@@ -187,7 +187,6 @@ vue add vue-next
 ```javascript
 export default {
   onRenderTriggered(e) {
-    debugger;
     // inspect which dependency is causing the component to re-render
   },
 };
