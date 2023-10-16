@@ -36,24 +36,38 @@
 <script setup>
 import { reactive, getCurrentInstance, ref } from "vue";
 import useRequest from '@/hooks/useRequest.js'
-import { loginIn } from '@/apis'
+import { loginIn } from '@/apis/index.js'
 import { useRouter } from "vue-router";
 import { encrypt } from '@/utils/tools.js'
-// const aaa = useRequest()
+import { useStore } from "vuex";
+const store = useStore()
+console.log(store);
 const loginForm = ref({
-    loginid: 'admin@ln',
-    password: 'Xf119@119',
-    jcaptchaCode: 3195
+  loginid: 'admin@ln',
+  password: 'Xf119@119',
+  jcaptchaCode: 3195
 })
 const handleUserRegister = () => { }
+const initStore = async()=>{
+  const storeList = ['rules','userInfo','dict']
+  const isInited =  await Promise.all(
+    storeList.map(item=>{
+      store.dispatch(item + '/init')
+    })
+  )
+  return isInited
+}
 const handleUserLogin = async () => {
-    const { loginid, password, jcaptchaCode } = loginForm.value
-    const params = {
-        loginid: encrypt(loginid),
-        password: encrypt(password),
-        jcaptchaCode
-    }
-    const res = await loginIn(params)
+  const { loginid, password, jcaptchaCode } = loginForm.value
+  const params = {
+    loginid: encrypt(loginid),
+    password: encrypt(password),
+    jcaptchaCode
+  }
+  const res = await loginIn(params)
+  await initStore()
+  console.log( store)
+//   useStore
 };
 
 </script>

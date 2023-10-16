@@ -9,14 +9,27 @@
  */
 
 import { createStore } from 'vuex'
+import createPersistedstate from 'vuex-persistedstate'
 
 import cart from './module/cart'
 import search from './module/search'
+import dict from './module/dict'
+import rules from './module/rules'
+import userInfo from './module/userInfo'
 
 export default createStore({
-  module: {
+  modules: {
     cart,
-    search
+    search,
+    dict,
+    rules,
+    userInfo
   },
-  strict: process.env.NODE_ENV !== 'production'
+  strict: process.env.NODE_ENV !== 'production',
+  plugins: [
+    createPersistedstate({
+      key: 'saveInfo',
+      paths: ['dict', 'rules','userInfo']
+    })
+  ]
 })
