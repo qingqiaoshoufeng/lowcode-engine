@@ -41,7 +41,6 @@ export default {
   setup() {
     const $router = useRouter();
     const { ctx } = getCurrentInstance();
-    debugger;
     const loginForm = reactive({
       emailPhone: "",
       password: ""
@@ -172,4 +171,5 @@ export default {
       margin-left: 15px;
     }
   }
-}</style>
+}
+</style>

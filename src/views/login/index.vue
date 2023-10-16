@@ -54,7 +54,6 @@ const handleUserLogin = async () => {
         jcaptchaCode
     }
     const res = await loginIn(params)
-    debugger;
 };
 
 </script>
