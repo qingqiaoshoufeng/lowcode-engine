@@ -1,5 +1,5 @@
 import { Toast } from 'vant'
-
+import { getCodeMessages } from '@/utils/http-code-messages'
 
 export const requestInterceptors = (config) => {
     debugger;
@@ -9,15 +9,25 @@ export const requestInterceptors = (config) => {
 
 
 export const responseInterceptors = (response) => {
-    console.log(111);
+    const { data, config, status } = response
     debugger;
-    const { data, config } = response
-    const { code, data: resData } = data
-
-    if (config.noErrorHandler) {
-        return response
+    let resData
+    let code
+    if (status === 200 && config.url === '/acws/rest/authentication') {
+        const { code: resCode, data } = response
+        resData = data
+        code = status
+    } else {
+        const { code: resCode, data: resData } = data
+        resData = data
+        code = resCode
     }
-    else if (code !== 200 && code !== 302) {
+
+
+    // if (config.noErrorHandler) {
+    //     return response
+    // }
+    if (code !== 200 && code !== 302) {
         if (code === 403) {
             Toast.error({
                 message: '无权限',
@@ -49,8 +59,7 @@ export const responseInterceptors = (response) => {
 }
 
 
-export const responseError = (err) => {
-    debugger;
+export const responseError = (error) => {
     if (error.response?.status === 401) {
         const text = error.response?.data?.msg || '用户信息输入有误，请重新输入！'
         Toast.error({
