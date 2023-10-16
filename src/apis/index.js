@@ -1,6 +1,19 @@
 import axios from 'axios'
+import { request } from '@/plugins/axios/index.js'
 
 export * from './system/login.js'
+
+// 获取行政区域
+export function getSystemArea({ parentAreaId, reportName, showAllArea, staticFlag }) {
+    let url = ''
+    if (parentAreaId) {
+        url = `/acws/rest/biz/common/sysarea/unfold/arealist?parentAreaId=${parentAreaId}&reportName=${reportName}&showAllArea=${showAllArea}&staticFlag=${staticFlag}`
+    }
+    else {
+        url = `/acws/rest/biz/common/sysarea/unfold/arealist?reportName=${reportName}&showAllArea=${showAllArea}&staticFlag=${staticFlag}`
+    }
+    return request.get(url)
+}
 
 // 地址位置编码查询
 export function searchLocation(params) {
