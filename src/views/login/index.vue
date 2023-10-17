@@ -1,34 +1,32 @@
 <template>
     <div class="login">
-        <header class="page-header">
-            <span class="btn-left" @click="$router.go(-1)">
-                <svg-icon icon-class="close-popup"></svg-icon>
-            </span>
-        </header>
-        <div class="mall-logo" v-p="['aaa']">
-            <img src="../../assets/image/setting/logo.png" />
-        </div>
-        <section class="login-info">
-            <van-cell-group class="info-list">
-                <van-field v-model="loginForm.loginid" clearable placeholder="手机/邮箱"
-                    @click-right-icon="$toast('question')" />
-                <van-field v-model="loginForm.password" type="password" clearable placeholder="请输入密码" />
-                <van-field class="temp-empty" />
-                <span class="forget-pwd">
-                    <svg-icon icon-class="question-mark"></svg-icon>
-                    <i>忘记密码？</i>
-                </span>
-            </van-cell-group>
-        </section>
-        <ul class="other-login">
-            <li class="top-login">
-                <span>或使用TOP金服登录</span>
-            </li>
-            <img src="../../assets/image/top-logo.png" alt />
-        </ul>
-        <div class="login-register-btns">
-            <span class="login-btn" @click="handleUserLogin">登录</span>
-            <span class="register-btn" @click="handleUserRegister">注册</span>
+        <img class="logo" src="@/assets/images/login-logo.png" alt="">
+        <div class="title">全国火灾与警情统计系统</div>
+        <div class="form">
+            <van-form @failed="onFailed">
+                <van-field 
+                    v-model="loginForm.loginid" 
+                    left-icon="manager"
+                    name="validatorMessage" 
+                    placeholder="校验函数返回错误提示"
+                    :rules="[{ validator: validatorMessage }]" 
+                />
+                <van-field 
+                    v-model="loginForm.password" 
+                    left-icon="lock"
+                    name="validatorMessage" 
+                    placeholder="校验函数返回错误提示"
+                    :rules="[{ validator: validatorMessage }]" 
+                />
+                <van-button 
+                    class="submit" 
+                    round 
+                    block 
+                    type="primary" 
+                    native-type="submit"
+                    @click="handleUserLogin"
+                >提交</van-button>
+            </van-form>
         </div>
     </div>
 </template>
@@ -37,7 +35,7 @@
 import { reactive, getCurrentInstance, ref } from "vue";
 import useRequest from '@/hooks/useRequest.js'
 import { loginIn } from '@/apis/index.js'
-import { useRouter } from "vue-router";
+import router from '@/router/index.js'
 import { encrypt } from '@/utils/tools.js'
 import { useStore } from "vuex";
 const store = useStore()
@@ -48,10 +46,10 @@ const loginForm = ref({
   jcaptchaCode: 3195
 })
 const handleUserRegister = () => { }
-const initStore = async()=>{
-  const storeList = ['rules','userInfo','dict']
-  const isInited =  await Promise.all(
-    storeList.map(item=>{
+const initStore = async () => {
+  const storeList = ['rules', 'userInfo', 'dict']
+  const isInited = await Promise.all(
+    storeList.map(item => {
       store.dispatch(item + '/init')
     })
   )
@@ -65,9 +63,12 @@ const handleUserLogin = async () => {
     jcaptchaCode
   }
   const res = await loginIn(params)
+  debugger;
   await initStore()
-  console.log( store)
-//   useStore
+  localStorage.token = res.token
+  router.push({
+    name:'Home'
+  })
 };
 
 </script>
@@ -75,115 +76,45 @@ const handleUserLogin = async () => {
   
 <style scoped lang="scss">
 .login {
-    height: 100%;
-    padding: 0 16px;
-    min-height: 667px;
-    max-height: 812px;
-    background: linear-gradient(#fdfdfd, #ffecf0);
+    background: url('~@/assets/images/login-bg.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 0% 0%;
+    overflow: hidden;
+    background-color: #fff;
 
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        line-height: 44px;
+    .logo {
+        height: 66px;
+        width: 68px;
+        margin: 50px auto 11px;
+        display: block;
     }
 
-    .mall-logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-top: 32px;
-    }
-
-    .login-info {
-        padding: 0 34px;
-
-        .info-list {
-            position: relative;
-
-            .forget-pwd {
-                position: absolute;
-                bottom: -30px;
-                left: 15px;
-                color: #d8182d;
-                font-size: 11px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                .svg-icon {
-                    padding-right: 4px;
-                    width: 12px;
-                    height: 12px;
-                }
-            }
-        }
-
-        ::v-deep .temp-empty {
-            display: none;
-        }
-
-        ::v-deep .van-cell-group {
-            background-color: transparent;
-        }
-
-        ::v-deep .van-cell {
-            background-color: transparent;
-            font-size: 17px;
-            padding-top: 60px;
-        }
-
-        ::v-deep .van-hairline--top-bottom::after {
-            font-size: 17px;
-            border-width: 0;
-        }
-    }
-
-    .other-login {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 100px;
-
-        .top-login {
-            font-size: 13px;
-            color: #3a3a3a;
-            padding-bottom: 10px;
-        }
-    }
-
-    .login-register-btns {
+    .title {
+        width: 264px;
+        height: 33px;
+        font-size: 24px;
+        font-family: STKaitiSC-Bold, STKaitiSC;
+        font-weight: bold;
+        color: #FFFFFF;
+        line-height: 33px;
         text-align: center;
-        position: fixed;
-        bottom: 10px;
-        left: 0;
-        right: 0;
-
-        .login-btn {
-            display: inline-block;
-            width: 150px;
-            height: 44px;
-            line-height: 44px;
-            color: white;
-            font-size: 17px;
-            border: 1px solid #d8182d;
-            border-radius: 4px;
-            background-color: #d8182d;
-        }
-
-        .register-btn {
-            line-height: 44px;
-            display: inline-block;
-            color: #949497;
-            font-size: 17px;
-            border: 1px solid #949497;
-            background-color: transparent;
-            border-radius: 4px;
-            width: 150px;
-            height: 44px;
-            margin-left: 15px;
-        }
+        width: 100%;
+    }
+    .form {
+        border-radius: 32px  32px  0px  0px;
+        background: #fff;
+        padding:46px 16px 0 16px;
+        margin-top: 26px;
+    }
+    ::v-deep .van-field{
+        background-color: #F0F5F8 !important;
+        margin-top: 16px;
+    }
+    .submit{
+        margin-top: 65px;
+        background-color: #7485CB !important;
+        height: 36px;
     }
 }
 </style>

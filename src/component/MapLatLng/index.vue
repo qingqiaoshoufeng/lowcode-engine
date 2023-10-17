@@ -157,7 +157,6 @@ defineOptions({
   name: 'MapLatLng',
 })
 </script>
-
 <template>
   <div ref="tmap" class="map-latlng">
     <LMap

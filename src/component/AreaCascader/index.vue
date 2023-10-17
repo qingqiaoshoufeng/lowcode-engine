@@ -166,6 +166,11 @@ defineOptions({
   name: 'AreaCascader',
 })
 </script>
+<script>
+export default {
+  name: 'AreaCascader',
+}
+</script>
 
 <template>
   <a-cascader

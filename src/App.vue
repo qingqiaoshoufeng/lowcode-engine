@@ -26,7 +26,7 @@ body,
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background-color: #efeff4;
+  background-color: #fff;
   -webkit-overflow-scrolling: touch;
 }
 </style>
