@@ -1,29 +1,9 @@
-<!--
- * @version: v 1.0.0
- * @Github: https://github.com/GitHubGanKai
- * @Author: GitHubGanKai
- * @Date: 2021-01-01 13:57:27
- * @LastEditors: gankai
- * @LastEditTime: 2021-01-02 15:07:37
- * @FilePath: /refactor-with-vue3/src/component/tabbar/index.vue
--->
 <template>
-  <div class="tabbar">
-    <div 
-      :class="{
-        tab_item:true,
-        is_active:item.value === props.currentTab,
-      }" 
-      v-for="item in menuList" 
-      :key="item.label"
-      @click="handleClick(item.path)"
-    >
-      <img :class="{ wb3:item.value === 3}" :src="item[item.value === props.currentTab ? 'activeImage' : 'deactiveImage']" alt="">
-      <span :class="{label:true, ty3:item.value === 3}">{{ item.label }}</span>
+    <div class="entry_list">
+      
     </div>
-  </div>
-</template>
-
+  </template>
+  
 <script setup>
 import { computed, ref, getCurrentInstance,defineProps } from "vue";
 import { useStore } from "vuex";
@@ -40,9 +20,13 @@ import homeDeactive from '@/assets/images/home-deactive.png'
 import homeActive from '@/assets/images/home-active.png'
 import { Handler } from "leaflet";
 const props = defineProps({
-  currentTab:{
-    default:null,
+  title:{
+    default:'标题',
     type:Number
+  },
+  list:{
+    default:()=>([]),
+    type:Array
   }
 })
 const menuList = [
@@ -88,56 +72,51 @@ const handleClick = (val)=>{
   })
 }
 </script>
-
-
 <script>
 export default {
-  name:'Tabbar'
+  name:'ListEntry'
 }
 </script>
-<style lang="scss" scoped>
-.tabbar{
-  position: fixed;
-  bottom:0 ;
-  width: 100%;
-  height: 56px;
-  background-color: #fff;
-  padding: 0 38px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .tab_item{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    .label{
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #A4A6AC;
-      font-size: 12px;
-      // scale: .5;
+  <style lang="scss" scoped>
+  .entry_list{
+    width: 100%;
+    background-color: #fff;
+    justify-content: space-between;
+    .title{
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #0E203C;
+        line-height: 22px;
+        margin-bottom: 13px;
     }
-    img{
-      height: 28px;
-      width: 28px;
-      background-color: #fff;
-      border-radius: 50%;
+    .tab_item{
+      display: flex;
+      flex-direction: column;
+      display: inline-block;
+      width: 25%;
+      padding-bottom: 18px;
+      .item_wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .label{
+            font-size: 13px;
+            font-family: PingFang-SC-Medium, PingFang-SC;
+            font-weight: 500;
+            color: #0E203C;
+        }
+        img{
+            height: 30px;
+            width: 30px;
+            background-color: #fff;
+
+        }
+      }
+  
     }
   }
-  .is_active{
-    .label{
-      color: #1833A9 ;
-    }
-  }
-  .wb3{
-    border:3px solid #fff;
-    transform: translateY(-50%);
-    width:40px !important;
-    height: 40px !important;
-  }
-  .ty3{
-    transform:translateY(-9px);
-  }
-}
-</style>
+  </style>
+  
+    
