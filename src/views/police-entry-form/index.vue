@@ -6,6 +6,7 @@ import MapLatLng from "@/component/MapLatLng/index";
 import AreaCascader from "@/component/AreaCascader/index";
 import PoliceTags from "@/component/PoliceTags/index";
 import ProModal from "@/component/ProModal/index";
+import SelectSingle from "@/component/SelectSingle/index";
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
@@ -392,6 +393,13 @@ const validateHeadquarters = (rule, value, callback) => {
           :required="false"
           :rule="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
         />
+        <SelectSingle
+          v-model="form.warningSource"
+          :options="options.warningSource"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          label="报警来源"
+          placeholder="请选择报警来源"
+        />
         <van-field
           v-model="form.warningCodeYyj"
           label="119警情编号"
@@ -462,7 +470,7 @@ const validateHeadquarters = (rule, value, callback) => {
       font-size: 14px;
       font-family: PingFang-SC-Medium, PingFang-SC;
       font-weight: 500;
-      color: #0E203C;
+      color: #0e203c;
       line-height: 20px;
     }
     .title-placeholder {
