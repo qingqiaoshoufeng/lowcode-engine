@@ -1,10 +1,10 @@
-import { axios } from '@/plugins/axios/index.js'
+import { request } from '@/plugins/axios/index.js'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 
 // 获取119警情列表
 export function getFireWarningList(data) {
-  return axios.get('/acws/rest/biz/firewarningyyj/warningyyj/query', {
+  return request.get('/acws/rest/biz/firewarningyyj/warningyyj/query', {
     params: {
       offset: (data.page - 1) * data.limit + 1,
       limit: data.limit,
@@ -24,10 +24,10 @@ export function getFireWarningList(data) {
 
 // 获取119警情详情
 export function getFireWarningDetail119(id) {
-  return axios.get(`/acws/rest/biz/firewarningyyj/warningyyj/${id}`)
+  return request.get(`/acws/rest/biz/firewarningyyj/warningyyj/${id}`)
 }
 
 // 119警情挂起
 export function hangupFireWarning(data) {
-  return axios.post('/acws/rest/biz/firewarningyyj/updatewarningyyj', data)
+  return request.post('/acws/rest/biz/firewarningyyj/updatewarningyyj', data)
 }

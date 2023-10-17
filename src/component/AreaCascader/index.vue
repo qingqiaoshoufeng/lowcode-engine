@@ -17,7 +17,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  changeOnSelect: {
+  required: {
     type: Boolean,
     default: false,
   },
@@ -214,6 +214,7 @@ export default {
     v-model="areaText"
     is-link
     readonly
+    :required="required"
     label="行政区划"
     :placeholder="placeholder"
     @click="selectVisible = true"

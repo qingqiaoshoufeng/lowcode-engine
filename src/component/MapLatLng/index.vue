@@ -38,8 +38,6 @@ const leafletObj = ref(null)
 
 const makerList = ref([])
 
-console.log(props.selectArea?.join(''))
-
 const keyword = ref(`${props.selectArea?.join('')}${props.selectAddr}`)
 
 const tiandituToken = 'cf8b627df2989291ecfc67605220bf98'
