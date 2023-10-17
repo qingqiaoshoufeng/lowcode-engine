@@ -1,4 +1,4 @@
-import { axios } from '@/plugins/axios/index.js'
+import { request } from '@/plugins/axios/index.js'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 
@@ -43,7 +43,7 @@ export function getFireWarningManage(data) {
       finishQueryFlag: data?.finishQueryFlag,
     }
   }
-  return axios.get('/acws/rest/biz/firewarning/query', {
+  return request.get('/acws/rest/biz/firewarning/query', {
     params,
   }).then((res) => {
     return {
@@ -64,70 +64,70 @@ export function getFireWarningManage(data) {
 
 // 获取警情信息
 export function getFireWarningDetail(id) {
-  return axios.get(`/acws/rest/biz/firewarning/${id}`)
+  return request.get(`/acws/rest/biz/firewarning/${id}`)
 }
 
 // 获取警情详情页签
 export function getFireWarningTabs(warningId) {
-  return axios.get(`/acws/rest/biz/firewarning/query/view?warningId=${warningId}`)
+  return request.get(`/acws/rest/biz/firewarning/query/view?warningId=${warningId}`)
 }
 
 // 添加标签
 export function addTagsFireWarning(params) {
-  return axios.post('/acws/rest/biz/firewarning/savewarningtag', params)
+  return request.post('/acws/rest/biz/firewarning/savewarningtag', params)
 }
 
 // 收藏警情
 export function collectFireWarning(params) {
-  return axios.post('/acws/rest/biz/firefocus/focus/save', params)
+  return request.post('/acws/rest/biz/firefocus/focus/save', params)
 }
 
 // 警情收藏列表
 export function getCollectList(params) {
-  return axios.get('/acws/rest/biz/common/focus/query', { params })
+  return request.get('/acws/rest/biz/common/focus/query', { params })
 }
 
 // 驳回警情
 export function rejectFireWarning(params) {
-  return axios.post('/acws/rest/biz/firewarning/reject', params)
+  return request.post('/acws/rest/biz/firewarning/reject', params)
 }
 
 // 申请更正/修改
 export function recheckFireWarning(params) {
-  return axios.post('/acws/rest/biz/firerecheck/firerecheck/save', params)
+  return request.post('/acws/rest/biz/firerecheck/firerecheck/save', params)
 }
 
 // 申请作废
 export function abolishFireWarning(params) {
-  return axios.post('/acws/rest/biz/firecancel/save', params)
+  return request.post('/acws/rest/biz/firecancel/save', params)
 }
 
 // 获取字段备注信息
 export function getFieldAnnotationList(params) {
-  return axios.get('/acws/rest/biz/fieldremark/selectsinglefieldremarks', { params })
+  return request.get('/acws/rest/biz/fieldremark/selectsinglefieldremarks', { params })
 }
 
 // 新增字段备注
 export function addFieldAnnotation(params) {
-  return axios.post('/acws/rest/biz/fieldremark/addsinglefieldremark', params)
+  return request.post('/acws/rest/biz/fieldremark/addsinglefieldremark', params)
 }
 
 // 更新备注信息
 export function getFormFieldAnnotation(params) {
-  return axios.post('/acws/rest/biz/fieldremark/updatefieldremark', params)
+  return request.post('/acws/rest/biz/fieldremark/updatefieldremark', params)
 }
 
 // 删除字段备注信息
 export function deleteFormFieldAnnotation(data) {
-  return axios.post('/acws/rest/biz/fieldremark/deletefieldremark', data, { noErrorHandler: true })
+  return request.post('/acws/rest/biz/fieldremark/deletefieldremark', data, { noErrorHandler: true })
 }
 
 // 获取字段备注提醒
 export function getFieldAnnotationDetail(params) {
-  return axios.get('/acws/rest/biz/fieldremark/getremarkwarn', { params })
+  return request.get('/acws/rest/biz/fieldremark/getremarkwarn', { params })
 }
 
 // 页面新增时保存备注
 export function updateFormFieldAnnotationIds(params) {
-  return axios.post('/acws/rest/biz/fieldremark/updatedataid', params)
+  return request.post('/acws/rest/biz/fieldremark/updatedataid', params)
 }
