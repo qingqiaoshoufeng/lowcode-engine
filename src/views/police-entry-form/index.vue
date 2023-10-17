@@ -7,6 +7,7 @@ import AreaCascader from "@/component/AreaCascader/index";
 import PoliceTags from "@/component/PoliceTags/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
+import SelectMultiple from "@/component/SelectMultiple/index";
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
@@ -68,7 +69,7 @@ const { show } = useModal();
 
 const store = useStore()
 
-const { options, setOptions } = useOptions({
+const { options } = useOptions({
   otherCityOptions: [],
   otherProvinceOptions: [],
 });
@@ -415,7 +416,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :rule="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
         />
         <SelectSingle
-          v-model="form.warningSource"
+          v-model:value="form.warningSource"
           :options="options.warningSource"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           label="报警来源"
@@ -434,6 +435,24 @@ const validateHeadquarters = (rule, value, callback) => {
         <PoliceTags
           v-model:value="form.warningTag"
           :options="options.warningTagOptions"
+        />
+        <SelectMultiple
+          v-model:value="form.otherCity"
+          :options="options.otherCityOptions"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :rule="[{ required: true, message: '请选择增援支队' }]"
+          :required="true"
+          label="增援支队"
+          placeholder="请选择增援支队"
+        />
+        <SelectMultiple
+          v-model:value="form.otherProvince"
+          :options="options.otherProvinceOptions"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :rule="[{ required: true, message: '请选择增援总队' }]"
+          :required="true"
+          label="增援总队"
+          placeholder="请选择增援总队"
         />
         <van-field
           v-model="form.warningInfo"
