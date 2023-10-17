@@ -8,6 +8,7 @@ import PoliceTags from "@/component/PoliceTags/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
+import CascaderSingle from "@/component/CascaderSingle/index";
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
@@ -20,7 +21,7 @@ import {
 } from "@/apis/index.js";
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
-import { useStore } from 'vuex'
+import { useStore } from "vuex";
 
 const props = defineProps({
   currentRow: {
@@ -67,7 +68,7 @@ const props = defineProps({
 
 const { show } = useModal();
 
-const store = useStore()
+const store = useStore();
 
 const { options } = useOptions({
   otherCityOptions: [],
@@ -78,7 +79,11 @@ const formRef = ref(null);
 
 const importantEdit = ref(true); // 重要信息更正
 
-let warningLevelOptions = [] // 警情等级
+const labelWarningOrgname = ref("单位/户主/个体户名称");
+
+let warningLevelOptions = []; // 警情等级
+
+const userOrgName = ref()
 
 const form = ref({
   warningName: "", // 警情标题
@@ -103,7 +108,7 @@ const form = ref({
   isNaturalDisaster: "2", // 是否自然灾害引发
   naturalDisasterType: [], // 自然灾害类型
   naturalDisasterOther: "", // 自然灾害类型其他
-  naturalDisasterTypeText: "",
+  naturalDisasterTypeText: [],
   dispatchGroup: [], // 出动队伍
   mainGroup: undefined, // 主战队站
   firstGroup: undefined, // 首到队站
@@ -169,15 +174,15 @@ form.value.warningName = computed(() => {
   if (warningTypeText?.[0] === "抢险救援") {
     result += warningTypeText
       ? `${textFilter(warningTypeText, warningTypeText.length - 1).replace(
-        "抢险救援",
-        ""
-      )}抢险救援`
+          "抢险救援",
+          ""
+        )}抢险救援`
       : "";
     result += naturalDisasterTypeText
       ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
+          naturalDisasterTypeText,
+          naturalDisasterTypeText.length - 1
+        )}）`
       : "";
   }
   if (warningTypeText?.[0] === "社会救助") {
@@ -187,9 +192,9 @@ form.value.warningName = computed(() => {
       : "";
     result += naturalDisasterTypeText
       ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
+          naturalDisasterTypeText,
+          naturalDisasterTypeText.length - 1
+        )}）`
       : "";
   }
   if (warningTypeText?.[0] === "安保勤务") {
@@ -199,31 +204,126 @@ form.value.warningName = computed(() => {
       : "";
     result += naturalDisasterTypeText
       ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
+          naturalDisasterTypeText,
+          naturalDisasterTypeText.length - 1
+        )}）`
       : "";
   }
   return result;
 });
 
+const showAddTag = computed(() => {
+  return !props.isApproval && props.showPreview;
+});
+
+const showWarningLevel = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return types && (types[0] === "火灾扑救" || types[0] === "抢险救援");
+});
+
+const showAreaDutyGroup = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return types && types[0] === "火灾扑救";
+});
+
+const showWarningTypeOther = computed(() => {
+  const types = form.value.warningTypeText || [];
+  if (types?.length) {
+    return types[types.length - 1].includes("其他");
+  }
+  return false;
+});
+
+const showNaturalDisaster = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return (
+    types && ["社会救助", "抢险救援", "安保勤务", "虚假警"].includes(types[0])
+  );
+});
+
+const showSecurityService = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return types && types[0] === "安保勤务";
+});
+
+const showVipSecurity = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return types && types[0] === "安保勤务" && types[1] === "日常勤务";
+});
+
+const showIsHappenFire = computed(() => {
+  const types = form.value.warningTypeText || [];
+  return types && types[0] === "抢险救援" && types[1] === "交通事故";
+});
+
+const showNaturalDisasterOther = computed(() => {
+  const types = form.value.naturalDisasterTypeText || [];
+  return types && types[1] === "其他";
+});
+
+const showTyphoonType = computed(() => {
+  const types = form.value.naturalDisasterTypeText || [];
+  return types && types[1] === "台风";
+});
+
+const warningAddrBefore = computed(() => {
+  const { warningAreaText } = form.value;
+  let result = warningAreaText?.[0];
+  if (warningAreaText?.[1]) {
+    result += `${warningAreaText?.[1]}`;
+  }
+  if (warningAreaText?.[2]) {
+    result += `${warningAreaText?.[2]}`;
+  }
+  return result;
+});
+
 const initLevelOptions = () => {
-  const filter = options.value?.warningTypeOptions?.map(item => item.boDictId === form.value.warningType[0])
-  if (filter && filter[0].dictName === '抢险救援') {
-    options.value.warningLevelOptions = warningLevelOptions.slice(0, 4)
+  const filter = options.value?.warningTypeOptions?.map(
+    (item) => item.boDictId === form.value.warningType[0]
+  );
+  if (filter && filter[0].dictName === "抢险救援") {
+    options.value.warningLevelOptions = warningLevelOptions.slice(0, 4);
+  } else {
+    options.value.warningLevelOptions = warningLevelOptions;
   }
-  else {
-    options.value.warningLevelOptions = warningLevelOptions
+};
+
+const warningTypeChange = (value, selectedOptions) => {
+  form.value.warningLevel = undefined;
+  form.value.typhoonType = undefined;
+  form.value.warningTypeOther = "";
+  if (selectedOptions) {
+    form.value.warningTypeText =
+      selectedOptions.map((item) => item.dictName) || [];
+    if (selectedOptions && selectedOptions[0].dictName === "抢险救援") {
+      options.value.warningLevelOptions = warningLevelOptions.slice(0, 4);
+    } else {
+      options.value.warningLevelOptions = warningLevelOptions;
+    }
+    if (selectedOptions && selectedOptions[0].dictName === "安保勤务") {
+      labelWarningOrgname.value = "活动/任务名称";
+      // formRef.value.clearValidate(['warningOrgname'])
+    } else {
+      labelWarningOrgname.value = "单位/户主/个体户名称";
+      // formRef.value.clearValidate(['warningOrgname'])
+    }
+  } else {
+    form.value.warningTypeText = [];
+    form.value.areaDutyGroup = [];
+    labelWarningOrgname.value = "单位/户主/个体户名称";
+    // formRef.value.clearValidate(['warningOrgname'])
+    // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
   }
-}
+};
 
 onMounted(() => {
-  const res = store.getters?.['dict/filterDicts'](['JQ_TYPE', 'NATURAL_DISASTER_TYPE', 'JQ_LEVEL', 'JQ_LY', 'TP_TYPE'], null, false)
-  options.value.warningTypeOptions = res.JQ_TYPE
-  options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE
-  warningLevelOptions = res.JQ_LEVEL
-  options.value.warningSource = res.JQ_LY
-  options.value.typhoonType = res.TP_TYPE
+  const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, false);
+  options.value.warningTypeOptions = res.JQ_TYPE;
+  options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE;
+  warningLevelOptions = res.JQ_LEVEL;
+  options.value.warningSource = res.JQ_LY;
+  options.value.typhoonType = res.TP_TYPE;
   // 获取增援总队
   getOtherProvince({ deptType: 1, deptLevel: 2 }).then((res) => {
     if (res.items) {
@@ -240,6 +340,10 @@ onMounted(() => {
   getFireWarningTag({ tagType: 1 }).then((res) => {
     options.value.warningTagOptions = res.data;
   });
+  // 获取用户单位
+  if (store.getters?.["userInfo/userInfo"]) {
+    userOrgName.value = store.getters?.["userInfo/userInfo"]?.USERMESSAGE?.orgName
+  }
 });
 
 const handleLngLat = () => {
@@ -407,6 +511,85 @@ const validateHeadquarters = (rule, value, callback) => {
             >
           </template>
         </van-field>
+        <CascaderSingle
+          v-model:value="form.warningType"
+          v-modal:text="form.warningTypeText"
+          :options="options.warningTypeOptions"
+          :required="true"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          label="警情类型"
+          placeholder="请选择警情类型"
+          @change="warningTypeChange"
+        />
+        <van-field
+          v-if="showVipSecurity"
+          required
+          name="switch"
+          label="要人安保"
+          label-width="100px"
+          class="switch-wrapper"
+        >
+          <template #input>
+            <van-switch
+              v-model="form.vipSecurity"
+              size="20"
+              active-value="1"
+              inactive-value="2"
+            />
+          </template>
+        </van-field>
+        <van-field
+          v-if="showIsHappenFire"
+          required
+          name="switch"
+          label="是否发生火灾"
+          label-width="120px"
+          class="switch-wrapper"
+        >
+          <template #input>
+            <van-switch
+              v-model="form.isHappenFire"
+              size="20"
+              active-value="1"
+              inactive-value="2"
+            />
+          </template>
+        </van-field>
+        <van-field
+          v-if="showWarningTypeOther || form.warningTypeOther"
+          v-model="form.warningTypeOther"
+          required
+          :readonly="showPreview"
+          name="warningTypeOther"
+          label="其他说明"
+          placeholder="请输入其他说明"
+          :rule="[{ required: true, message: '请输入其他说明' }]"
+        />
+        <SelectSingle
+          v-if="showWarningLevel || form.warningLevel"
+          v-model:value="form.warningLevel"
+          :options="options.warningLevelOptions"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          label="警情等级"
+          placeholder="请选择警情等级"
+        />
+        <van-field
+          v-model="form.warningOrgname"
+          required
+          :readonly="showPreview"
+          name="warningOrgname"
+          label-width="166px"
+          :label="labelWarningOrgname"
+          :placeholder="`请输入${labelWarningOrgname}`"
+          :rule="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
+        />
+        <SelectSingle
+          v-model:value="form.warningSource"
+          :options="options.warningSource"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          label="报警来源"
+          placeholder="请选择报警来源"
+        />
         <van-field
           v-model="form.warningCodeYyj"
           label="联系方式"
@@ -415,12 +598,51 @@ const validateHeadquarters = (rule, value, callback) => {
           :required="false"
           :rule="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
         />
+        <van-field
+          v-if="showNaturalDisaster || form.isNaturalDisaster"
+          required
+          name="switch"
+          label="是否自然灾害引发"
+          label-width="200px"
+          class="switch-wrapper"
+        >
+          <template #input>
+            <van-switch
+              v-model="form.isNaturalDisaster"
+              size="20"
+              active-value="1"
+              inactive-value="2"
+            />
+          </template>
+        </van-field>
+        <CascaderSingle
+          v-if="form.isNaturalDisaster === '1'"
+          v-model:value="form.naturalDisasterType"
+          v-modal:text="form.naturalDisasterTypeText"
+          :options="options.naturalDisasterOptions"
+          :required="true"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          label="自然灾害类型"
+          label-width="108px"
+          placeholder="请选择自然灾害类型"
+        />
+        <van-field
+          v-if="showNaturalDisasterOther || form.naturalDisasterOther"
+          v-model="form.naturalDisasterOther"
+          required
+          :readonly="showPreview"
+          name="naturalDisasterOther"
+          label="其他说明"
+          placeholder="请输入其他说明"
+          :rule="[{ required: true, message: '请输入其他说明' }]"
+        />
         <SelectSingle
-          v-model:value="form.warningSource"
-          :options="options.warningSource"
+          v-if="showTyphoonType"
+          v-model:value="form.typhoonType"
+          :options="options.typhoonType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
-          label="报警来源"
-          placeholder="请选择报警来源"
+          label="台风编号"
+          placeholder="请选择台风编号"
         />
         <van-field
           v-model="form.warningCodeYyj"
@@ -519,6 +741,11 @@ const validateHeadquarters = (rule, value, callback) => {
       font-weight: 500;
       color: #9398a7;
       line-height: 20px;
+    }
+  }
+  .switch-wrapper {
+    :deep(.van-field__control.van-field__control--custom) {
+      justify-content: right;
     }
   }
   .form-textarea {
