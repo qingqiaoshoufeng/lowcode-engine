@@ -1,13 +1,25 @@
 import { getFireWarningType } from '@/apis/index.js'
 
 
-const state={
+const state = {
   systemDicts: [],
   systemDictsAll: [], // 包含已删除字典
 }
 const getters = {
-  filterDicts(state) {
-    return (dictType, transformRes)=>{
+  filterDicts: (state) => (dictType, transformRes, detail) => {
+    if (detail) {
+      if (Array.isArray(dictType)) {
+        const filters = {}
+        dictType.forEach((temp) => {
+          filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
+        })
+        return transformRes ? transformRes(filters) : filters
+      }
+      else {
+        const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
+        return transformRes ? transformRes(filters) : filters
+      }
+    } else {
       if (Array.isArray(dictType)) {
         const filters = {}
         dictType.forEach((temp) => {
@@ -21,42 +33,27 @@ const getters = {
       }
     }
   },
-  filterDictsAll(state) {
-    return (dictType, transformRes)=>{
-      if (Array.isArray(dictType)) {
-        const filters = {}
-        dictType.forEach((temp) => {
-          filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
-        })
-        return transformRes ? transformRes(filters) : filters
-      }
-      else {
-        const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
-        return transformRes ? transformRes(filters) : filters
-      }
-    }
-  },
 }
 const mutations = {
-  setSystemDicts(state,val){
+  setSystemDicts(state, val) {
     state.systemDicts = val.items
   },
-  setSystemDictsAll(state,val){
+  setSystemDictsAll(state, val) {
     state.systemDictsAll = val.items
   }
 }
 
-const actions={
-  init({state,commit}) {
+const actions = {
+  init({ state, commit }) {
     return Promise.all([
       getFireWarningType().then((res) => {
         if (res && res.items) {
-          commit('setSystemDicts',res)
+          commit('setSystemDicts', res)
         }
       }),
       getFireWarningType({ allFlag: true }).then((res) => {
         if (res && res.items) {
-          commit('setSystemDictsAll',res)
+          commit('setSystemDictsAll', res)
         }
       })
     ])

@@ -19,6 +19,7 @@ import {
 } from "@/apis/index.js";
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
+import { useStore } from 'vuex'
 
 const props = defineProps({
   currentRow: {
@@ -65,7 +66,9 @@ const props = defineProps({
 
 const { show } = useModal();
 
-const { options } = useOptions({
+const store = useStore()
+
+const { options, setOptions } = useOptions({
   otherCityOptions: [],
   otherProvinceOptions: [],
 });
@@ -73,6 +76,8 @@ const { options } = useOptions({
 const formRef = ref(null);
 
 const importantEdit = ref(true); // 重要信息更正
+
+let warningLevelOptions = [] // 警情等级
 
 const form = ref({
   warningName: "", // 警情标题
@@ -201,7 +206,23 @@ form.value.warningName = computed(() => {
   return result;
 });
 
+const initLevelOptions = () => {
+  const filter = options.value?.warningTypeOptions?.map(item => item.boDictId === form.value.warningType[0])
+  if (filter && filter[0].dictName === '抢险救援') {
+    options.value.warningLevelOptions = warningLevelOptions.slice(0, 4)
+  }
+  else {
+    options.value.warningLevelOptions = warningLevelOptions
+  }
+}
+
 onMounted(() => {
+  const res = store.getters?.['dict/filterDicts'](['JQ_TYPE', 'NATURAL_DISASTER_TYPE', 'JQ_LEVEL', 'JQ_LY', 'TP_TYPE'], null, false)
+  options.value.warningTypeOptions = res.JQ_TYPE
+  options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE
+  warningLevelOptions = res.JQ_LEVEL
+  options.value.warningSource = res.JQ_LY
+  options.value.typhoonType = res.TP_TYPE
   // 获取增援总队
   getOtherProvince({ deptType: 1, deptLevel: 2 }).then((res) => {
     if (res.items) {
