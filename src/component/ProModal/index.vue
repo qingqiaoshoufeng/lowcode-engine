@@ -2,6 +2,10 @@
 import { watch, ref } from "vue";
 
 const props = defineProps({
+  title: {
+    type: String,
+    default: "",
+  },
   visible: {
     type: Boolean,
     default: false,
@@ -49,11 +53,12 @@ defineOptions({
 
 <template>
   <div class="pro-modal" v-if="showModal">
-    <slot name="default" :set-handle-ok="setHandleOk" />
     <div class="footer">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
+      <div class="modal-title">{{ title }}</div>
       <van-button type="primary" size="small" @click="handleOk">确定</van-button>
     </div>
+    <slot name="default" :set-handle-ok="setHandleOk" />
   </div>
 </template>
 
@@ -66,20 +71,19 @@ defineOptions({
   top: 0;
   z-index: 99;
   background-color: white;
-  :deep(.leaflet-bottom.leaflet-left) {
-    bottom: 48px;
-  }
   .footer {
     width: 100%;
-    height: 48px;
-    padding-right: 10PX;
+    height: 44px;
+    padding: 0 10px;
     background-color: white;
     display: flex;
     align-items: center;
-    justify-content: end;
-    position: absolute;
-    bottom: 0;
-    z-index: 999;
+    .modal-title {
+      color: #242424;
+      font-size: 16px;
+      flex: 1;
+      text-align: center;
+    }
   }
 }
 </style>
