@@ -72,3 +72,34 @@ export const scrollFormFailed = () => {
 export const getLastMonth = () => {
   return [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')]
 }
+
+// 根据 key, value 生成数组对象，比如：列表返回了状态key，状态value
+export const generateByKeyValue = (keys, values, fields, keyType) => {
+  if (!keys || !values) {
+    return
+  }
+  const key = keys.split(',')
+  const value = values.split(',')
+  return key.map((item, index) => {
+    const object = {}
+    object[fields.key] = item
+    object[fields.value] = keyType ? Number(value[index]) : value[index]
+    return object
+  })
+}
+
+// 从字典获取警情类型中文
+export const getTypeText = (warningType, options) => {
+  if (!warningType || warningType.length <= 0 || !options) {
+    return []
+  }
+  const list = treeToArray(options)
+  const result = []
+  warningType.forEach((item) => {
+    const filter = list.filter(temp => temp.boDictId === item)
+    if (filter?.length > 0) {
+      result.push(filter[0].dictName)
+    }
+  })
+  return result
+}

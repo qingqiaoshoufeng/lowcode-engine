@@ -78,7 +78,8 @@ defineOptions({
         :title="placeholder"
         :options="options"
         :field-names="fieldNames"
-        @close="show = false"
+        active-color="#1989fa"
+        @close="selectVisible = false"
         @finish="onFinish"
       />
     </div>
