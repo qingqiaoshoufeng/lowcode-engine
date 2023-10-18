@@ -347,6 +347,16 @@ const handleMain = () => {
   return false
 }
 
+const onChangeDispatchGroup = (values, items, texts) => {
+  form.value.dispatchGroup = items
+  if (!items || items.length <= 0) {
+    form.value.mainGroup = ''
+    form.value.firstGroup =  ''
+  }
+
+  // formRef.value.clearValidate(['dispatchGroup', 'mainGroup', 'firstGroup'])
+}
+
 const { loading, submit } = useSubmit((res) => {
   if (props.isConfirm) {
     Toast('警情确认成功')
@@ -885,6 +895,7 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请选择出动队伍"
           title="请选择出动队伍"
           :params="{ deptType: 1 }"
+          @change="onChangeDispatchGroup"
         />
         <SelectSingle
           v-model:value="form.firstGroup"

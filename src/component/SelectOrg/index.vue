@@ -62,7 +62,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:value", "change"]);
+const emit = defineEmits(["update:value", "update:text", "change"]);
 
 const selectVisible = ref(false);
 
@@ -72,9 +72,19 @@ const tabsActive = ref(0);
 
 const treeData = ref([]);
 
-const selectValue = ref("");
+const selectValue = ref([]);
 
-const selectText = ref("");
+const selectItem = ref([]);
+
+const selectText = ref([]);
+
+const selectTextShow = computed(() => {
+  return selectText.value.join(",");
+})
+
+const renderChecked = (item) => {
+  return selectValue.value?.indexOf(item.organizationid) > -1;
+}
 
 const getItem = (item) => {
   if (item.hasChildren && props.single && props.selectLeaf) {
@@ -98,9 +108,18 @@ const getItem = (item) => {
   }
   return {
     ...item,
+    checked: renderChecked(item),
     title: item[props.fieldNames.title],
     key: item[props.fieldNames.key],
   };
+};
+
+const showCheck = (item) => {
+  let result = false;
+  if (props.selectLeaf && item.isLeaf) {
+    return true;
+  }
+  return result;
 };
 
 onMounted(() => {
@@ -122,9 +141,22 @@ const handleCancel = () => {
 };
 
 const handleOk = () => {
-  // emit("update:value", selectValue.value);
-  // emit("change", selectValue.value, selectItem.value);
+  emit("update:value", selectItem.value);
+  emit("update:text", selectText.value);
+  emit("change", selectValue.value, selectItem.value, selectText.value);
   selectVisible.value = false;
+};
+
+const handleCheck = (item) => {
+  if (item.checked) {
+    selectValue.value.push(item.organizationid);
+    selectText.value.push(item.name);
+    selectItem.value.push(item);
+  } else {
+    selectValue.value = selectValue.value.filter((temp) => temp !== item.organizationid);
+    selectText.value = selectText.value.filter((temp) => temp !== item.name);
+    selectItem.value = selectItem.value.filter((temp) => temp.organizationid !== item.organizationid);
+  }
 };
 
 const handleEnter = (item) => {
@@ -137,16 +169,25 @@ const handleEnter = (item) => {
       disabledValue: props.disabledValue,
     }).then((res) => {
       Toast.clear();
-      tabs.value = tabs.value.filter((tab) => tab.organizationid !== 0);
-      tabs.value.push(item);
-      tabs.value.push({ name: "请选择", organizationid: 0 });
-      tabsActive.value = 0;
+      const currentIndex = tabs.value.findIndex(
+        (node) => node.orgLevel === item.orgLevel
+      );
+      if (currentIndex > -1) {
+        treeData.value = treeData.value.slice(0, currentIndex + 1);
+        tabs.value = tabs.value.slice(0, currentIndex);
+        tabs.value.push(item);
+        tabs.value.push({ name: "请选择", organizationid: 0 });
+        tabsActive.value = 0;
+      } else {
+        tabs.value = tabs.value.filter((tab) => tab.organizationid !== 0);
+        tabs.value.push(item);
+        tabs.value.push({ name: "请选择", organizationid: 0 });
+        tabsActive.value = 0;
+      }
       treeData.value.push(res.items.map(getItem));
     });
   }
 };
-
-const handleCheck = (item) => {};
 
 defineOptions({
   name: "SelectOrg",
@@ -155,7 +196,7 @@ defineOptions({
 
 <template>
   <van-field
-    v-model="selectText"
+    v-model="selectTextShow"
     is-link
     readonly
     :required="required"
@@ -192,7 +233,11 @@ defineOptions({
                   @click="handleEnter(item)"
                 >
                   <div class="item-title">{{ item.name }}</div>
-                  <van-checkbox v-model="item.checked" />
+                  <van-checkbox
+                    v-if="showCheck(item)"
+                    v-model="item.checked"
+                    @change="handleCheck(item)"
+                  />
                 </div>
               </div>
             </van-tab>
