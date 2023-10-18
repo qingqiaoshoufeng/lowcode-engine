@@ -106,6 +106,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0px -2px 4px 0px rgba(23,28,44,0.1);
   .tab_item{
     display: flex;
     flex-direction: column;

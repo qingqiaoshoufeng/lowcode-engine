@@ -63,7 +63,6 @@ const handleUserLogin = async () => {
     jcaptchaCode
   }
   const res = await loginIn(params)
-  debugger;
   await initStore()
   localStorage.token = res.token
   router.push({
