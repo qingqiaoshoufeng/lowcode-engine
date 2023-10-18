@@ -5,14 +5,14 @@ import {reactive,toRefs} from 'vue'
 const getOptionsMap= () => {
   let files = []
   let optionsMap = {}
-  files = require.context('../directives', true, /\.js$/)
+  files = require.context('./config', true, /\.js$/)
   files.keys().forEach((key) => {
     const { name, getOptions } = files(key).default
     optionsMap[name] = getOptions
   })
   return optionsMap
 }
-const optionsMap = getDirectives()
+const optionsMap = getOptionsMap()
 
 export default function useChart({dom,type}){
   const state = reactive({
