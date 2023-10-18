@@ -5,6 +5,7 @@ import { Toast } from "vant";
 import { useSubmit } from '@castle/castle-use';
 import MapLatLng from "@/component/MapLatLng/index";
 import AreaCascader from "@/component/AreaCascader/index";
+import SelectOrg from "@/component/SelectOrg/index";
 import PoliceTags from "@/component/PoliceTags/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
@@ -876,9 +877,18 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请选择警情标签"
           title="请选择警情标签"
         />
+        <SelectOrg
+          v-model:value="form.dispatchGroup"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="true"
+          label="出动队伍"
+          placeholder="请选择出动队伍"
+          title="请选择出动队伍"
+          :params="{ deptType: 1 }"
+        />
         <SelectSingle
           v-model:value="form.firstGroup"
-          :options="[]"
+          :options="form.dispatchGroup"
           :field-names="{ value: 'organizationid', label: 'name' }"
           :required="true"
           label="首到队站"
@@ -887,7 +897,7 @@ const validateHeadquarters = (rule, value, callback) => {
         />
         <SelectSingle
           v-model:value="form.mainGroup"
-          :options="[]"
+          :options="form.dispatchGroup"
           :field-names="{ value: 'organizationid', label: 'name' }"
           :required="true"
           label="主战队站"
