@@ -6,7 +6,7 @@
                     <img :src="item.icon" alt="">
                     <div class="label">{{ item.label }}</div>
                 </div>
-            </template>
+            </template> 
         </van-cell>
     </div>
   </template>

@@ -7,6 +7,7 @@ import store from './store'
 import axios from "@/plugins/axios/index.js";
 import icons from '@/icons' // icon
 import component from '@/component' // icon
+import '@/styles/common.scss';
 import 'vant/lib/index.css' // 全局引入样式
 import './mock/mock'
 import eventBus from './utils/eventBus'

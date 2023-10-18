@@ -1,6 +1,6 @@
 <script setup>
 import useAllTimePicker from './hooks/useAllTimePicker.js'
-// import {defineEmits,computed } from 'vue'
+import {computed } from 'vue'
 // console.log(defineEmits,computed);
 const props = defineProps({
   columns:{
@@ -9,7 +9,7 @@ const props = defineProps({
   },
   defaultValue:{
     type:Array,
-    default:false
+    default:()=>([])
   },
   formatter:{
     type:Function,
@@ -22,25 +22,26 @@ const props = defineProps({
       }
     }
   },
+  clearformat:{
+    type:Function,
+    default:(type,val)=>{
+      if(type === 'year'){
+        return val.replace(/年/g,"")
+      }
+      if(type === 'month'){
+        return val.replace(/月/g,"")
+      }
+    }
+  },
   show:{
     default:false,
     type:Boolean
   }
 })
-debugger;
 const emit = defineEmits(['update:defaultValue','update:show'])
 
-const isShow = computed({
-  get(){
-    // debugger;
-    return !!props.show
-  },
-  set(val){
-    debugger;
-    emit('update:show',val)
-  }
-})
-const { columsData , onConfirm, onCancel} = useAllTimePicker(props)
+
+const { columsData ,isShow, onConfirm, onCancel} = useAllTimePicker(props,emit)
 </script>
 <script>
 export default {
@@ -50,7 +51,7 @@ export default {
 <template>
   <van-popup :show="isShow" position="bottom" :style="{ height: '50%' }">
     <van-picker
-        title="标题"
+        title="选择时间"
         :columns="columsData"
         @confirm="onConfirm"
         @cancel="onCancel"

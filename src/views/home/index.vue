@@ -1,10 +1,18 @@
 <template>
   <div class="home">
     <div class="time" @click="openTimePop">
-        <span>{{ Time.of(currentTime).getYear() }}</span>年 <span>{{ Time.of(currentTime).getMonth() }}</span>月
+        <span>{{ currentTime[0] }}</span>年 <span>{{ currentTime[1]}}</span>月
+    </div>
+    <div class="wrapper">
+      <div class="card_list">
+        <DisplayCard v-for="item in cardList" :key="item.title" :color="item.color" />
+      </div>
+      <NoticeList class="notice_list" />
+      <StatisticsInfo class="statistics_info" />
+      <FireInfo />
     </div>
   </div>
-  <AllTimePicker v-model:show="isShow.time" />
+  <AllTimePicker v-model:show="isShow.time" v-model:defaultValue="currentTime"/>
   <Tabbar :currentTab="currentab" />
 </template>
   
@@ -12,6 +20,10 @@
 import Tabbar from '@/component/tabbar/index.vue'
 import AllTimePicker from '@/component/AllTimePicker/index.vue'
 import useSearch from './hooks/useSearch.js'
+import DisplayCard from './components/DisplayCard.vue'
+import NoticeList from './components/NoticeList.vue'
+import StatisticsInfo from './components/StatisticsInfo.vue'
+import FireInfo from './components/FireInfo.vue'
 import Time from '@/utils/time.js'
 import {ref} from 'vue'
 const currentab = ref(1)
@@ -23,6 +35,7 @@ const {
   maxDate,
   isShow,
   openTimePop,
+  cardList,
   confirmTime,
   formatter,
   filterOptions
@@ -38,9 +51,32 @@ const {
     background-repeat: no-repeat;
     background-position: 0% 0%;
     overflow: hidden;
-    background-color: #F6F7F8;
-    padding: 82px 16px 0px;
+    background-color: #fff;
     height: 100%;
+    padding-top: 56px;
+    overflow-y: scroll;
+    .time{
+        margin-bottom: 18px;
+    }
+    .wrapper{
+      border-radius: 16px;
+      background-color: #fff;
+      padding: 16px 16px 0px;
+      .card_list{
+        height: 66px;
+        width: 100%;
+        display: flex;
+        .red{
+          margin: 0 9px;
+        }
+      }
+      .notice_list{
+        // height: 100px;
+        background: #F7F8FF;
+        border-radius: 4px;
+        margin-top: 12px;
+      }
+    } 
 }
 </style>
   
