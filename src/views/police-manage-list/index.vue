@@ -7,6 +7,7 @@ import {
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
+import router from '@/router/index.js'
 import { Toast } from "vant";
 import { getFireWarningManage, collectFireWarning } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
@@ -41,7 +42,30 @@ const tabs = ref([
 
 const proListRef = ref(null);
 
-const onTabFn = (name, title) => {};
+const onTabFn = (name, title) => {
+  if (title === '我的警情') {
+    proListRef.value.query.onlyMy = true
+    proListRef.value.query.myCollect = false
+    Toast.loading()
+    proListRef.value.filter().then(() => {
+      Toast.clear()
+    })
+  } else if (title === '收藏的警情') {
+    proListRef.value.query.onlyMy = false
+    proListRef.value.query.myCollect = true
+    Toast.loading()
+    proListRef.value.filter().then(() => {
+      Toast.clear()
+    })
+  } else if (title === '辖区警情') {
+    proListRef.value.query.onlyMy = false
+    proListRef.value.query.myCollect = false
+    Toast.loading()
+    proListRef.value.filter().then(() => {
+      Toast.clear()
+    })
+  }
+};
 
 const handleCollect = async (row, state) => {
   Toast.loading()
@@ -65,6 +89,10 @@ const handleChange = (item) => {
   Toast('此功能暂未开放！')
 }
 
+const handleItem = (item) => {
+  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId }})
+}
+
 onMounted(() => {
   nextTick(() => {
     proListRef.value.filter();
@@ -86,8 +114,8 @@ onMounted(() => {
       <!-- <template #search>
         <div>???</div>
       </template> -->
-      <template #list="{ record, index }">
-        <div class="list-item">
+      <template #list="{ record }">
+        <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div
@@ -101,15 +129,17 @@ onMounted(() => {
             <span>{{ record.warningTypeValue }}</span>
           </div>
           <div class="item-field">
-            <div>接警时间：</div>
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398;">接警时间：</div>
             <div>{{ formatYmdHm(record.warningDate) }}</div>
           </div>
           <div class="item-field">
-            <div>行政区域：</div>
+            <img src="../../assets/images/icon-area@2x.png" style="width: 13px;height: 15px;margin-right: 8px;" alt="" />
+            <div style="color: #929398;">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-line" />
-          <div class="item-operate">
+          <div class="item-operate" @click.stop>
             <van-icon name="star" v-if="record.focusStatus === '1'" style="font-size: 20px;color: #FED547;" @click="handleCollect(record, false)"/>
             <van-icon name="star-o" v-else style="font-size: 20px;" @click="handleCollect(record, true)" />
             <van-button plain type="success" size="small" class="item-btn" @click="handleAbolish(record)">作废</van-button>
@@ -129,6 +159,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     background: #ffffff;
+    margin-top: 10px;
     .item-header {
       display: flex;
       padding: 8px 10px;
@@ -146,9 +177,15 @@ onMounted(() => {
     }
     .item-field {
       font-size: 14px;
+      color: #1F1F1F;
       display: flex;
       align-items: center;
       padding: 0 0 8px 10px;
+      img {
+        width: 14px;
+        height: 14px;
+        margin-right: 6px;
+      }
     }
     .item-type {
       margin: 0 0 8px 10px;

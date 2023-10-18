@@ -25,6 +25,7 @@ import { generateByKeyValue, getTypeText, scrollFormFailed } from '@/utils/tools
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
   currentRow: {
@@ -69,6 +70,8 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
+
 const { show } = useModal();
 
 const store = useStore();
@@ -79,6 +82,8 @@ const { options } = useOptions({
 });
 
 const formRef = ref(null);
+
+const loadDetail = ref(false);
 
 const importantEdit = ref(true); // 重要信息更正
 
@@ -418,7 +423,7 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId } = props.currentRow
+  const { boFireWarningId, boWarningYyjId } = route.query
   if (boWarningYyjId) {
     loadDetail.value = true
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
@@ -561,6 +566,8 @@ onMounted(() => {
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
     options.value.warningTagOptions = res.data;
+
+    initDetail()
   });
   // 获取用户单位
   if (store.getters?.["userInfo/userInfo"]) {

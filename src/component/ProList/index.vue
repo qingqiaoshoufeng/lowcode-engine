@@ -68,6 +68,7 @@ onMounted(() => {
 });
 
 const onTabs = (name, title) => {
+  finished.value = false;
   if (props.onTabFn) {
     props.onTabFn(name, title)
     return
@@ -76,11 +77,11 @@ const onTabs = (name, title) => {
 
 const onLoad = async () => {
   if (list.value?.length > 0 && !loading.value) {
-    loadMore(page + 1, limit).then(res => {
-      if (list.value.length === total.value) {
-        finished.value = true
-      }
-    })
+    // loadMore(page + 1, limit).then(res => {
+    //   if (list.value.length === total.value) {
+    //     finished.value = true
+    //   }
+    // })
   }
 };
 
