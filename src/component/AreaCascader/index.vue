@@ -220,13 +220,15 @@ export default {
     @click="selectVisible = true"
   />
   <!-- 弹窗 -->
-  <van-popup v-model:show="selectVisible" round position="bottom">
+  <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">
       <van-cascader
         v-model="areaValue"
+        :title="placeholder"
         :options="areaOptions"
         :field-names="{ value: 'boAreaId', text: 'areaName' }"
         :placeholder="placeholder"
+        active-color="#1989fa"
         @close="selectVisible = false"
         @change="onChange"
         @finish="onFinish"

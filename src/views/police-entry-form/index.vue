@@ -87,6 +87,8 @@ let warningLevelOptions = []; // 警情等级
 
 const userOrgName = ref()
 
+const detail = ref(null)
+
 const form = ref({
   warningName: "", // 警情标题
   warningDate: new Date(), // 接警时间

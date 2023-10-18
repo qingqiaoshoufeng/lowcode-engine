@@ -116,7 +116,11 @@ defineOptions({
                   :name="item[fieldNames.value]"
                   :ref="(el) => (checkboxRefs[index] = el)"
                   @click.stop
-                />
+                >
+                  <template #icon="props">
+                    <van-icon name="success" class="selected-icon" v-if="props.checked"  />
+                  </template>
+                </van-checkbox>
               </template>
             </van-cell>
           </van-cell-group>
@@ -147,6 +151,11 @@ defineOptions({
   .multiple-wrapper {
     max-height: 50vh;
     overflow-y: auto;
+    .selected-icon {
+      background-color: white;
+      border: white;
+      color: #1989fa;
+    }
   }
 }
 </style>

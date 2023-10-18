@@ -37,7 +37,7 @@ const props = defineProps({
   checkShowFn: {
     type: Function,
     default: () => {},
-  }
+  },
 });
 
 const emit = defineEmits(["update:value", "change"]);
@@ -58,10 +58,10 @@ const handleSelect = (item) => {
 
 const handleShow = () => {
   if (props.checkShowFn && props.checkShowFn()) {
-    return
+    return;
   }
-  selectVisible.value = true
-}
+  selectVisible.value = true;
+};
 
 const handleCancel = () => {
   selectVisible.value = false;
@@ -86,11 +86,7 @@ defineOptions({
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-single">
       <div class="header">
-        <van-button
-          type="default"
-          size="small"
-          @click="handleCancel"
-        >
+        <van-button type="default" size="small" @click="handleCancel">
           取消
         </van-button>
         <div class="modal-title">{{ title }}</div>
@@ -106,7 +102,15 @@ defineOptions({
               @click="handleSelect(item)"
             >
               <template #right-icon>
-                <van-radio :name="item[fieldNames.value]" />
+                <van-radio :name="item[fieldNames.value]">
+                  <template #icon="props">
+                    <van-icon
+                      name="success"
+                      class="selected-icon"
+                      v-if="props.checked"
+                    />
+                  </template>
+                </van-radio>
               </template>
             </van-cell>
           </van-cell-group>
@@ -141,6 +145,11 @@ defineOptions({
   .single-wrapper {
     max-height: 50vh;
     overflow-y: auto;
+    .selected-icon {
+      background-color: white;
+      border: white;
+      color: #1989fa;
+    }
   }
 }
 </style>
