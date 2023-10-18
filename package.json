@@ -8,6 +8,7 @@
     "lint": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
+    "@castle/castle-use": "^0.0.4",
     "@vant/compat": "^1.0.0",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "axios": "^0.21.4",
@@ -19,7 +20,7 @@
     "lib-flexible": "^0.3.2",
     "lodash-es": "^4.17.21",
     "mitt": "^2.1.0",
-    "vant": "^3.2.5",
+    "vant": "^3.4.8",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0",

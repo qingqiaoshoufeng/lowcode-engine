@@ -3,7 +3,9 @@ import { getUserInfo } from '@/apis/index.js'
 const state = {
   userInfo: null,
 }
-const getters = {}
+const getters = {
+  userInfo: (state) => state.userInfo,
+}
 const mutations = {
   setUserInfo(state, val) {
     state.userInfo = val

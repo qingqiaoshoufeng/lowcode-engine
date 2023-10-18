@@ -3,8 +3,8 @@ import { onMounted, ref, watch, computed } from "vue";
 
 const props = defineProps({
   value: {
-    type: String,
-    default: "",
+    type: Array,
+    default: () => [],
   },
   title: {
     type: String,
@@ -34,33 +34,35 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  checkShowFn: {
-    type: Function,
-    default: () => {},
-  },
 });
 
 const emit = defineEmits(["update:value", "change"]);
 
 const selectVisible = ref(false);
 
-const selectValue = ref("");
+const selectItem = ref([]);
+
+const selectValue = ref([]);
 
 const selectText = ref("");
 
-const handleSelect = (item) => {
-  selectVisible.value = false;
-  selectValue.value = item[props.fieldNames.value];
-  selectText.value = item[props.fieldNames.label];
-  emit("update:value", selectValue.value);
-  emit("change", selectValue.value, item);
+const checkboxRefs = ref([]);
+
+const toggle = (index) => {
+  checkboxRefs.value[index].toggle();
 };
 
-const handleShow = () => {
-  if (props.checkShowFn && props.checkShowFn()) {
-    return;
-  }
-  selectVisible.value = true;
+const handleOk = () => {
+  const { options } = props;
+  selectItem.value = options?.filter(
+    (item) => selectValue.value?.indexOf(item[props.fieldNames.value]) > -1
+  );
+  selectText.value = selectItem.value
+    ?.map((item) => item[props.fieldNames.label])
+    .join(",");
+  emit("update:value", selectValue.value);
+  emit("change", selectValue.value, selectItem.value);
+  selectVisible.value = false;
 };
 
 const handleCancel = () => {
@@ -68,7 +70,7 @@ const handleCancel = () => {
 };
 
 defineOptions({
-  name: "SelectSingle",
+  name: "SelectMultiple",
 });
 </script>
 
@@ -81,47 +83,55 @@ defineOptions({
     :label="label"
     :placeholder="placeholder"
     :rule="rule"
-    @click="handleShow"
+    @click="selectVisible = true"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
-    <div class="select-single">
+    <div class="select-multiple">
       <div class="header">
-        <van-button type="default" size="small" @click="handleCancel">
+        <van-button
+          type="default"
+          size="small"
+          style="margin-right: 10px"
+          @click="handleCancel"
+        >
           取消
         </van-button>
         <div class="modal-title">{{ title }}</div>
+        <van-button type="primary" size="small" @click="handleOk"
+          >确定</van-button
+        >
       </div>
-      <div class="single-wrapper">
-        <van-radio-group v-model="selectValue">
+      <div class="multiple-wrapper">
+        <van-checkbox-group v-model="selectValue">
           <van-cell-group inset>
             <van-cell
-              v-for="item in options"
+              v-for="(item, index) in options"
               :title="item[fieldNames.label]"
               :key="item[fieldNames.value]"
               clickable
-              @click="handleSelect(item)"
+              @click="toggle(index)"
             >
               <template #right-icon>
-                <van-radio :name="item[fieldNames.value]">
+                <van-checkbox
+                  :name="item[fieldNames.value]"
+                  :ref="(el) => (checkboxRefs[index] = el)"
+                  @click.stop
+                >
                   <template #icon="props">
-                    <van-icon
-                      name="success"
-                      class="selected-icon"
-                      v-if="props.checked"
-                    />
+                    <van-icon name="success" class="selected-icon" v-if="props.checked"  />
                   </template>
-                </van-radio>
+                </van-checkbox>
               </template>
             </van-cell>
           </van-cell-group>
-        </van-radio-group>
+        </van-checkbox-group>
       </div>
     </div>
   </van-popup>
 </template>
 
 <style lang="scss" scoped>
-.select-single {
+.select-multiple {
   display: flex;
   flex-direction: column;
   .header {
@@ -131,18 +141,14 @@ defineOptions({
     background-color: white;
     display: flex;
     align-items: center;
-    position: relative;
     .modal-title {
       color: #242424;
       font-size: 16px;
+      flex: 1;
       text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
     }
   }
-  .single-wrapper {
+  .multiple-wrapper {
     max-height: 50vh;
     overflow-y: auto;
     .selected-icon {
