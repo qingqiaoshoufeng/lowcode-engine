@@ -11,7 +11,7 @@ import {
 } from "@/utils/tools.js";
 import router from "@/router/index.js";
 import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
-import { Toast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
@@ -19,8 +19,9 @@ import { useStore } from "vuex";
 const searchOptions = ref([
   {
     title: '选择时间',
-    type: 'rangtime',
+    type: 'select-range',
     placeholder: '请选择时间',
+    value: 'time',
   },
   {
     title: '状态',
@@ -144,29 +145,29 @@ const onTabFn = (name, title) => {
   if (title === "我的警情") {
     proListRef.value.query.onlyMy = true;
     proListRef.value.query.myCollect = false;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   } else if (title === "收藏的警情") {
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = true;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   } else if (title === "辖区警情") {
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = false;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   }
 };
 
 const handleCollect = async (row, state) => {
-  Toast.loading();
+  showLoadingToast();
   const res = await collectFireWarning({
     focusAppid: row.boFireWarningId,
     focusCode: row.warningCode,
@@ -174,8 +175,8 @@ const handleCollect = async (row, state) => {
     deleteFlag: state ? "1" : "2",
   });
   proListRef.value.filter().then(() => {
-    Toast(state ? "收藏成功" : "取消收藏成功");
-    Toast.clear();
+    showToast(state ? "收藏成功" : "取消收藏成功");
+    closeToast();
   });
 };
 
@@ -187,11 +188,11 @@ const handleEdit = (item) => {
 };
 
 const handleAbolish = (item) => {
-  Toast("此功能暂未开放！");
+  showToast("此功能暂未开放！");
 };
 
 const handleChange = (item) => {
-  Toast("此功能暂未开放！");
+  showToast("此功能暂未开放！");
 };
 
 const handleItem = (item) => {
@@ -202,16 +203,16 @@ const handleItem = (item) => {
 };
 
 const onTimeChange = (value) => {
-  Toast.loading();
+  showLoadingToast();
   proListRef.value.filter().then((res) => {
-    Toast.clear();
+    closeToast();
   });
 };
 
 const onSearchConfirm = () => {
-  Toast.loading();
+  showLoadingToast();
   proListRef.value.filter().then((res) => {
-    Toast.clear();
+    closeToast();
   });
 }
 

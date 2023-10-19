@@ -2,7 +2,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import { cloneDeep } from "lodash-es";
 import { getSystemArea } from "@/apis/index.js";
-import { Toast } from 'vant';
+import { showLoadingToast, closeToast } from 'vant';
 import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
@@ -185,7 +185,7 @@ onMounted(() => {
 
 const onChange = ({value, selectedOptions, tabIndex}) => {
   const targetOption = selectedOptions[tabIndex];
-  Toast.loading()
+  showLoadingToast()
   getSystemArea({
     parentAreaId: targetOption.boAreaId,
     reportName: props.reportName,
@@ -193,7 +193,7 @@ const onChange = ({value, selectedOptions, tabIndex}) => {
     ...props.params,
   }).then((res) => {
     if (res) {
-      Toast.clear()
+      closeToast()
       targetOption.children = res.map((item) => {
         return {
           ...item,

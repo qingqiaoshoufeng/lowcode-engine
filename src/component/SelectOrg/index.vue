@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { getDispatchGroup, searchDispatchGroup } from "@/apis/index.js";
-import { Toast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
@@ -183,14 +183,14 @@ const handleCheck = (item) => {
 
 const handleEnter = (item) => {
   if (item.hasChildren) {
-    Toast.loading();
+    showLoadingToast();
     getDispatchGroup({
       ...props.params,
       parentOrganizationId: item.organizationid,
       disabledKey: props.disabledKey,
       disabledValue: props.disabledValue,
     }).then((res) => {
-      Toast.clear();
+      closeToast();
       const currentIndex = tabs.value.findIndex(
         (node) => node.orgLevel === item.orgLevel
       );

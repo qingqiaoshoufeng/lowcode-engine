@@ -4,6 +4,7 @@ import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectOrg from "@/component/SelectOrg/index";
+import SelectRange from "@/component/SelectRange/index";
 import AreaCascader from "@/component/AreaCascader/index";
 
 const props = defineProps({
@@ -108,6 +109,14 @@ defineOptions({
               v-model:value="query[item.value]"
               :required="false"
               label=""
+            />
+          </template>
+          <template v-else-if="item.type === 'select-range'">
+            <SelectRange 
+              v-model:value="query[item.value]"
+              :required="false"
+              label=""
+              :placeholder="item.placeholder"
             />
           </template>
         </div>
