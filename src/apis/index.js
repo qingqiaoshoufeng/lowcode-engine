@@ -5,6 +5,10 @@ export * from './system/login.js'
 export * from './business/police-confirm.js'
 export * from './business/police-entry.js'
 export * from './business/police-manage.js'
+export * from './system/login.js'
+export * from './system/menu.js'
+export * from './system/login.js'
+export * from './business/home.js'
 
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {
