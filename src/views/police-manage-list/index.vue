@@ -1,13 +1,14 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
+import SelectTime from "@/component/SelectTime/index";
 import {
   checkAbolishState,
   checkPoliceChangeState,
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
-import router from '@/router/index.js'
+import router from "@/router/index.js";
 import { Toast } from "vant";
 import { getFireWarningManage, collectFireWarning } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
@@ -42,60 +43,77 @@ const tabs = ref([
 
 const proListRef = ref(null);
 
+const checkChange = (record) => {
+  return ['待更正', '被退回', '被驳回'].includes(record.warningStatusValue) && record.updatePermission
+}
+
 const onTabFn = (name, title) => {
-  if (title === '我的警情') {
-    proListRef.value.query.onlyMy = true
-    proListRef.value.query.myCollect = false
-    Toast.loading()
+  if (title === "我的警情") {
+    proListRef.value.query.onlyMy = true;
+    proListRef.value.query.myCollect = false;
+    Toast.loading();
     proListRef.value.filter().then(() => {
-      Toast.clear()
-    })
-  } else if (title === '收藏的警情') {
-    proListRef.value.query.onlyMy = false
-    proListRef.value.query.myCollect = true
-    Toast.loading()
+      Toast.clear();
+    });
+  } else if (title === "收藏的警情") {
+    proListRef.value.query.onlyMy = false;
+    proListRef.value.query.myCollect = true;
+    Toast.loading();
     proListRef.value.filter().then(() => {
-      Toast.clear()
-    })
-  } else if (title === '辖区警情') {
-    proListRef.value.query.onlyMy = false
-    proListRef.value.query.myCollect = false
-    Toast.loading()
+      Toast.clear();
+    });
+  } else if (title === "辖区警情") {
+    proListRef.value.query.onlyMy = false;
+    proListRef.value.query.myCollect = false;
+    Toast.loading();
     proListRef.value.filter().then(() => {
-      Toast.clear()
-    })
+      Toast.clear();
+    });
   }
 };
 
 const handleCollect = async (row, state) => {
-  Toast.loading()
+  Toast.loading();
   const res = await collectFireWarning({
     focusAppid: row.boFireWarningId,
     focusCode: row.warningCode,
-    focusType: '1',
-    deleteFlag: state ? '1' : '2',
-  })
+    focusType: "1",
+    deleteFlag: state ? "1" : "2",
+  });
   proListRef.value.filter().then(() => {
-    Toast(state ? '收藏成功' : '取消收藏成功')
-    Toast.clear()
-  })
-}
+    Toast(state ? "收藏成功" : "取消收藏成功");
+    Toast.clear();
+  });
+};
 
 const handleEdit = (item) => {
-  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId }})
-}
+  router.push({
+    name: "police-entry-form",
+    query: { boFireWarningId: item.boFireWarningId },
+  });
+};
 
 const handleAbolish = (item) => {
-  Toast('此功能暂未开放！')
-}
+  Toast("此功能暂未开放！");
+};
 
 const handleChange = (item) => {
-  Toast('此功能暂未开放！')
-}
+  Toast("此功能暂未开放！");
+};
 
 const handleItem = (item) => {
-  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId, showPreview: true }})
-}
+  router.push({
+    name: "police-entry-form",
+    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+  });
+};
+
+const onTimeChange = (value) => {
+  Toast.loading();
+  proListRef.value.filter().then((res) => {
+    Toast.clear();
+  });
+};
 
 onMounted(() => {
   nextTick(() => {
@@ -115,17 +133,20 @@ onMounted(() => {
       :showLoad="false"
       :onTabFn="onTabFn"
     >
-      <!-- <template #search>
-        <div>???</div>
-      </template> -->
+      <template #search="{ tabsActive, filterFormState }">
+        <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
+          <SelectTime
+            v-model:value="filterFormState.time"
+            @change="onTimeChange"
+          />
+          <van-cell title="选择更多条件" style="margin-left: 10px" is-link />
+        </div>
+      </template>
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div
-              class="item-state"
-              :class="generateColorByState(record.warningStatusValue)"
-            >
+            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
               {{ record.warningStatusValue }}
             </div>
           </div>
@@ -134,21 +155,66 @@ onMounted(() => {
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398;">接警时间：</div>
+            <div style="color: #929398">接警时间：</div>
             <div>{{ formatYmdHm(record.warningDate) }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-area@2x.png" style="width: 13px;height: 15px;margin-right: 8px;" alt="" />
-            <div style="color: #929398;">行政区域：</div>
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
-            <van-icon name="star" v-if="record.focusStatus === '1'" style="font-size: 20px;color: #FED547;" @click="handleCollect(record, false)"/>
-            <van-icon name="star-o" v-else style="font-size: 20px;" @click="handleCollect(record, true)" />
-            <van-button plain type="success" size="small" class="item-btn" @click="handleEdit(record)">修改</van-button>
-            <van-button plain type="success" size="small" class="item-btn" @click="handleAbolish(record)">作废</van-button>
-            <van-button plain type="success" size="small" class="item-btn" @click="handleChange(record)">更正</van-button>
+            <van-icon
+              name="star"
+              v-if="record.focusStatus === '1'"
+              style="color: #fed547"
+              class="item-collect"
+              @click="handleCollect(record, false)"
+            />
+            <van-icon
+              name="star-o"
+              v-else
+              class="item-collect"
+              @click="handleCollect(record, true)"
+            />
+            <van-button
+              v-p="['admin', 'police-manage:edit']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click="handleEdit(record)"
+              :disabled="!checkChange(record)"
+            >
+              修改
+            </van-button>
+            <van-button
+              v-p="['admin', 'police-manage:abolish']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click="handleAbolish(record)"
+              :disabled="!checkPoliceChangeState(record.warningStatusValue, record.updatePermission)"
+            >
+              作废
+            </van-button>
+            <van-button
+              v-p="['admin', 'police-manage:change']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click="handleChange(record)"
+              :disabled="!checkAbolishState(record.warningStatusValue, record.updatePermission)"
+            >
+              更正
+            </van-button>
           </div>
         </div>
       </template>
@@ -160,6 +226,10 @@ onMounted(() => {
 .police-manage-list {
   height: 100vh;
   background-color: #f6f7f8;
+  .list-tabs {
+    display: flex;
+    padding: 10px 16px 0 16px;
+  }
   .list-item {
     display: flex;
     flex-direction: column;
@@ -171,18 +241,17 @@ onMounted(() => {
       .item-state {
         width: 57px;
         height: 24px;
-        color: white;
+        font-size: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #0075ff;
         border-radius: 2px;
         margin-left: auto;
       }
     }
     .item-field {
       font-size: 14px;
-      color: #1F1F1F;
+      color: #1f1f1f;
       display: flex;
       align-items: center;
       padding: 0 0 8px 10px;
@@ -214,6 +283,10 @@ onMounted(() => {
       align-items: center;
       justify-content: flex-end;
       padding: 8px 10px;
+      .item-collect {
+        font-size: 20px;
+        margin-right: auto;
+      }
       .item-btn {
         padding: 0 16px;
         margin-left: 10px;

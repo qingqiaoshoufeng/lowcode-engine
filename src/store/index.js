@@ -1,13 +1,3 @@
-/*
- * @version: v 1.0.0
- * @Github: https://github.com/GitHubGanKai
- * @Author: GitHubGanKai
- * @Date: 2021-01-01 17:19:50
- * @LastEditors: gankai
- * @LastEditTime: 2021-01-02 20:35:02
- * @FilePath: /refactor-with-vue3/src/store/index.js
- */
-
 import { createStore } from 'vuex'
 import createPersistedstate from 'vuex-persistedstate'
 
@@ -16,6 +6,7 @@ import search from './module/search'
 import dict from './module/dict'
 import rules from './module/rules'
 import userInfo from './module/userInfo'
+import menuInfo from './module/menuInfo'
 
 export default createStore({
   modules: {
@@ -23,7 +14,8 @@ export default createStore({
     search,
     dict,
     rules,
-    userInfo
+    userInfo,
+    menuInfo
   },
   strict: process.env.NODE_ENV !== 'production',
   plugins: [

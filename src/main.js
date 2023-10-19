@@ -7,12 +7,14 @@ import store from './store'
 import axios from "@/plugins/axios/index.js";
 import icons from '@/icons' // icon
 import component from '@/component' // icon
+import '@/styles/common.scss';
 import 'vant/lib/index.css' // 全局引入样式
 import './mock/mock'
 import eventBus from './utils/eventBus'
 import { registerPlugins } from './utils/util'
 import directives from './directives/index';
 import './styles/index.scss'
+import '@/assets/fonts/iconfont.js'
 
 const plugins = [Vant, store, router, axios, icons, component, eventBus, directives]
 const app = createApp(App);
