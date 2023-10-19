@@ -56,11 +56,18 @@ watch(() => props.value, (val) => {
 }, { immediate: true })
 
 const handleSelect = (item) => {
-  selectVisible.value = false;
-  selectValue.value = item[props.fieldNames.value];
-  selectText.value = item[props.fieldNames.label];
-  emit("update:value", selectValue.value);
-  emit("change", selectValue.value, item);
+  if (selectValue.value !== item[props.fieldNames.value]) {
+    selectVisible.value = false;
+    selectValue.value = item[props.fieldNames.value];
+    selectText.value = item[props.fieldNames.label];
+    emit("update:value", selectValue.value);
+    emit("change", selectValue.value, item);
+  } else {
+    selectValue.value = '';
+    selectText.value = '';
+    emit("update:value", selectValue.value);
+    emit("change", selectValue.value, item);
+  }
 };
 
 const handleShow = () => {

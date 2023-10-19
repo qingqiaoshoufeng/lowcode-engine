@@ -83,7 +83,7 @@ const { options } = useOptions({
 
 const formRef = ref(null);
 
-const loadDetail = ref(false);
+const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正
 
@@ -425,7 +425,6 @@ const initDetail = () => {
   // 警情详情
   const { boFireWarningId, boWarningYyjId, showPreview } = route.query
   if (boWarningYyjId) {
-    loadDetail.value = true
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
     form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
     form.value.warningType = props.currentRow.warningType?.split(',')
@@ -441,7 +440,6 @@ const initDetail = () => {
     })
   }
   else if (boFireWarningId) {
-    loadDetail.value = true
     getFireWarningDetail(boFireWarningId).then((res) => {
       loadDetail.value = false
       if (res) {
@@ -543,6 +541,8 @@ const initDetail = () => {
 
       // refreshField()
     })
+  } else {
+    loadDetail.value = false
   }
 }
 
@@ -692,6 +692,7 @@ const validateHeadquarters = (rule, value, callback) => {
         >
         </van-field>
         <AreaCascader
+          v-if="!loadDetail"
           v-model:value="form.warningArea"
           :show-all-area="showPreview"
           :required="!showPreview"

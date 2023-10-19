@@ -27,37 +27,25 @@ export const encrypt = (str) => {
   return encryptor.encrypt(str)
 }
 
-export const findNodeFromTreeById = (root, id, key = 'id') => {
-  if (!root || !id) {
-    return null
+export function findNodeFromTreeById(rootNode, targetId, key = 'id') {
+  // 如果根节点就是目标节点，直接返回
+  if (rootNode[key] === targetId) {
+    return rootNode;
   }
-  let result = null
-  if (root) {
-    const type = Object.prototype.toString.call(root).slice(8, -1)
-    if (type === 'Object') {
-      if (root[key] && root[key] === id) {
-        result = root
-      }
-      else {
-        const node = root.children || null
-        findNodeFromTreeById(node, id)
-      }
-    }
-    else if (type === 'Array') {
-      const needNode = root.find(x => !!x === true && x[key] === id)
-      if (needNode) {
-        result = needNode
-      }
-      else {
-        root && root.forEach((item) => {
-          if (item && item.children && item.children.length) {
-            findNodeFromTreeById(item.children, id)
-          }
-        })
-      }
+  
+  // 遍历子节点，查找目标节点
+  for (let i = 0; i < rootNode.children?.length; i++) {
+    const childNode = rootNode.children[i];
+    // 递归查找子节点
+    const resultNode = findNodeFromTreeById(childNode, targetId, key);
+    // 如果找到目标节点，则返回
+    if (resultNode !== null) {
+      return resultNode;
     }
   }
-  return result
+  
+  // 没有找到目标节点，返回null
+  return null;
 }
 
 // 找到所有父节点的函数
