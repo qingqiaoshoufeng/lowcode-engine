@@ -49,7 +49,7 @@ watch(() => props.value, (val) => {
     selectValue.value = props.value;
     selectText.value = props.text;
   }
-})
+}, { immediate: true })
 
 const onFinish = ({ selectedOptions }) => {
   const values = selectedOptions.map((option) => option[props.fieldNames.value]);

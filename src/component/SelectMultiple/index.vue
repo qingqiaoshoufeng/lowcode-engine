@@ -54,7 +54,7 @@ watch(() => props.value, (val) => {
     selectValue.value = props.value;
     selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])
   }
-})
+}, { immediate: true })
 
 const toggle = (index) => {
   checkboxRefs.value[index].toggle();

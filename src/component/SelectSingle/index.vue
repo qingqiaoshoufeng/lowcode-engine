@@ -53,7 +53,7 @@ watch(() => props.value, (val) => {
     selectValue.value = props.value;
     selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
   }
-})
+}, { immediate: true })
 
 const handleSelect = (item) => {
   selectVisible.value = false;

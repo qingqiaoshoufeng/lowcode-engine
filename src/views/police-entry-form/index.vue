@@ -850,7 +850,7 @@ const validateHeadquarters = (rule, value, callback) => {
         <CascaderSingle
           v-if="form.isNaturalDisaster === '1'"
           v-model:value="form.naturalDisasterType"
-          v-modal:text="form.naturalDisasterTypeText"
+          v-model:text="form.naturalDisasterTypeText"
           :options="options.naturalDisasterOptions"
           :required="true"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
