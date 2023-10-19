@@ -87,6 +87,10 @@ watch(() => props.value, (newVal, oldVal) => {
     selectItem.value = props.value;
     selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
     selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+  } else {
+    selectItem.value = [];
+    selectValue.value = [];
+    selectText.value = [];
   }
 }, { immediate: true })
 
@@ -157,6 +161,12 @@ const handleOk = () => {
 
 const handleCheck = (item) => {
   if (props.single) {
+    selectValue.value.push(item.organizationid);
+    selectText.value.push(item.name);
+    selectItem.value.push(item);
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
     selectVisible.value = false;
     return
   }

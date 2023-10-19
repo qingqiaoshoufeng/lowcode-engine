@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
@@ -11,9 +11,14 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  resetFn: {
+    type: Function,
+  }
 });
 
-const emit = defineEmits(["update:value", "change"]);
+const emit = defineEmits(["update:value", "confirmCallback"]);
+
+const query = inject("query");
 
 const selectVisible = ref(false);
 
@@ -22,11 +27,12 @@ const handleMore = () => {
 };
 
 const handleReset = () => {
-  
+  props.resetFn()
 }
 
 const handleConfirm = () => {
-  selectVisible.value = true;
+  emit('confirmCallback')
+  selectVisible.value = false;
 }
 
 defineOptions({
@@ -48,14 +54,14 @@ defineOptions({
           <div class="more-title">{{ item.title }}</div>
           <template v-if="item.type === 'input'">
             <van-field
-              v-model="item.value"
+              v-model="query[item.value]"
               label=""
               :placeholder="item.placeholder"
             />
           </template>
           <template v-else-if="item.type === 'select'">
             <SelectMultiple
-              v-model:value="item.value"
+              v-model:value="query[item.value]"
               :options="item.options"
               :field-names="item.fieldNames"
               :rule="[{ required: true, message: item.placeholder }]"
@@ -66,7 +72,7 @@ defineOptions({
           </template>
           <template v-else-if="item.type === 'select-single'">
             <SelectSingle
-              v-model:value="item.value"
+              v-model:value="query[item.value]"
               :options="item.options"
               :field-names="item.fieldNames"
               :rule="[{ required: true, message: item.placeholder }]"
@@ -77,7 +83,7 @@ defineOptions({
           </template>
           <template v-else-if="item.type === 'select-org'">
             <SelectOrg
-              v-model:value="item.value"
+              v-model:value="query[item.value]"
               :field-names="{ value: 'organizationid', label: 'name' }"
               :required="false"
               :placeholder="item.placeholder"
@@ -88,7 +94,7 @@ defineOptions({
           </template>
           <template v-else-if="item.type === 'cascader'">
             <CascaderSingle
-              v-model:value="item.value"
+              v-model:value="query[item.value]"
               v-model:text="item.text"
               :options="item.options"
               :required="false"
@@ -99,7 +105,7 @@ defineOptions({
           </template>
           <template v-else-if="item.type === 'select-area'">
             <AreaCascader
-              v-model:value="item.value"
+              v-model:value="query[item.value]"
               :required="false"
               label=""
             />

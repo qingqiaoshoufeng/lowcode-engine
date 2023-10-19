@@ -10,7 +10,7 @@ import {
   getLastMonth,
 } from "@/utils/tools.js";
 import router from "@/router/index.js";
-import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js'
+import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
 import { Toast } from "vant";
 import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
@@ -27,12 +27,14 @@ const searchOptions = ref([
     type: 'select',
     placeholder: '请选择状态',
     options: [],
-    fieldNames: { value: 'boDictId', label: 'dictName' }
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'warningStatus',
   },
   {
     title: '警情编号',
     type: 'input',
     placeholder: '请输入警情编号',
+    value: "warningCode",
   },
   {
     title: '警情类型',
@@ -40,35 +42,41 @@ const searchOptions = ref([
     placeholder: '请选择警情类型',
     fieldNames: { value: 'boDictId', text: 'dictName' },
     options: [],
+    value: 'warningType',
   },
   {
     title: '警情等级',
     type: 'select-single',
     placeholder: '请选择警情等级',
     options: [],
-    fieldNames: { value: 'boDictId', label: 'dictName' }
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'warningLevel',
   },
   {
     title: '主站队伍',
     type: 'select-org',
     placeholder: '请选择主站队伍',
     single: true,
+    value: 'mainGroup',
   },
   {
     title: '行政区域',
     type: 'select-area',
     placeholder: '请选择行政区域',
+    value: 'boAreaId',
   },
   {
     title: '警情标签',
     type: 'select',
     placeholder: '请输入警情标签',
-    fieldNames: { value: 'boFireTagId', label: 'tagName' }
+    fieldNames: { value: 'boFireTagId', label: 'tagName' },
+    value: 'warningTag',
   },
   {
     title: '警情地址',
     type: 'input',
     placeholder: '请输入警情地址',
+    value: "warningAddr",
   },
   {
     title: '自然灾害类型',
@@ -76,6 +84,7 @@ const searchOptions = ref([
     placeholder: '请选择自然灾害类型',
     fieldNames: { value: 'boDictId', text: 'dictName' },
     options: [],
+    value: 'naturalDisasterType',
   },
   {
     title: '是否跨市',
@@ -83,6 +92,7 @@ const searchOptions = ref([
     placeholder: '请选择是否跨市',
     fieldNames: { value: 'value', label: 'label' },
     options: isNot,
+    value: 'isOtherCity',
   },
   {
     title: '是否跨省',
@@ -90,6 +100,7 @@ const searchOptions = ref([
     placeholder: '请选择是否跨省',
     fieldNames: { value: 'value', label: 'label' },
     options: isNot,
+    value: 'isOtherProvince',
   },
   {
     title: '全勤指挥部是否出动',
@@ -97,20 +108,13 @@ const searchOptions = ref([
     placeholder: '请选择全勤指挥部是否出动',
     fieldNames: { value: 'value', label: 'label' },
     options: isDispatch,
+    value: 'isHeadquarters',
   },
 ])
 
 const defaultFilterValue = {
   onlyMy: false,
   time: getLastMonth(),
-  // warningType: [],
-  // warningTag: [],
-  // warningStatus: [],
-  // mainGroup: [],
-  // boAreaId: [],
-  // areaLvl: [],
-  // orgIds: [],
-  // naturalDisasterType: [],
 };
 
 const tabs = ref([
@@ -204,6 +208,13 @@ const onTimeChange = (value) => {
   });
 };
 
+const onSearchConfirm = () => {
+  Toast.loading();
+  proListRef.value.filter().then((res) => {
+    Toast.clear();
+  });
+}
+
 onMounted(() => {
   const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
   searchOptions.value[1].options = res.JQ_STATUS
@@ -231,7 +242,7 @@ onMounted(() => {
       :showLoad="false"
       :onTabFn="onTabFn"
     >
-      <template #search="{ tabsActive, filterFormState }">
+      <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
             v-model:value="filterFormState.time"
@@ -239,6 +250,8 @@ onMounted(() => {
           />
           <SelectMore
             :options="searchOptions"
+            :reset-fn="resetForm"
+            @confirmCallback="onSearchConfirm"
           />
         </div>
       </template>

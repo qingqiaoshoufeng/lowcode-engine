@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, provide } from "vue";
 import { useList } from "@/utils/curd.js";
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps({
   tabs: {
@@ -35,7 +36,15 @@ const props = defineProps({
     type: Function,
     default: () => {},
   },
+  searchFn: {
+    type: Function,
+  },
+  resetFn: {
+    type: Function,
+  },
 });
+
+const emit = defineEmits(['filter', 'reset'])
 
 const tabsActive = ref(1);
 
@@ -55,10 +64,12 @@ const {
   immediate: false,
 });
 
+provide("query", query);
+
 const finished = ref(false);
 
 if (props.defaultFilterValue) {
-  query.value = props.defaultFilterValue
+  query.value = cloneDeep(props.defaultFilterValue)
 }
 
 onMounted(() => {
@@ -85,6 +96,18 @@ const onLoad = async () => {
   }
 };
 
+const resetForm = () => {
+  page.value = 1
+  limit.value = 10
+  query.value = cloneDeep(props.defaultFilterValue)
+  if (props.resetFn) {
+    props.resetFn()
+    return
+  }
+  loadList()
+  emit('reset')
+}
+
 defineOptions({
   name: "ProList",
 });
@@ -96,6 +119,7 @@ defineExpose({
   list,
   query,
   total,
+  resetForm,
 })
 </script>
 
@@ -112,7 +136,7 @@ defineExpose({
       </van-tabs>
     </div>
     <div class="list-search">
-      <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" />
+      <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" :reset-form="resetForm" />
     </div>
     <div class="list-wrapper">
       <van-list

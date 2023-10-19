@@ -52,17 +52,23 @@ const emit = defineEmits(["update:value", "change"]);
 
 const areaOptions = ref([]);
 
-const areaValue = ref(props.value);
+const areaCascaderValue = ref('')
+
+const areaValue = ref([]);
 
 const areaText = ref("")
 
 const selectVisible = ref(false);
 
 watch(() => props.value, (newValue) => {
-  if (newValue) {
+  if (newValue?.length > 0) {
     areaValue.value = cloneDeep(newValue);
+    areaCascaderValue.value = areaValue.value?.pop()
+  } else {
+    areaValue.value = []
+    areaText.value = ''
   }
-});
+}, { immediate: true });
 
 const returnLeaf = (item) => {
   let isLeaf = !item.hasChild;
@@ -155,7 +161,6 @@ onMounted(() => {
       });
       areaText.value = areaValue.value?.map(item => {
         const temp = findNodeFromTreeById(areaOptions.value?.[0], item, 'boAreaId')
-        console.log(temp)
         return temp?.areaName
       })?.join('/')
     });
@@ -202,6 +207,7 @@ const onChange = ({value, selectedOptions, tabIndex}) => {
 
 const onFinish = ({ selectedOptions }) => {
   selectVisible.value = false;
+  areaValue.value = selectedOptions.map((option) => option.boAreaId);
   areaText.value = selectedOptions.map((option) => option.areaName).join('/');
   emit("update:value", areaValue.value);
   emit("change", areaValue.value, selectedOptions);
@@ -231,7 +237,7 @@ export default {
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">
       <van-cascader
-        v-model="areaValue"
+        v-model="areaCascaderValue"
         :title="placeholder"
         :options="areaOptions"
         :field-names="{ value: 'boAreaId', text: 'areaName' }"
