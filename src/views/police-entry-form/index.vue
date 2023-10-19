@@ -101,7 +101,7 @@ const form = ref({
   warningDateText: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   warningCodeYyj: "", // 119警情编号
   warningOrgname: "", // 单位/户主/个体户名称
-  warningArea: "", // 行政区划
+  warningArea: "", // 行政区域
   warningAreaText: "",
   warningAddr: "", // 警情地址
   warningLng: "", // 经度坐标

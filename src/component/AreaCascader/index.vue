@@ -10,6 +10,10 @@ const props = defineProps({
     type: String,
     default: "200px",
   },
+  label: {
+    type: String,
+    default: "行政区域",
+  },
   value: {
     type: [String, Array],
     default: "",
@@ -219,7 +223,7 @@ export default {
     is-link
     readonly
     :required="required"
-    label="行政区划"
+    :label="label"
     :placeholder="placeholder"
     @click="selectVisible = true"
   />

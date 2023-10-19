@@ -38,6 +38,8 @@ const searchOptions = ref([
     title: '警情类型',
     type: 'cascader',
     placeholder: '请选择警情类型',
+    fieldNames: { value: 'boDictId', text: 'dictName' },
+    options: [],
   },
   {
     title: '警情等级',
@@ -50,6 +52,7 @@ const searchOptions = ref([
     title: '主站队伍',
     type: 'select-org',
     placeholder: '请选择主站队伍',
+    single: true,
   },
   {
     title: '行政区域',
@@ -60,6 +63,7 @@ const searchOptions = ref([
     title: '警情标签',
     type: 'select',
     placeholder: '请输入警情标签',
+    fieldNames: { value: 'boFireTagId', label: 'tagName' }
   },
   {
     title: '警情地址',
@@ -70,7 +74,7 @@ const searchOptions = ref([
     title: '自然灾害类型',
     type: 'cascader',
     placeholder: '请选择自然灾害类型',
-    fieldNames: { value: 'boDictId', label: 'dictName' },
+    fieldNames: { value: 'boDictId', text: 'dictName' },
     options: [],
   },
   {
@@ -203,13 +207,12 @@ const onTimeChange = (value) => {
 onMounted(() => {
   const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
   searchOptions.value[1].options = res.JQ_STATUS
-  searchOptions.value[6].options = res.JQ_TYPE
+  searchOptions.value[3].options = res.JQ_TYPE
   searchOptions.value[4].options = res.JQ_LEVEL
   searchOptions.value[9].options = res.NATURAL_DISASTER_TYPE
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
-    searchOptions.value[8].options = res.data;
-    debugger
+    searchOptions.value[7].options = res.data;
   });
   nextTick(() => {
     proListRef.value.filter();

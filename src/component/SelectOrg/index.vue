@@ -31,11 +31,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "选择单位",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择单位",
+    default: "",
   },
   rule: {
     type: Array,
@@ -156,6 +156,10 @@ const handleOk = () => {
 };
 
 const handleCheck = (item) => {
+  if (props.single) {
+    selectVisible.value = false;
+    return
+  }
   if (item.checked) {
     selectValue.value.push(item.organizationid);
     selectText.value.push(item.name);

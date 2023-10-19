@@ -3,6 +3,8 @@ import { onMounted, ref, watch, computed } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
+import SelectOrg from "@/component/SelectOrg/index";
+import AreaCascader from "@/component/AreaCascader/index";
 
 const props = defineProps({
   options: {
@@ -20,11 +22,11 @@ const handleMore = () => {
 };
 
 const handleReset = () => {
-
+  
 }
 
 const handleConfirm = () => {
-
+  selectVisible.value = true;
 }
 
 defineOptions({
@@ -73,6 +75,17 @@ defineOptions({
               :title="item.placeholder"
             />
           </template>
+          <template v-else-if="item.type === 'select-org'">
+            <SelectOrg
+              v-model:value="item.value"
+              :field-names="{ value: 'organizationid', label: 'name' }"
+              :required="false"
+              :placeholder="item.placeholder"
+              :title="item.placeholder"
+              :params="{ deptType: 1 }"
+              :single="item.single"
+            />
+          </template>
           <template v-else-if="item.type === 'cascader'">
             <CascaderSingle
               v-model:value="item.value"
@@ -82,6 +95,13 @@ defineOptions({
               :field-names="item.fieldNames"
               label=""
               :placeholder="item.placeholder"
+            />
+          </template>
+          <template v-else-if="item.type === 'select-area'">
+            <AreaCascader
+              v-model:value="item.value"
+              :required="false"
+              label=""
             />
           </template>
         </div>
