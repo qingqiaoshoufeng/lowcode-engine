@@ -4,16 +4,13 @@ $state-reject: #ff4d16; // 被驳回
 $state-disable: gray; // 不能修改
 
 .state-wait {
-  color: white !important;
-  background-color: $state-wait !important;
+  color: $state-wait !important;
 }
 
 .state-finish {
-  color: white !important;
-  background-color: $state-finish !important;
+  color: $state-finish !important;
 }
 
 .state-reject {
-  color: white !important;
-  background-color: $state-reject !important;
+  color: $state-reject !important;
 }
