@@ -43,7 +43,7 @@ const props = defineProps({
   },
   fieldNames: {
     type: Object,
-    default: () => ({ value: "boDictId", label: "dictName" }),
+    default: () => ({ value: "organizationid", label: "name" }),
   },
   headersDisabled: {
     // 全勤指挥部是否能选择
@@ -81,6 +81,14 @@ const selectText = ref([]);
 const selectTextShow = computed(() => {
   return selectText.value.join(",");
 })
+
+watch(() => props.value, (newVal, oldVal) => {
+  if (props.value) {
+    selectItem.value = props.value;
+    selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
+    selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+  }
+}, { immediate: true })
 
 const renderChecked = (item) => {
   return selectValue.value?.indexOf(item.organizationid) > -1;

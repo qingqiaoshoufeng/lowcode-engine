@@ -3,6 +3,7 @@ import { onMounted, ref, watch, computed } from "vue";
 import { cloneDeep } from "lodash-es";
 import { getSystemArea } from "@/apis/index.js";
 import { Toast } from 'vant';
+import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
   width: {
@@ -53,12 +54,11 @@ const areaText = ref("")
 
 const selectVisible = ref(false);
 
-watch(
-  () => props.value,
-  (newValue) => {
+watch(() => props.value, (newValue) => {
+  if (newValue) {
     areaValue.value = cloneDeep(newValue);
   }
-);
+});
 
 const returnLeaf = (item) => {
   let isLeaf = !item.hasChild;
@@ -146,10 +146,14 @@ onMounted(() => {
       areaOptions.value = res[0].map((item) => {
         return {
           ...item,
-          children: returnChild(item),
           isLeaf: returnLeaf(item),
         };
       });
+      areaText.value = areaValue.value?.map(item => {
+        const temp = findNodeFromTreeById(areaOptions.value?.[0], item, 'boAreaId')
+        console.log(temp)
+        return temp?.areaName
+      })?.join('/')
     });
   } else {
     getSystemArea({

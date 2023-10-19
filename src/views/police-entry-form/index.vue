@@ -25,6 +25,7 @@ import { generateByKeyValue, getTypeText, scrollFormFailed } from '@/utils/tools
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
   currentRow: {
@@ -69,6 +70,8 @@ const props = defineProps({
   },
 });
 
+const route = useRoute();
+
 const { show } = useModal();
 
 const store = useStore();
@@ -79,6 +82,8 @@ const { options } = useOptions({
 });
 
 const formRef = ref(null);
+
+const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正
 
@@ -418,9 +423,8 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId } = props.currentRow
+  const { boFireWarningId, boWarningYyjId, showPreview } = route.query
   if (boWarningYyjId) {
-    loadDetail.value = true
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
     form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
     form.value.warningType = props.currentRow.warningType?.split(',')
@@ -436,7 +440,6 @@ const initDetail = () => {
     })
   }
   else if (boFireWarningId) {
-    loadDetail.value = true
     getFireWarningDetail(boFireWarningId).then((res) => {
       loadDetail.value = false
       if (res) {
@@ -529,13 +532,17 @@ const initDetail = () => {
         // 警情等级
         initLevelOptions()
         // 详情特殊处理options
-        initPermissionOptions(res)
+        if (showPreview) {
+          initPermissionOptions(res)
+        }
 
         importantEdit.value = res.importantInfoRecheck
       }
 
       // refreshField()
     })
+  } else {
+    loadDetail.value = false
   }
 }
 
@@ -561,6 +568,8 @@ onMounted(() => {
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
     options.value.warningTagOptions = res.data;
+
+    initDetail()
   });
   // 获取用户单位
   if (store.getters?.["userInfo/userInfo"]) {
@@ -683,6 +692,7 @@ const validateHeadquarters = (rule, value, callback) => {
         >
         </van-field>
         <AreaCascader
+          v-if="!loadDetail"
           v-model:value="form.warningArea"
           :show-all-area="showPreview"
           :required="!showPreview"
@@ -735,7 +745,7 @@ const validateHeadquarters = (rule, value, callback) => {
         </van-field>
         <CascaderSingle
           v-model:value="form.warningType"
-          v-modal:text="form.warningTypeText"
+          v-model:text="form.warningTypeText"
           :options="options.warningTypeOptions"
           :required="true"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
@@ -841,7 +851,7 @@ const validateHeadquarters = (rule, value, callback) => {
         <CascaderSingle
           v-if="form.isNaturalDisaster === '1'"
           v-model:value="form.naturalDisasterType"
-          v-modal:text="form.naturalDisasterTypeText"
+          v-model:text="form.naturalDisasterTypeText"
           :options="options.naturalDisasterOptions"
           :required="true"
           :field-names="{ value: 'boDictId', text: 'dictName' }"

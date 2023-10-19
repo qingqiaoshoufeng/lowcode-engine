@@ -48,12 +48,26 @@ const selectValue = ref("");
 
 const selectText = ref("");
 
+watch(() => props.value, (val) => {
+  if (props.value) {
+    selectValue.value = props.value;
+    selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
+  }
+}, { immediate: true })
+
 const handleSelect = (item) => {
-  selectVisible.value = false;
-  selectValue.value = item[props.fieldNames.value];
-  selectText.value = item[props.fieldNames.label];
-  emit("update:value", selectValue.value);
-  emit("change", selectValue.value, item);
+  if (selectValue.value !== item[props.fieldNames.value]) {
+    selectVisible.value = false;
+    selectValue.value = item[props.fieldNames.value];
+    selectText.value = item[props.fieldNames.label];
+    emit("update:value", selectValue.value);
+    emit("change", selectValue.value, item);
+  } else {
+    selectValue.value = '';
+    selectText.value = '';
+    emit("update:value", selectValue.value);
+    emit("change", selectValue.value, item);
+  }
 };
 
 const handleShow = () => {
