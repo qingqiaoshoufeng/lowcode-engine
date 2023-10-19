@@ -2,6 +2,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
+import SelectMore from "@/component/SelectMore/index";
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -9,9 +10,91 @@ import {
   getLastMonth,
 } from "@/utils/tools.js";
 import router from "@/router/index.js";
+import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js'
 import { Toast } from "vant";
-import { getFireWarningManage, collectFireWarning } from "@/apis/index.js";
+import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
+import { useStore } from "vuex";
+
+const searchOptions = ref([
+  {
+    title: '选择时间',
+    type: 'rangtime',
+    placeholder: '请选择时间',
+  },
+  {
+    title: '状态',
+    type: 'select',
+    placeholder: '请选择状态',
+    options: [],
+    fieldNames: { value: 'boDictId', label: 'dictName' }
+  },
+  {
+    title: '警情编号',
+    type: 'input',
+    placeholder: '请输入警情编号',
+  },
+  {
+    title: '警情类型',
+    type: 'cascader',
+    placeholder: '请选择警情类型',
+  },
+  {
+    title: '警情等级',
+    type: 'select-single',
+    placeholder: '请选择警情等级',
+    options: [],
+    fieldNames: { value: 'boDictId', label: 'dictName' }
+  },
+  {
+    title: '主站队伍',
+    type: 'select-org',
+    placeholder: '请选择主站队伍',
+  },
+  {
+    title: '行政区域',
+    type: 'select-area',
+    placeholder: '请选择行政区域',
+  },
+  {
+    title: '警情标签',
+    type: 'select',
+    placeholder: '请输入警情标签',
+  },
+  {
+    title: '警情地址',
+    type: 'input',
+    placeholder: '请输入警情地址',
+  },
+  {
+    title: '自然灾害类型',
+    type: 'cascader',
+    placeholder: '请选择自然灾害类型',
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    options: [],
+  },
+  {
+    title: '是否跨市',
+    type: 'select-single',
+    placeholder: '请选择是否跨市',
+    fieldNames: { value: 'value', label: 'label' },
+    options: isNot,
+  },
+  {
+    title: '是否跨省',
+    type: 'select-single',
+    placeholder: '请选择是否跨省',
+    fieldNames: { value: 'value', label: 'label' },
+    options: isNot,
+  },
+  {
+    title: '全勤指挥部是否出动',
+    type: 'select-single',
+    placeholder: '请选择全勤指挥部是否出动',
+    fieldNames: { value: 'value', label: 'label' },
+    options: isDispatch,
+  },
+])
 
 const defaultFilterValue = {
   onlyMy: false,
@@ -40,6 +123,8 @@ const tabs = ref([
     value: 3,
   },
 ]);
+
+const store = useStore();
 
 const proListRef = ref(null);
 
@@ -116,6 +201,16 @@ const onTimeChange = (value) => {
 };
 
 onMounted(() => {
+  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
+  searchOptions.value[1].options = res.JQ_STATUS
+  searchOptions.value[6].options = res.JQ_TYPE
+  searchOptions.value[4].options = res.JQ_LEVEL
+  searchOptions.value[9].options = res.NATURAL_DISASTER_TYPE
+  // 获取警情标签
+  getFireWarningTag({ tagType: 1 }).then((res) => {
+    searchOptions.value[8].options = res.data;
+    debugger
+  });
   nextTick(() => {
     proListRef.value.filter();
   });
@@ -139,7 +234,9 @@ onMounted(() => {
             v-model:value="filterFormState.time"
             @change="onTimeChange"
           />
-          <van-cell title="选择更多条件" style="margin-left: 10px" is-link />
+          <SelectMore
+            :options="searchOptions"
+          />
         </div>
       </template>
       <template #list="{ record }">
@@ -238,6 +335,14 @@ onMounted(() => {
     .item-header {
       display: flex;
       padding: 8px 10px;
+      .item-title {
+        width: 260px;
+        font-size: 16px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       .item-state {
         width: 57px;
         height: 24px;
