@@ -1,19 +1,20 @@
 import JSEncrypt from 'jsencrypt'
 import dayjs from 'dayjs'
 
-export const treeToArray = (data, list = []) => {
-  if (!Array.isArray(data)) {
+export const treeToArray = (data) => {
+  if (!Array.isArray(data) || !data.length) {
     return []
   }
-  data.forEach((item) => {
-    if (item.children && item.children.length) {
-      treeToArray(item.children, list)
-    }
-    else {
-      list.push(item)
+  const res = []
+  data.forEach((v) => {
+    // tree的每个元素都 放入到 res里面
+    res.push(v)
+    if (v.children) {
+      // 有children 就把 children数据递归 返回  依次放到 res里面
+      res.push(...treeToArray(v.children))
     }
   })
-  return list
+  return res
 }
 
 /**

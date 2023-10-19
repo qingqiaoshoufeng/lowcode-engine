@@ -423,7 +423,7 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId } = route.query
+  const { boFireWarningId, boWarningYyjId, showPreview } = route.query
   if (boWarningYyjId) {
     loadDetail.value = true
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
@@ -534,7 +534,9 @@ const initDetail = () => {
         // 警情等级
         initLevelOptions()
         // 详情特殊处理options
-        initPermissionOptions(res)
+        if (showPreview) {
+          initPermissionOptions(res)
+        }
 
         importantEdit.value = res.importantInfoRecheck
       }
@@ -742,7 +744,7 @@ const validateHeadquarters = (rule, value, callback) => {
         </van-field>
         <CascaderSingle
           v-model:value="form.warningType"
-          v-modal:text="form.warningTypeText"
+          v-model:text="form.warningTypeText"
           :options="options.warningTypeOptions"
           :required="true"
           :field-names="{ value: 'boDictId', text: 'dictName' }"

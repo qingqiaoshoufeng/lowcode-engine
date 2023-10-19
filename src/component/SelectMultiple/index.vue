@@ -48,6 +48,14 @@ const selectText = ref("");
 
 const checkboxRefs = ref([]);
 
+watch(() => props.value, (val) => {
+  if (props.value) {
+    selectItem.value = props.options?.filter((item) => props.value.includes(item[props.fieldNames.value]));
+    selectValue.value = props.value;
+    selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])
+  }
+})
+
 const toggle = (index) => {
   checkboxRefs.value[index].toggle();
 };

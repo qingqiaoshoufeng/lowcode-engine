@@ -81,6 +81,10 @@ const handleCollect = async (row, state) => {
   })
 }
 
+const handleEdit = (item) => {
+  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId }})
+}
+
 const handleAbolish = (item) => {
   Toast('此功能暂未开放！')
 }
@@ -90,7 +94,7 @@ const handleChange = (item) => {
 }
 
 const handleItem = (item) => {
-  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId }})
+  router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId, showPreview: true }})
 }
 
 onMounted(() => {
@@ -142,6 +146,7 @@ onMounted(() => {
           <div class="item-operate" @click.stop>
             <van-icon name="star" v-if="record.focusStatus === '1'" style="font-size: 20px;color: #FED547;" @click="handleCollect(record, false)"/>
             <van-icon name="star-o" v-else style="font-size: 20px;" @click="handleCollect(record, true)" />
+            <van-button plain type="success" size="small" class="item-btn" @click="handleEdit(record)">修改</van-button>
             <van-button plain type="success" size="small" class="item-btn" @click="handleAbolish(record)">作废</van-button>
             <van-button plain type="success" size="small" class="item-btn" @click="handleChange(record)">更正</van-button>
           </div>

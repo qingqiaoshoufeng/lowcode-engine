@@ -44,6 +44,13 @@ const selectValue = ref("");
 
 const selectText = ref("");
 
+watch(() => props.value, (val) => {
+  if (props.value) {
+    selectValue.value = props.value;
+    selectText.value = props.text;
+  }
+})
+
 const onFinish = ({ selectedOptions }) => {
   const values = selectedOptions.map((option) => option[props.fieldNames.value]);
   const texts = selectedOptions.map((option) => option[props.fieldNames.text])
