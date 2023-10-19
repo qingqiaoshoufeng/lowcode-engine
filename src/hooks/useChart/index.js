@@ -1,7 +1,7 @@
 
-import {reactive,toRefs} from 'vue'
-
-
+import {reactive,toRefs,markRaw} from 'vue'
+import * as echarts from 'echarts';
+import 'echarts-wordcloud'
 const getOptionsMap= () => {
   let files = []
   let optionsMap = {}
@@ -19,10 +19,13 @@ export default function useChart({dom,type}){
     chart:null
   })
   const init = ()=>{
-    state.chart = echarts.init(dom)
+    state.chart = markRaw(echarts.init(dom.value))
   }
   const render = (data)=>{
-    myChart.setOption(optionsMap[type](data));
+    if(!state.chart){
+      init()
+    }
+    state.chart.setOption(optionsMap[type](data));
   }
   return {
     ...toRefs(state),

@@ -24,11 +24,9 @@ export default function useAllTimePicker(props,emit){
   console.log(columsData);
   const isShow = computed({
     get(){
-      // debugger;
       return !!props.show
     },
     set(val){
-      debugger;
       emit('update:show',val)
     }
   })

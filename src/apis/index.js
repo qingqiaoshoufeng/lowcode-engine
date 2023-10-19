@@ -1,10 +1,12 @@
 import axios from 'axios'
 
 export * from './system/login.js'
-
+export * from './system/menu.js'
+export * from './system/login.js'
+export * from './business/home.js'
 import { request } from '@/plugins/axios/index.js'
 
-export * from './system/login.js'
+
 
 // 获取行政区域
 export function getSystemArea({ parentAreaId, reportName, showAllArea, staticFlag }) {

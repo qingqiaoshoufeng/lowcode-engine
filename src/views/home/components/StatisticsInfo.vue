@@ -1,7 +1,7 @@
 <template>
   <div class="statistics_info" :class="color">
-      <div class="min-title">整体概况</div>
-      <div class="tab">
+      <div class="min-title">{{ title }}</div>
+      <div class="tab" v-if="withTab">
         <div v-for="item in tabList" :key="item.label" class="tab_item">{{ item.label }}</div>
       </div>
       <div class="card_list">
@@ -30,6 +30,12 @@ const props = defineProps({
     })
   },
   color:{
+    type:String
+  },
+  withTab:{
+    default:false
+  },
+  title:{
     type:String
   }
 })

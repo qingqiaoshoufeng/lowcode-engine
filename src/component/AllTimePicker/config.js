@@ -13,7 +13,7 @@ export const genarateDefaultColumns = (formatter,val =(-20))=>{
       values:[...yearColums],
     },
     {
-      values:['全部',...Array.from(Array(13).keys()).filter(item =>item).map(item =>(formatter('month',item)))]
+      values:['全年',...Array.from(Array(13).keys()).filter(item =>item).map(item =>(formatter('month',item)))]
     }
   ]
 }

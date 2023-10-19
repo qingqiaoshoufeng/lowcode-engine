@@ -47,7 +47,7 @@ const loginForm = ref({
 })
 const handleUserRegister = () => { }
 const initStore = async () => {
-  const storeList = ['rules', 'userInfo', 'dict']
+  const storeList = ['rules', 'userInfo', 'dict','menuInfo']
   const isInited = await Promise.all(
     storeList.map(item => {
       store.dispatch(item + '/init')

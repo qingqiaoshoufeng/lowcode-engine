@@ -13,6 +13,7 @@ import './mock/mock'
 import eventBus from './utils/eventBus'
 import { registerPlugins } from './utils/util'
 import directives from './directives/index';
+import '@/assets/fonts/iconfont.js'
 
 const plugins = [Vant, store, router, axios, icons, component, eventBus, directives]
 const app = createApp(App);

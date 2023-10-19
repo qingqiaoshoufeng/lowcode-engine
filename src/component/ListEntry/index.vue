@@ -19,7 +19,6 @@ const props = defineProps({
     type:Array
   }
 })
-USERMESSAGE
 
 </script>
 <script>
