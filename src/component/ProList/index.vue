@@ -112,7 +112,7 @@ defineExpose({
       </van-tabs>
     </div>
     <div class="list-search">
-      <slot name="search" />
+      <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" />
     </div>
     <div class="list-wrapper">
       <van-list

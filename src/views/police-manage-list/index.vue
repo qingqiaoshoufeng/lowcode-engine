@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
+import SelectTime from "@/component/SelectTime/index";
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -97,6 +98,13 @@ const handleItem = (item) => {
   router.push({ name: 'police-entry-form', query: { boFireWarningId: item.boFireWarningId, showPreview: true }})
 }
 
+const onTimeChange = (value) => {
+  Toast.loading();
+  proListRef.value.filter().then(res => {
+    Toast.clear();
+  });
+}
+
 onMounted(() => {
   nextTick(() => {
     proListRef.value.filter();
@@ -115,9 +123,15 @@ onMounted(() => {
       :showLoad="false"
       :onTabFn="onTabFn"
     >
-      <!-- <template #search>
-        <div>???</div>
-      </template> -->
+      <template #search="{ tabsActive, filterFormState }">
+        <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
+          <SelectTime
+            v-model:value="filterFormState.time"
+            @change="onTimeChange"
+          />
+          <van-cell title="选择更多条件" style="margin-left: 10px;" is-link />
+        </div>
+      </template>
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
@@ -146,9 +160,15 @@ onMounted(() => {
           <div class="item-operate" @click.stop>
             <van-icon name="star" v-if="record.focusStatus === '1'" style="font-size: 20px;color: #FED547;" @click="handleCollect(record, false)"/>
             <van-icon name="star-o" v-else style="font-size: 20px;" @click="handleCollect(record, true)" />
-            <van-button plain type="success" size="small" class="item-btn" @click="handleEdit(record)">修改</van-button>
-            <van-button plain type="success" size="small" class="item-btn" @click="handleAbolish(record)">作废</van-button>
-            <van-button plain type="success" size="small" class="item-btn" @click="handleChange(record)">更正</van-button>
+            <van-button plain type="success" size="small" class="item-btn" @click="handleEdit(record)">
+              修改
+            </van-button>
+            <van-button plain type="success" size="small" class="item-btn" @click="handleAbolish(record)">
+              作废
+            </van-button>
+            <van-button plain type="success" size="small" class="item-btn" @click="handleChange(record)">
+              更正
+            </van-button>
           </div>
         </div>
       </template>
@@ -160,6 +180,10 @@ onMounted(() => {
 .police-manage-list {
   height: 100vh;
   background-color: #f6f7f8;
+  .list-tabs {
+    display: flex;
+    padding: 10px 16px 0 16px;
+  }
   .list-item {
     display: flex;
     flex-direction: column;
