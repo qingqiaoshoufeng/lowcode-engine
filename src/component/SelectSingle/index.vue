@@ -16,11 +16,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "行政区域",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择行政区域",
+    default: "",
   },
   rule: {
     type: Array,
@@ -154,6 +154,7 @@ defineOptions({
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      white-space: nowrap;
     }
   }
   .single-wrapper {
