@@ -6,7 +6,7 @@ const mockData = [
 const options = {
   tooltip: {},
   grid:{
-    left:35,
+    left:45,
     top:35,
   },
   yAxis: {
