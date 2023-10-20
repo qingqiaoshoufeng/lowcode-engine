@@ -26,6 +26,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  rules: {
+    type: Array,
+    default: () => [],
+  },
   preview: {
     type: Boolean,
     default: false,
@@ -231,6 +235,7 @@ export default {
     :required="required"
     :label="label"
     :placeholder="placeholder"
+    :rules="rules"
     @click="selectVisible = true"
   />
   <!-- 弹窗 -->
