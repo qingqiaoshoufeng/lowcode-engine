@@ -11,6 +11,7 @@
 <script setup>
 import {ref,computed} from 'vue'
 import store from '@/store/index.js'
+console.log(store);
 const currentab = ref(3)
 const titleList = ['','信息采集','审核/审批','统计监督']
 const menuListMap = computed(()=>{
