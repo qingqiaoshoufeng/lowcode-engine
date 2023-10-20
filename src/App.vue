@@ -1,7 +1,11 @@
 <template>
-  <keep-alive>
-    <router-view />
-  </keep-alive>
+  <router-view v-slot="{ Component }">
+    <transition name="fade-transform" mode="out-in">
+      <keep-alive :include="isCached">
+        <component :is="Component" />
+      </keep-alive>
+    </transition>
+  </router-view>
 </template>
 
 <script>

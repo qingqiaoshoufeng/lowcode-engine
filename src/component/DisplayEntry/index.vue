@@ -41,7 +41,6 @@ const props = defineProps({
 const handleClick = (val)=>{
   const {iconId} = val
   const path = pathMap[iconId]
-  debugger;
   router.push({
     path
   })

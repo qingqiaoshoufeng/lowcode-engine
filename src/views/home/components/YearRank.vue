@@ -67,6 +67,7 @@ const props = defineProps({
     width: 100%;
     height: 263px;
     background: #FFFFFF;
+    padding: 0 16px;;
     .tab{
       width: 220px;
       height: 30px;
