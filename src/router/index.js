@@ -8,7 +8,7 @@ const indexRouter = {
   children: []
 }
 indexRouter.children = autoRegisteredRoutes()
-debugger;
+
 const routes = [
   indexRouter,
   {
@@ -35,7 +35,6 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to,from,next)=>{
-  debugger;
   if(localStorage.token){
     next()
   }else{
