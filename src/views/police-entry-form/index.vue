@@ -22,6 +22,7 @@ import {
   // updateFormFieldAnnotationIds,
 } from "@/apis/index.js";
 import { generateByKeyValue, getTypeText, scrollFormFailed } from '@/utils/tools.js'
+import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/validate.js'
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
@@ -330,16 +331,16 @@ const warningTypeChange = (value, selectedOptions) => {
     }
     if (selectedOptions && selectedOptions[0].dictName === "安保勤务") {
       labelWarningOrgname.value = "活动/任务名称";
-      // formRef.value.clearValidate(['warningOrgname'])
+      formRef.value.resetValidation(['warningOrgname'])
     } else {
       labelWarningOrgname.value = "单位/户主/个体户名称";
-      // formRef.value.clearValidate(['warningOrgname'])
+      formRef.value.resetValidation(['warningOrgname'])
     }
   } else {
     form.value.warningTypeText = [];
     form.value.areaDutyGroup = [];
     labelWarningOrgname.value = "单位/户主/个体户名称";
-    // formRef.value.clearValidate(['warningOrgname'])
+    formRef.value.resetValidation(['warningOrgname'])
     // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
   }
 };
@@ -359,7 +360,7 @@ const onChangeDispatchGroup = (values, items, texts) => {
     form.value.firstGroup =  ''
   }
 
-  // formRef.value.clearValidate(['dispatchGroup', 'mainGroup', 'firstGroup'])
+  formRef.value.resetValidation(['dispatchGroup', 'mainGroup', 'firstGroup'])
 }
 
 const { loading, submit } = useSubmit((res) => {
@@ -549,11 +550,17 @@ const initDetail = () => {
 const onSubmit = () => {
   formRef.value.submit((values) => {
     console.log('submit', values);
+    if (values) {
+
+    }
   })
 }
 
 const onFailed = (errorInfo) => {
-  console.log('failed', errorInfo);
+  if (errorInfo?.errors?.length > 0) {
+    showToast('信息填写不完整，请检查填写内容！')
+    scrollFormFailed()
+  }
 };
 
 onMounted(() => {
@@ -610,7 +617,7 @@ const onAreaChange = (value, selectedOptions) => {
 const lngLatCallback = (lat, lng) => {
   form.value.warningLng = lng;
   form.value.warningLat = lat;
-  //   formRef.value.clearValidate(['warningLng', 'warningLat'])
+  formRef.value.resetValidation(['warningLng', 'warningLat'])
 };
 
 const onConfirm = (value) => {
