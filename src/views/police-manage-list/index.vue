@@ -232,7 +232,7 @@ onMounted(() => {
     searchOptions.value[7].options = res.data;
   });
   nextTick(() => {
-    proListRef.value.filter();
+    proListRef.value?.filter();
   });
 });
 </script>
