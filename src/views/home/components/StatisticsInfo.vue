@@ -59,6 +59,8 @@ export default {
   
 <style scoped lang="scss">
 .statistics_info{
+  padding: 0 16px;
+  background: #FFFFFF;
   .tab{
       width: 220px;
       height: 30px;

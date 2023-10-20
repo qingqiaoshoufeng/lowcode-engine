@@ -38,6 +38,8 @@ export default {
   padding-top: 9px;
   padding-left: 9px;
   padding-right: 7px;
+  margin: 16px;
+  background: #FFFFFF;
   .desc{
     display: flex;
     justify-content: space-between;

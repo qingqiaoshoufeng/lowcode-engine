@@ -6,13 +6,16 @@
                 :class="{
                 tab_item:true,
                 }" 
-                v-for="item in menuList" 
-                :key="item.label"
-                @click="handleClick(item.path)"
+                v-for="item in list" 
+                :key="item.menuName"
+                @click="handleClick(item)"
             >
                <div class="item_wrapper">
-                    <img :src="item.activeImage" alt="">
-                    <span>{{ item.label }}</span>
+                    <!-- <img :src="item.activeImage" alt=""> -->
+                    <svg class="icon svg-icon" aria-hidden="true">
+                      <use v-bind:xlink:href="`#icon-${item.iconId}`"></use>
+                    </svg>
+                    <span>{{ item.menuName }}</span>
                </div>
             </div>
         </div>
@@ -20,20 +23,11 @@
   </template>
   
 <script setup>
-import { computed, ref, getCurrentInstance,defineProps } from "vue";
+import { computed, ref, getCurrentInstance,defineProps, onMounted } from "vue";
 import { useStore } from "vuex";
 import router from '@/router/index.js'
-// import businessDeactive from '@/assets/images/business-deactive.png'
-import businessActive from '@/assets/images/business-active.png'
-import mineActive from '@/assets/images/mine-active.png'
-import mineDeactive from '@/assets/images/mine-deactive.png'
-import searchActive from '@/assets/images/search-active.png'
-import searchDeactive from '@/assets/images/search-deactive.png'
-import statisticsDeactive from '@/assets/images/statistics-deactive.png'
-import statisticsActive from '@/assets/images/statistics-active.png'
-import homeDeactive from '@/assets/images/home-deactive.png'
-import homeActive from '@/assets/images/home-active.png'
-import { Handler } from "leaflet";
+import {pathMap} from './pathMap.js'
+
 const props = defineProps({
   title:{
     default:'标题',
@@ -44,46 +38,11 @@ const props = defineProps({
     type:Array
   }
 })
-const menuList = [
-  {
-    activeImage:homeActive,
-    deactiveImage: homeDeactive,
-    label:'首页',
-    value: 1,
-    path:'/home'
-  },
-  {
-    activeImage:searchActive,
-    deactiveImage: searchDeactive,
-    label:'查询',
-    value: 2,
-    path:'/search'
-  },
-  {
-    activeImage:businessActive,
-    deactiveImage: businessActive,
-    label:'业务',
-    value: 3,
-    path:'/business'
-  },
-  {
-    activeImage:statisticsActive,
-    deactiveImage: statisticsDeactive,
-    label:'统计',
-    value: 4,
-    path:'/statistics'
-  },
-  {
-    activeImage:mineActive,
-    deactiveImage: mineDeactive,
-    label:'我的',
-    value: 5,
-    path:'/mine'
-  }
-]
 const handleClick = (val)=>{
+  const {iconId} = val
+  const path = pathMap[iconId]
   router.push({
-    path:val
+    path
   })
 }
 </script>
@@ -130,6 +89,10 @@ export default {
         }
       }
   
+    }
+    .icon{
+      width: 30px;
+      height: 30px;
     }
   }
   </style>

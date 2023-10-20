@@ -9,8 +9,6 @@ const mockData = [
   ],
 ]
 const legendData = ['<10分钟', '10-20分钟', '30-60分钟', '60-90分钟', '90-120分钟','>=120分钟']
-
-
 const options = {
   tooltip: {},
   grid:{
@@ -19,19 +17,25 @@ const options = {
   },
   legend: {
     orient: 'vertical',
-    right: 10,
-    top: 20,
+    right: 20,
+    top: 50,
     bottom: 20,
-    data: legendData
+    data: legendData,
+    icon:'circle',
+    itemWidth:10,
+    itemHeight:10,
   },
   series: [
     {
       name: '姓名',
       type: 'pie',
-      center:['23%','40%'],
-      radius: ['34%', '50%'],
+      center:['33%','50%'],
+      radius: ['44%', '60%'],
       labelLine:{
         show:false,
+      },
+      label:{
+        show:false
       },
       data: mockData,
       emphasis: {

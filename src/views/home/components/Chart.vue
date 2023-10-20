@@ -45,6 +45,8 @@ watch(()=>props.chartData,(val)=>{
     width: 100%;
     height: 263px;
     background: #FFFFFF;
+    padding: 0 16px;
+    padding-top: 10px;
  }
  .chart{
   width: 343px;
