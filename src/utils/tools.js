@@ -79,7 +79,7 @@ export function findParentNodes(root, targetValue) {
 
 // 表单验证失败，滚动到失败项：https://www.jianshu.com/p/59d90ae35c86
 export const scrollFormFailed = () => {
-  const errorList = document.querySelectorAll('.ant-form-item-has-error')
+  const errorList = document.querySelectorAll('.van-field__error-message')
   errorList[0]?.scrollIntoView({
     block: 'center',
     behavior: 'smooth',

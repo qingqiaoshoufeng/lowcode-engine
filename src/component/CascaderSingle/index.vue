@@ -22,7 +22,7 @@ const props = defineProps({
     type: String,
     default: "请选择自然灾害类型",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
   },
@@ -78,7 +78,7 @@ defineOptions({
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="selectVisible = true"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
