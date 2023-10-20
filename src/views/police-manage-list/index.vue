@@ -10,8 +10,8 @@ import {
   getLastMonth,
 } from "@/utils/tools.js";
 import router from "@/router/index.js";
-import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js'
-import { Toast } from "vant";
+import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
@@ -19,59 +19,73 @@ import { useStore } from "vuex";
 const searchOptions = ref([
   {
     title: '选择时间',
-    type: 'rangtime',
+    type: 'select-range',
     placeholder: '请选择时间',
+    value: 'time',
   },
   {
     title: '状态',
     type: 'select',
     placeholder: '请选择状态',
     options: [],
-    fieldNames: { value: 'boDictId', label: 'dictName' }
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'warningStatus',
   },
   {
     title: '警情编号',
     type: 'input',
     placeholder: '请输入警情编号',
+    value: "warningCode",
   },
   {
     title: '警情类型',
     type: 'cascader',
     placeholder: '请选择警情类型',
+    fieldNames: { value: 'boDictId', text: 'dictName' },
+    options: [],
+    value: 'warningType',
   },
   {
     title: '警情等级',
     type: 'select-single',
     placeholder: '请选择警情等级',
     options: [],
-    fieldNames: { value: 'boDictId', label: 'dictName' }
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'warningLevel',
   },
   {
     title: '主站队伍',
     type: 'select-org',
     placeholder: '请选择主站队伍',
+    single: true,
+    value: 'mainGroup',
   },
   {
     title: '行政区域',
     type: 'select-area',
     placeholder: '请选择行政区域',
+    value: 'boAreaId',
   },
   {
     title: '警情标签',
     type: 'select',
     placeholder: '请输入警情标签',
+    fieldNames: { value: 'boFireTagId', label: 'tagName' },
+    value: 'warningTag',
   },
   {
     title: '警情地址',
     type: 'input',
     placeholder: '请输入警情地址',
+    value: "warningAddr",
   },
   {
     title: '自然灾害类型',
     type: 'cascader',
     placeholder: '请选择自然灾害类型',
-    fieldNames: { value: 'boDictId', label: 'dictName' },
+    fieldNames: { value: 'boDictId', text: 'dictName' },
     options: [],
+    value: 'naturalDisasterType',
   },
   {
     title: '是否跨市',
@@ -79,6 +93,7 @@ const searchOptions = ref([
     placeholder: '请选择是否跨市',
     fieldNames: { value: 'value', label: 'label' },
     options: isNot,
+    value: 'isOtherCity',
   },
   {
     title: '是否跨省',
@@ -86,6 +101,7 @@ const searchOptions = ref([
     placeholder: '请选择是否跨省',
     fieldNames: { value: 'value', label: 'label' },
     options: isNot,
+    value: 'isOtherProvince',
   },
   {
     title: '全勤指挥部是否出动',
@@ -93,20 +109,13 @@ const searchOptions = ref([
     placeholder: '请选择全勤指挥部是否出动',
     fieldNames: { value: 'value', label: 'label' },
     options: isDispatch,
+    value: 'isHeadquarters',
   },
 ])
 
 const defaultFilterValue = {
   onlyMy: false,
   time: getLastMonth(),
-  // warningType: [],
-  // warningTag: [],
-  // warningStatus: [],
-  // mainGroup: [],
-  // boAreaId: [],
-  // areaLvl: [],
-  // orgIds: [],
-  // naturalDisasterType: [],
 };
 
 const tabs = ref([
@@ -134,31 +143,34 @@ const checkChange = (record) => {
 
 const onTabFn = (name, title) => {
   if (title === "我的警情") {
+    proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = true;
     proListRef.value.query.myCollect = false;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   } else if (title === "收藏的警情") {
+    proListRef.value.query = {}
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = true;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   } else if (title === "辖区警情") {
+    proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = false;
-    Toast.loading();
+    showLoadingToast();
     proListRef.value.filter().then(() => {
-      Toast.clear();
+      closeToast();
     });
   }
 };
 
 const handleCollect = async (row, state) => {
-  Toast.loading();
+  showLoadingToast();
   const res = await collectFireWarning({
     focusAppid: row.boFireWarningId,
     focusCode: row.warningCode,
@@ -166,50 +178,58 @@ const handleCollect = async (row, state) => {
     deleteFlag: state ? "1" : "2",
   });
   proListRef.value.filter().then(() => {
-    Toast(state ? "收藏成功" : "取消收藏成功");
-    Toast.clear();
+    showToast(state ? "收藏成功" : "取消收藏成功");
+    closeToast();
   });
 };
 
 const handleEdit = (item) => {
-  router.push({
-    name: "police-entry-form",
-    query: { boFireWarningId: item.boFireWarningId },
-  });
+  showToast("此功能暂未开放！");
+  // router.push({
+  //   name: "police-entry-form",
+  //   query: { boFireWarningId: item.boFireWarningId },
+  // });
 };
 
 const handleAbolish = (item) => {
-  Toast("此功能暂未开放！");
+  showToast("此功能暂未开放！");
 };
 
 const handleChange = (item) => {
-  Toast("此功能暂未开放！");
+  showToast("此功能暂未开放！");
 };
 
 const handleItem = (item) => {
-  router.push({
-    name: "police-entry-form",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
-  });
+  showToast("此功能暂未开放！");
+  // router.push({
+  //   name: "police-entry-form",
+  //   query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+  // });
 };
 
 const onTimeChange = (value) => {
-  Toast.loading();
+  showLoadingToast();
   proListRef.value.filter().then((res) => {
-    Toast.clear();
+    closeToast();
   });
 };
+
+const onSearchConfirm = () => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+}
 
 onMounted(() => {
   const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
   searchOptions.value[1].options = res.JQ_STATUS
-  searchOptions.value[6].options = res.JQ_TYPE
+  searchOptions.value[3].options = res.JQ_TYPE
   searchOptions.value[4].options = res.JQ_LEVEL
   searchOptions.value[9].options = res.NATURAL_DISASTER_TYPE
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
-    searchOptions.value[8].options = res.data;
-    debugger
+    searchOptions.value[7].options = res.data;
   });
   nextTick(() => {
     proListRef.value.filter();
@@ -228,7 +248,7 @@ onMounted(() => {
       :showLoad="false"
       :onTabFn="onTabFn"
     >
-      <template #search="{ tabsActive, filterFormState }">
+      <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
             v-model:value="filterFormState.time"
@@ -236,6 +256,8 @@ onMounted(() => {
           />
           <SelectMore
             :options="searchOptions"
+            :reset-fn="resetForm"
+            @confirmCallback="onSearchConfirm"
           />
         </div>
       </template>

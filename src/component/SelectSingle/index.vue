@@ -52,6 +52,9 @@ watch(() => props.value, (val) => {
   if (props.value) {
     selectValue.value = props.value;
     selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
+  } else {
+    selectValue.value = ''
+    selectText.value = ''
   }
 }, { immediate: true })
 

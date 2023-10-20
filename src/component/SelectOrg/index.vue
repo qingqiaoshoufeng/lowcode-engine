@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { getDispatchGroup, searchDispatchGroup } from "@/apis/index.js";
-import { Toast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
@@ -31,11 +31,11 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "选择单位",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择单位",
+    default: "",
   },
   rule: {
     type: Array,
@@ -87,6 +87,10 @@ watch(() => props.value, (newVal, oldVal) => {
     selectItem.value = props.value;
     selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
     selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+  } else {
+    selectItem.value = [];
+    selectValue.value = [];
+    selectText.value = [];
   }
 }, { immediate: true })
 
@@ -156,6 +160,16 @@ const handleOk = () => {
 };
 
 const handleCheck = (item) => {
+  if (props.single) {
+    selectValue.value.push(item.organizationid);
+    selectText.value.push(item.name);
+    selectItem.value.push(item);
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
+    selectVisible.value = false;
+    return
+  }
   if (item.checked) {
     selectValue.value.push(item.organizationid);
     selectText.value.push(item.name);
@@ -169,14 +183,14 @@ const handleCheck = (item) => {
 
 const handleEnter = (item) => {
   if (item.hasChildren) {
-    Toast.loading();
+    showLoadingToast();
     getDispatchGroup({
       ...props.params,
       parentOrganizationId: item.organizationid,
       disabledKey: props.disabledKey,
       disabledValue: props.disabledValue,
     }).then((res) => {
-      Toast.clear();
+      closeToast();
       const currentIndex = tabs.value.findIndex(
         (node) => node.orgLevel === item.orgLevel
       );

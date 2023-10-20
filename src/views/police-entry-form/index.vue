@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, inject, nextTick } from "vue";
 import dayjs from "dayjs";
-import { Toast } from "vant";
+import { showToast } from "vant";
 import { useSubmit } from '@castle/castle-use';
 import MapLatLng from "@/component/MapLatLng/index";
 import AreaCascader from "@/component/AreaCascader/index";
@@ -101,7 +101,7 @@ const form = ref({
   warningDateText: dayjs().format("YYYY-MM-DD HH:mm:ss"),
   warningCodeYyj: "", // 119警情编号
   warningOrgname: "", // 单位/户主/个体户名称
-  warningArea: "", // 行政区划
+  warningArea: "", // 行政区域
   warningAreaText: "",
   warningAddr: "", // 警情地址
   warningLng: "", // 经度坐标
@@ -346,7 +346,7 @@ const warningTypeChange = (value, selectedOptions) => {
 
 const handleMain = () => {
   if (!form.value.dispatchGroup || form.value.dispatchGroup.length <= 0) {
-    Toast('请先选择出动队伍')
+    showToast('请先选择出动队伍')
     return true
   }
   return false
@@ -364,7 +364,7 @@ const onChangeDispatchGroup = (values, items, texts) => {
 
 const { loading, submit } = useSubmit((res) => {
   if (props.isConfirm) {
-    Toast('警情确认成功')
+    showToast('警情确认成功')
     emits('finishCallback')
   }
   if (res.boFireWarningId) {
@@ -579,11 +579,11 @@ onMounted(() => {
 
 const handleLngLat = () => {
   if (!form.value.warningArea) {
-    Toast("请先选择行政区域");
+    showToast("请先选择行政区域");
     return;
   }
   if (!form.value.warningAddr) {
-    Toast("请先输入警情地址");
+    showToast("请先输入警情地址");
     return;
   }
   show.value.lngLatVisible = true;

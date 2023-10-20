@@ -48,6 +48,9 @@ watch(() => props.value, (val) => {
   if (props.value) {
     selectValue.value = props.value;
     selectText.value = props.text;
+  } else {
+    selectValue.value =''
+    selectText.value = ''
   }
 }, { immediate: true })
 

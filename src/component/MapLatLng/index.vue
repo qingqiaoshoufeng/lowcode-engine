@@ -1,6 +1,6 @@
 <script setup>
 import { nextTick, onMounted, ref } from 'vue'
-import { Toast } from 'vant'
+import { showToast } from 'vant'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { LIcon, LMap, LMarker, LTileLayer } from '@vue-leaflet/vue-leaflet'
@@ -100,7 +100,7 @@ const onMapReady = (leafletObject) => {
 
 const handleSearch = () => {
   if (!keyword.value) {
-    Toast('请输入地址')
+    showToast('请输入地址')
     return
   }
   searchLocation({ ds: JSON.stringify({ keyWord: keyword.value }), tk: tiandituToken }).then((res) => {
@@ -112,7 +112,7 @@ const handleSearch = () => {
       drawMaker(currentLat.value, currentLng.value)
     }
     else {
-      Toast('未查询到相关地址的经纬度！')
+      showToast('未查询到相关地址的经纬度！')
     }
   })
 }
@@ -124,7 +124,7 @@ onMounted(() => {
       finishFn()
     }
     else {
-      Toast('请选择经纬度')
+      showToast('请选择经纬度')
     }
   })
   const { selectLat, selectLng, selectAddr, selectArea } = props
