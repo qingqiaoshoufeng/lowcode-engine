@@ -181,10 +181,11 @@ const handleCollect = async (row, state) => {
 };
 
 const handleEdit = (item) => {
-  router.push({
-    name: "police-entry-form",
-    query: { boFireWarningId: item.boFireWarningId },
-  });
+  showToast("此功能暂未开放！");
+  // router.push({
+  //   name: "police-entry-form",
+  //   query: { boFireWarningId: item.boFireWarningId },
+  // });
 };
 
 const handleAbolish = (item) => {
