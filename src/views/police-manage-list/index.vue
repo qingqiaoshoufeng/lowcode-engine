@@ -143,6 +143,7 @@ const checkChange = (record) => {
 
 const onTabFn = (name, title) => {
   if (title === "我的警情") {
+    proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = true;
     proListRef.value.query.myCollect = false;
     showLoadingToast();
@@ -150,6 +151,7 @@ const onTabFn = (name, title) => {
       closeToast();
     });
   } else if (title === "收藏的警情") {
+    proListRef.value.query = {}
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = true;
     showLoadingToast();
@@ -157,6 +159,7 @@ const onTabFn = (name, title) => {
       closeToast();
     });
   } else if (title === "辖区警情") {
+    proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = false;
     showLoadingToast();
