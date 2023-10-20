@@ -200,10 +200,11 @@ const handleChange = (item) => {
 };
 
 const handleItem = (item) => {
-  router.push({
-    name: "police-entry-form",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
-  });
+  showToast("此功能暂未开放！");
+  // router.push({
+  //   name: "police-entry-form",
+  //   query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+  // });
 };
 
 const onTimeChange = (value) => {
