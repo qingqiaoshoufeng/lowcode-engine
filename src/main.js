@@ -3,6 +3,7 @@ import Vant from 'vant'
 import 'lib-flexible/flexible'
 import App from './App.vue'
 import router from './router'
+
 import store from './store'
 import axios from "@/plugins/axios/index.js";
 import icons from '@/icons' // icon
@@ -15,8 +16,9 @@ import { registerPlugins } from './utils/util'
 import directives from './directives/index';
 import './styles/index.scss'
 import '@/assets/fonts/iconfont.js'
-
-const plugins = [Vant, store, router, axios, icons, component, eventBus, directives]
+console.log(router);
+const plugins = [Vant, store, axios, icons, component, eventBus, directives]
 const app = createApp(App);
 app.use(registerPlugins(plugins))
+app.use(router)
 app.mount("#app")

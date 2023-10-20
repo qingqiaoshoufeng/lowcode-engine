@@ -1,23 +1,15 @@
 import autoRegisteredRoutes from './routeRegister.js'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory ,createWebHashHistory } from 'vue-router'
 
 const indexRouter = {
   path: '/',
   component: () => import('@/views/old/index'),
-  redirect: '/home',
+  redirect: '/index',
   children: []
 }
-indexRouter.children = autoRegisteredRoutes(1)
+indexRouter.children = autoRegisteredRoutes()
+debugger;
 const routes = [
-  {
-    path: '/index',
-    name: 'index',
-    meta: {
-      index: 1
-    },
-    component: () =>({}),
-    redirect: '/home',
-  },
   indexRouter,
   {
     path: '/nopermission',
@@ -43,10 +35,17 @@ const router = createRouter({
   routes
 })
 router.beforeEach((to,from,next)=>{
+  debugger;
   if(localStorage.token){
     next()
   }else{
-    to('/login')
+    if(to.path === '/login'){
+      next();
+    }else {
+      next({
+        path:'/login',
+      });
+    }
   }
 })
 
