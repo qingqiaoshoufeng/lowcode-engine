@@ -161,7 +161,7 @@ defineOptions({
     }
   }
   .single-wrapper {
-    max-height: 50vh;
+    height: 50vh;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

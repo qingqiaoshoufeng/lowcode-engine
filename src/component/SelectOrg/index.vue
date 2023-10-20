@@ -161,9 +161,9 @@ const handleOk = () => {
 
 const handleCheck = (item) => {
   if (props.single) {
-    selectValue.value.push(item.organizationid);
-    selectText.value.push(item.name);
-    selectItem.value.push(item);
+    selectValue.value = [item.organizationid];
+    selectText.value = [item.name];
+    selectItem.value = [item];
     emit("update:value", selectItem.value);
     emit("update:text", selectText.value);
     emit("change", selectValue.value, selectItem.value, selectText.value);

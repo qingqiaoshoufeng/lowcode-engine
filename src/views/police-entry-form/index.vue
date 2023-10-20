@@ -386,7 +386,7 @@ const { loading, submit } = useSubmit((res) => {
     const params = {
       ...values,
       new: !values.boFireWarningId,
-      warningDate: `${values.warningDate.unix()}000`,
+      warningDate: `${dayjs(values.warningDate).unix()}000`,
       warningArea: values.warningArea.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
@@ -547,13 +547,12 @@ const initDetail = () => {
   }
 }
 
-const onSubmit = () => {
-  formRef.value.submit((values) => {
-    console.log('submit', values);
-    if (values) {
+const handleSubmit = () => {
+  formRef.value.submit()
+}
 
-    }
-  })
+const onSubmit = () => {
+  submit()
 }
 
 const onFailed = (errorInfo) => {
@@ -631,57 +630,54 @@ const validateFireTel = (rule, value, callback) => {
     (item) => item.boDictId === warningSource
   );
   if (!value) {
-    callback();
-  } else if (
-    filter?.[0]?.dictName === "电话报警" &&
-    !validateTelePhone(value)
-  ) {
-    callback(new Error("请输入正确报警人联系方式"));
+    return '';
+  } else if (filter?.[0]?.dictName === "电话报警" && !validateTelePhone(value)) {
+    return "请输入正确报警人联系方式";
   } else {
-    callback();
+    return '';
   }
 };
 
-const validateLng = (rule, value, callback) => {
+const validateLng = (value, rule) => {
   if (!value) {
-    callback(new Error("请输入经度坐标"));
+    return "请输入经度坐标";
   } else if (!validateLongitude(value)) {
-    callback(new Error("请输入正确经度坐标"));
+    return "请输入正确经度坐标";
   } else {
-    callback();
+    return ''
   }
 };
 
-const validateLat = (rule, value, callback) => {
+const validateLat = (value, rule) => {
   if (!value) {
-    callback(new Error("请输入纬度坐标"));
+    return "请输入纬度坐标";
   } else if (!validateLatitude(value)) {
-    callback(new Error("请输入正确纬度坐标"));
+    return "请输入正确纬度坐标";
   } else {
-    callback();
+    return ''
   }
 };
 
 const validateWarningAddr = (rule, value, callback) => {
   if (!value) {
-    callback(new Error("请补充详情地址"));
+    return "请补充详情地址";
   } else if (value && value.length < 5) {
-    callback(new Error("警情地址不能少于5个字，请重新输入"));
+    return "警情地址不能少于5个字，请重新输入";
   } else {
-    callback();
+    return 
   }
 };
 
 const validateOtherCity = (rule, value, callback) => {
-  callback();
+  return '';
 };
 
 const validateOtherProvince = (rule, value, callback) => {
-  callback();
+  return '';
 };
 
 const validateHeadquarters = (rule, value, callback) => {
-  callback();
+  return '';
 };
 </script>
 
@@ -694,12 +690,13 @@ const validateHeadquarters = (rule, value, callback) => {
       </div>
       <div v-else class="title-placeholder">警情名称由系统自动生成</div>
     </div>
-    <van-form ref="formRef" @failed="onFailed">
+    <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
       <van-cell-group inset>
         <van-field
           v-model="form.warningDateText"
+          v-preview-text="true"
           is-link
-          :readonly="showPreview"
+          :readonly="true"
           required
           name="warningDateText"
           label="接警时间"
@@ -734,7 +731,7 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请输入经度坐标"
           :rules="[
             { required: true, message: '请输入经度坐标' },
-            { validator: validateLat, trigger: 'blur' },
+            { validator: validateLng, trigger: 'onBlur' },
           ]"
         >
           <template #button>
@@ -752,7 +749,7 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请输入纬度坐标"
           :rules="[
             { required: true, message: '请输入纬度坐标' },
-            { validator: validateLng, trigger: 'blur' },
+            { validator: validateLat, trigger: 'onBlur' },
           ]"
         >
           <template #button>
@@ -845,7 +842,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :rules="[{ required: true, message: '请选择报警来源' }]"
         />
         <van-field
-          v-model="form.warningCodeYyj"
+          v-model="form.warningTel"
           label="联系方式"
           placeholder="请输入联系方式"
           maxlength="50"
@@ -931,6 +928,17 @@ const validateHeadquarters = (rule, value, callback) => {
           :params="{ deptType: 1 }"
           @change="onChangeDispatchGroup"
         />
+        <SelectOrg
+          v-model:value="form.dutyGroup"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="true"
+          label="辖区队站"
+          placeholder="请选择辖区队站"
+          title="请选择辖区队站"
+          :single="true"
+          :rules="[{ required: true, message: '请选择辖区队站' }]"
+          :params="{ deptType: 1 }"
+        />
         <SelectSingle
           v-model:value="form.firstGroup"
           :options="form.dispatchGroup"
@@ -950,6 +958,18 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请选择主战队站"
           :rules="[{ required: true, message: '请选择主战队站' }]"
           :checkShowFn="handleMain"
+        />
+        <SelectOrg
+          v-if="showAreaDutyGroup"
+          v-model:value="form.areaDutyGroup"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="true"
+          label="责任区大队"
+          placeholder="请选择责任区大队"
+          title="请选择责任区大队"
+          :single="true"
+          :rules="[{ required: true, message: '请选择责任区大队' }]"
+          :params="{ deptType: 1, deptLevel: 4 }"
         />
         <SelectMultiple
           v-model:value="form.otherCity"
@@ -986,7 +1006,7 @@ const validateHeadquarters = (rule, value, callback) => {
     </van-form>
 
     <div class="form-footer">
-      <van-button round block type="primary" size="large" @click="onSubmit">
+      <van-button round block type="primary" size="large" @click="handleSubmit">
         派发
       </van-button>
     </div>
@@ -1017,6 +1037,7 @@ const validateHeadquarters = (rule, value, callback) => {
 
 <style lang="scss" scoped>
 .police-entry-form {
+  height: unset;
   background-color: white;
   .police-entry-title {
     display: flex;
