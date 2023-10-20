@@ -4,11 +4,10 @@ import { createRouter, createWebHistory ,createWebHashHistory } from 'vue-router
 const indexRouter = {
   path: '/',
   component: () => import('@/views/old/index'),
-  redirect: '/index',
+  redirect: '/home',
   children: []
 }
 indexRouter.children = autoRegisteredRoutes()
-debugger;
 const routes = [
   indexRouter,
   {
@@ -31,11 +30,10 @@ const routes = [
 
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 router.beforeEach((to,from,next)=>{
-  debugger;
   if(localStorage.token){
     next()
   }else{
