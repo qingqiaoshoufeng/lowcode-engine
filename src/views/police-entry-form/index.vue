@@ -26,7 +26,7 @@ import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   currentRow: {
@@ -72,6 +72,8 @@ const props = defineProps({
 });
 
 const route = useRoute();
+
+const router = useRouter();
 
 const { show } = useModal();
 
@@ -378,6 +380,8 @@ const { loading, submit } = useSubmit((res) => {
     // showSuccessModal({ title: '派发成功！', okText: '查看已派发', pathName: 'police-manage' }, () => {
     //   props.refreshCallback()
     // })
+    showToast('派发成功！')
+    router.go(-1)
   }
 }, {
   submitFn: () => {
@@ -658,25 +662,25 @@ const validateLat = (value, rule) => {
   }
 };
 
-const validateWarningAddr = (rule, value, callback) => {
+const validateWarningAddr = (value, rule) => {
   if (!value) {
     return "请补充详情地址";
   } else if (value && value.length < 5) {
     return "警情地址不能少于5个字，请重新输入";
   } else {
-    return 
+    return ""
   }
 };
 
-const validateOtherCity = (rule, value, callback) => {
+const validateOtherCity = (value, rule) => {
   return '';
 };
 
-const validateOtherProvince = (rule, value, callback) => {
+const validateOtherProvince = (value, rule) => {
   return '';
 };
 
-const validateHeadquarters = (rule, value, callback) => {
+const validateHeadquarters = (value, rule) => {
   return '';
 };
 </script>
@@ -720,7 +724,7 @@ const validateHeadquarters = (rule, value, callback) => {
           name="warningAddr"
           label="警情地址"
           placeholder="请输入警情地址"
-          :rules="[{ required: true, message: '请输入警情地址' }]"
+          :rules="[{ validator: validateWarningAddr, trigger: 'onBlur' }, { required: true, message: '' }]"
         />
         <van-field
           v-model="form.warningLng"
@@ -971,25 +975,40 @@ const validateHeadquarters = (rule, value, callback) => {
           :rules="[{ required: true, message: '请选择责任区大队' }]"
           :params="{ deptType: 1, deptLevel: 4 }"
         />
+        <SelectOrg
+          v-model:value="form.headquarters"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="true"
+          label="全勤指挥部"
+          placeholder="无"
+          title="请选择全勤指挥部"
+          :rules="[{ required: true, validator: validateHeadquarters, trigger: 'onBlur' }]"
+          :params="{ deptType: 2 }"
+          :select-leaf="false"
+          :headers-disabled="false"
+          class="special-place"
+        />
         <SelectMultiple
           v-model:value="form.otherCity"
           :options="options.otherCityOptions"
           :field-names="{ value: 'organizationid', label: 'name' }"
-          :rules="[{ required: true, message: '请选择增援支队' }]"
+          :rules="[{ required: true, validator: validateOtherCity, trigger: 'onBlur' }]"
           :required="true"
           label="增援支队"
-          placeholder="请选择增援支队"
+          placeholder="无"
           title="请选择增援支队"
+          class="special-place"
         />
         <SelectMultiple
           v-model:value="form.otherProvince"
           :options="options.otherProvinceOptions"
           :field-names="{ value: 'organizationid', label: 'name' }"
-          :rules="[{ required: true, message: '请选择增援总队' }]"
+          :rules="[{ required: true, validator: validateOtherProvince, trigger: 'onBlur' }]"
           :required="true"
           label="增援总队"
-          placeholder="请选择增援总队"
+          placeholder="无"
           title="请选择增援总队"
+          class="special-place"
         />
         <van-field
           v-model="form.warningInfo"
@@ -1081,6 +1100,11 @@ const validateHeadquarters = (rule, value, callback) => {
 
   .form-footer {
     padding: 0 33px 30px 33px;
+  }
+  :deep(.special-place) {
+    .van-field__control::placeholder {
+      color: rgba(0, 0, 0, 0.85) !important;
+    }
   }
 }
 </style>

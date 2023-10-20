@@ -131,6 +131,9 @@ const showCheck = (item) => {
   if (props.selectLeaf && item.isLeaf) {
     return true;
   }
+  if (!props.headersDisabled && item.isheadquarters === 1) {
+    return true;
+  }
   return result;
 };
 
@@ -221,6 +224,7 @@ defineOptions({
     v-model="selectTextShow"
     is-link
     readonly
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"

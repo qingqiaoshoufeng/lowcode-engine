@@ -232,6 +232,7 @@ export default {
     v-model="areaText"
     is-link
     readonly
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
