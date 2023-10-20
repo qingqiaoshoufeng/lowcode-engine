@@ -8,6 +8,7 @@ const indexRouter = {
   children: []
 }
 indexRouter.children = autoRegisteredRoutes()
+
 const routes = [
   indexRouter,
   {

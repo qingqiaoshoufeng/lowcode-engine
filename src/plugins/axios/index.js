@@ -31,7 +31,7 @@ const toLogin = () => {
 
 // 创建axios实例
 export const request = axios.create({
-  baseURL: process.env.VUE_APP_BASE_URL,
+  // baseURL: process.env.VUE_APP_BASE_URL,
   // baseURL: '',
   timeout: 1000 * 12
 })
