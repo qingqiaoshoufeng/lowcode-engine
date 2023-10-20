@@ -546,6 +546,16 @@ const initDetail = () => {
   }
 }
 
+const onSubmit = () => {
+  formRef.value.submit((values) => {
+    console.log('submit', values);
+  })
+}
+
+const onFailed = (errorInfo) => {
+  console.log('failed', errorInfo);
+};
+
 onMounted(() => {
   const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, false);
   options.value.warningTypeOptions = res.JQ_TYPE;
@@ -677,7 +687,7 @@ const validateHeadquarters = (rule, value, callback) => {
       </div>
       <div v-else class="title-placeholder">警情名称由系统自动生成</div>
     </div>
-    <van-form>
+    <van-form ref="formRef" @failed="onFailed">
       <van-cell-group inset>
         <van-field
           v-model="form.warningDateText"
@@ -687,7 +697,7 @@ const validateHeadquarters = (rule, value, callback) => {
           name="warningDateText"
           label="接警时间"
           placeholder="请选择接警时间"
-          :rule="[{ required: true, message: '请选择接警时间' }]"
+          :rules="[{ required: true, message: '请选择接警时间' }]"
           @click="show.warningDate = true"
         >
         </van-field>
@@ -696,6 +706,7 @@ const validateHeadquarters = (rule, value, callback) => {
           v-model:value="form.warningArea"
           :show-all-area="showPreview"
           :required="!showPreview"
+          :rules="[{ required: true, message: '请选择行政区域' }]"
           @change="onAreaChange"
         />
         <van-field
@@ -705,7 +716,7 @@ const validateHeadquarters = (rule, value, callback) => {
           name="warningAddr"
           label="警情地址"
           placeholder="请输入警情地址"
-          :rule="[{ required: true, message: '请输入警情地址' }]"
+          :rules="[{ required: true, message: '请输入警情地址' }]"
         />
         <van-field
           v-model="form.warningLng"
@@ -714,8 +725,8 @@ const validateHeadquarters = (rule, value, callback) => {
           clearable
           label="经度坐标"
           placeholder="请输入经度坐标"
-          :rule="[
-            { required: true, message: '' },
+          :rules="[
+            { required: true, message: '请输入经度坐标' },
             { validator: validateLat, trigger: 'blur' },
           ]"
         >
@@ -732,8 +743,8 @@ const validateHeadquarters = (rule, value, callback) => {
           clearable
           label="纬度坐标"
           placeholder="请输入纬度坐标"
-          :rule="[
-            { required: true, message: '' },
+          :rules="[
+            { required: true, message: '请输入纬度坐标' },
             { validator: validateLng, trigger: 'blur' },
           ]"
         >
@@ -751,6 +762,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           label="警情类型"
           placeholder="请选择警情类型"
+          :rules="[{ required: true, message: '请选择警情类型' }]"
           @change="warningTypeChange"
         />
         <van-field
@@ -795,7 +807,7 @@ const validateHeadquarters = (rule, value, callback) => {
           name="warningTypeOther"
           label="其他说明"
           placeholder="请输入其他说明"
-          :rule="[{ required: true, message: '请输入其他说明' }]"
+          :rules="[{ required: true, message: '请输入其他说明' }]"
         />
         <SelectSingle
           v-if="showWarningLevel || form.warningLevel"
@@ -804,6 +816,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           label="警情等级"
           placeholder="请选择警情等级"
+          :rules="[{ required: true, message: '请选择警情等级' }]"
         />
         <van-field
           v-model="form.warningOrgname"
@@ -813,7 +826,7 @@ const validateHeadquarters = (rule, value, callback) => {
           label-width="166px"
           :label="labelWarningOrgname"
           :placeholder="`请输入${labelWarningOrgname}`"
-          :rule="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
+          :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
         />
         <SelectSingle
           v-model:value="form.warningSource"
@@ -822,6 +835,7 @@ const validateHeadquarters = (rule, value, callback) => {
           label="报警来源"
           placeholder="请选择报警来源"
           title="请选择报警来源"
+          :rules="[{ required: true, message: '请选择报警来源' }]"
         />
         <van-field
           v-model="form.warningCodeYyj"
@@ -829,7 +843,7 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请输入联系方式"
           maxlength="50"
           :required="false"
-          :rule="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
+          :rules="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
         />
         <van-field
           v-if="showNaturalDisaster || form.isNaturalDisaster"
@@ -867,7 +881,7 @@ const validateHeadquarters = (rule, value, callback) => {
           name="naturalDisasterOther"
           label="其他说明"
           placeholder="请输入其他说明"
-          :rule="[{ required: true, message: '请输入其他说明' }]"
+          :rules="[{ required: true, message: '请输入其他说明' }]"
         />
         <SelectSingle
           v-if="showTyphoonType"
@@ -876,6 +890,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           label="台风编号"
           placeholder="请选择台风编号"
+          :rules="[{ required: true, message: '请选择台风编号' }]"
         />
         <van-field
           v-model="form.warningCodeYyj"
@@ -883,7 +898,8 @@ const validateHeadquarters = (rule, value, callback) => {
           placeholder="请输入119警情编号"
           maxlength="50"
           :required="false"
-          :rule="[
+          :rules="[
+            { required: false, message: '' },
             { pattern: /^[A-Za-z0-9]+$/, message: '请输入正确119警情编号' },
           ]"
         />
@@ -891,7 +907,7 @@ const validateHeadquarters = (rule, value, callback) => {
           v-model:value="form.warningTag"
           :options="options.warningTagOptions"
           :field-names="{ value: 'boFireTagId', label: 'tagName' }"
-          :rule="[{ required: true, message: '请选择警情标签' }]"
+          :rules="[{ required: true, message: '请选择警情标签' }]"
           :required="true"
           label="警情标签"
           placeholder="请选择警情标签"
@@ -904,6 +920,7 @@ const validateHeadquarters = (rule, value, callback) => {
           label="出动队伍"
           placeholder="请选择出动队伍"
           title="请选择出动队伍"
+          :rules="[{ required: true, message: '请选择出动队伍' }]"
           :params="{ deptType: 1 }"
           @change="onChangeDispatchGroup"
         />
@@ -914,6 +931,7 @@ const validateHeadquarters = (rule, value, callback) => {
           :required="true"
           label="首到队站"
           placeholder="请选择首到队站"
+          :rules="[{ required: true, message: '请选择首到队站' }]"
           :checkShowFn="handleMain"
         />
         <SelectSingle
@@ -923,13 +941,14 @@ const validateHeadquarters = (rule, value, callback) => {
           :required="true"
           label="主战队站"
           placeholder="请选择主战队站"
+          :rules="[{ required: true, message: '请选择主战队站' }]"
           :checkShowFn="handleMain"
         />
         <SelectMultiple
           v-model:value="form.otherCity"
           :options="options.otherCityOptions"
           :field-names="{ value: 'organizationid', label: 'name' }"
-          :rule="[{ required: true, message: '请选择增援支队' }]"
+          :rules="[{ required: true, message: '请选择增援支队' }]"
           :required="true"
           label="增援支队"
           placeholder="请选择增援支队"
@@ -939,7 +958,7 @@ const validateHeadquarters = (rule, value, callback) => {
           v-model:value="form.otherProvince"
           :options="options.otherProvinceOptions"
           :field-names="{ value: 'organizationid', label: 'name' }"
-          :rule="[{ required: true, message: '请选择增援总队' }]"
+          :rules="[{ required: true, message: '请选择增援总队' }]"
           :required="true"
           label="增援总队"
           placeholder="请选择增援总队"
@@ -958,6 +977,12 @@ const validateHeadquarters = (rule, value, callback) => {
         />
       </van-cell-group>
     </van-form>
+
+    <div class="form-footer">
+      <van-button round block type="primary" size="large" @click="onSubmit">
+        派发
+      </van-button>
+    </div>
 
     <van-popup v-model:show="show.warningDate" position="bottom">
       <van-datetime-picker
@@ -1024,6 +1049,10 @@ const validateHeadquarters = (rule, value, callback) => {
       padding: 5px 5px;
       margin-top: 5px;
     }
+  }
+
+  .form-footer {
+    padding: 0 33px 30px 33px;
   }
 }
 </style>

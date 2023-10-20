@@ -37,7 +37,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
   },
@@ -224,7 +224,7 @@ defineOptions({
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="handleShow"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
