@@ -1,11 +1,14 @@
 <template>
  <div class="marquee-container">
     <div class="marquee-box">
-      <van-cell v-for="item in cardList" :key="item.label" title="单元格" is-link>
+      <van-cell v-for="item in list" :key="item.label" title="单元格" is-link>
           <template #title>
               <div class="title">
-                  <img src="@/assets/images/home-notice.png" alt="">
-                  <div class="label">{{ item.title }}</div>
+                  <div class="img">
+                    <div class="dot"></div>
+                    <img src="@/assets/images/home-notice.png" alt="">
+                  </div>
+                  <div class="label">{{ item.noticeTitle }}</div>
               </div>
           </template> 
       </van-cell>
@@ -16,17 +19,10 @@
 <script setup>
 import {cardList} from '../config.js'
 const props = defineProps({
-  info:{
-    type:Object,
-    default:()=>({
-      title:'标题',
-      number:'数量',
-      percent:'百分比',
-    })
+  list:{
+    type:Array,
+    default:()=>([])
   },
-  color:{
-    type:String
-  }
 })
 </script>
 <script>
@@ -43,6 +39,7 @@ export default {
   overflow: hidden;
   padding: 0 16px;
   background: #FFFFFF;
+  background: #fff;
 }
 .marquee-box {
   /* position: absolute; */
@@ -53,11 +50,27 @@ export default {
 .title{
     display: flex;
     align-items: center;
-    img{
+    .img{
         height: 14px;
         width: 14px;
         display: block;
         margin-right: 11px;
+        position: relative;
+        .dot{
+          width: 6px;
+          height: 6px;
+          background: #FF3131;
+          position: absolute;
+          right: 0;
+          top: 0;
+          border-radius: 50%;
+          transform: translate(50%,-50%);
+        }
+        img{
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
     }
   }
 }

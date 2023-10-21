@@ -18,7 +18,12 @@ const props = defineProps({
         return val + '年'
       }
       if(type === 'month'){
-        return val + '月'
+        if(val !== '全年'){
+          return val + '月'
+        }else{
+          return val
+        }
+       
       }
     }
   },
@@ -39,7 +44,14 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['update:defaultValue','update:show'])
-
+const values = computed({
+  get(){
+    return props.defaultValue
+  },
+  set(val){
+    emit('update:defaultValue',val)
+  }
+})
 
 const { columsData ,isShow, onConfirm, onCancel} = useAllTimePicker(props,emit)
 </script>
@@ -52,10 +64,10 @@ export default {
   <van-popup :show="isShow" position="bottom" :style="{ height: '50%' }">
     <van-picker
         title="选择时间"
+        :modelValue="values"
         :columns="columsData"
         @confirm="onConfirm"
         @cancel="onCancel"
-        @change="onChange"
     />
   </van-popup>
 </template>

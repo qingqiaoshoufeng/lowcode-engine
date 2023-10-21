@@ -4,3 +4,18 @@
   font-weight: 800;
   color: #0E203C;
 }
+
+.dot{
+  position: relative;
+  ::before{
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #FF3131;
+    position: absolute;
+    // right: 0;
+    // top: 0;
+    // transform: translate(-50%,-50%);
+  }
+}

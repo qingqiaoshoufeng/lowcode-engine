@@ -1,3 +1,5 @@
+import {isType} from '@/utils/types.js'
+
 const mockData = [
   [320, 332, 301, 334, 390],
 ]
@@ -62,6 +64,7 @@ const options = {
 export default {
   name:'WayTime',
   getOptions(val = mockData){
+    if(!isType(val,'Array')) return []
     Array.from(Array(1).keys()).map(index=>{
       options.series[index].data = val[index]
     })

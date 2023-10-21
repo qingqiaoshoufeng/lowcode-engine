@@ -33,7 +33,9 @@ const menuListMap = computed(()=>{
         position: fixed !important;
         top: 0;
         height: 44px;
+        box-sizing: content-box;
         line-height: 44px;
+        border-top: 44px solid #0C207F;
         background-color: #0C207F;
         color: #fff;
         width: 100%;

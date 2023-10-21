@@ -2,10 +2,16 @@
   <div class="statistics_info" :class="color">
       <div class="min-title">{{ title }}</div>
       <div class="tab" v-if="withTab">
-        <div v-for="item in tabList" :key="item.label" class="tab_item">{{ item.label }}</div>
+        <div 
+          v-for="item in tabList" 
+          :class="{isActive:(item.value === currentTab)}" 
+          :key="item.label" 
+          class="tab_item"
+          @click="tabChange(item.value)"
+        >{{ item.label }}</div>
       </div>
       <div class="card_list">
-          <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in cardList" :key="item.label">
+          <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
                 <div class="title">{{ item.title }}</div>
               </div>
@@ -19,7 +25,7 @@
 </template>
   
 <script setup>
-import { cardList} from '../config.js'
+import useTab from '../hooks/useTab.js'
 const props = defineProps({
   info:{
     type:Object,
@@ -37,19 +43,34 @@ const props = defineProps({
   },
   title:{
     type:String
+  },
+  list:[],
+  handleChange:{
+    type:Function,
   }
 })
 
-const tabList = [
-  {
-    label:'警情'
-  },{
-    label:'出动'
-  },
-  {
-    label:'火灾'
-  }
-]
+const {
+  currentTab,
+  tabList,tabChange} = useTab({
+  list:[
+    {
+      label:'警情',
+      value:1,
+    },
+    {
+      label:'出动',
+      value:2,
+    },
+    {
+      label:'火灾',
+      value:3,
+    },
+  ],
+  defaultTab:1,
+  handleChange:props.handleChange,
+  paramsKey:'annual'
+})
 </script>
 <script>
 export default {
@@ -70,10 +91,11 @@ export default {
       align-items: center;
       justify-content: space-between;
       padding: 0 5px;
+      margin-top: 5px;
       .tab_item{
         width: 68px;
         height: 22px;
-        background: #FFFFFD;
+        background: #F6F6F6;
         border-radius: 19px;
         align-items: center;
         display: flex;
@@ -86,7 +108,7 @@ export default {
     .card_item{
       width: 164px;
       height: 76px;
-      background: #F3F7FD;
+      background: #F6F6F6;
       border-radius: 4px;
       padding: 11px 10px 0 12px;
       box-sizing: border-box;
@@ -115,7 +137,12 @@ export default {
         color: #FF7F2C;
       }
     }
+   
   }
+  .isActive{
+        color: #1833A9 !important;
+        background-color: #FFFFFD !important;
+      }
 }
 .ml9{
   margin-left: 9px;

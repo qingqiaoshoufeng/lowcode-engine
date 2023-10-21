@@ -22,21 +22,18 @@ const props = defineProps({
   }
 })
 const {init,render} = useChat({dom:chartRef,type:props.type})
-setTimeout(()=>{
-  const data = null
-  render() 
-},2000)
-
 watch(()=>props.chartData,(val)=>{
   nextTick(()=>{
     render(val)
   })
+},{
+  immediate:true
 })
 
 </script>
  <script>
  export default {
-   name:'DisplayCard'
+   name:'Chart'
  }
  </script>
    

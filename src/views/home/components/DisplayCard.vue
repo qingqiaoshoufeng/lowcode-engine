@@ -1,7 +1,7 @@
 <template>
   <div class="display_card" :class="color">
     <div class="desc">
-      <div class="title">{{ info.title }}</div>
+      <div class="title">{{ info.name }}</div>
       <div class="percent">{{info.percent }}</div>
     </div>
     <div class="number">{{info.number }}</div>
@@ -32,14 +32,15 @@ export default {
 <style scoped lang="scss">
 .display_card{
   height: 100%;
-  width: 100%;
+  width: 108px;
   box-shadow: 0px 2px 6px 0px rgba(255,84,42,0.2);
   border-radius: 8px;
   padding-top: 9px;
   padding-left: 9px;
   padding-right: 7px;
-  margin: 16px;
+  // margin: 16px;
   background: #FFFFFF;
+  box-sizing: border-box;
   .desc{
     display: flex;
     justify-content: space-between;
@@ -49,18 +50,33 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #FFFFFF; 
+    min-width: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
   }
   .number{
     font-size: 21px;
     font-family: D-DINExp-Bold, D-DINExp;
     font-weight: bold;
     color: #FFFFFF;
+    max-width: 45px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
   }
   .percent{
     font-size: 11px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #FFFFFF; 
+    max-width: 50px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
   }
 }
 .blue{

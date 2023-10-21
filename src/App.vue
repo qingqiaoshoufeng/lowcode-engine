@@ -28,6 +28,7 @@ body,
   height: 100%;
   margin: 0 auto;
   background-color: #efeff4;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
 }
 </style>

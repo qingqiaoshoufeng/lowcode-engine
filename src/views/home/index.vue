@@ -5,24 +5,32 @@
         <div class="triangle "></div>
     </div>
     <div class="wrapper">
-      <div class="card_list" v-if="isStanding">
-        <DisplayCard v-for="item in cardList" :key="item.title" :color="item.color" />
+      <div class="card_list" v-if="!isStanding">
+        <div>
+          <DisplayCard :info="policeCardInfo" color="blue"/>
+        </div>
+        <div>
+          <DisplayCard :info="fireCardInfo" color="red"/>
+        </div>
+        <div>
+          <DisplayCard :info="dispatchCardInfo" color="green"/>
+        </div>
       </div>
-      <NoticeList class="notice_list" />
-      <template v-if="isStanding">
-        <StatisticsInfo title="整体概况" :withTab="!isStanding" class="statistics_info" />
-        <Chart class="mt10" title="百万人口火灾" type="FireInfo"/>
-        <Chart class="mt10" title="火警平均出动时长（分钟)" type="DispatchInfo"/>
-        <YearRank class="mt10 year_rank" title="全年榜单 TOP10"  type="FireInfo"/>
-        <Chart class="mt10" title="高频起火场所" type="InitialFuels" />
+      <NoticeList class="notice_list" :list="noticeList" @click="goNotice"/>
+      <template v-if="!isStanding">
+        <StatisticsInfo class="pt10 statistics_info" ref="statisticsInfoRef" :list="statisticsList" title="整体概况" :withTab="!isStanding" />
+        <Chart class="mt10" title="百万人口火灾" type="FireInfo" :chartData="FireInfoList"/>
+        <Chart class="mt10" title="火警平均出动时长（分钟)" type="DispatchInfo" :chartData="DispatchInfoList" />
+        <YearRank class="mt10 year_rank" title="全年榜单 TOP10"  type="FireInfo" :handleChange="getRank" :list="rankList"/>
+        <Chart class="mt10" title="高频起火原因" type="InitialFuels" :chartData="InitialFuelsList" />
       </template>
       <template v-else>
-        <StatisticsInfo class="pt10 statistics_info" title="辖区警情统计" />
-        <StatisticsInfo class="pt10 statistics_info" title="出动情况统计" />
-        <StatisticsInfo class="pt10 statistics_info"  title="战斗成果统计" />
-        <Chart class="mt10" title="途中时长分布" type="WayTime"/>
-        <Chart class="mt10" title="战斗时长分布" type="FightingTime"/>
-        <Chart class="mt10" title="战斗时长分布" type="FireArea"/>
+        <StatisticsInfo :list="policelist" class="pt10 statistics_info" title="辖区警情统计" />
+        <StatisticsInfo :list="dispatchList" class="pt10 statistics_info" title="出动情况统计" />
+        <StatisticsInfo :list="fitghtList" class="pt10 statistics_info"  title="战斗成果统计" />
+        <Chart class="mt10" title="途中时长分布" type="WayTime" :chartData="WayTimeList"/>
+        <Chart class="mt10" title="战斗时长分布" type="FightingTime" :chartData="FightingTimeList" />
+        <Chart class="mt10" title="参战形式分布" type="FireArea"/>
       </template>
     </div>
   </div>
@@ -38,24 +46,36 @@ import DisplayCard from './components/DisplayCard.vue'
 import NoticeList from './components/NoticeList.vue'
 import StatisticsInfo from './components/StatisticsInfo.vue'
 import YearRank from './components/YearRank.vue'
-
 import Chart from './components/Chart.vue'
 import {ref} from 'vue'
+
 const currentab = ref(1)
+const statisticsInfoRef = ref(null)
 const show=ref(true)
 const dataPickerRef = ref(null)
 const {
   currentTime,
-  minDate,
-  maxDate,
   isShow,
   openTimePop,
-  cardList,
-  confirmTime,
-  formatter,
-  filterOptions,
+  policeCardInfo,
+  dispatchCardInfo,
+  fireCardInfo,
+  // confirmTime,
   isStanding,
-} = useSearch({dataPickerRef})
+  FireInfoList,
+  InitialFuelsList,
+  WayTimeList,
+  FightingTimeList,
+  statisticsList,
+  fitghtList,
+  policelist, //
+  dispatchList,
+  DispatchInfoList,
+  noticeList,
+  rankList,
+  getRank,
+  goNotice
+} = useSearch({dataPickerRef,statisticsInfoRef})
 
 
 </script>
@@ -96,10 +116,22 @@ const {
       border-radius: 16px;
       background-color: #F6F7F8 ;
       // padding: 16px 16px 0px;
+      padding-top: 16px;
       .card_list{
-        height: 66px;
+        height: 78px;
         width: 100%;
         display: flex;
+        padding: 0 16px;
+        padding-bottom: 12px;;
+        background: #fff;
+        >div{
+          // width: 108px;
+          flex:1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+        }
         .red{
           margin: 0 9px;
         }
@@ -108,7 +140,7 @@ const {
         // height: 100px;
         background: #F7F8FF;
         border-radius: 4px;
-        margin-top: 12px;
+        // margin-top: 12px;
       }
       .year_rank{
         background: #fff;
@@ -119,6 +151,9 @@ const {
     }
     .pt10{
       padding-top: 10px;
+    }
+    .statistics_info{
+      padding-bottom: 15px;
     }
 }
 </style>
