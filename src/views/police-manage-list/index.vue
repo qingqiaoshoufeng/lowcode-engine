@@ -3,6 +3,9 @@ import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
+import ProModal from "@/component/ProModal/index";
+import ApplyAbolish from "./apply-abolish.vue";
+import ApplyRecheck from "./apply-recheck.vue";
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -15,6 +18,7 @@ import { showToast, showLoadingToast, closeToast } from "vant";
 import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
+import { useModal } from '@/hooks/useModal.js'
 
 const searchOptions = ref([
   {
@@ -135,6 +139,10 @@ const tabs = ref([
 
 const store = useStore();
 
+const { show } = useModal();
+
+const currentRow = ref(null);
+
 const proListRef = ref(null);
 
 const checkChange = (record) => {
@@ -191,20 +199,40 @@ const handleEdit = (item) => {
   // });
 };
 
-const handleAbolish = (item) => {
+const handleAbolish = (row) => {
   showToast("此功能暂未开放！");
+  // if (row.isLock === '1') {
+  //   showToast(MSG_LOCKING_TEXT)
+  //   return
+  // }
+  // currentRow.value = row
+  // show.value.abolishVisible = true
 };
 
-const handleChange = (item) => {
+const handleChange = (row) => {
   showToast("此功能暂未开放！");
+  // if (row.isLock === '1') {
+  //   showToast(MSG_LOCKING_TEXT)
+  //   return
+  // }
+  // if (row.isOtherCity === '1') {
+  //   showToast('跨市警情不支持【申请更正】操作，请联系管理员处理！')
+  //   return
+  // }
+  // if (row.isOtherProvince === '1') {
+  //   showToast('跨省警情不支持【申请更正】操作，请联系管理员处理！')
+  //   return
+  // }
+  // currentRow.value = row
+  // show.value.recheckVisible = true
 };
 
 const handleItem = (item) => {
-  showToast("此功能暂未开放！");
-  // router.push({
-  //   name: "police-entry-form",
-  //   query: { boFireWarningId: item.boFireWarningId, showPreview: true },
-  // });
+  // showToast("此功能暂未开放！");
+  router.push({
+    name: "police-entry-form",
+    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+  });
 };
 
 const onTimeChange = (value) => {
@@ -219,6 +247,10 @@ const onSearchConfirm = () => {
   proListRef.value.filter().then((res) => {
     closeToast();
   });
+}
+
+const finishCallback = () => {
+  proListRef.value.filter()
 }
 
 onMounted(() => {
@@ -338,6 +370,28 @@ onMounted(() => {
         </div>
       </template>
     </ProList>
+
+    <!-- 申请更正 -->
+    <ProModal v-model:visible="show.recheckVisible" title="申请更正">
+      <template #default="{ setHandleOk }">
+        <ApplyRecheck
+          :recheck-type="1"
+          :current-row="currentRow"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
+        />
+      </template>
+    </ProModal>
+    <!-- 申请作废 -->
+    <ProModal v-model:visible="show.abolishVisible" title="申请作废">
+      <template #default="{ setHandleOk }">
+        <ApplyAbolish
+          :current-row="currentRow"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
+        />
+      </template>
+    </ProModal>
   </div>
 </template>
 

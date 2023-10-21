@@ -53,7 +53,6 @@ export const validateLongitude = (longitude) => {
   if (longitude < -180 || longitude > 180) {
     return false
   }
-
   // 校验经度格式：十进制小数或度分秒格式
   const longitudeRegex = /^-?(?:1[0-7]|[1-9])?\d(?:\.\d+)?|180(?:\.0+)?$/
   if (!longitudeRegex.test(longitude)) {
@@ -68,7 +67,6 @@ export const validateLatitude = (latitude) => {
   if (latitude < -90 || latitude > 90) {
     return false
   }
-
   // 校验纬度格式：十进制小数或度分秒格式
   const latitudeRegex = /^-?([1-8]?\d(?:\.\d+)?|90(?:\.0+)?)$/
   if (!latitudeRegex.test(latitude)) {

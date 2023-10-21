@@ -5,8 +5,8 @@ import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
-    type: String,
-    default: "",
+    type: Array,
+    default: () => [],
   },
   title: {
     type: String,
@@ -40,6 +40,10 @@ const props = defineProps({
   rules: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   fieldNames: {
     type: Object,
@@ -131,6 +135,9 @@ const showCheck = (item) => {
   if (props.selectLeaf && item.isLeaf) {
     return true;
   }
+  if (!props.headersDisabled && item.isheadquarters === 1) {
+    return true;
+  }
   return result;
 };
 
@@ -161,9 +168,9 @@ const handleOk = () => {
 
 const handleCheck = (item) => {
   if (props.single) {
-    selectValue.value.push(item.organizationid);
-    selectText.value.push(item.name);
-    selectItem.value.push(item);
+    selectValue.value = [item.organizationid];
+    selectText.value = [item.name];
+    selectItem.value = [item];
     emit("update:value", selectItem.value);
     emit("update:text", selectText.value);
     emit("change", selectValue.value, selectItem.value, selectText.value);
@@ -220,7 +227,8 @@ defineOptions({
   <van-field
     v-model="selectTextShow"
     is-link
-    readonly
+    v-preview-text="showPreview"
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"

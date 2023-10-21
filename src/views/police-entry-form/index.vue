@@ -26,7 +26,7 @@ import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   currentRow: {
@@ -34,10 +34,6 @@ const props = defineProps({
     default: () => {
       return {};
     },
-  },
-  showPreview: {
-    type: Boolean,
-    default: false,
   },
   isEdit: {
     // 警情修改
@@ -73,6 +69,8 @@ const props = defineProps({
 
 const route = useRoute();
 
+const router = useRouter();
+
 const { show } = useModal();
 
 const store = useStore();
@@ -83,6 +81,8 @@ const { options } = useOptions({
 });
 
 const formRef = ref(null);
+
+const showPreview = ref(Boolean(route.query?.showPreview));
 
 const loadDetail = ref(true);
 
@@ -98,8 +98,8 @@ const detail = ref(null)
 
 const form = ref({
   warningName: "", // 警情标题
-  warningDate: new Date(), // 接警时间
-  warningDateText: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+  warningDate: dayjs().format("YYYY-MM-DD").split('-'), // 接警时间
+  warningDateText: dayjs().format("YYYY-MM-DD"),
   warningCodeYyj: "", // 119警情编号
   warningOrgname: "", // 单位/户主/个体户名称
   warningArea: "", // 行政区域
@@ -146,18 +146,12 @@ const textFilter = (text, length) => {
 };
 
 form.value.warningName = computed(() => {
-  if (props.showPreview) {
+  if (showPreview.value) {
     return detail.value?.warningName;
   }
-  const {
-    warningDate,
-    warningOrgname,
-    warningAreaText,
-    warningTypeText,
-    naturalDisasterTypeText,
-  } = form.value;
+  const { warningDate, warningOrgname, warningAreaText, warningTypeText, naturalDisasterTypeText } = form.value;
   let result = warningDate
-    ? `“${dayjs(warningDate).format("M")}· ${dayjs(warningDate).format("D")}”`
+    ? `“${dayjs(warningDate?.join('-')).format("M")}· ${dayjs(warningDate?.join('-')).format("D")}”`
     : "";
   if (warningTypeText?.[0] === "虚假警") {
     if (warningTypeText?.[1] === "虚警（误报）") {
@@ -224,7 +218,7 @@ form.value.warningName = computed(() => {
 });
 
 const showAddTag = computed(() => {
-  return !props.isApproval && props.showPreview;
+  return !props.isApproval && showPreview.value;
 });
 
 const showWarningLevel = computed(() => {
@@ -378,6 +372,8 @@ const { loading, submit } = useSubmit((res) => {
     // showSuccessModal({ title: '派发成功！', okText: '查看已派发', pathName: 'police-manage' }, () => {
     //   props.refreshCallback()
     // })
+    showToast('派发成功！')
+    setTimeout(() => router.go(-1), 200)
   }
 }, {
   submitFn: () => {
@@ -386,7 +382,7 @@ const { loading, submit } = useSubmit((res) => {
     const params = {
       ...values,
       new: !values.boFireWarningId,
-      warningDate: `${values.warningDate.unix()}000`,
+      warningDate: `${dayjs(values.warningDate.join('-')).unix()}000`,
       warningArea: values.warningArea.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
@@ -427,7 +423,7 @@ const initDetail = () => {
   const { boFireWarningId, boWarningYyjId, showPreview } = route.query
   if (boWarningYyjId) {
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
-    form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
+    form.value.warningDate = dayjs(props.currentRow.warningCodeYyj).format('YYYY-MM-DD').split('-')
     form.value.warningType = props.currentRow.warningType?.split(',')
     form.value.warningTypeText = props.currentRow.warningTypeValue?.split('/')
     form.value.warningArea = props.currentRow.warningArea?.split(',')
@@ -446,7 +442,7 @@ const initDetail = () => {
       if (res) {
         detail.value = res
         form.value.boFireWarningId = res.boFireWarningId
-        form.value.warningDate = dayjs(res.warningDate)
+        form.value.warningDate = dayjs(res.warningDate).format('YYYY-MM-DD').split('-')
         form.value.warningCodeYyj = res.warningCodeYyj
         form.value.warningOrgname = res.warningOrgname
         if (res.warningStreet) {
@@ -457,11 +453,11 @@ const initDetail = () => {
           form.value.warningArea = [res.warningProvince, res.warningCity, res.warningTown]
           form.value.warningAreaText = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue]
         }
-        if (!props.showPreview && form.value.warningAreaText?.length >= 3) {
+        if (!showPreview.value && form.value.warningAreaText?.length >= 3) {
           const attr = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
-        else if (!props.showPreview && form.value.warningAreaText?.length === 2) {
+        else if (!showPreview.value && form.value.warningAreaText?.length === 2) {
           const attr = [res.warningProvinceValue, res.warningCityValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
@@ -533,7 +529,7 @@ const initDetail = () => {
         // 警情等级
         initLevelOptions()
         // 详情特殊处理options
-        if (showPreview) {
+        if (showPreview.value) {
           initPermissionOptions(res)
         }
 
@@ -547,16 +543,16 @@ const initDetail = () => {
   }
 }
 
-const onSubmit = () => {
-  formRef.value.submit((values) => {
-    console.log('submit', values);
-    if (values) {
+const handleSubmit = () => {
+  formRef.value.submit()
+}
 
-    }
-  })
+const onSubmit = () => {
+  submit()
 }
 
 const onFailed = (errorInfo) => {
+  console.log(errorInfo)
   if (errorInfo?.errors?.length > 0) {
     showToast('信息填写不完整，请检查填写内容！')
     scrollFormFailed()
@@ -620,68 +616,67 @@ const lngLatCallback = (lat, lng) => {
   formRef.value.resetValidation(['warningLng', 'warningLat'])
 };
 
-const onConfirm = (value) => {
-  form.value.warningDateText = dayjs(value).format("YYYY-MM-DD HH:mm:ss");
-  show.value.warningDate = false;
+const onConfirm = (selectedValues, selectedOptions) => {
+  if (selectedValues) {
+    form.value.warningDateText = selectedValues.selectedValues?.join('-');
+    show.value.warningDate = false;
+  }
 };
 
-const validateFireTel = (rule, value, callback) => {
+const validateFireTel = (value, rule) => {
   const { warningSource } = form.value;
   const filter = options.value.warningSource?.filter(
     (item) => item.boDictId === warningSource
   );
   if (!value) {
-    callback();
-  } else if (
-    filter?.[0]?.dictName === "电话报警" &&
-    !validateTelePhone(value)
-  ) {
-    callback(new Error("请输入正确报警人联系方式"));
+    return '';
+  } else if (filter?.[0]?.dictName === "电话报警" && !validateTelePhone(value)) {
+    return "请输入正确报警人联系方式";
   } else {
-    callback();
+    return '';
   }
 };
 
-const validateLng = (rule, value, callback) => {
+const validateLng = (value, rule) => {
   if (!value) {
-    callback(new Error("请输入经度坐标"));
+    return "请输入经度坐标";
   } else if (!validateLongitude(value)) {
-    callback(new Error("请输入正确经度坐标"));
+    return "请输入正确经度坐标";
   } else {
-    callback();
+    return ''
   }
 };
 
-const validateLat = (rule, value, callback) => {
+const validateLat = (value, rule) => {
   if (!value) {
-    callback(new Error("请输入纬度坐标"));
+    return "请输入纬度坐标";
   } else if (!validateLatitude(value)) {
-    callback(new Error("请输入正确纬度坐标"));
+    return "请输入正确纬度坐标";
   } else {
-    callback();
+    return ''
   }
 };
 
-const validateWarningAddr = (rule, value, callback) => {
+const validateWarningAddr = (value, rule) => {
   if (!value) {
-    callback(new Error("请补充详情地址"));
+    return "请补充详情地址";
   } else if (value && value.length < 5) {
-    callback(new Error("警情地址不能少于5个字，请重新输入"));
+    return "警情地址不能少于5个字，请重新输入";
   } else {
-    callback();
+    return '';
   }
 };
 
-const validateOtherCity = (rule, value, callback) => {
-  callback();
+const validateOtherCity = (value, rule) => {
+  return "";
 };
 
-const validateOtherProvince = (rule, value, callback) => {
-  callback();
+const validateOtherProvince = (value, rule) => {
+  return "";
 };
 
-const validateHeadquarters = (rule, value, callback) => {
-  callback();
+const validateHeadquarters = (value, rule) => {
+  return "";
 };
 </script>
 
@@ -694,307 +689,419 @@ const validateHeadquarters = (rule, value, callback) => {
       </div>
       <div v-else class="title-placeholder">警情名称由系统自动生成</div>
     </div>
-    <van-form ref="formRef" @failed="onFailed">
-      <van-cell-group inset>
-        <van-field
-          v-model="form.warningDateText"
-          is-link
-          :readonly="showPreview"
-          required
-          name="warningDateText"
-          label="接警时间"
-          placeholder="请选择接警时间"
-          :rules="[{ required: true, message: '请选择接警时间' }]"
-          @click="show.warningDate = true"
-        >
-        </van-field>
-        <AreaCascader
-          v-if="!loadDetail"
-          v-model:value="form.warningArea"
-          :show-all-area="showPreview"
-          :required="!showPreview"
-          :rules="[{ required: true, message: '请选择行政区域' }]"
-          @change="onAreaChange"
-        />
-        <van-field
-          v-model="form.warningAddr"
-          required
-          :readonly="showPreview"
-          name="warningAddr"
-          label="警情地址"
-          placeholder="请输入警情地址"
-          :rules="[{ required: true, message: '请输入警情地址' }]"
-        />
-        <van-field
-          v-model="form.warningLng"
-          center
-          required
-          clearable
-          label="经度坐标"
-          placeholder="请输入经度坐标"
-          :rules="[
-            { required: true, message: '请输入经度坐标' },
-            { validator: validateLat, trigger: 'blur' },
-          ]"
-        >
-          <template #button>
-            <van-button size="small" type="primary" @click="handleLngLat"
-              >选择经纬度</van-button
-            >
-          </template>
-        </van-field>
-        <van-field
-          v-model="form.warningLat"
-          center
-          required
-          clearable
-          label="纬度坐标"
-          placeholder="请输入纬度坐标"
-          :rules="[
-            { required: true, message: '请输入纬度坐标' },
-            { validator: validateLng, trigger: 'blur' },
-          ]"
-        >
-          <template #button>
-            <van-button size="small" type="primary" @click="handleLngLat"
-              >选择经纬度</van-button
-            >
-          </template>
-        </van-field>
-        <CascaderSingle
-          v-model:value="form.warningType"
-          v-model:text="form.warningTypeText"
-          :options="options.warningTypeOptions"
-          :required="true"
-          :field-names="{ value: 'boDictId', text: 'dictName' }"
-          label="警情类型"
-          placeholder="请选择警情类型"
-          :rules="[{ required: true, message: '请选择警情类型' }]"
-          @change="warningTypeChange"
-        />
-        <van-field
-          v-if="showVipSecurity"
-          required
-          name="switch"
-          label="要人安保"
-          label-width="100px"
-          class="switch-wrapper"
-        >
-          <template #input>
-            <van-switch
-              v-model="form.vipSecurity"
-              size="20"
-              active-value="1"
-              inactive-value="2"
-            />
-          </template>
-        </van-field>
-        <van-field
-          v-if="showIsHappenFire"
-          required
-          name="switch"
-          label="是否发生火灾"
-          label-width="120px"
-          class="switch-wrapper"
-        >
-          <template #input>
-            <van-switch
-              v-model="form.isHappenFire"
-              size="20"
-              active-value="1"
-              inactive-value="2"
-            />
-          </template>
-        </van-field>
-        <van-field
-          v-if="showWarningTypeOther || form.warningTypeOther"
-          v-model="form.warningTypeOther"
-          required
-          :readonly="showPreview"
-          name="warningTypeOther"
-          label="其他说明"
-          placeholder="请输入其他说明"
-          :rules="[{ required: true, message: '请输入其他说明' }]"
-        />
-        <SelectSingle
-          v-if="showWarningLevel || form.warningLevel"
-          v-model:value="form.warningLevel"
-          :options="options.warningLevelOptions"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          label="警情等级"
-          placeholder="请选择警情等级"
-          :rules="[{ required: true, message: '请选择警情等级' }]"
-        />
-        <van-field
-          v-model="form.warningOrgname"
-          required
-          :readonly="showPreview"
-          name="warningOrgname"
-          label-width="166px"
-          :label="labelWarningOrgname"
-          :placeholder="`请输入${labelWarningOrgname}`"
-          :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
-        />
-        <SelectSingle
-          v-model:value="form.warningSource"
-          :options="options.warningSource"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          label="报警来源"
-          placeholder="请选择报警来源"
-          title="请选择报警来源"
-          :rules="[{ required: true, message: '请选择报警来源' }]"
-        />
-        <van-field
-          v-model="form.warningCodeYyj"
-          label="联系方式"
-          placeholder="请输入联系方式"
-          maxlength="50"
-          :required="false"
-          :rules="[{ pattern: /^[A-Za-z0-9]+$/, message: '请输入正确联系方式' }]"
-        />
-        <van-field
-          v-if="showNaturalDisaster || form.isNaturalDisaster"
-          required
-          name="switch"
-          label="是否自然灾害引发"
-          label-width="200px"
-          class="switch-wrapper"
-        >
-          <template #input>
-            <van-switch
-              v-model="form.isNaturalDisaster"
-              size="20"
-              active-value="1"
-              inactive-value="2"
-            />
-          </template>
-        </van-field>
-        <CascaderSingle
-          v-if="form.isNaturalDisaster === '1'"
-          v-model:value="form.naturalDisasterType"
-          v-model:text="form.naturalDisasterTypeText"
-          :options="options.naturalDisasterOptions"
-          :required="true"
-          :field-names="{ value: 'boDictId', text: 'dictName' }"
-          label="自然灾害类型"
-          label-width="108px"
-          placeholder="请选择自然灾害类型"
-        />
-        <van-field
-          v-if="showNaturalDisasterOther || form.naturalDisasterOther"
-          v-model="form.naturalDisasterOther"
-          required
-          :readonly="showPreview"
-          name="naturalDisasterOther"
-          label="其他说明"
-          placeholder="请输入其他说明"
-          :rules="[{ required: true, message: '请输入其他说明' }]"
-        />
-        <SelectSingle
-          v-if="showTyphoonType"
-          v-model:value="form.typhoonType"
-          :options="options.typhoonType"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          label="台风编号"
-          placeholder="请选择台风编号"
-          :rules="[{ required: true, message: '请选择台风编号' }]"
-        />
-        <van-field
-          v-model="form.warningCodeYyj"
-          label="119警情编号"
-          placeholder="请输入119警情编号"
-          maxlength="50"
-          :required="false"
-          :rules="[
-            { required: false, message: '' },
-            { pattern: /^[A-Za-z0-9]+$/, message: '请输入正确119警情编号' },
-          ]"
-        />
-        <SelectMultiple
-          v-model:value="form.warningTag"
-          :options="options.warningTagOptions"
-          :field-names="{ value: 'boFireTagId', label: 'tagName' }"
-          :rules="[{ required: true, message: '请选择警情标签' }]"
-          :required="true"
-          label="警情标签"
-          placeholder="请选择警情标签"
-          title="请选择警情标签"
-        />
-        <SelectOrg
-          v-model:value="form.dispatchGroup"
-          :field-names="{ value: 'organizationid', label: 'name' }"
-          :required="true"
-          label="出动队伍"
-          placeholder="请选择出动队伍"
-          title="请选择出动队伍"
-          :rules="[{ required: true, message: '请选择出动队伍' }]"
-          :params="{ deptType: 1 }"
-          @change="onChangeDispatchGroup"
-        />
-        <SelectSingle
-          v-model:value="form.firstGroup"
-          :options="form.dispatchGroup"
-          :field-names="{ value: 'organizationid', label: 'name' }"
-          :required="true"
-          label="首到队站"
-          placeholder="请选择首到队站"
-          :rules="[{ required: true, message: '请选择首到队站' }]"
-          :checkShowFn="handleMain"
-        />
-        <SelectSingle
-          v-model:value="form.mainGroup"
-          :options="form.dispatchGroup"
-          :field-names="{ value: 'organizationid', label: 'name' }"
-          :required="true"
-          label="主战队站"
-          placeholder="请选择主战队站"
-          :rules="[{ required: true, message: '请选择主战队站' }]"
-          :checkShowFn="handleMain"
-        />
-        <SelectMultiple
-          v-model:value="form.otherCity"
-          :options="options.otherCityOptions"
-          :field-names="{ value: 'organizationid', label: 'name' }"
-          :rules="[{ required: true, message: '请选择增援支队' }]"
-          :required="true"
-          label="增援支队"
-          placeholder="请选择增援支队"
-          title="请选择增援支队"
-        />
-        <SelectMultiple
-          v-model:value="form.otherProvince"
-          :options="options.otherProvinceOptions"
-          :field-names="{ value: 'organizationid', label: 'name' }"
-          :rules="[{ required: true, message: '请选择增援总队' }]"
-          :required="true"
-          label="增援总队"
-          placeholder="请选择增援总队"
-          title="请选择增援总队"
-        />
-        <van-field
-          v-model="form.warningInfo"
-          rows="4"
-          autosize
-          label="警情描述"
-          type="textarea"
-          maxlength="500"
-          placeholder="请输入警情描述"
-          show-word-limit
-          class="form-textarea"
-        />
-      </van-cell-group>
+    <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+      <van-field
+        v-model="form.warningDateText"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        is-link
+        required
+        name="warningDateText"
+        label="接警时间："
+        placeholder="请选择接警时间"
+        :rules="[{ required: true, message: '请选择接警时间' }]"
+        @click="show.warningDate = true"
+      >
+      </van-field>
+      <AreaCascader
+        v-if="!loadDetail"
+        name="warningArea"
+        v-model:value="form.warningArea"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        :show-all-area="showPreview"
+        :required="!showPreview"
+        :rules="[{ required: true, message: '请选择行政区域' }]"
+        @change="onAreaChange"
+      />
+      <van-field
+        v-model="form.warningAddr"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="warningAddr"
+        label="警情地址："
+        placeholder="请输入警情地址"
+        :rules="[{ validator: validateWarningAddr, trigger: 'onBlur' }]"
+      />
+      <van-field
+        v-model="form.warningLng"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        name="warningLng"
+        center
+        required
+        clearable
+        label="经度坐标："
+        placeholder="请输入经度坐标"
+        :rules="[
+          { required: true, message: '请输入经度坐标' },
+          { validator: validateLng, trigger: 'onBlur' },
+        ]"
+      >
+        <template #button>
+          <van-button size="small" type="primary" @click="handleLngLat"
+            >选择经纬度</van-button
+          >
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.warningLat"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        name="warningLat"
+        center
+        required
+        clearable
+        label="纬度坐标："
+        placeholder="请输入纬度坐标"
+        :rules="[
+          { required: true, message: '请输入纬度坐标' },
+          { validator: validateLat, trigger: 'onBlur' },
+        ]"
+      >
+        <template #button>
+          <van-button size="small" type="primary" @click="handleLngLat"
+            >选择经纬度</van-button
+          >
+        </template>
+      </van-field>
+      <CascaderSingle
+        v-model:value="form.warningType"
+        v-model:text="form.warningTypeText"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="warningType"
+        :options="options.warningTypeOptions"
+        :required="true"
+        :field-names="{ value: 'boDictId', text: 'dictName' }"
+        label="警情类型："
+        placeholder="请选择警情类型"
+        :rules="[{ required: true, message: '请选择警情类型' }]"
+        @change="warningTypeChange"
+      />
+      <van-field
+        v-if="showVipSecurity"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="要人安保："
+        label-width="100px"
+        class="switch-wrapper"
+      >
+        <template #input>
+          <van-switch
+            v-model="form.vipSecurity"
+            size="20"
+            active-value="1"
+            inactive-value="2"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-if="showIsHappenFire"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="是否发生火灾："
+        label-width="120px"
+        class="switch-wrapper"
+      >
+        <template #input>
+          <van-switch
+            v-model="form.isHappenFire"
+            size="20"
+            active-value="1"
+            inactive-value="2"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-if="showWarningTypeOther || form.warningTypeOther"
+        v-model="form.warningTypeOther"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="warningTypeOther"
+        label="其他说明："
+        placeholder="请输入其他说明"
+        :rules="[{ required: true, message: '请输入其他说明' }]"
+      />
+      <SelectSingle
+        v-if="showWarningLevel || form.warningLevel"
+        v-model:value="form.warningLevel"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="warningLevel"
+        required
+        :options="options.warningLevelOptions"
+        :field-names="{ value: 'boDictId', label: 'dictName' }"
+        label="警情等级："
+        placeholder="请选择警情等级"
+        :rules="[{ required: true, message: '请选择警情等级' }]"
+      />
+      <van-field
+        v-model="form.warningOrgname"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="warningOrgname"
+        label-width="178px"
+        :label="`${labelWarningOrgname}：`"
+        :placeholder="`请输入${labelWarningOrgname}`"
+        :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
+      />
+      <SelectSingle
+        v-model:value="form.warningSource"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="warningSource"
+        required
+        :options="options.warningSource"
+        :field-names="{ value: 'boDictId', label: 'dictName' }"
+        label="报警来源："
+        placeholder="请选择报警来源"
+        title="请选择报警来源"
+        :rules="[{ required: true, message: '请选择报警来源' }]"
+      />
+      <van-field
+        v-if="!showSecurityService"
+        v-model="form.warningTel"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        name="warningTel"
+        label="联系方式："
+        placeholder="请输入联系方式"
+        maxlength="50"
+        :required="false"
+        :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
+      />
+      <van-field
+        v-if="showNaturalDisaster || form.isNaturalDisaster"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="isNaturalDisaster"
+        label="是否自然灾害引发："
+        label-width="200px"
+        class="switch-wrapper"
+      >
+        <template #input>
+          <van-switch
+            v-model="form.isNaturalDisaster"
+            size="20"
+            active-value="1"
+            inactive-value="2"
+          />
+        </template>
+      </van-field>
+      <CascaderSingle
+        v-if="form.isNaturalDisaster === '1'"
+        v-model:value="form.naturalDisasterType"
+        v-model:text="form.naturalDisasterTypeText"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="naturalDisasterType"
+        :options="options.naturalDisasterOptions"
+        :required="true"
+        :field-names="{ value: 'boDictId', text: 'dictName' }"
+        label="自然灾害类型："
+        label-width="108px"
+        placeholder="请选择自然灾害类型"
+      />
+      <van-field
+        v-if="showNaturalDisasterOther || form.naturalDisasterOther"
+        v-model="form.naturalDisasterOther"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="naturalDisasterOther"
+        label="其他说明："
+        placeholder="请输入其他说明"
+        :rules="[{ required: true, message: '请输入其他说明' }]"
+      />
+      <SelectSingle
+        v-if="showTyphoonType"
+        v-model:value="form.typhoonType"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="typhoonType"
+        :options="options.typhoonType"
+        :field-names="{ value: 'boDictId', label: 'dictName' }"
+        label="台风编号："
+        placeholder="请选择台风编号"
+        :rules="[{ required: true, message: '请选择台风编号' }]"
+      />
+      <van-field
+        v-model="form.warningCodeYyj"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        name="warningCodeYyj"
+        label="119警情编号："
+        label-width="108px"
+        placeholder="请输入119警情编号"
+        maxlength="50"
+        :required="false"
+        :rules="[
+          { required: false, message: '' },
+          { pattern: /^[A-Za-z0-9]+$/, message: '请输入正确119警情编号' },
+        ]"
+      />
+      <SelectMultiple
+        v-model:value="form.warningTag"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="warningTag"
+        :options="options.warningTagOptions"
+        :field-names="{ value: 'boFireTagId', label: 'tagName' }"
+        :rules="[{ required: false, message: '请选择警情标签' }]"
+        :required="false"
+        label="警情标签："
+        placeholder="请选择警情标签"
+        title="请选择警情标签"
+      />
+      <SelectOrg
+        v-model:value="form.dispatchGroup"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="dispatchGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="出动队伍："
+        placeholder="请选择出动队伍"
+        title="请选择出动队伍"
+        :rules="[{ required: true, message: '请选择出动队伍' }]"
+        :params="{ deptType: 1 }"
+        @change="onChangeDispatchGroup"
+      />
+      <SelectOrg
+        v-model:value="form.dutyGroup"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="dutyGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="辖区队站："
+        placeholder="请选择辖区队站"
+        title="请选择辖区队站"
+        :single="true"
+        :rules="[{ required: true, message: '请选择辖区队站' }]"
+        :params="{ deptType: 1 }"
+      />
+      <SelectSingle
+        v-model:value="form.firstGroup"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="firstGroup"
+        :options="form.dispatchGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="首到队站："
+        placeholder="请选择首到队站"
+        :rules="[{ required: true, message: '请选择首到队站' }]"
+        :checkShowFn="handleMain"
+      />
+      <SelectSingle
+        v-model:value="form.mainGroup"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="mainGroup"
+        :options="form.dispatchGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="主战队站："
+        placeholder="请选择主战队站"
+        :rules="[{ required: true, message: '请选择主战队站' }]"
+        :checkShowFn="handleMain"
+      />
+      <SelectOrg
+        v-if="showAreaDutyGroup"
+        v-model:value="form.areaDutyGroup"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="areaDutyGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="责任区大队："
+        label-width="102px"
+        placeholder="请选择责任区大队"
+        title="请选择责任区大队"
+        :single="true"
+        :rules="[{ required: true, message: '请选择责任区大队' }]"
+        :params="{ deptType: 1, deptLevel: 4 }"
+      />
+      <SelectOrg
+        v-model:value="form.headquarters"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="headquarters"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="全勤指挥部："
+        label-width="102px"
+        placeholder="无"
+        title="请选择全勤指挥部"
+        :rules="[{ required: false, validator: validateHeadquarters, message: '请选择全勤指挥部'}]"
+        :params="{ deptType: 2 }"
+        :select-leaf="false"
+        :headers-disabled="false"
+        class="special-place"
+      />
+      <SelectMultiple
+        v-model:value="form.otherCity"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="otherCity"
+        :options="options.otherCityOptions"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队'}]"
+        :required="true"
+        label="增援支队："
+        placeholder="无"
+        title="请选择增援支队"
+        class="special-place"
+      />
+      <SelectMultiple
+        v-model:value="form.otherProvince"
+        :showPreview="showPreview"
+        :readonly="showPreview"
+        name="otherProvince"
+        :options="options.otherProvinceOptions"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :rules="[{ required: false, validator: validateOtherProvince, message: '请选择增援总队'}]"
+        :required="true"
+        label="增援总队："
+        placeholder="无"
+        title="请选择增援总队"
+        class="special-place"
+      />
+      <van-field
+        v-model="form.warningInfo"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        name="warningInfo"
+        rows="4"
+        autosize
+        label="警情描述："
+        type="textarea"
+        maxlength="500"
+        placeholder="请输入警情描述"
+        show-word-limit
+        class="form-textarea"
+      />
     </van-form>
 
-    <div class="form-footer">
-      <van-button round block type="primary" size="large" @click="onSubmit">
+    <div class="form-footer" v-if="!showPreview">
+      <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
         派发
       </van-button>
     </div>
 
     <van-popup v-model:show="show.warningDate" position="bottom">
-      <van-datetime-picker
+      <van-date-picker
         v-model="form.warningDate"
-        type="datetime"
         :max-date="new Date()"
         @confirm="onConfirm"
         @cancel="show.warningDate = false"
@@ -1017,11 +1124,12 @@ const validateHeadquarters = (rule, value, callback) => {
 
 <style lang="scss" scoped>
 .police-entry-form {
+  height: unset;
   background-color: white;
   .police-entry-title {
     display: flex;
     flex-direction: column;
-    padding: 10px 0 10px 30px;
+    padding: 10px 0 10px 16px;
     .title-header {
       font-size: 16px;
       font-family: PingFangSC-Medium, PingFang SC;
@@ -1060,6 +1168,11 @@ const validateHeadquarters = (rule, value, callback) => {
 
   .form-footer {
     padding: 0 33px 30px 33px;
+  }
+  :deep(.special-place) {
+    .van-field__control::placeholder {
+      color: rgba(0, 0, 0, 0.85) !important;
+    }
   }
 }
 </style>

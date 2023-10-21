@@ -88,6 +88,7 @@ defineOptions({
     v-model="selectText"
     is-link
     readonly
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
