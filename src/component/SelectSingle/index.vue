@@ -3,7 +3,7 @@ import { onMounted, ref, watch, computed } from "vue";
 
 const props = defineProps({
   value: {
-    type: String,
+    type: [String, Number],
     default: "",
   },
   title: {
@@ -33,6 +33,10 @@ const props = defineProps({
   options: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   checkShowFn: {
     type: Function,
@@ -92,8 +96,8 @@ defineOptions({
 <template>
   <van-field
     v-model="selectText"
+    v-preview-text="showPreview"
     is-link
-    readonly
     v-bind="$attrs"
     :required="required"
     :label="label"
@@ -111,27 +115,25 @@ defineOptions({
       </div>
       <div class="single-wrapper">
         <van-radio-group v-model="selectValue">
-          <van-cell-group inset>
-            <van-cell
-              v-for="item in options"
-              :title="item[fieldNames.label]"
-              :key="item[fieldNames.value]"
-              clickable
-              @click="handleSelect(item)"
-            >
-              <template #right-icon>
-                <van-radio :name="item[fieldNames.value]">
-                  <template #icon="props">
-                    <van-icon
-                      name="success"
-                      class="selected-icon"
-                      v-if="props.checked"
-                    />
-                  </template>
-                </van-radio>
-              </template>
-            </van-cell>
-          </van-cell-group>
+          <van-cell
+            v-for="item in options"
+            :title="item[fieldNames.label]"
+            :key="item[fieldNames.value]"
+            clickable
+            @click="handleSelect(item)"
+          >
+            <template #right-icon>
+              <van-radio :name="item[fieldNames.value]">
+                <template #icon="props">
+                  <van-icon
+                    name="success"
+                    class="selected-icon"
+                    v-if="props.checked"
+                  />
+                </template>
+              </van-radio>
+            </template>
+          </van-cell>
         </van-radio-group>
       </div>
     </div>

@@ -12,7 +12,7 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "行政区域",
+    default: "行政区域：",
   },
   value: {
     type: [String, Array],
@@ -30,7 +30,7 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  preview: {
+  showPreview: {
     type: Boolean,
     default: false,
   },
@@ -67,7 +67,7 @@ const selectVisible = ref(false);
 watch(() => props.value, (newValue) => {
   if (newValue?.length > 0) {
     areaValue.value = cloneDeep(newValue);
-    areaCascaderValue.value = areaValue.value?.pop()
+    areaCascaderValue.value = cloneDeep(newValue)?.pop()
   } else {
     areaValue.value = []
     areaText.value = ''
@@ -164,7 +164,7 @@ onMounted(() => {
         };
       });
       areaText.value = areaValue.value?.map(item => {
-        const temp = findNodeFromTreeById(areaOptions.value?.[0], item, 'boAreaId')
+        const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: areaOptions.value }, item, 'boAreaId')
         return temp?.areaName
       })?.join('/')
     });
@@ -230,8 +230,8 @@ export default {
 <template>
   <van-field
     v-model="areaText"
+    v-preview-text="showPreview"
     is-link
-    readonly
     v-bind="$attrs"
     :required="required"
     :label="label"

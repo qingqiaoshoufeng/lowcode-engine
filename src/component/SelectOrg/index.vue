@@ -5,8 +5,8 @@ import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
-    type: String,
-    default: "",
+    type: Array,
+    default: () => [],
   },
   title: {
     type: String,
@@ -40,6 +40,10 @@ const props = defineProps({
   rules: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   fieldNames: {
     type: Object,
@@ -223,7 +227,7 @@ defineOptions({
   <van-field
     v-model="selectTextShow"
     is-link
-    readonly
+    v-preview-text="showPreview"
     v-bind="$attrs"
     :required="required"
     :label="label"
