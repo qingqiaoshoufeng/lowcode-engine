@@ -16,8 +16,10 @@ import { registerPlugins } from './utils/util'
 import directives from './directives/index';
 import './styles/index.scss'
 import '@/assets/fonts/iconfont.js'
+import FormPreviewText from '@/component/FormPreviewText/index'
+
 console.log(router);
-const plugins = [Vant, store, axios, icons, component, eventBus, directives]
+const plugins = [Vant, store, axios, icons, component, eventBus, directives, FormPreviewText]
 const app = createApp(App);
 app.use(registerPlugins(plugins))
 app.use(router)

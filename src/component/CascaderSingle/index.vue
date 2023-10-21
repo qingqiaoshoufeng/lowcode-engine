@@ -16,15 +16,19 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "自然灾害类型",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择自然灾害类型",
+    default: "",
   },
   rules: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   fieldNames: {
     type: Object,
@@ -47,7 +51,7 @@ const selectText = ref("");
 watch(() => props.value, (val) => {
   if (props.value) {
     selectValue.value = props.value;
-    selectText.value = props.text;
+    selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
   } else {
     selectValue.value =''
     selectText.value = ''
@@ -72,8 +76,8 @@ defineOptions({
 <template>
   <van-field
     v-model="selectText"
+    v-preview-text="showPreview"
     is-link
-    readonly
     v-bind="$attrs"
     :required="required"
     :label="label"
