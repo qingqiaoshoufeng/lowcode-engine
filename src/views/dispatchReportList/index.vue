@@ -1,11 +1,8 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
-import SelectTime from "@/component/SelectTime/index";
-import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
-// import ApplyAbolish from "./apply-abolish.vue";
-// import ApplyRecheck from "./apply-recheck.vue";
+import ApplyReject from "./apply-reject.vue";
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -17,14 +14,11 @@ import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getReportList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js'
 
 const defaultFilterValue = {
   isDraft: 2,
 };
-
-const store = useStore();
 
 const { show } = useModal();
 
@@ -32,39 +26,22 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
-const handleBack = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.abolishVisible = true
+const handleReject = (row) => {
+  currentRow.value = row
+  show.value.rejectVisible = true
 };
 
 const handleInput = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // if (row.isOtherCity === '1') {
-  //   showToast('跨市警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // if (row.isOtherProvince === '1') {
-  //   showToast('跨省警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.recheckVisible = true
+  router.push({
+    name: "dispatchReportForm",
+    query: { boFireDispatchId: item.boFireDispatchId },
+  });
 };
 
 const handleItem = (item) => {
-  // showToast("此功能暂未开放！");
   router.push({
-    name: "policeEntryForm",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+    name: "dispatchReportForm",
+    query: { boFireDispatchId: item.boFireDispatchId, showPreview: true },
   });
 };
 
@@ -93,8 +70,8 @@ onMounted(() => {
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-              {{ record.warningStatusValue }}
+            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
+              {{ record.dispatchStatusValue || '待填报' }}
             </div>
           </div>
           <div class="item-type">
@@ -114,6 +91,16 @@ onMounted(() => {
             <div style="color: #929398">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
+          <div class="item-field">
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">派发单位：</div>
+            <div>{{ record.distributeOrgName }}</div>
+          </div>
+          <div class="item-field">
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">已派时长：</div>
+            <div>{{ record.dispatchedTime }}</div>
+          </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
@@ -122,7 +109,7 @@ onMounted(() => {
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleBack(record)"
+              @click="handleReject(record)"
             >
               退回
             </van-button>
@@ -142,14 +129,14 @@ onMounted(() => {
     </ProList>
 
     <!-- 退回说明 -->
-    <ProModal v-model:visible="show.abolishVisible" title="退回说明">
-      <!-- <template #default="{ setHandleOk }">
-        <ApplyAbolish
+    <ProModal v-model:visible="show.rejectVisible" title="退回说明">
+      <template #default="{ setHandleOk }">
+        <ApplyReject
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />
-      </template> -->
+      </template>
     </ProModal>
   </div>
 </template>
