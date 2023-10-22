@@ -82,8 +82,8 @@ const selectItem = ref([]);
 
 const selectText = ref([]);
 
-const selectTextShow = computed(() => {
-  return selectText.value.join(",");
+const selectTextValue = computed(() => {
+  return selectText.value?.join(",");
 })
 
 watch(() => props.value, (newVal, oldVal) => {
@@ -137,6 +137,11 @@ const showCheck = (item) => {
   }
   if (!props.headersDisabled && item.isheadquarters === 1) {
     return true;
+  } else if (!props.headersDisabled && item.isheadquarters !== 1) {
+    return false
+  }
+  if (!props.single) {
+    return true
   }
   return result;
 };
@@ -167,7 +172,15 @@ const handleOk = () => {
 };
 
 const handleCheck = (item) => {
-  if (props.single) {
+  if (props.single && item.checked) {
+    // 已经选中的要重置
+    treeData.value.forEach(arr => {
+      arr.forEach(i => {
+        if (i.organizationid !== item.organizationid && i.checked) {
+          i.checked = false
+        }
+      })
+    })
     selectValue.value = [item.organizationid];
     selectText.value = [item.name];
     selectItem.value = [item];
@@ -225,7 +238,7 @@ defineOptions({
 
 <template>
   <van-field
-    v-model="selectTextShow"
+    v-model="selectTextValue"
     is-link
     v-preview-text="showPreview"
     v-bind="$attrs"

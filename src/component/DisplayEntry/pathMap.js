@@ -1,5 +1,8 @@
 export const pathMap = {
-  "jingqingluru":'/police-entry-form',
-  "jingqingxiugai": "/police-manage-list",
-  "jingqingguanli": "/police-manage-list"
+  "jingqingluru":'/policeEntryForm',
+  // "jingqingxiugai": "/policeManageEdit",
+  "jingqingguanli": "/policeManageList",
+  // "chudongtianbao": "/dispatchReportList",
+  // "chudongxiugai": "/dispatchReportEdit",
+  // "chudongguanli": "/dispatchReportManage"
 }

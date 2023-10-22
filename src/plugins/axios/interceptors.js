@@ -55,7 +55,7 @@ export const responseError = (error) => {
     })
     loginError(text)
   }
-  else if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_REQUEST') {
+  else if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_REQUEST' || error.message === 'Network Error') {
     showFailToast({
       message: '操作未授权，请重新登录',
     })

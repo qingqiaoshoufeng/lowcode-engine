@@ -4,18 +4,16 @@ import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
-import ApplyAbolish from "./apply-abolish.vue";
-import ApplyRecheck from "./apply-recheck.vue";
+import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import {
-  checkAbolishState,
-  checkPoliceChangeState,
+  checkDispatchChangeState,
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
 import router from "@/router/index.js";
-import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
+import { MSG_LOCKING_TEXT, dispatchType, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
+import { getDispatchManageList, collectFireWarning } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js'
@@ -33,7 +31,13 @@ const searchOptions = ref([
     placeholder: '请选择状态',
     options: [],
     fieldNames: { value: 'boDictId', label: 'dictName' },
-    value: 'warningStatus',
+    value: 'dispatchStatus',
+  },
+  {
+    title: '出动编号',
+    type: 'input',
+    placeholder: '请输入出动编号',
+    value: "dispatchCode",
   },
   {
     title: '警情编号',
@@ -50,18 +54,27 @@ const searchOptions = ref([
     value: 'warningType',
   },
   {
-    title: '警情等级',
+    title: '参战形式',
     type: 'select-single',
-    placeholder: '请选择警情等级',
-    options: [],
-    fieldNames: { value: 'boDictId', label: 'dictName' },
-    value: 'warningLevel',
+    placeholder: '请选择参战形式',
+    fieldNames: { value: 'value', label: 'label' },
+    value: 'dispatchType',
+    options: dispatchType,
+  },
+  {
+    title: '警情地址',
+    type: 'input',
+    placeholder: '请输入警情地址',
+    value: "warningAddr",
   },
   {
     title: '主站队伍',
     type: 'select-org',
     placeholder: '请选择主站队伍',
+    params: { permission: true },
     single: true,
+    selectLeaf: true,
+    headersDisabled: true,
     value: 'mainGroup',
   },
   {
@@ -71,25 +84,14 @@ const searchOptions = ref([
     value: 'boAreaId',
   },
   {
-    title: '警情标签',
-    type: 'select',
-    placeholder: '请输入警情标签',
-    fieldNames: { value: 'boFireTagId', label: 'tagName' },
-    value: 'warningTag',
-  },
-  {
-    title: '警情地址',
-    type: 'input',
-    placeholder: '请输入警情地址',
-    value: "warningAddr",
-  },
-  {
-    title: '自然灾害类型',
-    type: 'cascader',
-    placeholder: '请选择自然灾害类型',
-    fieldNames: { value: 'boDictId', text: 'dictName' },
-    options: [],
-    value: 'naturalDisasterType',
+    title: '所属队伍',
+    type: 'select-org',
+    placeholder: '请选择所属队伍',
+    params: { permission: true },
+    single: false,
+    selectLeaf: false,
+    headersDisabled: true,
+    value: 'orgList',
   },
   {
     title: '是否跨市',
@@ -108,12 +110,22 @@ const searchOptions = ref([
     value: 'isOtherProvince',
   },
   {
-    title: '全勤指挥部是否出动',
-    type: 'select-single',
-    placeholder: '请选择全勤指挥部是否出动',
-    fieldNames: { value: 'value', label: 'label' },
-    options: isDispatch,
-    value: 'isHeadquarters',
+    title: '处置情况',
+    type: 'select',
+    placeholder: '请选择处置情况',
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'dealSituation',
+    options: [],
+  },
+  {
+    title: '全勤指挥部名称',
+    type: 'select-org',
+    placeholder: '请选择全勤指挥部名称',
+    value: 'headNameList',
+    params: { deptType: 2 },
+    single: false,
+    selectLeaf: false,
+    headersDisabled: false
   },
 ])
 
@@ -124,15 +136,15 @@ const defaultFilterValue = {
 
 const tabs = ref([
   {
-    title: "辖区警情",
+    title: "辖区出动",
     value: 1,
   },
   {
-    title: "我的警情",
+    title: "我的出动",
     value: 2,
   },
   {
-    title: "收藏的警情",
+    title: "收藏的出动",
     value: 3,
   },
 ]);
@@ -145,12 +157,8 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
-const checkChange = (record) => {
-  return ['待更正', '被退回', '被驳回'].includes(record.warningStatusValue) && record.updatePermission
-}
-
 const onTabFn = (name, title) => {
-  if (title === "我的警情") {
+  if (title === tabs.value[1].title) {
     proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = true;
     proListRef.value.query.myCollect = false;
@@ -158,7 +166,7 @@ const onTabFn = (name, title) => {
     proListRef.value.filter().then(() => {
       closeToast();
     });
-  } else if (title === "收藏的警情") {
+  } else if (title === tabs.value[2].title) {
     proListRef.value.query = {}
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = true;
@@ -166,7 +174,7 @@ const onTabFn = (name, title) => {
     proListRef.value.filter().then(() => {
       closeToast();
     });
-  } else if (title === "辖区警情") {
+  } else if (title === tabs.value[0].title) {
     proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = false;
@@ -180,8 +188,8 @@ const onTabFn = (name, title) => {
 const handleCollect = async (row, state) => {
   showLoadingToast();
   const res = await collectFireWarning({
-    focusAppid: row.boFireWarningId,
-    focusCode: row.warningCode,
+    focusAppid: row.boFireDispatchId,
+    focusCode: row.dispatchCode,
     focusType: "1",
     deleteFlag: state ? "1" : "2",
   });
@@ -191,47 +199,19 @@ const handleCollect = async (row, state) => {
   });
 };
 
-const handleEdit = (item) => {
-  showToast("此功能暂未开放！");
-  // router.push({
-  //   name: "police-entry-form",
-  //   query: { boFireWarningId: item.boFireWarningId },
-  // });
-};
-
-const handleAbolish = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.abolishVisible = true
-};
-
 const handleChange = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // if (row.isOtherCity === '1') {
-  //   showToast('跨市警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // if (row.isOtherProvince === '1') {
-  //   showToast('跨省警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.recheckVisible = true
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  show.value.recheckVisible = true
 };
 
 const handleItem = (item) => {
-  // showToast("此功能暂未开放！");
   router.push({
-    name: "police-entry-form",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+    name: "dispatchReportForm",
+    query: { boFireDispatchId: item.boFireDispatchId, showPreview: true },
   });
 };
 
@@ -254,15 +234,10 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
-  searchOptions.value[1].options = res.JQ_STATUS
-  searchOptions.value[3].options = res.JQ_TYPE
-  searchOptions.value[4].options = res.JQ_LEVEL
-  searchOptions.value[9].options = res.NATURAL_DISASTER_TYPE
-  // 获取警情标签
-  getFireWarningTag({ tagType: 1 }).then((res) => {
-    searchOptions.value[7].options = res.data;
-  });
+  const res = store.getters?.["dict/filterDicts"](['CD_STATUS', 'JQ_TYPE', 'CD_JYQK_CZ'], null, false);
+  searchOptions.value[1].options = res.CD_STATUS
+  searchOptions.value[4].options = res.JQ_TYPE
+  searchOptions.value[12].options = res.CD_JYQK_CZ
   nextTick(() => {
     proListRef.value?.filter();
   });
@@ -270,13 +245,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="police-manage-list">
+  <div class="dispatch-manage-list">
     <ProList
       ref="proListRef"
       :defaultFilterValue="defaultFilterValue"
-      :getListFn="getFireWarningManage"
+      :getListFn="getDispatchManageList"
       :tabs="tabs"
-      rowKey="boFireWarningId"
+      rowKey="boFireDispatchId"
       :showLoad="false"
       :onTabFn="onTabFn"
     >
@@ -297,8 +272,8 @@ onMounted(() => {
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-              {{ record.warningStatusValue }}
+            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
+              {{ record.dispatchStatusValue }}
             </div>
           </div>
           <div class="item-type">
@@ -318,6 +293,16 @@ onMounted(() => {
             <div style="color: #929398">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
+          <div class="item-field">
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">出动队伍：</div>
+            <div>{{ record.dispatchGroupName }}</div>
+          </div>
+          <div class="item-field">
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">投入力量：</div>
+            <div>{{ record.dispatchInput }}</div>
+          </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-icon
@@ -334,35 +319,13 @@ onMounted(() => {
               @click="handleCollect(record, true)"
             />
             <van-button
-              v-p="['admin', 'police-manage:edit']"
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleEdit(record)"
-              :disabled="!checkChange(record)"
-            >
-              修改
-            </van-button>
-            <van-button
-              v-p="['admin', 'police-manage:abolish']"
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleAbolish(record)"
-              :disabled="!checkPoliceChangeState(record.warningStatusValue, record.updatePermission)"
-            >
-              作废
-            </van-button>
-            <van-button
-              v-p="['admin', 'police-manage:change']"
+              v-p="['admin', 'dispatch-manage:change']"
               type="success"
               size="mini"
               color="#1989fa"
               class="item-btn"
               @click="handleChange(record)"
-              :disabled="!checkAbolishState(record.warningStatusValue, record.updatePermission)"
+              :disabled="!checkDispatchChangeState(record.dispatchStatusValue, record.updatePermission)"
             >
               更正
             </van-button>
@@ -375,17 +338,7 @@ onMounted(() => {
     <ProModal v-model:visible="show.recheckVisible" title="申请更正">
       <template #default="{ setHandleOk }">
         <ApplyRecheck
-          :recheck-type="1"
-          :current-row="currentRow"
-          :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
-        />
-      </template>
-    </ProModal>
-    <!-- 申请作废 -->
-    <ProModal v-model:visible="show.abolishVisible" title="申请作废">
-      <template #default="{ setHandleOk }">
-        <ApplyAbolish
+          :recheck-type="2"
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
@@ -396,7 +349,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.police-manage-list {
+.dispatch-manage-list {
   height: 100vh;
   background-color: #f6f7f8;
   .list-tabs {

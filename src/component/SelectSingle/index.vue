@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
 
 const props = defineProps({
   value: {
@@ -53,13 +53,15 @@ const selectValue = ref("");
 const selectText = ref("");
 
 watch(() => props.value, (val) => {
-  if (props.value) {
-    selectValue.value = props.value;
-    selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
-  } else {
-    selectValue.value = ''
-    selectText.value = ''
-  }
+  nextTick(() => {
+    if (props.value) {
+      selectValue.value = props.value;
+      selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
+    } else {
+      selectValue.value = ''
+      selectText.value = ''
+    }
+  })
 }, { immediate: true })
 
 const handleSelect = (item) => {

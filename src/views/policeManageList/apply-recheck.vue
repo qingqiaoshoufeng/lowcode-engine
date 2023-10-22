@@ -1,8 +1,9 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-// import { message } from '@castle/ant-design-vue'
+import { showLoadingToast, closeToast } from "vant";
 import { useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
+import SelectSingle from "@/component/SelectSingle/index";
 import { recheckFireWarning } from '@/apis/index.js'
 import { useOptions } from '@/hooks/useOptions.js'
 // import { useSuccess } from '@/hooks/useSuccess.js'
@@ -56,7 +57,6 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  // message.success('申请成功')
   emits('finishCallback')
 }, {
   submitFn: () => recheckFireWarning({
@@ -72,7 +72,7 @@ const { loading, submit } = useSubmit(() => {
 
 const onSubmit = async () => {
   await submit()
-  await finishFn()
+  await formRef.value.finishFn()
   // showSuccessModal({
   //   title: '申请更正成功！',
   //   okText: '查看申请记录',
@@ -86,13 +86,30 @@ const onSubmit = async () => {
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
     formRef.value.submit()
+    formRef.value.finishFn = finishFn
   }, loading)
 })
 </script>
 
 <template>
   <div class="apply-recheck">
+    <div class="tooltip">
+      <img src="@/assets/images/icon_warning.png" alt="">
+      <span style="margin-left: 10px;">{{ tooltip[recheckType - 1] }}</span>
+    </div>
     <van-form ref="formRef" @submit="onSubmit">
+      <SelectSingle
+        v-if="recheckType !== 2"
+        v-model:value="form.applyType"
+        name="applyType"
+        :options="options.applyType"
+        :field-names="{ value: 'value', label: 'label' }"
+        :required="true"
+        title="申请类型"
+        label="申请类型："
+        placeholder="请选择申请类型"
+        :rules="[{ required: true, message: '请选择申请类型' }]"
+      />
       <van-field
         v-model="form.recheckReason"
         name="recheckReason"
@@ -108,32 +125,16 @@ onMounted(() => {
         class="form-textarea"
       />
     </van-form>
-    <!-- <a-form ref="formRef" :model="form" label-align="right" :label-col="{ style: { width: '94px' } }" autocomplete="off">
-      <a-form-item
-        v-if="recheckType !== 2"
-        name="applyType"
-        label="申请类型"
-        :rules="[{ required: true, message: `请选择申请类型` }]"
-      >
-        <a-select
-          v-model:value="form.applyType"
-          :options="options.applyType"
-          placeholder="请选择申请类型"
-        />
-        <a-tooltip>
-          <template #title>
-            {{ tooltip[recheckType - 1] }}
-          </template>
-          <QuestionCircleOutlined class="form-col-delete" />
-        </a-tooltip>
-      </a-form-item>
-    </a-form> -->
   </div>
 </template>
 
 <style lang="scss" scoped>
 .apply-recheck {
-  margin-right: 20px;
+  .tooltip {
+    background: #FEF7E3;
+    padding: 8px 10px;
+    margin: 10px 16px;
+  }
   .form-textarea {
     flex-direction: column;
     :deep(.van-field__body) {

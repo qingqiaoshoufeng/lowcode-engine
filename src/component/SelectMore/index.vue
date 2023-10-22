@@ -89,8 +89,10 @@ defineOptions({
               :required="false"
               :placeholder="item.placeholder"
               :title="item.placeholder"
-              :params="{ deptType: 1 }"
+              :params="item.params"
               :single="item.single"
+              :select-leaf="item.selectLeaf"
+              :headers-disabled="item.headersDisabled"
             />
           </template>
           <template v-else-if="item.type === 'cascader'">
