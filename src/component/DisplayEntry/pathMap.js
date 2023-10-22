@@ -3,5 +3,6 @@ export const pathMap = {
   // "jingqingxiugai": "/policeManageEdit",
   "jingqingguanli": "/policeManageList",
   // "chudongtianbao": "/dispatchReportList",
-  // "chudongxiugai": "/dispatchReportEdit"
+  // "chudongxiugai": "/dispatchReportEdit",
+  // "chudongguanli": "/dispatchReportManage"
 }

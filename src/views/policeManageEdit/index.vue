@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
 import router from "@/router/index.js";
@@ -12,7 +12,7 @@ const defaultFilterValue = {
 
 const proListRef = ref(null);
 
-const handleReject = (row) => {
+const handleEdit = (row) => {
   router.push({
     name: "policeEntryForm",
     query: { boFireWarningId: row.boFireWarningId },
@@ -69,7 +69,7 @@ const handleItem = (item) => {
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleReject(record)"
+              @click="handleEdit(record)"
             >
               修改
             </van-button>
@@ -84,10 +84,6 @@ const handleItem = (item) => {
 .police-manage-edit {
   height: 100vh;
   background-color: #f6f7f8;
-  .list-tabs {
-    display: flex;
-    padding: 10px 16px 0 16px;
-  }
   .list-item {
     display: flex;
     flex-direction: column;

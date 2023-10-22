@@ -1,17 +1,11 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
-import {
-  checkAbolishState,
-  checkPoliceChangeState,
-  generateColorByState,
-  getLastMonth,
-} from "@/utils/tools.js";
+import { generateColorByState } from "@/utils/tools.js";
 import router from "@/router/index.js";
-import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 import { getReportList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
@@ -34,26 +28,23 @@ const handleReject = (row) => {
 const handleInput = (row) => {
   router.push({
     name: "dispatchReportForm",
-    query: { boFireDispatchId: item.boFireDispatchId },
+    query: { boFireDispatchId: row.boFireDispatchId },
   });
 };
 
-const handleItem = (item) => {
+const handleItem = (row) => {
   router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: item.boFireDispatchId, showPreview: true },
+    name: "policeEntryForm",
+    query: { boFireDispatchId: row.boFireDispatchId, boFireWarningId: row.boFireWarningId, showPreview: true },
   });
 };
 
 const finishCallback = () => {
-  proListRef.value.filter()
+  showLoadingToast()
+  proListRef.value.filter().then(res => {
+    closeToast()
+  })
 }
-
-onMounted(() => {
-  nextTick(() => {
-    proListRef.value?.filter();
-  });
-});
 </script>
 
 <template>
@@ -64,7 +55,6 @@ onMounted(() => {
       :getListFn="getReportList"
       :tabs="[]"
       rowKey="boFireDispatchId"
-      :showLoad="false"
     >
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">

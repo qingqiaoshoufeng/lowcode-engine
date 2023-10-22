@@ -420,7 +420,7 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId, showPreview } = route.query
+  const { boFireWarningId, boWarningYyjId } = route.query
   if (boWarningYyjId) {
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
     form.value.warningDate = dayjs(props.currentRow.warningCodeYyj).format('YYYY-MM-DD').split('-')
