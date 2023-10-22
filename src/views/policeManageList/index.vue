@@ -61,7 +61,10 @@ const searchOptions = ref([
     title: '主站队伍',
     type: 'select-org',
     placeholder: '请选择主站队伍',
+    params: { permission: true },
     single: true,
+    selectLeaf: true,
+    headersDisabled: true,
     value: 'mainGroup',
   },
   {
@@ -82,6 +85,16 @@ const searchOptions = ref([
     type: 'input',
     placeholder: '请输入警情地址',
     value: "warningAddr",
+  },
+  {
+    title: '所属队伍',
+    type: 'select-org',
+    placeholder: '请选择所属队伍',
+    params: { permission: true },
+    single: false,
+    selectLeaf: false,
+    headersDisabled: true,
+    value: 'orgIds',
   },
   {
     title: '自然灾害类型',
@@ -145,12 +158,8 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
-const checkChange = (record) => {
-  return ['待更正', '被退回', '被驳回'].includes(record.warningStatusValue) && record.updatePermission
-}
-
 const onTabFn = (name, title) => {
-  if (title === "我的警情") {
+  if (title === tabs.value[1].title) {
     proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = true;
     proListRef.value.query.myCollect = false;
@@ -158,7 +167,7 @@ const onTabFn = (name, title) => {
     proListRef.value.filter().then(() => {
       closeToast();
     });
-  } else if (title === "收藏的警情") {
+  } else if (title === tabs.value[2].title) {
     proListRef.value.query = {}
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = true;
@@ -166,7 +175,7 @@ const onTabFn = (name, title) => {
     proListRef.value.filter().then(() => {
       closeToast();
     });
-  } else if (title === "辖区警情") {
+  } else if (title === tabs.value[0].title) {
     proListRef.value.query = defaultFilterValue
     proListRef.value.query.onlyMy = false;
     proListRef.value.query.myCollect = false;
@@ -258,7 +267,7 @@ onMounted(() => {
   searchOptions.value[1].options = res.JQ_STATUS
   searchOptions.value[3].options = res.JQ_TYPE
   searchOptions.value[4].options = res.JQ_LEVEL
-  searchOptions.value[9].options = res.NATURAL_DISASTER_TYPE
+  searchOptions.value[10].options = res.NATURAL_DISASTER_TYPE
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
     searchOptions.value[7].options = res.data;
@@ -333,17 +342,6 @@ onMounted(() => {
               class="item-collect"
               @click="handleCollect(record, true)"
             />
-            <van-button
-              v-p="['admin', 'police-manage:edit']"
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleEdit(record)"
-              :disabled="!checkChange(record)"
-            >
-              修改
-            </van-button>
             <van-button
               v-p="['admin', 'police-manage:abolish']"
               type="success"

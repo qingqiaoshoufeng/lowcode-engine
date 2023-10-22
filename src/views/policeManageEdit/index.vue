@@ -1,67 +1,47 @@
 <script setup>
 import { ref } from "vue";
 import ProList from "@/component/ProList/index";
-import ProModal from "@/component/ProModal/index";
-import ApplyReject from "./apply-reject.vue";
 import { generateColorByState } from "@/utils/tools.js";
 import router from "@/router/index.js";
-import { showLoadingToast, closeToast } from "vant";
-import { getReportList } from "@/apis/index.js";
+import { getFireWarningManage } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { useModal } from '@/hooks/useModal.js'
 
 const defaultFilterValue = {
-  isDraft: 2,
+  unEditFlag: true,
 };
-
-const { show } = useModal();
-
-const currentRow = ref(null);
 
 const proListRef = ref(null);
 
-const handleReject = (row) => {
-  currentRow.value = row
-  show.value.rejectVisible = true
-};
-
-const handleInput = (row) => {
-  router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: row.boFireDispatchId },
-  });
-};
-
-const handleItem = (row) => {
+const handleEdit = (row) => {
   router.push({
     name: "policeEntryForm",
-    query: { boFireDispatchId: row.boFireDispatchId, boFireWarningId: row.boFireWarningId, showPreview: true },
+    query: { boFireWarningId: row.boFireWarningId },
   });
 };
 
-const finishCallback = () => {
-  showLoadingToast()
-  proListRef.value.filter().then(res => {
-    closeToast()
-  })
-}
+const handleItem = (item) => {
+  router.push({
+    name: "policeEntryForm",
+    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
+  });
+};
 </script>
 
 <template>
-  <div class="dispatch-report-list">
+  <div class="police-manage-edit">
     <ProList
       ref="proListRef"
       :defaultFilterValue="defaultFilterValue"
-      :getListFn="getReportList"
+      :getListFn="getFireWarningManage"
       :tabs="[]"
-      rowKey="boFireDispatchId"
+      rowKey="boFireWarningId"
     >
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
-              {{ record.dispatchStatusValue || '待填报' }}
+            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+              {{ record.warningStatusValue }}
             </div>
           </div>
           <div class="item-type">
@@ -81,64 +61,29 @@ const finishCallback = () => {
             <div style="color: #929398">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
-          <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">派发单位：</div>
-            <div>{{ record.distributeOrgName }}</div>
-          </div>
-          <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">已派时长：</div>
-            <div>{{ record.dispatchedTime }}</div>
-          </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
-              v-p="['admin', 'dispatch-report:reback']"
+              v-p="['admin', 'police-manage:edit']"
               type="success"
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleReject(record)"
+              @click="handleEdit(record)"
             >
-              退回
-            </van-button>
-            <van-button
-              v-p="['admin', 'dispatch-report:input']"
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleInput(record)"
-            >
-              填报
+              修改
             </van-button>
           </div>
         </div>
       </template>
     </ProList>
-
-    <!-- 退回说明 -->
-    <ProModal v-model:visible="show.rejectVisible" title="退回说明">
-      <template #default="{ setHandleOk }">
-        <ApplyReject
-          :current-row="currentRow"
-          :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
-        />
-      </template>
-    </ProModal>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.dispatch-report-list {
+.police-manage-edit {
   height: 100vh;
   background-color: #f6f7f8;
-  .list-tabs {
-    display: flex;
-    padding: 10px 16px 0 16px;
-  }
   .list-item {
     display: flex;
     flex-direction: column;
