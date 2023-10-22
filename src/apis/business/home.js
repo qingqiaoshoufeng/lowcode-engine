@@ -49,5 +49,10 @@ export function getNoticeDetail(params) {
 export function downloadAttachmentFile({ attachmentId }) {
   return axios.get(`/acws/rest/attachments/${attachmentId}`)
 }
+// 参展形式
+
+// export function downloadAttachmentFile({ attachmentId }) {
+//   return axios.get(`/acws/rest/attachments/${attachmentId}`)
+// }
 
 

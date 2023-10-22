@@ -7,7 +7,6 @@ export default function useTab({list,defaultTab,handleChange,paramsKey}){
   })
   const tabChange = (val,callback)=>{
     state.currentTab = val
-    debugger
     handleChange && handleChange({ 
       [paramsKey]:val
     })

@@ -29,7 +29,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     fitghtList:[],
     policelist:[], //
     dispatchList:[],
-    noticeList:[]
+    noticeList:[],
+    FireAreaList:[],
     // DispatchInfoList:[] // 出动平均时长列表
 
   })
@@ -64,24 +65,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     console.log(res,'getFireInfo');
     state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
     state.InitialFuelsList = res?.dateAnalysisThreeResult?.threeResultsFire || ''
-    state.WayTimeList =[
-      [
-        res?.dateAnalysisSixResults?.dateOne,
-        res?.dateAnalysisSixResults?.dateTwo,
-        res?.dateAnalysisSixResults?.dateThree,
-        res?.dateAnalysisSixResults?.dateFour
-      ]
-    ]
-    state.FightingTimeList =[ 
-      [
-        res?.dateAnalysisSevenResult?.dateOne,
-        res?.dateAnalysisSevenResult?.dateTwo,
-        res?.dateAnalysisSevenResult?.dateThree,
-        res?.dateAnalysisSevenResult?.dateFour,
-        res?.dateAnalysisSevenResult?.dateFive,
-        res?.dateAnalysisSevenResult?.dateSix,
-      ]
-    ]
     if(state.isStanding === false){
       state.statisticsList = [
         ...state.statisticsList,
@@ -110,6 +93,24 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
         percent:res?.dateAnalysisHeadResult?.qsWarningNumYOY
       }
     }else{
+      state.WayTimeList =[
+        [
+          res?.dateAnalysisSixResult?.dateOne,
+          res?.dateAnalysisSixResult?.dateTwo,
+          res?.dateAnalysisSixResult?.dateThree,
+          res?.dateAnalysisSixResult?.dateFour
+        ]
+      ]
+      state.FightingTimeList =[ 
+        [
+          res?.dateAnalysisSevenResult?.dateOne,
+          res?.dateAnalysisSevenResult?.dateTwo,
+          res?.dateAnalysisSevenResult?.dateThree,
+          res?.dateAnalysisSevenResult?.dateFour,
+          res?.dateAnalysisSevenResult?.dateFive,
+          res?.dateAnalysisSevenResult?.dateSix,
+        ]
+      ]
       state.policelist = getStatisticsInfo(res,'policelistMap2',state.isStanding)
       state.fitghtList =  getStatisticsInfo(res,'fightListMap2',state.isStanding,'dateAnalysisFiveResult')
     }
@@ -136,7 +137,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
         percent:res?.totalDispatchPro || 0,
       }
     }else{
-      state.policelist = getStatisticsInfo(res,'dispatchListMap2',state.isStanding)
+      state.dispatchList = getStatisticsInfo(res,'dispatchListMap2',state.isStanding)
     }
   }
   // 获取火灾平均时长
@@ -149,6 +150,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   // 获取参展形式列表
   const getStyle= async()=>{
     const res = await getStylePercent(formatParams())
+    state.FireAreaList = res
     console.log(res,'getStyle');
   }
 

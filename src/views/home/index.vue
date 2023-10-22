@@ -24,13 +24,13 @@
         <YearRank class="mt10 year_rank" title="全年榜单 TOP10"  type="FireInfo" :handleChange="getRank" :list="rankList"/>
         <Chart class="mt10" title="高频起火原因" type="InitialFuels" :chartData="InitialFuelsList" />
       </template>
-      <template v-else>
+      <template v-else> 
         <StatisticsInfo :list="policelist" class="pt10 statistics_info" title="辖区警情统计" />
         <StatisticsInfo :list="dispatchList" class="pt10 statistics_info" title="出动情况统计" />
         <StatisticsInfo :list="fitghtList" class="pt10 statistics_info"  title="战斗成果统计" />
         <Chart class="mt10" title="途中时长分布" type="WayTime" :chartData="WayTimeList"/>
         <Chart class="mt10" title="战斗时长分布" type="FightingTime" :chartData="FightingTimeList" />
-        <Chart class="mt10" title="参战形式分布" type="FireArea"/>
+        <Chart class="mt10" title="参战形式分布" type="FireArea" :chartData="FireAreaList"/>
       </template>
     </div>
   </div>

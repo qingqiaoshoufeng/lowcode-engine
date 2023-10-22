@@ -27,7 +27,6 @@ const route = useRoute()
 defineProps()
 const getDetail = ()=>{
   getNoticeDetail({id:route.query.id}).then((res) => {
-    debugger
     if (res) {
       form.value.noticeTitle = res.noticeTitle
       form.value.noticeType = res.noticeType
