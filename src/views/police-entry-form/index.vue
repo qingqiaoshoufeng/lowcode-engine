@@ -880,21 +880,25 @@ const validateHeadquarters = (value, rule) => {
       />
       <van-field
         v-if="showNaturalDisaster || form.isNaturalDisaster"
-        v-preview-text="showPreview"
         :readonly="showPreview"
         required
         name="isNaturalDisaster"
         label="是否自然灾害引发："
-        label-width="200px"
+        label-width="150px"
         class="switch-wrapper"
       >
         <template #input>
-          <van-switch
-            v-model="form.isNaturalDisaster"
-            size="20"
-            active-value="1"
-            inactive-value="2"
-          />
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.isNaturalDisaster === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-switch
+              v-model="form.isNaturalDisaster"
+              size="20"
+              active-value="1"
+              inactive-value="2"
+            />
+          </template>
         </template>
       </van-field>
       <CascaderSingle
@@ -1048,6 +1052,7 @@ const validateHeadquarters = (value, rule) => {
         :select-leaf="false"
         :headers-disabled="false"
         class="special-place"
+        :class="{'special-no-data': showPreview && form.headquarters?.length <= 0}"
       />
       <SelectMultiple
         v-model:value="form.otherCity"
@@ -1062,6 +1067,7 @@ const validateHeadquarters = (value, rule) => {
         placeholder="无"
         title="请选择增援支队"
         class="special-place"
+        :class="{'special-no-data': showPreview && form.otherCity?.length <= 0}"
       />
       <SelectMultiple
         v-model:value="form.otherProvince"
@@ -1076,6 +1082,7 @@ const validateHeadquarters = (value, rule) => {
         placeholder="无"
         title="请选择增援总队"
         class="special-place"
+        :class="{'special-no-data': showPreview && form.otherProvince?.length <= 0}"
       />
       <van-field
         v-model="form.warningInfo"
@@ -1089,7 +1096,7 @@ const validateHeadquarters = (value, rule) => {
         maxlength="500"
         placeholder="请输入警情描述"
         show-word-limit
-        class="form-textarea"
+        :class="{'form-textarea': !showPreview}"
       />
     </van-form>
 
@@ -1172,6 +1179,12 @@ const validateHeadquarters = (value, rule) => {
   :deep(.special-place) {
     .van-field__control::placeholder {
       color: rgba(0, 0, 0, 0.85) !important;
+    }
+  }
+  :deep(.special-no-data) {
+    .van-field__value::after {
+      content: '无';
+      color: #323233;
     }
   }
 }

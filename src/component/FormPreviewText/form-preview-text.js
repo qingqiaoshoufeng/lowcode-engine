@@ -5,18 +5,25 @@ const handlePreview = (el, binding, vnode) => {
   }
 
   let renderText = null
+  let textValue = ''
   const renderDom = document.createElement('span')
-  const textValue = vnode.el.querySelector('.van-field__body')?.querySelector('input')?.value
   const wrapper = vnode.el.querySelector('.van-field__value')
 
+  if (vnode.el.querySelector('.van-field__body')?.querySelector('input')) {
+    textValue = vnode.el.querySelector('.van-field__body')?.querySelector('input')?.value
+  } else if (vnode.el.querySelector('.van-field__body')?.querySelector('textarea')) {
+    textValue = vnode.el.querySelector('.van-field__body')?.querySelector('textarea')?.value
+  }
+
   if (textValue && wrapper) {
+    // 多次渲染要先移除
     if (wrapper.querySelectorAll('.preview-text-wrapper')?.length > 0) {
       wrapper.querySelectorAll('.preview-text-wrapper')?.forEach(e => wrapper.removeChild(e))
     }
     renderText = document.createTextNode(`${textValue}`)
     renderDom.appendChild(renderText)
     // 设置样式
-    renderDom.style = 'color: #323233;'
+    renderDom.style = 'color: #323233;text-align: left;word-break: break-all;'
     renderDom.className = 'preview-text-wrapper'
     // 添加到容器节点
     wrapper.appendChild(renderDom)
@@ -32,6 +39,7 @@ const handlePreview = (el, binding, vnode) => {
   vnode.el.querySelector('.van-field__body').style.display = 'none'
   vnode.el.querySelector('.van-field__value').style.display = 'flex'
 
+  // 屏蔽点击事件
   vnode.el.addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
