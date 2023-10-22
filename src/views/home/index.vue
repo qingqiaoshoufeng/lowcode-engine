@@ -39,6 +39,7 @@
 </template>
   
 <script setup>
+import { onMounted } from 'vue'
 import Tabbar from '@/component/tabbar/index.vue'
 import AllTimePicker from '@/component/AllTimePicker/index.vue'
 import useSearch from './hooks/useSearch.js'
@@ -48,6 +49,9 @@ import StatisticsInfo from './components/StatisticsInfo.vue'
 import YearRank from './components/YearRank.vue'
 import Chart from './components/Chart.vue'
 import {ref} from 'vue'
+import { useStore } from "vuex";
+
+const store = useStore()
 
 const currentab = ref(1)
 const statisticsInfoRef = ref(null)
@@ -77,7 +81,21 @@ const {
   goNotice
 } = useSearch({dataPickerRef,statisticsInfoRef})
 
+const initStore = async () => {
+  const storeList = ['rules', 'userInfo', 'dict','menuInfo']
+  const isInited = await Promise.all(
+    storeList.map(item => {
+      store.dispatch(item + '/init')
+    })
+  )
+  return isInited
+}
 
+onMounted(async () => {
+  if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
+    await initStore()
+  }
+})
 </script>
   
 <style scoped lang="scss">
