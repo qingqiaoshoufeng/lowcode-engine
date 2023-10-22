@@ -1,7 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-// import { message } from '@castle/ant-design-vue'
+import { showLoadingToast, closeToast } from "vant";
 import { useSubmit } from '@castle/castle-use'
+import SelectSingle from "@/component/SelectSingle/index";
 import { rejectDispatchBack } from '@/apis/index.js'
 
 const props = defineProps({
@@ -43,7 +44,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  // message.success('操作成功')
+  closeToast()
   emits('finishCallback')
 }, {
   submitFn: () => rejectDispatchBack({
@@ -52,40 +53,61 @@ const { loading, submit } = useSubmit(() => {
   }),
 })
 
+const onSubmit = async () => {
+  showLoadingToast()
+  await submit()
+  await formRef.value.finishFn()
+}
+
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
-    formRef.value.validate().then(async (values) => {
-      if (values) {
-        await submit()
-        await finishFn()
-      }
-    })
+    formRef.value.submit()
+    formRef.value.finishFn = finishFn
   }, loading)
 })
 </script>
 
 <template>
-  >>>>
-  <!-- <a-form ref="formRef" :model="form" label-align="right" :label-col="{ style: { width: '80px' } }" autocomplete="off">
-    <a-form-item
-      name="backCause"
-      :label="title"
-      :rules="[{ required: true, message: `请选择${title}` }]"
-    >
-      <a-select v-model:value="form.backCause" :options="options" :placeholder="`请选择${title}`" />
-    </a-form-item>
-    <a-form-item
-      name="backRemark"
-      label="备注"
-      :rules="[{ required: true, message: '请输入备注' }]"
-    >
-      <a-textarea
-        v-model:value="form.backRemark"
-        placeholder="请输入备注"
-        :rows="4"
-        :maxlength="500"
-        show-count
+  <div class="apply-reject">
+    <van-form ref="formRef" @submit="onSubmit">
+      <SelectSingle
+        v-model:value="form.backCause"
+        name="backCause"
+        :options="options"
+        :field-names="{ value: 'value', label: 'label' }"
+        :required="true"
+        :title="`${title}`"
+        :label="`${title}：`"
+        :placeholder="`请选择${title}`"
+        :rules="[{ required: true, message: `请选择${title}` }]"
       />
-    </a-form-item>
-  </a-form> -->
+      <van-field
+        v-model="form.backRemark"
+        name="backRemark"
+        required
+        rows="4"
+        autosize
+        label="备注："
+        type="textarea"
+        maxlength="500"
+        placeholder="请输入备注"
+        show-word-limit
+        :rules="[{ required: true, message: '请输入备注' }]"
+        class="form-textarea"
+      />
+    </van-form>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.apply-reject {
+  .form-textarea {
+    flex-direction: column;
+    :deep(.van-field__body) {
+      border: 1px solid #f6f6f6;
+      padding: 5px 5px;
+      margin-top: 5px;
+    }
+  }
+}
+</style>

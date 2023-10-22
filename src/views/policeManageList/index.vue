@@ -334,17 +334,6 @@ onMounted(() => {
               @click="handleCollect(record, true)"
             />
             <van-button
-              v-p="['admin', 'police-manage:edit']"
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleEdit(record)"
-              :disabled="!checkChange(record)"
-            >
-              修改
-            </van-button>
-            <van-button
               v-p="['admin', 'police-manage:abolish']"
               type="success"
               size="mini"
