@@ -1,4 +1,4 @@
-import { request } from '@/plugins/request/index.js'
+import { request } from '@/plugins/axios/index.js'
 
 // 出动填报列表
 export function getReportList(data) {

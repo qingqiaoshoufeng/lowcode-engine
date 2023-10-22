@@ -1,4 +1,4 @@
-import { request } from '@/plugins/request/index.js'
+import { request } from '@/plugins/axios/index.js'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 

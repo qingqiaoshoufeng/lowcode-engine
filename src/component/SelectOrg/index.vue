@@ -82,6 +82,10 @@ const selectItem = ref([]);
 
 const selectText = ref([]);
 
+const selectTextValue = computed(() => {
+  return selectText.value?.join(",");
+})
+
 watch(() => props.value, (newVal, oldVal) => {
   if (props.value) {
     selectItem.value = props.value;
@@ -221,7 +225,7 @@ defineOptions({
 
 <template>
   <van-field
-    v-model="selectText"
+    v-model="selectTextValue"
     is-link
     v-preview-text="showPreview"
     v-bind="$attrs"

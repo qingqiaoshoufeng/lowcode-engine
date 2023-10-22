@@ -1,5 +1,6 @@
 export const pathMap = {
   "jingqingluru":'/policeEntryForm',
   "jingqingxiugai": "/policeManageList",
-  "jingqingguanli": "/policeManageList"
+  "jingqingguanli": "/policeManageList",
+  "chudongtianbao": "/dispatchReportList"
 }
