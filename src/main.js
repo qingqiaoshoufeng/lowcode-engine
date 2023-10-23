@@ -18,7 +18,7 @@ import './styles/index.scss'
 import '@/assets/fonts/iconfont.js'
 import FormPreviewText from '@/component/FormPreviewText/index'
 
-console.log(router);
+// console.log(router);
 const plugins = [Vant, store, axios, icons, component, eventBus, directives, FormPreviewText]
 const app = createApp(App);
 app.use(registerPlugins(plugins))

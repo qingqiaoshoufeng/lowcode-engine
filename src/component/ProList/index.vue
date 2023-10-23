@@ -74,7 +74,11 @@ if (props.defaultFilterValue) {
 
 onMounted(() => {
   if (props.showLoad) {
-    loadList();
+    loadList().then(res => {
+      if (list.value.length === total.value) {
+        finished.value = true
+      }
+    });
   }
 });
 
@@ -139,17 +143,24 @@ defineExpose({
       <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" :reset-form="resetForm" />
     </div>
     <div class="list-wrapper">
-      <van-list
-        :loading="loading"
-        :finished="finished"
-        :immediate-check="false"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
-          <slot name="list" :record="item" :index="index" />
+      <template v-if="total === 0 && finished">
+        <div class="no-data">
+          <van-empty image-size="100" description="暂无数据" />
         </div>
-      </van-list>
+      </template>
+      <template v-else>
+        <van-list
+          :loading="loading"
+          :finished="finished"
+          :immediate-check="false"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
+            <slot name="list" :record="item" :index="index" />
+          </div>
+        </van-list>
+      </template>
     </div>
   </div>
 </template>

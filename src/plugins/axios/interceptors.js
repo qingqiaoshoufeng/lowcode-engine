@@ -8,7 +8,6 @@ export const requestInterceptors = (config) => {
 
 
 export const responseInterceptors = (response) => {
-  console.log(111);
   const { data, config } = response
   const { code, data: resData } = data
 
