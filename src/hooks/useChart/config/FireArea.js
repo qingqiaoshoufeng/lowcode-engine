@@ -75,7 +75,6 @@ export default {
     if (!isType(val, 'Array')) {
       return {}
     }
-    debugger;
     Array.from(Array(1).keys()).forEach((index) => {
       options.series[index].data = val.map((item) => {
         return {

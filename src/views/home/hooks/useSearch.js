@@ -66,7 +66,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     console.log(res,'getFireInfo');
     state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
     state.InitialFuelsList = res?.dateAnalysisSevenResult?.dateAnalysisSevenResultList || ''
-    debugger;
     state.FireSiteList = res?.dateAnalysisThreeResult?.threeResultsFire || ''
     if(state.isStanding === false){
       state.statisticsList = [
@@ -152,7 +151,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
 
   // 获取参展形式列表
   const getStyle= async()=>{
-    debugger;
     const res = await getStylePercent(formatParams())
     state.FireAreaList = res
     console.log(res,'getStyle');
