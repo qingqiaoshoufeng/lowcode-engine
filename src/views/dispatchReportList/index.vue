@@ -82,12 +82,12 @@ const finishCallback = () => {
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">派发单位：</div>
             <div>{{ record.distributeOrgName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
             <div>{{ record.dispatchedTime }}</div>
           </div>
