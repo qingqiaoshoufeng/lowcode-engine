@@ -14,7 +14,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     isShow:{
       time:false
     },
-    isStanding:ORGLEVEL === 4,
+    isStanding:ORGLEVEL === 5,
     cardList,
     FireInfoList:'', // 百万人口火灾
     DispatchInfoList: '', // 出动平均时长列表
@@ -30,7 +30,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     policelist:[], //
     dispatchList:[],
     noticeList:[],
-    FireAreaList:[],
+    FireAreaList:'',
+    FireSiteList:'',
     // DispatchInfoList:[] // 出动平均时长列表
 
   })
@@ -64,7 +65,9 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     const res = await getFirelist(formatParams())
     console.log(res,'getFireInfo');
     state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
-    state.InitialFuelsList = res?.dateAnalysisThreeResult?.threeResultsFire || ''
+    state.InitialFuelsList = res?.dateAnalysisSevenResult?.dateAnalysisSevenResultList || ''
+    debugger;
+    state.FireSiteList = res?.dateAnalysisThreeResult?.threeResultsFire || ''
     if(state.isStanding === false){
       state.statisticsList = [
         ...state.statisticsList,
@@ -149,6 +152,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
 
   // 获取参展形式列表
   const getStyle= async()=>{
+    debugger;
     const res = await getStylePercent(formatParams())
     state.FireAreaList = res
     console.log(res,'getStyle');
@@ -354,22 +358,22 @@ const fightListMap2 = [
   {
     label:'抢救人数',
     numberKey:'rescueNum',
-    YOYkey:'rescueNumPro'
+    YOYkey:'rescueNumPo'
   },
   {
     label:'疏散转移人数，',
-    numberKey:'rescueNumMom',
-    YOYkey:'rescueNumMomPro'
+    numberKey:'rescueNum',
+    YOYkey:'rescueNumPro'
   },
   {
-    label:'抢救财产价值、',
-    numberKey:'protectNumMom',
-    YOYkey:'protectNumMomPro'
+    label:'抢救财产价值',
+    numberKey:'protectNum',
+    YOYkey:'protectNumPro'
   },
   {
-    label:'保护财产价值，',
-    numberKey:'evacuateNumMom',
-    YOYkey:'evacuateNumMomPro'
+    label:'保护财产价值',
+    numberKey:'evacuateNum',
+    YOYkey:'evacuateNumPro'
   }
 ]
 

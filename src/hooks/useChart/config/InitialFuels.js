@@ -1,4 +1,4 @@
-import {isType} from '@/utils/types.js'
+import { isType } from '@/utils/types.js'
 
 // const mockData = [
 //   {
@@ -180,19 +180,20 @@ const options = {
   }],
 }
 
-
 export default {
-  name:'InitialFuels',
-  getOptions(val = mockData){
-    if(!isType(val,'Array')) return []
-    Array.from(Array(1).keys()).map(index=>{
+  name: 'InitialFuels',
+  getOptions(val) {
+    if (!isType(val, 'Array')) {
+      return []
+    }
+    Array.from(Array(1).keys()).forEach((index) => {
       options.series[index].data = val?.map((val) => {
         return {
-          name: val.dictNameLvl2,
+          name: val.dictName,
           value: val.hzCount,
         }
       })
     })
     return options
-  }
+  },
 }

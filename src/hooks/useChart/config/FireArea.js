@@ -41,7 +41,7 @@ const options = {
         padding: [-40, 0, -15, 0],
         distanceToLabelLine: -80,
         // formatter:'{b}: {c}:{"人"}'
-        formatter(val, val2) {
+        formatter(val) {
           // debugger;
           const { name, value } = val.data
           return `${name}:${value}`
@@ -75,7 +75,8 @@ export default {
     if (!isType(val, 'Array')) {
       return {}
     }
-    Array.from(Array(1).keys()).map((index) => {
+    debugger;
+    Array.from(Array(1).keys()).forEach((index) => {
       options.series[index].data = val.map((item) => {
         return {
           value: item.total, name: item.dictName,

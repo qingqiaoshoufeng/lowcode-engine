@@ -129,6 +129,11 @@ export default {
         font-family: D-DINExp-Bold, D-DINExp;
         font-weight: bold;
         color: #0B2E59;
+        max-width: 70px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
       }
       .percent{
         font-size: 14px;
