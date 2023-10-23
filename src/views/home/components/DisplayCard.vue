@@ -2,7 +2,7 @@
   <div class="display_card" :class="color">
     <div class="desc">
       <div class="title">{{ info.name }}</div>
-      <div class="percent">{{info.percent }}</div>
+      <div class="percent">{{ info.percent.includes('-') ? info.percent : `+${info.percent}`  }}</div>
     </div>
     <div class="number">{{info.number }}</div>
   </div>
@@ -44,6 +44,7 @@ export default {
   .desc{
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .title{
     font-size: 12px;
@@ -57,11 +58,11 @@ export default {
     white-space: nowrap;
   }
   .number{
-    font-size: 21px;
+    font-size: 18px;
     font-family: D-DINExp-Bold, D-DINExp;
     font-weight: bold;
     color: #FFFFFF;
-    max-width: 45px;
+    max-width: 80px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;

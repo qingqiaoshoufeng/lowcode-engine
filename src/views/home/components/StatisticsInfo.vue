@@ -17,7 +17,7 @@
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}</div>
-                <div class="percent">{{ item.percent }}</div>
+                <div class="percent">{{ item.percent.includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
@@ -108,7 +108,8 @@ export default {
     .card_item{
       width: 164px;
       height: 76px;
-      background: #F6F6F6;
+      // background: #F6F6F6;
+      background: #F3F7FD;
       border-radius: 4px;
       padding: 11px 10px 0 12px;
       box-sizing: border-box;
@@ -117,7 +118,11 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
         color: #545A66;
+        margin-bottom: 8px;
       }
       .buttom{
         display: flex;
@@ -125,11 +130,11 @@ export default {
         justify-content: space-between;
       }
       .number{
-        font-size: 21px;
+        font-size: 18px;
         font-family: D-DINExp-Bold, D-DINExp;
         font-weight: bold;
         color: #0B2E59;
-        max-width: 70px;
+        max-width: 150px;
         text-overflow: ellipsis;
         overflow: hidden;
         word-break: break-all;

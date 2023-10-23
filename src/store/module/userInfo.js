@@ -12,7 +12,7 @@ const mutations = {
   }
 }
 const actions = {
-  init({commit}) {
+  init:async({commit})=> {
     return getUserInfo().then((res) => {
       if (res?.data) {
         commit('setUserInfo', res.data)

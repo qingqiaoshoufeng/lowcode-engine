@@ -134,7 +134,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
         ...getStatisticsInfo(res,'dispatchListMap',state.isStanding)
       ]
       state.dispatchCardInfo = {
-        title:'出动次数',
+        name:'出动次数',
         number:res?.totalDispatch || 0,
         percent:res?.totalDispatchPro || 0,
       }
@@ -318,7 +318,7 @@ const dispatchListMap = [
     numberKey:'rescueNum',
     YOYkey:'rescueNumPro'
   },{
-    label:'抢救财产价值（万元）',
+    label:'抢救财产（万元）',
     numberKey:'protectNum',
     YOYkey:'protectNumPro'
   }
