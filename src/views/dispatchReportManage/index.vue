@@ -132,6 +132,7 @@ const searchOptions = ref([
 const defaultFilterValue = {
   onlyMy: false,
   time: getLastMonth(),
+  headNameList: [],
 };
 
 const tabs = ref([
@@ -259,6 +260,7 @@ onMounted(() => {
         <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
             v-model:value="filterFormState.time"
+            title="选择时间"
             @change="onTimeChange"
           />
           <SelectMore
@@ -294,12 +296,12 @@ onMounted(() => {
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">出动队伍：</div>
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>

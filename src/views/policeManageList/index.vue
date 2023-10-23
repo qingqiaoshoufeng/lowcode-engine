@@ -293,6 +293,7 @@ onMounted(() => {
         <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
             v-model:value="filterFormState.time"
+            title="选择时间"
             @change="onTimeChange"
           />
           <SelectMore

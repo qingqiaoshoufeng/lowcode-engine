@@ -904,6 +904,11 @@
   dependencies:
     "source-map" "^0.6.1"
 
+"@types/web-bluetooth@^0.0.18":
+  "integrity" "sha512-v/ZHEj9xh82usl8LMR3GarzFY1IrbXJw5L4QfQhokjRV91q+SelFqxQWSep1ucXEZ22+dSTwLFkXeur25sPIbw=="
+  "resolved" "http://castle-npm.cp.hxdi.cn/@types%2fweb-bluetooth/-/web-bluetooth-0.0.18.tgz"
+  "version" "0.0.18"
+
 "@types/webpack-dev-server@^3.11.0":
   "version" "3.11.1"
   dependencies:
@@ -1264,6 +1269,28 @@
 
 "@vue/web-component-wrapper@^1.2.0":
   "version" "1.2.0"
+
+"@vueuse/core@^10.5.0":
+  "integrity" "sha512-z/tI2eSvxwLRjOhDm0h/SXAjNm8N5ld6/SC/JQs6o6kpJ6Ya50LnEL8g5hoYu005i28L0zqB5L5yAl8Jl26K3A=="
+  "resolved" "http://castle-npm.cp.hxdi.cn/@vueuse%2fcore/-/core-10.5.0.tgz"
+  "version" "10.5.0"
+  dependencies:
+    "@types/web-bluetooth" "^0.0.18"
+    "@vueuse/metadata" "10.5.0"
+    "@vueuse/shared" "10.5.0"
+    "vue-demi" ">=0.14.6"
+
+"@vueuse/metadata@10.5.0":
+  "integrity" "sha512-fEbElR+MaIYyCkeM0SzWkdoMtOpIwO72x8WsZHRE7IggiOlILttqttM69AS13nrDxosnDBYdyy3C5mR1LCxHsw=="
+  "resolved" "http://castle-npm.cp.hxdi.cn/@vueuse%2fmetadata/-/metadata-10.5.0.tgz"
+  "version" "10.5.0"
+
+"@vueuse/shared@10.5.0":
+  "integrity" "sha512-18iyxbbHYLst9MqU1X1QNdMHIjks6wC7XTVf0KNOv5es/Ms6gjVFCAAWTVP2JStuGqydg3DT+ExpFORUEi9yhg=="
+  "resolved" "http://castle-npm.cp.hxdi.cn/@vueuse%2fshared/-/shared-10.5.0.tgz"
+  "version" "10.5.0"
+  dependencies:
+    "vue-demi" ">=0.14.6"
 
 "@webassemblyjs/ast@1.9.0":
   "integrity" "sha512-C6wW5L+b7ogSDVqymbkkvuW9kruN//YisMED04xzeBBqjHa2FYnmvOlS6Xj68xWQRgWvI9cIglsjFowH/RJyEA=="
@@ -8379,6 +8406,11 @@
   "resolved" "https://registry.npmmirror.com/vue-click-outside/-/vue-click-outside-1.1.0.tgz"
   "version" "1.1.0"
 
+"vue-demi@>=0.14.6":
+  "integrity" "sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w=="
+  "resolved" "http://castle-npm.cp.hxdi.cn/vue-demi/-/vue-demi-0.14.6.tgz"
+  "version" "0.14.6"
+
 "vue-eslint-parser@^7.3.0":
   "version" "7.3.0"
   dependencies:
@@ -8428,7 +8460,7 @@
   "resolved" "https://registry.npmmirror.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz"
   "version" "1.9.1"
 
-"vue@^2 || ^3.0.0-0", "vue@^3.0.0", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@^3.3.4", "vue@3.3.4":
+"vue@^2 || ^3.0.0-0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.2", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.2.37", "vue@^3.3.4", "vue@3.3.4":
   "version" "3.3.4"
   dependencies:
     "@vue/compiler-dom" "3.3.4"
