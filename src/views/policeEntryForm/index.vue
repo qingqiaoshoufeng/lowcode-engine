@@ -689,7 +689,7 @@ const validateHeadquarters = (value, rule) => {
       </div>
       <div v-else class="title-placeholder">警情名称由系统自动生成</div>
     </div>
-    <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" readonly>
+    <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
       <van-field
         v-model="form.warningDateText"
         v-preview-text="showPreview"
