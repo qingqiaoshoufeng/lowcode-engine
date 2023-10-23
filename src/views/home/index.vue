@@ -39,7 +39,7 @@
 </template>
   
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onActivated } from 'vue'
 import Tabbar from '@/component/tabbar/index.vue'
 import AllTimePicker from '@/component/AllTimePicker/index.vue'
 import useSearch from './hooks/useSearch.js'
@@ -91,11 +91,9 @@ const initStore = async () => {
   return isInited
 }
 
-onMounted(async () => {
-  if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
-    await initStore()
-  }
-})
+if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
+  initStore()
+}
 </script>
   
 <style scoped lang="scss">

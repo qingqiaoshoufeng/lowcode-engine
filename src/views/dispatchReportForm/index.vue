@@ -3,6 +3,7 @@ import { ref, provide, onMounted, watch, computed } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
+import { showToast } from "vant";
 import { useFormConfig } from "./formConfig.js";
 import basicInformation from "./components/basicInformation.vue";
 import {
@@ -295,7 +296,23 @@ onMounted(() => {
   console.log('init', result)
 })
 
+const handleSubmit = () => {
+  formRef.value.submit()
+}
+
+const handleTemporary = () => {
+
+}
+
 const onSubmit = () => {};
+
+const onFailed = (errorInfo) => {
+  console.log(errorInfo)
+  if (errorInfo?.errors?.length > 0) {
+    showToast('信息填写不完整，请检查填写内容！')
+    scrollFormFailed()
+  }
+};
 </script>
 
 <template>
@@ -308,9 +325,18 @@ const onSubmit = () => {};
       </van-sidebar>
     </div>
     <div class="form-right">
-      <van-form ref="formRef" @submit="onSubmit">
+      <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <basicInformation />
       </van-form>
+
+      <div class="form-footer" v-if="!showPreview">
+        <van-button round block type="default" size="small" :loading="loading" @click="handleTemporary">
+          暂存
+        </van-button>
+        <van-button round block type="primary" size="small" :loading="loading" @click="handleSubmit">
+          确定
+        </van-button>
+      </div>
     </div>
   </div>
 </template>
@@ -328,6 +354,13 @@ const onSubmit = () => {};
     width: 80%;
     display: flex;
     flex-direction: column;
+    .form-footer {
+      display: flex;
+      padding: 20px 30px;
+      button:first-child {
+        margin-right: 20px;
+      }
+    }
   }
 }
 </style>
