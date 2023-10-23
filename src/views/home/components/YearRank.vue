@@ -12,13 +12,21 @@
       <div class="info_list">
         <div class="info_item" :class="{no_line:index===9}" v-for="(item,index) in list" :key="item.name + currentTab">
           <div class="index">
-            <img v-if="iconList[index]" :src="iconList[index]" alt="">
-            <span v-else>{{ index }}</span>
+            <img v-if="iconList[index] && currentTab === 1" :src="iconList[index]" alt="">
+            <span v-else>{{ index + 1  }}</span>
           </div>
-          <div class="name">{{ item.name || item.warningName }}</div>
-          <div class="times">{{ item.qs ? (item.qs + '起') : '-' }}</div>
-          <div class="cars">{{ item.qs ? (item.car + '辆' ) : '-' }}</div>
-          <div class="people">{{item.qs ? (item.person + '人') : '-'  }}</div>
+          <template v-if="currentTab === 1">
+            <div class="name">{{ item.name || item.warningName }}</div>
+            <div class="times">{{ item.qs ? (item.qs + '起') : '-' }}</div>
+            <div class="cars">{{ item.qs ? (item.car + '辆' ) : '-' }}</div>
+            <div class="people">{{item.qs ? (item.person + '人') : '-'  }}</div>
+          </template>
+          <template v-else>
+            <div class="warningName">{{ item.warningName }}</div>
+            <div class="deadNum">
+              {{ item.deadNum ? (`${item.deadNum}人`) : '-' }}
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -135,11 +143,25 @@ export default {
           white-space: nowrap;
           line-height: 34px;
         }
+        .warningName{
+          max-width: 200px;
+          width: 200px;
+          // flex-shrink: 0;
+          // flex-grow: 0;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-break: break-all;
+          white-space: nowrap;
+          line-height: 34px;
+        }
         .times,.cars{
           width:64px;
           text-align: center;
         }
-        
+        .deadNum{
+          width:80px;
+          text-align: center;
+        }
       }
       .no_line{
         border-bottom:none;

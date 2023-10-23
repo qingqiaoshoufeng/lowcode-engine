@@ -2,7 +2,7 @@
   <div class="display_card" :class="color">
     <div class="desc">
       <div class="title">{{ info.name }}</div>
-      <div class="percent">{{ info.percent.includes('-') ? info.percent : `+${info.percent}`  }}</div>
+      <div class="percent">{{ (info.percent || '-').includes('-') ? info.percent : `+${info.percent}`  }}</div>
     </div>
     <div class="number">{{info.number }}</div>
   </div>
