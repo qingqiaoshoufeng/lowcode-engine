@@ -1,5 +1,6 @@
 <script setup>
 import { inject, watch } from 'vue'
+import SelectSingle from "@/component/SelectSingle/index";
 
 const form = inject('form')
 

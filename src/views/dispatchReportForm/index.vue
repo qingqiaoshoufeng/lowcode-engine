@@ -14,6 +14,8 @@ import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
 import GovernmentCommand from './components/governmentCommand.vue';
 import LinkageUnit from './components/linkageUnit.vue';
 import OtherAttach from './components/otherAttach.vue';
+import OtherForce from './components/otherForce.vue';
+import TacticalMeasures from './components/tacticalMeasures.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -341,8 +343,10 @@ const onFailed = (errorInfo) => {
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <BasicInformation />
         <BasicInfoHeadquarter />
+        <TacticalMeasures />
         <GovernmentCommand />
         <LinkageUnit />
+        <OtherForce />
         <BattleResult />
         <DeployEquipment />
         <DisposalProcess />
