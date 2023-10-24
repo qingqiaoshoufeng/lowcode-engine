@@ -5,7 +5,7 @@ import { showToast } from "vant";
 
 const props = defineProps({
   value: {
-    type: [String, Number],
+    type: [String, Object],
     default: "",
   },
   title: {

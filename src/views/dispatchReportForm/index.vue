@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import { showToast } from "vant";
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
+import BattleConsume from "./components/battleConsume.vue";
 import DisposalProcess from './components/disposalProcess.vue';
 import CommandProcess from './components/commandProcess.vue';
 import DeployEquipment from './components/deployEquipment.vue';
@@ -205,7 +206,6 @@ const initDict = () => {
 const initTruckMsg = () => {
   return getTruckMsg().then(res => {
     dispatchTruckListOptions.value = res.items || []
-    console.log('.......', dispatchTruckListOptions.value)
   })
 }
 
@@ -342,6 +342,7 @@ const onFailed = (errorInfo) => {
         <DeployEquipment />
         <DisposalProcess />
         <CommandProcess />
+        <BattleConsume />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

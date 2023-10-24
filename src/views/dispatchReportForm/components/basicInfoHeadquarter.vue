@@ -1,6 +1,5 @@
 <script setup>
 import { inject, ref, watch } from "vue";
-import dayjs from "dayjs";
 import { formatDiff } from "@/utils/tools.js";
 import SelectDateTime from "@/component/SelectDateTime/index";
 
@@ -12,74 +11,60 @@ const currentRow = inject("currentRow");
 
 const diffTime = ref("");
 
-const disabledDate = (current) => {
-  return current && current > Date.now();
-};
-
-const validateDispatch = (rule, value, callback) => {
+const validateDispatch = (value, rule) => {
   const { dispatchDate } = form.value.basicInfoHead;
   if (!value) {
     if (!dispatchDate.rules[0].required) {
-      callback();
+      return "";
     } else {
-      callback(new Error("请选择出动时间"));
+      return "请选择出动时间";
     }
-  } else if (
-    currentRow &&
-    dispatchDate.value?.valueOf() < currentRow.warningDate
-  ) {
-    callback(new Error("出动时间不能早于接警时间"));
+  } else if (currentRow && dispatchDate.value?.valueOf() < currentRow.warningDate) {
+    return "出动时间不能早于接警时间";
   } else {
-    callback();
+    return "";
   }
 };
 
-const validateAttendance = (rule, value, callback) => {
+const validateAttendance = (value, rule) => {
   const { dispatchDate, attendanceDate } = form.value.basicInfoHead;
   if (!value) {
     if (!attendanceDate.rules[0].required) {
-      callback();
+      return "";
     } else {
-      callback(new Error("请选择到场时间"));
+      return "请选择到场时间";
     }
   } else if (attendanceDate.value?.valueOf() < dispatchDate.value?.valueOf()) {
-    callback(new Error("到场时间不能早于出动时间"));
+    return "到场时间不能早于出动时间";
   } else {
-    callback();
+    return "";
   }
 };
 
-const validateEvacuate = (rule, value, callback) => {
+const validateEvacuate = (value, rule) => {
   const { attendanceDate, evacuateDate } = form.value.basicInfoHead;
   if (!value) {
     if (!evacuateDate.rules[0].required) {
-      callback();
+      return "";
     } else {
-      callback(new Error("请选择撤离时间"));
+      return "请选择撤离时间";
     }
   } else if (evacuateDate.value?.valueOf() < attendanceDate.value?.valueOf()) {
-    callback(new Error("撤离时间不能早于到场时间"));
+    return "撤离时间不能早于到场时间";
   } else {
-    callback();
+    return "";
   }
 };
 
 // 计算指挥时长
-// watch(
-//   () => form.value.basicInfoHead,
-//   () => {
-//     const { attendanceDate, evacuateDate } = form.value.basicInfoHead;
-//     if (attendanceDate.value && evacuateDate.value) {
-//       form.value.basicInfoHead.commandTime.value =
-//         evacuateDate.value?.valueOf() - attendanceDate.value?.valueOf();
-//       diffTime.value = formatDiff(
-//         attendanceDate.value?.valueOf(),
-//         evacuateDate.value?.valueOf()
-//       );
-//     }
-//   },
-//   { deep: true, immediate: true }
-// );
+watch(() => form.value.basicInfoHead, () => {
+  const { attendanceDate, evacuateDate } = form.value.basicInfoHead;
+  if (attendanceDate.value && evacuateDate.value) {
+    form.value.basicInfoHead.commandTime.value = evacuateDate.value?.valueOf() - attendanceDate.value?.valueOf();
+    diffTime.value = formatDiff(attendanceDate.value?.valueOf(), evacuateDate.value?.valueOf());
+    console.log(diffTime.value)
+  }
+}, { deep: true, immediate: true });
 
 // 计算总人数
 // watch(
@@ -192,7 +177,7 @@ const validateEvacuate = (rule, value, callback) => {
       title="请选择出动时间"
       label="出动时间："
       placeholder="请选择出动时间"
-      :rules="[{ required: true, message: '请选择出动时间' }]"
+      :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.attendanceDate.value"
@@ -204,7 +189,7 @@ const validateEvacuate = (rule, value, callback) => {
       title="请选择到场时间"
       label="到场时间："
       placeholder="请选择到场时间"
-      :rules="[{ required: true, message: '请选择到场时间' }]"
+      :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.evacuateDate.value"
@@ -216,7 +201,7 @@ const validateEvacuate = (rule, value, callback) => {
       title="请选择撤离时间"
       label="撤离时间："
       placeholder="请选择撤离时间"
-      :rules="[{ required: true, message: '请选择撤离时间' }]"
+      :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
     />
     <van-field
       v-model="form.basicInfoHead.personNum.value"
@@ -249,10 +234,9 @@ const validateEvacuate = (rule, value, callback) => {
       <template #extra>辆</template>
     </van-field>
     <van-field
-      v-model="form.basicInfoHead.commandTime.value"
+      v-model="diffTime"
       v-preview-text="showPreview"
       :readonly="showPreview"
-      type="number"
       maxlength="20"
       required
       name="commandTime"
@@ -260,8 +244,6 @@ const validateEvacuate = (rule, value, callback) => {
       placeholder="请输入指挥时长"
       :disabled="true"
       :rules="form.basicInfoHead.commandTime.rules"
-    >
-      <template #extra>小时</template>
-    </van-field>
+    />
   </van-cell-group>
 </template>

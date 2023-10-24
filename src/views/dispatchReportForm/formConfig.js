@@ -237,6 +237,264 @@ export const useFormConfig = () => {
         value: undefined,
         rules: [{ required: true, message: '请选择指挥车辆信息' }],
       },
+      boardingTruckList: { // 宿营车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择宿营车' }],
+      },
+      kitchenTruckList: { // 请选择炊事车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择炊事车' }],
+      },
+      toiletTruckList: { // 盥洗车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择盥洗车' }],
+      },
+      refrigerateTruckZqList: { // 冷藏车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择冷藏车' }],
+      },
+      airfeedTruckList: { // 供气车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择供气车' }],
+      },
+      oilTruckList: { // 油料车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择油料车' }],
+      },
+      steamThawingTruckList: { // 蒸汽解冻车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择蒸汽解冻车' }],
+      },
+      foamTransferTruckList: { // 泡沫输转车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择泡沫输转车' }],
+      },
+      wreckTruckList: { // 清障车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择清障车' }],
+      },
+      modularTruckList: { // 模块车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择模块车' }],
+      },
+      mobileCommunicateTruckList: { // 动中通通信车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择动中通通信车' }],
+      },
+      communicateEquipTruckList: { // 通信材料车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择通信材料车' }],
+      },
+      quietCommunicateTruckList: { // 静中通通信车
+        value: undefined,
+        // rules: [{ required: true, message: '请选择静中通通信车' }],
+      },
+      satellitePhone: { // 卫星电话（台）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入卫星电话数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确卫星电话数量' },
+        ],
+      },
+      satellitePortableStation: { // 卫星便携站（座）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入卫星便携站数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确卫星便携站数量' },
+        ],
+      },
+      singleSoldier: { // 单兵（件）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入单兵数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确单兵数量' },
+        ],
+      },
+      uav: { // 无人机（架）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入无人机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+        ],
+      },
+      clothControl: { // 布控球（个）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入布控球数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确布控球数量' },
+        ],
+      },
+      meshStation: { // Mesh自组网基站（座）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入Mesh自组网基站数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确Mesh自组网基站数量' },
+        ],
+      },
+      microwaveGraph: { // 微播图传（个）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入微播图传数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确微播图传数量' },
+        ],
+      },
+      beidouTerminal: { // 北斗有源终端（个）
+        value: 0,
+        rules: [
+          { required: true, message: '请输入北斗有源终端数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确北斗有源终端数量' },
+        ],
+      },
+    },
+    investForce: { // 投入力量
+      title: '投入力量',
+      fieldAnnotation: false, // 批注
+      fieldWarning: 'commander:false;firemen:false;isResponseTruck:false;',
+      groupLeader: { // 带队指挥员
+        value: undefined,
+        rules: [{ required: true, message: '请选择带队指挥员' }],
+      },
+      commander: { // 指挥员人数（人）
+        value: undefined,
+        rules: [
+          { required: true, message: '请选择指挥员' },
+        ],
+      },
+      firemen: { // 消防员（人）
+        value: undefined,
+        rules: [
+          { required: true, message: '请选择消防员' },
+        ],
+      },
+      isResponseTruck: { // 是否有车辆出动
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有车辆出动' }],
+      },
+      dispatchTruckList: { // 消防车辆信息
+        value: undefined,
+        rules: [{ required: true, message: '请选择消防车辆信息' }],
+      },
+      isReturnTruck: { // 是否有车辆中途返回
+        value: '2',
+        disabled: false,
+        rules: [{ required: true, message: '请选择是否有车辆中途返回' }],
+      },
+      midwayCar: { // 中途返回车辆信息
+        value: undefined,
+        disabled: false,
+        rules: [{ required: true, message: '请选择中途返回车辆信息' }],
+      },
+      fireBoatNum: { // 艇（艘）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入艇数' },
+          { pattern: positiveIntegerReg, message: '请输入正确艇数' },
+        ],
+      },
+      fireAirplaneNum: { // 消防直升机（架）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防直升机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防直升机数量' },
+        ],
+      },
+      rescueDogNum: { // 搜救犬（只）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入搜救犬数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确搜救犬数量' },
+        ],
+      },
+      uavNum: { // 无人机（架）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入无人机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+        ],
+      },
+      // governmentCommand: { // 政府指挥
+      //   title: '政府指挥',
+      isCommand: { // 是否有政府指挥
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有政府指挥' }],
+      },
+      fireDispatchZfList: [], // 指挥人员
+      name: { // 姓名
+        value: '',
+        rules: [{ required: true, message: '请输入姓名' }],
+      },
+      duty: { // 职务
+        value: '',
+        rules: [{ required: true, message: '请输入职务' }],
+      },
+      level: { // 所属级别
+        value: undefined,
+        rules: [{ required: true, message: '请选择所属级别' }],
+      },
+      // linkageUnit: { // 联动单位
+      // title: '联动单位',
+      haveLinkageUnit: { // 是否有联动单位
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有联动单位' }],
+      },
+      fireDispatchLinkList: [], // 联动单位
+      orgName: { // 单位名称
+        value: '',
+        rules: [{ required: true, message: '请输入单位名称' }],
+      },
+      departmentName: { // 所属行业部门
+        value: undefined,
+        rules: [{ required: true, message: '请选择所属行业部门' }],
+      },
+      orgLevel: { // 所属级别
+        value: undefined,
+        rules: [{ required: true, message: '请选择所属级别' }],
+      },
+      // otherForce: { // 其他消防救援力量
+      // title: '其他消防救援力量',
+      haveVolunteer: { // 是否有志愿救援队
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有志愿队力量' }],
+      },
+      volunteerList: [], // 志愿救援队
+      haveProfessional: { // 是否有专业救援队
+        value: '2',
+        rules: [{ required: true, message: '请选择有专业队力量' }],
+      },
+      otherList: [], // 专业队救援力量
+      groupType: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择队务类型' }],
+      },
+      orgName1: {
+        value: '',
+        rules: [{ required: true, message: '请输入志愿队名称' }],
+      },
+      professionalName: {
+        value: '',
+        rules: [{ required: true, message: '请输入专业队名称' }],
+      },
+      peopleNum: {
+        value: '',
+        rules: [
+          // { required: true, message: '请输入人数' },
+          { pattern: nonZeroPositiveInteger, message: '请输入正确人数' },
+        ],
+      },
+      trunkNum: {
+        value: '',
+        rules: [
+          // { required: true, message: '请输入车数' },
+          { pattern: positiveIntegerReg, message: '请输入正确车数' },
+        ],
+      },
+      boatNum: {
+        value: '',
+        rules: [
+          // { required: true, message: '请输入艇数' },
+          { pattern: positiveIntegerReg, message: '请输入正确艇数' },
+        ],
+      },
     },
     battleResult: { // 战斗成果
       title: '战斗成果',
@@ -289,6 +547,300 @@ export const useFormConfig = () => {
         rules: [
           { required: true, message: '请输入保护财产价值' },
           { pattern: nonnegativeNumberReg, message: '请输入正确保护财产价值' },
+        ],
+      },
+    },
+    battleConsume: { // 战斗消耗
+      title: '战斗消耗',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      wastageTruck: { // 损耗车辆信息
+        value: undefined,
+        // rules: [{ required: true, message: '请选择损耗车辆信息' }],
+      },
+      wastageTruckExplain: { // 车辆损耗说明
+        value: '',
+        rules: [
+          // { required: true, message: '请输入车辆损耗说明' },
+        ],
+      },
+      fuel: { // 燃油（升）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入燃油量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确燃油量' },
+        ],
+      },
+      waterPump: { // 机动消防泵（含浮艇泵）（台）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入机动消防泵数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确机动消防泵数量' },
+        ],
+      },
+      hoseReel: { // 移动式水带卷盘或水带槽（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入移动式水带卷盘或水带槽数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确移动式水带卷盘或水带槽数量' },
+        ],
+      },
+      fireGun: { // 移动式消防炮（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入移动式消防炮数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确移动式消防炮数量' },
+        ],
+      },
+      airForm: { // 空气泡沫枪（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入空气泡沫枪数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确空气泡沫枪数量' },
+        ],
+      },
+      formTank: { // 泡沫液桶（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入泡沫液桶数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确泡沫液桶数量' },
+        ],
+      },
+      ladder: { // 梯子（把）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入梯子数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确梯子数量' },
+        ],
+      },
+      waterBand: { // 水带（米）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入水带长度' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确水带长度' },
+        ],
+      },
+      fireHydrantHandle: { // 消防栓扳手（把）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防栓扳手数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防栓扳手数量' },
+        ],
+      },
+      waterGun: { // 水枪（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入水枪数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确水枪数量' },
+        ],
+      },
+      waterMainfold: { // 分水器（只）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入分水器数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确分水器数量' },
+        ],
+      },
+      entryTool: { // 破拆工具（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入破拆工具数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确破拆工具数量' },
+        ],
+      },
+      fireExtinguisher: { // 灭火机（只）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入灭火机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确灭火机数量' },
+        ],
+      },
+      firePump: { // 手抬泵（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入手抬泵数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确手抬泵数量' },
+        ],
+      },
+      fireHat: { // 消防头盔（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防头盔数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防头盔数量' },
+        ],
+      },
+      protectiveSuit: { // 消防员灭火防护服（套）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防员灭火防护服数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护服数量' },
+        ],
+      },
+      fireGlove: { // 消防手套（副）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防手套数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防手套数量' },
+        ],
+      },
+      lapBelt: { // 消防安全腰带（根）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防安全腰带数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防安全腰带数量' },
+        ],
+      },
+      protectiveBoots: { // 消防员灭火防护靴（双）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防员灭火防护靴数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护靴数量' },
+        ],
+      },
+      fireRebreather: { // 双正式压消防空气呼吸器（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入双正式压消防空气呼吸器数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确双正式压消防空气呼吸器数量' },
+        ],
+      },
+      fireLight: { // 佩戴式防爆照灯（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入佩戴式防爆照灯数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确佩戴式防爆照灯数量' },
+        ],
+      },
+      fireRescuer: { // 消防员呼救器（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防员呼救器数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防员呼救器数量' },
+        ],
+      },
+      positionLamp: { // 方位灯（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入方位灯数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确方位灯数量' },
+        ],
+      },
+      safetyRope: { // 消防安全绳（根）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防安全绳数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防安全绳数量' },
+        ],
+      },
+      fireAxe: { // 消防腰斧（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入消防腰斧数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防腰斧数量' },
+        ],
+      },
+      interphone: { // 对讲机（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入对讲机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确对讲机数量' },
+        ],
+      },
+      transferImage: { // 图传（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入图传数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确图传数量' },
+        ],
+      },
+      uav: { // 无人机（架）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入无人机数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+        ],
+      },
+      foamLiquid: { // 泡沫液（千克）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入泡沫液量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确泡沫液量' },
+        ],
+      },
+      dryPowder: { // 干粉（千克）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入干粉量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确干粉量' },
+        ],
+      },
+      carbonDioxide: { // 二氧化碳（千克）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入二氧化碳量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确二氧化碳量' },
+        ],
+      },
+      haloalkane: { // 卤代烷（升）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入卤代烷量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确卤代烷量' },
+        ],
+      },
+      totalFlow: { // 总流量（升/秒）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入总流量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确总流量' },
+        ],
+      },
+      firefightingWater: { // 灭火用水（吨）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入灭火用水量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确灭火用水量' },
+        ],
+      },
+      coolingWater: { // 冷却水（吨）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入冷却水量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确冷却水量' },
+        ],
+      },
+      totalWater: { // 用水总量（吨）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入用水总量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确用水总量' },
+        ],
+      },
+      waterInterrupt: { // 无故供水中断（次）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入无故供水中断次数' },
+          { pattern: positiveIntegerReg, message: '请输入正确无故供水中断次数' },
+        ],
+      },
+      waterDamage: { // 水渍损失
+        value: '',
+        rules: [
+          // { required: true, message: '请选择水渍损失' },
+        ],
+      },
+      lossOtherEquipments: [], // 其他物品（灭火器材）
+      lossOtherPersonal: [], // 其他物品（个人装备）
+      lossOtherAgent: [], // 其他物品（灭火药剂）
+      otherName: {
+        value: '',
+        rules: [{ required: true, message: '请输入其他物品名称' }],
+      },
+      otherAmount: {
+        value: '',
+        rules: [
+          { required: true, message: '请输入数量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确数量' },
         ],
       },
     },
