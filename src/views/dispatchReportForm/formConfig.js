@@ -175,6 +175,39 @@ export const useFormConfig = () => {
         ],
       },
     },
+    basicInfoHead: { // 基本信息-全勤指挥部
+      title: '基本信息',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      headquarterName: { // 全勤指挥部名称
+        value: undefined,
+        // rules: [{ required: true, message: '请选择全勤指挥部' }],
+      },
+      dispatchDate: { // 出动时间
+        value: '',
+        rules: [{ required: true, message: '' }],
+      },
+      attendanceDate: { // 到场时间
+        value: '',
+        rules: [{ required: true, message: '' }],
+      },
+      evacuateDate: { // 撤离时间
+        value: '',
+        rules: [{ required: true, message: '' }],
+      },
+      personNum: { // 人员数量
+        value: '',
+        // rules: [{ required: true, message: '请输入人员数量' }],
+      },
+      truckNum: { // 出动车辆（辆）
+        value: '',
+        // rules: [{ required: true, message: '请输入出动车辆数量' }],
+      },
+      commandTime: { // 指挥时长（小时）
+        value: '',
+        // rules: [{ required: true, message: '请输入指挥时长' }],
+      },
+    },
     commandProcess: { // 指挥过程
       title: '指挥过程',
       fieldAnnotation: false, // 批注

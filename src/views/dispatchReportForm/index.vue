@@ -9,6 +9,7 @@ import BasicInformation from "./components/basicInformation.vue";
 import DisposalProcess from './components/disposalProcess.vue';
 import CommandProcess from './components/commandProcess.vue';
 import DeployEquipment from './components/deployEquipment.vue';
+import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -336,6 +337,7 @@ const onFailed = (errorInfo) => {
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <BasicInformation />
+        <BasicInfoHeadquarter />
         <BattleResult />
         <DeployEquipment />
         <DisposalProcess />
