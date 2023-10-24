@@ -16,7 +16,7 @@ export const positiveIntegerReg = /^[0-9]\d*$/
 export const integerReg = /^-?[1-9]\d*$/
 
 // 非负浮点数
-export const nonnegativeNumberReg = /^\d+(\.\d+)?$/
+export const nonnegativeNumberReg = /^(\d+(\.\d+)?)?$/
 
 export const pwdReg = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$/
 

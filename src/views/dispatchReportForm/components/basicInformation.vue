@@ -87,7 +87,7 @@ const onDealSituation = (value, option) => {
       maxlength="20"
       required
       name="fireDistance"
-      label="入行驶距离："
+      label="行驶距离："
       label-width="102px"
       placeholder="请输入行驶距离"
       :rules="form.basicInformation.fireDistance.rules"
