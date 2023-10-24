@@ -11,6 +11,7 @@ import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
+import SelectDateTime from "@/component/SelectDateTime/index";
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
@@ -98,8 +99,7 @@ const detail = ref(null)
 
 const form = ref({
   warningName: "", // 警情标题
-  warningDate: dayjs().format("YYYY-MM-DD").split('-'), // 接警时间
-  warningDateText: dayjs().format("YYYY-MM-DD"),
+  warningDate: undefined, // 接警时间
   warningCodeYyj: "", // 119警情编号
   warningOrgname: "", // 单位/户主/个体户名称
   warningArea: "", // 行政区域
@@ -151,7 +151,7 @@ form.value.warningName = computed(() => {
   }
   const { warningDate, warningOrgname, warningAreaText, warningTypeText, naturalDisasterTypeText } = form.value;
   let result = warningDate
-    ? `“${dayjs(warningDate?.join('-')).format("M")}· ${dayjs(warningDate?.join('-')).format("D")}”`
+    ? `“${dayjs(warningDate).format("M")}· ${dayjs(warningDate).format("D")}”`
     : "";
   if (warningTypeText?.[0] === "虚假警") {
     if (warningTypeText?.[1] === "虚警（误报）") {
@@ -382,7 +382,7 @@ const { loading, submit } = useSubmit((res) => {
     const params = {
       ...values,
       new: !values.boFireWarningId,
-      warningDate: `${dayjs(values.warningDate.join('-')).unix()}000`,
+      warningDate: `${values.warningDate?.unix()}000`,
       warningArea: values.warningArea.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
@@ -616,13 +616,6 @@ const lngLatCallback = (lat, lng) => {
   formRef.value.resetValidation(['warningLng', 'warningLat'])
 };
 
-const onConfirm = (selectedValues, selectedOptions) => {
-  if (selectedValues) {
-    form.value.warningDateText = selectedValues.selectedValues?.join('-');
-    show.value.warningDate = false;
-  }
-};
-
 const validateFireTel = (value, rule) => {
   const { warningSource } = form.value;
   const filter = options.value.warningSource?.filter(
@@ -690,19 +683,18 @@ const validateHeadquarters = (value, rule) => {
       <div v-else class="title-placeholder">警情名称由系统自动生成</div>
     </div>
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
-      <van-field
-        v-model="form.warningDateText"
+      <SelectDateTime
+        v-model:value="form.warningDate"
         v-preview-text="showPreview"
         :readonly="showPreview"
         is-link
         required
-        name="warningDateText"
+        name="warningDate"
+        title="请选择接警时间"
         label="接警时间："
         placeholder="请选择接警时间"
         :rules="[{ required: true, message: '请选择接警时间' }]"
-        @click="show.warningDate = true"
-      >
-      </van-field>
+      />
       <AreaCascader
         v-if="!loadDetail"
         name="warningArea"
@@ -838,6 +830,7 @@ const validateHeadquarters = (value, rule) => {
         required
         :options="options.warningLevelOptions"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
+        title="请选择警情等级"
         label="警情等级："
         placeholder="请选择警情等级"
         :rules="[{ required: true, message: '请选择警情等级' }]"
@@ -949,8 +942,7 @@ const validateHeadquarters = (value, rule) => {
         maxlength="50"
         :required="false"
         :rules="[
-          { required: false, message: '' },
-          { pattern: /^[A-Za-z0-9]+$/, message: '请输入正确119警情编号' },
+          { pattern: /^[A-Za-z0-9]*$/, message: '请输入正确119警情编号' },
         ]"
       />
       <SelectMultiple
@@ -1003,6 +995,7 @@ const validateHeadquarters = (value, rule) => {
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
         label="首到队站："
+        title="请选择首到队站"
         placeholder="请选择首到队站"
         :rules="[{ required: true, message: '请选择首到队站' }]"
         :checkShowFn="handleMain"
@@ -1016,6 +1009,7 @@ const validateHeadquarters = (value, rule) => {
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
         label="主战队站："
+        title="请选择主战队站"
         placeholder="请选择主战队站"
         :rules="[{ required: true, message: '请选择主战队站' }]"
         :checkShowFn="handleMain"
@@ -1106,14 +1100,6 @@ const validateHeadquarters = (value, rule) => {
       </van-button>
     </div>
 
-    <van-popup v-model:show="show.warningDate" position="bottom">
-      <van-date-picker
-        v-model="form.warningDate"
-        :max-date="new Date()"
-        @confirm="onConfirm"
-        @cancel="show.warningDate = false"
-      />
-    </van-popup>
     <ProModal v-model:visible="show.lngLatVisible" title="选择地图">
       <template #default="{ setHandleOk }">
         <MapLatLng

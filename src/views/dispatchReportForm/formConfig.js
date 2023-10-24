@@ -174,7 +174,61 @@ export const useFormConfig = () => {
           { pattern: nonnegativeNumberReg, message: '请输入正确消杀面积' },
         ],
       },
-    }
+    },
+    battleResult: { // 战斗成果
+      title: '战斗成果',
+      fieldAnnotation: false, // 批注
+      fieldWarning: 'rescueNum:false;',
+      rescueNum: { // 抢救（人）
+        value: '',
+        rules: [
+          { required: true, message: '' },
+          { pattern: positiveIntegerReg, message: '请输入正确抢救人数' },
+        ],
+      },
+      surviveNum: { // 生还（人）
+        value: '',
+        rules: [
+          { required: true, message: '' },
+          { pattern: positiveIntegerReg, message: '请输入正确生还人数' },
+        ],
+      },
+      deathNum: { // 死亡（人）（抢救-生还）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入死亡人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确死亡人数' },
+        ],
+      },
+      evacuateNum: { // 疏散（人）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入疏散人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确疏散人数' },
+        ],
+      },
+      transferNum: { // 转移（人）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入转移人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确转移人数' },
+        ],
+      },
+      emergencyNum: { // 抢救财产价值（元）
+        value: '',
+        rules: [
+          { required: true, message: '请输入抢救财产价值' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确抢救财产价值' },
+        ],
+      },
+      protectNum: { // 保护财产价值（元）
+        value: '',
+        rules: [
+          { required: true, message: '请输入保护财产价值' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确保护财产价值' },
+        ],
+      },
+    },
   }
 
   const form = ref(cloneDeep(formOrigin))
