@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import dayjs from 'dayjs'
+import { showToast } from "vant";
 
 const props = defineProps({
   value: {
@@ -51,6 +52,11 @@ const currentDate = ref([]);
 
 const currentTime = ref([]);
 
+const canConfirm = computed(() => {
+  const value = dayjs(currentDate.value.join("-") + " " + currentTime.value.join(":"));
+  return value.valueOf() >= dayjs(props.maxDate).valueOf()
+})
+
 watch(() => props.value, (newVal) => {
   if (props.value) {
     const value = dayjs(props.value);
@@ -59,7 +65,7 @@ watch(() => props.value, (newVal) => {
   } else {
     const current = dayjs();
     currentDate.value = [current.year(), current.month() + 1, current.date()];
-    currentTime.value = [current.hour(), current.minute(), current.second()];
+    currentTime.value = ['00', '00', '00'];
   }
 }, { immediate: true });
 
@@ -103,8 +109,9 @@ defineOptions({
           取消
         </van-button>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" style="margin-left: auto;" @click="handleOk"
-          >确定</van-button>
+        <van-button type="primary" size="small" style="margin-left: auto;" :disabled="canConfirm" @click="handleOk">
+          确定
+        </van-button>
       </div>
       <div class="select-date-wrapper">
         <van-date-picker

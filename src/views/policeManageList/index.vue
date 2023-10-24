@@ -350,7 +350,7 @@ onMounted(() => {
               color="#1989fa"
               class="item-btn"
               @click="handleAbolish(record)"
-              :disabled="!checkPoliceChangeState(record.warningStatusValue, record.updatePermission)"
+              :disabled="!checkAbolishState(record.warningStatusValue, record.updatePermission)"
             >
               作废
             </van-button>
@@ -361,7 +361,7 @@ onMounted(() => {
               color="#1989fa"
               class="item-btn"
               @click="handleChange(record)"
-              :disabled="!checkAbolishState(record.warningStatusValue, record.updatePermission)"
+              :disabled="!checkPoliceChangeState(record.warningStatusValue, record.updatePermission)"
             >
               更正
             </van-button>

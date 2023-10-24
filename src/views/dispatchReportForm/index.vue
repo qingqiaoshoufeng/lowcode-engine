@@ -4,9 +4,12 @@ import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { showToast } from "vant";
-import { useFormConfig } from "./formConfig.js";
-import BasicInformation from "./components/basicInformation.vue";
 import BattleResult from './components/battleResult.vue';
+import BasicInformation from "./components/basicInformation.vue";
+import DisposalProcess from './components/disposalProcess.vue';
+import CommandProcess from './components/commandProcess.vue';
+import DeployEquipment from './components/deployEquipment.vue';
+import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -24,6 +27,7 @@ import {
 } from '@/apis/index.js'
 import { fixCarParams, getTypeText, scrollFormFailed } from '@/utils/tools.js'
 import { gender } from '@/utils/constants.js';
+import { useFormConfig } from "./formConfig.js";
 import { useModal } from '@/hooks/useModal.js';
 import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue } from '@vueuse/core';
@@ -133,6 +137,10 @@ provide("form", form)
 
 provide("options", options)
 
+provide('dispatchTruckListOptions', dispatchTruckListOptions)
+
+provide('deptMembersOptions', deptMembersOptions)
+
 provide('showDealSituation', showDealSituation)
 
 provide('showNotDealReason', showNotDealReason)
@@ -197,6 +205,7 @@ const initDict = () => {
 const initTruckMsg = () => {
   return getTruckMsg().then(res => {
     dispatchTruckListOptions.value = res.items || []
+    console.log('.......', dispatchTruckListOptions.value)
   })
 }
 
@@ -328,7 +337,11 @@ const onFailed = (errorInfo) => {
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <BasicInformation />
+        <BasicInfoHeadquarter />
         <BattleResult />
+        <DeployEquipment />
+        <DisposalProcess />
+        <CommandProcess />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">
@@ -354,6 +367,8 @@ const onFailed = (errorInfo) => {
   }
   .form-right {
     width: 80%;
+    height: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     .form-footer {
