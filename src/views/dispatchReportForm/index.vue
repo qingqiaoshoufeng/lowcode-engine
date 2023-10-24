@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { showToast } from "vant";
 import { useFormConfig } from "./formConfig.js";
-import basicInformation from "./components/basicInformation.vue";
+import BasicInformation from "./components/basicInformation.vue";
+import BattleResult from './components/battleResult.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -326,7 +327,8 @@ const onFailed = (errorInfo) => {
     </div>
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
-        <basicInformation />
+        <BasicInformation />
+        <BattleResult />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

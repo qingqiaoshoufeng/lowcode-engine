@@ -1,6 +1,7 @@
 <script setup>
 import { ref, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
+import MeteorologicalInfo from "./meteorologicalInfo.vue";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
 
 const form = inject("form");
@@ -20,6 +21,12 @@ const showFalsePolice = inject('showFalsePolice')
 const showMidwayReturn = inject('showMidwayReturn')
 
 const detail = inject('detail')
+
+const onIsBlocking = (value) => {
+  if (value === '2') {
+    form.value.basicInformation.blockingTime.value = ''
+  }
+}
 
 const onFireSituation = (value, option) => {
   if (option?.dictName) {
@@ -136,6 +143,20 @@ const onDealSituation = (value, option) => {
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
     />
+    <van-cell v-if="showFireFighting" title="消防通道是否堵塞" required class="field-radio">
+      <template #default>
+        <van-radio-group
+          v-model="form.basicInformation.isBlocking.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          @change="onIsBlocking"
+          direction="horizontal"
+        >
+          <van-radio name="1">是</van-radio>
+          <van-radio name="2">否</van-radio>
+        </van-radio-group>
+      </template>
+    </van-cell>
     <van-field
       v-if="form.basicInformation.isBlocking.value === '1'"
       v-model="form.basicInformation.blockingTime.value"
@@ -151,6 +172,7 @@ const onDealSituation = (value, option) => {
     >
       <template #extra>分钟</template>
     </van-field>
+    <MeteorologicalInfo />
   </van-cell-group>
 </template>
 
