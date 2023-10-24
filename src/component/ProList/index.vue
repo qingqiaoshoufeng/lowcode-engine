@@ -127,6 +127,11 @@ defineExpose({
   resetForm,
 })
 </script>
+<script>
+export default {
+  name:'ProList'
+}
+</script>
 
 <template>
   <div class="pro-list">
