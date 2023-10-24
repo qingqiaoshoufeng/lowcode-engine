@@ -61,7 +61,7 @@ const onHaveLinkageUnit = (e) => {
     </van-cell>
     <div v-if="form.investForce.haveLinkageUnit.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.fireDispatchZfList" :key="index" class="block-dynamic-item">
-        <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="index !== 0" @click="handleDeleteUnit(index)" /></div>
+        <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteUnit(index)" /></div>
         <van-field
           v-model="item.orgName"
           v-preview-text="showPreview"

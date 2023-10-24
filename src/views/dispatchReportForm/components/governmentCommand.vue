@@ -70,7 +70,7 @@ const onIsCommand = (e) => {
     </van-cell>
     <div v-if="form.investForce.isCommand.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.fireDispatchZfList" :key="index" class="block-dynamic-item">
-        <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="index !== 0" @click="handleDeletePerson(index)" /></div>
+        <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeletePerson(index)" /></div>
         <van-field
           v-model="item.name"
           v-preview-text="showPreview"

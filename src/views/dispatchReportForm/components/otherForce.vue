@@ -63,7 +63,7 @@ const onHaveVolunteer = (e) => {
     </van-cell>
     <div v-if="form.investForce.haveVolunteer.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.volunteerList" :key="index" class="block-dynamic-item">
-        <div class="title">志愿队{{ index + 1}}<van-icon name="cross" v-if="index !== 0" @click="handleDeleteVolunteer(index)" /></div>
+        <div class="title">志愿队{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteVolunteer(index)" /></div>
         <SelectSingle
           v-model:value="item.groupType"
           :showPreview="showPreview"

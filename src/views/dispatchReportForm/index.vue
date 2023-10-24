@@ -15,6 +15,7 @@ import GovernmentCommand from './components/governmentCommand.vue';
 import LinkageUnit from './components/linkageUnit.vue';
 import OtherAttach from './components/otherAttach.vue';
 import OtherForce from './components/otherForce.vue';
+import PersonInfo from './components/personInfo.vue';
 import TacticalMeasures from './components/tacticalMeasures.vue';
 import {
   approveProcessActions,
@@ -346,6 +347,7 @@ const onFailed = (errorInfo) => {
         <TacticalMeasures />
         <GovernmentCommand />
         <LinkageUnit />
+        <PersonInfo />
         <OtherForce />
         <BattleResult />
         <DeployEquipment />

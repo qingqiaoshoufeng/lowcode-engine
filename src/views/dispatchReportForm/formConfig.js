@@ -7,6 +7,22 @@ import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from
 
 export const useFormConfig = () => {
   const formOrigin = {
+    draftInfo: { // 草稿信息
+      title: '草稿信息',
+      draftName: { // 草稿名称
+        value: '',
+        rules: [{ required: true, message: '请输入草稿名称' }],
+      },
+      warningType: { // 警情类型
+        value: '',
+        text: [],
+        rules: [{ required: true, message: '请选择警情类型' }],
+      },
+      partakeType: { // 参战形式
+        value: undefined,
+        rules: [{ required: true, message: '请选择参战形式' }],
+      },
+    },
     basicInformation: { // 基本信息
       title: '基本信息',
       fieldAnnotation: false, // 批注
@@ -206,6 +222,80 @@ export const useFormConfig = () => {
       commandTime: { // 指挥时长（小时）
         value: '',
         // rules: [{ required: true, message: '请输入指挥时长' }],
+      },
+    },
+    personInfo: { // 人员信息
+      title: '人员信息',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      commandLeader: [], // 指挥员
+      headerName: { // 指挥员姓名
+        value: undefined,
+        rules: [{ required: true, message: '请选择指挥员姓名' }],
+      },
+      position: { // 指挥角色
+        value: undefined,
+        rules: [{ required: true, message: '请选择指挥角色' }],
+      },
+      headLeader: { // 带班领导
+        value: undefined,
+        // rules: [{ required: true, message: '请选择带班领导' }],
+      },
+      commandCenter: { // 指挥中心
+        value: undefined,
+        // rules: [{ required: true, message: '请选择指挥中心' }],
+      },
+      chiefCommander: { // 总指挥
+        value: undefined,
+        // rules: [{ required: true, message: '请选择总指挥' }],
+      },
+      deputyCommander: { // 副总指挥
+        value: undefined,
+        // rules: [{ required: true, message: '请选择副总指挥' }],
+      },
+      commander: { // 指挥长
+        value: undefined,
+        // rules: [{ required: true, message: '请选择指挥长' }],
+      },
+      commandAssistant: { // 指挥助理
+        value: undefined,
+        // rules: [{ required: true, message: '请选择指挥助理' }],
+      },
+      messageAssistant: { // 通信助理
+        value: undefined,
+        // rules: [{ required: true, message: '请选择通信助理' }],
+      },
+      messenger: { // 通信员
+        value: undefined,
+        // rules: [{ required: true, message: '请选择通信员' }],
+      },
+      headSupport: { // 战勤保障
+        value: undefined,
+        // rules: [{ required: true, message: '请选择战勤保障' }],
+      },
+      headPolitic: { // 战地政工
+        value: undefined,
+        // rules: [{ required: true, message: '请选择战地政工' }],
+      },
+      newsPropagation: { // 新闻宣传
+        value: undefined,
+        // rules: [{ required: true, message: '请选择新闻宣传' }],
+      },
+      technicianGroup: { // 技术专家（队内）
+        value: undefined,
+        // rules: [{ required: true, message: '请选择技术专家' }],
+      },
+      haveProfessor: { // 是否有社会技术专家
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有车辆出动' }],
+      },
+      technician: [], // 技术专家（社会）
+      otherMember: { // 其他人员
+        value: undefined,
+        // rules: [{ required: true, message: '请选择其他人员' }],
+      },
+      name: {
+        rules: [{ required: true, message: '请输入技术专家' }],
       },
     },
     commandProcess: { // 指挥过程
