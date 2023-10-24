@@ -175,6 +175,36 @@ export const useFormConfig = () => {
         ],
       },
     },
+    commandProcess: { // 指挥过程
+      title: '指挥过程',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      rescueMethod: { // 处置对策
+        value: '',
+        rules: [{ required: true, message: '请输入处置对策' }],
+      },
+      actionPlan: { // 行动方案
+        value: '',
+        rules: [{ required: true, message: '请输入行动方案' }],
+      },
+      commandProcess: { // 过程描述
+        value: '',
+        rules: [{ required: true, message: '请输入过程描述' }],
+      },
+      attach: { // 其他附件
+        value: undefined,
+        // rules: [{ required: true, message: '请选择其他附件' }],
+      },
+    },
+    deployEquipment: { // 出动装备
+      title: '出动装备',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      headTruckList: { // 指挥车辆信息
+        value: undefined,
+        rules: [{ required: true, message: '请选择指挥车辆信息' }],
+      },
+    },
     battleResult: { // 战斗成果
       title: '战斗成果',
       fieldAnnotation: false, // 批注
@@ -227,6 +257,15 @@ export const useFormConfig = () => {
           { required: true, message: '请输入保护财产价值' },
           { pattern: nonnegativeNumberReg, message: '请输入正确保护财产价值' },
         ],
+      },
+    },
+    disposalProcess: { // 处置经过
+      title: '处置经过',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      fireProcess: {
+        value: '', // 处置经过
+        rules: [{ required: true, message: '请输入处置经过' }],
       },
     },
   }
