@@ -12,6 +12,7 @@ import CommandProcess from './components/commandProcess.vue';
 import DeployEquipment from './components/deployEquipment.vue';
 import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
 import GovernmentCommand from './components/governmentCommand.vue';
+import InvestForce from './components/investForce.vue';
 import LinkageUnit from './components/linkageUnit.vue';
 import OtherAttach from './components/otherAttach.vue';
 import OtherForce from './components/otherForce.vue';
@@ -344,6 +345,7 @@ const onFailed = (errorInfo) => {
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <BasicInformation />
         <BasicInfoHeadquarter />
+        <InvestForce />
         <TacticalMeasures />
         <GovernmentCommand />
         <LinkageUnit />
