@@ -87,7 +87,7 @@ const onDealSituation = (value, option) => {
       maxlength="20"
       required
       name="fireDistance"
-      label="入行驶距离："
+      label="行驶距离："
       label-width="102px"
       placeholder="请输入行驶距离"
       :rules="form.basicInformation.fireDistance.rules"
@@ -143,7 +143,7 @@ const onDealSituation = (value, option) => {
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
     />
-    <van-cell v-if="showFireFighting" title="消防通道是否堵塞" required class="field-radio">
+    <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" required class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.basicInformation.isBlocking.value"

@@ -1,0 +1,132 @@
+<script setup>
+import { inject, watch } from 'vue'
+import SelectSingle from "@/component/SelectSingle/index";
+
+const form = inject('form')
+
+const isDetail = inject('isDetail')
+
+const showPreview = inject('showPreview')
+
+const options = inject('options')
+
+const handleAddUnit = () => {
+  form.value.investForce.fireDispatchLinkList.push({
+    orgName: '',
+    departmentName: undefined,
+    orgLevel: undefined,
+  })
+}
+
+const handleDeleteUnit = (index) => {
+  const { fireDispatchLinkList } = form.value.investForce
+  form.value.investForce.fireDispatchLinkList = fireDispatchLinkList.filter((item, i) => i !== index)
+}
+
+watch(() => form.value.investForce.haveLinkageUnit.value, () => {
+  if (form.value.investForce.haveLinkageUnit.value === '1' && form.value.investForce.fireDispatchLinkList.length <= 0) {
+    handleAddUnit()
+  }
+  else if (form.value.investForce.haveLinkageUnit.value === '2') {
+    form.value.investForce.fireDispatchLinkList = []
+  }
+})
+
+const onHaveLinkageUnit = (e) => {
+  if (e === '2') {
+    form.value.investForce.fireDispatchLinkList = [{
+      orgName: '',
+      departmentName: undefined,
+      orgLevel: undefined,
+    }]
+  }
+}
+</script>
+
+<template>
+  <van-cell-group>
+    <van-cell title="是否有联动单位：" class="field-radio-label">
+      <template #default>
+        <van-radio-group
+          v-model="form.investForce.haveLinkageUnit.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          direction="horizontal"
+          @change="onHaveLinkageUnit"
+        >
+          <van-radio name="1">是</van-radio>
+          <van-radio name="2">否</van-radio>
+        </van-radio-group>
+      </template>
+    </van-cell>
+    <div v-if="form.investForce.haveLinkageUnit.value === '1'" class="block-dynamic">
+      <div v-for="(item, index) in form.investForce.fireDispatchZfList" :key="index" class="block-dynamic-item">
+        <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteUnit(index)" /></div>
+        <van-field
+          v-model="item.orgName"
+          v-preview-text="showPreview"
+          :readonly="showPreview"
+          required
+          maxlength="50"
+          name="orgName"
+          label="单位名称："
+          placeholder="请输入单位名称"
+          :rules="form.investForce.orgName.rules"
+        />
+        <SelectSingle
+          v-model:value="item.departmentName"
+          :showPreview="showPreview"
+          :readonly="true"
+          name="departmentName"
+          required
+          :options="options.departmentName"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          title="请选择所属行业部门"
+          label="所属行业部门："
+          label-width="118px"
+          placeholder="请选择所属行业部门"
+          :rules="form.investForce.departmentName.rules"
+        />
+        <SelectSingle
+          v-model:value="item.orgLevel"
+          :showPreview="showPreview"
+          :readonly="true"
+          name="orgLevel"
+          required
+          :options="options.orgLevel"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          title="请选择所属级别"
+          label="所属级别："
+          placeholder="请选择所属级别"
+          :rules="form.investForce.orgLevel.rules"
+        />
+      </div>
+      <template v-if="!isDetail">
+        <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddUnit">
+          新增联动单位
+        </van-button>
+      </template>
+    </div>
+  </van-cell-group>
+</template>
+
+<style lang="scss" scoped>
+.block-dynamic {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px 0 10px 0;
+  .block-dynamic-item {
+    border: 1px solid #ebebeb;
+    margin: 10px 10px;
+    .title {
+      display: flex;
+      align-items: center;
+      margin: 10px 20px 0 20px;
+    }
+    .title i {
+      margin-left: auto;
+    }
+  }
+}
+</style>

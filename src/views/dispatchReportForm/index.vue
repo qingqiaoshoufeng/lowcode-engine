@@ -6,10 +6,20 @@ import dayjs from 'dayjs'
 import { showToast } from "vant";
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
+import BattleConsume from "./components/battleConsume.vue";
+import BriefSituation from "./components/briefSituation.vue";
 import DisposalProcess from './components/disposalProcess.vue';
+import CasualtyWar from './components/casualtyWar.vue';
 import CommandProcess from './components/commandProcess.vue';
 import DeployEquipment from './components/deployEquipment.vue';
 import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
+import GovernmentCommand from './components/governmentCommand.vue';
+import InvestForce from './components/investForce.vue';
+import LinkageUnit from './components/linkageUnit.vue';
+import OtherAttach from './components/otherAttach.vue';
+import OtherForce from './components/otherForce.vue';
+import PersonInfo from './components/personInfo.vue';
+import TacticalMeasures from './components/tacticalMeasures.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -205,7 +215,6 @@ const initDict = () => {
 const initTruckMsg = () => {
   return getTruckMsg().then(res => {
     dispatchTruckListOptions.value = res.items || []
-    console.log('.......', dispatchTruckListOptions.value)
   })
 }
 
@@ -338,10 +347,20 @@ const onFailed = (errorInfo) => {
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <BasicInformation />
         <BasicInfoHeadquarter />
+        <InvestForce />
+        <BriefSituation />
+        <CasualtyWar />
+        <TacticalMeasures />
+        <GovernmentCommand />
+        <LinkageUnit />
+        <PersonInfo />
+        <OtherForce />
         <BattleResult />
         <DeployEquipment />
         <DisposalProcess />
         <CommandProcess />
+        <OtherAttach />
+        <BattleConsume />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">
