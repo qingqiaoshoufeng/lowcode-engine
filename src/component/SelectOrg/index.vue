@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
 import { getDispatchGroup, searchDispatchGroup } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
 
@@ -87,15 +87,17 @@ const selectTextValue = computed(() => {
 })
 
 watch(() => props.value, (newVal, oldVal) => {
-  if (props.value) {
-    selectItem.value = props.value;
-    selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
-    selectText.value = props.value.map((item) => item[props.fieldNames.label]);
-  } else {
-    selectItem.value = [];
-    selectValue.value = [];
-    selectText.value = [];
-  }
+  nextTick(() => {
+    if (props.value) {
+      selectItem.value = props.value;
+      selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
+      selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+    } else {
+      selectItem.value = [];
+      selectValue.value = [];
+      selectText.value = [];
+    }
+  })
 }, { immediate: true })
 
 const renderChecked = (item) => {
