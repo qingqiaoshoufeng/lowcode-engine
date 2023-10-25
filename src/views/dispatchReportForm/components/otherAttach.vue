@@ -15,8 +15,6 @@ const currentRow = inject("currentRow");
 
 const localFireDispatchId = inject("localFireDispatchId");
 
-const relevanceDraft = inject("relevanceDraft");
-
 // const { onRemove } = useUpload();
 
 onMounted(() => {

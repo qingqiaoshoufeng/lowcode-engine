@@ -267,7 +267,7 @@ const validateDealEndDate = (value, rule) => {
   <van-cell-group>
     <SelectDateTime
       v-model:value="form.basicInformation.dispatchDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -281,7 +281,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showMidwayReturn"
       v-model:value="form.basicInformation.midwayReturnDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -294,7 +294,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.attendanceDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -308,7 +308,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.carryoutDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -321,7 +321,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.waterflowDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -334,7 +334,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice && showMainGroup"
       v-model:value="form.basicInformation.controllingDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -347,7 +347,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.washDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -360,7 +360,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -373,7 +373,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -386,7 +386,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.evacuateDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -398,7 +398,7 @@ const validateDealEndDate = (value, rule) => {
     />
     <SelectDateTime
       v-model:value="form.basicInformation.returnDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -438,7 +438,7 @@ const validateDealEndDate = (value, rule) => {
     <SelectDateTime
       v-if="showDealSituation && showMainGroup"
       v-model:value="form.basicInformation.dealEndDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required

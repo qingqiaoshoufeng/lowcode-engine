@@ -251,7 +251,7 @@ watch(
         <SelectDateTime
           v-if="showMainGroup || showReinforce"
           v-model:value="item.teamEntryTime"
-          v-preview-text="showPreview"
+          :show-preview="showPreview"
           :readonly="showPreview"
           is-link
           required
@@ -496,7 +496,7 @@ watch(
         <SelectDateTime
           v-if="showMainGroup || showReinforce"
           v-model:value="item.teamEntryTime"
-          v-preview-text="showPreview"
+          :show-preview="showPreview"
           :readonly="showPreview"
           is-link
           required
@@ -645,7 +645,7 @@ watch(
         />
         <SelectDateTime
           v-model:value="item.deathDate"
-          v-preview-text="showPreview"
+          :show-preview="showPreview"
           :readonly="showPreview"
           is-link
           required

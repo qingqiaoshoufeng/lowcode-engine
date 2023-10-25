@@ -1,7 +1,7 @@
 import { nextTick, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
-// import { checkAttendanceDate, checkDispatchNum, checkFireDistance, checkIsResponseTruck, checkReturnSpeed, checkTrappedPerson } from './_tool.js'
+import { checkAttendanceDate, checkDispatchNum, checkFireDistance, checkIsResponseTruck, checkReturnSpeed, checkTrappedPerson } from './tool.js'
 import { fixCarInfo, getTypeText } from '@/utils/tools.js'
 import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from '@/utils/validate.js'
 
@@ -296,6 +296,15 @@ export const useFormConfig = () => {
       },
       name: {
         rules: [{ required: true, message: '请输入技术专家' }],
+      },
+    },
+    commandMode: { // 指挥方式
+      title: '指挥方式',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      commandMethod: { // 指挥方式
+        value: undefined,
+        rules: [{ required: true, message: '请选择指挥方式' }],
       },
     },
     commandProcess: { // 指挥过程
@@ -1062,9 +1071,417 @@ export const useFormConfig = () => {
         // rules: [{ required: true, message: '请输入其他说明' }],
       },
     },
+    proSteps: { // 其他附件
+      title: '操作记录',
+      fieldAnnotation: false, // 批注
+      fireDispatchTransferVOList: {
+        value: [],
+      },
+    },
   }
 
   const form = ref(cloneDeep(formOrigin))
 
-  return { form }
+  // 当警情类型、参战形式、处置情况，发生变化时重置表单，避免无用数据提交到后端
+  const initFormWhenChange = (draft) => {
+    form.value.fireInfo = cloneDeep(formOrigin.fireInfo)
+    if (draft) {
+      form.value.draftInfo.draftName.value = ''
+    }
+    form.value.basicInformation.dispatchDate.value = ''
+    form.value.basicInformation.midwayReturnDate.value = ''
+    form.value.basicInformation.attendanceDate.value = ''
+    form.value.basicInformation.attendanceDate.warning = false
+    form.value.basicInformation.carryoutDate.value = ''
+    form.value.basicInformation.waterflowDate.value = ''
+    form.value.basicInformation.controllingDate.value = ''
+    form.value.basicInformation.washDate.value = ''
+    form.value.basicInformation.extinctDate.value = ''
+    form.value.basicInformation.endDate.value = ''
+    form.value.basicInformation.evacuateDate.value = ''
+    form.value.basicInformation.returnDate.value = ''
+    form.value.basicInformation.dealEndDate.value = ''
+    form.value.basicInformation.returnLateReason.value = undefined
+    // form.value.basicInformation.dealSituation.value = '2023020800260'
+    form.value.basicInformation.notDealReason.value = ''
+    form.value.basicInformation.fireDistance.value = ''
+    form.value.basicInformation.fireDistance.warning = false
+    form.value.basicInformation.fireSituation.value = undefined
+    form.value.basicInformation.trappedPerson.value = ''
+    form.value.basicInformation.trappedPerson.warning = false
+    form.value.basicInformation.industryDepartment.value = undefined
+    form.value.basicInformation.isBlocking.value = '2'
+    form.value.basicInformation.blockingTime.value = ''
+    // form.value.basicInformation.isPublicFireHydrant.value = '2'
+    // form.value.basicInformation.fireHydrantSituation.value = undefined
+    // form.value.basicInformation.fixedFireEquipment.value = undefined
+    // form.value.basicInformation.notUseFireHydrantReason.value = undefined
+    form.value.basicInformation.fieldWarning = formOrigin.basicInformation.fieldWarning
+    form.value.basicInfoHead = {
+      ...cloneDeep(formOrigin.basicInfoHead),
+      fieldAnnotation: form.value.basicInfoHead.fieldAnnotation,
+      fieldWarning: formOrigin.basicInfoHead.fieldWarning,
+    }
+    form.value.personInfo = {
+      ...cloneDeep(formOrigin.personInfo),
+      fieldAnnotation: form.value.personInfo.fieldAnnotation,
+      fieldWarning: formOrigin.personInfo.fieldWarning,
+    }
+    form.value.commandMode = {
+      ...cloneDeep(formOrigin.commandMode),
+      fieldAnnotation: form.value.commandMode.fieldAnnotation,
+      fieldWarning: formOrigin.commandMode.fieldWarning,
+    }
+    form.value.commandProcess = {
+      ...cloneDeep(formOrigin.commandProcess),
+      fieldAnnotation: form.value.commandProcess.fieldAnnotation,
+      fieldWarning: formOrigin.commandProcess.fieldWarning,
+    }
+    form.value.deployEquipment = {
+      ...cloneDeep(formOrigin.deployEquipment),
+      fieldAnnotation: form.value.deployEquipment.fieldAnnotation,
+      fieldWarning: formOrigin.deployEquipment.fieldWarning,
+    }
+    form.value.investForce = {
+      ...cloneDeep(formOrigin.investForce),
+      fieldAnnotation: form.value.investForce.fieldAnnotation,
+      fieldWarning: formOrigin.investForce.fieldWarning,
+    }
+    form.value.casualtyWar = {
+      ...cloneDeep(formOrigin.casualtyWar),
+      fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
+      fieldWarning: formOrigin.casualtyWar.fieldWarning,
+    }
+    form.value.battleResult = {
+      ...cloneDeep(formOrigin.battleResult),
+      fieldAnnotation: form.value.battleResult.fieldAnnotation,
+      fieldWarning: formOrigin.battleResult.fieldWarning,
+    }
+    form.value.battleConsume = {
+      ...cloneDeep(formOrigin.battleConsume),
+      fieldAnnotation: form.value.battleConsume.fieldAnnotation,
+      fieldWarning: formOrigin.battleConsume.fieldWarning,
+    }
+    if (draft) {
+      form.value.disposalProcess = {
+        ...cloneDeep(formOrigin.disposalProcess),
+        fieldAnnotation: form.value.disposalProcess.fieldAnnotation,
+        fieldWarning: formOrigin.disposalProcess.fieldWarning,
+      }
+    }
+    form.value.scenePhoto = {
+      ...cloneDeep(formOrigin.scenePhoto),
+      fieldAnnotation: form.value.scenePhoto.fieldAnnotation,
+      fieldWarning: formOrigin.scenePhoto.fieldWarning,
+    }
+    form.value.otherAttach = {
+      ...cloneDeep(formOrigin.otherAttach),
+      fieldAnnotation: form.value.otherAttach.fieldAnnotation,
+      fieldWarning: formOrigin.otherAttach.fieldWarning,
+    }
+  }
+
+  // 校验表单规则是否需要显示 warning 提示
+  const checkFormField = (warningDetail) => {
+    if (warningDetail?.warningStatusValue === '已归档') {
+      return
+    }
+
+    checkDispatchNum(form.value, false)
+
+    checkFireDistance(form.value, false)
+
+    checkTrappedPerson(warningDetail, form.value, false)
+
+    checkAttendanceDate(form.value, false)
+
+    checkIsResponseTruck(form.value, false)
+
+    checkReturnSpeed(form.value)
+  }
+
+  // 根据详情初始化表单，用于回显
+  const initFormByDetail = (detail, options, callback, warningDetail) => {
+    const {
+      fireDispatch,
+      fireDispatchItem,
+      fireDispatchTruckList,
+      fireDispatchZfList,
+      fireDispatchLinkList,
+      fireDispatchOtherList,
+      fireDispatchInjuryList,
+      fireDispatchLoss,
+      fireDispatchHeadPerson,
+      fireDispatchHead,
+      // fireDispatchTruck,
+      fireDispatchTruckVO,
+      fireDispatchRetrunTruckList,
+      fireDispatchTransferVOList,
+    } = detail
+    // 草稿信息
+    form.value.draftInfo.draftName.value = fireDispatch?.draftName
+    if (fireDispatch?.warningType) {
+      form.value.draftInfo.warningType.value = fireDispatch?.warningType?.split(',')
+      if (form.value.draftInfo.warningType.value) {
+        form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
+      }
+    }
+    form.value.draftInfo.partakeType.value = fireDispatch?.partakeType
+    // 简要情况
+    form.value.basicInformation.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
+    form.value.basicInformation.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(fireDispatch?.midwayReturnDate)
+    form.value.basicInformation.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(fireDispatch?.attendanceDate)
+    form.value.basicInformation.carryoutDate.value = fireDispatch?.carryoutDate && dayjs(fireDispatch?.carryoutDate)
+    form.value.basicInformation.waterflowDate.value = fireDispatch?.waterflowDate && dayjs(fireDispatch?.waterflowDate)
+    form.value.basicInformation.controllingDate.value = fireDispatch?.controllingDate && dayjs(fireDispatch?.controllingDate)
+    form.value.basicInformation.washDate.value = fireDispatch?.washDate && dayjs(fireDispatch?.washDate)
+    form.value.basicInformation.extinctDate.value = fireDispatch?.extinctDate && dayjs(fireDispatch?.extinctDate)
+    form.value.basicInformation.endDate.value = fireDispatch?.endDate && dayjs(fireDispatch?.endDate)
+    form.value.basicInformation.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(fireDispatch?.evacuateDate)
+    form.value.basicInformation.returnDate.value = fireDispatch?.returnDate && dayjs(fireDispatch?.returnDate)
+    form.value.basicInformation.dealEndDate.value = fireDispatch?.dealEndDate && dayjs(fireDispatch?.dealEndDate)
+    form.value.basicInformation.returnLateReason.value = fireDispatch?.returnLateReason
+    // 基本信息
+    form.value.basicInformation.dealSituation.value = fireDispatch?.dealSituation
+    if (fireDispatch?.dealSituation) {
+      const filter = options.dealSituation.filter(item => fireDispatch?.dealSituation === item.boDictId)
+      form.value.basicInformation.dealSituation.text = filter[0] ? filter[0].dictName : ''
+    }
+    form.value.basicInformation.notDealReason.value = fireDispatch?.notDealReason
+    form.value.basicInformation.fireSituation.value = fireDispatchItem?.fireSituation
+    if (fireDispatchItem?.fireSituation) {
+      const filter = options.fireSituation.filter(item => fireDispatchItem?.fireSituation === item.boDictId)
+      form.value.basicInformation.fireSituation.text = filter[0] ? filter[0].dictName : ''
+    }
+    form.value.basicInformation.industryDepartment.value = fireDispatchItem?.industryDepartment
+    form.value.basicInformation.fireDistance.value = fireDispatchItem?.fireDistance
+    form.value.basicInformation.trappedPerson.value = fireDispatchItem?.trappedPerson
+    form.value.basicInformation.isBlocking.value = fireDispatchItem?.isBlocking
+    form.value.basicInformation.blockingTime.value = fireDispatchItem?.blockingTime
+    // form.value.basicInformation.isPublicFireHydrant.value = fireDispatchItem?.isPublicFireHydrant
+    // form.value.basicInformation.fireHydrantSituation.value = fireDispatchItem?.fireHydrantSituation
+    // form.value.basicInformation.fixedFireEquipment.value = fireDispatchItem?.fixedFireEquipment
+    // form.value.basicInformation.notUseFireHydrantReason.value = fireDispatchItem?.notUseFireHydrantReason
+    // 基本信息-全勤指挥部
+    // form.value.basicInfoHead.headquarterName.value = fireDispatch?.headquarterName
+    form.value.basicInfoHead.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
+    form.value.basicInfoHead.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(fireDispatch?.attendanceDate)
+    form.value.basicInfoHead.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(fireDispatch?.evacuateDate)
+    form.value.basicInfoHead.personNum.value = fireDispatch?.personNum
+    form.value.basicInfoHead.truckNum.value = fireDispatch?.truckNum
+    form.value.basicInfoHead.commandTime.value = fireDispatch?.commandTime
+    // 人员信息
+    form.value.personInfo.headLeader.value = fireDispatchHeadPerson?.headLeader?.split(',')
+    form.value.personInfo.commandCenter.value = fireDispatchHeadPerson?.commandCenter?.split(',')
+    form.value.personInfo.chiefCommander.value = fireDispatchHeadPerson?.chiefCommander?.split(',')
+    form.value.personInfo.deputyCommander.value = fireDispatchHeadPerson?.deputyCommander?.split(',')
+    form.value.personInfo.commander.value = fireDispatchHeadPerson?.commander?.split(',')
+    form.value.personInfo.commandAssistant.value = fireDispatchHeadPerson?.commandAssistant?.split(',')
+    form.value.personInfo.messageAssistant.value = fireDispatchHeadPerson?.messageAssistant?.split(',')
+    form.value.personInfo.messenger.value = fireDispatchHeadPerson?.messenger?.split(',')
+    form.value.personInfo.headSupport.value = fireDispatchHeadPerson?.headSupport?.split(',')
+    form.value.personInfo.headPolitic.value = fireDispatchHeadPerson?.headPolitic?.split(',')
+    form.value.personInfo.newsPropagation.value = fireDispatchHeadPerson?.newsPropagation?.split(',')
+    form.value.personInfo.technicianGroup.value = fireDispatchHeadPerson?.technicianGroup?.split(',')
+    if (fireDispatchHeadPerson?.headerPersonList) {
+      form.value.personInfo.commandLeader = fireDispatchHeadPerson.headerPersonList?.map((item) => {
+        return {
+          ...item,
+        }
+      })
+    }
+    if (fireDispatchHeadPerson?.technician) {
+      form.value.personInfo.haveProfessor.value = '1'
+      const list = fireDispatchHeadPerson?.technician?.split(',')
+      form.value.personInfo.technician = list.map((item) => {
+        return { name: item }
+      })
+    }
+    form.value.personInfo.otherMember.value = fireDispatchHeadPerson?.otherMember?.split(',')
+    // 指挥方式
+    form.value.commandMode.commandMethod.value = fireDispatchHead?.commandMethod
+    // 指挥过程
+    form.value.commandProcess.rescueMethod.value = fireDispatchHead?.rescueMethod
+    form.value.commandProcess.actionPlan.value = fireDispatchHead?.actionPlan
+    form.value.commandProcess.commandProcess.value = fireDispatchHead?.commandProcess
+    // 出动装备
+    form.value.deployEquipment.headTruckList.value = fixCarInfo(fireDispatchTruckVO?.headTruckList)
+    form.value.deployEquipment.boardingTruckList.value = fixCarInfo(fireDispatchTruckVO?.boardingTruckList)
+    form.value.deployEquipment.kitchenTruckList.value = fixCarInfo(fireDispatchTruckVO?.kitchenTruckList)
+    form.value.deployEquipment.toiletTruckList.value = fixCarInfo(fireDispatchTruckVO?.toiletTruckList)
+    form.value.deployEquipment.refrigerateTruckZqList.value = fixCarInfo(fireDispatchTruckVO?.refrigerateTruckZqList)
+    form.value.deployEquipment.airfeedTruckList.value = fixCarInfo(fireDispatchTruckVO?.airfeedTruckList)
+    form.value.deployEquipment.oilTruckList.value = fixCarInfo(fireDispatchTruckVO?.oilTruckList)
+    form.value.deployEquipment.steamThawingTruckList.value = fixCarInfo(fireDispatchTruckVO?.steamThawingTruckList)
+    form.value.deployEquipment.foamTransferTruckList.value = fixCarInfo(fireDispatchTruckVO?.foamTransferTruckList)
+    form.value.deployEquipment.wreckTruckList.value = fixCarInfo(fireDispatchTruckVO?.wreckTruckList)
+    form.value.deployEquipment.modularTruckList.value = fixCarInfo(fireDispatchTruckVO?.modularTruckList)
+    form.value.deployEquipment.mobileCommunicateTruckList.value = fixCarInfo(fireDispatchTruckVO?.mobileCommunicateTruckList)
+    form.value.deployEquipment.communicateEquipTruckList.value = fixCarInfo(fireDispatchTruckVO?.communicateEquipTruckList)
+    form.value.deployEquipment.quietCommunicateTruckList.value = fixCarInfo(fireDispatchTruckVO?.quietCommunicateTruckList)
+    form.value.deployEquipment.satellitePhone.value = fireDispatchHead?.satellitePhone || 0
+    form.value.deployEquipment.satellitePortableStation.value = fireDispatchHead?.satellitePortableStation || 0
+    form.value.deployEquipment.singleSoldier.value = fireDispatchHead?.singleSoldier || 0
+    form.value.deployEquipment.uav.value = fireDispatchHead?.uav || 0
+    form.value.deployEquipment.clothControl.value = fireDispatchHead?.clothControl || 0
+    form.value.deployEquipment.meshStation.value = fireDispatchHead?.meshStation || 0
+    form.value.deployEquipment.microwaveGraph.value = fireDispatchHead?.microwaveGraph || 0
+    form.value.deployEquipment.beidouTerminal.value = fireDispatchHead?.beidouTerminal || 0
+    // 气象信息
+    form.value.basicInformation.temperature.value = fireDispatch?.temperature
+    form.value.basicInformation.weather.value = fireDispatch?.weather
+    form.value.basicInformation.wind.value = fireDispatch?.wind
+    form.value.basicInformation.windDirection.value = fireDispatch?.windDirection
+    // 投入力量
+    form.value.investForce.groupLeader.value = fireDispatchItem?.groupLeader?.split(',')
+    form.value.investForce.commander.value = fireDispatchItem?.commander?.split(',')
+    form.value.investForce.firemen.value = fireDispatchItem?.firemen?.split(',')
+    form.value.investForce.isResponseTruck.value = fireDispatchItem?.isResponseTruck
+    if (fireDispatchTruckList && fireDispatchTruckList.length > 0) {
+      form.value.investForce.dispatchTruckList.value = fixCarInfo(fireDispatchTruckList)
+    }
+    form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
+    if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {
+      form.value.investForce.midwayCar.value = fixCarInfo(fireDispatchRetrunTruckList)
+    }
+    form.value.investForce.fireBoatNum.value = fireDispatchItem?.fireBoatNum
+    form.value.investForce.fireAirplaneNum.value = fireDispatchItem?.fireAirplaneNum
+    form.value.investForce.rescueDogNum.value = fireDispatchItem?.rescueDogNum
+    form.value.investForce.uavNum.value = fireDispatchItem?.uavNum
+    // 政府指挥
+    form.value.investForce.isCommand.value = fireDispatchZfList && fireDispatchZfList.length > 0 ? '1' : '2'
+    form.value.investForce.fireDispatchZfList = fireDispatchZfList?.map(item => item)
+    // 联动单位
+    form.value.investForce.haveLinkageUnit.value = fireDispatchLinkList && fireDispatchLinkList.length > 0 ? '1' : '2'
+    form.value.investForce.fireDispatchLinkList = fireDispatchLinkList?.map(item => item)
+    // 其他消防救援力量
+    if (fireDispatchOtherList && fireDispatchOtherList.length > 0) {
+      const volunteers = fireDispatchOtherList.filter(item => item.otherType === '1')
+      const others = fireDispatchOtherList.filter(item => item.otherType === '2')
+      form.value.investForce.haveVolunteer.value = volunteers && volunteers.length > 0 ? '1' : '2'
+      form.value.investForce.volunteerList = volunteers.map((item) => {
+        return {
+          ...item,
+          orgName1: item.orgName,
+        }
+      })
+      form.value.investForce.haveProfessional.value = others && others.length > 0 ? '1' : '2'
+      form.value.investForce.otherList = others
+    }
+    // 主要战术措施
+    form.value.basicInformation.isInside.value = fireDispatchItem?.isInside
+    form.value.basicInformation.fireTechnic.value = fireDispatchItem?.fireTechnic
+    form.value.basicInformation.rescueMeasures.value = fireDispatchItem?.rescueMeasures
+    form.value.basicInformation.deliverWater.value = fireDispatchItem?.deliverWater
+    form.value.basicInformation.drainWater.value = fireDispatchItem?.drainWater
+    form.value.basicInformation.killArea.value = fireDispatchItem?.killArea
+    // 参战伤亡
+    if (fireDispatchInjuryList && fireDispatchInjuryList.length > 0) {
+      const injureds = fireDispatchInjuryList.filter(item => item.injuryType === '1')
+      const deads = fireDispatchInjuryList.filter(item => item.injuryType === '2')
+      form.value.casualtyWar.isInjured.value = injureds && injureds.length ? '1' : '2'
+      form.value.casualtyWar.injuredList = injureds.map((item) => {
+        return {
+          ...item,
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+          rescueRank: item.rescueRank?.split(','),
+          nativePlace: item.nativePlace?.split(','),
+        }
+      })
+      form.value.casualtyWar.isDead.value = deads && deads.length ? '1' : '2'
+      form.value.casualtyWar.deadList = deads.map((item) => {
+        return {
+          ...item,
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+          rescueRank: item.rescueRank?.split(','),
+          nativePlace: item.nativePlace?.split(','),
+          deathDate: item.deathDate ? dayjs(item.deathDate) : undefined,
+        }
+      })
+    }
+    // 战斗成果
+    form.value.battleResult.rescueNum.value = fireDispatchItem?.rescueNum
+    form.value.battleResult.surviveNum.value = fireDispatchItem?.surviveNum
+    form.value.battleResult.deathNum.value = fireDispatchItem?.deathNum
+    form.value.battleResult.evacuateNum.value = fireDispatchItem?.evacuateNum
+    form.value.battleResult.transferNum.value = fireDispatchItem?.transferNum
+    form.value.battleResult.emergencyNum.value = fireDispatchItem?.emergencyNum
+    form.value.battleResult.protectNum.value = fireDispatchItem?.protectNum
+    // 战斗消耗
+    if (fireDispatchLoss?.wastageTruck && fireDispatchLoss?.wastageTruck !== '') {
+      form.value.battleConsume.wastageTruck.value = fireDispatchLoss?.wastageTruck?.split(',')
+    }
+    form.value.battleConsume.wastageTruckExplain.value = fireDispatchLoss?.wastageTruckExplain
+    form.value.battleConsume.fuel.value = fireDispatchLoss?.fuel
+    form.value.battleConsume.waterPump.value = fireDispatchLoss?.waterPump
+    form.value.battleConsume.hoseReel.value = fireDispatchLoss?.hoseReel
+    form.value.battleConsume.fireGun.value = fireDispatchLoss?.fireGun
+    form.value.battleConsume.airForm.value = fireDispatchLoss?.airForm
+    form.value.battleConsume.formTank.value = fireDispatchLoss?.formTank
+    form.value.battleConsume.ladder.value = fireDispatchLoss?.ladder
+    form.value.battleConsume.waterBand.value = fireDispatchLoss?.waterBand
+    form.value.battleConsume.fireHydrantHandle.value = fireDispatchLoss?.fireHydrantHandle
+    form.value.battleConsume.waterGun.value = fireDispatchLoss?.waterGun
+    form.value.battleConsume.waterMainfold.value = fireDispatchLoss?.waterMainfold
+    form.value.battleConsume.entryTool.value = fireDispatchLoss?.entryTool
+    form.value.battleConsume.fireExtinguisher.value = fireDispatchLoss?.fireExtinguisher
+    form.value.battleConsume.firePump.value = fireDispatchLoss?.firePump
+    form.value.battleConsume.fireHat.value = fireDispatchLoss?.fireHat
+    form.value.battleConsume.protectiveSuit.value = fireDispatchLoss?.protectiveSuit
+    form.value.battleConsume.fireGlove.value = fireDispatchLoss?.fireGlove
+    form.value.battleConsume.lapBelt.value = fireDispatchLoss?.lapBelt
+    form.value.battleConsume.protectiveBoots.value = fireDispatchLoss?.protectiveBoots
+    form.value.battleConsume.fireRebreather.value = fireDispatchLoss?.fireRebreather
+    form.value.battleConsume.fireLight.value = fireDispatchLoss?.fireLight
+    form.value.battleConsume.fireRescuer.value = fireDispatchLoss?.fireRescuer
+    form.value.battleConsume.positionLamp.value = fireDispatchLoss?.positionLamp
+    form.value.battleConsume.safetyRope.value = fireDispatchLoss?.safetyRope
+    form.value.battleConsume.fireAxe.value = fireDispatchLoss?.fireAxe
+    form.value.battleConsume.interphone.value = fireDispatchLoss?.interphone
+    form.value.battleConsume.transferImage.value = fireDispatchLoss?.transferImage
+    form.value.battleConsume.uav.value = fireDispatchLoss?.uav
+    form.value.battleConsume.foamLiquid.value = fireDispatchLoss?.foamLiquid
+    form.value.battleConsume.dryPowder.value = fireDispatchLoss?.dryPowder
+    form.value.battleConsume.carbonDioxide.value = fireDispatchLoss?.carbonDioxide
+    form.value.battleConsume.haloalkane.value = fireDispatchLoss?.haloalkane
+    form.value.battleConsume.totalFlow.value = fireDispatchLoss?.totalFlow
+    form.value.battleConsume.firefightingWater.value = fireDispatchLoss?.firefightingWater
+    form.value.battleConsume.coolingWater.value = fireDispatchLoss?.coolingWater
+    form.value.battleConsume.totalWater.value = fireDispatchLoss?.totalWater
+    form.value.battleConsume.waterInterrupt.value = fireDispatchLoss?.waterInterrupt
+    form.value.battleConsume.waterDamage.value = fireDispatchLoss?.waterDamage
+    form.value.battleConsume.fireDispatchLossOtherList = fireDispatchLoss?.fireDispatchLossOtherList
+    if (fireDispatchLoss?.fireDispatchLossOtherList?.length > 0) {
+      const equipments = fireDispatchLoss?.fireDispatchLossOtherList.filter(item => item.otherType === '1')
+      form.value.battleConsume.lossOtherEquipments = equipments.map((item) => {
+        return {
+          otherName: item.otherName,
+          otherAmount: item.otherAmount,
+        }
+      })
+      const personal = fireDispatchLoss?.fireDispatchLossOtherList.filter(item => item.otherType === '2')
+      form.value.battleConsume.lossOtherPersonal = personal.map((item) => {
+        return {
+          otherName: item.otherName,
+          otherAmount: item.otherAmount,
+        }
+      })
+      const agent = fireDispatchLoss?.fireDispatchLossOtherList.filter(item => item.otherType === '3')
+      form.value.battleConsume.lossOtherAgent = agent.map((item) => {
+        return {
+          otherName: item.otherName,
+          otherAmount: item.otherAmount,
+        }
+      })
+    }
+    // 处置经过
+    form.value.disposalProcess.fireProcess.value = fireDispatchItem?.fireProcess
+    // 流程流转
+    form.value.proSteps.fireDispatchTransferVOList.value = fireDispatchTransferVOList
+    checkFormField(warningDetail)
+
+    callback()
+  }
+
+  return { form, initFormWhenChange, initFormByDetail }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, onMounted, watch, computed } from "vue";
+import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
@@ -44,11 +44,70 @@ import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue } from '@vueuse/core';
 import { useStore } from "vuex";
 
+const props = defineProps({
+  showDraft: {
+    type: Boolean,
+    default: false,
+  },
+  currentRow: {
+    type: Object,
+    default: () => {},
+  },
+  relevanceDraft: {
+    type: Object,
+    default: () => {},
+  },
+  isDetail: {
+    type: Boolean,
+    default: false,
+  },
+  isEdit: {
+    type: Boolean,
+    default: false,
+  },
+  isApproval: {
+    type: Boolean,
+    default: false,
+  },
+  isPolice: {
+    type: Boolean,
+    default: false,
+  },
+  isAgain: { // 退回起草人之后，重新修改提审
+    type: Boolean,
+    default: false,
+  },
+  processKey: {
+    type: String,
+    default: '',
+  },
+  labelText: {
+    type: String,
+    default: '审核',
+  },
+  renderDom: {
+    type: String,
+    default: '.ant-modal-content',
+  },
+  showExportPdf: { // 显示导出按钮
+    type: Boolean,
+    default: false,
+  },
+  setHandleOk: {
+    type: Function,
+  },
+  setHandleExtend: {
+    type: Function,
+  },
+})
+
+const emits = defineEmits(['finishCallback'])
+
 const { options } = useOptions();
 
 const { show } = useModal();
 
-const { form } = useFormConfig();
+const { form, initFormWhenChange, initFormByDetail } = useFormConfig();
 
 const store = useStore();
 
@@ -81,59 +140,59 @@ const showMidwayReturn = computed(() => {
 })
 
 // 显示主战相关字段
-// const showMainGroup = computed(() => {
-//   if (form.value.draftInfo.partakeType?.value) {
-//     return form.value.draftInfo.partakeType.value === '主战'
-//   }
-//   else {
-//     return props?.currentRow?.partakeType === '主战' || props?.currentRow?.dispatchTypeValue === '主战'
-//   }
-// })
+const showMainGroup = computed(() => {
+  if (form.value.draftInfo.partakeType?.value) {
+    return form.value.draftInfo.partakeType.value === '主战'
+  }
+  else {
+    return props?.currentRow?.partakeType === '主战' || props?.currentRow?.dispatchTypeValue === '主战'
+  }
+})
 
 // 显示增援相关字段
-// const showReinforce = computed(() => {
-//   if (form.value.draftInfo.partakeType?.value) {
-//     return form.value.draftInfo.partakeType.value === '增援'
-//   }
-//   else {
-//     return props?.currentRow?.partakeType === '增援' || props?.currentRow?.dispatchTypeValue === '增援'
-//   }
-// })
+const showReinforce = computed(() => {
+  if (form.value.draftInfo.partakeType?.value) {
+    return form.value.draftInfo.partakeType.value === '增援'
+  }
+  else {
+    return props?.currentRow?.partakeType === '增援' || props?.currentRow?.dispatchTypeValue === '增援'
+  }
+})
 
 // 显示全勤指挥部相关字段
-// const showHeadquarter = computed(() => {
-//   if (form.value.draftInfo.partakeType?.value) {
-//     return form.value.draftInfo.partakeType.value === '指挥'
-//   }
-//   else {
-//     return props?.currentRow?.partakeType === '指挥' || props?.currentRow?.dispatchTypeValue === '指挥'
-//   }
-// })
+const showHeadquarter = computed(() => {
+  if (form.value.draftInfo.partakeType?.value) {
+    return form.value.draftInfo.partakeType.value === '指挥'
+  }
+  else {
+    return props?.currentRow?.partakeType === '指挥' || props?.currentRow?.dispatchTypeValue === '指挥'
+  }
+})
 
 // 火灾扑救
-// const showFireFighting = computed(() => {
-//   return form.value.draftInfo.warningType?.text?.includes('火灾扑救')
-// })
+const showFireFighting = computed(() => {
+  return form.value.draftInfo.warningType?.text?.includes('火灾扑救')
+})
 
 // 抢险救援
-// const showRescueRescue = computed(() => {
-//   return form.value.draftInfo.warningType?.text?.includes('抢险救援')
-// })
+const showRescueRescue = computed(() => {
+  return form.value.draftInfo.warningType?.text?.includes('抢险救援')
+})
 
 // 社会救助
-// const showSocialAssistance = computed(() => {
-//   return form.value.draftInfo.warningType?.text?.includes('社会救助')
-// })
+const showSocialAssistance = computed(() => {
+  return form.value.draftInfo.warningType?.text?.includes('社会救助')
+})
 
 // 安保勤务
-// const showSecurityService = computed(() => {
-//   return form.value.draftInfo.warningType?.text?.includes('安保勤务')
-// })
+const showSecurityService = computed(() => {
+  return form.value.draftInfo.warningType?.text?.includes('安保勤务')
+})
 
 // 虚假警
-// const showFalsePolice = computed(() => {
-//   return form.value.draftInfo.warningType?.text?.includes('虚假警')
-// })
+const showFalsePolice = computed(() => {
+  return form.value.draftInfo.warningType?.text?.includes('虚假警')
+})
 
 // 主要战术措施
 const showTactical = computed(() => {
@@ -158,19 +217,31 @@ provide('showNotDealReason', showNotDealReason)
 
 provide('showMidwayReturn', showMidwayReturn)
 
-// provide('showMainGroup', showMainGroup)
+provide('showMainGroup', showMainGroup)
 
-// provide('showReinforce', showReinforce)
+provide('showReinforce', showReinforce)
 
-// provide('showHeadquarter', showHeadquarter)
+provide('showHeadquarter', showHeadquarter)
 
 provide('showPreview', showPreview)
 
-// provide('showFalsePolice', showFalsePolice)
+provide('showFalsePolice', showFalsePolice)
 
-// provide('showFireFighting', showFireFighting)
+provide('showFireFighting', showFireFighting)
 
-// provide('showRescueRescue', showRescueRescue)
+provide('showRescueRescue', showRescueRescue)
+
+const { detail, loadDetail } = useDetail({
+  getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
+})
+
+const initPoliceDetail = () => {
+  return new Promise((resolve) => {
+    loadDetail().then(res => {
+      resolve()
+    })
+  })
+}
 
 const initDict = () => {
   return new Promise((resolve) => {
@@ -214,15 +285,16 @@ const initDict = () => {
 }
 
 const initTruckMsg = () => {
-  return getTruckMsg().then(res => {
-    dispatchTruckListOptions.value = res.items || []
+  return new Promise((resolve) => {
+    getTruckMsg().then(res => {
+      dispatchTruckListOptions.value = res.items || []
+    }).finally(() => resolve())
   })
 }
 
 const initWeather = () => {
-  const { showDraft, isDetail } = route.query
   return new Promise((resolve) => {
-    if (!showDraft && !isDetail && !form.value.basicInformation.weather.value) {
+    if (!props.showDraft && !props.isDetail && !form.value.basicInformation.weather.value) {
       getWeatherMsg({
         boAreaId: detail.value?.warningTown || detail.value?.warningCity,
         warningDate: dayjs(detail?.value?.warningDate).format('YYYY-MM-DD HH:mm:ss'),
@@ -233,7 +305,7 @@ const initWeather = () => {
           form.value.basicInformation.wind.value = res.windPowerDictId
           form.value.basicInformation.windDirection.value = res.windDirectionDictId
         }
-      })
+      }).finally(() => resolve())
     } else {
       resolve()
     }
@@ -241,59 +313,74 @@ const initWeather = () => {
 }
 
 const initDetail = () => {
-  const { boFireDispatchId, isStorage, partakeType, dispatchTypeValue } = route.query
-  const { isEdit, isDetail } = props
-  if (boFireDispatchId && ['指挥'].includes(partakeType || dispatchTypeValue)) {
-    getDispatchDetailHeadquarter(boFireDispatchId).then((res) => {
-      if (res) {
-        dispatchDetail.value = res
-        if (!props.showDraft) {
-          importantEdit.value = res.importantInfoRecheck
+  return new Promise((resolve) => {
+    const { currentRow, isEdit, isDetail } = props
+    if (currentRow?.boFireDispatchId && ['指挥'].includes(currentRow?.partakeType || currentRow?.dispatchTypeValue)) {
+      const id = props.currentRow?.boFireDispatchId
+      getDispatchDetailHeadquarter(id).then((res) => {
+        if (res) {
+          dispatchDetail.value = res
+          if (!props.showDraft) {
+            importantEdit.value = res.importantInfoRecheck
+          }
+
+          initFormByDetail(res, options.value, initWatch, detail.value)
         }
-      }
-    })
-  }
-  else if ((isEdit && boFireDispatchId) || (isDetail && boFireDispatchId)) {
-    getDispatchDetail(boFireDispatchId).then((res) => {
-      if (res) {
-        dispatchDetail.value = res
-        if (!props.showDraft) {
-          importantEdit.value = res.importantInfoRecheck
+      }).finally(() => resolve())
+    }
+    else if ((isEdit && currentRow?.boFireDispatchId) || (isDetail && currentRow?.boFireDispatchId)) {
+      const id = currentRow?.boFireDispatchId
+      getDispatchDetail(id).then((res) => {
+        if (res) {
+          dispatchDetail.value = res
+          if (!props.showDraft) {
+            importantEdit.value = res.importantInfoRecheck
+          }
+
+          initFormByDetail(res, options.value, initWatch, detail.value)
         }
-      }
-    })
-  }
-  else if (isStorage === '1' && ['指挥'].includes(partakeType || dispatchTypeValue)) {
-    getDispatchDetailHeadquarter(boFireDispatchId).then((res) => {
-      if (res) {
-        if (!props.showDraft) {
-          importantEdit.value = res.importantInfoRecheck
+      }).finally(() => resolve())
+    }
+    else if (currentRow?.isStorage === '1' && ['指挥'].includes(currentRow?.partakeType || currentRow?.dispatchTypeValue)) {
+      const id = currentRow?.boFireDispatchId
+      getDispatchDetailHeadquarter(id).then((res) => {
+        if (res) {
+          if (!props.showDraft) {
+            importantEdit.value = res.importantInfoRecheck
+          }
+
+          initFormByDetail(res, options.value, initWatch, detail.value)
         }
-      }
-    })
-  }
-  else if (isStorage === '1') {
-    getDispatchDetail(boFireDispatchId).then((res) => {
-      if (res) {
-        if (!props.showDraft) {
-          importantEdit.value = res.importantInfoRecheck
+      }).finally(() => resolve())
+    }
+    else if (currentRow?.isStorage === '1') {
+      const id = currentRow?.boFireDispatchId
+      getDispatchDetail(id).then((res) => {
+        if (res) {
+          if (!props.showDraft) {
+            importantEdit.value = res.importantInfoRecheck
+          }
+
+          initFormByDetail(res, options.value, initWatch, detail.value)
         }
-      }
-    })
-  }
+      }).finally(() => resolve())
+    } else {
+      resolve()
+    }
+  })
 }
 
 const initReport = () => {
-  const { boFireDispatchId } = route.query
+  const { currentRow } = props
   return new Promise((resolve) => {
-    if (boFireDispatchId) {
-      return initDispatchReport({ id: boFireDispatchId }).then((res) => {
+    if (currentRow?.boFireDispatchId) {
+      initDispatchReport({ id: currentRow?.boFireDispatchId }).then((res) => {
         if (res) {
           isNew.value = res.isNew
-          // form.value.basicInfoHead.headquarterName.value = res.dispatchGroupName
+          form.value.basicInfoHead.headquarterName.value = res.dispatchGroupName
           detachment.value = res.detachment
         }
-      })
+      }).finally(() => resolve())
     } else {
       resolve()
     }
@@ -301,16 +388,35 @@ const initReport = () => {
 }
 
 const initPerson = (dispatchGroup) => {
-  return getInputPerson({ dispatchGroup }).then((res) => {
-    if (res) {
-      deptMembersOptions.value = res
-      options.value.commander = res.filter(item => item.userType === '1')
-      options.value.firemen = res.filter(item => item.userType === '2')
-    }
+  return new Promise((resolve) => {
+    getInputPerson({ dispatchGroup }).then((res) => {
+      if (res) {
+        deptMembersOptions.value = res
+        options.value.commander = res.filter(item => item.userType === '1')
+        options.value.firemen = res.filter(item => item.userType === '2')
+      }
+    }).finally(() => resolve())
   })
 }
 
-const { result } = useAsyncQueue([initDict, initTruckMsg, initWeather, initDetail, initReport, initPerson])
+const initWatch = () => {
+  return new Promise((resolve) => {
+    watch(() => [
+      form.value.draftInfo.warningType,
+      form.value.draftInfo.partakeType,
+      form.value.basicInformation.dealSituation.value,
+    ], () => {
+      initFormWhenChange()
+    }, { deep: true })
+    nextTick(() => {
+      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dispatchDate.value)
+      console.log(props.isDetail, form.value.basicInformation.dispatchDate.value)
+    })
+    resolve()
+  })
+}
+
+const { result } = useAsyncQueue([initPoliceDetail, initDict, initTruckMsg, initWeather, initReport, initPerson, initDetail, initWatch])
 
 onMounted(() => {
   console.log('init', result)
@@ -346,23 +452,123 @@ const onFailed = (errorInfo) => {
     </div>
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
-        <BasicInformation />
-        <BasicInfoHeadquarter />
-        <InvestForce />
+        <template v-if="showMainGroup">
+          <!-- 基本信息 -->
+          <BasicInformation />
+          <!-- 主要战术措施 -->
+          <TacticalMeasures
+            v-if="
+              !showFalsePolice
+                && ((showTactical && !(showNotDealReason || showMidwayReturn))
+                  || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
+                  || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
+            "
+          />
+          <!-- 简要情况 -->
+          <BriefSituation />
+          <!-- 气象信息 -->
+          <MeteorologicalInfo v-if="!showDraft" />
+          <!-- 投入力量 -->
+          <InvestForce />
+          <!-- 政府指挥 -->
+          <GovernmentCommand
+            v-if="
+              !showFalsePolice
+                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+            "
+          />
+          <!-- 联动单位 -->
+          <LinkageUnit
+            v-if="
+              !showFalsePolice
+                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+            "
+          />
+          <!-- 其他救援力量 -->
+          <OtherForce v-if="!showFalsePolice" />
+          <!-- 参战人员伤亡 -->
+          <CasualtyWar />
+          <!-- 战斗成果 -->
+          <BattleResult
+            v-if="
+              !showFalsePolice
+                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+            "
+          />
+          <!-- 处置经过 -->
+          <DisposalProcess />
+          <!-- 现场照片 -->
+          <ScenePhoto v-if="!showMidwayReturn" />
+          <!-- 其他附件 -->
+          <OtherAttach />
+          <!-- 战斗消耗 -->
+          <BattleConsume />
+        </template>
+        <template v-else-if="showReinforce">
+          <!-- 基本信息 -->
+          <BasicInformation />
+          <!-- 主要战术措施 -->
+          <TacticalMeasures
+            v-if="
+              !showFalsePolice
+                && ((showTactical && !(showNotDealReason || showMidwayReturn))
+                  || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
+                  || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
+            "
+          />
+          <!-- 简要情况 -->
+          <BriefSituation />
+          <!-- 投入力量 -->
+          <InvestForce />
+          <!-- 参战人员伤亡 -->
+          <CasualtyWar />
+          <!-- 战斗成果 -->
+          <BattleResult
+            v-if="
+              !showFalsePolice
+                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+            "
+          />
+          <!-- 处置经过 -->
+          <DisposalProcess />
+          <!-- 现场照片 -->
+          <ScenePhoto v-if="!showMidwayReturn" />
+          <!-- 其他附件 -->
+          <OtherAttach />
+          <!-- 战斗消耗 -->
+          <BattleConsume />
+        </template>
+        <template v-else-if="showHeadquarter">
+          <!-- 基本信息-全勤指挥部 -->
+          <BasicInfoHeadquarter />
+          <!-- 人员信息 -->
+          <PersonInfo />
+          <!-- 出动装备 -->
+          <DeployEquipment />
+           <!-- 指挥过程 -->
+          <CommandProcess />
+          <!-- 参战人员伤亡 -->
+          <CasualtyWar />
+          <!-- 战斗消耗 -->
+          <BattleConsume />
+        </template>
         <BriefSituation />
-        <CasualtyWar />
         <TacticalMeasures />
         <GovernmentCommand />
         <LinkageUnit />
-        <PersonInfo />
         <OtherForce />
-        <BattleResult />
-        <DeployEquipment />
-        <DisposalProcess />
-        <CommandProcess />
-        <OtherAttach />
-        <ScenePhoto />
-        <BattleConsume />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

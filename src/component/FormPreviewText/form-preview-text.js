@@ -36,8 +36,12 @@ const handlePreview = (el, binding, vnode) => {
     vnode.el.querySelector('.van-field__word-limit').style.display = 'none'
   }
   vnode.el.classList.remove('van-cell--clickable') // 移除 van-cell--clickable 样式
-  vnode.el.querySelector('.van-field__body').style.display = 'none'
-  vnode.el.querySelector('.van-field__value').style.display = 'flex'
+  if (vnode.el.querySelector('.van-field__body')) {
+    vnode.el.querySelector('.van-field__body').style.display = 'none'
+  }
+  if (vnode.el.querySelector('.van-field__value')) {
+    vnode.el.querySelector('.van-field__value').style.display = 'flex'
+  }
 
   // 屏蔽点击事件
   vnode.el.addEventListener('click', (event) => {

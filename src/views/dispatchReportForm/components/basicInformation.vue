@@ -118,14 +118,12 @@ const onDealSituation = (value, option) => {
       maxlength="10"
       required
       name="trappedPerson"
-      label="现场被困人数："
-      label-width="118px"
+      label="现场被困人数(人)："
+      label-width="144px"
       placeholder="请输入现场被困人数"
       :rules="form.basicInformation.trappedPerson.rules"
       @blur="checkTrappedPerson(detail, form)"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <SelectSingle
       v-if="showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.industryDepartment.value"
@@ -164,12 +162,10 @@ const onDealSituation = (value, option) => {
       maxlength="10"
       required
       name="blockingTime"
-      label="疏通耗时："
+      label="疏通耗时(分钟)："
       placeholder="请输入疏通耗时"
       :rules="form.basicInformation.blockingTime.rules"
-    >
-      <template #extra>分钟</template>
-    </van-field>
+    />
     <MeteorologicalInfo />
   </van-cell-group>
 </template>

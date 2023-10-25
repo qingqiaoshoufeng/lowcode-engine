@@ -169,7 +169,7 @@ watch(() => form.value.basicInfoHead, () => {
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.dispatchDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -181,7 +181,7 @@ watch(() => form.value.basicInfoHead, () => {
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.attendanceDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -193,7 +193,7 @@ watch(() => form.value.basicInfoHead, () => {
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.evacuateDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
