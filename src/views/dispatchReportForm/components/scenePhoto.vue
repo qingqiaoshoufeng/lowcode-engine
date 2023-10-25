@@ -1,64 +1,100 @@
 <script setup>
-import { inject, nextTick, onMounted, ref } from 'vue'
-import { gutter } from '@/utils/constants.js'
+import { inject, nextTick, onMounted, ref } from "vue";
+import { gutter } from "@/utils/constants.js";
 // import { useUpload } from '@/hooks/useUpload.js'
-import { downloadAttachmentFile, getAttachmentFile } from '@/apis/index.js'
+import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 
-const form = inject('form')
+const form = inject("form");
 
-const isDetail = inject('isDetail')
+const isDetail = inject("isDetail");
 
-const isEdit = inject('isEdit')
+const isEdit = inject("isEdit");
 
-const currentRow = inject('currentRow')
+const currentRow = inject("currentRow");
 
-const localFireDispatchId = inject('localFireDispatchId')
+const localFireDispatchId = inject("localFireDispatchId");
 
 // const { initViewer, handlePreview, beforeUpload, onRemove } = useUpload(form.value.scenePhoto.photos)
-
-const onPreview = (file) => {
-  form.value.scenePhoto.photos.value?.forEach((item, i) => {
-    if ((item.attachmentId || item.response?.attachmentId) === (file.attachmentId || file.response?.attachmentId)) {
-      handlePreview(i)
-    }
-  })
-}
 
 const onChange = (file, fileList, event) => {
   form.value.scenePhoto.photos.value?.forEach((item, i) => {
     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-      item.url = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
-      item.thumbUrl = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
+      item.url = `/acws/rest/attachments/${
+        item.attachmentId || item.response?.attachmentId
+      }`;
+      item.thumbUrl = `/acws/rest/attachments/${
+        item.attachmentId || item.response?.attachmentId
+      }`;
     }
-  })
+  });
   setTimeout(() => {
-    initViewer()
-  }, 1000)
-}
+    initViewer();
+  }, 1000);
+};
 
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
     getAttachmentFile({
       businessObjId: currentRow?.boFireDispatchId,
-      businessType: 'image',
+      businessType: "image",
     }).then((res) => {
       form.value.scenePhoto.photos.value = res.data.map((item) => {
         return {
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
-          status: 'done',
+          status: "done",
           url: `/acws/rest/attachments/${item.attachmentId}`,
-        }
-      })
+        };
+      });
       nextTick(() => {
-        initViewer()
-      })
-    })
+        initViewer();
+      });
+    });
   }
-})
+});
+
+const OnAfterRead = (file) => {
+  const formData = new FormData()
+  formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
+  formData.append('attachmentType', 'image')
+  formData.append('extend2', '照片')
+  formData.append('file', file.file)
+  return uploadFile(formData)
+}
 </script>
 
 <template>
-  <van-cell-group> ??? </van-cell-group>
+  <van-cell-group>
+    <div class="scene-photo">
+      <van-cell title="出动现场照片：" required class="item-cell">
+        <van-uploader
+          v-model="form.scenePhoto.photos.value"
+          accept="image/png, image/jpeg, image/jpg"
+          multiple
+          preview-full-image
+          name="photos"
+          :max-count="9"
+          :max-size="10 * 1000 * 1000000"
+          :readonly="isDetail"
+          :deletable="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+          :after-read="OnAfterRead"
+        />
+      </van-cell>
+    </div>
+  </van-cell-group>
 </template>
+
+<style lang="scss" scoped>
+.scene-photo {
+  padding: 10px 0 0 10px;
+  .item-cell {
+    flex-direction: column;
+    :deep(.van-field__body) {
+      border: 1px solid #f6f6f6;
+      padding: 5px 5px;
+      margin-top: 5px;
+    }
+  }
+}
+</style>

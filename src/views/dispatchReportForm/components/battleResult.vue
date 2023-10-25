@@ -63,16 +63,14 @@ const validateSurvive = (rule, value, callback) => {
       maxlength="10"
       required
       name="rescueNum"
-      label="抢救："
+      label="抢救(人)："
       placeholder="请输入抢救人数"
       :rules="[
         { validator: validateRescueNum, trigger: 'blur' },
         ...form.battleResult.rescueNum.rules,
       ]"
       @blur="onSurviveNum()"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.surviveNum.value"
       v-preview-text="showPreview"
@@ -81,16 +79,14 @@ const validateSurvive = (rule, value, callback) => {
       maxlength="10"
       required
       name="surviveNum"
-      label="生还："
+      label="生还(人)："
       placeholder="请输入生还人数"
       :rules="[
         { validator: validateSurvive, trigger: 'blur' },
         ...form.battleResult.surviveNum.rules,
       ]"
       @blur="onSurviveNum()"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.deathNum.value"
       v-preview-text="showPreview"
@@ -99,11 +95,9 @@ const validateSurvive = (rule, value, callback) => {
       type="number"
       maxlength="10"
       name="deathNum"
-      label="死亡："
+      label="死亡(人)："
       placeholder="请输入死亡人数"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.evacuateNum.value"
       v-preview-text="showPreview"
@@ -111,12 +105,10 @@ const validateSurvive = (rule, value, callback) => {
       type="number"
       maxlength="10"
       name="evacuateNum"
-      label="疏散："
+      label="疏散(人)："
       placeholder="请输入疏散人数"
       :rules="form.battleResult.evacuateNum.rules"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.transferNum.value"
       v-preview-text="showPreview"
@@ -124,12 +116,10 @@ const validateSurvive = (rule, value, callback) => {
       type="number"
       maxlength="10"
       name="transferNum"
-      label="转移："
+      label="转移(人)："
       placeholder="请输入转移人数"
       :rules="form.battleResult.transferNum.rules"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.emergencyNum.value"
       v-preview-text="showPreview"
@@ -138,13 +128,11 @@ const validateSurvive = (rule, value, callback) => {
       type="number"
       maxlength="10"
       name="emergencyNum"
-      label="抢救财产价值："
-      label-width="118px"
+      label="抢救财产价值(元)："
+      label-width="148px"
       placeholder="请输入抢救财产价值"
       :rules="form.battleResult.emergencyNum.rules"
-    >
-      <template #extra>元</template>
-    </van-field>
+    />
     <van-field
       v-model="form.battleResult.protectNum.value"
       v-preview-text="showPreview"
@@ -153,12 +141,10 @@ const validateSurvive = (rule, value, callback) => {
       type="number"
       maxlength="10"
       name="protectNum"
-      label="保护财产价值："
-      label-width="118px"
+      label="保护财产价值(元)："
+      label-width="148px"
       placeholder="请输入保护财产价值"
       :rules="form.battleResult.protectNum.rules"
-    >
-      <template #extra>元</template>
-    </van-field>
+    />
   </van-cell-group>
 </template>

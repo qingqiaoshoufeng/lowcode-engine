@@ -1040,6 +1040,28 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '请输入处置经过' }],
       },
     },
+    scenePhoto: { // 现场照片
+      title: '现场照片',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      photos: { // 出动现场照片
+        value: [],
+        rules: [{ required: true, message: '请选择出动现场照片' }],
+      },
+    },
+    otherAttach: { // 其他附件
+      title: '其他附件',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      attach: { // 其他附件
+        value: undefined,
+        // rules: [{ required: true, message: '请选择其他附件' }],
+      },
+      remark: { // 其他说明
+        value: '',
+        // rules: [{ required: true, message: '请输入其他说明' }],
+      },
+    },
   }
 
   const form = ref(cloneDeep(formOrigin))

@@ -211,13 +211,12 @@ watch(() => form.value.basicInfoHead, () => {
       maxlength="20"
       required
       name="personNum"
-      label="人员数量："
+      label="人员数量(人)："
+      label-width="122px"
       placeholder="请输入人员数量"
       :disabled="true"
       :rules="form.basicInfoHead.personNum.rules"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <van-field
       v-model="form.basicInfoHead.truckNum.value"
       v-preview-text="showPreview"
@@ -226,13 +225,12 @@ watch(() => form.value.basicInfoHead, () => {
       maxlength="20"
       required
       name="truckNum"
-      label="出动车辆："
+      label="出动车辆(辆)："
+      label-width="122px"
       placeholder="请输入出动车辆"
       :disabled="true"
       :rules="form.basicInfoHead.truckNum.rules"
-    >
-      <template #extra>辆</template>
-    </van-field>
+    />
     <van-field
       v-model="diffTime"
       v-preview-text="showPreview"
