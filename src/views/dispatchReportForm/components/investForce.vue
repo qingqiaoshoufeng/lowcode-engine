@@ -163,7 +163,7 @@ const validateCommander = (rule, value, callback) => {
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
         label="中途返回车辆信息："
-        label-width="142px"
+        label-width="152px"
         placeholder="请选择中途返回车辆信息"
         title="请选择中途返回车辆信息"
       />

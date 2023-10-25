@@ -20,6 +20,7 @@ import OtherAttach from './components/otherAttach.vue';
 import OtherForce from './components/otherForce.vue';
 import PersonInfo from './components/personInfo.vue';
 import TacticalMeasures from './components/tacticalMeasures.vue';
+import ScenePhoto from './components/scenePhoto.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -360,6 +361,7 @@ const onFailed = (errorInfo) => {
         <DisposalProcess />
         <CommandProcess />
         <OtherAttach />
+        <ScenePhoto />
         <BattleConsume />
       </van-form>
 

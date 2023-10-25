@@ -423,7 +423,7 @@ const initDetail = () => {
   const { boFireWarningId, boWarningYyjId } = route.query
   if (boWarningYyjId) {
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
-    form.value.warningDate = dayjs(props.currentRow.warningCodeYyj).format('YYYY-MM-DD').split('-')
+    form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
     form.value.warningType = props.currentRow.warningType?.split(',')
     form.value.warningTypeText = props.currentRow.warningTypeValue?.split('/')
     form.value.warningArea = props.currentRow.warningArea?.split(',')
@@ -442,7 +442,7 @@ const initDetail = () => {
       if (res) {
         detail.value = res
         form.value.boFireWarningId = res.boFireWarningId
-        form.value.warningDate = dayjs(res.warningDate).format('YYYY-MM-DD').split('-')
+        form.value.warningDate = dayjs(res.warningDate)
         form.value.warningCodeYyj = res.warningCodeYyj
         form.value.warningOrgname = res.warningOrgname
         if (res.warningStreet) {
@@ -685,7 +685,7 @@ const validateHeadquarters = (value, rule) => {
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
       <SelectDateTime
         v-model:value="form.warningDate"
-        v-preview-text="showPreview"
+        :showPreview="showPreview"
         :readonly="showPreview"
         is-link
         required
@@ -905,7 +905,7 @@ const validateHeadquarters = (value, rule) => {
         :required="true"
         :field-names="{ value: 'boDictId', text: 'dictName' }"
         label="自然灾害类型："
-        label-width="108px"
+        label-width="118px"
         placeholder="请选择自然灾害类型"
       />
       <van-field

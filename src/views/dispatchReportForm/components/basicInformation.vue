@@ -87,14 +87,12 @@ const onDealSituation = (value, option) => {
       maxlength="20"
       required
       name="fireDistance"
-      label="行驶距离："
-      label-width="102px"
+      label="行驶距离(公里)："
+      label-width="132px"
       placeholder="请输入行驶距离"
       :rules="form.basicInformation.fireDistance.rules"
       @blur="checkFireDistance(form), checkAttendanceDate(form), checkReturnSpeed(form)"
-    >
-      <template #extra>公里</template>
-    </van-field>
+    />
     <SelectSingle
       v-if="showFireFighting && !showMidwayReturn"
       v-model:value="form.basicInformation.fireSituation.value"

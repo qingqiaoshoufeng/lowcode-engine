@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
   value: {
@@ -49,13 +50,22 @@ const selectValue = ref("");
 const selectText = ref("");
 
 watch(() => props.value, (val) => {
-  if (props.value) {
-    selectValue.value = props.value;
-    selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
-  } else {
-    selectValue.value =''
-    selectText.value = ''
-  }
+  nextTick(() => {
+    if (props.value) {
+      selectValue.value = props.value;
+      if (props.text) {
+        selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
+      } else if (props.value && !props.text) {
+        selectText.value = props.value?.map(item => {
+          const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: props.options }, item, 'boDictId')
+          return temp?.dictName
+        })?.join('/')
+      }
+    } else {
+      selectValue.value =''
+      selectText.value = ''
+    }
+  })
 }, { immediate: true })
 
 const onFinish = ({ selectedOptions }) => {
