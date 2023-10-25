@@ -586,6 +586,103 @@ export const useFormConfig = () => {
         ],
       },
     },
+    casualtyWar: { // 参战伤亡
+      title: '参战伤亡',
+      fieldAnnotation: false, // 批注
+      fieldWarning: '',
+      isInjured: { // 是否有人员伤亡
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有人员受伤' }],
+      },
+      injuredList: [], // 受伤人员列表
+      isDead: { // 是否有人员死亡
+        value: '2',
+        rules: [{ required: true, message: '请选择是否有人员死亡' }],
+      },
+      deadList: [], // 死亡人员列表
+      name: {
+        value: '',
+        rules: [{ required: true, message: '请输入人员姓名' }],
+      },
+      identity: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择人员身份' }],
+      },
+      personCode: {
+        value: '',
+        // rules: [{ required: true, message: '请输入消防证件号' }],
+      },
+      nation: { // 民族
+        value: undefined,
+        rules: [{ required: true, message: '请选择民族' }],
+      },
+      nativePlace: { // 户籍
+        value: undefined,
+        rules: [{ required: true, message: '请选择户籍' }],
+      },
+      politicalOutlook: { // 政治面貌
+        value: undefined,
+        rules: [{ required: true, message: '请选择政治面貌' }],
+      },
+      idNumber: {
+        value: '',
+        rules: [
+          { required: true, message: '请输入身份证号码' },
+        ],
+      },
+      deathDate: { // 死亡日期
+        value: '',
+        rules: [{ required: true, message: '请选择死亡日期' }],
+      },
+      gender: {
+        value: '',
+        // rules: [{ required: true, message: '请输入人员性别' }],
+      },
+      age: {
+        value: '',
+        // rules: [{ required: true, message: '请输入年龄' }],
+      },
+      rescueRank: {
+        value: undefined,
+        // rules: [{ required: true, message: '请选择消防救援衔' }],
+      },
+      titleRank: {
+        value: '',
+        // rules: [{ required: true, message: '请输入衔级' }],
+      },
+      bridgingRank: {
+        value: '',
+        // rules: [{ required: true, message: '请输入职级' }],
+      },
+      duty: {
+        value: '',
+        rules: [{ required: true, message: '请输入职务' }],
+      },
+      injuryPart: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择受伤/致命伤部位' }],
+      },
+      teamEntryTime: { // 入队时间（进入消防系统）
+        value: undefined,
+        rules: [{ required: true, message: '请选择入队时间' }],
+      },
+      period: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择事发阶段' }],
+      },
+      injuryReason: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择受伤/死亡原因' }],
+      },
+      protectDevice: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择防护装备情况' }],
+      },
+      isInstantDeath: {
+        value: undefined,
+        rules: [{ required: true, message: '请选择是否当场死亡' }],
+      },
+    },
     battleResult: { // 战斗成果
       title: '战斗成果',
       fieldAnnotation: false, // 批注

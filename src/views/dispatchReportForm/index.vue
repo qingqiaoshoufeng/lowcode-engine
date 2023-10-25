@@ -8,6 +8,7 @@ import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
 import BattleConsume from "./components/battleConsume.vue";
 import DisposalProcess from './components/disposalProcess.vue';
+import CasualtyWar from './components/casualtyWar.vue';
 import CommandProcess from './components/commandProcess.vue';
 import DeployEquipment from './components/deployEquipment.vue';
 import BasicInfoHeadquarter from './components/basicInfoHeadquarter.vue';
@@ -346,6 +347,7 @@ const onFailed = (errorInfo) => {
         <BasicInformation />
         <BasicInfoHeadquarter />
         <InvestForce />
+        <CasualtyWar />
         <TacticalMeasures />
         <GovernmentCommand />
         <LinkageUnit />
