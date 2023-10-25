@@ -7,6 +7,7 @@ import { showToast } from "vant";
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
 import BattleConsume from "./components/battleConsume.vue";
+import BriefSituation from "./components/briefSituation.vue";
 import DisposalProcess from './components/disposalProcess.vue';
 import CasualtyWar from './components/casualtyWar.vue';
 import CommandProcess from './components/commandProcess.vue';
@@ -347,6 +348,7 @@ const onFailed = (errorInfo) => {
         <BasicInformation />
         <BasicInfoHeadquarter />
         <InvestForce />
+        <BriefSituation />
         <CasualtyWar />
         <TacticalMeasures />
         <GovernmentCommand />

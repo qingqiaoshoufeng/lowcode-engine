@@ -1,10 +1,6 @@
 <script setup>
 import { computed, inject } from "vue";
-import {
-  checkDispatchNum,
-  checkDispatchTruckList,
-  checkIsResponseTruck,
-} from "../tool.js";
+import { checkDispatchNum, checkDispatchTruckList, checkIsResponseTruck } from "../tool.js";
 import { positiveIntegerReg } from "@/utils/validate.js";
 import SelectMultiple from "@/component/SelectMultiple/index";
 
