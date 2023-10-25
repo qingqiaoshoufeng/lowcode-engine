@@ -14,8 +14,6 @@ const showDraft = inject("showDraft");
 
 const showMidwayReturn = inject("showMidwayReturn");
 
-const showMainGroup = inject("showMainGroup");
-
 const showDealSituation = inject("showDealSituation");
 
 const dispatchTruckListOptions = inject("dispatchTruckListOptions");
@@ -23,10 +21,7 @@ const dispatchTruckListOptions = inject("dispatchTruckListOptions");
 const deptMembersOptions = inject("deptMembersOptions");
 
 const personNum = computed(() => {
-  if (
-    form.value.investForce.commander?.value ||
-    form.value.investForce.firemen?.value
-  ) {
+  if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
     return (
       form.value.investForce.commander?.value?.length +
       form.value.investForce.firemen?.value?.length
@@ -101,11 +96,10 @@ const validateCommander = (rule, value, callback) => {
     <div class="invest-message">
       共投入 {{ form.investForce?.dispatchTruckList.value?.length || 0 }} 车 {{ personNum || 0 }} 人
     </div>
-    <van-cell title="是否有车辆出动：" required class="field-radio-label">
+    <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio-label">
       <template #default>
         <van-radio-group
           v-model="form.investForce.isResponseTruck.value"
-          v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
           @change="onResponseTruck"
@@ -131,11 +125,10 @@ const validateCommander = (rule, value, callback) => {
         title="请选择消防车辆信息"
         @change="onDispatchTruck(), OnCarNum()"
       />
-      <van-cell title="是否有车辆中途返回：" class="field-radio-label">
+      <van-cell title="是否有车辆中途返回：" v-preview-text="showPreview" class="field-radio-label">
         <template #default>
           <van-radio-group
             v-model="form.investForce.isReturnTruck.value"
-            v-preview-text="showPreview"
             icon-size="16px"
             direction="horizontal"
             @change="onReturnTruck"
@@ -146,12 +139,7 @@ const validateCommander = (rule, value, callback) => {
         </template>
       </van-cell>
     </template>
-    <template
-      v-if="
-        form.investForce.isResponseTruck.value === '1' &&
-        form.investForce.isReturnTruck.value === '1'
-      "
-    >
+    <template v-if="form.investForce.isResponseTruck.value === '1' && form.investForce.isReturnTruck.value === '1'">
       <SelectMultiple
         v-model:value="form.investForce.midwayCar.value"
         :showPreview="showPreview"

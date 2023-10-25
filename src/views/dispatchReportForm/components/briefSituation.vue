@@ -416,10 +416,10 @@ const validateDealEndDate = (value, rule) => {
       maxlength="20"
       name="presentSpeed"
       label="到场时速(公里/小时)："
-      label-width="104px"
+      label-width="158px"
       placeholder="请输入到场时速"
       :rules="form.basicInformation.presentSpeed.rules"
-      :disabled="true"
+      :disabled="!showPreview"
     />
     <SelectSingle
       v-if="showReturnSlow"
@@ -432,6 +432,7 @@ const validateDealEndDate = (value, rule) => {
       :field-names="{ value: 'boDictId', label: 'dictName' }"
       title="请选择到场时速异常原因"
       label="到场时速异常原因："
+      label-width="116px"
       placeholder="请选择到场时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
     />
@@ -445,6 +446,7 @@ const validateDealEndDate = (value, rule) => {
       name="dealEndDate"
       title="请选择警情处置结束时间"
       label="警情处置结束时间："
+      label-width="116px"
       placeholder="请选择警情处置结束时间"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
     />

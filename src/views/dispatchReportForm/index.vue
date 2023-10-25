@@ -231,6 +231,10 @@ provide('showFireFighting', showFireFighting)
 
 provide('showRescueRescue', showRescueRescue)
 
+provide('isDetail', props.isDetail)
+
+provide('isEdit', props.isEdit)
+
 const { detail, loadDetail } = useDetail({
   getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
 })
@@ -259,6 +263,7 @@ const initDict = () => {
     options.value.orgLevel = res.CD_LINK_LEVEL
     options.value.departmentName = res.CD_LINK_DEP
     options.value.dealSituation = res.CD_JYQK_CZ
+    console.log(JSON.stringify(options.value.dealSituation))
     options.value.returnLateReason = res.CD_BACK
     options.value.wind = res.TQ_TYPE_FL
     options.value.windDirection = res.TQ_TYPE_FX
@@ -410,13 +415,12 @@ const initWatch = () => {
     }, { deep: true })
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dispatchDate.value)
-      console.log(props.isDetail, form.value.basicInformation.dispatchDate.value)
     })
     resolve()
   })
 }
 
-const { result } = useAsyncQueue([initPoliceDetail, initDict, initTruckMsg, initWeather, initReport, initPerson, initDetail, initWatch])
+const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail, initWatch])
 
 onMounted(() => {
   console.log('init', result)
@@ -456,22 +460,22 @@ const onFailed = (errorInfo) => {
           <!-- 基本信息 -->
           <BasicInformation />
           <!-- 主要战术措施 -->
-          <TacticalMeasures
+          <!-- <TacticalMeasures
             v-if="
               !showFalsePolice
                 && ((showTactical && !(showNotDealReason || showMidwayReturn))
                   || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
                   || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
             "
-          />
+          /> -->
           <!-- 简要情况 -->
           <BriefSituation />
           <!-- 气象信息 -->
-          <MeteorologicalInfo v-if="!showDraft" />
+          <!-- <MeteorologicalInfo v-if="!showDraft" /> -->
           <!-- 投入力量 -->
-          <InvestForce />
+          <!-- <InvestForce /> -->
           <!-- 政府指挥 -->
-          <GovernmentCommand
+          <!-- <GovernmentCommand
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -479,9 +483,9 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          />
+          /> -->
           <!-- 联动单位 -->
-          <LinkageUnit
+          <!-- <LinkageUnit
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -489,13 +493,13 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          />
+          /> -->
           <!-- 其他救援力量 -->
-          <OtherForce v-if="!showFalsePolice" />
+          <!-- <OtherForce v-if="!showFalsePolice" /> -->
           <!-- 参战人员伤亡 -->
-          <CasualtyWar />
+          <!-- <CasualtyWar /> -->
           <!-- 战斗成果 -->
-          <BattleResult
+          <!-- <BattleResult
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -503,13 +507,13 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          />
+          /> -->
           <!-- 处置经过 -->
-          <DisposalProcess />
+          <!-- <DisposalProcess /> -->
           <!-- 现场照片 -->
-          <ScenePhoto v-if="!showMidwayReturn" />
+          <!-- <ScenePhoto v-if="!showMidwayReturn" /> -->
           <!-- 其他附件 -->
-          <OtherAttach />
+          <!-- <OtherAttach /> -->
           <!-- 战斗消耗 -->
           <BattleConsume />
         </template>
@@ -564,11 +568,6 @@ const onFailed = (errorInfo) => {
           <!-- 战斗消耗 -->
           <BattleConsume />
         </template>
-        <BriefSituation />
-        <TacticalMeasures />
-        <GovernmentCommand />
-        <LinkageUnit />
-        <OtherForce />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

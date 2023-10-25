@@ -168,11 +168,10 @@ watch(
       共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
       {{ form.casualtyWar.deadList?.length }} 人
     </div>
-    <van-cell title="是否有人员受伤：" class="field-radio-label">
+    <van-cell title="是否有人员受伤：" v-preview-text="showPreview" class="field-radio-label">
       <template #default>
         <van-radio-group
           v-model="form.casualtyWar.isInjured.value"
-          v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
         >
@@ -183,18 +182,9 @@ watch(
     </van-cell>
     <!-- 受伤人员 -->
     <div v-if="form.casualtyWar.isInjured.value === '1'" class="block-dynamic">
-      <div
-        v-for="(item, index) in form.casualtyWar.injuredList"
-        :key="index"
-        class="block-dynamic-item"
-      >
+      <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="block-dynamic-item">
         <div class="title">
-          受伤人员{{ index + 1
-          }}<van-icon
-            name="cross"
-            v-if="!isDetail && index !== 0"
-            @click="handleDeleteInjury(index)"
-          />
+          受伤人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteInjury(index)" />
         </div>
         <van-field
           v-model="item.name"
@@ -424,11 +414,10 @@ watch(
         </van-button>
       </template>
     </div>
-    <van-cell title="是否有人员死亡：" class="field-radio-label">
+    <van-cell title="是否有人员死亡：" v-preview-text="showPreview" class="field-radio-label">
       <template #default>
         <van-radio-group
           v-model="form.casualtyWar.isDead.value"
-          v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
         >

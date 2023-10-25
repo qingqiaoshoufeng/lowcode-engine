@@ -6,13 +6,17 @@ const handlePreview = (el, binding, vnode) => {
 
   let renderText = null
   let textValue = ''
-  const renderDom = document.createElement('span')
+  const renderDom = document.createElement('p')
   const wrapper = vnode.el.querySelector('.van-field__value')
+  const cell = vnode.el.querySelector('.van-cell__value')
+  const radioGroup = vnode.el.querySelector('.van-cell__value .van-radio-group')
 
   if (vnode.el.querySelector('.van-field__body')?.querySelector('input')) {
     textValue = vnode.el.querySelector('.van-field__body')?.querySelector('input')?.value
   } else if (vnode.el.querySelector('.van-field__body')?.querySelector('textarea')) {
     textValue = vnode.el.querySelector('.van-field__body')?.querySelector('textarea')?.value
+  } else if (radioGroup) {
+    textValue = vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText
   }
 
   if (textValue && wrapper) {
@@ -27,6 +31,18 @@ const handlePreview = (el, binding, vnode) => {
     renderDom.className = 'preview-text-wrapper'
     // 添加到容器节点
     wrapper.appendChild(renderDom)
+  } else if (textValue && radioGroup && cell) {
+    // 多次渲染要先移除
+    if (cell.querySelectorAll('.preview-text-wrapper')?.length > 0) {
+      cell.querySelectorAll('.preview-text-wrapper')?.forEach(e => wrapper.removeChild(e))
+    }
+    renderText = document.createTextNode(`${textValue}`)
+    renderDom.appendChild(renderText)
+    // 设置样式
+    renderDom.style = 'color: #323233;text-align: left;word-break: break-all;'
+    renderDom.className = 'preview-text-wrapper'
+    // 添加到容器节点
+    cell.appendChild(renderDom)
   }
 
   if (vnode.el.querySelector('.van-icon-arrow')) { // 隐藏右向箭头
@@ -41,6 +57,9 @@ const handlePreview = (el, binding, vnode) => {
   }
   if (vnode.el.querySelector('.van-field__value')) {
     vnode.el.querySelector('.van-field__value').style.display = 'flex'
+  }
+  if (vnode.el.querySelector('.van-radio-group')) {
+    vnode.el.querySelector('.van-radio-group').style.display = 'none'
   }
 
   // 屏蔽点击事件

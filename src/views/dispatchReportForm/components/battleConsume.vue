@@ -345,7 +345,7 @@ onMounted(() => {
     </template>
     <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
       <div v-for="(item, index) in form.battleConsume.lossOtherEquipments" :key="index" class="block-dynamic-item">
-        <div class="title">物品{{  index + 1 }}<van-icon name="cross" @click="handleDeleteEquipments(index)" /></div>
+        <div class="title">物品{{  index + 1 }}<van-icon name="cross" v-if="!isDetail" @click="handleDeleteEquipments(index)" /></div>
         <van-field
           v-model="item.otherName"
           v-preview-text="showPreview"
@@ -371,7 +371,7 @@ onMounted(() => {
           :rules="form.battleConsume.otherAmount.rules"
         />
       </div>
-      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" @click="handleAddEquipments">
+      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddEquipments">
         新增物品（灭火器材）
       </van-button>
     </div>
@@ -544,7 +544,7 @@ onMounted(() => {
     </template>
     <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
       <div v-for="(item, index) in form.battleConsume.lossOtherPersonal" :key="index" class="block-dynamic-item">
-        <div class="title">物品{{  index + 1 }}<van-icon name="cross" @click="handleDeletePersnal(index)" /></div>
+        <div class="title">物品{{  index + 1 }}<van-icon name="cross" v-if="!isDetail" @click="handleDeletePersnal(index)" /></div>
         <van-field
           v-model="item.otherName"
           v-preview-text="showPreview"
@@ -570,7 +570,7 @@ onMounted(() => {
           :rules="form.battleConsume.otherAmount.rules"
         />
       </div>
-      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" @click="handleAddPersnal">
+      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddPersnal">
         新增物品（个人装备）
       </van-button>
     </div>
@@ -625,7 +625,7 @@ onMounted(() => {
     </template>
     <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
       <div v-for="(item, index) in form.battleConsume.lossOtherAgent" :key="index" class="block-dynamic-item">
-        <div class="title">物品{{  index + 1 }}<van-icon name="cross" @click="handleDeleteAgent(index)" /></div>
+        <div class="title">物品{{  index + 1 }}<van-icon name="cross" v-if="!isDetail" @click="handleDeleteAgent(index)" /></div>
         <van-field
           v-model="item.otherName"
           v-preview-text="showPreview"
@@ -651,7 +651,7 @@ onMounted(() => {
           :rules="form.battleConsume.otherAmount.rules"
         />
       </div>
-      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" @click="handleAddAgent">
+      <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddAgent">
         新增物品（灭火药剂）
       </van-button>
     </div>
@@ -717,11 +717,10 @@ onMounted(() => {
         placeholder="请输入无故供水中断次数"
         :rules="form.battleConsume.waterInterrupt.rules"
       />
-      <van-cell title="水渍损失：" class="field-radio-label">
+      <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio-label">
         <template #default>
           <van-radio-group
             v-model="form.battleConsume.waterDamage.value"
-            v-preview-text="showPreview"
             icon-size="16px"
             direction="horizontal"
           >
