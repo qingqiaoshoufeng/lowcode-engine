@@ -9,10 +9,10 @@
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
-            <div class="item-title">{{ record.warningAddr }}</div>
-            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
+            <div class="item-title">{{ record.warningName }}</div>
+            <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
               {{ record.dispatchStatusValue }}
-            </div>
+            </div> -->
           </div>
           <div class="item-type">
             <span>{{ record.warningTypeValue }}</span>
@@ -51,30 +51,125 @@
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleReject(record)"
+              @click.stop="handleclick({type:'look' ,record})"
             >
-              修改
+              查看
+            </van-button>
+            <van-button
+              v-p="['admin', 'dispatch-manage:edit']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click.stop="handleclick({type:'editor' ,record})"
+            >
+              填报
+            </van-button>
+            <van-button
+              v-p="['admin', 'dispatch-manage:edit']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click.stop="handleclick({type:'return' ,record})"
+            >
+              回退
             </van-button>
           </div>
         </div>
       </template>
   </ProList>
+  <ProModal  v-model:visible="show.editVisible" title="火灾填报">
+    <template #default="{ setHandleOk, setHandleExtend }">
+        <EditorForm
+          :is-edit="isEdit"
+          :current-row="currentRow"
+          :relevance-draft="relevanceDraft"
+          :show-draft="isDraft"
+          :set-handle-ok="setHandleOk"
+          :set-handle-extend="setHandleExtend"
+          @finish-callback="refreshCallback"
+        />
+      </template>
+  </ProModal>
 </div>
 </template>
+
 <script setup>
-import { 
+import {  
   // deleteFireReportDraft, 
   getFireReportList } from '@/apis/index.js'
 import { computed, createVNode, onMounted, ref } from 'vue'
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
+import EditorForm from './components/EditorForm.vue'
+const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
   draftFlag: '2',
 }
-const handleItem = (record)=>{
-
+const show = ref({})
+const isEdit = ref(false)
+const isDraft = ref(false)
+const relevanceDraft = ref(null)
+const refreshCallback = () => {
+  proListRef.value.filter()
 }
+
+
+
+const handleInput = (row) => {
+  if (row.isLock === '1') {
+    message.warning(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  isDraft.value = false
+  isEdit.value = false
+  show.value.editVisible = true
+}
+const handleclick = ({type,record})=>{
+  const map = {
+    'editor':handleInput(record)
+  }
+  show.value[type] = true
+}
+const handleItem = (record)=>{
+  selectVisible
+}
+const handleLook = (row) => {
+  currentRow.value = { ...row, boFireInfoId: undefined }
+  isDraft.value = false
+  isEdit.value = false
+  show.value.lookVisible = true
+}
+
+
+
+const handleEdit = (row) => {
+  currentRow.value = row
+  relevanceDraft.value = null
+  isDraft.value = true
+  isEdit.value = true
+  show.value.editVisible = true
+}
+
+const handleAddDraft = () => {
+  currentRow.value = null
+  relevanceDraft.value = null
+  isDraft.value = true
+  isEdit.value = false
+  show.value.draftVisible = true
+}
+
+const handleAddUnDispatch = () => {
+  currentRow.value = null
+  relevanceDraft.value = null
+  isDraft.value = false
+  isEdit.value = false
+  show.value.unDispatchVisible = true
+}
+const setHandleOk = ()=>{}
 </script>
 <style>
 .fire-report{

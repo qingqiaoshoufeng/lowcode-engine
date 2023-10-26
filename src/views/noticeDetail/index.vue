@@ -9,7 +9,7 @@
         <div class="org">{{ form.publishOrganization }}</div>
         <div class="time">{{ dayjs(form.createDate).format('YYYY-MM-DD')}}</div>
       </div>
-      <div>{{ form.noticeBody }}</div>
+      <div v-html="form.noticeBody"></div>
       <div class="bottom">
         <van-button icon="plus" plain  type="primary">下载</van-button>
       </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { getNoticeDetail} from '@/apis/index.js'
+import { getNoticeDetail,updateMessage} from '@/apis/index.js'
 import {ref} from 'vue'
 import dayjs from 'dayjs';
 import {useRoute} from 'vue-router'
@@ -32,6 +32,7 @@ const getDetail = ()=>{
       form.value.noticeType = res.noticeType
       form.value.noticeStatus = res.noticeStatus
       form.value.noticeBody = res.noticeBody
+      updateMessage({id:route.query.id})
     }
     return res
   })
