@@ -49,13 +49,6 @@ const refreshCallback = () => {
     closeToast()
   })
 }
-
-const finishCallback = () => {
-  showLoadingToast()
-  proListRef.value.filter().then(res => {
-    closeToast()
-  })
-}
 </script>
 
 <template>
@@ -131,11 +124,12 @@ const finishCallback = () => {
 
     <!-- 出动填报 -->
     <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报">
-      <template #default="{ setHandleOk }">
+      <template #default="{ setHandleOk, closeModal }">
         <DispatchForm
           :show-draft="false"
           :is-edit="false"
           :current-row="currentRow"
+          :close-modal="closeModal"
           :set-handle-ok="setHandleOk"
           @finish-callback="refreshCallback"
         />
@@ -155,7 +149,7 @@ const finishCallback = () => {
         <ApplyReject
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
+          @finish-callback="refreshCallback"
         />
       </template>
     </ProModal>

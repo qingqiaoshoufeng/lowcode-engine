@@ -96,6 +96,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  closeModal: {
+    type: Function,
+  },
   setHandleOk: {
     type: Function,
   },
@@ -435,10 +438,6 @@ const initWatch = () => {
 }
 
 const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail, initWatch])
-
-onMounted(() => {
-  console.log('init', result)
-})
 
 const getSubmitParams = () => {
   const {
@@ -879,7 +878,30 @@ const handleTemporary = () => {
 
 }
 
-const onSubmit = () => {};
+const onSubmit = async () => {
+  if (props.isApproval) {
+    show.value.approvalVisible = true
+  }
+  else if (props.isAgain) {
+    await submit()
+    loading.value = againLoading.value
+    await againSubmit()
+    await finishFn()
+  }
+  else {
+    if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
+      notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+    }
+    else {
+      await submit()
+      await finishFn()
+    }
+  }
+};
+
+onMounted(() => {
+  console.log('init', result)
+})
 
 const onFailed = (errorInfo) => {
   console.log(errorInfo)

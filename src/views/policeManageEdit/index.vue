@@ -7,7 +7,7 @@ import ProModal from "@/component/ProModal/index";
 import { getFireWarningManage } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
-import { showToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
 
 const { show } = useModal();
@@ -33,6 +33,13 @@ const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 };
+
+const finishCallback = () => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+}
 </script>
 
 <template>
@@ -88,12 +95,15 @@ const handleItem = (row) => {
 
     <!-- 修改警情 -->
     <ProModal v-model:visible="show.editVisible" :showHeader="false" title="修改警情">
-      <PoliceForm
-        :current-row="currentRow"
-        :is-edit="true"
-        :set-handle-ok="setHandleOk"
-        @finish-callback="finishCallback"
-      />
+      <template #default="{ setHandleOk, closeModal }">
+        <PoliceForm
+          :current-row="currentRow"
+          :is-edit="true"
+          :close-modal="closeModal"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
+        />
+      </template>
     </ProModal>
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">

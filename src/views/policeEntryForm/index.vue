@@ -59,6 +59,9 @@ const props = defineProps({
   setHandleOk: {
     type: Function,
   },
+  closeModal: {
+    type: Function,
+  },
   showSteps: {
     type: Boolean,
     default: false,
@@ -370,7 +373,7 @@ const { loading, submit } = useSubmit((res) => {
     //   props.refreshCallback()
     // })
     showToast('派发成功！')
-    setTimeout(() => router.go(-1), 200)
+    setTimeout(() => props.closeModal(), 200)
   }
 }, {
   submitFn: () => {

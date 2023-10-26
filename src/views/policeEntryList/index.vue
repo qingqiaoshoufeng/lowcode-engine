@@ -24,11 +24,11 @@ const finishCallback = () => {
   <div class="police-entry-list">
     <!-- 新建警情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="新建警情">
-      <template #default="{ setHandleOk }">
+      <template #default="{ setHandleOk, closeModal }">
         <PoliceForm
           :current-row="{}"
+          :close-modal="closeModal"
           :set-handle-ok="setHandleOk"
-          :refresh-callback="finishCallback"
           @finish-callback="finishCallback"
         />
       </template>
