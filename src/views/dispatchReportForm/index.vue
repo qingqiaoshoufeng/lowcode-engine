@@ -22,6 +22,7 @@ import PersonInfo from './components/personInfo.vue';
 import TacticalMeasures from './components/tacticalMeasures.vue';
 import ScenePhoto from './components/scenePhoto.vue';
 import MeteorologicalInfo from './components/meteorologicalInfo.vue';
+import ProCard from "@/component/ProCard/index.vue";
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -467,45 +468,49 @@ const onFailed = (errorInfo) => {
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
         <template v-if="showMainGroup">
-          <!-- 基本信息 -->
-          <BasicInformation />
-          <!-- 主要战术措施 -->
-          <TacticalMeasures
-            v-if="
-              !showFalsePolice
-                && ((showTactical && !(showNotDealReason || showMidwayReturn))
-                  || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
-                  || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
-            "
-          />
-          <!-- 简要情况 -->
-          <BriefSituation />
-          <!-- 气象信息 -->
-          <MeteorologicalInfo v-if="!showDraft" />
-          <!-- 投入力量 -->
-          <InvestForce />
-          <!-- 政府指挥 -->
-          <GovernmentCommand
-            v-if="
-              !showFalsePolice
-                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
-                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
-                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
-                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
-            "
-          />
-          <!-- 联动单位 -->
-          <LinkageUnit
-            v-if="
-              !showFalsePolice
-                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
-                && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
-                && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
-                && !(showFireFighting && (showNotDealReason || showMidwayReturn))
-            "
-          />
-          <!-- 其他救援力量 -->
-          <OtherForce v-if="!showFalsePolice" />
+          <ProCard title="基本信息">
+            <!-- 基本信息 -->
+            <BasicInformation />
+            <!-- 主要战术措施 -->
+            <TacticalMeasures
+              v-if="
+                !showFalsePolice
+                  && ((showTactical && !(showNotDealReason || showMidwayReturn))
+                    || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
+                    || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
+              "
+            />
+            <!-- 简要情况 -->
+            <BriefSituation />
+            <!-- 气象信息 -->
+            <MeteorologicalInfo v-if="!showDraft" />
+          </ProCard>
+          <ProCard title="投入力量">
+            <!-- 投入力量 -->
+            <InvestForce />
+            <!-- 政府指挥 -->
+            <GovernmentCommand
+              v-if="
+                !showFalsePolice
+                  && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                  && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                  && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                  && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+              "
+            />
+            <!-- 联动单位 -->
+            <LinkageUnit
+              v-if="
+                !showFalsePolice
+                  && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+                  && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
+                  && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
+                  && !(showFireFighting && (showNotDealReason || showMidwayReturn))
+              "
+            />
+            <!-- 其他救援力量 -->
+            <OtherForce v-if="!showFalsePolice" />
+          </ProCard>
           <!-- 参战人员伤亡 -->
           <CasualtyWar />
           <!-- 战斗成果 -->
@@ -528,21 +533,25 @@ const onFailed = (errorInfo) => {
           <BattleConsume />
         </template>
         <template v-else-if="showReinforce">
-          <!-- 基本信息 -->
-          <BasicInformation />
-          <!-- 主要战术措施 -->
-          <TacticalMeasures
-            v-if="
-              !showFalsePolice
-                && ((showTactical && !(showNotDealReason || showMidwayReturn))
-                  || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
-                  || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
-            "
-          />
-          <!-- 简要情况 -->
-          <BriefSituation />
-          <!-- 投入力量 -->
-          <InvestForce />
+          <ProCard title="基本信息">
+            <!-- 基本信息 -->
+            <BasicInformation />
+            <!-- 主要战术措施 -->
+            <TacticalMeasures
+              v-if="
+                !showFalsePolice
+                  && ((showTactical && !(showNotDealReason || showMidwayReturn))
+                    || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
+                    || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
+              "
+            />
+            <!-- 简要情况 -->
+            <BriefSituation />
+          </ProCard>
+          <ProCard title="投入力量">
+            <!-- 投入力量 -->
+            <InvestForce />
+          </ProCard>
           <!-- 参战人员伤亡 -->
           <CasualtyWar />
           <!-- 战斗成果 -->

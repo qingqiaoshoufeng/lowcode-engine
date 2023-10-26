@@ -2,6 +2,7 @@
 import { inject, nextTick, onMounted, ref } from "vue";
 // import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -62,26 +63,28 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <van-cell-group>
-    <div class="scene-photo">
-      <van-cell title="出动现场照片：" required class="item-cell">
-        <van-uploader
-          v-model="form.scenePhoto.photos.value"
-          accept="image/png, image/jpeg, image/jpg"
-          multiple
-          preview-full-image
-          name="photos"
-          preview-image
-          :max-count="9"
-          :max-size="10 * 1000 * 1000000"
-          :readonly="isDetail"
-          :deletable="!isDetail"
-          :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
-          :after-read="OnAfterRead"
-        />
-      </van-cell>
-    </div>
-  </van-cell-group>
+  <ProCard title="现场照片">
+    <van-cell-group>
+      <div class="scene-photo">
+        <van-cell title="出动现场照片：" required class="item-cell">
+          <van-uploader
+            v-model="form.scenePhoto.photos.value"
+            accept="image/png, image/jpeg, image/jpg"
+            multiple
+            preview-full-image
+            name="photos"
+            preview-image
+            :max-count="9"
+            :max-size="10 * 1000 * 1000000"
+            :readonly="isDetail"
+            :deletable="!isDetail"
+            :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+            :after-read="OnAfterRead"
+          />
+        </van-cell>
+      </div>
+    </van-cell-group>
+  </ProCard>
 </template>
 
 <style lang="scss" scoped>

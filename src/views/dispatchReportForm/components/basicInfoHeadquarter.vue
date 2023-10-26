@@ -2,6 +2,7 @@
 import { inject, ref, watch } from "vue";
 import { formatDiff } from "@/utils/tools.js";
 import SelectDateTime from "@/component/SelectDateTime/index";
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -144,96 +145,98 @@ watch(() => form.value.deployEquipment, () => {
 </script>
 
 <template>
-  <van-cell-group>
-    <van-field
-      v-model="form.basicInfoHead.headquarterName.value"
-      v-preview-text="showPreview"
-      :readonly="showPreview"
-      type="number"
-      maxlength="100"
-      required
-      name="headquarterName"
-      label="全勤指挥部名称："
-      label-width="134px"
-      placeholder="请输入全勤指挥部名称"
-      :disabled="!showPreview"
-      :rules="form.basicInfoHead.headquarterName.rules"
-    />
-    <SelectDateTime
-      v-model:value="form.basicInfoHead.dispatchDate.value"
-      :show-preview="showPreview"
-      :readonly="showPreview"
-      is-link
-      required
-      name="dispatchDate"
-      title="请选择出动时间"
-      label="出动时间："
-      placeholder="请选择出动时间"
-      :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
-    />
-    <SelectDateTime
-      v-model:value="form.basicInfoHead.attendanceDate.value"
-      :show-preview="showPreview"
-      :readonly="showPreview"
-      is-link
-      required
-      name="attendanceDate"
-      title="请选择到场时间"
-      label="到场时间："
-      placeholder="请选择到场时间"
-      :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
-    />
-    <SelectDateTime
-      v-model:value="form.basicInfoHead.evacuateDate.value"
-      :show-preview="showPreview"
-      :readonly="showPreview"
-      is-link
-      required
-      name="evacuateDate"
-      title="请选择撤离时间"
-      label="撤离时间："
-      placeholder="请选择撤离时间"
-      :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
-    />
-    <van-field
-      v-model="form.basicInfoHead.personNum.value"
-      v-preview-text="showPreview"
-      :readonly="showPreview"
-      type="number"
-      maxlength="20"
-      required
-      name="personNum"
-      label="人员数量(人)："
-      label-width="122px"
-      placeholder="请输入人员数量"
-      :disabled="!showPreview"
-      :rules="form.basicInfoHead.personNum.rules"
-    />
-    <van-field
-      v-model="form.basicInfoHead.truckNum.value"
-      v-preview-text="showPreview"
-      :readonly="showPreview"
-      type="number"
-      maxlength="20"
-      required
-      name="truckNum"
-      label="出动车辆(辆)："
-      label-width="122px"
-      placeholder="请输入出动车辆"
-      :disabled="!showPreview"
-      :rules="form.basicInfoHead.truckNum.rules"
-    />
-    <van-field
-      v-model="diffTime"
-      v-preview-text="showPreview"
-      :readonly="showPreview"
-      maxlength="20"
-      required
-      name="commandTime"
-      label="指挥时长："
-      placeholder="请输入指挥时长"
-      :disabled="!showPreview"
-      :rules="form.basicInfoHead.commandTime.rules"
-    />
-  </van-cell-group>
+  <ProCard title="基本信息">
+    <van-cell-group>
+      <van-field
+        v-model="form.basicInfoHead.headquarterName.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="100"
+        required
+        name="headquarterName"
+        label="全勤指挥部名称："
+        label-width="134px"
+        placeholder="请输入全勤指挥部名称"
+        :disabled="!showPreview"
+        :rules="form.basicInfoHead.headquarterName.rules"
+      />
+      <SelectDateTime
+        v-model:value="form.basicInfoHead.dispatchDate.value"
+        :show-preview="showPreview"
+        :readonly="showPreview"
+        is-link
+        required
+        name="dispatchDate"
+        title="请选择出动时间"
+        label="出动时间："
+        placeholder="请选择出动时间"
+        :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
+      />
+      <SelectDateTime
+        v-model:value="form.basicInfoHead.attendanceDate.value"
+        :show-preview="showPreview"
+        :readonly="showPreview"
+        is-link
+        required
+        name="attendanceDate"
+        title="请选择到场时间"
+        label="到场时间："
+        placeholder="请选择到场时间"
+        :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
+      />
+      <SelectDateTime
+        v-model:value="form.basicInfoHead.evacuateDate.value"
+        :show-preview="showPreview"
+        :readonly="showPreview"
+        is-link
+        required
+        name="evacuateDate"
+        title="请选择撤离时间"
+        label="撤离时间："
+        placeholder="请选择撤离时间"
+        :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
+      />
+      <van-field
+        v-model="form.basicInfoHead.personNum.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="20"
+        required
+        name="personNum"
+        label="人员数量(人)："
+        label-width="122px"
+        placeholder="请输入人员数量"
+        :disabled="!showPreview"
+        :rules="form.basicInfoHead.personNum.rules"
+      />
+      <van-field
+        v-model="form.basicInfoHead.truckNum.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="20"
+        required
+        name="truckNum"
+        label="出动车辆(辆)："
+        label-width="122px"
+        placeholder="请输入出动车辆"
+        :disabled="!showPreview"
+        :rules="form.basicInfoHead.truckNum.rules"
+      />
+      <van-field
+        v-model="diffTime"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        maxlength="20"
+        required
+        name="commandTime"
+        label="指挥时长："
+        placeholder="请输入指挥时长"
+        :disabled="!showPreview"
+        :rules="form.basicInfoHead.commandTime.rules"
+      />
+    </van-cell-group>
+  </ProCard>
 </template>
