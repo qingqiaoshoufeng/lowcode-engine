@@ -1,7 +1,6 @@
 <script setup>
 import { ref, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
-import MeteorologicalInfo from "./meteorologicalInfo.vue";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
 
 const form = inject("form");
@@ -165,7 +164,6 @@ const onDealSituation = (value, option) => {
       placeholder="请输入疏通耗时"
       :rules="form.basicInformation.blockingTime.rules"
     />
-    <MeteorologicalInfo />
   </van-cell-group>
 </template>
 

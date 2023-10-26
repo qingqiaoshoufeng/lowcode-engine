@@ -125,7 +125,7 @@ const validateCommander = (rule, value, callback) => {
         title="请选择消防车辆信息"
         @change="onDispatchTruck(), OnCarNum()"
       />
-      <van-cell title="是否有车辆中途返回：" v-preview-text="showPreview" class="field-radio-label">
+      <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio-label">
         <template #default>
           <van-radio-group
             v-model="form.investForce.isReturnTruck.value"
@@ -259,5 +259,11 @@ const validateCommander = (rule, value, callback) => {
 .invest-message {
   color: red;
   padding: 12px 0 0 20px;
+}
+.field-radio-label {
+  :deep(.van-cell__title) {
+    flex: unset;
+    margin-right: 10px;
+  }
 }
 </style>

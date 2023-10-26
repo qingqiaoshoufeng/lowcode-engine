@@ -47,7 +47,7 @@ const onHaveVolunteer = (e) => {
 
 <template>
   <van-cell-group>
-    <van-cell title="是否有志愿队力量：" v-preview-text="showPreview" class="field-radio-label">
+    <van-cell title="是否有志愿队力量：" required v-preview-text="showPreview" class="field-radio-label">
       <template #default>
         <van-radio-group
           v-model="form.investForce.haveVolunteer.value"

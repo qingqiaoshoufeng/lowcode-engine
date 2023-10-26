@@ -266,7 +266,6 @@ const initDict = () => {
     options.value.orgLevel = res.CD_LINK_LEVEL
     options.value.departmentName = res.CD_LINK_DEP
     options.value.dealSituation = res.CD_JYQK_CZ
-    console.log(JSON.stringify(options.value.dealSituation))
     options.value.returnLateReason = res.CD_BACK
     options.value.wind = res.TQ_TYPE_FL
     options.value.windDirection = res.TQ_TYPE_FX

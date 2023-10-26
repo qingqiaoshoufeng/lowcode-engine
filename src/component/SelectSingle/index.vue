@@ -52,11 +52,11 @@ const selectValue = ref("");
 
 const selectText = ref("");
 
-watch(() => props.value, (val) => {
+watch(() => [props.value, props.options], (val) => {
   nextTick(() => {
     if (props.value) {
       selectValue.value = props.value;
-      selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
+      selectText.value = props.options?.filter((item) => item[props.fieldNames.value] === props.value)?.[0]?.[props.fieldNames.label]
     } else {
       selectValue.value = ''
       selectText.value = ''

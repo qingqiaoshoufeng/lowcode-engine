@@ -288,6 +288,7 @@ const validateDealEndDate = (value, rule) => {
       name="midwayReturnDate"
       title="请选择中途返回时间"
       label="中途返回时间："
+      label-width="118px"
       placeholder="请选择中途返回时间"
       :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInformation.midwayReturnDate.rules]"
     />
