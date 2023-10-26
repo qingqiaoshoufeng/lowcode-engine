@@ -2,16 +2,22 @@
   <div class="statistics_info" :class="color">
       <div class="min-title">{{ title }}</div>
       <div class="tab" v-if="withTab">
-        <div v-for="item in tabList" :key="item.label" class="tab_item">{{ item.label }}</div>
+        <div 
+          v-for="item in tabList" 
+          :class="{isActive:(item.value === currentTab)}" 
+          :key="item.label" 
+          class="tab_item"
+          @click="tabChange(item.value)"
+        >{{ item.label }}</div>
       </div>
       <div class="card_list">
-          <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in cardList" :key="item.label">
+          <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
                 <div class="title">{{ item.title }}</div>
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}</div>
-                <div class="percent">{{ item.percent }}</div>
+                <div class="percent">{{ item.percent.includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
@@ -19,7 +25,7 @@
 </template>
   
 <script setup>
-import { cardList} from '../config.js'
+import useTab from '../hooks/useTab.js'
 const props = defineProps({
   info:{
     type:Object,
@@ -37,19 +43,34 @@ const props = defineProps({
   },
   title:{
     type:String
+  },
+  list:[],
+  handleChange:{
+    type:Function,
   }
 })
 
-const tabList = [
-  {
-    label:'警情'
-  },{
-    label:'出动'
-  },
-  {
-    label:'火灾'
-  }
-]
+const {
+  currentTab,
+  tabList,tabChange} = useTab({
+  list:[
+    {
+      label:'警情',
+      value:1,
+    },
+    {
+      label:'出动',
+      value:2,
+    },
+    {
+      label:'火灾',
+      value:3,
+    },
+  ],
+  defaultTab:1,
+  handleChange:props.handleChange,
+  paramsKey:'annual'
+})
 </script>
 <script>
 export default {
@@ -59,6 +80,8 @@ export default {
   
 <style scoped lang="scss">
 .statistics_info{
+  padding: 0 16px;
+  background: #FFFFFF;
   .tab{
       width: 220px;
       height: 30px;
@@ -68,10 +91,11 @@ export default {
       align-items: center;
       justify-content: space-between;
       padding: 0 5px;
+      margin-top: 5px;
       .tab_item{
         width: 68px;
         height: 22px;
-        background: #FFFFFD;
+        background: #F6F6F6;
         border-radius: 19px;
         align-items: center;
         display: flex;
@@ -84,6 +108,7 @@ export default {
     .card_item{
       width: 164px;
       height: 76px;
+      // background: #F6F6F6;
       background: #F3F7FD;
       border-radius: 4px;
       padding: 11px 10px 0 12px;
@@ -93,7 +118,11 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
         color: #545A66;
+        margin-bottom: 8px;
       }
       .buttom{
         display: flex;
@@ -101,10 +130,15 @@ export default {
         justify-content: space-between;
       }
       .number{
-        font-size: 21px;
+        font-size: 18px;
         font-family: D-DINExp-Bold, D-DINExp;
         font-weight: bold;
         color: #0B2E59;
+        max-width: 150px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
       }
       .percent{
         font-size: 14px;
@@ -113,7 +147,12 @@ export default {
         color: #FF7F2C;
       }
     }
+   
   }
+  .isActive{
+        color: #1833A9 !important;
+        background-color: #FFFFFD !important;
+      }
 }
 .ml9{
   margin-left: 9px;

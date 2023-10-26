@@ -1,13 +1,14 @@
 import autoRegisteredRoutes from './routeRegister.js'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory ,createWebHashHistory } from 'vue-router'
 
 const indexRouter = {
   path: '/',
   component: () => import('@/views/old/index'),
-  redirect: '/index',
+  redirect: '/home',
   children: []
 }
-indexRouter.children = autoRegisteredRoutes(1)
+indexRouter.children = autoRegisteredRoutes()
+
 const routes = [
   indexRouter,
   {
@@ -29,8 +30,23 @@ const routes = [
 ]
 
 
-
-export default createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+const router = createRouter({
+  history: createWebHistory(),
   routes
 })
+router.beforeEach((to,from,next)=>{
+  if(localStorage.token){
+    next()
+  }else{
+    if(to.path === '/login'){
+      next();
+    }else {
+      next({
+        path:'/login',
+      });
+    }
+  }
+})
+
+
+export default router

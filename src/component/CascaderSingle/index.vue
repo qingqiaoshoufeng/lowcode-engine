@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
   value: {
@@ -16,15 +17,19 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "自然灾害类型",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择自然灾害类型",
+    default: "",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   fieldNames: {
     type: Object,
@@ -45,10 +50,22 @@ const selectValue = ref("");
 const selectText = ref("");
 
 watch(() => props.value, (val) => {
-  if (props.value) {
-    selectValue.value = props.value;
-    selectText.value = props.text;
-  }
+  nextTick(() => {
+    if (props.value) {
+      selectValue.value = props.value;
+      if (props.text) {
+        selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
+      } else if (props.value && !props.text) {
+        selectText.value = props.value?.map(item => {
+          const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: props.options }, item, 'boDictId')
+          return temp?.dictName
+        })?.join('/')
+      }
+    } else {
+      selectValue.value =''
+      selectText.value = ''
+    }
+  })
 }, { immediate: true })
 
 const onFinish = ({ selectedOptions }) => {
@@ -69,13 +86,13 @@ defineOptions({
 <template>
   <van-field
     v-model="selectText"
+    v-preview-text="showPreview"
     is-link
-    readonly
     v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="selectVisible = true"
   />
   <van-popup v-model:show="selectVisible" position="bottom">

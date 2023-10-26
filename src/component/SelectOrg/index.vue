@@ -1,12 +1,12 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
 import { getDispatchGroup, searchDispatchGroup } from "@/apis/index.js";
-import { Toast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
-    type: String,
-    default: "",
+    type: Array,
+    default: () => [],
   },
   title: {
     type: String,
@@ -31,15 +31,19 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "选择单位",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择单位",
+    default: "",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   fieldNames: {
     type: Object,
@@ -78,16 +82,22 @@ const selectItem = ref([]);
 
 const selectText = ref([]);
 
-const selectTextShow = computed(() => {
-  return selectText.value.join(",");
+const selectTextValue = computed(() => {
+  return selectText.value?.join(",");
 })
 
 watch(() => props.value, (newVal, oldVal) => {
-  if (props.value) {
-    selectItem.value = props.value;
-    selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
-    selectText.value = props.value.map((item) => item[props.fieldNames.label]);
-  }
+  nextTick(() => {
+    if (props.value) {
+      selectItem.value = props.value;
+      selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
+      selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+    } else {
+      selectItem.value = [];
+      selectValue.value = [];
+      selectText.value = [];
+    }
+  })
 }, { immediate: true })
 
 const renderChecked = (item) => {
@@ -127,6 +137,14 @@ const showCheck = (item) => {
   if (props.selectLeaf && item.isLeaf) {
     return true;
   }
+  if (!props.headersDisabled && item.isheadquarters === 1) {
+    return true;
+  } else if (!props.headersDisabled && item.isheadquarters !== 1) {
+    return false
+  }
+  if (!props.single) {
+    return true
+  }
   return result;
 };
 
@@ -156,6 +174,24 @@ const handleOk = () => {
 };
 
 const handleCheck = (item) => {
+  if (props.single && item.checked) {
+    // 已经选中的要重置
+    treeData.value.forEach(arr => {
+      arr.forEach(i => {
+        if (i.organizationid !== item.organizationid && i.checked) {
+          i.checked = false
+        }
+      })
+    })
+    selectValue.value = [item.organizationid];
+    selectText.value = [item.name];
+    selectItem.value = [item];
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
+    selectVisible.value = false;
+    return
+  }
   if (item.checked) {
     selectValue.value.push(item.organizationid);
     selectText.value.push(item.name);
@@ -169,14 +205,14 @@ const handleCheck = (item) => {
 
 const handleEnter = (item) => {
   if (item.hasChildren) {
-    Toast.loading();
+    showLoadingToast();
     getDispatchGroup({
       ...props.params,
       parentOrganizationId: item.organizationid,
       disabledKey: props.disabledKey,
       disabledValue: props.disabledValue,
     }).then((res) => {
-      Toast.clear();
+      closeToast();
       const currentIndex = tabs.value.findIndex(
         (node) => node.orgLevel === item.orgLevel
       );
@@ -204,13 +240,14 @@ defineOptions({
 
 <template>
   <van-field
-    v-model="selectTextShow"
+    v-model="selectTextValue"
     is-link
-    readonly
+    v-preview-text="showPreview"
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="handleShow"
   />
   <van-popup v-model:show="selectVisible" position="bottom">

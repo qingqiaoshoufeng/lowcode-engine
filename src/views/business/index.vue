@@ -1,18 +1,30 @@
 <template>
-    <div class="title">标题</div>
+    <div class="title">业务</div>
     <div class="statistics">
-        <DisplayEntry />
-        <DisplayEntry />
-        <DisplayEntry />
-        <DisplayEntry />
-        <DisplayEntry />
+        <template v-for="(item,index) in menuListMap" :key="index">
+            <DisplayEntry v-if="item && item.length" :list="item" :title="titleList[index]" />
+        </template>
     </div>
     <Tabbar :currentTab="currentab" />
   </template>
     
 <script setup>
-import {ref} from 'vue'
+import {ref,computed} from 'vue'
+import store from '@/store/index.js'
+console.log(store);
 const currentab = ref(3)
+const titleList = ['','信息采集','审核/审批','统计监督']
+const menuListMap = computed(()=>{
+  const menuList = store.state?.menuInfo.menuInfo?.appMenuList || []
+  const result = menuList.reduce((current,item,index)=>{
+    const {menuType} =item 
+    const list = current[menuType] || []
+    list.push(item)
+    current[menuType] = list
+    return current
+  },[])
+  return result
+})
   
 </script>
     
@@ -21,7 +33,9 @@ const currentab = ref(3)
         position: fixed !important;
         top: 0;
         height: 44px;
+        box-sizing: content-box;
         line-height: 44px;
+        border-top: 44px solid #0C207F;
         background-color: #0C207F;
         color: #fff;
         width: 100%;

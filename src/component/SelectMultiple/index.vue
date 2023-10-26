@@ -16,19 +16,23 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "行政区域",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择行政区域",
+    default: "",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
   },
   fieldNames: {
     type: Object,
     default: () => ({ value: "boDictId", label: "dictName" }),
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   options: {
     type: Array,
@@ -85,12 +89,13 @@ defineOptions({
 <template>
   <van-field
     v-model="selectText"
+    v-preview-text="showPreview"
     is-link
-    readonly
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="selectVisible = true"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
@@ -111,27 +116,25 @@ defineOptions({
       </div>
       <div class="multiple-wrapper">
         <van-checkbox-group v-model="selectValue">
-          <van-cell-group inset>
-            <van-cell
-              v-for="(item, index) in options"
-              :title="item[fieldNames.label]"
-              :key="item[fieldNames.value]"
-              clickable
-              @click="toggle(index)"
-            >
-              <template #right-icon>
-                <van-checkbox
-                  :name="item[fieldNames.value]"
-                  :ref="(el) => (checkboxRefs[index] = el)"
-                  @click.stop
-                >
-                  <template #icon="props">
-                    <van-icon name="success" class="selected-icon" v-if="props.checked"  />
-                  </template>
-                </van-checkbox>
-              </template>
-            </van-cell>
-          </van-cell-group>
+          <van-cell
+            v-for="(item, index) in options"
+            :title="item[fieldNames.label]"
+            :key="item[fieldNames.value]"
+            clickable
+            @click="toggle(index)"
+          >
+            <template #right-icon>
+              <van-checkbox
+                :name="item[fieldNames.value]"
+                :ref="(el) => (checkboxRefs[index] = el)"
+                @click.stop
+              >
+                <template #icon="props">
+                  <van-icon name="success" class="selected-icon" v-if="props.checked"  />
+                </template>
+              </van-checkbox>
+            </template>
+          </van-cell>
         </van-checkbox-group>
       </div>
     </div>
@@ -157,7 +160,7 @@ defineOptions({
     }
   }
   .multiple-wrapper {
-    max-height: 50vh;
+    height: 50vh;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

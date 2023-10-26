@@ -1,16 +1,15 @@
+import {isType} from '@/utils/types.js'
 const mockData = [
   [
-    {value:320,name:'<10分钟'}, 
-    {value:320,name:'10-20分钟'}, 
-    {value:320,name:'30-60分钟'}, 
-    {value:320,name:'60-90分钟'},
-    {value:320,name:'90-120分钟'}, 
-    {value:320,name:'>=120分钟'}
+    {value:0,name:'<10分钟'}, 
+    {value:0,name:'10-20分钟'}, 
+    {value:0,name:'30-60分钟'}, 
+    {value:0,name:'60-90分钟'},
+    {value:0,name:'90-120分钟'}, 
+    {value:0,name:'>=120分钟'}
   ],
 ]
 const legendData = ['<10分钟', '10-20分钟', '30-60分钟', '60-90分钟', '90-120分钟','>=120分钟']
-
-
 const options = {
   tooltip: {},
   grid:{
@@ -19,19 +18,25 @@ const options = {
   },
   legend: {
     orient: 'vertical',
-    right: 10,
-    top: 20,
+    right: 20,
+    top: 50,
     bottom: 20,
-    data: legendData
+    data: legendData,
+    icon:'circle',
+    itemWidth:10,
+    itemHeight:10,
   },
   series: [
     {
       name: '姓名',
       type: 'pie',
-      center:['23%','40%'],
-      radius: ['34%', '50%'],
+      center:['33%','50%'],
+      radius: ['44%', '60%'],
       labelLine:{
         show:false,
+      },
+      label:{
+        show:false
       },
       data: mockData,
       emphasis: {
@@ -49,8 +54,14 @@ const options = {
 export default {
   name:'FightingTime',
   getOptions(val = mockData){
+    if(!isType(val,'Array')) return mockData
     Array.from(Array(1).keys()).map(index=>{
-      options.series[index].data = val[index]
+      options.series[index].data = val[index].map((itm,idx)=>{
+        return {
+          name:legendData[idx],
+          value:itm
+        }
+      })
     })
     return options
   }

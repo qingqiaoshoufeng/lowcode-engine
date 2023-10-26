@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, provide } from "vue";
 import { useList } from "@/utils/curd.js";
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps({
   tabs: {
@@ -35,7 +36,15 @@ const props = defineProps({
     type: Function,
     default: () => {},
   },
+  searchFn: {
+    type: Function,
+  },
+  resetFn: {
+    type: Function,
+  },
 });
+
+const emit = defineEmits(['filter', 'reset'])
 
 const tabsActive = ref(1);
 
@@ -55,15 +64,21 @@ const {
   immediate: false,
 });
 
+provide("query", query);
+
 const finished = ref(false);
 
 if (props.defaultFilterValue) {
-  query.value = props.defaultFilterValue
+  query.value = cloneDeep(props.defaultFilterValue)
 }
 
 onMounted(() => {
   if (props.showLoad) {
-    loadList();
+    loadList().then(res => {
+      if (list.value.length === total.value) {
+        finished.value = true
+      }
+    });
   }
 });
 
@@ -85,6 +100,18 @@ const onLoad = async () => {
   }
 };
 
+const resetForm = () => {
+  page.value = 1
+  limit.value = 10
+  query.value = cloneDeep(props.defaultFilterValue)
+  if (props.resetFn) {
+    props.resetFn()
+    return
+  }
+  loadList()
+  emit('reset')
+}
+
 defineOptions({
   name: "ProList",
 });
@@ -96,12 +123,13 @@ defineExpose({
   list,
   query,
   total,
+  resetForm,
 })
 </script>
 
 <template>
   <div class="pro-list">
-    <div class="list-tabs">
+    <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab
           v-for="item in tabs"
@@ -112,20 +140,27 @@ defineExpose({
       </van-tabs>
     </div>
     <div class="list-search">
-      <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" />
+      <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" :reset-form="resetForm" />
     </div>
     <div class="list-wrapper">
-      <van-list
-        :loading="loading"
-        :finished="finished"
-        :immediate-check="false"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
-          <slot name="list" :record="item" :index="index" />
+      <template v-if="total === 0 && finished">
+        <div class="no-data">
+          <van-empty image-size="100" description="暂无数据" />
         </div>
-      </van-list>
+      </template>
+      <template v-else>
+        <van-list
+          :loading="loading"
+          :finished="finished"
+          :immediate-check="false"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
+            <slot name="list" :record="item" :index="index" />
+          </div>
+        </van-list>
+      </template>
     </div>
   </div>
 </template>

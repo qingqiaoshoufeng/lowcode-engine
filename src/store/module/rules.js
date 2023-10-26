@@ -36,7 +36,7 @@ const mutations = {
   }
 }
 const actions = {
-  init( {state,commit}) {
+  init:async({commit})=> {
     return getAllRules().then((res) => {
       if (res?.length > 0) {
         commit('setRuleConfig',res)

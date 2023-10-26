@@ -21,7 +21,7 @@ export default createStore({
   plugins: [
     createPersistedstate({
       key: 'saveInfo',
-      paths: ['dict', 'rules','userInfo']
+      paths: ['dict', 'rules','userInfo','menuInfo']
     })
   ]
 })

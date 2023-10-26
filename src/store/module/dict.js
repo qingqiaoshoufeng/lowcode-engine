@@ -44,7 +44,7 @@ const mutations = {
 }
 
 const actions = {
-  init({ state, commit }) {
+  init:async({commit})=>{
     return Promise.all([
       getFireWarningType().then((res) => {
         if (res && res.items) {

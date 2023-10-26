@@ -10,10 +10,10 @@ const mutations = {
   }
 }
 const actions = {
-  init({commit}) {
+  init:async({commit})=> {
     return getMenuInfo().then((res) => {
-      if (res?.data) {
-        commit('setUserInfo', res.data)
+      if (res) {
+        commit('setMenuInfo', res)
       }
     })
   },

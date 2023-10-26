@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, nextTick } from "vue";
 
 const props = defineProps({
   value: {
-    type: String,
+    type: [String, Number],
     default: "",
   },
   title: {
@@ -16,13 +16,13 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "行政区域",
+    default: "",
   },
   placeholder: {
     type: String,
-    default: "请选择行政区域",
+    default: "",
   },
-  rule: {
+  rules: {
     type: Array,
     default: () => [],
   },
@@ -33,6 +33,10 @@ const props = defineProps({
   options: {
     type: Array,
     default: () => [],
+  },
+  showPreview: {
+    type: Boolean,
+    default: false,
   },
   checkShowFn: {
     type: Function,
@@ -48,11 +52,16 @@ const selectValue = ref("");
 
 const selectText = ref("");
 
-watch(() => props.value, (val) => {
-  if (props.value) {
-    selectValue.value = props.value;
-    selectText.value = props.options?.filter((item) => item[props.fieldNames.value] == props.value)?.[0]?.[props.fieldNames.label]
-  }
+watch(() => [props.value, props.options], (val) => {
+  nextTick(() => {
+    if (props.value) {
+      selectValue.value = props.value;
+      selectText.value = props.options?.filter((item) => item[props.fieldNames.value] === props.value)?.[0]?.[props.fieldNames.label]
+    } else {
+      selectValue.value = ''
+      selectText.value = ''
+    }
+  })
 }, { immediate: true })
 
 const handleSelect = (item) => {
@@ -89,12 +98,13 @@ defineOptions({
 <template>
   <van-field
     v-model="selectText"
+    v-preview-text="showPreview"
     is-link
-    readonly
+    v-bind="$attrs"
     :required="required"
     :label="label"
     :placeholder="placeholder"
-    :rule="rule"
+    :rules="rules"
     @click="handleShow"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
@@ -107,27 +117,25 @@ defineOptions({
       </div>
       <div class="single-wrapper">
         <van-radio-group v-model="selectValue">
-          <van-cell-group inset>
-            <van-cell
-              v-for="item in options"
-              :title="item[fieldNames.label]"
-              :key="item[fieldNames.value]"
-              clickable
-              @click="handleSelect(item)"
-            >
-              <template #right-icon>
-                <van-radio :name="item[fieldNames.value]">
-                  <template #icon="props">
-                    <van-icon
-                      name="success"
-                      class="selected-icon"
-                      v-if="props.checked"
-                    />
-                  </template>
-                </van-radio>
-              </template>
-            </van-cell>
-          </van-cell-group>
+          <van-cell
+            v-for="item in options"
+            :title="item[fieldNames.label]"
+            :key="item[fieldNames.value]"
+            clickable
+            @click="handleSelect(item)"
+          >
+            <template #right-icon>
+              <van-radio :name="item[fieldNames.value]">
+                <template #icon="props">
+                  <van-icon
+                    name="success"
+                    class="selected-icon"
+                    v-if="props.checked"
+                  />
+                </template>
+              </van-radio>
+            </template>
+          </van-cell>
         </van-radio-group>
       </div>
     </div>
@@ -154,10 +162,11 @@ defineOptions({
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      white-space: nowrap;
     }
   }
   .single-wrapper {
-    max-height: 50vh;
+    height: 50vh;
     overflow-y: auto;
     .selected-icon {
       background-color: white;
