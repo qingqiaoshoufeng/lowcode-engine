@@ -440,6 +440,437 @@ onMounted(() => {
   console.log('init', result)
 })
 
+const getSubmitParams = () => {
+  const {
+    draftInfo,
+    basicInformation,
+    basicInfoHead,
+    commandProcess,
+    commandMode,
+    personInfo,
+    deployEquipment,
+    investForce,
+    tacticalMeasures,
+    casualtyWar,
+    battleResult,
+    battleConsume,
+    disposalProcess,
+  } = form.value
+  let params = {}
+  // 出动填报普通队站
+  if (showMainGroup.value || showReinforce.value) {
+    params = {
+      fireDispatch: {
+        // 出动填报实体
+        boFireDispatchId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+        boFireWarningId: props.currentRow?.boFireWarningId,
+        fireDraftDispatchID: props.relevanceDraft?.boFireDispatchId,
+        dealSituation: basicInformation.dealSituation.value,
+        notDealReason: basicInformation.notDealReason.value,
+        dispatchDate: basicInformation.dispatchDate.value?.valueOf(),
+        midwayReturnDate: basicInformation.midwayReturnDate.value?.valueOf(),
+        attendanceDate: basicInformation.attendanceDate.value?.valueOf(),
+        carryoutDate: basicInformation.carryoutDate.value?.valueOf(),
+        waterflowDate: basicInformation.waterflowDate.value?.valueOf(),
+        controllingDate: basicInformation.controllingDate.value?.valueOf(),
+        washDate: basicInformation.washDate.value?.valueOf(),
+        extinctDate: basicInformation.extinctDate.value?.valueOf(),
+        endDate: basicInformation.endDate.value?.valueOf(),
+        evacuateDate: basicInformation.evacuateDate.value?.valueOf(),
+        returnDate: basicInformation.returnDate.value?.valueOf(),
+        dealEndDate: basicInformation.dealEndDate.value?.valueOf(),
+        returnLateReason: basicInformation.returnLateReason.value,
+        draftName: draftInfo.draftName.value,
+        warningType: draftInfo.warningType.value?.join(','),
+        partakeType: draftInfo.partakeType.value,
+        temperature: basicInformation.temperature.value,
+        weather: basicInformation.weather.value,
+        wind: basicInformation.wind.value,
+        windDirection: basicInformation.windDirection.value,
+      },
+      fireDispatchItem: {
+        // 出动填报明细实体
+        fireSituation: basicInformation.fireSituation.value,
+        industryDepartment: basicInformation.industryDepartment.value,
+        fireDistance: basicInformation.fireDistance.value,
+        trappedPerson: basicInformation.trappedPerson.value,
+        groupLeader: investForce.groupLeader.value?.join(','),
+        commander: investForce.commander.value?.join(','),
+        firemen: investForce.firemen.value?.join(','),
+        isResponseTruck: investForce.isResponseTruck.value,
+        isReturnTruck: investForce.isReturnTruck.value,
+        fireBoatNum: investForce.fireBoatNum.value,
+        fireAirplaneNum: investForce.fireAirplaneNum.value,
+        rescueDogNum: investForce.rescueDogNum.value,
+        uavNum: investForce.uavNum.value,
+        isBlocking: basicInformation.isBlocking.value,
+        blockingTime: basicInformation.blockingTime.value,
+        // isPublicFireHydrant: basicInformation.isPublicFireHydrant.value,
+        // fireHydrantSituation: basicInformation.fireHydrantSituation.value,
+        // fixedFireEquipment: basicInformation.fixedFireEquipment.value,
+        // notUseFireHydrantReason: basicInformation.notUseFireHydrantReason.value,
+        isInside: basicInformation.isInside.value,
+        fireTechnic: basicInformation.fireTechnic.value,
+        rescueMeasures: basicInformation.rescueMeasures.value,
+        deliverWater: basicInformation.deliverWater.value,
+        drainWater: basicInformation.drainWater.value,
+        killArea: basicInformation.killArea.value,
+        rescueNum: battleResult.rescueNum.value,
+        surviveNum: battleResult.surviveNum.value,
+        deathNum: battleResult.deathNum.value,
+        evacuateNum: battleResult.evacuateNum.value,
+        transferNum: battleResult.transferNum.value,
+        emergencyNum: battleResult.emergencyNum.value,
+        protectNum: battleResult.protectNum.value,
+        fireProcess: disposalProcess.fireProcess.value,
+        boFireDispatchItemId: uuidv4(), // 编辑?
+      },
+      fireDispatchTruckList: [],
+      fireDispatchInjuryList: [],
+      fireDispatchOtherList: [],
+      fireDispatchZfList: investForce.isCommand.value === '1' ? investForce.fireDispatchZfList : [], // 政府人员
+      fireDispatchLinkList: investForce.haveLinkageUnit.value === '1' ? investForce.fireDispatchLinkList : [], // 联动力量
+      fireDispatchLoss: {
+        // 战斗损耗实体
+        boFireDispatchId: props.currentRow?.boFireDispatchId,
+        wastageTruck: battleConsume.wastageTruck.value ? battleConsume.wastageTruck.value?.join(',') : '',
+        wastageTruckExplain: battleConsume.wastageTruckExplain.value,
+        fuel: battleConsume.fuel.value,
+        waterPump: battleConsume.waterPump.value,
+        hoseReel: battleConsume.hoseReel.value,
+        fireGun: battleConsume.fireGun.value,
+        airForm: battleConsume.airForm.value,
+        formTank: battleConsume.formTank.value,
+        ladder: battleConsume.ladder.value,
+        waterBand: battleConsume.waterBand.value,
+        fireHydrantHandle: battleConsume.fireHydrantHandle.value,
+        waterGun: battleConsume.waterGun.value,
+        waterMainfold: battleConsume.waterMainfold.value,
+        entryTool: battleConsume.entryTool.value,
+        fireExtinguisher: battleConsume.fireExtinguisher.value,
+        firePump: battleConsume.firePump.value,
+        fireHat: battleConsume.fireHat.value,
+        protectiveSuit: battleConsume.protectiveSuit.value,
+        fireGlove: battleConsume.fireGlove.value,
+        lapBelt: battleConsume.lapBelt.value,
+        protectiveBoots: battleConsume.protectiveBoots.value,
+        fireRebreather: battleConsume.fireRebreather.value,
+        fireLight: battleConsume.fireLight.value,
+        fireRescuer: battleConsume.fireRescuer.value,
+        positionLamp: battleConsume.positionLamp.value,
+        safetyRope: battleConsume.safetyRope.value,
+        fireAxe: battleConsume.fireAxe.value,
+        interphone: battleConsume.interphone.value,
+        transferImage: battleConsume.transferImage.value,
+        uav: battleConsume.uav.value,
+        foamLiquid: battleConsume.foamLiquid.value,
+        dryPowder: battleConsume.dryPowder.value,
+        carbonDioxide: battleConsume.carbonDioxide.value,
+        haloalkane: battleConsume.haloalkane.value,
+        totalFlow: battleConsume.totalFlow.value,
+        firefightingWater: battleConsume.firefightingWater.value,
+        coolingWater: battleConsume.coolingWater.value,
+        totalWater: battleConsume.totalWater.value,
+        waterInterrupt: battleConsume.waterInterrupt.value,
+        waterDamage: battleConsume.waterDamage.value,
+        fireDispatchLossOtherList: [],
+      },
+      fireDispatchRetrunTruckList: [],
+      isNew: isNew.value,
+      isDraft: props.showDraft ? 1 : 2,
+    }
+    if (form.value.investForce.isResponseTruck.value === '1') {
+      const list = fixCarParams(investForce.dispatchTruckList.value)
+      params.fireDispatchTruckList.push(...list)
+    }
+    if (form.value.investForce.isReturnTruck.value === '1') {
+      const list = fixCarParams(investForce.midwayCar.value)
+      params.fireDispatchRetrunTruckList.push(...list)
+    }
+    if (investForce.haveVolunteer.value === '1') {
+      const list = investForce.volunteerList.map((item) => {
+        return {
+          ...item,
+          otherType: '1',
+          orgName: item.orgName1,
+        }
+      })
+      params.fireDispatchOtherList.push(...list)
+    }
+    if (investForce.haveProfessional.value === '1') {
+      const list = investForce.otherList.map((item) => {
+        return {
+          ...item,
+          otherType: '2',
+        }
+      })
+      params.fireDispatchOtherList.push(...list)
+    }
+    if (casualtyWar.isInjured.value === '1') {
+      const list = casualtyWar.injuredList.map((item) => {
+        return {
+          ...item,
+          injuryType: '1',
+          rescueRank: item.rescueRank?.join(','),
+          nativePlace: item.nativePlace?.join(','),
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+        }
+      })
+      params.fireDispatchInjuryList.push(...list)
+    }
+    if (casualtyWar.isDead.value === '1') {
+      const list = casualtyWar.deadList.map((item) => {
+        return {
+          ...item,
+          injuryType: '2',
+          rescueRank: item.rescueRank?.join(','),
+          nativePlace: item.nativePlace?.join(','),
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+          deathDate: item.deathDate?.valueOf(),
+        }
+      })
+      params.fireDispatchInjuryList.push(...list)
+    }
+    if (battleConsume.lossOtherEquipments?.length > 0) {
+      const list = battleConsume.lossOtherEquipments.map((item) => {
+        return {
+          ...item,
+          otherType: '1',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+    if (battleConsume.lossOtherPersonal?.length > 0) {
+      const list = battleConsume.lossOtherPersonal.map((item) => {
+        return {
+          ...item,
+          otherType: '2',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+    if (battleConsume.lossOtherAgent?.length > 0) {
+      const list = battleConsume.lossOtherAgent.map((item) => {
+        return {
+          ...item,
+          otherType: '3',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+  }
+  else if (showHeadquarter.value) {
+    params = {
+      fireDispatch: {
+        boFireDispatchId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+        boFireWarningId: props.currentRow?.boFireWarningId,
+        fireDraftDispatchID: props.relevanceDraft?.boFireDispatchId,
+        dispatchDate: basicInfoHead?.dispatchDate.value?.valueOf(),
+        attendanceDate: basicInfoHead?.attendanceDate.value?.valueOf(),
+        evacuateDate: basicInfoHead?.evacuateDate.value?.valueOf(),
+        draftName: draftInfo.draftName.value,
+        warningType: draftInfo.warningType.value?.join(','),
+        partakeType: draftInfo.partakeType.value,
+      },
+      fireDispatchHead: {
+        commandTime: basicInfoHead.commandTime.value,
+        personNum: basicInfoHead.personNum.value,
+        truckNum: basicInfoHead.truckNum.value,
+        commandMethod: commandMode.commandMethod.value,
+        rescueMethod: commandProcess.rescueMethod.value,
+        actionPlan: commandProcess.actionPlan.value,
+        commandProcess: commandProcess.commandProcess.value,
+        satellitePhone: deployEquipment.satellitePhone.value,
+        satellitePortableStation: deployEquipment.satellitePortableStation.value,
+        singleSoldier: deployEquipment.singleSoldier.value,
+        uav: deployEquipment.uav.value,
+        clothControl: deployEquipment.clothControl.value,
+        meshStation: deployEquipment.meshStation.value,
+        microwaveGraph: deployEquipment.microwaveGraph.value,
+        beidouTerminal: deployEquipment.beidouTerminal.value,
+      },
+      fireDispatchHeadPerson: {
+        headLeader: personInfo.headLeader.value?.join(','),
+        commandCenter: personInfo.commandCenter.value?.join(','),
+        chiefCommander: personInfo.chiefCommander.value?.join(','),
+        deputyCommander: personInfo.deputyCommander.value?.join(','),
+        commander: personInfo.commander.value?.join(','),
+        commandAssistant: personInfo.commandAssistant.value?.join(','),
+        messageAssistant: personInfo.messageAssistant.value?.join(','),
+        messenger: personInfo.messenger.value?.join(','),
+        headSupport: personInfo.headSupport.value?.join(','),
+        headPolitic: personInfo.headPolitic.value?.join(','),
+        newsPropagation: personInfo.newsPropagation.value?.join(','),
+        technicianGroup: personInfo.technicianGroup.value?.join(','),
+        technician: personInfo.technician?.map(item => item.name).join(','),
+        otherMember: personInfo?.otherMember.value?.join(','),
+        headerPersonList: [],
+      },
+      fireDispatchTruck: {
+        headTruckList: fixCarParams(deployEquipment.headTruckList?.value),
+        boardingTruckList: fixCarParams(deployEquipment.boardingTruckList?.value),
+        kitchenTruckList: fixCarParams(deployEquipment.kitchenTruckList?.value),
+        toiletTruckList: fixCarParams(deployEquipment.toiletTruckList?.value),
+        refrigerateTruckZqList: fixCarParams(deployEquipment?.refrigerateTruckZqList?.value),
+        airfeedTruckList: fixCarParams(deployEquipment?.airfeedTruckList.value),
+        oilTruckList: fixCarParams(deployEquipment?.oilTruckList.value),
+        steamThawingTruckList: fixCarParams(deployEquipment?.steamThawingTruckList.value),
+        foamTransferTruckList: fixCarParams(deployEquipment?.foamTransferTruckList.value),
+        wreckTruckList: fixCarParams(deployEquipment?.wreckTruckList.value),
+        modularTruckList: fixCarParams(deployEquipment?.modularTruckList.value),
+        mobileCommunicateTruckList: fixCarParams(deployEquipment?.mobileCommunicateTruckList.value),
+        communicateEquipTruckList: fixCarParams(deployEquipment?.communicateEquipTruckList.value),
+        quietCommunicateTruckList: fixCarParams(deployEquipment?.quietCommunicateTruckList.value),
+      },
+      fireDispatchInjuryList: [], // 人员伤亡
+      fireDispatchLoss: {
+        // 战斗损耗实体
+        boFireDispatchId: props.currentRow?.boFireDispatchId,
+        wastageTruck: battleConsume.wastageTruck.value ? battleConsume.wastageTruck.value?.join(',') : '',
+        wastageTruckExplain: battleConsume.wastageTruckExplain.value,
+        fuel: battleConsume.fuel.value,
+        waterPump: battleConsume.waterPump.value,
+        hoseReel: battleConsume.hoseReel.value,
+        fireGun: battleConsume.fireGun.value,
+        airForm: battleConsume.airForm.value,
+        formTank: battleConsume.formTank.value,
+        ladder: battleConsume.ladder.value,
+        waterBand: battleConsume.waterBand.value,
+        fireHydrantHandle: battleConsume.fireHydrantHandle.value,
+        waterGun: battleConsume.waterGun.value,
+        waterMainfold: battleConsume.waterMainfold.value,
+        entryTool: battleConsume.entryTool.value,
+        fireExtinguisher: battleConsume.fireExtinguisher.value,
+        firePump: battleConsume.firePump.value,
+        fireHat: battleConsume.fireHat.value,
+        protectiveSuit: battleConsume.protectiveSuit.value,
+        fireGlove: battleConsume.fireGlove.value,
+        lapBelt: battleConsume.lapBelt.value,
+        protectiveBoots: battleConsume.protectiveBoots.value,
+        fireRebreather: battleConsume.fireRebreather.value,
+        fireLight: battleConsume.fireLight.value,
+        fireRescuer: battleConsume.fireRescuer.value,
+        positionLamp: battleConsume.positionLamp.value,
+        safetyRope: battleConsume.safetyRope.value,
+        fireAxe: battleConsume.fireAxe.value,
+        interphone: battleConsume.interphone.value,
+        transferImage: battleConsume.transferImage.value,
+        uav: battleConsume.uav.value,
+        foamLiquid: battleConsume.foamLiquid.value,
+        dryPowder: battleConsume.dryPowder.value,
+        carbonDioxide: battleConsume.carbonDioxide.value,
+        haloalkane: battleConsume.haloalkane.value,
+        totalFlow: battleConsume.totalFlow.value,
+        firefightingWater: battleConsume.firefightingWater.value,
+        coolingWater: battleConsume.coolingWater.value,
+        totalWater: battleConsume.totalWater.value,
+        waterInterrupt: battleConsume.waterInterrupt.value,
+        waterDamage: battleConsume.waterDamage.value,
+        fireDispatchLossOtherList: [],
+      },
+      isNew: isNew.value,
+      isDraft: props.showDraft ? 1 : 2,
+    }
+    if (casualtyWar.isInjured.value === '1') {
+      const list = casualtyWar.injuredList.map((item) => {
+        return {
+          ...item,
+          injuryType: '1',
+          nativePlace: item.nativePlace?.join(','),
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+        }
+      })
+      params.fireDispatchInjuryList.push(...list)
+    }
+    if (casualtyWar.isDead.value === '1') {
+      const list = casualtyWar.deadList.map((item) => {
+        return {
+          ...item,
+          injuryType: '2',
+          nativePlace: item.nativePlace?.join(','),
+          deathDate: item.deathDate?.valueOf(),
+          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+        }
+      })
+      params.fireDispatchInjuryList.push(...list)
+    }
+    if (personInfo.commandLeader?.length > 0) {
+      params.fireDispatchHeadPerson.headerPersonList.push(...personInfo.commandLeader)
+    }
+    if (battleConsume.lossOtherEquipments?.length > 0) {
+      const list = battleConsume.lossOtherEquipments.map((item) => {
+        return {
+          ...item,
+          otherType: '1',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+    if (battleConsume.lossOtherPersonal?.length > 0) {
+      const list = battleConsume.lossOtherPersonal.map((item) => {
+        return {
+          ...item,
+          otherType: '2',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+    if (battleConsume.lossOtherAgent?.length > 0) {
+      const list = battleConsume.lossOtherAgent.map((item) => {
+        return {
+          ...item,
+          otherType: '3',
+        }
+      })
+      params.fireDispatchLoss.fireDispatchLossOtherList.push(...list)
+    }
+  }
+  if (props.isApproval) {
+    params.isAudit = '1'
+  }
+  return params
+}
+
+const { loading, submit } = useSubmit(
+  (res) => {
+    if (!props.isApproval && !props.isAgain && !props.showDraft) {
+      showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'dispatch-manage' })
+      emits('finishCallback', res, props.showDraft)
+    }
+    else if (!props.isApproval && !props.isAgain && props.showDraft) {
+      message.success('保存成功')
+      emits('finishCallback', res, props.showDraft)
+    }
+  },
+  {
+    submitFn: () => {
+      // 出动填报普通队站
+      if (showMainGroup.value || showReinforce.value) {
+        const params = getSubmitParams()
+        return saveDispatchReport(params)
+      }
+      else if (showHeadquarter.value) {
+        const params = getSubmitParams()
+        return saveDispatchHeadquarter(params)
+      }
+      return Promise.resolve()
+    },
+  },
+)
+
+const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
+  (res) => {
+    message.success('暂存成功')
+    emits('finishCallback')
+  },
+  {
+    submitFn: () => {
+      const params = getSubmitParams()
+      return saveTemporaryDispatchReport(params)
+    },
+  },
+)
+
 const handleSubmit = () => {
   formRef.value.submit()
 }
