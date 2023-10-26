@@ -67,88 +67,80 @@ watch(() => form.value.basicInfoHead, () => {
 }, { deep: true, immediate: true });
 
 // 计算总人数
-// watch(
-//   () => form.value.personInfo,
-//   () => {
-//     const {
-//       headLeader,
-//       commandCenter,
-//       chiefCommander,
-//       deputyCommander,
-//       commander,
-//       commandAssistant,
-//       messageAssistant,
-//       messenger,
-//       headSupport,
-//       headPolitic,
-//       newsPropagation,
-//       technicianGroup,
-//       technician,
-//       commandLeader,
-//     } = form.value.personInfo;
-//     let totalNum = 0;
-//     headLeader.value && (totalNum += headLeader.value?.length);
-//     commandCenter.value && (totalNum += commandCenter.value?.length);
-//     chiefCommander.value && (totalNum += chiefCommander.value?.length);
-//     deputyCommander.value && (totalNum += deputyCommander.value?.length);
-//     commander.value && (totalNum += commander.value?.length);
-//     commandAssistant.value && (totalNum += commandAssistant.value?.length);
-//     messageAssistant.value && (totalNum += messageAssistant.value?.length);
-//     messenger.value && (totalNum += messenger.value?.length);
-//     headSupport.value && (totalNum += headSupport.value?.length);
-//     headPolitic.value && (totalNum += headPolitic.value?.length);
-//     newsPropagation.value && (totalNum += newsPropagation.value?.length);
-//     technicianGroup.value && (totalNum += technicianGroup.value?.length);
-//     technician && (totalNum += technician?.length);
-//     commandLeader && (totalNum += commandLeader?.length);
-//     form.value.basicInfoHead.personNum.value = totalNum > 0 ? totalNum : "";
-//   },
-//   { deep: true, immediate: true }
-// );
+watch(() => form.value.personInfo, () => {
+  const {
+    headLeader,
+    commandCenter,
+    chiefCommander,
+    deputyCommander,
+    commander,
+    commandAssistant,
+    messageAssistant,
+    messenger,
+    headSupport,
+    headPolitic,
+    newsPropagation,
+    technicianGroup,
+    technician,
+    commandLeader,
+  } = form.value.personInfo;
+  let totalNum = 0;
+  headLeader.value && (totalNum += headLeader.value?.length);
+  commandCenter.value && (totalNum += commandCenter.value?.length);
+  chiefCommander.value && (totalNum += chiefCommander.value?.length);
+  deputyCommander.value && (totalNum += deputyCommander.value?.length);
+  commander.value && (totalNum += commander.value?.length);
+  commandAssistant.value && (totalNum += commandAssistant.value?.length);
+  messageAssistant.value && (totalNum += messageAssistant.value?.length);
+  messenger.value && (totalNum += messenger.value?.length);
+  headSupport.value && (totalNum += headSupport.value?.length);
+  headPolitic.value && (totalNum += headPolitic.value?.length);
+  newsPropagation.value && (totalNum += newsPropagation.value?.length);
+  technicianGroup.value && (totalNum += technicianGroup.value?.length);
+  technician && (totalNum += technician?.length);
+  commandLeader && (totalNum += commandLeader?.length);
+  form.value.basicInfoHead.personNum.value = totalNum > 0 ? totalNum : "";
+}, { deep: true, immediate: true });
 
 // 计算出动车辆
-// watch(
-//   () => form.value.deployEquipment,
-//   () => {
-//     const {
-//       headTruckList,
-//       boardingTruckList,
-//       kitchenTruckList,
-//       toiletTruckList,
-//       refrigerateTruckZqList,
-//       airfeedTruckList,
-//       oilTruckList,
-//       steamThawingTruckList,
-//       foamTransferTruckList,
-//       wreckTruckList,
-//       mobileCommunicateTruckList,
-//       communicateEquipTruckList,
-//       quietCommunicateTruckList,
-//     } = form.value.deployEquipment;
-//     let totalNum = 0;
-//     headTruckList.value && (totalNum += headTruckList.value?.length);
-//     boardingTruckList.value && (totalNum += boardingTruckList.value?.length);
-//     kitchenTruckList.value && (totalNum += kitchenTruckList.value?.length);
-//     toiletTruckList.value && (totalNum += toiletTruckList.value?.length);
-//     refrigerateTruckZqList.value &&
-//       (totalNum += refrigerateTruckZqList.value?.length);
-//     airfeedTruckList.value && (totalNum += airfeedTruckList.value?.length);
-//     oilTruckList.value && (totalNum += oilTruckList.value?.length);
-//     steamThawingTruckList.value &&
-//       (totalNum += steamThawingTruckList.value?.length);
-//     foamTransferTruckList.value &&
-//       (totalNum += foamTransferTruckList.value?.length);
-//     wreckTruckList.value && (totalNum += wreckTruckList.value?.length);
-//     mobileCommunicateTruckList.value &&
-//       (totalNum += mobileCommunicateTruckList.value?.length);
-//     communicateEquipTruckList.value &&
-//       (totalNum += communicateEquipTruckList.value?.length);
-//     quietCommunicateTruckList.value &&
-//       (totalNum += quietCommunicateTruckList.value?.length);
-//     form.value.basicInfoHead.truckNum.value = totalNum > 0 ? totalNum : "";
-//   },
-//   { deep: true, immediate: true }
-// );
+watch(() => form.value.deployEquipment, () => {
+  const {
+    headTruckList,
+    boardingTruckList,
+    kitchenTruckList,
+    toiletTruckList,
+    refrigerateTruckZqList,
+    airfeedTruckList,
+    oilTruckList,
+    steamThawingTruckList,
+    foamTransferTruckList,
+    wreckTruckList,
+    mobileCommunicateTruckList,
+    communicateEquipTruckList,
+    quietCommunicateTruckList,
+  } = form.value.deployEquipment;
+  let totalNum = 0;
+  headTruckList.value && (totalNum += headTruckList.value?.length);
+  boardingTruckList.value && (totalNum += boardingTruckList.value?.length);
+  kitchenTruckList.value && (totalNum += kitchenTruckList.value?.length);
+  toiletTruckList.value && (totalNum += toiletTruckList.value?.length);
+  refrigerateTruckZqList.value &&
+      (totalNum += refrigerateTruckZqList.value?.length);
+  airfeedTruckList.value && (totalNum += airfeedTruckList.value?.length);
+  oilTruckList.value && (totalNum += oilTruckList.value?.length);
+  steamThawingTruckList.value &&
+      (totalNum += steamThawingTruckList.value?.length);
+  foamTransferTruckList.value &&
+      (totalNum += foamTransferTruckList.value?.length);
+  wreckTruckList.value && (totalNum += wreckTruckList.value?.length);
+  mobileCommunicateTruckList.value &&
+      (totalNum += mobileCommunicateTruckList.value?.length);
+  communicateEquipTruckList.value &&
+      (totalNum += communicateEquipTruckList.value?.length);
+  quietCommunicateTruckList.value &&
+      (totalNum += quietCommunicateTruckList.value?.length);
+  form.value.basicInfoHead.truckNum.value = totalNum > 0 ? totalNum : "";
+}, { deep: true, immediate: true });
 </script>
 
 <template>
@@ -164,12 +156,12 @@ watch(() => form.value.basicInfoHead, () => {
       label="全勤指挥部名称："
       label-width="134px"
       placeholder="请输入全勤指挥部名称"
-      :disabled="true"
+      :disabled="!showPreview"
       :rules="form.basicInfoHead.headquarterName.rules"
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.dispatchDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -181,7 +173,7 @@ watch(() => form.value.basicInfoHead, () => {
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.attendanceDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -193,7 +185,7 @@ watch(() => form.value.basicInfoHead, () => {
     />
     <SelectDateTime
       v-model:value="form.basicInfoHead.evacuateDate.value"
-      v-preview-text="showPreview"
+      :show-preview="showPreview"
       :readonly="showPreview"
       is-link
       required
@@ -214,7 +206,7 @@ watch(() => form.value.basicInfoHead, () => {
       label="人员数量(人)："
       label-width="122px"
       placeholder="请输入人员数量"
-      :disabled="true"
+      :disabled="!showPreview"
       :rules="form.basicInfoHead.personNum.rules"
     />
     <van-field
@@ -228,7 +220,7 @@ watch(() => form.value.basicInfoHead, () => {
       label="出动车辆(辆)："
       label-width="122px"
       placeholder="请输入出动车辆"
-      :disabled="true"
+      :disabled="!showPreview"
       :rules="form.basicInfoHead.truckNum.rules"
     />
     <van-field
@@ -240,7 +232,7 @@ watch(() => form.value.basicInfoHead, () => {
       name="commandTime"
       label="指挥时长："
       placeholder="请输入指挥时长"
-      :disabled="true"
+      :disabled="!showPreview"
       :rules="form.basicInfoHead.commandTime.rules"
     />
   </van-cell-group>

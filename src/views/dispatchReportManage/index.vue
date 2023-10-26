@@ -5,6 +5,7 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
+import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import {
   checkDispatchChangeState,
   generateColorByState,
@@ -209,11 +210,13 @@ const handleChange = (row) => {
   show.value.recheckVisible = true
 };
 
-const handleItem = (item) => {
-  router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: item.boFireDispatchId, showPreview: true },
-  });
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
+  // router.push({
+  //   name: "dispatchReportForm",
+  //   query: { boFireDispatchId: row.boFireDispatchId, showPreview: true },
+  // });
 };
 
 const onTimeChange = (value) => {
@@ -336,6 +339,13 @@ onMounted(() => {
       </template>
     </ProList>
 
+    <!-- 出动详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动详情">
+      <DispatchForm
+        :current-row="currentRow"
+        :is-detail="true"
+      />
+    </ProModal>
     <!-- 申请更正 -->
     <ProModal v-model:visible="show.recheckVisible" title="申请更正">
       <template #default="{ setHandleOk }">

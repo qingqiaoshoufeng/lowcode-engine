@@ -15,15 +15,12 @@ const currentRow = inject("currentRow");
 
 const localFireDispatchId = inject("localFireDispatchId");
 
-const relevanceDraft = inject("relevanceDraft");
-
 // const { onRemove } = useUpload();
 
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
     getAttachmentFile({
-      businessObjId:
-        relevanceDraft?.boFireDispatchId || currentRow?.boFireDispatchId,
+      businessObjId: currentRow?.boFireDispatchId,
       businessType: "file",
     }).then((res) => {
       form.value.otherAttach.attach.value = res.data.map((item) => {
@@ -62,10 +59,13 @@ const OnAfterRead = (file) => {
           :max-count="9"
           :max-size="10 * 1000 * 1000000"
           :readonly="isDetail"
-          :deletable="form.otherAttach.attach?.value?.length < 9 && !isDetail"
+          :deletable="!isDetail"
+          :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
           :after-read="OnAfterRead"
         >
-          <van-button icon="plus" size="small" type="primary">上传文件</van-button>
+          <van-button v-if="form.scenePhoto.photos?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
+            上传文件
+          </van-button>
         </van-uploader>
       </van-cell>
     </div>

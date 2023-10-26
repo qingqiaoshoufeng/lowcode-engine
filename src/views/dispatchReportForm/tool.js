@@ -135,10 +135,10 @@ export const checkDispatchNum = (form, prompt = true) => {
 
 // 时速在 20 ~ 120，显示到场时速异常原因
 export const checkReturnSpeed = (form) => {
-  // const { attendanceDate, dispatchDate, fireDistance } = form.basicInformation
-  // if (attendanceDate.value && dispatchDate.value && (attendanceDate.value?.unix() > dispatchDate.value?.unix()) && fireDistance.value) {
-  //   const time = dayjs(attendanceDate.value).diff(dayjs(dispatchDate.value), 'second')
-  //   const speed = fireDistance.value / time * 60 * 60
-  //   form.basicInformation.presentSpeed.value = Number(speed.toFixed(2))
-  // }
+  const { attendanceDate, dispatchDate, fireDistance } = form.basicInformation
+  if (attendanceDate.value && dispatchDate.value && (attendanceDate.value?.unix() > dispatchDate.value?.unix()) && fireDistance.value) {
+    const time = dayjs(attendanceDate.value).diff(dayjs(dispatchDate.value), 'second')
+    const speed = fireDistance.value / time * 60 * 60
+    form.basicInformation.presentSpeed.value = Number(speed.toFixed(2))
+  }
 }

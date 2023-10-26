@@ -1,7 +1,6 @@
 <script setup>
 import { ref, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
-import MeteorologicalInfo from "./meteorologicalInfo.vue";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
 
 const form = inject("form");
@@ -118,14 +117,12 @@ const onDealSituation = (value, option) => {
       maxlength="10"
       required
       name="trappedPerson"
-      label="现场被困人数："
-      label-width="118px"
+      label="现场被困人数(人)："
+      label-width="144px"
       placeholder="请输入现场被困人数"
       :rules="form.basicInformation.trappedPerson.rules"
       @blur="checkTrappedPerson(detail, form)"
-    >
-      <template #extra>人</template>
-    </van-field>
+    />
     <SelectSingle
       v-if="showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.industryDepartment.value"
@@ -141,11 +138,10 @@ const onDealSituation = (value, option) => {
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
     />
-    <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" required class="field-radio">
+    <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" v-preview-text="showPreview" required class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.basicInformation.isBlocking.value"
-          v-preview-text="showPreview"
           icon-size="16px"
           @change="onIsBlocking"
           direction="horizontal"
@@ -164,13 +160,10 @@ const onDealSituation = (value, option) => {
       maxlength="10"
       required
       name="blockingTime"
-      label="疏通耗时："
+      label="疏通耗时(分钟)："
       placeholder="请输入疏通耗时"
       :rules="form.basicInformation.blockingTime.rules"
-    >
-      <template #extra>分钟</template>
-    </van-field>
-    <MeteorologicalInfo />
+    />
   </van-cell-group>
 </template>
 

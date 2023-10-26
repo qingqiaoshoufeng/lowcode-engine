@@ -1,6 +1,5 @@
 <script setup>
 import { inject, nextTick, onMounted, ref } from "vue";
-import { gutter } from "@/utils/constants.js";
 // import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 
@@ -44,11 +43,9 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: "done",
+          isImage: true,
           url: `/acws/rest/attachments/${item.attachmentId}`,
         };
-      });
-      nextTick(() => {
-        initViewer();
       });
     });
   }
@@ -74,10 +71,12 @@ const OnAfterRead = (file) => {
           multiple
           preview-full-image
           name="photos"
+          preview-image
           :max-count="9"
           :max-size="10 * 1000 * 1000000"
           :readonly="isDetail"
-          :deletable="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+          :deletable="!isDetail"
+          :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
           :after-read="OnAfterRead"
         />
       </van-cell>

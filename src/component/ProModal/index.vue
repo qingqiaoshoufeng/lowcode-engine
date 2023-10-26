@@ -10,6 +10,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showHeader: {
+    type: Boolean,
+    default: true,
+  }
 });
 
 const emit = defineEmits(['update:visible'])
@@ -18,12 +22,9 @@ const loading = ref(false);
 
 const showModal = ref(false);
 
-watch(
-  () => props.visible,
-  (newValue) => {
-    showModal.value = newValue;
-  }
-);
+watch(() => props.visible,(newValue) => {
+  showModal.value = newValue;
+});
 
 let handleOkFn = () => {
   showModal.value = false
@@ -53,12 +54,12 @@ defineOptions({
 
 <template>
   <div class="pro-modal" v-if="showModal">
-    <div class="footer">
+    <div class="header" v-if="showHeader">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
       <div class="modal-title">{{ title }}</div>
       <van-button type="primary" size="small" @click="handleOk">确定</van-button>
     </div>
-    <slot name="default" :set-handle-ok="setHandleOk" />
+    <slot name="default" :set-handle-ok="setHandleOk" :handle-ok="handleOk" :close-modal="closeModal" />
   </div>
 </template>
 
@@ -71,7 +72,7 @@ defineOptions({
   top: 0;
   z-index: 99;
   background-color: white;
-  .footer {
+  .header {
     width: 100%;
     height: 44px;
     padding: 0 10px;
