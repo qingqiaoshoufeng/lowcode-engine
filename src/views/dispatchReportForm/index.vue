@@ -60,6 +60,10 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  isInput: {
+    type: Boolean,
+    default: false,
+  },
   isDetail: {
     type: Boolean,
     default: false,
@@ -113,7 +117,7 @@ const { options } = useOptions();
 
 const { show } = useModal();
 
-const { form, initFormWhenChange, initFormByDetail } = useFormConfig();
+const { form, initFormWhenChange, initFormByDetail, checkFieldWarning, generateRemarkField } = useFormConfig();
 
 const store = useStore();
 
@@ -122,6 +126,10 @@ const isNew = ref(true);
 const formRef = ref(null);
 
 const showPreview = ref(null);
+
+const fieldExist = ref({})
+
+const userInfo = ref({})
 
 const detachment = ref('');
 
@@ -255,6 +263,8 @@ provide('showDraft', props.showDraft)
 
 provide('isEdit', props.isEdit)
 
+provide('fieldExist', fieldExist)
+
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
@@ -301,6 +311,11 @@ const initDict = () => {
     options.value.position = res.JOB_TYPE
     options.value.rescueRank = res.CD_RANK
     options.value.gender = gender
+
+    // 获取用户单位
+    if (store.getters?.["userInfo/userInfo"]) {
+      userInfo.value = store.getters?.["userInfo/userInfo"]
+    }
     resolve()
   })
 }
@@ -386,6 +401,14 @@ const initDetail = () => {
         }
       }).finally(() => resolve())
     } else {
+      form.value.draftInfo.draftName.value = ""
+      if (currentRow?.warningType) {
+        form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
+        if (form.value.draftInfo.warningType.value) {
+          form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
+        }
+      }
+      form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
       resolve()
     }
   })
@@ -430,6 +453,12 @@ const initWatch = () => {
     ], () => {
       initFormWhenChange()
     }, { deep: true })
+    // 只有当填报状态下才自动生成处置过程
+    if (props.closeModal && props.isInput) {
+      watch(() => [form.value.basicInformation, form.value.basicInfoHead, form.value.investForce, form.value.casualtyWar, form.value.battleResult, form.value.battleConsume], () => {
+        generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
+      }, { deep: true })
+    }
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dispatchDate.value)
     })
@@ -886,7 +915,7 @@ const onSubmit = async () => {
     await submit()
     loading.value = againLoading.value
     await againSubmit()
-    await finishFn()
+    props.closeModal()
   }
   else {
     if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
@@ -894,7 +923,7 @@ const onSubmit = async () => {
     }
     else {
       await submit()
-      await finishFn()
+      props.closeModal()
     }
   }
 };

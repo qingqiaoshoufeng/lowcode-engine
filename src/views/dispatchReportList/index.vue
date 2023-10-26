@@ -128,6 +128,7 @@ const refreshCallback = () => {
         <DispatchForm
           :show-draft="false"
           :is-edit="false"
+          :isInput="true"
           :current-row="currentRow"
           :close-modal="closeModal"
           :set-handle-ok="setHandleOk"
