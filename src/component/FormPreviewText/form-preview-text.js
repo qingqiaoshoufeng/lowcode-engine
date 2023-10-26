@@ -34,7 +34,7 @@ const handlePreview = (el, binding, vnode) => {
   } else if (textValue && radioGroup && cell) {
     // 多次渲染要先移除
     if (cell.querySelectorAll('.preview-text-wrapper')?.length > 0) {
-      cell.querySelectorAll('.preview-text-wrapper')?.forEach(e => wrapper.removeChild(e))
+      cell.querySelectorAll('.preview-text-wrapper')?.forEach(e => cell.removeChild(e))
     }
     renderText = document.createTextNode(`${textValue}`)
     renderDom.appendChild(renderText)

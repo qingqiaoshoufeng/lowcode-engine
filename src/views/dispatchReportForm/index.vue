@@ -3,7 +3,7 @@ import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
-import { showToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant";
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
 import BattleConsume from "./components/battleConsume.vue";
@@ -207,6 +207,8 @@ provide("form", form)
 
 provide("options", options)
 
+provide('currentRow', props.currentRow)
+
 provide('dispatchTruckListOptions', dispatchTruckListOptions)
 
 provide('deptMembersOptions', deptMembersOptions)
@@ -240,6 +242,7 @@ const { detail, loadDetail } = useDetail({
 })
 
 const initPoliceDetail = () => {
+  showLoadingToast()
   return new Promise((resolve) => {
     loadDetail().then(res => {
       resolve()
@@ -405,6 +408,7 @@ const initPerson = (dispatchGroup) => {
 }
 
 const initWatch = () => {
+  closeToast()
   return new Promise((resolve) => {
     watch(() => [
       form.value.draftInfo.warningType,
@@ -460,22 +464,22 @@ const onFailed = (errorInfo) => {
           <!-- 基本信息 -->
           <BasicInformation />
           <!-- 主要战术措施 -->
-          <!-- <TacticalMeasures
+          <TacticalMeasures
             v-if="
               !showFalsePolice
                 && ((showTactical && !(showNotDealReason || showMidwayReturn))
                   || (showRescueRescue && !(showNotDealReason || showMidwayReturn))
                   || (showFireFighting && !(showNotDealReason || showMidwayReturn)))
             "
-          /> -->
+          />
           <!-- 简要情况 -->
           <BriefSituation />
           <!-- 气象信息 -->
-          <!-- <MeteorologicalInfo v-if="!showDraft" /> -->
+          <MeteorologicalInfo v-if="!showDraft" />
           <!-- 投入力量 -->
-          <!-- <InvestForce /> -->
+          <InvestForce />
           <!-- 政府指挥 -->
-          <!-- <GovernmentCommand
+          <GovernmentCommand
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -483,9 +487,9 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          /> -->
+          />
           <!-- 联动单位 -->
-          <!-- <LinkageUnit
+          <LinkageUnit
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -493,13 +497,13 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          /> -->
+          />
           <!-- 其他救援力量 -->
-          <!-- <OtherForce v-if="!showFalsePolice" /> -->
+          <OtherForce v-if="!showFalsePolice" />
           <!-- 参战人员伤亡 -->
-          <!-- <CasualtyWar /> -->
+          <CasualtyWar />
           <!-- 战斗成果 -->
-          <!-- <BattleResult
+          <BattleResult
             v-if="
               !showFalsePolice
                 && !(showSecurityService && (showNotDealReason || showMidwayReturn))
@@ -507,13 +511,13 @@ const onFailed = (errorInfo) => {
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
             "
-          /> -->
+          />
           <!-- 处置经过 -->
-          <!-- <DisposalProcess /> -->
+          <DisposalProcess />
           <!-- 现场照片 -->
-          <!-- <ScenePhoto v-if="!showMidwayReturn" /> -->
+          <ScenePhoto v-if="!showMidwayReturn" />
           <!-- 其他附件 -->
-          <!-- <OtherAttach /> -->
+          <OtherAttach />
           <!-- 战斗消耗 -->
           <BattleConsume />
         </template>

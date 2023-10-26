@@ -139,11 +139,10 @@ const onDealSituation = (value, option) => {
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
     />
-    <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" required class="field-radio">
+    <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" v-preview-text="showPreview" required class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.basicInformation.isBlocking.value"
-          v-preview-text="showPreview"
           icon-size="16px"
           @change="onIsBlocking"
           direction="horizontal"

@@ -90,8 +90,8 @@ const validateSurvive = (rule, value, callback) => {
     <van-field
       v-model="form.battleResult.deathNum.value"
       v-preview-text="showPreview"
-      :readonly="true"
-      :disabled="true"
+      :readonly="showPreview"
+      :disabled="!showPreview"
       type="number"
       maxlength="10"
       name="deathNum"

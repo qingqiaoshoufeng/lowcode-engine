@@ -659,11 +659,10 @@ watch(
           placeholder="请选择防护装备情况"
           :rules="form.casualtyWar.protectDevice.rules"
         />
-        <van-cell title="是否当场死亡：" required class="field-radio-label">
+        <van-cell title="是否当场死亡：" v-preview-text="showPreview" required class="field-radio-label">
           <template #default>
             <van-radio-group
               v-model="form.casualtyWar.isInstantDeath.value"
-              v-preview-text="showPreview"
               icon-size="16px"
               direction="horizontal"
             >
