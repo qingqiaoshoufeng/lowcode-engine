@@ -56,3 +56,9 @@ export function downloadAttachmentFile({ attachmentId }) {
 // }
 
 
+//  我的统计--我的消息--已读
+export function updateMessage(params) {
+  return axios.get('/acws/rest/biz/firestatistics/usermessage/update', { params })
+}
+
+

@@ -18,6 +18,17 @@
                     placeholder="校验函数返回错误提示"
                     :rules="[{ validator: validatorMessage }]" 
                 />
+                <div class="validator">
+                  <van-field 
+                    class="verification"
+                    v-model="loginForm.password" 
+                    :left-icon="verification"
+                    name="validatorMessage" 
+                    placeholder="校验函数返回错误提示"
+                    :rules="[{ validator: validatorMessage }]" 
+                  />
+                  <img :src="imgUrl" alt="" @click="getCode"/>
+                </div>
                 <van-button 
                     class="submit" 
                     round 
@@ -32,13 +43,15 @@
 </template>
   
 <script setup>
-import { reactive, getCurrentInstance, ref } from "vue";
+import { reactive, getCurrentInstance, ref ,onMounted} from "vue";
+import verification from '@/assets/images/verification.png'
 import useRequest from '@/hooks/useRequest.js'
-import { loginIn } from '@/apis/index.js'
+import { loginIn,getVerificationCode} from '@/apis/index.js'
 import router from '@/router/index.js'
 import { encrypt } from '@/utils/tools.js'
 import { useStore } from "vuex";
 const store = useStore()
+const imgUrl = ref(null)
 console.log(store);
 const loginForm = ref({
   loginid: 'admin@ln',
@@ -69,6 +82,13 @@ const handleUserLogin = async () => {
     name:'Home'
   })
 };
+const getCode = async ()=>{
+  imgUrl.value = await getVerificationCode()
+}
+
+onMounted(()=>{
+  getCode()
+})
 
 </script>
 
@@ -114,6 +134,25 @@ const handleUserLogin = async () => {
         margin-top: 65px;
         background-color: #7485CB !important;
         height: 36px;
+    }
+    img{
+      width: 105px;
+      height: 40px;
+      margin-top: 17px;
+    }
+    .validator{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      .verification{
+        margin-right:12px;
+        
+      }
+    }
+    .verification{
+      ::v-deep(.van-field__left-icon){
+        margin-top: 3px;
+      }
     }
 }
 </style>
