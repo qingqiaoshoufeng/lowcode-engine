@@ -21,6 +21,7 @@ import OtherForce from './components/otherForce.vue';
 import PersonInfo from './components/personInfo.vue';
 import TacticalMeasures from './components/tacticalMeasures.vue';
 import ScenePhoto from './components/scenePhoto.vue';
+import MeteorologicalInfo from './components/meteorologicalInfo.vue';
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -127,6 +128,8 @@ const dispatchDetail = ref(null);
 
 const importantEdit = ref(true) // 重要信息更正
 
+const localFireDispatchId = ref(props.currentRow?.boFireDispatchId || uuidv4())
+
 const showDealSituation = computed(() => {
   return form.value.basicInformation.dealSituation?.text === '到场实施处置'
 })
@@ -209,6 +212,8 @@ provide("options", options)
 
 provide('currentRow', props.currentRow)
 
+provide('localFireDispatchId', localFireDispatchId)
+
 provide('dispatchTruckListOptions', dispatchTruckListOptions)
 
 provide('deptMembersOptions', deptMembersOptions)
@@ -234,6 +239,8 @@ provide('showFireFighting', showFireFighting)
 provide('showRescueRescue', showRescueRescue)
 
 provide('isDetail', props.isDetail)
+
+provide('showDraft', props.showDraft)
 
 provide('isEdit', props.isEdit)
 

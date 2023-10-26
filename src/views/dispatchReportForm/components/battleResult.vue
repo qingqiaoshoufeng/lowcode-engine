@@ -123,7 +123,7 @@ const validateSurvive = (rule, value, callback) => {
     <van-field
       v-model="form.battleResult.emergencyNum.value"
       v-preview-text="showPreview"
-      :readonly="emergencyNum"
+      :readonly="showPreview"
       required
       type="number"
       maxlength="10"

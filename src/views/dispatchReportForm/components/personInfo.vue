@@ -96,7 +96,7 @@ onMounted(() => {
         </van-button>
       </template>
     </div>
-    <van-cell title="是否有社会技术专家：" v-preview-text="showPreview" class="field-radio-label">
+    <van-cell title="是否有社会技术专家：" required v-preview-text="showPreview" class="field-radio-label">
       <template #default>
         <van-radio-group
           v-model="form.personInfo.haveProfessor.value"
