@@ -4,6 +4,7 @@ import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { showToast, showLoadingToast, closeToast } from "vant";
+import FireInfo from './components/fireInfo.vue';
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
 import BattleConsume from "./components/battleConsume.vue";
@@ -207,6 +208,10 @@ const showTactical = computed(() => {
     || warningType?.text?.join('/').indexOf('安保勤务/防灾勤务') > -1
 })
 
+const { detail, loadDetail } = useDetail({
+  getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
+})
+
 provide("form", form)
 
 provide("options", options)
@@ -241,13 +246,11 @@ provide('showRescueRescue', showRescueRescue)
 
 provide('isDetail', props.isDetail)
 
+provide('detail', detail)
+
 provide('showDraft', props.showDraft)
 
 provide('isEdit', props.isEdit)
-
-const { detail, loadDetail } = useDetail({
-  getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
-})
 
 const initPoliceDetail = () => {
   showLoadingToast()
@@ -467,6 +470,8 @@ const onFailed = (errorInfo) => {
     </div>
     <div class="form-right">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+        <!-- 警情信息 -->
+        <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">
           <ProCard title="基本信息">
             <!-- 基本信息 -->

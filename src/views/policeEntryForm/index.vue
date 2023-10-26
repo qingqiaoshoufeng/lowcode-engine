@@ -63,6 +63,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showSurvey: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emits = defineEmits(['finishCallback', 'updateField'])
@@ -434,6 +438,7 @@ const initDetail = () => {
       loadDetail.value = false
       if (res) {
         detail.value = res
+        form.value.warningSurvey = res.warningSurvey
         form.value.boFireWarningId = res.boFireWarningId
         form.value.warningDate = dayjs(res.warningDate)
         form.value.warningCodeYyj = res.warningCodeYyj
@@ -668,14 +673,32 @@ const validateHeadquarters = (value, rule) => {
 
 <template>
   <div class="police-entry-form">
-    <div class="police-entry-title">
-      <div class="title-header">警情名称</div>
-      <div v-if="form.warningName" class="title-real">
-        {{ form.warningName }}
-      </div>
-      <div v-else class="title-placeholder">警情名称由系统自动生成</div>
-    </div>
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+      <van-field
+        v-if="showSurvey"
+        v-model="form.warningSurvey"
+        v-preview-text="true"
+        :readonly="true"
+        required
+        name="warningSurvey"
+        rows="4"
+        autosize
+        label="警情概况："
+        type="textarea"
+        placeholder="请输入警情概况"
+        show-word-limit
+        :class="{ 'form-textarea': !showPreview }"
+      />
+      <van-field
+        v-model="form.warningName"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        :disabled="!showPreview"
+        required
+        name="warningName"
+        label="警情名称："
+        placeholder="请输入警情名称"
+      />
       <SelectDateTime
         v-model:value="form.warningDate"
         :showPreview="showPreview"
