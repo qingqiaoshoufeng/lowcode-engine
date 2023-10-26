@@ -6,6 +6,7 @@ import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyAbolish from "./apply-abolish.vue";
 import ApplyRecheck from "./apply-recheck.vue";
+import PoliceForm from '@/views/policeEntryForm/index.vue';
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -200,48 +201,35 @@ const handleCollect = async (row, state) => {
   });
 };
 
-const handleEdit = (item) => {
-  showToast("此功能暂未开放！");
-  // router.push({
-  //   name: "policeEntryForm",
-  //   query: { boFireWarningId: item.boFireWarningId },
-  // });
-};
-
 const handleAbolish = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.abolishVisible = true
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  show.value.abolishVisible = true
 };
 
 const handleChange = (row) => {
-  showToast("此功能暂未开放！");
-  // if (row.isLock === '1') {
-  //   showToast(MSG_LOCKING_TEXT)
-  //   return
-  // }
-  // if (row.isOtherCity === '1') {
-  //   showToast('跨市警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // if (row.isOtherProvince === '1') {
-  //   showToast('跨省警情不支持【申请更正】操作，请联系管理员处理！')
-  //   return
-  // }
-  // currentRow.value = row
-  // show.value.recheckVisible = true
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  if (row.isOtherCity === '1') {
+    showToast('跨市警情不支持【申请更正】操作，请联系管理员处理！')
+    return
+  }
+  if (row.isOtherProvince === '1') {
+    showToast('跨省警情不支持【申请更正】操作，请联系管理员处理！')
+    return
+  }
+  currentRow.value = row
+  show.value.recheckVisible = true
 };
 
-const handleItem = (item) => {
-  // showToast("此功能暂未开放！");
-  router.push({
-    name: "policeEntryForm",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
-  });
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
 };
 
 const onTimeChange = (value) => {
@@ -370,6 +358,14 @@ onMounted(() => {
       </template>
     </ProList>
 
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+      <PoliceForm
+        :current-row="currentRow"
+        :show-preview="true"
+        :show-steps="true"
+      />
+    </ProModal>
     <!-- 申请更正 -->
     <ProModal v-model:visible="show.recheckVisible" title="申请更正">
       <template #default="{ setHandleOk }">

@@ -27,32 +27,29 @@ import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   currentRow: {
     type: Object,
-    default: () => {
-      return {};
-    },
+    default: () => { return {} },
   },
-  isEdit: {
-    // 警情修改
+  showPreview: {
     type: Boolean,
     default: false,
   },
-  isConfirm: {
-    // 警情确认
+  isEdit: { // 警情修改
     type: Boolean,
     default: false,
   },
-  isApproval: {
-    // 警情作废申请、警情修改申请
+  isConfirm: { // 警情确认
     type: Boolean,
     default: false,
   },
-  showExportPdf: {
-    // 显示导出按钮
+  isApproval: { // 警情作废申请、警情修改申请
+    type: Boolean,
+    default: false,
+  },
+  showExportPdf: { // 显示导出按钮
     type: Boolean,
     default: false,
   },
@@ -66,11 +63,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-});
+})
 
-const route = useRoute();
-
-const router = useRouter();
+const emits = defineEmits(['finishCallback', 'updateField'])
 
 const { show } = useModal();
 
@@ -82,8 +77,6 @@ const { options } = useOptions({
 });
 
 const formRef = ref(null);
-
-const showPreview = ref(Boolean(route.query?.showPreview));
 
 const loadDetail = ref(true);
 
@@ -146,7 +139,7 @@ const textFilter = (text, length) => {
 };
 
 form.value.warningName = computed(() => {
-  if (showPreview.value) {
+  if (props.showPreview) {
     return detail.value?.warningName;
   }
   const { warningDate, warningOrgname, warningAreaText, warningTypeText, naturalDisasterTypeText } = form.value;
@@ -218,7 +211,7 @@ form.value.warningName = computed(() => {
 });
 
 const showAddTag = computed(() => {
-  return !props.isApproval && showPreview.value;
+  return !props.isApproval && props.showPreview;
 });
 
 const showWarningLevel = computed(() => {
@@ -420,7 +413,7 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId } = route.query
+  const { boFireWarningId, boWarningYyjId, showPreview } = props.currentRow
   if (boWarningYyjId) {
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
     form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
@@ -453,11 +446,11 @@ const initDetail = () => {
           form.value.warningArea = [res.warningProvince, res.warningCity, res.warningTown]
           form.value.warningAreaText = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue]
         }
-        if (!showPreview.value && form.value.warningAreaText?.length >= 3) {
+        if (!showPreview && form.value.warningAreaText?.length >= 3) {
           const attr = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
-        else if (!showPreview.value && form.value.warningAreaText?.length === 2) {
+        else if (!showPreview && form.value.warningAreaText?.length === 2) {
           const attr = [res.warningProvinceValue, res.warningCityValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
@@ -529,7 +522,7 @@ const initDetail = () => {
         // 警情等级
         initLevelOptions()
         // 详情特殊处理options
-        if (showPreview.value) {
+        if (showPreview) {
           initPermissionOptions(res)
         }
 
@@ -560,7 +553,7 @@ const onFailed = (errorInfo) => {
 };
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, false);
+  const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, props.showPreview);
   options.value.warningTypeOptions = res.JQ_TYPE;
   options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE;
   warningLevelOptions = res.JQ_LEVEL;
