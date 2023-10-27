@@ -7,6 +7,10 @@ import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from
 
 export const useFormConfig = () => {
   const formOrigin = {
+    fireInfo: {
+      title: '警情信息',
+      fieldAnnotation: false, // 批注
+    },
     draftInfo: { // 草稿信息
       title: '草稿信息',
       draftName: { // 草稿名称
@@ -471,6 +475,7 @@ export const useFormConfig = () => {
       },
       dispatchTruckList: { // 消防车辆信息
         value: undefined,
+        list: undefined,
         rules: [{ required: true, message: '请选择消防车辆信息' }],
       },
       isReturnTruck: { // 是否有车辆中途返回
@@ -1071,7 +1076,7 @@ export const useFormConfig = () => {
         // rules: [{ required: true, message: '请输入其他说明' }],
       },
     },
-    proSteps: { // 其他附件
+    proSteps: { // 操作记录
       title: '操作记录',
       fieldAnnotation: false, // 批注
       fireDispatchTransferVOList: {
@@ -1472,7 +1477,8 @@ export const useFormConfig = () => {
     form.value.investForce.firemen.value = fireDispatchItem?.firemen?.split(',')
     form.value.investForce.isResponseTruck.value = fireDispatchItem?.isResponseTruck
     if (fireDispatchTruckList && fireDispatchTruckList.length > 0) {
-      form.value.investForce.dispatchTruckList.value = fixCarInfo(fireDispatchTruckList)
+      form.value.investForce.dispatchTruckList.list = fixCarInfo(fireDispatchTruckList)
+      form.value.investForce.dispatchTruckList.value = form.value.investForce.dispatchTruckList.list?.map(item => item.boFireTruckId)
     }
     form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
     if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {

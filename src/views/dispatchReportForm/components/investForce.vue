@@ -33,6 +33,7 @@ const personNum = computed(() => {
 const onResponseTruck = (e) => {
   if (e === "2") {
     form.value.investForce.dispatchTruckList.value = undefined;
+    form.value.investForce.dispatchTruckList.list = undefined;
     form.value.investForce.midwayCar.value = undefined;
     form.value.investForce.isReturnTruck.value = "2";
   }
@@ -55,18 +56,18 @@ const onReturnTruck = (e) => {
   }
 };
 
-const onDispatchTruck = () => {
+const onDispatchTruck = (value, items) => {
   checkDispatchTruckList(form.value);
 
-  if (
-    form.value.investForce.isResponseTruck.value === "1" &&
-    showMidwayReturn.value
-  ) {
-    form.value.investForce.midwayCar.value =
-      form.value.investForce.dispatchTruckList.value;
+  form.value.investForce.dispatchTruckList.list = items
+
+  if (form.value.investForce.isResponseTruck.value === "1" && showMidwayReturn.value) {
+    form.value.investForce.midwayCar.value = form.value.investForce.dispatchTruckList.value;
   } else {
     form.value.investForce.midwayCar.value = undefined;
   }
+
+  OnCarNum()
 };
 
 const OnCarNum = () => {
@@ -123,7 +124,7 @@ const validateCommander = (rule, value, callback) => {
         label-width="118px"
         placeholder="请选择消防车辆信息"
         title="请选择消防车辆信息"
-        @change="onDispatchTruck(), OnCarNum()"
+        @change="onDispatchTruck"
       />
       <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio-label">
         <template #default>
@@ -146,7 +147,7 @@ const validateCommander = (rule, value, callback) => {
         :readonly="showPreview"
         required
         name="midwayCar"
-        :options="form.investForce.dispatchTruckList.value"
+        :options="form.investForce.dispatchTruckList.list"
         :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"

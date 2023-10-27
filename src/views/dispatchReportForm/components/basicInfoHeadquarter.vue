@@ -145,7 +145,7 @@ watch(() => form.value.deployEquipment, () => {
 </script>
 
 <template>
-  <ProCard title="基本信息">
+  <ProCard title="基本信息" id="basicInfoHead">
     <van-cell-group>
       <van-field
         v-model="form.basicInfoHead.headquarterName.value"

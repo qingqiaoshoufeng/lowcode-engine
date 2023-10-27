@@ -11,7 +11,7 @@ const dispatchTruckListOptions = inject("dispatchTruckListOptions");
 </script>
 
 <template>
-  <ProCard title="出动装备">
+  <ProCard title="出动装备" id="deployEquipment">
     <van-cell-group>
       <SelectMultiple
         v-model:value="form.deployEquipment.headTruckList.value"

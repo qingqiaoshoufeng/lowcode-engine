@@ -55,7 +55,7 @@ const validateSurvive = (rule, value, callback) => {
 </script>
 
 <template>
-  <ProCard title="战斗成果">
+  <ProCard title="战斗成果" id="battleResult">
     <van-cell-group>
       <van-field
         v-model="form.battleResult.rescueNum.value"

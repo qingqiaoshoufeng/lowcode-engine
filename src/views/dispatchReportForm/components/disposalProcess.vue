@@ -8,7 +8,7 @@ const showPreview = inject("showPreview");
 </script>
 
 <template>
-  <ProCard title="处置经过">
+  <ProCard title="处置经过" id="disposalProcess">
     <van-cell-group>
       <van-field
         v-model="form.disposalProcess.fireProcess.value"

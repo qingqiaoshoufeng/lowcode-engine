@@ -15,7 +15,7 @@ const updateField = (value) => {
 </script>
 
 <template>
-  <ProCard title="警情信息">
+  <ProCard title="警情信息" id="fireInfo">
     <PoliceForm
       :is-approval="true"
       :show-survey="true"

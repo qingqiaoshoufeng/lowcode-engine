@@ -60,7 +60,7 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <ProCard title="现场照片">
+  <ProCard title="现场照片" id="scenePhoto">
     <van-cell-group>
       <div class="scene-photo">
         <van-cell title="出动现场照片：" required class="item-cell">

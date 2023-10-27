@@ -164,7 +164,7 @@ watch(
 </script>
 
 <template>
-  <ProCard title="参战伤亡">
+  <ProCard title="参战伤亡" id="casualtyWar">
     <van-cell-group>
       <div class="injured-message">
         共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
