@@ -170,7 +170,7 @@ watch(
         共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
         {{ form.casualtyWar.deadList?.length }} 人
       </div>
-      <van-cell title="是否有人员受伤：" required v-preview-text="showPreview" class="field-radio-label">
+      <van-cell title="是否有人员受伤：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.casualtyWar.isInjured.value"
@@ -416,7 +416,7 @@ watch(
           </van-button>
         </template>
       </div>
-      <van-cell title="是否有人员死亡：" required v-preview-text="showPreview" class="field-radio-label">
+      <van-cell title="是否有人员死亡：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.casualtyWar.isDead.value"

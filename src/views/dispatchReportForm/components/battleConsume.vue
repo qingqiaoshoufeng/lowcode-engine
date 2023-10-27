@@ -147,7 +147,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗" id="scenePhoto" :showOpenClose="!showPreview">
+  <ProCard title="战斗消耗" id="battleConsume" :showOpenClose="!showPreview">
     <van-cell-group>
       <!-- 车辆耗损 -->
       <SelectMultiple
@@ -718,7 +718,7 @@ onMounted(() => {
           placeholder="请输入无故供水中断次数"
           :rules="form.battleConsume.waterInterrupt.rules"
         />
-        <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio-label">
+        <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio">
           <template #default>
             <van-radio-group
               v-model="form.battleConsume.waterDamage.value"
