@@ -10,7 +10,7 @@ export const deskReg = /^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,6})?$/
 export const nonZeroPositiveInteger = /^[1-9]\d*$/
 
 // 正整数
-export const positiveIntegerReg = /^(0|[1-9]\d*)$|^$/
+export const positiveIntegerReg = /^[0-9]\d*$/
 
 // 整数
 export const integerReg = /^-?[1-9]\d*$/

@@ -866,7 +866,7 @@ const { loading, submit } = useSubmit(
       emits('finishCallback', res, props.showDraft)
     }
     else if (!props.isApproval && !props.isAgain && props.showDraft) {
-      message.success('保存成功')
+      showToast('保存成功')
       emits('finishCallback', res, props.showDraft)
     }
   },
@@ -888,8 +888,9 @@ const { loading, submit } = useSubmit(
 
 const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
   (res) => {
-    message.success('暂存成功')
+    showToast('暂存成功')
     emits('finishCallback')
+    props.closeModal()
   },
   {
     submitFn: () => {
@@ -904,7 +905,7 @@ const handleSubmit = () => {
 }
 
 const handleTemporary = () => {
-
+  temporarySubmit()
 }
 
 const onSubmit = async () => {
@@ -1077,10 +1078,10 @@ const onFailed = (errorInfo) => {
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">
-        <van-button round block type="default" size="small" :loading="loading" @click="handleTemporary">
+        <van-button round block type="default" size="small" :loading="loading || temporaryLoading" @click="handleTemporary">
           暂存
         </van-button>
-        <van-button round block type="primary" size="small" :loading="loading" @click="handleSubmit">
+        <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
           确定
         </van-button>
       </div>
