@@ -18,7 +18,7 @@ const onSurviveNum = () => {
   }
 };
 
-const validateRescueNum = (rule, value, callback) => {
+const validateRescueNum = (value, rule) => {
   const { rescueNum } = form.value.battleResult;
   const { trappedPerson } = form.value.basicInformation;
   if (showMainGroup.value && rescueNum.value > trappedPerson.value) {
@@ -29,14 +29,12 @@ const validateRescueNum = (rule, value, callback) => {
     } else {
       return "请输入抢救人数";
     }
-  } else if (!positiveIntegerReg.test(value)) {
-    return "请输入正确抢救人数";
   } else {
     return "";
   }
 };
 
-const validateSurvive = (rule, value, callback) => {
+const validateSurvive = (value, rule) => {
   const { rescueNum, surviveNum } = form.value.battleResult;
   if (rescueNum.value < surviveNum.value) {
     return "生还人数不能大于抢救人数！";
@@ -46,8 +44,6 @@ const validateSurvive = (rule, value, callback) => {
     } else {
       return "请输入生还人数";
     }
-  } else if (!positiveIntegerReg.test(value)) {
-    return "请输入正确生还人数";
   } else {
     return "";
   }
@@ -61,14 +57,14 @@ const validateSurvive = (rule, value, callback) => {
         v-model="form.battleResult.rescueNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        type="number"
+        type="digit"
         maxlength="10"
         required
         name="rescueNum"
         label="抢救(人)："
         placeholder="请输入抢救人数"
         :rules="[
-          { validator: validateRescueNum, trigger: 'blur' },
+          { validator: validateRescueNum, trigger: 'onBlur' },
           ...form.battleResult.rescueNum.rules,
         ]"
         @blur="onSurviveNum()"
@@ -77,14 +73,14 @@ const validateSurvive = (rule, value, callback) => {
         v-model="form.battleResult.surviveNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        type="number"
+        type="digit"
         maxlength="10"
         required
         name="surviveNum"
         label="生还(人)："
         placeholder="请输入生还人数"
         :rules="[
-          { validator: validateSurvive, trigger: 'blur' },
+          { validator: validateSurvive, trigger: 'onBlur' },
           ...form.battleResult.surviveNum.rules,
         ]"
         @blur="onSurviveNum()"
@@ -104,7 +100,7 @@ const validateSurvive = (rule, value, callback) => {
         v-model="form.battleResult.evacuateNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        type="number"
+        type="digit"
         maxlength="10"
         name="evacuateNum"
         label="疏散(人)："
@@ -115,7 +111,7 @@ const validateSurvive = (rule, value, callback) => {
         v-model="form.battleResult.transferNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        type="number"
+        type="digit"
         maxlength="10"
         name="transferNum"
         label="转移(人)："

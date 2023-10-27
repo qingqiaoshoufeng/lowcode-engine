@@ -4,7 +4,6 @@ import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
 import { generateColorByState } from "@/utils/tools.js";
-import router from "@/router/index.js";
 import PoliceForm from '@/views/policeEntryForm/index.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
