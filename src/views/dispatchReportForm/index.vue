@@ -502,14 +502,6 @@ const initDetail = () => {
         }
       }).finally(() => resolve())
     } else {
-      form.value.draftInfo.draftName.value = ""
-      if (currentRow?.warningType) {
-        form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
-        if (form.value.draftInfo.warningType.value) {
-          form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
-        }
-      }
-      form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
       resolve()
     }
   })
@@ -547,6 +539,7 @@ const initPerson = (dispatchGroup) => {
 const initWatch = () => {
   closeToast()
   return new Promise((resolve) => {
+    const { currentRow } = props
     watch(() => [
       form.value.draftInfo.warningType,
       form.value.draftInfo.partakeType,
@@ -554,6 +547,13 @@ const initWatch = () => {
     ], () => {
       initFormWhenChange()
     }, { deep: true })
+    if (currentRow?.warningType) {
+      form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
+      if (form.value.draftInfo.warningType.value) {
+        form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.value.warningType)
+      }
+    }
+    form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
     // 只有当填报状态下才自动生成处置过程
     if (props.closeModal && props.isInput) {
       watch(() => [form.value.basicInformation, form.value.basicInfoHead, form.value.investForce, form.value.casualtyWar, form.value.battleResult, form.value.battleConsume], () => {
@@ -561,7 +561,7 @@ const initWatch = () => {
       }, { deep: true })
     }
     nextTick(() => {
-      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dispatchDate.value)
+      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
     })
     resolve()
   })

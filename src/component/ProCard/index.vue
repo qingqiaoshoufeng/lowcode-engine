@@ -25,11 +25,11 @@ defineOptions({
 
 <template>
   <div class="pro-card">
-    <div v-if="showOpenClose" class="pro-card-title">
+    <div class="pro-card-title">
       <img src="@/assets/images/icon_title@2x.png" alt="" />
       <span>{{ title }}</span>
-      <van-icon v-if="openState" name="arrow-up" class="arrow" @click="handleClose(false)" />
-      <van-icon v-else name="arrow-down" class="arrow" @click="handleClose(true)" />
+      <van-icon v-if="openState && showOpenClose" name="arrow-up" class="arrow" @click="handleClose(false)" />
+      <van-icon v-else-if="showOpenClose" name="arrow-down" class="arrow" @click="handleClose(true)" />
     </div>
     <template v-if="openState">
       <slot />

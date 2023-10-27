@@ -304,7 +304,7 @@ onMounted(() => {
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon_power@2x.png" alt="" />
+            <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>

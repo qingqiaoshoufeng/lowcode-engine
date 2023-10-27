@@ -97,7 +97,7 @@ const validateCommander = (rule, value, callback) => {
     <div class="invest-message">
       共投入 {{ form.investForce?.dispatchTruckList.value?.length || 0 }} 车 {{ personNum || 0 }} 人
     </div>
-    <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio-label">
+    <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.isResponseTruck.value"
@@ -126,7 +126,7 @@ const validateCommander = (rule, value, callback) => {
         title="请选择消防车辆信息"
         @change="onDispatchTruck"
       />
-      <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio-label">
+      <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.investForce.isReturnTruck.value"
@@ -168,7 +168,7 @@ const validateCommander = (rule, value, callback) => {
       :rules="form.investForce.groupLeader.rules"
       :disabled="form.investForce.groupLeader.disabled"
       label="带队指挥员："
-      label-width="122px"
+      label-width="102px"
       placeholder="请选择带队指挥员"
       title="请选择带队指挥员"
     />
@@ -207,7 +207,7 @@ const validateCommander = (rule, value, callback) => {
       v-model="form.investForce.fireBoatNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
-      type="number"
+      type="digit"
       maxlength="20"
       name="fireBoatNum"
       label="艇(艘)："
@@ -219,7 +219,7 @@ const validateCommander = (rule, value, callback) => {
       v-model="form.investForce.fireAirplaneNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
-      type="number"
+      type="digit"
       maxlength="20"
       name="fireAirplaneNum"
       label="消防直升机(架)："
@@ -232,7 +232,7 @@ const validateCommander = (rule, value, callback) => {
       v-model="form.investForce.rescueDogNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
-      type="number"
+      type="digit"
       maxlength="20"
       name="rescueDogNum"
       label="搜救犬(只)："
@@ -245,7 +245,7 @@ const validateCommander = (rule, value, callback) => {
       v-model="form.investForce.uavNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
-      type="number"
+      type="digit"
       maxlength="20"
       name="uavNum"
       label="无人机(架)："

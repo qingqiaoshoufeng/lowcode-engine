@@ -54,7 +54,7 @@ const onIsCommand = (e) => {
 
 <template>
   <van-cell-group>
-    <van-cell title="是否有政府指挥：" required v-preview-text="showPreview" class="field-radio-label">
+    <van-cell title="是否有政府指挥：" required v-preview-text="showPreview" class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.isCommand.value"
