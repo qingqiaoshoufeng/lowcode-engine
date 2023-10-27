@@ -147,7 +147,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗" id="scenePhoto">
+  <ProCard title="战斗消耗" id="scenePhoto" :showOpenClose="!showPreview">
     <van-cell-group>
       <!-- 车辆耗损 -->
       <SelectMultiple

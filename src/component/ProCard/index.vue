@@ -6,6 +6,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  showOpenClose: {
+    type: Boolean,
+    default: true,
+  }
 });
 
 const openState = ref(true);
@@ -21,7 +25,7 @@ defineOptions({
 
 <template>
   <div class="pro-card">
-    <div class="pro-card-title">
+    <div v-if="showOpenClose" class="pro-card-title">
       <img src="@/assets/images/icon_title@2x.png" alt="" />
       <span>{{ title }}</span>
       <van-icon v-if="openState" name="arrow-up" class="arrow" @click="handleClose(false)" />
@@ -30,7 +34,7 @@ defineOptions({
     <template v-if="openState">
       <slot />
     </template>
-    <div class="pro-card-close" v-if="openState" @click="handleClose(false)">收起</div>
+    <div class="pro-card-close" v-if="openState && showOpenClose" @click="handleClose(false)">收起</div>
   </div>
 </template>
 

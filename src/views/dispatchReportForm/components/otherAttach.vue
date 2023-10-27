@@ -45,7 +45,7 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <ProCard title="其他附件" id="otherAttach">
+  <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
         <van-cell title="相关附件上传：" required class="item-cell">

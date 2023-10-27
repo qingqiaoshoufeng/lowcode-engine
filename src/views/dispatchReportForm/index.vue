@@ -24,6 +24,7 @@ import TacticalMeasures from './components/tacticalMeasures.vue';
 import ScenePhoto from './components/scenePhoto.vue';
 import MeteorologicalInfo from './components/meteorologicalInfo.vue';
 import ProCard from "@/component/ProCard/index.vue";
+import ProSteps from "@/component/ProSteps/index.vue";
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -1068,7 +1069,7 @@ const onSideBarChange = (e, k) => {
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">
-          <ProCard title="基本信息" id="basicInformation">
+          <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
             <!-- 主要战术措施 -->
@@ -1085,7 +1086,7 @@ const onSideBarChange = (e, k) => {
             <!-- 气象信息 -->
             <MeteorologicalInfo v-if="!showDraft" />
           </ProCard>
-          <ProCard title="投入力量" id="investForce">
+          <ProCard title="投入力量" id="investForce" :showOpenClose="!showPreview">
             <!-- 投入力量 -->
             <InvestForce />
             <!-- 政府指挥 -->
@@ -1133,7 +1134,7 @@ const onSideBarChange = (e, k) => {
           <BattleConsume />
         </template>
         <template v-else-if="showReinforce">
-          <ProCard title="基本信息" id="basicInformation">
+          <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
             <!-- 主要战术措施 -->
@@ -1148,7 +1149,7 @@ const onSideBarChange = (e, k) => {
             <!-- 简要情况 -->
             <BriefSituation />
           </ProCard>
-          <ProCard title="投入力量" id="investForce">
+          <ProCard title="投入力量" id="investForce" :showOpenClose="!showPreview">
             <!-- 投入力量 -->
             <InvestForce />
           </ProCard>
@@ -1187,6 +1188,8 @@ const onSideBarChange = (e, k) => {
           <!-- 战斗消耗 -->
           <BattleConsume />
         </template>
+        <!-- 操作记录 -->
+        <ProSteps v-if="isDetail" :data="form?.proSteps?.fireDispatchTransferVOList?.value" />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

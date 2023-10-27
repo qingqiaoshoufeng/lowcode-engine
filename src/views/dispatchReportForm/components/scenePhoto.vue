@@ -11,6 +11,8 @@ const isEdit = inject("isEdit");
 
 const currentRow = inject("currentRow");
 
+const showPreview = inject("showPreview");
+
 const localFireDispatchId = inject("localFireDispatchId");
 
 const onChange = (file, fileList, event) => {
@@ -60,7 +62,7 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <ProCard title="现场照片" id="scenePhoto">
+  <ProCard title="现场照片" id="scenePhoto" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
         <van-cell title="出动现场照片：" required class="item-cell">
