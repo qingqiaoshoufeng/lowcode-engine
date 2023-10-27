@@ -7,6 +7,8 @@ const emits = defineEmits(["updateField"]);
 
 const currentRow = inject("currentRow");
 
+const showPreview = inject("showPreview");
+
 const detail = inject("detail");
 
 const updateField = (value) => {
@@ -15,7 +17,7 @@ const updateField = (value) => {
 </script>
 
 <template>
-  <ProCard title="警情信息">
+  <ProCard title="警情信息" id="fireInfo" :showOpenClose="!showPreview">
     <PoliceForm
       :is-approval="true"
       :show-survey="true"

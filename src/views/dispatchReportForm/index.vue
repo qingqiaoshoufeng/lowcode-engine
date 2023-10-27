@@ -24,6 +24,7 @@ import TacticalMeasures from './components/tacticalMeasures.vue';
 import ScenePhoto from './components/scenePhoto.vue';
 import MeteorologicalInfo from './components/meteorologicalInfo.vue';
 import ProCard from "@/component/ProCard/index.vue";
+import ProSteps from "@/component/ProSteps/index.vue";
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -141,6 +142,8 @@ const dispatchDetail = ref(null);
 
 const importantEdit = ref(true) // 重要信息更正
 
+const sideBarActive = ref(0)
+
 const localFireDispatchId = ref(props.currentRow?.boFireDispatchId || uuidv4())
 
 const showDealSituation = computed(() => {
@@ -217,6 +220,104 @@ const showTactical = computed(() => {
     || warningType?.text?.join('/') === '社会救助/公共服务/排水排涝清淤'
     || warningType?.text?.join('/') === '安保勤务/特殊勤务/医疗卫生'
     || warningType?.text?.join('/').indexOf('安保勤务/防灾勤务') > -1
+})
+
+// 段落信息
+const sections = computed(() => {
+  const type = form.value.draftInfo.partakeType.value || props.currentRow?.dispatchTypeValue
+  const extra = {}
+  const {
+    fireInfo,
+    draftInfo,
+    basicInformation,
+    basicInfoHead,
+    personInfo,
+    commandProcess,
+    deployEquipment,
+    investForce,
+    casualtyWar,
+    battleResult,
+    battleConsume,
+    disposalProcess,
+    scenePhoto,
+    otherAttach,
+    proSteps,
+  } = form.value
+  if (!props.isPolice) {
+    extra.fireInfo = fireInfo
+  }
+  switch (type) {
+  case '主战':
+    extra.basicInformation = basicInformation
+    extra.investForce = investForce
+    extra.casualtyWar = casualtyWar
+    if (!showFalsePolice.value
+          && !(showSecurityService.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showSocialAssistance.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showRescueRescue.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showFireFighting.value && (showNotDealReason.value || showMidwayReturn.value))
+    ) {
+      extra.battleResult = battleResult
+    }
+    extra.disposalProcess = disposalProcess
+    if (!showMidwayReturn.value) {
+      extra.scenePhoto = scenePhoto
+    }
+    extra.otherAttach = otherAttach
+    extra.battleConsume = battleConsume
+    if (props.isDetail) {
+      extra.proSteps = proSteps
+    }
+    return extra
+  case '增援':
+    extra.basicInformation = basicInformation
+    extra.investForce = investForce
+    extra.casualtyWar = casualtyWar
+    if (!showFalsePolice.value
+          && !(showSecurityService.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showSocialAssistance.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showRescueRescue.value && (showNotDealReason.value || showMidwayReturn.value))
+          && !(showFireFighting.value && (showNotDealReason.value || showMidwayReturn.value))
+    ) {
+      extra.battleResult = battleResult
+    }
+    extra.disposalProcess = disposalProcess
+    if (!showMidwayReturn.value) {
+      extra.scenePhoto = scenePhoto
+    }
+    extra.otherAttach = otherAttach
+    extra.battleConsume = battleConsume
+    if (props.isDetail) {
+      extra.proSteps = proSteps
+    }
+    return extra
+  case '指挥':
+    if (props.isDetail) {
+      return {
+        ...extra,
+        basicInfoHead,
+        personInfo,
+        deployEquipment,
+        commandProcess,
+        casualtyWar,
+        battleConsume,
+        proSteps,
+      }
+    }
+    return {
+      ...extra,
+      basicInfoHead,
+      personInfo,
+      deployEquipment,
+      commandProcess,
+      casualtyWar,
+      battleConsume,
+    }
+  default:
+    return {
+      draftInfo,
+    }
+  }
 })
 
 const { detail, loadDetail } = useDetail({
@@ -608,7 +709,7 @@ const getSubmitParams = () => {
       isDraft: props.showDraft ? 1 : 2,
     }
     if (form.value.investForce.isResponseTruck.value === '1') {
-      const list = fixCarParams(investForce.dispatchTruckList.value)
+      const list = fixCarParams(investForce.dispatchTruckList.list)
       params.fireDispatchTruckList.push(...list)
     }
     if (form.value.investForce.isReturnTruck.value === '1') {
@@ -940,15 +1041,27 @@ const onFailed = (errorInfo) => {
     scrollFormFailed()
   }
 };
+
+const onSideBarChange = (e, k) => {
+  const targetElement = document.getElementById(k);
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth',
+    });
+  }
+}
 </script>
 
 <template>
   <div class="dispatch-report-form">
     <div class="form-left">
-      <van-sidebar>
-        <van-sidebar-item title="标签名称" dot />
-        <van-sidebar-item title="标签名称" badge="5" />
-        <van-sidebar-item title="标签名称" />
+      <van-sidebar v-model="sideBarActive">
+        <template v-for="(item, k) in sections" :key="k">
+          <van-sidebar-item to="#otherAttach" @click="onSideBarChange(item, k)">
+            <template #title>{{ item?.title }}</template>
+          </van-sidebar-item>
+        </template>
       </van-sidebar>
     </div>
     <div class="form-right">
@@ -956,7 +1069,7 @@ const onFailed = (errorInfo) => {
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">
-          <ProCard title="基本信息">
+          <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
             <!-- 主要战术措施 -->
@@ -973,7 +1086,7 @@ const onFailed = (errorInfo) => {
             <!-- 气象信息 -->
             <MeteorologicalInfo v-if="!showDraft" />
           </ProCard>
-          <ProCard title="投入力量">
+          <ProCard title="投入力量" id="investForce" :showOpenClose="!showPreview">
             <!-- 投入力量 -->
             <InvestForce />
             <!-- 政府指挥 -->
@@ -1021,7 +1134,7 @@ const onFailed = (errorInfo) => {
           <BattleConsume />
         </template>
         <template v-else-if="showReinforce">
-          <ProCard title="基本信息">
+          <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
             <!-- 主要战术措施 -->
@@ -1036,7 +1149,7 @@ const onFailed = (errorInfo) => {
             <!-- 简要情况 -->
             <BriefSituation />
           </ProCard>
-          <ProCard title="投入力量">
+          <ProCard title="投入力量" id="investForce" :showOpenClose="!showPreview">
             <!-- 投入力量 -->
             <InvestForce />
           </ProCard>
@@ -1075,6 +1188,8 @@ const onFailed = (errorInfo) => {
           <!-- 战斗消耗 -->
           <BattleConsume />
         </template>
+        <!-- 操作记录 -->
+        <ProSteps v-if="isDetail" :data="form?.proSteps?.fireDispatchTransferVOList?.value" />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="指挥过程">
+  <ProCard title="指挥过程" id="commandProcess" :showOpenClose="!showPreview">
     <van-cell-group>
       <van-field
         v-model="form.commandProcess.rescueMethod.value"

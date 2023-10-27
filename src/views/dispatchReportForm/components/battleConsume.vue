@@ -147,7 +147,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗">
+  <ProCard title="战斗消耗" id="scenePhoto" :showOpenClose="!showPreview">
     <van-cell-group>
       <!-- 车辆耗损 -->
       <SelectMultiple
@@ -158,7 +158,7 @@ onMounted(() => {
         :options="
           showHeadquarter
             ? dispatchTruckListOptions
-            : form.investForce.dispatchTruckList.value
+            : form.investForce.dispatchTruckList.list
         "
         :field-names="{ value: 'value', label: 'label' }"
         :rules="form.battleConsume.wastageTruck.rules"

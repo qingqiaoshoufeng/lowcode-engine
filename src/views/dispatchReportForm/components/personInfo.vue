@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="人员信息">
+  <ProCard title="人员信息" id="personInfo" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="block-dynamic">
         <div v-for="(item, index) in form.personInfo.commandLeader" :key="index" class="block-dynamic-item">
