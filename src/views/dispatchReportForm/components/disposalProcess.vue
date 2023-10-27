@@ -1,5 +1,6 @@
 <script setup>
 import { inject } from "vue";
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -7,24 +8,26 @@ const showPreview = inject("showPreview");
 </script>
 
 <template>
-  <van-cell-group>
-    <van-field
-      v-model="form.disposalProcess.fireProcess.value"
-      v-preview-text="showPreview"
-      :readonly="showPreview"
-      required
-      name="fireProcess"
-      rows="4"
-      autosize
-      label="处置经过："
-      type="textarea"
-      maxlength="1000"
-      placeholder="请输入处置经过"
-      show-word-limit
-      :rules="form.disposalProcess.fireProcess.rules"
-      :class="{ 'form-textarea': !showPreview }"
-    />
-  </van-cell-group>
+  <ProCard title="处置经过">
+    <van-cell-group>
+      <van-field
+        v-model="form.disposalProcess.fireProcess.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="fireProcess"
+        rows="4"
+        autosize
+        label="处置经过："
+        type="textarea"
+        maxlength="1000"
+        placeholder="请输入处置经过"
+        show-word-limit
+        :rules="form.disposalProcess.fireProcess.rules"
+        :class="{ 'form-textarea': !showPreview }"
+      />
+    </van-cell-group>
+  </ProCard>
 </template>
 
 <style lang="scss" scoped>

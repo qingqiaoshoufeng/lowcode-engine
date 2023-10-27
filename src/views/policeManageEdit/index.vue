@@ -2,9 +2,15 @@
 import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
-import router from "@/router/index.js";
+import PoliceForm from '@/views/policeEntryForm/index.vue';
+import ProModal from "@/component/ProModal/index";
 import { getFireWarningManage } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
+import { useModal } from '@/hooks/useModal.js'
+import { showToast, showLoadingToast, closeToast } from "vant";
+import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
+
+const { show } = useModal();
 
 const defaultFilterValue = {
   unEditFlag: true,
@@ -12,19 +18,28 @@ const defaultFilterValue = {
 
 const proListRef = ref(null);
 
+const currentRow = ref(null);
+
 const handleEdit = (row) => {
-  router.push({
-    name: "policeEntryForm",
-    query: { boFireWarningId: row.boFireWarningId },
-  });
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  show.value.editVisible = true
 };
 
-const handleItem = (item) => {
-  router.push({
-    name: "policeEntryForm",
-    query: { boFireWarningId: item.boFireWarningId, showPreview: true },
-  });
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
 };
+
+const finishCallback = () => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+}
 </script>
 
 <template>
@@ -77,6 +92,27 @@ const handleItem = (item) => {
         </div>
       </template>
     </ProList>
+
+    <!-- 修改警情 -->
+    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="修改警情">
+      <template #default="{ setHandleOk, closeModal }">
+        <PoliceForm
+          :current-row="currentRow"
+          :is-edit="true"
+          :close-modal="closeModal"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
+        />
+      </template>
+    </ProModal>
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+      <PoliceForm
+        :current-row="currentRow"
+        :show-preview="true"
+        :show-steps="true"
+      />
+    </ProModal>
   </div>
 </template>
 

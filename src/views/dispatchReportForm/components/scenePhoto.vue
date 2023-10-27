@@ -1,7 +1,7 @@
 <script setup>
 import { inject, nextTick, onMounted, ref } from "vue";
-// import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -12,8 +12,6 @@ const isEdit = inject("isEdit");
 const currentRow = inject("currentRow");
 
 const localFireDispatchId = inject("localFireDispatchId");
-
-// const { initViewer, handlePreview, beforeUpload, onRemove } = useUpload(form.value.scenePhoto.photos)
 
 const onChange = (file, fileList, event) => {
   form.value.scenePhoto.photos.value?.forEach((item, i) => {
@@ -62,26 +60,28 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <van-cell-group>
-    <div class="scene-photo">
-      <van-cell title="出动现场照片：" required class="item-cell">
-        <van-uploader
-          v-model="form.scenePhoto.photos.value"
-          accept="image/png, image/jpeg, image/jpg"
-          multiple
-          preview-full-image
-          name="photos"
-          preview-image
-          :max-count="9"
-          :max-size="10 * 1000 * 1000000"
-          :readonly="isDetail"
-          :deletable="!isDetail"
-          :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
-          :after-read="OnAfterRead"
-        />
-      </van-cell>
-    </div>
-  </van-cell-group>
+  <ProCard title="现场照片">
+    <van-cell-group>
+      <div class="scene-photo">
+        <van-cell title="出动现场照片：" required class="item-cell">
+          <van-uploader
+            v-model="form.scenePhoto.photos.value"
+            accept="image/png, image/jpeg, image/jpg"
+            multiple
+            preview-full-image
+            name="photos"
+            preview-image
+            :max-count="9"
+            :max-size="10 * 1000 * 1000000"
+            :readonly="isDetail"
+            :deletable="!isDetail"
+            :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+            :after-read="OnAfterRead"
+          />
+        </van-cell>
+      </div>
+    </van-cell-group>
+  </ProCard>
 </template>
 
 <style lang="scss" scoped>
@@ -89,10 +89,8 @@ const OnAfterRead = (file) => {
   padding: 10px 0 0 10px;
   .item-cell {
     flex-direction: column;
-    :deep(.van-field__body) {
-      border: 1px solid #f6f6f6;
-      padding: 5px 5px;
-      margin-top: 5px;
+    :deep(.van-cell__value) {
+      display: flex;
     }
   }
 }

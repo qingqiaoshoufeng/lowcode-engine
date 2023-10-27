@@ -1,7 +1,7 @@
 <script setup>
 import { inject, onMounted } from "vue";
-// import { useUpload } from "@/hooks/useUpload.js";
 import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -14,8 +14,6 @@ const isEdit = inject("isEdit");
 const currentRow = inject("currentRow");
 
 const localFireDispatchId = inject("localFireDispatchId");
-
-// const { onRemove } = useUpload();
 
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
@@ -47,29 +45,31 @@ const OnAfterRead = (file) => {
 </script>
 
 <template>
-  <van-cell-group>
-    <div class="scene-photo">
-      <van-cell title="相关附件上传：" required class="item-cell">
-        <van-uploader
-          v-model="form.otherAttach.attach.value"
-          accept="*"
-          multiple
-          preview-full-image
-          name="attach"
-          :max-count="9"
-          :max-size="10 * 1000 * 1000000"
-          :readonly="isDetail"
-          :deletable="!isDetail"
-          :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
-          :after-read="OnAfterRead"
-        >
-          <van-button v-if="form.scenePhoto.photos?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
-            上传文件
-          </van-button>
-        </van-uploader>
-      </van-cell>
-    </div>
-  </van-cell-group>
+  <ProCard title="其他附件">
+    <van-cell-group>
+      <div class="scene-photo">
+        <van-cell title="相关附件上传：" required class="item-cell">
+          <van-uploader
+            v-model="form.otherAttach.attach.value"
+            accept="*"
+            multiple
+            preview-full-image
+            name="attach"
+            :max-count="9"
+            :max-size="10 * 1000 * 1000000"
+            :readonly="isDetail"
+            :deletable="!isDetail"
+            :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+            :after-read="OnAfterRead"
+          >
+            <van-button v-if="form.scenePhoto.photos?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
+              上传文件
+            </van-button>
+          </van-uploader>
+        </van-cell>
+      </div>
+    </van-cell-group>
+  </ProCard>
 </template>
 
 <style lang="scss" scoped>
@@ -77,10 +77,8 @@ const OnAfterRead = (file) => {
   padding: 10px 0 0 10px;
   .item-cell {
     flex-direction: column;
-    :deep(.van-field__body) {
-      border: 1px solid #f6f6f6;
-      padding: 5px 5px;
-      margin-top: 5px;
+    :deep(.van-cell__value) {
+      display: flex;
     }
   }
 }
