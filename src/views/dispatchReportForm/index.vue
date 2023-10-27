@@ -561,7 +561,7 @@ const initWatch = () => {
       }, { deep: true })
     }
     nextTick(() => {
-      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dispatchDate.value)
+      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
     })
     resolve()
   })

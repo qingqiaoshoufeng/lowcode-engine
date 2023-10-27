@@ -82,12 +82,12 @@ const refreshCallback = () => {
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">出动队伍：</div>
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>
@@ -109,7 +109,7 @@ const refreshCallback = () => {
     </ProList>
 
     <!-- 出动填报详情 -->
-    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报详情">
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动填报详情">
       <DispatchForm
         :is-detail="true"
         :current-row="currentRow"
