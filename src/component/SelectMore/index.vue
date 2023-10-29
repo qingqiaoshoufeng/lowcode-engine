@@ -67,6 +67,7 @@ defineOptions({
               :field-names="item.fieldNames"
               :rule="[{ required: true, message: item.placeholder }]"
               :required="false"
+              :readonly="true"
               :placeholder="item.placeholder"
               :title="item.placeholder"
             />
@@ -78,6 +79,7 @@ defineOptions({
               :field-names="item.fieldNames"
               :rule="[{ required: true, message: item.placeholder }]"
               :required="false"
+              :readonly="true"
               :placeholder="item.placeholder"
               :title="item.placeholder"
             />
@@ -87,6 +89,7 @@ defineOptions({
               v-model:value="query[item.value]"
               :field-names="{ value: 'organizationid', label: 'name' }"
               :required="false"
+              :readonly="true"
               :placeholder="item.placeholder"
               :title="item.placeholder"
               :params="item.params"
@@ -101,6 +104,7 @@ defineOptions({
               v-model:text="item.text"
               :options="item.options"
               :required="false"
+              :readonly="true"
               :field-names="item.fieldNames"
               label=""
               :placeholder="item.placeholder"
@@ -110,6 +114,7 @@ defineOptions({
             <AreaCascader
               v-model:value="query[item.value]"
               :required="false"
+              :readonly="true"
               label=""
             />
           </template>
@@ -117,6 +122,7 @@ defineOptions({
             <SelectRange 
               v-model:value="query[item.value]"
               :required="false"
+              :readonly="true"
               label=""
               :placeholder="item.placeholder"
             />
