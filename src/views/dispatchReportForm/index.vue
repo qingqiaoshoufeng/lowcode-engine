@@ -364,6 +364,8 @@ provide('isDetail', props.isDetail)
 
 provide('detail', detail)
 
+provide('importantEdit', importantEdit)
+
 provide('showDraft', props.showDraft)
 
 provide('isEdit', props.isEdit)

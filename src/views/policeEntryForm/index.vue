@@ -786,6 +786,7 @@ const validateHeadquarters = (value, rule) => {
         :options="options.warningTypeOptions"
         :required="true"
         :field-names="{ value: 'boDictId', text: 'dictName' }"
+        :disabled="!importantEdit"
         label="警情类型："
         placeholder="请选择警情类型"
         :rules="[{ required: true, message: '请选择警情类型' }]"
