@@ -134,8 +134,8 @@ const getItem = (item) => {
 
 const showCheck = (item) => {
   let result = false;
-  if (props.selectLeaf && item.isLeaf) {
-    return true;
+  if (props.selectLeaf) {
+    return item.isLeaf;
   }
   if (!props.headersDisabled && item.isheadquarters === 1) {
     return true;

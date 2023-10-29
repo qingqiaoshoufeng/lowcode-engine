@@ -540,13 +540,6 @@ const initWatch = () => {
   closeToast()
   return new Promise((resolve) => {
     const { currentRow } = props
-    watch(() => [
-      form.value.draftInfo.warningType,
-      form.value.draftInfo.partakeType,
-      form.value.basicInformation.dealSituation.value,
-    ], () => {
-      initFormWhenChange()
-    }, { deep: true })
     if (currentRow?.warningType) {
       form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
       if (form.value.draftInfo.warningType.value) {
@@ -554,6 +547,13 @@ const initWatch = () => {
       }
     }
     form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
+    watch(() => [
+      form.value.draftInfo.warningType,
+      form.value.draftInfo.partakeType,
+      form.value.basicInformation.dealSituation.value,
+    ], () => {
+      initFormWhenChange()
+    }, { deep: true })
     // 只有当填报状态下才自动生成处置过程
     if (props.closeModal && props.isInput) {
       watch(() => [form.value.basicInformation, form.value.basicInfoHead, form.value.investForce, form.value.casualtyWar, form.value.battleResult, form.value.battleConsume], () => {
@@ -1211,13 +1211,13 @@ const onSideBarChange = (e, k) => {
   display: flex;
   background-color: #F6F8FC;
   .form-left {
-    width: 20%;
+    // width: 20%;
   }
   .form-right {
-    width: 80%;
     height: 100%;
     overflow-y: auto;
     display: flex;
+    flex: 1;
     flex-direction: column;
     .form-footer {
       display: flex;

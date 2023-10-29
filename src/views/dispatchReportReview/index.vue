@@ -219,7 +219,7 @@ onMounted(() => {
       />
     </ProModal>
     <!-- 出动审核详情 -->
-    <ProModal v-model:visible="show.reviewVisible" title="出动审核详情">
+    <ProModal v-model:visible="show.reviewVisible" :showHeader="false" title="出动审核详情">
       <template #default="{ setHandleOk }">
         <DispatchForm
           :current-row="currentRow"
