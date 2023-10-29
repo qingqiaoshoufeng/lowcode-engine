@@ -373,7 +373,7 @@ const { loading, submit } = useSubmit((res) => {
     //   props.refreshCallback()
     // })
     showToast('派发成功！')
-    setTimeout(() => props.closeModal(), 200)
+    emits('finishCallback')
   }
 }, {
   submitFn: () => {

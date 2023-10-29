@@ -16,7 +16,10 @@ onMounted(() => {
 })
 
 const finishCallback = () => {
-  setTimeout(() => router.go(-1), 200)
+  setTimeout(() => {
+    show.value.lookVisible = false
+    router.go(-1)
+  }, 200)
 }
 </script>
 
