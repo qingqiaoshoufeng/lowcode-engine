@@ -48,7 +48,7 @@ const OnAfterRead = (file) => {
   <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
-        <van-cell title="相关附件上传：" required class="item-cell">
+        <van-cell title="相关附件上传：" class="item-cell">
           <van-uploader
             v-model="form.otherAttach.attach.value"
             accept="*"
