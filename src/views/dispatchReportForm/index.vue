@@ -1211,13 +1211,13 @@ const onSideBarChange = (e, k) => {
   display: flex;
   background-color: #F6F8FC;
   .form-left {
-    width: 20%;
+    // width: 20%;
   }
   .form-right {
-    width: 80%;
     height: 100%;
     overflow-y: auto;
     display: flex;
+    flex: 1;
     flex-direction: column;
     .form-footer {
       display: flex;
