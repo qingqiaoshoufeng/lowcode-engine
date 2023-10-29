@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { getInitProcess } from "@/apis/index.js";
 import { useOptions } from "@/hooks/useOptions.js";
+import SelectSingle from "@/component/SelectSingle/index";
 
 const props = defineProps({
   processKey: {
@@ -94,32 +95,30 @@ defineOptions({
       :placeholder="`请输入${labelText}单位`"
       :disabled="true"
     />
-  </van-form>
-  <!-- <a-form ref="formRef" :model="form" label-align="right" :label-col="{ style: { width: '80px' } }" autocomplete="off">
-    <a-form-item
+    <SelectSingle
+      v-model:value="form.approveType"
+      :readonly="true"
       name="approveType"
-      :label="`${labelText}意见`"
+      required
+      :options="options.approval"
+      :field-names="{ value: 'boDictId', label: 'dictName' }"
+      :title="`请选择${labelText}意见`"
+      label="`${labelText}意见：`"
+      :placeholder="`请选择${labelText}意见`"
       :rules="[{ required: true, message: `请选择${labelText}意见` }]"
-    >
-      <a-select
-        v-model:value="form.approveType"
-        :options="options.approval"
-        :placeholder="`请选择${labelText}意见`"
-        @change="onApproveType"
-      />
-    </a-form-item>
-    <a-form-item
+      @change="onApproveType"
+    />
+    <van-field
+      v-model="form.remark"
       name="remark"
-      label="批注"
-      :rules="[{ required: false, message: '请输入批注' }]"
-    >
-      <a-textarea
-        v-model:value="form.remark"
-        placeholder="请输入批注"
-        :rows="4"
-        :maxlength="500"
-        show-count
-      />
-    </a-form-item>
-  </a-form> -->
+      rows="4"
+      autosize
+      label="批注："
+      type="textarea"
+      maxlength="500"
+      placeholder="请输入批注"
+      show-word-limit
+      class="form-textarea"
+    />
+  </van-form>
 </template>

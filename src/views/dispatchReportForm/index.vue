@@ -25,6 +25,7 @@ import ScenePhoto from './components/scenePhoto.vue';
 import MeteorologicalInfo from './components/meteorologicalInfo.vue';
 import ProCard from "@/component/ProCard/index.vue";
 import ProSteps from "@/component/ProSteps/index.vue";
+import ProcessReview from "@/component/ProcessReview/index.vue";
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -539,14 +540,6 @@ const initPerson = (dispatchGroup) => {
 const initWatch = () => {
   closeToast()
   return new Promise((resolve) => {
-    const { currentRow } = props
-    if (currentRow?.warningType) {
-      form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
-      if (form.value.draftInfo.warningType.value) {
-        form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.value.warningType)
-      }
-    }
-    form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
     watch(() => [
       form.value.draftInfo.warningType,
       form.value.draftInfo.partakeType,
@@ -1193,12 +1186,19 @@ const onSideBarChange = (e, k) => {
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">
-        <van-button round block type="default" size="small" :loading="loading || temporaryLoading" @click="handleTemporary">
-          暂存
-        </van-button>
-        <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
-          确定
-        </van-button>
+        <template v-if="isApproval && isEdit">
+          <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
+            审核
+          </van-button>
+        </template>
+        <template v-else>
+          <van-button round block type="default" size="small" :loading="loading || temporaryLoading" @click="handleTemporary">
+            暂存
+          </van-button>
+          <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
+            确定
+          </van-button>
+        </template>
       </div>
     </div>
   </div>
