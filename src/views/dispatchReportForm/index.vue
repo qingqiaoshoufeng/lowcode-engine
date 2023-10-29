@@ -26,6 +26,7 @@ import MeteorologicalInfo from './components/meteorologicalInfo.vue';
 import ProCard from "@/component/ProCard/index.vue";
 import ProSteps from "@/component/ProSteps/index.vue";
 import ProcessReview from "@/component/ProcessReview/index.vue";
+import ProModal from "@/component/ProModal/index";
 import {
   approveProcessActions,
   deleteFormFieldAnnotation,
@@ -142,6 +143,8 @@ const deptMembersOptions = ref([]);
 const dispatchDetail = ref(null);
 
 const importantEdit = ref(true) // 重要信息更正
+
+const approvalForm = ref(null)
 
 const sideBarActive = ref(0)
 
@@ -360,6 +363,8 @@ provide('showRescueRescue', showRescueRescue)
 provide('isDetail', props.isDetail)
 
 provide('detail', detail)
+
+provide('importantEdit', importantEdit)
 
 provide('showDraft', props.showDraft)
 
@@ -980,6 +985,28 @@ const { loading, submit } = useSubmit(
   },
 )
 
+const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
+  (res) => {
+    if (!props.isApproval) {
+      showToast('审核成功')
+      emits('finishCallback')
+    }
+  },
+  {
+    submitFn: () => {
+      return approveProcessActions(props.currentRow?.taskId, {
+        businessData: {},
+        approveType: approvalForm.value.approveType,
+        taskData: {
+          suggest: approvalForm.value.suggest,
+          variables: {},
+        },
+        remark: approvalForm.value.remark,
+      })
+    },
+  },
+)
+
 const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
   (res) => {
     showToast('暂存成功')
@@ -993,6 +1020,43 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
     },
   },
 )
+
+const { loading: againLoading, submit: againSubmit } = useSubmit(
+  (res) => {
+    // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+    showToast('提交送审成功！')
+    emits('finishCallback')
+  },
+  {
+    submitFn: () => {
+      return approveProcessActions(props.currentRow?.taskId, {
+        businessData: {},
+        approveType: 1,
+        taskData: {
+          suggest: '',
+          variables: {},
+        },
+        remark: '',
+      })
+    },
+  },
+)
+
+const approvalCallback = async (form) => {
+  approvalForm.value = form
+  if (form.approveType === '1' && props.isEdit) { // 审核通过
+    await submit()
+    await approvalSubmit()
+    show.value.approvalVisible = false
+    emits('finishCallback')
+  }
+  else { // 审核不通过
+    loading.value = approvalLoading.value
+    await approvalSubmit()
+    show.value.approvalVisible = false
+    emits('finishCallback')
+  }
+}
 
 const handleSubmit = () => {
   formRef.value.submit()
@@ -1201,6 +1265,19 @@ const onSideBarChange = (e, k) => {
         </template>
       </div>
     </div>
+
+    <!-- 出动审核 -->
+    <ProModal v-model:visible="show.approvalVisible" title="出动审核">
+      <template #default="{ setHandleOk }">
+        <ProcessReview
+        :process-key="props.processKey"
+        :current-row="props.currentRow"
+        :set-handle-ok="setHandleOk"
+        :label-text="labelText"
+        @finish-callback="approvalCallback"
+        />
+      </template>
+    </ProModal>
   </div>
 </template>
 

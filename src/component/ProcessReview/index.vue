@@ -103,7 +103,7 @@ defineOptions({
       :options="options.approval"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
       :title="`请选择${labelText}意见`"
-      label="`${labelText}意见：`"
+      :label="`${labelText}意见：`"
       :placeholder="`请选择${labelText}意见`"
       :rules="[{ required: true, message: `请选择${labelText}意见` }]"
       @change="onApproveType"
