@@ -151,7 +151,6 @@ watch(() => form.value.deployEquipment, () => {
         v-model="form.basicInfoHead.headquarterName.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        type="number"
         maxlength="100"
         required
         name="headquarterName"
@@ -202,7 +201,7 @@ watch(() => form.value.deployEquipment, () => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         type="number"
-        maxlength="20"
+        maxlength="10"
         required
         name="personNum"
         label="人员数量(人)："
@@ -216,7 +215,7 @@ watch(() => form.value.deployEquipment, () => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         type="number"
-        maxlength="20"
+        maxlength="10"
         required
         name="truckNum"
         label="出动车辆(辆)："

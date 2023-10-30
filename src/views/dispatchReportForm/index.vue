@@ -508,6 +508,15 @@ const initDetail = () => {
         }
       }).finally(() => resolve())
     } else {
+      if (currentRow?.warningType) {
+        form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
+        if (form.value.draftInfo.warningType.value) {
+          form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
+        }
+      }
+      form.value.draftInfo.partakeType.value = currentRow?.partakeType
+
+      initWatch()
       resolve()
     }
   })
@@ -565,7 +574,7 @@ const initWatch = () => {
   })
 }
 
-const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail, initWatch])
+const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail])
 
 const getSubmitParams = () => {
   const {
