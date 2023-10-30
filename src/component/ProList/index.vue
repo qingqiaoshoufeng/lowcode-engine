@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, provide } from "vue";
+import { ref, onMounted, provide, nextTick } from "vue";
 import { useList } from "@/utils/curd.js";
 import { cloneDeep } from 'lodash-es'
 
@@ -91,12 +91,13 @@ const onTabs = (name, title) => {
 }
 
 const onLoad = async () => {
-  if (list.value?.length > 0 && !loading.value) {
-    // loadMore(page + 1, limit).then(res => {
-    //   if (list.value.length === total.value) {
-    //     finished.value = true
-    //   }
-    // })
+  if (list.value?.length > 0 && loading.value) {
+    loadMore(page.value + 1, limit.value).then(res => {
+      if (list.value.length === total.value) {
+        finished.value = true
+      }
+      loading.value = false
+    })
   }
 };
 
@@ -150,13 +151,13 @@ defineExpose({
       </template>
       <template v-else>
         <van-list
-          :loading="loading"
+          v-model:loading="loading"
           :finished="finished"
           :immediate-check="false"
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
+          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content van-clearfix">
             <slot name="list" :record="item" :index="index" />
           </div>
         </van-list>
@@ -167,7 +168,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .pro-list {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   .list-wrapper {

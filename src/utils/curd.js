@@ -69,11 +69,8 @@ export function useList(paginationKeys = {}, { getListFn, transformQuery, transf
     return getListFn(_query.value)
       .then((res) => {
         const resData = transformRes ? transformRes(res) : res
-        list.value.push(resData[paginationKeys.list || 'list'])
+        list.value.push(...resData[paginationKeys.list || 'list'])
         total.value = resData[paginationKeys.total || 'total']
-      })
-      .finally(() => {
-        loading.value = false
       })
   }
 
