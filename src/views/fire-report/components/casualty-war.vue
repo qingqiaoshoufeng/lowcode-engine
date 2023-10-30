@@ -214,7 +214,7 @@ const bigInjured = computed(() => {
           <template #input>
             <van-radio-group 
               id="isInjured"
-              v-model:value="form.casualtyWar.isInjured.value"
+              v-model="form.casualtyWar.isInjured.value"
               v-preview-text="showPreview"
               :disabled="!importantEdit"
               @change="checkFireInjuryCost(form)"
@@ -440,7 +440,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'health']"
+              name="健康状况"
               label="健康状况"
               :rules="form.casualtyWar.health.rules"
               id="health"
@@ -454,7 +454,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'schooling']"
+              name="受教育程度"
               label="受教育程度"
               :rules="form.casualtyWar.schooling.rules"
               id="schooling"
@@ -482,7 +482,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'humanCause']"
+              name="人为因素"
               label="人为因素"
               :rules="form.casualtyWar.humanCause.rules"
               id="injuryBehavior"
@@ -496,7 +496,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'injuryBehavior']"
+              name="受伤时行为"
               label="受伤时行为"
               :rules="form.casualtyWar.injuryBehavior.rules"
               id="injuryBehavior"
@@ -510,7 +510,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'mainSymptoms']"
+              name="身体主要症状"
               label="身体主要症状"
               :rules="form.casualtyWar.mainSymptoms.rules"
               v-model:value="item.injuryPart"
@@ -523,7 +523,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'injuryPart']"
+              name="受伤部位"
               label="受伤部位"
               :rules="form.casualtyWar.injuryPart.rules"
               id="mainSymptoms"
@@ -557,14 +557,14 @@ const bigInjured = computed(() => {
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
-          name="['casualtyWar', 'isDead', 'value']"
+          name="是否有人员死亡"
           label="是否有人员死亡"
           :rules="form.casualtyWar.isDead.rules"
         >
           <template #input>
             <van-radio-group 
               id="isDead"
-              v-model:value="form.casualtyWar.isDead.value"
+              v-model="form.casualtyWar.isDead.value"
               v-preview-text="showPreview"
               :disabled="!importantEdit"
               @change="checkFireInjuryCost(form)"
@@ -588,7 +588,7 @@ const bigInjured = computed(() => {
         <div :gutter="gutter">
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'injuryType']"
+              name="伤亡情况"
               label="伤亡情况"
               :rules="form.casualtyWar.injuryType.rules"
               id="injuryType"
@@ -603,7 +603,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <van-field
-              :name="['casualtyWar', 'deadList', index, 'name']"
+              name="人员姓名"
               label="人员姓名"
               :rules="form.casualtyWar.name.rules"
               id="nation"
@@ -619,7 +619,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'nation']"
+              name="民族"
               label="民族"
               :rules="form.casualtyWar.nation.rules"
               id="injuryType"
@@ -653,7 +653,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <van-field
-              :name="['casualtyWar', 'deadList', index, 'idNumber']"
+              name="证件号码"
               label="证件号码"
               :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
               id="idNumber"
@@ -668,7 +668,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'gender']"
+              name="人员性别"
               label="人员性别"
               :rules="form.casualtyWar.gender.rules"
               id="gender"
@@ -742,7 +742,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'health']"
+              name="健康状况"
               label="健康状况"
               :rules="form.casualtyWar.health.rules"
               id="health"
@@ -756,7 +756,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'schooling']"
+              name="受教育程度"
               label="受教育程度"
               :rules="form.casualtyWar.schooling.rules"
               id="schooling"
@@ -770,7 +770,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'injuryCause']"
+              name="致死原因"
               label="致死原因"
               :rules="[{ required: form.casualtyWar.injuryCause.rules[0].required, message: '请选择致死原因' }]"
               id="injuryCause"
@@ -784,7 +784,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'injuredList', index, 'humanCause']"
+              name="人为因素"
               label="人为因素"
               :rules="form.casualtyWar.humanCause.rules"
               id="injuryBehavior"
@@ -798,7 +798,7 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'injuryBehavior']"
+              name="受害时行为"
               label="受害时行为"
               :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
               id="injuryBehavior"
@@ -815,7 +815,7 @@ const bigInjured = computed(() => {
         <div :gutter="gutter">
           <div :span="8">
             <SelectSingle
-              :name="['casualtyWar', 'deadList', index, 'bodyLocation']"
+              name="发现尸体位置"
               label="发现尸体位置"
               :rules="form.casualtyWar.bodyLocation.rules"
               id="bodyLocation"
@@ -829,14 +829,14 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <CascaderSingle
-              :name="['casualtyWar', 'deadList', index, 'deathDate']"
+              name="死亡时间"
               label="死亡时间"
               :rules="form.casualtyWar.deathDate.rules"
               id="deathDate"
               v-model:value="item.deathDate"
               v-preview-text="showPreview"
               :options="options.deathDate"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
+              :field-names="{ value: 'boDictId', text: 'dictName' }"
               placeholder="请选择死亡时间"
               allow-clear
               :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"

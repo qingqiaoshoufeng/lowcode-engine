@@ -9,16 +9,15 @@ import { useAsyncQueue } from '@vueuse/core'
 // import FireInfo from '../dispatch-report/components/_fire-info.vue'
 import BaseInfo from './base-info.vue'
 import CasualtyWar from './casualty-war.vue'
-console.log(BaseInfo,'BaseInfo');
-// import CasualtyWar from './components/_casualty-war.vue'
-// import EconomicLoss from './components/_economic-loss.vue'
-// import FireFacilities from './components/_fire-facilities.vue'
-// import CaseHandling from './components/_case-handling.vue'
-// import FireBuilding from './components/_fire-building.vue'
-// import FireCourse from './components/_fire-course.vue'
-// import FirePhoto from './components/_fire-photo.vue'
-// import OtherAttach from './components/_other-attach.vue'
-// import BriefSituation from './components/_brief-situation.vue'
+import EconomicLoss from './economic-loss.vue'
+import FireFacilities from './fire-facilities.vue'
+import CaseHandling from './case-handling.vue'
+import FireBuilding from './fire-building.vue'
+
+import FireCourse from './fire-course.vue'
+import FirePhoto from './fire-photo.vue'
+import OtherAttach from './other-attach.vue'
+import BriefSituation from './fireInfoTransferList_brief-situation.vue'
 import { useFormConfig } from '../config/form-config.js'
 // import ProcessReview from '@/components/process-review/index.vue'
 import { exportPdf } from '@/utils/export-pdf.js'
@@ -383,13 +382,19 @@ const initWatch = () => {
   }
   // 轻微火灾，起火原因不能选择‘刑事放火’
   if (options.value.fireCause) {
-    options.value.fireCause.map((item) => {
-      item.children?.forEach((temp) => {
-        if (temp.dictName === '刑事放火') {
-          temp.disabled = form.value.basicInfo.severity?.value === '1'
-        }
-      })
-      return item
+    options.value.fireCause = options.value.fireCause.map((item) => {
+      return {
+        ...item,
+        children: item.children?.map((temp) => {
+          if (temp.dictName === '刑事放火') {
+            return {
+              ...temp,
+              disabled:form.value.basicInfo.severity?.value === '1'
+            }
+          }
+          return temp
+        })
+      }
     })
   }
   // 起火场所字典根据火灾类型赋值
@@ -987,12 +992,26 @@ onMounted(() => {
               <van-form>
                 <!-- 警情信息 -->
                 <!-- <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" /> -->
+                <!-- 简要情况 -->
+                <BriefSituation v-if="!showDraft" />
                 <!-- 基本信息 -->
                 <BaseInfo />
                 <!-- 人员伤亡 -->
-                <!-- <CasualtyWar v-if="showSevereFire" /> -->
-                <CasualtyWar />
-                <!-- 简要情况 -->
+                <CasualtyWar v-if="showSevereFire" />
+                <!-- 经济损失 -->
+                <EconomicLoss />
+                <!-- 起火建筑 -->
+                <FireBuilding v-if="showBuildingFire" />
+                <!-- 消防设施 -->
+                <FireFacilities v-if="showBuildingFire && showSevereFire" />
+                <!-- 案件办理 -->
+                <CaseHandling v-if="showSevereFire" />
+                <!-- 火灾照片 -->
+                <FirePhoto />
+                <!-- 起火经过 -->
+                <FireCourse />
+                <!-- 其他附件 -->
+                <OtherAttach />
               </van-form>
             </div>
          </div>

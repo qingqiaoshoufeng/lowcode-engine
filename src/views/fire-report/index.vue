@@ -46,7 +46,7 @@
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
-              v-p="['admin', 'dispatch-manage:edit']"
+              v-p="['admin', 'fire-report:look']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -56,7 +56,7 @@
               查看
             </van-button>
             <van-button
-              v-p="['admin', 'dispatch-manage:edit']"
+              v-p="['admin', 'fire-report:input']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -66,7 +66,7 @@
               填报
             </van-button>
             <van-button
-              v-p="['admin', 'dispatch-manage:edit']"
+              v-p="['admin', 'fire-report:reback']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -74,6 +74,14 @@
               @click.stop="handleclick({type:'return' ,record})"
             >
               回退
+            </van-button>
+            <van-button
+              v-if="record.isDistribute !== '1'" 
+              v-p="['admin', 'fire-report:transfer']" 
+              type="link" 
+              @click="handleTransfer({type:'transfer' ,record})"
+            >
+              转派
             </van-button>
           </div>
         </div>
