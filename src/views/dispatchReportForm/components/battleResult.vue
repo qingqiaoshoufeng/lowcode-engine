@@ -124,7 +124,7 @@ const validateSurvive = (value, rule) => {
         :readonly="showPreview"
         required
         type="number"
-        maxlength="10"
+        maxlength="20"
         name="emergencyNum"
         label="抢救财产价值(元)："
         label-width="148px"
@@ -137,7 +137,7 @@ const validateSurvive = (value, rule) => {
         :readonly="showPreview"
         required
         type="number"
-        maxlength="10"
+        maxlength="20"
         name="protectNum"
         label="保护财产价值(元)："
         label-width="148px"

@@ -31,9 +31,9 @@ defineOptions({
       <van-icon v-if="openState && showOpenClose" name="arrow-up" class="arrow" @click="handleClose(false)" />
       <van-icon v-else-if="showOpenClose" name="arrow-down" class="arrow" @click="handleClose(true)" />
     </div>
-    <template v-if="openState">
+    <div v-if="openState" class="pro-card-content" :style="{ height: openState ? 'unset' : '0px;' }">
       <slot />
-    </template>
+    </div>
     <div class="pro-card-close" v-if="openState && showOpenClose" @click="handleClose(false)">收起</div>
   </div>
 </template>
@@ -62,6 +62,9 @@ defineOptions({
       color: #8D94A1;
       margin-left: auto;
     }
+  }
+  .pro-card-content {
+
   }
   .pro-card-close {
     font-size: 14px;

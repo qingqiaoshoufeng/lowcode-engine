@@ -271,8 +271,7 @@ watch(
             v-preview-text="showPreview"
             :readonly="showPreview"
             required
-            type="number"
-            maxlength="50"
+            maxlength="18"
             name="idNumber"
             label="身份证号码："
             label-width="110px"
@@ -515,8 +514,7 @@ watch(
             v-preview-text="showPreview"
             :readonly="showPreview"
             required
-            type="number"
-            maxlength="50"
+            maxlength="18"
             name="idNumber"
             label="身份证号码："
             label-width="110px"

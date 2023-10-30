@@ -86,7 +86,6 @@ const onIsCommand = (e) => {
           v-preview-text="showPreview"
           :readonly="showPreview"
           required
-          type="number"
           maxlength="50"
           name="duty"
           label="职务："
