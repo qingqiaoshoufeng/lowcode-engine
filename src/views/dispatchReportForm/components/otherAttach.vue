@@ -59,10 +59,10 @@ const OnAfterRead = (file) => {
             :max-size="10 * 1000 * 1000000"
             :readonly="isDetail"
             :deletable="!isDetail"
-            :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+            :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
             :after-read="OnAfterRead"
           >
-            <van-button v-if="form.scenePhoto.photos?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
+            <van-button v-if="form.otherAttach.attach?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
               上传文件
             </van-button>
           </van-uploader>

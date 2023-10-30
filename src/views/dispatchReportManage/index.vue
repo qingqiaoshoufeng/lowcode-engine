@@ -192,7 +192,7 @@ const handleCollect = async (row, state) => {
   const res = await collectFireWarning({
     focusAppid: row.boFireDispatchId,
     focusCode: row.dispatchCode,
-    focusType: "1",
+    focusType: "2",
     deleteFlag: state ? "1" : "2",
   });
   proListRef.value.filter().then(() => {

@@ -1,39 +1,32 @@
 import { onMounted, ref, onUnmounted } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import { throttle } from 'lodash';
 
-export const useIntersection = (classNames) => {
+export const useIntersection = (classNames, wrapper = '.form-right') => {
 
   const sideBarActive = ref(0)
 
-  const doms = ref([])
-
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const callback = () => {
+    let visibleIndex = 0;
+    let i = 0;
+    const scrollTop = document.querySelector(wrapper).scrollTop;
+    for (let key in classNames.value) {
+      const dom = document.querySelector(`#${key}`)
+      if (dom?.offsetTop <= scrollTop + 100) {
+        visibleIndex = i;
+      }
+      i += 1;
+    }
+  
+    // 更新选中的侧边栏项索引
+    sideBarActive.value = visibleIndex;
+  }
 
   onMounted(() => {
-    Object.keys(classNames.value)?.forEach(item => {
-      const dom = document.querySelector(`#${item}`)
-      if (dom) {
-        doms.value.push(dom)
-      }
-    })
+    document.querySelector(wrapper)?.addEventListener('scroll', throttle(callback, 100), true)
+  })
 
-    // useEventListener(document, 'scroll', (evt) => {
-    //   // 根据滚动位置计算当前可见区域对应的侧边栏项索引
-    //   let visibleIndex = 0;
-    //   for (let i = 0; i < doms.value.length; i++) {
-    //     const item = doms.value[i];
-    //     if (item.offsetTop <= scrollTop) {
-    //       visibleIndex = i;
-    //     } else {
-    //       break;
-    //     }
-    //   }
-
-    //   console.log('.....', visibleIndex)
-    
-    //   // 更新选中的侧边栏项索引
-    //   sideBarActive.value = visibleIndex;
-    // })
+  onUnmounted(() => {
+    document.querySelector(wrapper)?.removeEventListener('scroll', throttle(callback, 100))
   })
 
   return { sideBarActive }
