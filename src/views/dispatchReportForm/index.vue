@@ -49,6 +49,7 @@ import { useModal } from '@/hooks/useModal.js';
 import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue } from '@vueuse/core';
 import { useStore } from "vuex";
+import { useIntersection } from '@/hooks/useIntersection.js';
 
 const props = defineProps({
   showDraft: {
@@ -145,8 +146,6 @@ const dispatchDetail = ref(null);
 const importantEdit = ref(true) // 重要信息更正
 
 const approvalForm = ref(null)
-
-const sideBarActive = ref(0)
 
 const localFireDispatchId = ref(props.currentRow?.boFireDispatchId || uuidv4())
 
@@ -323,6 +322,8 @@ const sections = computed(() => {
     }
   }
 })
+
+const { sideBarActive } = useIntersection(sections);
 
 const { detail, loadDetail } = useDetail({
   getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
@@ -511,10 +512,10 @@ const initDetail = () => {
       if (currentRow?.warningType) {
         form.value.draftInfo.warningType.value = currentRow?.warningType?.split(',')
         if (form.value.draftInfo.warningType.value) {
-          form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
+          form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.value.warningType)
         }
       }
-      form.value.draftInfo.partakeType.value = currentRow?.partakeType
+      form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
 
       initWatch()
       resolve()

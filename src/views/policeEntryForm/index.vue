@@ -730,6 +730,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        maxlength="50"
         name="warningAddr"
         label="警情地址："
         placeholder="请输入警情地址"
@@ -739,10 +740,12 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningLng"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        type="number"
         name="warningLng"
         center
         required
         clearable
+        maxlength="20"
         label="经度坐标："
         placeholder="请输入经度坐标"
         :rules="[
@@ -760,10 +763,12 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningLat"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        type="number"
         name="warningLat"
         center
         required
         clearable
+        maxlength="20"
         label="纬度坐标："
         placeholder="请输入纬度坐标"
         :rules="[
@@ -786,7 +791,7 @@ const validateHeadquarters = (value, rule) => {
         :options="options.warningTypeOptions"
         :required="true"
         :field-names="{ value: 'boDictId', text: 'dictName' }"
-        :disabled="!importantEdit"
+        :disabled="showPreview ? false : !importantEdit"
         label="警情类型："
         placeholder="请选择警情类型"
         :rules="[{ required: true, message: '请选择警情类型' }]"
@@ -836,6 +841,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        maxlength="50"
         name="warningTypeOther"
         label="其他说明："
         placeholder="请输入其他说明"
@@ -859,6 +865,7 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningOrgname"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        maxlength="50"
         required
         name="warningOrgname"
         label-width="178px"
@@ -887,7 +894,7 @@ const validateHeadquarters = (value, rule) => {
         name="warningTel"
         label="联系方式："
         placeholder="请输入联系方式"
-        maxlength="50"
+        maxlength="12"
         :required="false"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
       />
@@ -934,6 +941,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        :maxlength="100"
         name="naturalDisasterOther"
         label="其他说明："
         placeholder="请输入其他说明"
