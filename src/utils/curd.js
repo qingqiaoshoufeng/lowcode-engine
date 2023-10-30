@@ -58,7 +58,7 @@ export function useList(paginationKeys = {}, { getListFn, transformQuery, transf
 
   function filter() {
     page.value = 1
-    list.value = []
+    // list.value = []
     return loadList()
   }
 
