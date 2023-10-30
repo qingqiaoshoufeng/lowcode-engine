@@ -17,7 +17,7 @@
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}</div>
-                <div class="percent">{{ item.percent.includes('-') ? item.percent : `+${item.percent}` }}</div>
+                <div class="percent">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
