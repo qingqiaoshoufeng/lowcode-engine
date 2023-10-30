@@ -13,6 +13,7 @@ export * from './system/menu.js'
 export * from './system/login.js'
 export * from './business/home.js'
 export * from './business/fire-report.js'
+export * from './business/fire-manage.js'
 
 
 // 119警情挂接（新建警情）

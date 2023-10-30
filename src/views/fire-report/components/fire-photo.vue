@@ -37,7 +37,9 @@ const onPreview = (file) => {
 }
 
 const onChange = (file, fileList, event) => {
+  debugger;
   form.value.firePhoto.photos.value?.forEach((item, i) => {
+    debugger
     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
       item.url = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
       item.thumbUrl = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
@@ -54,8 +56,10 @@ onMounted(() => {
       businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
       businessType: 'image',
     }).then((res) => {
+      debugger;
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
+          isImage: true,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
@@ -79,15 +83,22 @@ onMounted(() => {
     </h4>
     <div :gutter="gutter">
       <div :span="24">
-        <van-field 
-          name="firePhoto,photos,value" 
-          label="火灾照片"
-          :rules="form.firePhoto.photos.rules"
-        >
-          <template #input>
-            <van-uploader v-model="value" />
-          </template>
-        </van-field>
+        <van-uploader
+            name="firePhoto,photos,value"
+            label="火灾照片"
+            :rules="form.firePhoto.photos.rules"
+            v-model="form.firePhoto.photos.value"
+            accept="image/png, image/jpeg, image/jpg"
+            multiple
+            preview-full-image
+            preview-image
+            :max-count="9"
+            :max-size="10 * 1000 * 1000000"
+            :readonly="isDetail"
+            :deletable="!isDetail"
+            :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
+            :after-read="onChange"
+          />
         <!-- <a-form-item
           :name="['firePhoto', 'photos', 'value']"
           label="火灾照片"
