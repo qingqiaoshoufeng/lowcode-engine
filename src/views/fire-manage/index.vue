@@ -133,8 +133,6 @@ const refreshCallback = () => {
   proListRef.value.filter()
 }
   
-  
-  
 const handleInput = (row) => {
   if (row.isLock === '1') {
     message.warning(MSG_LOCKING_TEXT)
@@ -145,21 +143,23 @@ const handleInput = (row) => {
   isEdit.value = false
   show.value.editVisible = true
 }
-const handleclick = ({type,record})=>{
-  const map = {
-    'editor':handleInput(record)
-  }
-  show.value[type] = true
-}
-const handleItem = (record)=>{
-  selectVisible
-}
 const handleLook = (row) => {
   currentRow.value = { ...row, boFireInfoId: undefined }
   isDraft.value = false
   isEdit.value = false
   show.value.lookVisible = true
 }
+const handleclick = ({type,record})=>{
+  const map = {
+    'editor':handleInput(record),
+    'look':handleLook(record)
+  }
+  show.value[type] = true
+}
+const handleItem = (record)=>{
+  selectVisible
+}
+
   
   
   

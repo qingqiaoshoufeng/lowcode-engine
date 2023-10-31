@@ -56,10 +56,10 @@ onMounted(() => {
       businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
       businessType: 'image',
     }).then((res) => {
-      debugger;
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
+          deletable:isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
