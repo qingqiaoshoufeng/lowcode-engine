@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, provide, nextTick } from "vue";
+import { ref, onMounted, provide, nextTick, computed } from "vue";
 import { useList } from "@/utils/curd.js";
 import { cloneDeep } from 'lodash-es'
 
@@ -66,7 +66,12 @@ const {
 
 provide("query", query);
 
-const finished = ref(false);
+const finished = computed(() => {
+  if (loading.value) {
+    return false
+  }
+  return total.value === 0 || total.value === list.value.length;
+});
 
 if (props.defaultFilterValue) {
   query.value = cloneDeep(props.defaultFilterValue)
@@ -74,16 +79,11 @@ if (props.defaultFilterValue) {
 
 onMounted(() => {
   if (props.showLoad) {
-    loadList().then(res => {
-      if (list.value.length === total.value) {
-        finished.value = true
-      }
-    });
+    loadList();
   }
 });
 
 const onTabs = (name, title) => {
-  finished.value = false;
   if (props.onTabFn) {
     props.onTabFn(name, title)
     return
@@ -92,10 +92,7 @@ const onTabs = (name, title) => {
 
 const onLoad = async () => {
   if (list.value?.length > 0 && loading.value) {
-    loadMore(page.value + 1, limit.value).then(res => {
-      if (list.value.length === total.value) {
-        finished.value = true
-      }
+    loadMore(page.value + 1, limit.value).finally(() => {
       loading.value = false
     })
   }
