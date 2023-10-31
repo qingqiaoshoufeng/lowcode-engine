@@ -93,7 +93,7 @@ onMounted(() => {
 
 <template>
   <div class="apply-recheck">
-    <div class="tooltip">
+    <div v-if="recheckType !== 2" class="tooltip">
       <img src="@/assets/images/icon_warning.png" alt="">
       <span style="margin-left: 10px;">{{ tooltip[recheckType - 1] }}</span>
     </div>
