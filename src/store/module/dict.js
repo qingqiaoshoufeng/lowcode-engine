@@ -8,13 +8,13 @@ const filterDicts =( state,dictType, transformRes, callback , detail) => {
         filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
       })
       const result = transformRes ? transformRes(filters) : filters
-      callback(result)
+      callback && callback(result)
       return result
     }
     else {
       const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
       const result = transformRes ? transformRes(filters) : filters
-      callback(result)
+      callback && callback(result)
       return result
     }
   } else {
@@ -48,13 +48,13 @@ const getters = {
           filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
         })
         const result = transformRes ? transformRes(filters) : filters
-        callback(result)
+        // callback(result)
         return result
       }
       else {
         const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
         const result = transformRes ? transformRes(filters) : filters
-        callback(result)
+        // callback(result)
         return result
       }
     } else {
@@ -64,13 +64,13 @@ const getters = {
           filters[temp] = state.systemDicts.filter(item => item.dictType === temp)
         })
         const result = transformRes ? transformRes(filters) : filters
-        callback(result)
+        // callback && callback(result)
         return result
       }
       else {
         const filters = state.systemDicts.filter(item => item.dictType === dictType)
         const result = transformRes ? transformRes(filters) : filters
-        callback(result)
+        // callback(result)
         return result
       }
     }

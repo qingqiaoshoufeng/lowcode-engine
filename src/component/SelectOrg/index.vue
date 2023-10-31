@@ -237,7 +237,11 @@ defineOptions({
   name: "SelectOrg",
 });
 </script>
-
+<script>
+export default {
+  name:'SelectOrg'
+}
+</script>
 <template>
   <van-field
     v-model="selectTextValue"
@@ -250,7 +254,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
   />
-  <van-popup v-model:show="selectVisible" position="bottom">
+  <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="select-org">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">

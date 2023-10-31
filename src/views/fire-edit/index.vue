@@ -4,23 +4,7 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireManageList"
-        :tabs="tabs"
-        :onTabFn="onTabChangeFn"
       >
-      <template #search="{ tabsActive, filterFormState, resetForm }">
-        <div class="list-tabs1" v-if="tabsActive === 1 || tabsActive === 2">
-          <SelectTime
-            v-model:value="filterFormState.time"
-            title="选择时间"
-            @change="onTimeChange"
-          />
-          <SelectMore
-            :options="searchOptions"
-            :reset-fn="resetForm"
-            @confirmCallback="onSearchConfirm"
-          />
-        </div>
-      </template>
         <template #list="{ record }">
           <div class="list-item" @click="handleItem(record)">
             <div class="item-header">
@@ -59,44 +43,16 @@
               <div>{{ record.firePlaceValue }}</div>
             </div>
             <div class="item-line" />
-            <div class="item-operate" @click.stop>
+            <div class="item-operate">
               <van-button
-                v-p="['admin', 'fire-report:look']"
+                v-p="['admin', 'fire-manage:edit']"
                 type="success"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                @click.stop="handleclick({type:'look' ,record})"
+                @click.stop="handleEdit(record)"
               >
-                查看
-              </van-button>
-              <van-button
-                v-p="['admin', 'fire-report:input']"
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click.stop="handleclick({type:'editor' ,record})"
-              >
-                填报
-              </van-button>
-              <van-button
-                v-p="['admin', 'fire-report:reback']"
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click.stop="handleclick({type:'return' ,record})"
-              >
-                回退
-              </van-button>
-              <van-button
-                v-if="record.isDistribute !== '1'" 
-                v-p="['admin', 'fire-report:transfer']" 
-                type="link" 
-                @click="handleTransfer({type:'transfer' ,record})"
-              >
-                转派
+                修改
               </van-button>
             </div>
           </div>
@@ -146,14 +102,9 @@ const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
   onlyMy: false,
-  fireStatus: [],
-  fireInfoTag: [],
-  warningArea: [],
-  orgId: [],
   time: getLastMonth(),
-  fireLevel: [],
-  fireCause: [],
-  area: [],
+  unEditFlag: true,
+  orgId: [],
 }
 const show = ref({})
 const isEdit = ref(false)
@@ -162,12 +113,12 @@ const relevanceDraft = ref(null)
 const refreshCallback = () => {
   proListRef.value.filter()
 }
-const onSearchConfirm = () => {
-  showLoadingToast();
-  proListRef.value.filter().then((res) => {
-    closeToast();
-  });
-}
+// const onSearchConfirm = () => {
+//   showLoadingToast();
+//   proListRef.value.filter().then((res) => {
+//     closeToast();
+//   });
+// }
 const handleInput = (row) => {
   if (row.isLock === '1') {
     message.warning(MSG_LOCKING_TEXT)
@@ -190,68 +141,12 @@ const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }
-// 查询我的火灾
-const handleMyFire = () => {
-  proListRef.value.query = {
-    onlyMy: true,
-    time: getLastMonth(),
-    unEditFlag: false,
-    orgId: [],
-  }
-  proListRef.value.filter()
-}
-// 查询收藏的火灾
-const handleMyCollect = () => {
-  proListRef.value.query = {
-    onlyMy: false,
-    myCollect: true,
-    orgId: [],
-  }
-  proListRef.value.filter()
-}
-// 操作按钮
-const handleclick = ({type,record})=>{
-  const map = {
-    'editor':handleInput(record),
-    'look':handleLook(record)
-  }
-  show.value[type] = true
-}
-
-// tab切换
-const onTabChangeFn = (val,val1)=>{
-  const getMap = [getPrefectureFire,handleMyFire,handleMyCollect]
-  getMap[val]()
-}
-const handleItem = (record)=>{
-  selectVisible
-}
-
-  
-  
-  
 const handleEdit = (row) => {
   currentRow.value = row
   relevanceDraft.value = null
   isDraft.value = true
   isEdit.value = true
   show.value.editVisible = true
-}
-  
-const handleAddDraft = () => {
-  currentRow.value = null
-  relevanceDraft.value = null
-  isDraft.value = true
-  isEdit.value = false
-  show.value.draftVisible = true
-}
-  
-const handleAddUnDispatch = () => {
-  currentRow.value = null
-  relevanceDraft.value = null
-  isDraft.value = false
-  isEdit.value = false
-  show.value.unDispatchVisible = true
 }
 const setHandleOk = ()=>{}
 </script>

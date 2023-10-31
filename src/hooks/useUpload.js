@@ -1,4 +1,5 @@
 import { createVNode, ref } from 'vue'
+import { showConfirmDialog } from 'vant';
 // import { ExclamationCircleOutlined } from '@ant-design/icons-vue'
 // import { Modal, message } from '@castle/ant-design-vue'
 import Viewer from 'viewerjs'
@@ -34,31 +35,22 @@ export const useUpload = () => {
     return isJpgOrPng && isLt2M
   }
 
-  const onRemove = (file) => {
-    return new Promise((resolve, reject) => {
-      // Modal.confirm({
-      //   title: '确定删除该附件/照片吗，删除后将无法再使用！',
-      //   icon: createVNode(ExclamationCircleOutlined),
-      //   onOk: () => {
-      //     deleteAttachmentFile({ attachmentId: file?.response?.attachmentId || file?.attachmentId }).then((res) => {
-      //       if (res?.status === 204) {
-      //         setTimeout(() => {
-      //           initViewer()
-      //         }, 1000)
-      //         resolve(true)
-      //       }
-      //       else {
-      //         // eslint-disable-next-line prefer-promise-reject-errors
-      //         reject(false)
-      //       }
-      //     })
-      //   },
-      //   onCancel: () => {
-      //     // eslint-disable-next-line prefer-promise-reject-errors
-      //     reject(false)
-      //   },
-      // })
+  const onRemove = async(file) => {
+    const result = await showConfirmDialog({
+      title: '标题',
+      message:
+        '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。',
     })
+    if(result === 'confirm'){
+      const res = await deleteAttachmentFile({ attachmentId: file?.response?.attachmentId || file?.attachmentId })
+      if (res?.status === 204) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+    return true
   }
 
   return { initViewer, handlePreview, beforeUpload, onRemove }

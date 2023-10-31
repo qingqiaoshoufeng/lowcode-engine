@@ -44,7 +44,7 @@
             <div>{{ record.dispatchedInfoTime }}</div>
           </div>
           <div class="item-line" />
-          <div class="item-operate" @click.stop>
+          <div class="item-operate">
             <van-button
               v-p="['admin', 'fire-report:look']"
               type="success"
@@ -76,9 +76,11 @@
               回退
             </van-button>
             <van-button
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
               v-if="record.isDistribute !== '1'" 
               v-p="['admin', 'fire-report:transfer']" 
-              type="link" 
               @click="handleTransfer({type:'transfer' ,record})"
             >
               转派
@@ -87,6 +89,7 @@
         </div>
       </template>
   </ProList>
+  <!-- 填报窗口 -->
   <ProModal  v-model:visible="show.editVisible" title="火灾填报">
     <template #default="{ setHandleOk, setHandleExtend }">
         <EditorForm
@@ -99,7 +102,19 @@
           @finish-callback="refreshCallback"
         />
       </template>
+  </ProModal> 
+  <!-- 警情窗口 -->
+  <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+    <PoliceForm
+      :current-row="currentRow"
+      :show-preview="true"
+      :show-steps="true"
+    />
   </ProModal>
+  <!-- 转派窗口 -->
+  <!-- <DialogInfo v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
+    <TransferTask :setHandleOk="{setHandleOk}" :current-row="currentRow" />
+  </DialogInfo> -->
 </div>
 </template>
 
@@ -107,23 +122,28 @@
 import {  
   // deleteFireReportDraft, 
   getFireReportList } from '@/apis/index.js'
-import { computed, createVNode, onMounted, ref } from 'vue'
+import { computed, createVNode, onMounted, ref,provide } from 'vue'
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from './components/EditorForm.vue'
+import PoliceForm from '@/views/policeEntryForm/index.vue';
+import TransferTask from './components/transfer-task.vue'
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
   draftFlag: '2',
 }
+const isShowTemporary = ref(true)
 const show = ref({})
 const isEdit = ref(false)
 const isDraft = ref(false)
+isShowTemporary
 const relevanceDraft = ref(null)
 const refreshCallback = () => {
   proListRef.value.filter()
 }
 
+provide('isShowTemporary', isShowTemporary)
 
 
 const handleInput = (row) => {
@@ -135,24 +155,39 @@ const handleInput = (row) => {
   isDraft.value = false
   isEdit.value = false
   show.value.editVisible = true
-}
-const handleclick = ({type,record})=>{
-  const map = {
-    'editor':handleInput(record)
-  }
-  show.value[type] = true
-}
-const handleItem = (record)=>{
-  selectVisible
+  isShowTemporary.value = true
 }
 const handleLook = (row) => {
+  debugger
   currentRow.value = { ...row, boFireInfoId: undefined }
   isDraft.value = false
   isEdit.value = false
   show.value.lookVisible = true
 }
+const handleTransfer = (row) => {
+  currentRow.value = row
+  show.value.transferVisible = true
+}
+const handleclick = ({type,record})=>{
+  isShowTemporary.value = false
+  const map = {
+    'editor':handleInput,
+    'look':handleLook,
+    'transfer':handleTransfer
+  }
+  map[type](record)
+}
+const handleItem = (record)=>{
+  // selectVisible
+}
 
 
+const postTransfer = (callback)=>{
+  debugger;
+  callback(()=>{
+
+  })
+}
 
 const handleEdit = (row) => {
   currentRow.value = row

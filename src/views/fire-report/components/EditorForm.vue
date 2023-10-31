@@ -41,6 +41,7 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
+import { value } from 'lodash-es';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const props = defineProps({
@@ -105,7 +106,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['finishCallback'])
-
+const isShowTemporary = inject('isShowTemporary')
 // const bus = inject('bus')
 
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
@@ -872,6 +873,12 @@ const approvalCallback = async (form) => {
     emits('finishCallback')
   }
 }
+const setTemporary = async()=>{
+  temporaryLoading.value = true
+  await temporarySubmit()
+  temporaryLoading = false
+}
+
 
 onMounted(() => {
   props.setHandleOk && props.setHandleOk((finishFn) => {
@@ -905,10 +912,10 @@ onMounted(() => {
       })
   }, loading)
   // 暂存
-  props.setHandleExtend && props.setHandleExtend(async (finishFn) => {
-    await temporarySubmit()
-    await finishFn()
-  }, temporaryLoading)
+  // props.setHandleExtend && props.setHandleExtend(async (finishFn) => {
+  //   await temporarySubmit()
+  //   await finishFn()
+  // }, temporaryLoading)
   const promiseAll = []
   promiseAll.push(initDict())
   if (props.currentRow?.boFireWarningId) {
@@ -1013,6 +1020,11 @@ onMounted(() => {
                 <!-- 其他附件 -->
                 <OtherAttach />
               </van-form>
+              <div class="form-footer" v-if="!showPreview">
+                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click="setTemporary">
+                  暂存
+                </van-button>
+              </div>
             </div>
          </div>
       </div>
@@ -1055,6 +1067,16 @@ onMounted(() => {
     }
   }
 }
+.form-footer {
+    padding: 0 33px 30px 33px;
+    .temporary{
+      height: 42px;
+      background: #1833A9;
+      border-radius: 21px;
+      opacity: 0.6;
+    }
+}
+
 .fire-input {
   position: relative;
   :deep(h4) {

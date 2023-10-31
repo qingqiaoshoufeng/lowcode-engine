@@ -6,4 +6,8 @@ export const pathMap = {
   "chudongxiugai": "/dispatchReportEdit",
   "chudongguanli": "/dispatchReportManage",
   "chudongshenhe": "/dispatchReportReview",
+  'huozaitianbao': "/fire-report",
+  'huozaiguanli': "/fire-manage",
+  'huozaixiugai': "/fire-edit"
 }
+  
