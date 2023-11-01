@@ -21,7 +21,7 @@ install&build-job:
   only:
     - /^release-.*$/
     - tags
-    # - master
+    - master
   tags:
     - general
   script:
@@ -57,8 +57,8 @@ install&build-job:
     - sed -i 's|<remark>remark</remark>|<remark>'$ENVTEXT'-#'$CI_PIPELINE_ID'</remark>|g' ./public/version.xml
     - sed -i 's|<url>url</url>|<url>http://223.4.79.9:31201/foodreserver-apps/'$FIREALARMAPKNAME'</url>|g' ./public/version.xml
     - cd cordova
-    - sed -i 's|<name>浙江储备</name>|<name>浙江储备</name>|g' config.xml
-    - sed -i 's|<icon src="res/zhejiang.png"/>|<icon src="res/zhejiang.png"/>|g' config.xml
+    # - sed -i 's|<name>浙江储备</name>|<name>浙江储备</name>|g' config.xml
+    # - sed -i 's|<icon src="res/zhejiang.png"/>|<icon src="res/zhejiang.png"/>|g' config.xml
     - sed -i 's|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="1.0.0" android-versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|<widget id="com.hxid.firealarm" android-packageName="com.hxid.zhejiang" version="'$DATE'" android-versionCode="'$TIMESTAMP'" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|g' config.xml
     # - more config.xml
     - cordova platform add android
