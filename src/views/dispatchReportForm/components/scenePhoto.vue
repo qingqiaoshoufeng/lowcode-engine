@@ -1,6 +1,7 @@
 <script setup>
 import { inject, nextTick, onMounted, ref } from "vue";
-import { downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
+import { showDialog } from 'vant';
+import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
@@ -51,13 +52,42 @@ onMounted(() => {
   }
 });
 
-const OnAfterRead = (file) => {
+const onAfterRead = (file) => {
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
   formData.append('attachmentType', 'image')
   formData.append('extend2', '照片')
   formData.append('file', file.file)
-  return uploadFile(formData)
+  return uploadFile(formData).then(res => {
+    if (res?.attachmentId) {
+      file.file.attachmentId = res.attachmentId
+      file.file.attachmentName = res.attachmentName
+      file.file.attachmentSize = res.attachmentSize
+      file.file.fileType = res.fileType
+      file.file.fullPath = res.fullPath
+    }
+  })
+}
+
+const onDelete = (file) => {
+  return new Promise((resolve, reject) => {
+    showDialog({
+      message: '确定删除该附件/照片吗，删除后将无法再使用！',
+      showConfirmButton: true,
+      showCancelButton: true,
+    }).then(() => {
+      deleteAttachmentFile({ attachmentId: file?.attachmentId || file?.file?.attachmentId }).then((res) => {
+        if (res?.status === 204) {
+          resolve(true)
+        }
+        else {
+          reject(false)
+        }
+      })
+    }).catch((error) => {
+      reject(false)
+    });
+  })
 }
 </script>
 
@@ -69,7 +99,6 @@ const OnAfterRead = (file) => {
           <van-uploader
             v-model="form.scenePhoto.photos.value"
             accept="image/png, image/jpeg, image/jpg"
-            multiple
             preview-full-image
             name="photos"
             preview-image
@@ -78,7 +107,8 @@ const OnAfterRead = (file) => {
             :readonly="isDetail"
             :deletable="!isDetail"
             :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
-            :after-read="OnAfterRead"
+            :after-read="onAfterRead"
+            :before-delete="onDelete"
           />
         </van-cell>
       </div>
