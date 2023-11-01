@@ -1145,7 +1145,7 @@ const validateHeadquarters = (value, rule) => {
 
 <style lang="scss" scoped>
 .police-entry-form {
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   background-color: white;
   .police-entry-title {
