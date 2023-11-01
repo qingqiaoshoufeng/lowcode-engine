@@ -7,6 +7,7 @@ import ProModal from "@/component/ProModal/index";
 import ApplyAbolish from "./apply-abolish.vue";
 import ApplyRecheck from "./apply-recheck.vue";
 import PoliceForm from '@/views/policeEntryForm/index.vue';
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -360,10 +361,8 @@ onMounted(() => {
 
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceForm
+      <PoliceEntryDetail
         :current-row="currentRow"
-        :show-preview="true"
-        :show-steps="true"
       />
     </ProModal>
     <!-- 申请更正 -->
@@ -392,7 +391,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .police-manage-list {
-  height: 100vh;
+  height: 100%;
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;

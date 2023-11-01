@@ -1,7 +1,7 @@
 import { onMounted, ref, onUnmounted } from 'vue'
 import { throttle } from 'lodash';
 
-export const useIntersection = (classNames, wrapper = '.form-right') => {
+export const useIntersection = (classNames, wrapper = '.form-right', offset = 100) => {
 
   const sideBarActive = ref(0)
 
@@ -11,7 +11,7 @@ export const useIntersection = (classNames, wrapper = '.form-right') => {
     const scrollTop = document.querySelector(wrapper).scrollTop;
     for (let key in classNames.value) {
       const dom = document.querySelector(`#${key}`)
-      if (dom?.offsetTop <= scrollTop + 100) {
+      if (dom?.offsetTop <= scrollTop + offset) {
         visibleIndex = i;
       }
       i += 1;

@@ -83,7 +83,7 @@ const onDealSituation = (value, option) => {
       v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
-      maxlength="20"
+      maxlength="10"
       required
       name="fireDistance"
       label="行驶距离(公里)："

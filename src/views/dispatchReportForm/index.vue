@@ -96,9 +96,9 @@ const props = defineProps({
     type: String,
     default: '审核',
   },
-  renderDom: {
-    type: String,
-    default: '.ant-modal-content',
+  offset: {
+    type: Number,
+    default: 100,
   },
   showExportPdf: { // 显示导出按钮
     type: Boolean,
@@ -323,7 +323,7 @@ const sections = computed(() => {
   }
 })
 
-const { sideBarActive } = useIntersection(sections);
+const { sideBarActive } = useIntersection(sections, '.form-right', props.offset);
 
 const { detail, loadDetail } = useDetail({
   getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
@@ -1114,7 +1114,7 @@ const onSideBarChange = (e, k) => {
   if (targetElement) {
     targetElement.scrollIntoView({
       block: 'start',
-      behavior: 'smooth',
+      // behavior: 'smooth', // 会影响左侧点击
     });
   }
 }
