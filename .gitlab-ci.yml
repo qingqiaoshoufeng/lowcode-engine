@@ -35,7 +35,7 @@ install&build-job:
     - cd ../
     - DATE=`date "+%Y%m%d%H%M%S"`
     - TIMESTAMP=`date "+%s"`
-    - sed -i 's|window.__appInfo = {}|window.__appInfo = {pipeLineId:'$CI_PIPELINE_ID',timestamp:'$TIMESTAMP',date:'$DATE'}|g' ./public/app.html
+    - sed -i 's|window.__appInfo = {}|window.__appInfo = {pipeLineId:'$CI_PIPELINE_ID',timestamp:'$TIMESTAMP',date:'$DATE'}|g' ./public/index.html
     - npm run build
     - if [[ -n "$CI_COMMIT_TAG" ]]; then
       FIREALARMAPKNAME="fire-alarm.apk";
@@ -59,11 +59,17 @@ install&build-job:
     - cd cordova
     # - sed -i 's|<name>浙江储备</name>|<name>浙江储备</name>|g' config.xml
     # - sed -i 's|<icon src="res/zhejiang.png"/>|<icon src="res/zhejiang.png"/>|g' config.xml
-    - sed -i 's|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="1.0.0" android-versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|<widget id="com.hxid.firealarm" android-packageName="com.hxid.zhejiang" version="'$DATE'" android-versionCode="'$TIMESTAMP'" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|g' config.xml
+    - sed -i 's|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="1.0.0" android-versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="'$DATE'" android-versionCode="'$TIMESTAMP'" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|g' config.xml
     # - more config.xml
     - cordova platform add android
+    - pwd
     - cp -f ../project.properties ./platforms/android/project.properties
-    - sed -i 's|cordova.gradle.include.1=phonegap-plugin-barcodescanner/foodreserves-barcodescanner.gradle|cordova.gradle.include.1=phonegap-plugin-barcodescanner/zhejiang-barcodescanner.gradle|g' ./platforms/android/project.properties
+    - cd ./platforms/android
+    - more project.properties
+    - cd ./phonegap-plugin-barcodescanner
+    - ls
+    - cd ../../../
+    # - sed -i 's|cordova.gradle.include.1=phonegap-plugin-barcodescanner/firealarm-barcodescanner.gradle|cordova.gradle.include.1=phonegap-plugin-barcodescanner/firealarm-barcodescanner.gradle|g' ./platforms/android/project.properties
     # - more ./platforms/android/project.properties
     # - more ./platforms/android/app/build.gradle
     # - more ./plugins/cordova-base64-to-gallery/package.json
@@ -80,8 +86,8 @@ install&build-job:
   artifacts:
     expire_in: 4 week
     paths:
-      - fire_alarm_statistics_app_ui/firealarm.apk
-      - fire_alarm_statistics_app_ui/firealarm-version.xml
+      - fire-alarm.apk
+      - fire-alarm-version.xml
 
-      - fire_alarm_statistics_app_ui/dev-firealarm.apk
-      - fire_alarm_statistics_app_ui/dev-firealarm-version.xml
+      - dev-fire-alarm.apk
+      - dev-fire-alarm-version.xml
