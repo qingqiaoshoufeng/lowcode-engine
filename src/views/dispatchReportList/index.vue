@@ -92,7 +92,7 @@ const refreshCallback = () => {
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
-            <div>{{ record.dispatchedTime }}</div>
+            <div class="test-timeout">{{ record.dispatchedTime }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>

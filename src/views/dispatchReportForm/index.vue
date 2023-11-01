@@ -552,6 +552,82 @@ const initPerson = (dispatchGroup) => {
   })
 }
 
+const initDynamicDict = () => {
+  if (props.isDetail) {
+    const { battleConsume, deployEquipment, investForce, personInfo } = form.value
+    let cars = ''
+    // const persons = ''
+    // if (investForce.groupLeader.value) { // 带队指挥员
+    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
+    //   investForce.groupLeader.value?.forEach((item) => {
+    //     if (!persons.includes(item.userId)) {
+    //       deptMembersOptions.value.push({
+    //         userId: item.userId,
+    //         userName: item.userName,
+    //         label: item.userName,
+    //         value: item.userId,
+    //       })
+    //     }
+    //   })
+    // }
+    // if (personInfo.commandLeader) { // 指挥员姓名
+    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
+    //   personInfo.commandLeader?.forEach((item) => {
+    //     if (!persons.includes(item.headerName)) {
+    //       deptMembersOptions.value.push({
+    //         userId: item.headerName,
+    //         userName: item.userName,
+    //         label: item.userName,
+    //         value: item.headerName,
+    //       })
+    //     }
+    //   })
+    // }
+    if (battleConsume.wastageTruck.value) { // 损耗车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      battleConsume.wastageTruck.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+    if (deployEquipment.headTruckList.value) { // 指挥车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      deployEquipment.headTruckList.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+    if (investForce.dispatchTruckList.value) { // 消防车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      investForce.dispatchTruckList.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+  }
+}
+
 const initWatch = () => {
   closeToast()
   return new Promise((resolve) => {
@@ -568,6 +644,7 @@ const initWatch = () => {
         generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
       }, { deep: true })
     }
+    initDynamicDict()
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
     })
