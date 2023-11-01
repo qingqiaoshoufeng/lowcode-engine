@@ -1,6 +1,40 @@
 import { getFireWarningType } from '@/apis/index.js'
 
-
+const filterDicts =( state,dictType, transformRes, callback , detail) => {
+  if (detail) {
+    if (Array.isArray(dictType)) {
+      const filters = {}
+      dictType.forEach((temp) => {
+        filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
+      })
+      const result = transformRes ? transformRes(filters) : filters
+      callback && callback(result)
+      return result
+    }
+    else {
+      const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
+      const result = transformRes ? transformRes(filters) : filters
+      callback && callback(result)
+      return result
+    }
+  } else {
+    if (Array.isArray(dictType)) {
+      const filters = {}
+      dictType.forEach((temp) => {
+        filters[temp] = state.systemDicts.filter(item => item.dictType === temp)
+      })
+      const result = transformRes ? transformRes(filters) : filters
+      callback(result)
+      return result
+    }
+    else {
+      const filters = state.systemDicts.filter(item => item.dictType === dictType)
+      const result = transformRes ? transformRes(filters) : filters
+      callback(result)
+      return result
+    }
+  }
+}
 const state = {
   systemDicts: [],
   systemDictsAll: [], // 包含已删除字典
@@ -13,11 +47,15 @@ const getters = {
         dictType.forEach((temp) => {
           filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
         })
-        return transformRes ? transformRes(filters) : filters
+        const result = transformRes ? transformRes(filters) : filters
+        // callback(result)
+        return result
       }
       else {
         const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
-        return transformRes ? transformRes(filters) : filters
+        const result = transformRes ? transformRes(filters) : filters
+        // callback(result)
+        return result
       }
     } else {
       if (Array.isArray(dictType)) {
@@ -25,13 +63,42 @@ const getters = {
         dictType.forEach((temp) => {
           filters[temp] = state.systemDicts.filter(item => item.dictType === temp)
         })
-        return transformRes ? transformRes(filters) : filters
+        const result = transformRes ? transformRes(filters) : filters
+        // callback && callback(result)
+        return result
       }
       else {
         const filters = state.systemDicts.filter(item => item.dictType === dictType)
-        return transformRes ? transformRes(filters) : filters
+        const result = transformRes ? transformRes(filters) : filters
+        // callback(result)
+        return result
       }
     }
+  },
+  getSystemDictSync:(state) =>(dictType, transformRes, callback, detail = false)=> {
+    if (detail) {
+      if (!state.systemDictsAll || state.systemDictsAll.length <= 0) {
+        getFireWarningType({ allFlag: true }).then((res) => {
+          if (res && res.items) {
+            state.systemDictsAll = res.items
+            state.filterDictsAll(dictType, transformRes, callback)
+          }
+        })
+        return
+      }
+      state.filterDictsAll(dictType, transformRes, callback)
+    }
+    if (!state.systemDicts || state.systemDicts.length <= 0) {
+      getFireWarningType().then((res) => {
+        if (res && res.items) {
+          state.systemDicts = res.items
+          filterDicts(dictType, transformRes, callback)
+        }
+      })
+      return
+    }
+    console.log(state,this);
+    filterDicts(state,dictType, transformRes, callback)
   },
 }
 const mutations = {

@@ -63,11 +63,6 @@ watch(() => props.value, (newVal) => {
     currentDate.value = [value.year(), value.month() + 1, value.date()];
     currentTime.value = [value.hour(), value.minute(), value.second()];
     selectText.value = value.format("YYYY-MM-DD HH:mm:ss");
-  } else {
-    const current = dayjs();
-    currentDate.value = [current.year(), current.month() + 1, current.date()];
-    currentTime.value = ['00', '00', '00'];
-    selectText.value = current.format("YYYY-MM-DD HH:mm:ss");
   }
 }, { immediate: true });
 
@@ -80,12 +75,24 @@ const handleOk = () => {
 }
 
 const handleShow = () => {
+  if (!currentDate.value || currentDate.value.length <= 0 || !selectText.value) {
+    const current = dayjs();
+    currentDate.value = [current.year(), current.month() + 1, current.date()];
+    currentTime.value = ['00', '00', '00'];
+  }
   selectVisible.value = true;
 };
 
 const handleCancel = () => {
   selectVisible.value = false;
 };
+
+const onClose = () => {
+  if (!selectText.value) {
+    currentDate.value = [];
+    currentTime.value = [];
+  }
+}
 
 defineOptions({
   name: "SelectDateTime",
@@ -104,7 +111,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
   />
-  <van-popup v-model:show="selectVisible" position="bottom">
+  <van-popup v-model:show="selectVisible" position="bottom" @closed="onClose">
     <div class="select-date-time">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">

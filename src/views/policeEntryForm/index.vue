@@ -27,32 +27,29 @@ import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   currentRow: {
     type: Object,
-    default: () => {
-      return {};
-    },
+    default: () => { return {} },
   },
-  isEdit: {
-    // 警情修改
+  showPreview: {
     type: Boolean,
     default: false,
   },
-  isConfirm: {
-    // 警情确认
+  isEdit: { // 警情修改
     type: Boolean,
     default: false,
   },
-  isApproval: {
-    // 警情作废申请、警情修改申请
+  isConfirm: { // 警情确认
     type: Boolean,
     default: false,
   },
-  showExportPdf: {
-    // 显示导出按钮
+  isApproval: { // 警情作废申请、警情修改申请
+    type: Boolean,
+    default: false,
+  },
+  showExportPdf: { // 显示导出按钮
     type: Boolean,
     default: false,
   },
@@ -62,15 +59,20 @@ const props = defineProps({
   setHandleOk: {
     type: Function,
   },
+  closeModal: {
+    type: Function,
+  },
   showSteps: {
     type: Boolean,
     default: false,
   },
-});
+  showSurvey: {
+    type: Boolean,
+    default: false,
+  },
+})
 
-const route = useRoute();
-
-const router = useRouter();
+const emits = defineEmits(['finishCallback', 'updateField'])
 
 const { show } = useModal();
 
@@ -82,8 +84,6 @@ const { options } = useOptions({
 });
 
 const formRef = ref(null);
-
-const showPreview = ref(Boolean(route.query?.showPreview));
 
 const loadDetail = ref(true);
 
@@ -146,7 +146,7 @@ const textFilter = (text, length) => {
 };
 
 form.value.warningName = computed(() => {
-  if (showPreview.value) {
+  if (props.showPreview) {
     return detail.value?.warningName;
   }
   const { warningDate, warningOrgname, warningAreaText, warningTypeText, naturalDisasterTypeText } = form.value;
@@ -218,7 +218,7 @@ form.value.warningName = computed(() => {
 });
 
 const showAddTag = computed(() => {
-  return !props.isApproval && showPreview.value;
+  return !props.isApproval && props.showPreview;
 });
 
 const showWarningLevel = computed(() => {
@@ -373,7 +373,7 @@ const { loading, submit } = useSubmit((res) => {
     //   props.refreshCallback()
     // })
     showToast('派发成功！')
-    setTimeout(() => router.go(-1), 200)
+    emits('finishCallback')
   }
 }, {
   submitFn: () => {
@@ -420,7 +420,7 @@ const { loading, submit } = useSubmit((res) => {
 
 const initDetail = () => {
   // 警情详情
-  const { boFireWarningId, boWarningYyjId } = route.query
+  const { boFireWarningId, boWarningYyjId, showPreview } = props.currentRow
   if (boWarningYyjId) {
     form.value.warningCodeYyj = props.currentRow.warningCodeYyj
     form.value.warningDate = dayjs(props.currentRow.warningCodeYyj)
@@ -441,6 +441,7 @@ const initDetail = () => {
       loadDetail.value = false
       if (res) {
         detail.value = res
+        form.value.warningSurvey = res.warningSurvey
         form.value.boFireWarningId = res.boFireWarningId
         form.value.warningDate = dayjs(res.warningDate)
         form.value.warningCodeYyj = res.warningCodeYyj
@@ -453,11 +454,11 @@ const initDetail = () => {
           form.value.warningArea = [res.warningProvince, res.warningCity, res.warningTown]
           form.value.warningAreaText = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue]
         }
-        if (!showPreview.value && form.value.warningAreaText?.length >= 3) {
+        if (!showPreview && form.value.warningAreaText?.length >= 3) {
           const attr = [res.warningProvinceValue, res.warningCityValue, res.warningTownValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
-        else if (!showPreview.value && form.value.warningAreaText?.length === 2) {
+        else if (!showPreview && form.value.warningAreaText?.length === 2) {
           const attr = [res.warningProvinceValue, res.warningCityValue].join('')
           form.value.warningAddr = res.warningAddr?.replace(attr, '')
         }
@@ -529,7 +530,7 @@ const initDetail = () => {
         // 警情等级
         initLevelOptions()
         // 详情特殊处理options
-        if (showPreview.value) {
+        if (showPreview) {
           initPermissionOptions(res)
         }
 
@@ -560,7 +561,7 @@ const onFailed = (errorInfo) => {
 };
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, false);
+  const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, props.showPreview);
   options.value.warningTypeOptions = res.JQ_TYPE;
   options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE;
   warningLevelOptions = res.JQ_LEVEL;
@@ -675,14 +676,32 @@ const validateHeadquarters = (value, rule) => {
 
 <template>
   <div class="police-entry-form">
-    <div class="police-entry-title">
-      <div class="title-header">警情名称</div>
-      <div v-if="form.warningName" class="title-real">
-        {{ form.warningName }}
-      </div>
-      <div v-else class="title-placeholder">警情名称由系统自动生成</div>
-    </div>
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+      <van-field
+        v-if="showSurvey"
+        v-model="form.warningSurvey"
+        v-preview-text="true"
+        :readonly="true"
+        required
+        name="warningSurvey"
+        rows="4"
+        autosize
+        label="警情概况："
+        type="textarea"
+        placeholder="请输入警情概况"
+        show-word-limit
+        :class="{ 'form-textarea': !showPreview }"
+      />
+      <van-field
+        v-model="form.warningName"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        :disabled="!showPreview"
+        required
+        name="warningName"
+        label="警情名称："
+        placeholder="请输入警情名称"
+      />
       <SelectDateTime
         v-model:value="form.warningDate"
         :showPreview="showPreview"
@@ -711,6 +730,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        maxlength="50"
         name="warningAddr"
         label="警情地址："
         placeholder="请输入警情地址"
@@ -720,10 +740,12 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningLng"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        type="number"
         name="warningLng"
         center
         required
         clearable
+        maxlength="20"
         label="经度坐标："
         placeholder="请输入经度坐标"
         :rules="[
@@ -741,10 +763,12 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningLat"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        type="number"
         name="warningLat"
         center
         required
         clearable
+        maxlength="20"
         label="纬度坐标："
         placeholder="请输入纬度坐标"
         :rules="[
@@ -767,6 +791,7 @@ const validateHeadquarters = (value, rule) => {
         :options="options.warningTypeOptions"
         :required="true"
         :field-names="{ value: 'boDictId', text: 'dictName' }"
+        :disabled="showPreview ? false : !importantEdit"
         label="警情类型："
         placeholder="请选择警情类型"
         :rules="[{ required: true, message: '请选择警情类型' }]"
@@ -816,6 +841,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        maxlength="50"
         name="warningTypeOther"
         label="其他说明："
         placeholder="请输入其他说明"
@@ -839,6 +865,7 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningOrgname"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        maxlength="50"
         required
         name="warningOrgname"
         label-width="178px"
@@ -867,7 +894,7 @@ const validateHeadquarters = (value, rule) => {
         name="warningTel"
         label="联系方式："
         placeholder="请输入联系方式"
-        maxlength="50"
+        maxlength="12"
         :required="false"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
       />
@@ -914,6 +941,7 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
+        :maxlength="100"
         name="naturalDisasterOther"
         label="其他说明："
         placeholder="请输入其他说明"

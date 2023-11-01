@@ -11,7 +11,6 @@ import {
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
-import router from "@/router/index.js";
 import { MSG_LOCKING_TEXT, dispatchType, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getDispatchManageList, collectFireWarning } from "@/apis/index.js";
@@ -192,7 +191,7 @@ const handleCollect = async (row, state) => {
   const res = await collectFireWarning({
     focusAppid: row.boFireDispatchId,
     focusCode: row.dispatchCode,
-    focusType: "1",
+    focusType: "2",
     deleteFlag: state ? "1" : "2",
   });
   proListRef.value.filter().then(() => {
@@ -213,10 +212,6 @@ const handleChange = (row) => {
 const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
-  // router.push({
-  //   name: "dispatchReportForm",
-  //   query: { boFireDispatchId: row.boFireDispatchId, showPreview: true },
-  // });
 };
 
 const onTimeChange = (value) => {
@@ -304,7 +299,7 @@ onMounted(() => {
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon_power@2x.png" alt="" />
+            <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>

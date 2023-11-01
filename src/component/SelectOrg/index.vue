@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch, computed, nextTick } from "vue";
-import { getDispatchGroup, searchDispatchGroup } from "@/apis/index.js";
+import { getDispatchGroup } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
@@ -134,8 +134,8 @@ const getItem = (item) => {
 
 const showCheck = (item) => {
   let result = false;
-  if (props.selectLeaf && item.isLeaf) {
-    return true;
+  if (props.selectLeaf) {
+    return item.isLeaf;
   }
   if (!props.headersDisabled && item.isheadquarters === 1) {
     return true;
@@ -233,11 +233,29 @@ const handleEnter = (item) => {
   }
 };
 
+const handleDelete = (item) => {
+  // 已经选中的要重置
+  treeData.value.forEach(arr => {
+    arr.forEach(i => {
+      if (i.organizationid === item.organizationid) {
+        i.checked = false
+      }
+    })
+  })
+  selectValue.value = selectValue.value.filter((temp) => temp !== item.organizationid);
+  selectText.value = selectText.value.filter((temp) => temp !== item.name);
+  selectItem.value = selectItem.value.filter((temp) => temp.organizationid !== item.organizationid);
+}
+
 defineOptions({
   name: "SelectOrg",
 });
 </script>
-
+<script>
+export default {
+  name:'SelectOrg'
+}
+</script>
 <template>
   <van-field
     v-model="selectTextValue"
@@ -250,7 +268,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
   />
-  <van-popup v-model:show="selectVisible" position="bottom">
+  <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="select-org">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">
@@ -262,6 +280,19 @@ defineOptions({
         >
       </div>
       <div class="content-wrapper">
+        <div class="content-selects">
+          <van-tag
+            v-for="item in selectItem"
+            :key="item.organizationid"
+            closeable
+            plain
+            size="medium"
+            type="primary"
+            @close="handleDelete(item)"
+          >
+            {{ item.name }}
+          </van-tag>
+        </div>
         <div class="content-tabs">
           <van-tabs v-model:active="tabsActive" swipe-threshold="1" shrink>
             <van-tab
@@ -312,6 +343,16 @@ defineOptions({
     }
   }
   .content-wrapper {
+    .content-selects {
+      height: 12vh;
+      padding: 10px 10px;
+      border-bottom: 1px solid #dcdee0;
+      overflow-y: auto;
+      span {
+        margin-bottom: 5px;
+        margin-right: 5px;
+      }
+    }
     .content-tabs {
     }
     .content-list {

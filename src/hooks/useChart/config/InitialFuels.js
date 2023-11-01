@@ -194,6 +194,12 @@ export default {
         }
       })
     })
+    options.tooltip.formatter = (v) => {
+      const index = v.dataIndex
+      return `<span style="font-size: 14px;font-weight: 400;">起数：</span>${val[index].hzCount}
+              <span style="font-size: 14px;font-weight: 400;">占比：</span>${val[index].hzCountPro}
+              `
+    }
     return options
   },
 }

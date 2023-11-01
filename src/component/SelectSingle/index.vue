@@ -90,6 +90,15 @@ const handleCancel = () => {
   selectVisible.value = false;
 };
 
+const isRequired = ()=>{
+  if(props.required){
+    return true
+  }else{
+    return props.rules.some(item=>item.required)
+  }
+  return false
+}
+
 defineOptions({
   name: "SelectSingle",
 });
@@ -101,7 +110,7 @@ defineOptions({
     v-preview-text="showPreview"
     is-link
     v-bind="$attrs"
-    :required="required"
+    :required="isRequired"
     :label="label"
     :placeholder="placeholder"
     :rules="rules"

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, provide } from "vue";
+import { ref, onMounted, provide, nextTick, computed } from "vue";
 import { useList } from "@/utils/curd.js";
 import { cloneDeep } from 'lodash-es'
 
@@ -66,7 +66,12 @@ const {
 
 provide("query", query);
 
-const finished = ref(false);
+const finished = computed(() => {
+  if (loading.value) {
+    return false
+  }
+  return total.value === 0 || total.value === list.value.length;
+});
 
 if (props.defaultFilterValue) {
   query.value = cloneDeep(props.defaultFilterValue)
@@ -74,16 +79,11 @@ if (props.defaultFilterValue) {
 
 onMounted(() => {
   if (props.showLoad) {
-    loadList().then(res => {
-      if (list.value.length === total.value) {
-        finished.value = true
-      }
-    });
+    loadList();
   }
 });
 
 const onTabs = (name, title) => {
-  finished.value = false;
   if (props.onTabFn) {
     props.onTabFn(name, title)
     return
@@ -91,12 +91,10 @@ const onTabs = (name, title) => {
 }
 
 const onLoad = async () => {
-  if (list.value?.length > 0 && !loading.value) {
-    // loadMore(page + 1, limit).then(res => {
-    //   if (list.value.length === total.value) {
-    //     finished.value = true
-    //   }
-    // })
+  if (list.value?.length > 0 && loading.value) {
+    loadMore(page.value + 1, limit.value).finally(() => {
+      loading.value = false
+    })
   }
 };
 
@@ -126,6 +124,11 @@ defineExpose({
   resetForm,
 })
 </script>
+<script>
+export default {
+  name:'ProList'
+}
+</script>
 
 <template>
   <div class="pro-list">
@@ -150,13 +153,13 @@ defineExpose({
       </template>
       <template v-else>
         <van-list
-          :loading="loading"
+          v-model:loading="loading"
           :finished="finished"
           :immediate-check="false"
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content">
+          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content van-clearfix">
             <slot name="list" :record="item" :index="index" />
           </div>
         </van-list>
@@ -167,7 +170,7 @@ defineExpose({
 
 <style lang="scss" scoped>
 .pro-list {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   .list-wrapper {

@@ -7,10 +7,14 @@ export * from './business/police-entry.js'
 export * from './business/police-manage.js'
 export * from './business/dispatch-manage.js'
 export * from './business/dispatch-report.js'
+export * from './business/report-review.js'
 export * from './system/login.js'
 export * from './system/menu.js'
 export * from './system/login.js'
 export * from './business/home.js'
+export * from './business/fire-report.js'
+export * from './business/fire-manage.js'
+
 
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {

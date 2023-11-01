@@ -1,0 +1,222 @@
+<script setup>
+import { inject, watch } from 'vue'
+import store from '@/store/index.js'
+// import { message, notification } from '@castle/ant-design-vue'
+import { checkAffectedHouse, checkFireDisposalCost, checkFireInjuryCost } from '../config/tool.js'
+import { gutter } from '@/utils/constants.js'
+import { nonnegativeNumberReg } from '@/utils/validate.js'
+// import FieldAnnotation from '@/components/field-annotation/index.vue'
+// import { useRuleConfig } from '@/store/index.js'
+const severityConfig = store.state?.rules?.ruleConfig?.severityConfig|| []
+// const { ruleConfig: { severityConfig } } = useRuleConfig()
+// const severityConfig = store.state?.rules?.ruleConfig?.severityConfig|| []
+const form = inject('form')
+
+const showPreview = inject('showPreview')
+
+const showDraft = inject('showDraft')
+
+const options = inject('options')
+
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
+const importantEdit = inject('importantEdit')
+
+watch(() => form.value.economicLoss, () => {
+  let loss = 0
+  const { directDamage, fireDisposalCost, fireInjuryCost, otherExpense } = form.value.economicLoss
+  if (directDamage.value > 0) {
+    loss += directDamage.value
+  }
+  if (fireDisposalCost.value > 0) {
+    loss += fireDisposalCost.value
+  }
+  if (fireInjuryCost.value > 0) {
+    loss += fireInjuryCost.value
+  }
+  if (otherExpense.value > 0) {
+    loss += otherExpense.value
+  }
+  form.value.economicLoss.directEconomicLoss.value = loss
+}, { deep: true })
+
+const validateDirectDamage = (rule, value, callback) => {
+  const { basicInfo, economicLoss } = form.value
+  if ((Number(economicLoss.directDamage.value) > severityConfig?.[2]?.value?.[1]
+    || Number(economicLoss.directDamage.value) < severityConfig?.[2]?.value?.[0]) && basicInfo.severity.value === '1') {
+    callback(new Error(`轻微火灾的直接财产损失要在${severityConfig?.[2]?.value?.[0]}-${severityConfig?.[2]?.value?.[1]}元范围内！`))
+  }
+  else if (!value && value !== 0) {
+    if (!economicLoss.directDamage.rules[0].required) {
+      callback()
+    }
+    else {
+      callback(new Error('请输入直接财产损失'))
+    }
+  }
+  else if (!nonnegativeNumberReg.test(value)) {
+    callback(new Error('请输入正确直接财产损失'))
+  }
+  else {
+    callback()
+  }
+}
+</script>
+
+<template>
+  <div id="economicLoss">
+    <h4 id="economicLoss-title">
+      <!-- <file-text-outlined /> -->
+      <strong>经济损失</strong>
+    </h4>
+    <div class="economicLoss-message">
+      直接经济损失：{{ form.economicLoss.directEconomicLoss?.value }}元
+    </div>
+    <div :gutter="gutter">
+      <div :span="8">
+        <SelectSingle
+          name="economicLoss,inspectMethod,value"
+          label="调查方式"
+          :rules="form.economicLoss.inspectMethod.rules"
+          id="inspectMethod"
+          v-model:value="form.economicLoss.inspectMethod.value"
+          v-preview-text="showPreview"
+          :options="options.inspectMethod"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          allow-clear
+          placeholder="请选择调查方式"
+        />
+      </div>
+      <div :span="8">
+        <van-field 
+          name="economicLoss,directDamage,value"
+          label="直接财产损失（元)"
+          :rules="[{ validator: validateDirectDamage, trigger: 'blur' }, ...form.economicLoss.directDamage.rules]"
+        >
+          <template #input>
+            <van-stepper 
+              id="directDamage"
+              v-model:value="form.economicLoss.directDamage.value"
+              v-preview-text="showPreview"
+              allow-clear
+              style="width: 100%"
+              :maxlength="15"
+              :disabled="!importantEdit"
+              placeholder="请输入直接财产损失"
+              aria-autocomplete="none"
+            />
+          </template>
+        </van-field>
+      </div>
+      <div :span="8">
+        <van-field 
+          name="economicLoss,fireDisposalCost,value"
+          label="火灾现场处置费用（元)"
+          :rules="form.economicLoss.fireDisposalCost.rules"
+        >
+          <template #input>
+            <van-stepper 
+              id="fireDisposalCost"
+              v-model:value="form.economicLoss.fireDisposalCost.value"
+              v-preview-text="showPreview"
+              style="width: 100%"
+              :maxlength="15"
+              allow-clear
+              aria-autocomplete="none"
+              placeholder="请输入火灾现场处置费用（元)"
+              @blur="checkFireDisposalCost(form)"
+            />
+          </template>
+        </van-field>
+      </div>
+    </div>
+
+    <div :gutter="gutter">
+      <div :span="8">
+        <van-field 
+          name="economicLoss,fireInjuryCost,value"
+          label="人身伤亡医疗支出（元)"
+          :rules="form.economicLoss.fireInjuryCost.rules"
+        >
+          <template #input>
+            <van-stepper 
+              id="fireInjuryCost"
+              v-model:value="form.economicLoss.fireInjuryCost.value"
+              v-preview-text="showPreview"
+              style="width: 100%"
+              allow-clear
+              aria-autocomplete="none"
+              :maxlength="10"
+              placeholder="请输入人身伤亡医疗支出"
+              @blur="checkFireInjuryCost(form)"
+            />
+          </template>
+        </van-field>
+      </div>
+      <div :span="8">
+        <van-field 
+          name="economicLoss,otherExpense,value"
+          label="其他费用（元)"
+          :rules="form.economicLoss.otherExpense.rules"
+        >
+          <template #input>
+            <van-stepper 
+              id="otherExpense"
+              v-model:value="form.economicLoss.otherExpense.value"
+              v-preview-text="showPreview"
+              style="width: 100%"
+              allow-clear
+              aria-autocomplete="none"
+              :maxlength="10"
+              placeholder="请输入其他费用"
+            />
+          </template>
+        </van-field>
+      </div>
+      <div :span="8">
+        <SelectSingle
+          name="economicLoss,costSource,value"
+          label="损失来源"
+          :rules="form.economicLoss.costSource.rules"
+          id="costSource"
+          v-model:value="form.economicLoss.costSource.value"
+          v-preview-text="showPreview"
+          :options="options.costSource"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          allow-clear
+          placeholder="请选择损失来源"
+        />
+      </div>
+      <div :span="8">
+        <van-field 
+          name="economicLoss,affectedHouse,value"
+          label="受灾户数（户）"
+          :rules="form.economicLoss.affectedHouse.rules"
+        >
+          <template #input>
+            <van-stepper 
+              id="affectedHouse"
+              v-model:value="form.economicLoss.affectedHouse.value"
+              v-preview-text="showPreview"
+              style="width: 100%"
+              allow-clear
+              aria-autocomplete="none"
+              :maxlength="10"
+              placeholder="请输入受灾户数"
+              @blur="checkAffectedHouse(form)"
+            />
+          </template>
+        </van-field>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.economicLoss-message {
+  color: red;
+  margin-bottom: 20px;
+}
+</style>

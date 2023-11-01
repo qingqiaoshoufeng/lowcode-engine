@@ -2,9 +2,19 @@
 import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
-import router from "@/router/index.js";
+import ProModal from "@/component/ProModal/index";
+import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { getDispatchManageList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
+import { useModal } from '@/hooks/useModal.js'
+import { showToast, showLoadingToast, closeToast } from "vant";
+import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
+
+const { show } = useModal();
+
+const isAgain = ref(false)
+
+const currentRow = ref(null);
 
 const defaultFilterValue = {
   unEditFlag: true,
@@ -13,18 +23,29 @@ const defaultFilterValue = {
 const proListRef = ref(null);
 
 const handleReject = (row) => {
-  router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: row.boFireDispatchId },
-  });
+  if (row.isLock === '1') {
+    message.warning(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  if (row.taskId) {
+    isAgain.value = true
+  }
+  show.value.editVisible = true
 };
 
-const handleItem = (item) => {
-  router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: item.boFireDispatchId, showPreview: true },
-  });
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
 };
+
+const refreshCallback = () => {
+  isAgain.value = false
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+}
 </script>
 
 <template>
@@ -62,12 +83,12 @@ const handleItem = (item) => {
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">出动队伍：</div>
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>
@@ -87,6 +108,27 @@ const handleItem = (item) => {
         </div>
       </template>
     </ProList>
+
+    <!-- 出动填报详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动填报详情">
+      <DispatchForm
+        :is-detail="true"
+        :current-row="currentRow"
+      />
+    </ProModal>
+    <!-- 出动填报 -->
+    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报">
+      <template #default="{ setHandleOk, closeModal }">
+        <DispatchForm
+          :current-row="currentRow"
+          :is-edit="true"
+          :is-again="isAgain"
+          :close-modal="closeModal"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="refreshCallback"
+        />
+      </template>
+    </ProModal>
   </div>
 </template>
 

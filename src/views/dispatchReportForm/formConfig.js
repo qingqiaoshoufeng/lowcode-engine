@@ -7,6 +7,10 @@ import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from
 
 export const useFormConfig = () => {
   const formOrigin = {
+    fireInfo: {
+      title: '警情信息',
+      fieldAnnotation: false, // 批注
+    },
     draftInfo: { // 草稿信息
       title: '草稿信息',
       draftName: { // 草稿名称
@@ -471,6 +475,7 @@ export const useFormConfig = () => {
       },
       dispatchTruckList: { // 消防车辆信息
         value: undefined,
+        list: undefined,
         rules: [{ required: true, message: '请选择消防车辆信息' }],
       },
       isReturnTruck: { // 是否有车辆中途返回
@@ -487,28 +492,28 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入艇数' },
-          { pattern: positiveIntegerReg, message: '请输入正确艇数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确艇数' },
         ],
       },
       fireAirplaneNum: { // 消防直升机（架）
         value: '',
         rules: [
           // { required: true, message: '请输入消防直升机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防直升机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防直升机数量' },
         ],
       },
       rescueDogNum: { // 搜救犬（只）
         value: '',
         rules: [
           // { required: true, message: '请输入搜救犬数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确搜救犬数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确搜救犬数量' },
         ],
       },
       uavNum: { // 无人机（架）
         value: '',
         rules: [
           // { required: true, message: '请输入无人机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
         ],
       },
       // governmentCommand: { // 政府指挥
@@ -721,14 +726,14 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入疏散人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确疏散人数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确疏散人数' },
         ],
       },
       transferNum: { // 转移（人）
         value: '',
         rules: [
           // { required: true, message: '请输入转移人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确转移人数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确转移人数' },
         ],
       },
       emergencyNum: { // 抢救财产价值（元）
@@ -771,42 +776,42 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入机动消防泵数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确机动消防泵数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确机动消防泵数量' },
         ],
       },
       hoseReel: { // 移动式水带卷盘或水带槽（个）
         value: '',
         rules: [
           // { required: true, message: '请输入移动式水带卷盘或水带槽数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确移动式水带卷盘或水带槽数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确移动式水带卷盘或水带槽数量' },
         ],
       },
       fireGun: { // 移动式消防炮（个）
         value: '',
         rules: [
           // { required: true, message: '请输入移动式消防炮数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确移动式消防炮数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确移动式消防炮数量' },
         ],
       },
       airForm: { // 空气泡沫枪（个）
         value: '',
         rules: [
           // { required: true, message: '请输入空气泡沫枪数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确空气泡沫枪数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确空气泡沫枪数量' },
         ],
       },
       formTank: { // 泡沫液桶（个）
         value: '',
         rules: [
           // { required: true, message: '请输入泡沫液桶数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确泡沫液桶数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确泡沫液桶数量' },
         ],
       },
       ladder: { // 梯子（把）
         value: '',
         rules: [
           // { required: true, message: '请输入梯子数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确梯子数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确梯子数量' },
         ],
       },
       waterBand: { // 水带（米）
@@ -820,140 +825,140 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入消防栓扳手数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防栓扳手数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防栓扳手数量' },
         ],
       },
       waterGun: { // 水枪（个）
         value: '',
         rules: [
           // { required: true, message: '请输入水枪数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确水枪数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确水枪数量' },
         ],
       },
       waterMainfold: { // 分水器（只）
         value: '',
         rules: [
           // { required: true, message: '请输入分水器数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确分水器数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确分水器数量' },
         ],
       },
       entryTool: { // 破拆工具（个）
         value: '',
         rules: [
           // { required: true, message: '请输入破拆工具数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确破拆工具数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确破拆工具数量' },
         ],
       },
       fireExtinguisher: { // 灭火机（只）
         value: '',
         rules: [
           // { required: true, message: '请输入灭火机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确灭火机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确灭火机数量' },
         ],
       },
       firePump: { // 手抬泵（个）
         value: '',
         rules: [
           // { required: true, message: '请输入手抬泵数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确手抬泵数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确手抬泵数量' },
         ],
       },
       fireHat: { // 消防头盔（个）
         value: '',
         rules: [
           // { required: true, message: '请输入消防头盔数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防头盔数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防头盔数量' },
         ],
       },
       protectiveSuit: { // 消防员灭火防护服（套）
         value: '',
         rules: [
           // { required: true, message: '请输入消防员灭火防护服数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护服数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护服数量' },
         ],
       },
       fireGlove: { // 消防手套（副）
         value: '',
         rules: [
           // { required: true, message: '请输入消防手套数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防手套数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防手套数量' },
         ],
       },
       lapBelt: { // 消防安全腰带（根）
         value: '',
         rules: [
           // { required: true, message: '请输入消防安全腰带数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防安全腰带数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防安全腰带数量' },
         ],
       },
       protectiveBoots: { // 消防员灭火防护靴（双）
         value: '',
         rules: [
           // { required: true, message: '请输入消防员灭火防护靴数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护靴数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防员灭火防护靴数量' },
         ],
       },
       fireRebreather: { // 双正式压消防空气呼吸器（个）
         value: '',
         rules: [
           // { required: true, message: '请输入双正式压消防空气呼吸器数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确双正式压消防空气呼吸器数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确双正式压消防空气呼吸器数量' },
         ],
       },
       fireLight: { // 佩戴式防爆照灯（个）
         value: '',
         rules: [
           // { required: true, message: '请输入佩戴式防爆照灯数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确佩戴式防爆照灯数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确佩戴式防爆照灯数量' },
         ],
       },
       fireRescuer: { // 消防员呼救器（个）
         value: '',
         rules: [
           // { required: true, message: '请输入消防员呼救器数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防员呼救器数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防员呼救器数量' },
         ],
       },
       positionLamp: { // 方位灯（个）
         value: '',
         rules: [
           // { required: true, message: '请输入方位灯数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确方位灯数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确方位灯数量' },
         ],
       },
       safetyRope: { // 消防安全绳（根）
         value: '',
         rules: [
           // { required: true, message: '请输入消防安全绳数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防安全绳数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防安全绳数量' },
         ],
       },
       fireAxe: { // 消防腰斧（个）
         value: '',
         rules: [
           // { required: true, message: '请输入消防腰斧数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防腰斧数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防腰斧数量' },
         ],
       },
       interphone: { // 对讲机（个）
         value: '',
         rules: [
           // { required: true, message: '请输入对讲机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确对讲机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确对讲机数量' },
         ],
       },
       transferImage: { // 图传（个）
         value: '',
         rules: [
           // { required: true, message: '请输入图传数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确图传数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确图传数量' },
         ],
       },
       uav: { // 无人机（架）
         value: '',
         rules: [
           // { required: true, message: '请输入无人机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
         ],
       },
       foamLiquid: { // 泡沫液（千克）
@@ -1016,7 +1021,7 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入无故供水中断次数' },
-          { pattern: positiveIntegerReg, message: '请输入正确无故供水中断次数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确无故供水中断次数' },
         ],
       },
       waterDamage: { // 水渍损失
@@ -1063,7 +1068,7 @@ export const useFormConfig = () => {
       fieldAnnotation: false, // 批注
       fieldWarning: '',
       attach: { // 其他附件
-        value: undefined,
+        value: [],
         // rules: [{ required: true, message: '请选择其他附件' }],
       },
       remark: { // 其他说明
@@ -1071,7 +1076,7 @@ export const useFormConfig = () => {
         // rules: [{ required: true, message: '请输入其他说明' }],
       },
     },
-    proSteps: { // 其他附件
+    proSteps: { // 操作记录
       title: '操作记录',
       fieldAnnotation: false, // 批注
       fireDispatchTransferVOList: {
@@ -1081,6 +1086,140 @@ export const useFormConfig = () => {
   }
 
   const form = ref(cloneDeep(formOrigin))
+
+  // 根据模版生成处置经过
+  const generateRemarkField = (detail, orgName) => {
+    const { draftInfo, basicInformation, battleResult, casualtyWar, investForce } = form.value
+    const { warningDate, warningTypeValue, warningAddr, distributeOrgName } = detail
+    let content = ''
+    const warningTypeText = cloneDeep(warningTypeValue?.split('/') || draftInfo.warningType?.text)
+    if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('安保勤务') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【出动队伍所属支队】【出动队伍】出动【车辆数】车【指战员数】人赶赴【警情地址】，就【活动/任务名】开展【安保勤务末级指标类型】工作。【到场时间】到场，【结束时间】任务结束，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('安保勤务') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【出动队伍所属支队】【出动队伍】出动【车辆数】车【指战员数】人赶赴【警情地址】，就【活动/任务名】开展【安保勤务末级指标类型】工作。【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('安保勤务') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【出动队伍所属支队】【出动队伍】出动【车辆数】车【指战员数】人赶赴【警情地址】，就【活动/任务名】开展【安保勤务末级指标类型】工作。【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('虚假警') && basicInformation.dealSituation?.text === '到场实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到一起虚假警【虚假警末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('虚假警') && basicInformation.dealSituation?.text === '到场未实施处置') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到一起虚假警【虚假警末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    else if (warningTypeText?.includes('虚假警') && basicInformation.dealSituation?.text === '中途返回') {
+      content = '【接警时间年月日时分】，【警情录入单位】接到一起虚假警【虚假警末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+    }
+    // 替换各个字段
+    if (warningDate) {
+      content = content.replace('【接警时间年月日时分】', dayjs(warningDate).format('YYYY年MM月DD日HH时mm分'))
+    }
+    if (detail.detachment) {
+      content = content.replace('【出动队伍所属支队】', detail.detachment)
+    }
+    if (distributeOrgName) {
+      content = content.replace('【警情录入单位】', distributeOrgName)
+    }
+    if (warningTypeText?.length > 0) {
+      content = content.replace('【警情末级类型】', warningTypeText.pop())
+    }
+    if (warningAddr) {
+      content = content.replace('【警情地址】', warningAddr)
+    }
+    if (warningTypeText?.length > 0) {
+      content = content.replace('【（社会救助末级指标）】', warningTypeText.pop())
+      content = content.replace('【（公共服务末级指标）】', warningTypeText.pop())
+      content = content.replace('【虚假警末级指标】', warningTypeText.pop())
+    }
+    if (basicInformation.dispatchDate.value) {
+      content = content.replace('【出动时间】', dayjs(basicInformation.dispatchDate.value).format('MM月DD日HH时mm分'))
+    }
+    if (orgName && orgName === detail.dutyGroupName) {
+      content = content.replace('【出动队伍】', `${orgName}（辖区站）`)
+    }
+    else if (orgName && orgName !== detail.dutyGroupName) {
+      content = content.replace('【出动队伍】', `${orgName}（非辖区站）`)
+    }
+    if (investForce.dispatchTruckList.value?.length > 0) {
+      content = content.replace('【车辆数】', investForce.dispatchTruckList.value?.length)
+    }
+    if (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0) {
+      content = content.replace('【指战员数】', investForce.commander.value?.length + investForce.firemen.value?.length)
+    }
+    if (basicInformation.attendanceDate.value) {
+      content = content.replace('【到场时间】', dayjs(basicInformation.attendanceDate.value).format('MM月DD日HH时mm分'))
+    }
+    if (basicInformation.fireSituation.text) {
+      content = content.replace('【到场时火灾情况】', basicInformation.fireSituation.text)
+    }
+    if (basicInformation.endDate.value) {
+      content = content.replace('【结束时间】', dayjs(basicInformation.endDate.value).format('MM月DD日HH时mm分'))
+    }
+    if (battleResult.rescueNum.value >= 0 || battleResult.evacuateNum.value >= 0) {
+      content = content.replace('【抢救人数+疏散人数】', battleResult.rescueNum.value + battleResult.evacuateNum.value)
+    }
+    if (battleResult.emergencyNum.value) {
+      content = content.replace('【抢救财产价值】', battleResult.emergencyNum.value)
+    }
+    if (battleResult.protectNum.value) {
+      content = content.replace('【保护财产价值】', battleResult.protectNum.value)
+    }
+    if (basicInformation.notDealReason.value) {
+      content = content.replace('【未处置原因】', basicInformation.notDealReason.value)
+    }
+    if (basicInformation.midwayReturnDate.value) {
+      content = content.replace('【中返时间】', dayjs(basicInformation.midwayReturnDate.value).format('MM月DD日HH时mm分'))
+    }
+    if (basicInformation.returnDate.value) {
+      content = content.replace('【归队时间】', dayjs(basicInformation.returnDate.value).format('MM月DD日HH时mm分'))
+    }
+    if (casualtyWar.deadList?.length > 0 || casualtyWar.injuredList?.length > 0) {
+      content = content.replace('【亡人数】', casualtyWar.deadList?.length || 0)
+      content = content.replace('【伤人数】', casualtyWar.injuredList?.length || 0)
+    }
+    else {
+      content = content.replace('造成参战人员【亡人数】死【伤人数】伤', '无参战人员伤亡')
+    }
+    content = content.replaceAll(/【[^【】]*】/g, 'xx')
+    form.value.disposalProcess.fireProcess.value = content
+  }
 
   // 当警情类型、参战形式、处置情况，发生变化时重置表单，避免无用数据提交到后端
   const initFormWhenChange = (draft) => {
@@ -1338,7 +1477,8 @@ export const useFormConfig = () => {
     form.value.investForce.firemen.value = fireDispatchItem?.firemen?.split(',')
     form.value.investForce.isResponseTruck.value = fireDispatchItem?.isResponseTruck
     if (fireDispatchTruckList && fireDispatchTruckList.length > 0) {
-      form.value.investForce.dispatchTruckList.value = fixCarInfo(fireDispatchTruckList)
+      form.value.investForce.dispatchTruckList.list = fixCarInfo(fireDispatchTruckList)
+      form.value.investForce.dispatchTruckList.value = form.value.investForce.dispatchTruckList.list?.map(item => item.boFireTruckId)
     }
     form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
     if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {
@@ -1483,5 +1623,30 @@ export const useFormConfig = () => {
     callback()
   }
 
-  return { form, initFormWhenChange, initFormByDetail }
+  // 校验是否对异常项进行批注
+  const checkFieldWarning = (fields) => {
+    let warning = ''
+    const keys = []
+    let result = false
+    Object.keys(form.value).forEach((item) => {
+      if (form.value[item].fieldWarning) {
+        warning += form.value[item].fieldWarning
+      }
+    })
+    warning = warning.split(';')
+    warning.forEach((temp) => {
+      if (temp.includes('true')) {
+        keys.push(temp.slice(0, temp.indexOf(':')))
+      }
+    })
+    const current = Object.keys(fields).join(',')
+    keys.forEach((temp) => {
+      if (!current.includes(temp)) {
+        result = true
+      }
+    })
+    return result
+  }
+
+  return { form, initFormWhenChange, initFormByDetail, checkFieldWarning, generateRemarkField }
 }

@@ -158,8 +158,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
 
   // 获取通知列表
   const getFireNoticeList = async()=>{
-    const res = await getFireNotice(formatParams())
-    state.noticeList = res
+    const res = await getFireNotice(formatParams()) || []
+    state.noticeList = res.filter((item,index)=>(index<3))
     console.log(res,'getStyle');
   }
 

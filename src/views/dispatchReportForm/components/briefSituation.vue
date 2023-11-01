@@ -312,7 +312,6 @@ const validateDealEndDate = (value, rule) => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      required
       name="carryoutDate"
       title="请选择展开时间"
       label="展开时间："
@@ -325,7 +324,6 @@ const validateDealEndDate = (value, rule) => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      required
       name="waterflowDate"
       title="请选择出水时间"
       label="出水时间："
@@ -338,7 +336,6 @@ const validateDealEndDate = (value, rule) => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      required
       name="controllingDate"
       title="请选择控制时间"
       label="控制时间："
@@ -351,7 +348,6 @@ const validateDealEndDate = (value, rule) => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      required
       name="washDate"
       title="请选择洗消时间"
       label="洗消时间："

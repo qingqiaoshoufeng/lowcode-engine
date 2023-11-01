@@ -4,8 +4,10 @@ import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
 import { generateColorByState } from "@/utils/tools.js";
-import router from "@/router/index.js";
-import { showLoadingToast, closeToast } from "vant";
+import PoliceForm from '@/views/policeEntryForm/index.vue';
+import DispatchForm from '@/views/dispatchReportForm/index.vue';
+import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { getReportList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
@@ -26,20 +28,21 @@ const handleReject = (row) => {
 };
 
 const handleInput = (row) => {
-  router.push({
-    name: "dispatchReportForm",
-    query: { boFireDispatchId: row.boFireDispatchId },
-  });
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  show.value.editVisible = true
 };
 
 const handleItem = (row) => {
-  router.push({
-    name: "policeEntryForm",
-    query: { boFireDispatchId: row.boFireDispatchId, boFireWarningId: row.boFireWarningId, showPreview: true },
-  });
+  currentRow.value = row
+  show.value.lookVisible = true
 };
 
-const finishCallback = () => {
+const refreshCallback = () => {
+  show.value.editVisible = false
   showLoadingToast()
   proListRef.value.filter().then(res => {
     closeToast()
@@ -118,13 +121,35 @@ const finishCallback = () => {
       </template>
     </ProList>
 
+    <!-- 出动填报 -->
+    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报">
+      <template #default="{ setHandleOk, closeModal }">
+        <DispatchForm
+          :show-draft="false"
+          :is-edit="false"
+          :isInput="true"
+          :current-row="currentRow"
+          :close-modal="closeModal"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="refreshCallback"
+        />
+      </template>
+    </ProModal>
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+      <PoliceForm
+        :current-row="currentRow"
+        :show-preview="true"
+        :show-steps="true"
+      />
+    </ProModal>
     <!-- 退回说明 -->
     <ProModal v-model:visible="show.rejectVisible" title="退回说明">
       <template #default="{ setHandleOk }">
         <ApplyReject
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
+          @finish-callback="refreshCallback"
         />
       </template>
     </ProModal>

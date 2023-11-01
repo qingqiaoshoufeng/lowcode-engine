@@ -6,6 +6,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  showOpenClose: {
+    type: Boolean,
+    default: true,
+  }
 });
 
 const openState = ref(true);
@@ -24,13 +28,13 @@ defineOptions({
     <div class="pro-card-title">
       <img src="@/assets/images/icon_title@2x.png" alt="" />
       <span>{{ title }}</span>
-      <van-icon v-if="openState" name="arrow-up" class="arrow" @click="handleClose(false)" />
-      <van-icon v-else name="arrow-down" class="arrow" @click="handleClose(true)" />
+      <van-icon v-if="openState && showOpenClose" name="arrow-up" class="arrow" @click="handleClose(false)" />
+      <van-icon v-else-if="showOpenClose" name="arrow-down" class="arrow" @click="handleClose(true)" />
     </div>
-    <template v-if="openState">
+    <div v-if="openState" class="pro-card-content" :style="{ height: openState ? 'unset' : '0px;' }">
       <slot />
-    </template>
-    <div class="pro-card-close" v-if="openState" @click="handleClose(false)">收起</div>
+    </div>
+    <div class="pro-card-close" v-if="openState && showOpenClose" @click="handleClose(false)">收起</div>
   </div>
 </template>
 
@@ -58,6 +62,9 @@ defineOptions({
       color: #8D94A1;
       margin-left: auto;
     }
+  }
+  .pro-card-content {
+
   }
   .pro-card-close {
     font-size: 14px;

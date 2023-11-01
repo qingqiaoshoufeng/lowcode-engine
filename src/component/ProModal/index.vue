@@ -51,6 +51,11 @@ defineOptions({
   name: "ProModal",
 });
 </script>
+<script>
+export default {
+  name:'ProModal'
+}
+</script>
 
 <template>
   <div class="pro-modal" v-if="showModal">
