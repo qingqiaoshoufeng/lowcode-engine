@@ -410,7 +410,7 @@ const validateDealEndDate = (value, rule) => {
       v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
-      maxlength="20"
+      maxlength="10"
       name="presentSpeed"
       label="到场时速(公里/小时)："
       label-width="158px"

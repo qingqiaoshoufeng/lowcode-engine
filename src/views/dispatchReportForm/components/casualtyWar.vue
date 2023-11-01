@@ -298,7 +298,7 @@ watch(
             :readonly="true"
             required
             type="number"
-            maxlength="50"
+            maxlength="3"
             name="age"
             label="年龄："
             placeholder="请输入年龄"
@@ -541,7 +541,7 @@ watch(
             :readonly="true"
             required
             type="number"
-            maxlength="50"
+            maxlength="3"
             name="age"
             label="年龄："
             placeholder="请输入年龄"
