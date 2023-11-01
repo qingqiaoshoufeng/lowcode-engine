@@ -3,7 +3,7 @@ import { createRouter, createWebHistory ,createWebHashHistory } from 'vue-router
 
 const indexRouter = {
   path: '/',
-  component: () => import('@/views/old/index'),
+  component: () => import('@/views/index.vue'),
   redirect: '/home',
   children: []
 }
@@ -11,22 +11,22 @@ indexRouter.children = autoRegisteredRoutes()
 
 const routes = [
   indexRouter,
-  {
-    path: '/nopermission',
-    name: 'nopermission',
-    meta: {
-      index: 1
-    },
-    component: () => import('@/views/old/error/NoPermission')
-  },
-  {
-    path: '/*',
-    name: '404',
-    meta: {
-      index: 1
-    },
-    component: () => import('@/views/old/error/404')
-  },
+  // {
+  //   path: '/nopermission',
+  //   name: 'nopermission',
+  //   meta: {
+  //     index: 1
+  //   },
+  //   component: () => import('@/views/old/error/NoPermission')
+  // },
+  // {
+  //   path: '/*',
+  //   name: '404',
+  //   meta: {
+  //     index: 1
+  //   },
+  //   component: () => import('@/views/old/error/404')
+  // },
 ]
 
 
