@@ -1068,7 +1068,7 @@ export const useFormConfig = () => {
       fieldAnnotation: false, // 批注
       fieldWarning: '',
       attach: { // 其他附件
-        value: undefined,
+        value: [],
         // rules: [{ required: true, message: '请选择其他附件' }],
       },
       remark: { // 其他说明
