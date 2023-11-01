@@ -6,7 +6,6 @@ import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyAbolish from "./apply-abolish.vue";
 import ApplyRecheck from "./apply-recheck.vue";
-import PoliceForm from '@/views/policeEntryForm/index.vue';
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import {
   checkAbolishState,
@@ -361,9 +360,7 @@ onMounted(() => {
 
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceEntryDetail
-        :current-row="currentRow"
-      />
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 申请更正 -->
     <ProModal v-model:visible="show.recheckVisible" title="申请更正">

@@ -12,6 +12,7 @@ import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectDateTime from "@/component/SelectDateTime/index";
+import ProSteps from "@/component/ProSteps/index.vue";
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
@@ -1121,6 +1122,9 @@ const validateHeadquarters = (value, rule) => {
         :class="{'form-textarea': !showPreview}"
       />
     </van-form>
+
+    <!-- 操作记录 -->
+    <ProSteps v-if="showSteps" class="steps-box" :data="form?.transferList" />
 
     <div class="form-footer" v-if="!showPreview">
       <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
