@@ -1,5 +1,93 @@
-# http://10.10.3.188:9090/castle/gitlab-ci
-include:
-  - project: 'Castle/gitlab-ci'
-    ref: master
-    file: '.castle-gitlab-ci.yml'
+image: beevelop/cordova:v2023.04.1
+
+before_script:
+  - node -v
+  - npm -v
+
+stages:
+  - install&build
+  # - upload
+
+# cache: # 缓存
+#   key: ${CI_BUILD_REF_NAME}
+#   paths:
+#     - foodbase-mobile/node_modules
+#     - foodbase-mobile/cordova/node_modules
+#     - foodbase-mobile/cordova/platforms
+#     - foodbase-mobile/cordova/plugins
+
+install&build-job:
+  stage: install&build
+  only:
+    - /^release-.*$/
+    - tags
+    - master
+  tags:
+    - general
+  script:
+    - npm install -g cordova --registry=http://castle-npm.cp.hxdi.cn
+    - npm install --registry=http://castle-npm.cp.hxdi.cn
+    - cd cordova
+    - pwd
+    - npm install --registry=http://castle-npm.cp.hxdi.cn
+
+    # 浙江
+    - cd ../
+    - DATE=`date "+%Y%m%d%H%M%S"`
+    - TIMESTAMP=`date "+%s"`
+    - sed -i 's|window.__appInfo = {}|window.__appInfo = {pipeLineId:'$CI_PIPELINE_ID',timestamp:'$TIMESTAMP',date:'$DATE'}|g' ./public/index.html
+    - npm run build
+    - if [[ -n "$CI_COMMIT_TAG" ]]; then
+      FIREALARMAPKNAME="fire-alarm.apk";
+      FIREALARMAPK="../fire-alarm.apk";
+      FIREALARMVERDIONNAME="fire-alarm-version.xml";
+      FIREALARMVERDION="../fire-alarm-version.xml";
+      ENVTEXT="正式版";
+      else
+      FIREALARMAPKNAME="dev-fire-alarm.apk";
+      FIREALARMAPK="../dev-fire-alarm.apk";
+      FIREALARMVERDIONNAME="dev-fire-alarm-version.xml";
+      FIREALARMVERDION="../dev-fire-alarm-version.xml";
+      ENVTEXT="测试版";
+      fi
+    - echo $DATE
+    - echo $TIMESTAMP
+    - sed -i 's|<version>1</version>|<version>'$TIMESTAMP'</version>|g' ./public/version.xml
+    - sed -i 's|<name>1.0.0</name>|<name>'$DATE'-'$TIMESTAMP'</name>|g' ./public/version.xml
+    - sed -i 's|<remark>remark</remark>|<remark>'$ENVTEXT'-#'$CI_PIPELINE_ID'</remark>|g' ./public/version.xml
+    - sed -i 's|<url>url</url>|<url>http://223.4.79.9:31201/foodreserver-apps/'$FIREALARMAPKNAME'</url>|g' ./public/version.xml
+    - cd cordova
+    # - sed -i 's|<name>浙江储备</name>|<name>浙江储备</name>|g' config.xml
+    # - sed -i 's|<icon src="res/zhejiang.png"/>|<icon src="res/zhejiang.png"/>|g' config.xml
+    - sed -i 's|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="1.0.0" android-versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="'$DATE'" android-versionCode="'$TIMESTAMP'" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">|g' config.xml
+    # - more config.xml
+    - cordova platform add android
+    - pwd
+    - cp -f ../project.properties ./platforms/android/project.properties
+    - cd ./platforms/android
+    - more project.properties
+    - cd ./phonegap-plugin-barcodescanner
+    - ls
+    - cd ../../../
+    # - sed -i 's|cordova.gradle.include.1=phonegap-plugin-barcodescanner/firealarm-barcodescanner.gradle|cordova.gradle.include.1=phonegap-plugin-barcodescanner/firealarm-barcodescanner.gradle|g' ./platforms/android/project.properties
+    # - more ./platforms/android/project.properties
+    # - more ./platforms/android/app/build.gradle
+    # - more ./plugins/cordova-base64-to-gallery/package.json
+    - cordova build
+    - cp platforms/android/app/build/outputs/apk/debug/app-debug.apk $FIREALARMAPK
+    - cp ../public/version.xml $FIREALARMVERDION
+    - wget http://10.13.4.153:9000/foodreserver-apps/mc
+    - chmod a+x mc
+    - ls
+    - ./mc alias set hxdi-pub http://223.4.79.9:31201/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc cp $FIREALARMAPK hxdi-pub/foodreserver-apps/$FIREALARMAPKNAME
+    - ./mc cp $FIREALARMVERDION hxdi-pub/foodreserver-apps/$FIREALARMVERDIONNAME
+
+  artifacts:
+    expire_in: 4 week
+    paths:
+      - fire-alarm.apk
+      - fire-alarm-version.xml
+
+      - dev-fire-alarm.apk
+      - dev-fire-alarm-version.xml

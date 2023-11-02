@@ -30,9 +30,9 @@ const toLogin = () => {
 }
 
 // 创建axios实例
-export const request = axios.create({
+export const request = window.__axios = axios.create({
   // baseURL: process.env.VUE_APP_BASE_URL,
-  // baseURL: '',
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://10.13.5.47:8080/' : '/',
   timeout: 1000 * 12
 })
 // 设置post请求头

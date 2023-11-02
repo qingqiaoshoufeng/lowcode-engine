@@ -7,6 +7,7 @@ function resolve(dir) {
 module.exports = {
   lintOnSave: false,
   publicPath: './',
+  outputDir: resolve('cordova/www'),
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
     svgRule.uses.clear();
