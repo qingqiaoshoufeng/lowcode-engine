@@ -95,7 +95,7 @@ const onHaveVolunteer = (e) => {
           :readonly="showPreview"
           required
           type="number"
-          maxlength="20"
+          maxlength="10"
           name="peopleNum"
           label="人数(人)："
           placeholder="请输入人数"
@@ -107,7 +107,7 @@ const onHaveVolunteer = (e) => {
           :readonly="showPreview"
           required
           type="number"
-          maxlength="20"
+          maxlength="10"
           name="trunkNum"
           label="车数(辆)："
           placeholder="请输入车数"
@@ -119,7 +119,7 @@ const onHaveVolunteer = (e) => {
           :readonly="showPreview"
           required
           type="number"
-          maxlength="20"
+          maxlength="10"
           name="boatNum"
           label="艇(艘)："
           placeholder="请输入艇数"

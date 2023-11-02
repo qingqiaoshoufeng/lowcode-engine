@@ -53,3 +53,34 @@ $state-disable: gray; // 不能修改
     margin-top: 5px;
   }
 }
+
+.state-wait-text {
+  color: #F2B34C;
+}
+
+.state-finish-text {
+  color: #34C38F;
+}
+
+.state-reject-text {
+  color: #FF4D16;
+}
+
+@keyframes timeout-text {
+  0% {
+    text-shadow: 0px 0px 0px rgba(230, 41, 41, 0.4);
+  }
+
+  50% {
+    text-shadow: 0px 0px 4px rgba(230, 41, 41, 0.6);
+  }
+
+  100% {
+    text-shadow: 0px 0px 8px rgba(230, 41, 41, 0.8);
+  }
+}
+
+.test-timeout {
+  color: red;
+  animation: timeout-text 3s infinite;
+}

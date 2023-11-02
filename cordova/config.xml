@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hxid.firealarm" android-packageName="com.hxid.firealarm" version="1.0.0" android-versionCode="1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>火灾警情统计</name>
+    <description>火灾警情统计</description>
+    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
+        oys
+    </author>
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <preference name="Scheme" value="http" />
+    <preference name="hostname" value="localhost" />
+    <preference name="AndroidInsecureFileModeEnabled" value="true" />
+    <content src="index.html" />
+    <access origin="*"/>
+    <allow-intent href="http://*/*"/>
+    <allow-intent href="https://*/*"/>
+    <allow-intent href="tel:*"/>
+    <allow-intent href="sms:*"/>
+    <allow-intent href="mailto:*"/>
+    <allow-intent href="geo:*"/>
+    <platform name="android">
+        <allow-intent href="market:*"/>
+        <preference name="StatusBarOverlaysWebView" value="false"/>
+        <preference name="StatusBarBackgroundColor" value="#0C207F"/>
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <application android:requestLegacyExternalStorage="true"/>
+            <application android:usesCleartextTraffic="true" />
+        </edit-config>
+        <config-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-config>
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*"/>
+        <allow-intent href="itms-apps:*"/>
+    </platform>
+    <icon src="res/zhejiang.png"/>
+
+</widget>

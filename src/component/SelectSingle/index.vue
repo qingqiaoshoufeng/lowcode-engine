@@ -52,6 +52,14 @@ const selectValue = ref("");
 
 const selectText = ref("");
 
+const isRequired = computed(()=>{
+  if (props.required) {
+    return true
+  } else {
+    return props.rules?.some(item=>item.required)
+  }
+})
+
 watch(() => [props.value, props.options], (val) => {
   nextTick(() => {
     if (props.value) {

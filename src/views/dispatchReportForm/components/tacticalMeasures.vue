@@ -37,7 +37,7 @@ const showDisaster = computed(() => {
         :readonly="showPreview"
         required
         type="number"
-        maxlength="20"
+        maxlength="10"
         name="deliverWater"
         label="送水量(吨)："
         placeholder="请输入送水量"
@@ -51,7 +51,7 @@ const showDisaster = computed(() => {
         :readonly="showPreview"
         required
         type="number"
-        maxlength="20"
+        maxlength="10"
         name="drainWater"
         label="排涝量(吨)："
         placeholder="请输入排涝量"
@@ -65,7 +65,7 @@ const showDisaster = computed(() => {
         :readonly="showPreview"
         required
         type="number"
-        maxlength="20"
+        maxlength="10"
         name="killArea"
         label="消杀面积(平方)："
         placeholder="请输入消杀面积"

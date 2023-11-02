@@ -11,7 +11,6 @@ import {
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
-import router from "@/router/index.js";
 import { MSG_LOCKING_TEXT, dispatchType, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getDispatchManageList, collectFireWarning } from "@/apis/index.js";

@@ -118,7 +118,7 @@ const validateCommander = (rule, value, callback) => {
         required
         name="dispatchTruckList"
         :options="dispatchTruckListOptions"
-        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.dispatchTruckList.rules"
         label="消防车辆信息："
         label-width="118px"
@@ -148,7 +148,7 @@ const validateCommander = (rule, value, callback) => {
         required
         name="midwayCar"
         :options="form.investForce.dispatchTruckList.list"
-        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
         label="中途返回车辆信息："

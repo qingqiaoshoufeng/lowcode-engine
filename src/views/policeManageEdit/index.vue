@@ -3,6 +3,7 @@ import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
 import PoliceForm from '@/views/policeEntryForm/index.vue';
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ProModal from "@/component/ProModal/index";
 import { getFireWarningManage } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
@@ -108,11 +109,7 @@ const finishCallback = () => {
     </ProModal>
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceForm
-        :current-row="currentRow"
-        :show-preview="true"
-        :show-steps="true"
-      />
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
   </div>
 </template>
