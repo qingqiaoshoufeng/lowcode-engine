@@ -155,11 +155,7 @@ const onBuildTag = (val) => {
 </script>
 
 <template>
-  <div id="fireBuilding">
-    <h4 id="fireBuilding-title">
-      <!-- <file-text-outlined /> -->
-      <strong>起火建筑</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div>
       <div v-if="showSevereFire" :span="24">
         <van-field 
@@ -388,7 +384,8 @@ const onBuildTag = (val) => {
         />
       </div>
     </div>
-  </div>
+
+</van-cell-group>
 </template>
 <style scoped lang="scss">
 .checks{

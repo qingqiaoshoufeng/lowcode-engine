@@ -435,29 +435,7 @@ const showFireInspectionScope = computed(() => {
 </script>
 
 <template>
-  <div id="basicInfo">
-    <h4 id="basicInfo-title">
-      <strong>基本信息</strong>
-    </h4>
-    <div :gutter="gutter">
-      <!-- <div v-if="showDraft" :span="8">
-        <a-form-item
-          :name="['basicInfo', 'draftName', 'value']"
-          label="草稿名称"
-          :rules="form.basicInfo.draftName.rules"
-        >
-          <a-input
-            id="draftName"
-            v-model:value="form.basicInfo.draftName.value"
-            v-preview-text="showPreview"
-            :maxlength="100"
-            placeholder="请输入草稿名称"
-            allow-clear
-            aria-autocomplete="none"
-          />
-        </a-form-item>
-      </div> -->
-    </div>
+    <van-cell-group class="rootform1">
     <div class="isSearch">
       <SelectSingle
         v-model:value="form.basicInfo.isResearch.value"
@@ -642,7 +620,7 @@ const showFireInspectionScope = computed(() => {
       <div v-if="showisLaborIntensive"  class="isLaborIntensive">
         <van-field name="是否属于劳动密集型" label="是否属于劳动密集型" >
           <template #input>
-            <van-radio-group v-preview-text="showPreview" v-model="form.basicInfo.isLaborIntensive.value" direction="horizontal">
+            <van-radio-group class="field-radio" v-preview-text="showPreview" v-model="form.basicInfo.isLaborIntensive.value" direction="horizontal">
               <van-radio name="1">是</van-radio>
               <van-radio name="2">否</van-radio>
             </van-radio-group>
@@ -738,6 +716,7 @@ const showFireInspectionScope = computed(() => {
         <van-field name="是否改装" label="是否改装" >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               v-preview-text="showPreview" 
               v-model="form.basicInfo.isRepack.value" 
               direction="horizontal">
@@ -824,6 +803,7 @@ const showFireInspectionScope = computed(() => {
         <van-field name="是否属于扶贫安置房" label="是否属于扶贫安置房" >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               v-preview-text="showPreview" 
               v-model="form.basicInfo.isPoorHouse.value"
               direction="horizontal">
@@ -837,6 +817,7 @@ const showFireInspectionScope = computed(() => {
         <van-field name="是否变更使用性质" label="是否变更使用性质" >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               v-model="form.basicInfo.isChangeUseType.value"
               v-preview-text="showPreview"
               @change="onIsChangeUseType"
@@ -1075,6 +1056,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.isInsurance.rules">
           <template #input>
             <van-radio-group 
+              class="field-radio"
               v-model="form.basicInfo.isInsurance.value"
               v-preview-text="showPreview"
               @change="onIsInsurance"
@@ -1110,6 +1092,7 @@ const showFireInspectionScope = computed(() => {
         <van-field name="是否单方面火灾" label="是否单方面火灾" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
             <van-radio-group 
+              class="field-radio"
               id="isOnesided"
               v-model="form.basicInfo.isOnesided.value"
               v-preview-text="showPreview"
@@ -1181,7 +1164,8 @@ const showFireInspectionScope = computed(() => {
           label="是否属于安全生产事故"
           :rules="form.basicInfo.isSafetyAccident.rules">
           <template #input>
-            <van-radio-group 
+            <van-radio-group
+              class="field-radio" 
               id="isSafetyAccident"
               v-model="form.basicInfo.isSafetyAccident.value"
               v-preview-text="showPreview"
@@ -1244,5 +1228,70 @@ const showFireInspectionScope = computed(() => {
         />
       </div>
     </div>
-  </div>
+  </van-cell-group>
+
 </template>
+<style lang="scss" scoped>
+.isSearch,.severity,.fireType,.fireDate,.noDispatchArea,.fireLevel.area{
+  &::after{
+    // z-index: 1;
+    // position: absolute;
+    // box-sizing: border-box;
+    content: " " !important;
+    pointer-events: none;
+    right: var(--van-padding-md)!important;
+    bottom: 0!important;
+    left: var(--van-padding-md)!important;
+    border-bottom: 0.02667rem solid var(--van-cell-border-color)!important;
+    width: calc(100% - 64px)!important;
+    display: block!important;
+    padding: 0 20px!important;
+    margin-left: 8px!important;
+    // transform: scaleY(.5);
+  }
+}
+.rootform1 > div{
+  &::after{
+    // z-index: 1;
+    // position: absolute;
+    // box-sizing: border-box;
+    content: " ";
+    pointer-events: none;
+    right: var(--van-padding-md);
+    bottom: 0;
+    left: var(--van-padding-md);
+    border-bottom: 0.02667rem solid var(--van-cell-border-color);
+    width: calc(100% - 64px);
+    display: block;
+    padding: 0 20px;
+    margin-left: 8px;
+    // transform: scaleY(.5);
+  }
+}
+// .rootform1 > div:has(>div){
+//   &::after{
+//     border: none !important;
+//   }
+
+// }
+
+.rootform1 >div> div{
+  &::after{
+    // z-index: 1;
+    // position: absolute;
+    box-sizing: border-box;
+    content: " ";
+    pointer-events: none;
+    right: var(--van-padding-md);
+    bottom: 0;
+    left: var(--van-padding-md);
+    border-bottom: 0.02667rem solid var(--van-cell-border-color);
+    width: calc(100% - 32px);
+    display: block;
+    padding: 0 20px;
+    margin-left: 8px;
+    // transform: scaleY(.5);
+  }
+}
+
+</style>

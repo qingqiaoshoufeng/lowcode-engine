@@ -57,11 +57,7 @@ const handleDeletePerson = (index) => {
 </script>
 
 <template>
-  <div id="caseHandling">
-    <h4 id="caseHandling-title">
-      <file-text-outlined />
-      <strong>案件办理</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
@@ -71,6 +67,7 @@ const handleDeletePerson = (index) => {
         >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               id="handleTwoCase"
               v-model="form.caseHandling.handleTwoCase.value"
               v-preview-text="showPreview"
@@ -126,6 +123,7 @@ const handleDeletePerson = (index) => {
           <template #input>
             <van-radio-group 
               id="firePenalty"
+              class="field-radio"
               v-model="form.caseHandling.firePenalty.value"
               v-preview-text="showPreview"
               @change="onFirePenalty"
@@ -261,5 +259,5 @@ const handleDeletePerson = (index) => {
         </div>
       </div>
     </template>
-  </div>
+  </van-cell-group>
 </template>

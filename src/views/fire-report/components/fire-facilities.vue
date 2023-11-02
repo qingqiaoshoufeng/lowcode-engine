@@ -177,11 +177,8 @@ const onFireShutterStart = () => {
 </script>
 
 <template>
-  <div id="fireFacilities">
-    <h4 id="fireFacilities-title">
-      <!-- <file-text-outlined /> -->
-      <strong>消防设施</strong>
-    </h4>
+  <van-cell-group class="rootform1">
+
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
@@ -191,6 +188,7 @@ const onFireShutterStart = () => {
         >
           <template #input>
             <van-radio-group 
+                
               id="isFirefightFacility"
               v-model="form.fireFacilities.isFirefightFacility.value"
               v-preview-text="showPreview"
@@ -923,5 +921,5 @@ const onFireShutterStart = () => {
         </div>
       </div>
     </template>
-  </div>
+  </van-cell-group>
 </template>

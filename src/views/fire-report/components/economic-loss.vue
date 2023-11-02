@@ -66,11 +66,7 @@ const validateDirectDamage = (rule, value, callback) => {
 </script>
 
 <template>
-  <div id="economicLoss">
-    <h4 id="economicLoss-title">
-      <!-- <file-text-outlined /> -->
-      <strong>经济损失</strong>
-    </h4>
+<van-cell-group class="rootform1">
     <div class="economicLoss-message">
       直接经济损失：{{ form.economicLoss.directEconomicLoss?.value }}元
     </div>
@@ -191,12 +187,15 @@ const validateDirectDamage = (rule, value, callback) => {
           />
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>
 
 <style lang="scss" scoped>
 .economicLoss-message {
   color: red;
   margin-bottom: 20px;
+  color: red;
+  padding: 12px 0 0 20px;
 }
+
 </style>

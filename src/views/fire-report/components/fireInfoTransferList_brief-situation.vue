@@ -6,16 +6,12 @@ const form = inject('form')
 </script>
 
 <template>
-  <div id="briefSituation">
-    <h4 id="briefSituation-title">
-      <!-- <file-text-outlined /> -->
-      <strong>简要情况</strong>
-    </h4>
-    <a-row :gutter="gutter">
-      <a-col :span="24">
-        {{ form.briefSituation.content.value }}
-      </a-col>
-    </a-row>
-  </div>
+    <van-cell-group class="rootform1">
+    <div :gutter="gutter">
+      <div :span="24">
+        {{ form.briefSituation.content.value}}
+      </div>
+    </div>
+  </van-cell-group>
 </template>
 

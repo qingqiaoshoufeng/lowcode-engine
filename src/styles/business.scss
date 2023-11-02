@@ -40,6 +40,23 @@ $state-disable: gray; // 不能修改
     }
   }
 }
+.field-radio {
+  .van-cell__title {
+    margin-left: 12px !important;
+  }
+  .van-cell__value {
+    .van-radio[aria-checked=false] {
+      padding: 1px 5px;
+      border: 1px dashed #d9d9d9;
+      border-radius: 2px;
+    }
+    .van-radio[aria-checked=true] {
+      padding: 1px 5px;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+    }
+  }
+}
 
 .field-radio::before {
   left: 20px !important;

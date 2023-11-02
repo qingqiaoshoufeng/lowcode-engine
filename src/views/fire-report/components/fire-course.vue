@@ -13,11 +13,7 @@ const refreshField = inject('refreshField')
 </script>
 
 <template>
-  <div id="fireCourse">
-    <h4 id="fireCourse-title">
-      <!-- <file-text-outlined /> -->
-      <strong>起火经过</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="24">
         <van-field
@@ -27,6 +23,7 @@ const refreshField = inject('refreshField')
           id="firePassage"
           v-model="form.fireCourse.firePassage.value"
           v-preview-text="showPreview"
+          :required="true"
           :rows="6"
           :maxlength="1000"
           show-count
@@ -37,5 +34,5 @@ const refreshField = inject('refreshField')
         />
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>

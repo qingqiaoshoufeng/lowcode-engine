@@ -60,15 +60,6 @@ const OnAfterRead = async(file) => {
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
 }
-// const onChange = (file, fileList, event) => {
-//   form.value.firePhoto.photos.value?.forEach((item, i) => {
-//     debugger
-//     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-//       item.url = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
-//       item.thumbUrl = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
-//     }
-//   })
-// }
 const onDelete = async(val,val1)=>{
   const res = await onRemove(val)
   if(res === true){
@@ -114,11 +105,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="firePhoto">
-    <h4 id="firePhoto-title">
-      <!-- <file-text-outlined /> -->
-      <strong>火灾照片</strong>
-    </h4>
+  <van-cell-group class="rootform1">
+  
     <div :gutter="gutter">
       <div :span="24">
         <van-uploader
@@ -141,6 +129,6 @@ onMounted(() => {
           <span v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>
 

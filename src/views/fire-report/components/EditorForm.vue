@@ -1,13 +1,13 @@
 <script setup>
 import { computed, inject, nextTick, onMounted, provide, ref, watch } from 'vue'
 import store from '@/store/index.js'
-
+import ProCard from "@/component/ProCard/index.vue";
 console.log(store,'store'); 
 // import { message, notification } from '@castle/ant-design-vue'
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import { useAsyncQueue } from '@vueuse/core'
-// import FireInfo from '../dispatch-report/components/_fire-info.vue'
+import FireInfo from '@/views/dispatchReportForm/components/fireInfo.vue'
 import BaseInfo from './base-info.vue'
 import CasualtyWar from './casualty-war.vue'
 import EconomicLoss from './economic-loss.vue'
@@ -43,6 +43,7 @@ import {
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
 import { value } from 'lodash-es';
+import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const props = defineProps({
@@ -885,7 +886,8 @@ const approvalCallback = async (form) => {
 const setTemporary = async()=>{
   temporaryLoading.value = true
   await temporarySubmit()
-  temporaryLoading = false
+  showToast('暂存成功')
+  temporaryLoading.value = false
 }
 
 
@@ -962,6 +964,15 @@ onMounted(() => {
 //     bus.emit('CASTLE__globalLoading', false)
 //   }, 100)
 // }
+const onSideBarChange = (e, k) => {
+  const targetElement = document.getElementById(k);
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      block: 'start',
+      // behavior: 'smooth', // 会影响左侧点击
+    });
+  }
+}
 </script>
 
 <template>
@@ -975,59 +986,57 @@ onMounted(() => {
           <van-sidebar-item 
             v-for="(item, k) in sections" 
             :key="k" :title="item.title" 
-            badge="√" 
+            badge="√"
+            @click="onSideBarChange(item, k)" 
           />
         </van-sidebar>
-        <!-- <a-anchor
-          v-if="showPreview !== null && showCurrentDom"
-          :get-container="container"
-          :offset-top="24"
-          :offset-bottom="0"
-          :target-offset="30"
-          :affix="true"
-          class="input-anchor"
-          @click.prevent
-        >
-          <template v-for="(item, k) in sections" :key="k">
-            <a-anchor-link :href="`#${k}-title`">
-              <template #title>
-                <h5 class="anchor-h5">
-                  <span>{{ item.title }}</span>
-                  <check-circle-filled :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" fill style="color: #52c41a;margin-left: 15px;" />
-                  <img v-show="item.fieldWarning?.indexOf('true') > -1 && !showDraft" src="@/assets/images/icon-error@2x.png" style="width: 14px;height: 14px;margin-left: 15px;">
-                  <img v-show="item.fieldAnnotation" src="@/assets/images/icon-edit.png" style="width: 14px;height: 14px;margin-left: 15px;">
-                </h5>
-              </template>
-            </a-anchor-link>
-          </template>
-        </a-anchor> -->
       </div>
       <div class="form-right">
          <div class="box">
             <div class="wrapper">
               <van-form>
                 <!-- 警情信息 -->
-                <!-- <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" /> -->
+                <FireInfo v-if="!showDraft && !isPolice" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->
-                <BriefSituation v-if="!showDraft" />
+                <ProCard v-if="!showDraft" title="简要情况" id="basicInfo" :showOpenClose="!showPreview">
+                  <BriefSituation />
+                </ProCard>
                 <!-- 基本信息 -->
-                <BaseInfo />
+                <ProCard title="基本信息" id="basicInfo" :showOpenClose="!showPreview">
+                  <BaseInfo />
+                </ProCard>
                 <!-- 人员伤亡 -->
-                <CasualtyWar v-if="showSevereFire" />
+                <ProCard v-if="showSevereFire"  title="人员伤亡（不含消防员）" id="casualtyWar" :showOpenClose="!showPreview">
+                  <CasualtyWar />
+                </ProCard>
                 <!-- 经济损失 -->
-                <EconomicLoss />
+                <ProCard title="经济损失" id="economicLoss" :showOpenClose="!showPreview">
+                  <EconomicLoss />
+                </ProCard>
                 <!-- 起火建筑 -->
-                <FireBuilding v-if="showBuildingFire" />
+                <ProCard title="起火建筑" v-if="showBuildingFire" id="fireBuilding" :showOpenClose="!showPreview">
+                  <FireBuilding  />
+                </ProCard>
                 <!-- 消防设施 -->
-                <FireFacilities v-if="showBuildingFire && showSevereFire" />
+                <ProCard title="消防设施" v-if="showBuildingFire && showSevereFire" id="fireFacilities" :showOpenClose="!showPreview">
+                  <FireFacilities  />
+                </ProCard>
                 <!-- 案件办理 -->
-                <CaseHandling v-if="showSevereFire" />
+                <ProCard title="案件办理" v-if="showSevereFire" id="caseHandling" :showOpenClose="!showPreview">
+                  <CaseHandling  />
+                </ProCard>
                 <!-- 火灾照片 -->
-                <FirePhoto />
+                <ProCard title="火灾照片" id="firePhoto" :showOpenClose="!showPreview">
+                  <FirePhoto />
+                </ProCard>
                 <!-- 起火经过 -->
-                <FireCourse />
+                <ProCard title="起火经过" id="fireCourse" :showOpenClose="!showPreview">
+                  <FireCourse />
+                </ProCard>
                 <!-- 其他附件 -->
-                <OtherAttach />
+                <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
+                  <OtherAttach />
+                </ProCard>
               </van-form>
               <div class="form-footer" v-if="!showPreview">
                 <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click.stop="setTemporary">
@@ -1069,13 +1078,18 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .editor-form{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  // display: flex;
+  // align-items: flex-start;
+  // justify-content: space-between;
   height:calc(100% - 44px);
   .form-left{
     width: 20%;
     display: inline-block;
+    overflow-y: scroll;
+    height: 100%;
+    padding-right: 13px;
+    box-sizing: content-box;
+    overflow-x: hidden;
   }
   .form-right{
     display: inline-block;
@@ -1134,3 +1148,4 @@ onMounted(() => {
   }
 }
 </style>
+

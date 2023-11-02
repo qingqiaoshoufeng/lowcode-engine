@@ -46,11 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="otherAttach">
-    <h4 id="otherAttach-title">
-      <file-text-outlined />
-      <strong>其他附件</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="24">
         <a-form-item
@@ -96,5 +92,5 @@ onMounted(() => {
         />
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>

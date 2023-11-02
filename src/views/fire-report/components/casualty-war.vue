@@ -203,16 +203,14 @@ const bigInjured = computed(() => {
 </script>
 
 <template>
-  <div id="casualtyWar" class="fire-casualtyWar">
-    <h4 id="casualtyWar-title">
-      <strong>人员伤亡（不含消防员）</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="8">
         <van-field name="是否有人员受伤" label="是否有人员受伤"
           :rules="form.casualtyWar.isInjured.rules" >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               id="isInjured"
               v-model="form.casualtyWar.isInjured.value"
               v-preview-text="showPreview"
@@ -557,6 +555,7 @@ const bigInjured = computed(() => {
         >
           <template #input>
             <van-radio-group 
+              class="field-radio"
               id="isDead"
               v-model="form.casualtyWar.isDead.value"
               v-preview-text="showPreview"
@@ -851,7 +850,7 @@ const bigInjured = computed(() => {
         </div>
       </div>
     </template>
-  </div>
+</van-cell-group>
 </template>
 
 <style lang="scss" scoped>
