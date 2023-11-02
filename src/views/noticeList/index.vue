@@ -38,7 +38,6 @@ import { watch } from 'vue';
 const tabRef = ref(0)
 const getNotice = async(params= {})=>{
   list.value = await getFireNotice(params)
-  // debugger;
 }
 const list = ref([])
 const {

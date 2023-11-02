@@ -6,6 +6,9 @@ import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectOrg from "@/component/SelectOrg/index";
 import SelectRange from "@/component/SelectRange/index";
 import AreaCascader from "@/component/AreaCascader/index";
+import {getCurrentInstance} from 'vue';
+const instance = getCurrentInstance();
+
 
 const props = defineProps({
   options: {
@@ -18,6 +21,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:value", "confirmCallback"]);
+watch(()=>props.options,()=>{
+  instance.proxy.$forceUpdate();
+})
 
 const query = inject("query");
 

@@ -123,7 +123,6 @@ const validateFireFloor = (rule, value, callback) => {
 }
 
 const onBuildTag = (val) => {
-  // debugger;
   if (val==='2023020801767') {
     if(form.value.fireBuilding.buildTag.value.includes(val)){
       form.value.fireBuilding.buildTag.value = form.value.fireBuilding.buildTag.value.filter(item=>item !== val)
@@ -200,7 +199,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.buildType.rules"
           id="buildType"
           v-model:value="form.fireBuilding.buildType.value"
-          v-preview-text="!!showPreview"
+          :showPreview="showPreview"
           :options="options.buildType"
           :field-name="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -216,7 +215,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.buildStructure.rules"
           id="buildStructure"
           v-model:value="form.fireBuilding.buildStructure.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.buildStructure"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -231,7 +230,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.fireResistanceRating.rules"
           id="fireResistanceRating"
           v-model:value="form.fireBuilding.fireResistanceRating.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="ratingOptions"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -351,7 +350,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.isSpread.rules"
           id="isSpread"
           v-model:value="form.fireBuilding.isSpread.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否蔓延"
@@ -365,7 +364,7 @@ const onBuildTag = (val) => {
           :fieldNames="{label:'label',value:'value'}"
           id="isLoud"
           v-model:value="form.fireBuilding.isLoud.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否发生轰燃"
@@ -382,7 +381,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.isWindowOpened.rules"
           id="isWindowOpened"
           v-model:value="form.fireBuilding.isWindowOpened.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.isNot"
           allow-clear
           placeholder="请选择失火建筑门窗在过程中是否开启"

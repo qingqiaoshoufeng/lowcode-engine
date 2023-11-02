@@ -14,7 +14,7 @@
               </div> -->
             </div>
             <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
+              <span>{{ record.firePlaceValue }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -37,11 +37,11 @@
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
-            <div class="item-field">
+            <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">起火场所：</div>
               <div>{{ record.firePlaceValue }}</div>
-            </div>
+            </div> -->
             <div class="item-line" />
             <div class="item-operate">
               <van-button
@@ -150,7 +150,7 @@ const handleEdit = (row) => {
 }
 const setHandleOk = ()=>{}
 </script>
-  <style lang="scss">
+  <style lang="scss" scoped>
   .fire-manage{
     .list-item {
       display: flex;

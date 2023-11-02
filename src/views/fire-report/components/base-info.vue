@@ -461,18 +461,20 @@ const showFireInspectionScope = computed(() => {
     <div class="isSearch">
       <SelectSingle
         v-model:value="form.basicInfo.isResearch.value"
+        :showPreview="showPreview"
         label="是否调查"
         :options="options.isResearch"
         :field-names="{label:'label',value:'value'}"
         :rules="form.basicInfo.isResearch.rules"
         :required="true"
         placeholder="请选择是否正在调查"
-        title="请选择是否正在调查"
+        title="请选择是否正在调查" 
       />
     </div>
     <div class="severity">
       <SelectSingle
         v-model:value="form.basicInfo.severity.value"
+        :showPreview="showPreview"
         label="严重程度"
         :options="options.severity"
         :field-names="{label:'label',value:'value'}"
@@ -491,14 +493,14 @@ const showFireInspectionScope = computed(() => {
         :required="true"
         placeholder="请选择火灾类型"
         title="请选择火灾类型"
-        v-preview-text="showPreview"
+        :showPreview="showPreview"
         @change="fireTypeChange"
       />
     </div>
       <div class="fireDate">
         <SelectDateTime
           v-model:value="form.basicInfo.fireDate.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :readonly="showPreview"
           is-link
           required
@@ -544,7 +546,7 @@ const showFireInspectionScope = computed(() => {
       <div class="area">
         <CascaderSingle
           v-model:value="form.basicInfo.area.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.area"
           :required="true"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
@@ -586,7 +588,7 @@ const showFireInspectionScope = computed(() => {
       <div class="fireCause">
         <CascaderSingle 
           v-model:value="form.basicInfo.fireCause.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.fireCause"
           label="起火原因"
           placeholder="请选择起火原因"
@@ -596,24 +598,26 @@ const showFireInspectionScope = computed(() => {
       </div>
       <div>
         <van-field 
+          name="caseHandling,penaltyNum,value"
           :disabled="!importantEdit"
-          name="过火面积（平方米）" 
           label="过火面积（平方米）"
           :rules="[{ validator: validateBurnedArea, trigger: 'blur' }, ...form.basicInfo.burnedArea.rules]"
           @blur="checkBurnedArea(form)"
-        >
-          <template #input>
-            <van-stepper 
-              v-model="form.basicInfo.burnedArea.value" 
-              v-preview-text="showPreview"
-            />
-          </template>
-        </van-field>
+          v-model="form.basicInfo.burnedArea.value" 
+          v-preview-text="showPreview"
+          id="penaltyNum"
+          :maxlength="10"
+          style="width: 100%"
+          allow-clear
+          aria-autocomplete="none"
+          placeholder="请输入过火面积"
+          type="number" 
+        />
       </div>
       <div class="fireLevel">
         <SelectSingle
           v-model:value="form.basicInfo.fireLevel.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           label="火灾等级"
           :options="options.isResearch"
           :rules="form.basicInfo.fireLevel.rules"
@@ -626,7 +630,7 @@ const showFireInspectionScope = computed(() => {
         <CascaderSingle
           id="firePlace"
           v-model:value="form.basicInfo.firePlace.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.firePlace"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           label="起火场所"
@@ -654,7 +658,7 @@ const showFireInspectionScope = computed(() => {
           :required="true"
           placeholder="请选择厂房火灾危险性分类"
           title="请选择厂房火灾危险性分类"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
         />
       </div>
       <div v-if="showOtherFirePlace" class="otherFirePlace">
@@ -681,7 +685,7 @@ const showFireInspectionScope = computed(() => {
         <SelectSingle
           id="liveType"
           v-model:value="form.basicInfo.liveType.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.liveType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -700,7 +704,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.vehicleType.rules"
           id="vehicleType"
           v-model:value="form.basicInfo.vehicleType.value"
-          :preview="showPreview"
+          :showPreview="showPreview"
           :options="options.vehicleType"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           :field-name="['basicInfo', 'vehicleType', 'value']"
@@ -720,7 +724,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.chargeState.rules"
           id="chargeState"
           v-model:value="form.basicInfo.chargeState.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.chargeState"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -749,7 +753,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.batteryType.rules"
           id="batteryType"
           v-model:value="form.basicInfo.batteryType.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.batteryType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -763,7 +767,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.batteryType.rules"
           id="batteryType"
           v-model:value="form.basicInfo.batteryType.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.batteryType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -805,7 +809,7 @@ const showFireInspectionScope = computed(() => {
             :rules="form.basicInfo.driveState.rules"
             id="driveState"
             v-model:value="form.basicInfo.driveState.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.driveState"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
@@ -849,7 +853,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.useType.rules"
           id="useType"
           v-model:value="form.basicInfo.useType.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.useType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -863,7 +867,7 @@ const showFireInspectionScope = computed(() => {
         <CascaderSingle
             label="事故形态"
             :rules="form.basicInfo.firePattern.rules"
-            :preview="!!showPreview"
+            :showPreview="showPreview"
             id="firePattern"
             v-model:value="form.basicInfo.firePattern.value"
             :options="options.firePattern"
@@ -879,7 +883,7 @@ const showFireInspectionScope = computed(() => {
             :rules="form.basicInfo.fireSite.rules"
             id="fireSite"
             v-model:value="form.basicInfo.fireSite.value"
-            :preview="showPreview"
+            :showPreview="showPreview"
             :options="options.fireSite"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'fireSite', 'value']"
@@ -910,7 +914,7 @@ const showFireInspectionScope = computed(() => {
             :rules="form.basicInfo.initialFuelsType.rules"
             id="initialFuelsType"
             v-model:value="form.basicInfo.initialFuelsType.value"
-            :preview="!!showPreview"
+            :showPreview="showPreview"
             :options="options.initialFuelsType"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'initialFuelsType', 'value']"
@@ -944,7 +948,7 @@ const showFireInspectionScope = computed(() => {
             :rules="form.basicInfo.igniteSourceType.rules"
             id="igniteSourceType"
             v-model:value="form.basicInfo.igniteSourceType.value"
-            :preview="!!showPreview"
+            :showPreview="showPreview"
             :options="options.igniteSourceType"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'igniteSourceType', 'value']"
@@ -978,7 +982,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.schooling.rules"
           id="schooling"
           v-model:value="form.basicInfo.schooling.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.schooling"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -992,7 +996,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.health.rules"
           id="health"
           v-model:value="form.basicInfo.health.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.health"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -1009,7 +1013,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.industry.rules"
           id="industry"
           v-model:value="form.basicInfo.industry.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.industry"
           :field-name="{ value: 'boDictId', text: 'dictName' }"
           placeholder="请选择所属行业"
@@ -1023,7 +1027,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.economicType.rules"
           id="economicType"
           v-model:value="form.basicInfo.economicType.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.economicType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -1039,7 +1043,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.leadInspectionOrg.rules"
           id="leadInspectionOrg"
           v-model:value="form.basicInfo.leadInspectionOrg.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.leadInspectionOrg"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -1087,7 +1091,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.insuranceInfo.rules"
           id="insuranceInfo"
           v-model:value="form.basicInfo.insuranceInfo.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.insuranceInfo"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -1124,7 +1128,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.fireInspection.rules"
           id="fireInspection"
           v-model:value="form.basicInfo.fireInspection.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.fireInspection"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
@@ -1139,7 +1143,7 @@ const showFireInspectionScope = computed(() => {
             :rules="form.basicInfo.fireInspectionScope.rules"
             id="fireInspectionScope"
             v-model:value="form.basicInfo.fireInspectionScope.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.fireInspectionScope"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
@@ -1157,7 +1161,7 @@ const showFireInspectionScope = computed(() => {
           :rules="form.basicInfo.fireSafetyUnits.rules"
           id="fireSafetyUnits"
           v-model:value="form.basicInfo.fireSafetyUnits.value"
-          v-preview-text="showPreview"
+          :showPreview="showPreview"
           :options="options.fireSafetyUnits"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear

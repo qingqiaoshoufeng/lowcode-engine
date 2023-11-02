@@ -138,9 +138,9 @@ const handleDeletePerson = (index) => {
       </div>
     </div>
     <template v-if="form.caseHandling.firePenalty.value === '1'">
-      <a-divider style="border-color: #A4A4A4" dashed>
+      <div style="border-color: #A4A4A4" dashed>
         处罚单位列表
-      </a-divider>
+      </div>
       <div v-for="(item, index) in form.caseHandling.fireInfoOrgList" :key="index" :gutter="gutter">
         <div :span="8">
           <van-field 
@@ -177,7 +177,7 @@ const handleDeletePerson = (index) => {
             :rules="form.caseHandling.penalty.rules"
             id="penalty"
             v-model:value="item.penalty"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.penalty"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
@@ -188,30 +188,19 @@ const handleDeletePerson = (index) => {
       <div v-if="!isDetail">
         <div span="24">
           <van-button 
-              @click="handleAddDead"
-              title="新增死亡人员"
-              icon="plus" 
-              type="primary" 
-            />
-          <!-- <a-form-item title="新增处罚单位">
-            <van-button 
             @click="handleAddDead"
             title="新增死亡人员"
             icon="plus" 
             type="primary" 
           />
-            <a-button type="dashed" block @click="handleAddUnit">
-              <PlusOutlined />
-            </a-button>
-          </a-form-item> -->
         </div>
       </div>
     </template>
 
     <template v-if="form.caseHandling.firePenalty.value === '1'">
-      <a-divider style="border-color: #A4A4A4" dashed>
+      <div style="border-color: #A4A4A4" dashed>
         处罚个人列表
-      </a-divider>
+      </div>
       <div v-for="(item, index) in form.caseHandling.fireInfoPersonList" :key="index" :gutter="gutter">
         <div :span="8">
           <van-field 
@@ -234,7 +223,7 @@ const handleDeletePerson = (index) => {
             :rules="form.caseHandling.gender.rules"
             id="gender"
             v-model:value="item.gender"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.gender"
             allow-clear
             placeholder="请选择性别"

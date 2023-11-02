@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject, nextTick, onMounted, provide, ref, watch } from 'vue'
 import store from '@/store/index.js'
+
 console.log(store,'store'); 
 // import { message, notification } from '@castle/ant-design-vue'
 import { useDetail, useSubmit } from '@castle/castle-use'
@@ -19,7 +20,7 @@ import FirePhoto from './fire-photo.vue'
 import OtherAttach from './other-attach.vue'
 import BriefSituation from './fireInfoTransferList_brief-situation.vue'
 import { useFormConfig } from '../config/form-config.js'
-// import ProcessReview from '@/components/process-review/index.vue'
+import ProcessReview from '@/component/ProcessReview/index.vue'
 import { exportPdf } from '@/utils/export-pdf.js'
 import { useOptions } from '@/hooks/useOptions.js'
 // import { useSystemDict } from '@/store/index.js'
@@ -103,6 +104,10 @@ const props = defineProps({
   setHandleExtend: {
     type: Function,
   },
+  isReview:{
+    type: Boolean,
+    default: false,
+  }
 })
 
 const emits = defineEmits(['finishCallback'])
@@ -186,7 +191,6 @@ const checkArray = (arr, text) => {
   })
   return result
 }
-
 const showFireSite = computed(() => {
   const { fireType, firePlace, vehicleType } = form.value.basicInfo
   if (fireType?.text?.includes('建构筑物火灾') && checkArray(firePlace?.text, ['标志性/点缀性建筑', '废弃建筑', '发电储能场所', '城市地下综合管廊', '其他建构筑物'])) {
@@ -290,6 +294,11 @@ const sections = computed(() => {
 
 const container = () => {
   return document.querySelector('.tab-pane-content') || document.querySelector('#record-wrap') || document.querySelector('.ant-modal-body')
+}
+
+// 打开审核弹窗
+const showReviewDialog = ()=>{
+  show.value.approvalVisible = true
 }
 
 const refreshField = () => {
@@ -1021,8 +1030,11 @@ onMounted(() => {
                 <OtherAttach />
               </van-form>
               <div class="form-footer" v-if="!showPreview">
-                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click="setTemporary">
+                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click.stop="setTemporary">
                   暂存
+                </van-button>
+                <van-button v-if="isReview" class="temporary" round block type="primary" @click.stop="showReviewDialog">
+                  审核
                 </van-button>
               </div>
             </div>
@@ -1041,6 +1053,18 @@ onMounted(() => {
       </a-button> -->
     <!-- </a-row> -->
   </div>
+
+  <!-- 提交审核 -->
+  <DialogInfo title="火灾审核" v-model:visible="show.approvalVisible" v-slot="{setHandleOk}">
+    <ProcessReview
+      v-if="show.approvalVisible"
+      process-key="fireInfoFlow"
+      :current-row="currentRow"
+      :set-handle-ok="setHandleOk"
+      :label-text="labelText"
+      @finish-callback="approvalCallback"
+    />
+  </DialogInfo>
 </template>
 
 <style lang="scss" scoped>

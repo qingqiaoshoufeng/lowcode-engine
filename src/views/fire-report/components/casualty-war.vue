@@ -238,7 +238,7 @@ const bigInjured = computed(() => {
             :rules="form.casualtyWar.minorInjury.rules"
             id="minorInjury"
             v-model:value="form.casualtyWar.minorInjury.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.injuryType"
             allow-clear
             disabled
@@ -250,25 +250,22 @@ const bigInjured = computed(() => {
         </div>
         <div :span="8">
           <van-field 
-            name="轻伤人数" 
             label="轻伤人数"
-            :rules="form.casualtyWar.injuryNum.rules">
-            <template #input>
-              <van-stepper
-                id="injuryNum"
-                v-model:value="form.casualtyWar.injuryNum.value"
-                v-preview-text="showPreview"
-                :maxlength="6"
-                :disabled="!importantEdit"
-                style="width: 100%"
-                allow-clear
-                aria-autocomplete="none"
-                placeholder="请输入轻伤人数"
-                @change="checkFireInjuryCost(form)"
-                direction="horizontal"
-              />
-            </template>
-          </van-field>
+            :rules="form.casualtyWar.injuryNum.rules"
+            id="injuryNum"
+            v-model="form.casualtyWar.injuryNum.value"
+            v-preview-text="showPreview"
+            :maxlength="6"
+            :disabled="!importantEdit"
+            style="width: 100%"
+            allow-clear
+            aria-autocomplete="none"
+            placeholder="请输入轻伤人数"
+            @change="checkFireInjuryCost(form)"
+            direction="horizontal"
+            name="casualtyWar,injuryNum,value"
+            type="number" 
+          />
         </div>
       </div>
       <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="injured-item">
@@ -282,7 +279,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.minorInjury.rules"
               id="minorInjury"
               v-model:value="form.casualtyWar.minorInjury.value"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryType"
               allow-clear
               disabled
@@ -312,7 +309,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.nation.rules"
               id="nation"
               v-model:value="item.nation"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.nation"
               allow-clear
               show-search
@@ -339,7 +336,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.idType.rules"
               id="idType"
               v-model:value="item.idType"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.idType"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -370,7 +367,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.gender.rules"
               id="gender"
               v-model:value="item.gender"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.gender"
               :placeholder="item.genderHolder"
               :disabled="!item.disabled"
@@ -380,23 +377,20 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <van-field 
-              name="人员年龄"
               label="人员年龄"
-              :rules="form.casualtyWar.age.rules">
-              <template #input>
-                <van-stepper
-                  id="age"
-                  v-model:value="item.age"
-                  v-preview-text="showPreview"
-                  style="width: 100%"
-                  :maxlength="3"
-                  :placeholder="item.ageHolder"
-                  :disabled="!item.disabled"
-                  aria-autocomplete="none"
-                  allow-clear
-                />
-              </template>
-            </van-field>
+              :rules="form.casualtyWar.age.rules"
+              id="age"
+              v-model="item.age"
+              v-preview-text="showPreview"
+              style="width: 100%"
+              :maxlength="3"
+              :placeholder="item.ageHolder"
+              :disabled="!item.disabled"
+              aria-autocomplete="none"
+              allow-clear
+              name="casualtyWar,age,value"
+              type="number" 
+            />
           </div>
           <div :span="8">
             <SelectSingle
@@ -404,7 +398,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.injurySource.rules"
               id="injurySource"
               v-model:value="item.injurySource"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injurySource"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -417,7 +411,7 @@ const bigInjured = computed(() => {
               label="来源详情"
               id="injurySourceInfo"
               v-model:value="item.injurySourceInfo"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injurySourceInfo"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -431,7 +425,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.job.rules"
               id="job"
               v-model:value="item.job"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.job"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -445,7 +439,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.health.rules"
               id="health"
               v-model:value="item.health"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.health"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -459,7 +453,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.schooling.rules"
               id="schooling"
               v-model:value="item.schooling"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.schooling"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -473,7 +467,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.injuryCause.rules"
               id="injuryCause"
               v-model:value="item.injuryCause"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryCause"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -487,7 +481,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.humanCause.rules"
               id="injuryBehavior"
               v-model:value="item.injuryBehavior"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryBehavior"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -501,7 +495,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.injuryBehavior.rules"
               id="injuryBehavior"
               v-model:value="item.injuryBehavior"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryBehavior"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -514,7 +508,7 @@ const bigInjured = computed(() => {
               label="身体主要症状"
               :rules="form.casualtyWar.mainSymptoms.rules"
               v-model:value="item.injuryPart"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryPart"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -593,10 +587,10 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.injuryType.rules"
               id="injuryType"
               v-model:value="item.injuryType"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryType"
               allow-clear
-              placeholder=""
+              placeholder="请输入伤亡情况"
               disabled
               :field-names="{ value: 'value', label: 'label' }"
             />
@@ -624,7 +618,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.nation.rules"
               id="injuryType"
               v-model:value="item.injuryType"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryType"
               allow-clear
               placeholder=""
@@ -673,7 +667,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.gender.rules"
               id="gender"
               v-model:value="item.gender"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.gender"
               :placeholder="item.genderHolder"
               :disabled="!item.disabled"
@@ -682,23 +676,20 @@ const bigInjured = computed(() => {
           </div>
           <div :span="8">
             <van-field 
-              name="人员年龄"
               label="人员年龄"
-              :rules="form.casualtyWar.age.rules">
-              <template #input>
-                <van-stepper
-                  id="age"
-                  v-model:value="item.age"
-                  v-preview-text="showPreview"
-                  :placeholder="item.ageHolder"
-                  style="width: 100%"
-                  :maxlength="3"
-                  aria-autocomplete="none"
-                  :disabled="!item.disabled"
-                  allow-clear
-                />
-              </template>
-            </van-field>
+              :rules="form.casualtyWar.age.rules"
+              id="age"
+              v-model="item.age"
+              v-preview-text="showPreview"
+              :placeholder="item.ageHolder"
+              style="width: 100%"
+              :maxlength="3"
+              aria-autocomplete="none"
+              :disabled="!item.disabled"
+              allow-clear
+              name="casualtyWar,age,value"
+              type="number" 
+            />
           </div>
           <div :span="8">
             <SelectSingle
@@ -706,7 +697,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.injurySource.rules"
               id="injurySource"
               v-model:value="item.injurySource"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injurySource"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -719,7 +710,7 @@ const bigInjured = computed(() => {
               label="来源详情"
               id="injurySourceInfo"
               v-model:value="item.injurySourceInfo"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injurySourceInfo"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -733,7 +724,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.job.rules"
               id="job"
               v-model:value="item.job"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.job"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -747,7 +738,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.health.rules"
               id="health"
               v-model:value="item.health"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.health"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -761,7 +752,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.schooling.rules"
               id="schooling"
               v-model:value="item.schooling"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.schooling"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               allow-clear
@@ -775,7 +766,7 @@ const bigInjured = computed(() => {
               :rules="[{ required: form.casualtyWar.injuryCause.rules[0].required, message: '请选择致死原因' }]"
               id="injuryCause"
               v-model:value="item.injuryCause"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :field-names="{ value: 'boDictId', label: 'dictName' }"
               :options="options.injuryCause"
               allow-clear
@@ -789,7 +780,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.humanCause.rules"
               id="injuryBehavior"
               v-model:value="item.injuryBehavior"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryBehavior"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -803,7 +794,7 @@ const bigInjured = computed(() => {
               :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
               id="injuryBehavior"
               v-model:value="item.injuryBehavior"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.injuryBehavior"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -820,7 +811,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.bodyLocation.rules"
               id="bodyLocation"
               v-model:value="item.bodyLocation"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.bodyLocation"
               allow-clear
               :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -834,7 +825,7 @@ const bigInjured = computed(() => {
               :rules="form.casualtyWar.deathDate.rules"
               id="deathDate"
               v-model:value="item.deathDate"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.deathDate"
               :field-names="{ value: 'boDictId', text: 'dictName' }"
               placeholder="请选择死亡时间"

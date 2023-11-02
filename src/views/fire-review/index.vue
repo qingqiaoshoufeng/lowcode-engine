@@ -3,12 +3,12 @@
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
-        :getListFn="getFireManageList"
+        :getListFn="getFireReviewList"
         :tabs="tabs"
         :onTabFn="onTabChangeFn"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
-        <div class="list-tabs1" v-if="tabsActive === 1 || tabsActive === 2">
+        <div class="list-tabs1" >
           <SelectTime
             v-model:value="filterFormState.time"
             title="选择时间"
@@ -25,13 +25,13 @@
         <template #list="{ record }">
           <div class="list-item" @click="handleItem(record)">
             <div class="item-header">
-              <div class="item-title">{{ record.warningName }}</div>
-              <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-                {{ record.dispatchStatusValue }}
-              </div> -->
+              <div class="item-title">{{ record.warningAddr }}</div>
+              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+                {{ record.fireStatusValue }}
+              </div>
             </div>
             <div class="item-type">
-              <span>{{ record.firePlaceValue }}</span>
+              <span>{{ record.fireTypeValue }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -52,7 +52,7 @@
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.areaDutyGroupName }}</div>
+              <div>{{ record.dutyOrgName }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
@@ -61,19 +61,6 @@
             </div> -->
             <div class="item-line" />
             <div class="item-operate" @click.stop>
-              <van-icon
-                name="star"
-                v-if="record.focusStatus === '1'"
-                style="color: #fed547"
-                class="item-collect"
-                @click="handleCollect(record, false)"
-              />
-              <van-icon
-                name="star-o"
-                v-else
-                class="item-collect"
-                @click="handleCollect(record, true)"
-              />
               <van-button
                 v-p="['admin', 'fire-report:look']"
                 type="success"
@@ -85,33 +72,41 @@
                 查看
               </van-button>
               <van-button
-                v-p="['admin', 'fire-report:look']"
                 type="success"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                @click.stop="handleRecheck(record)"
-                v-if="checkFireChangeState(record.fireStatusValue, record.updatePermission)"
+                v-if="tabType === 'running' && checkFireApproval(record.fireStatusValue)" 
+                @click="handleReview(record)"
               >
-               申请更正
+                审核
               </van-button>
             </div>
           </div>
         </template>
     </ProList>
-    <ProModal  v-model:visible="show.editVisible" title="火灾填报">
-      <template #default="{ setHandleOk, setHandleExtend }">
-          <EditorForm
-            :is-edit="isEdit"
-            :current-row="currentRow"
-            :relevance-draft="relevanceDraft"
-            :show-draft="isDraft"
-            :set-handle-ok="setHandleOk"
-            :set-handle-extend="setHandleExtend"
-            @finish-callback="refreshCallback"
-          />
-        </template>
+    <!-- 火灾填报审核 -->
+    <ProModal
+      v-model:visible="show.reviewVisible"
+      title="火灾审核详情"
+      :ok-display="true"
+      ok-text="审核"
+      pro-card-id="card-wrap"
+    >
+      <template #default="{ setHandleOk }">
+        <EditorForm
+          :showReviewDialog="showReviewDialog"
+          :set-handle-ok="setHandleOk"
+          :current-row="currentRow"
+          :is-edit="true"
+          :is-approval="true"
+          :is-review="true"
+          process-key="fireInfoFlow"
+          @finish-callback="approvalCallback"
+        />
+      </template>
     </ProModal>
+    <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
       title="火灾填报详情"
@@ -121,32 +116,19 @@
     >
       <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
-    <!-- 申请更正 -->
-    <ProModal v-model:visible="show.recheckVisible" title="申请更正">
-      <template #default="{ setHandleOk }">
-        <ApplyRecheck
-          :recheck-type="3"
-          :current-row="currentRow"
-          :set-handle-ok="setHandleOk"
-          @finish-callback="refreshCallback"
-        />
-      </template>
-    </ProModal>
   </div>
 </template>
   
 <script setup>
-import {  
-  // deleteFireReportDraft, 
-  getFireWarningTag,
-  collectFireWarning,
-  getFireManageList } from '@/apis/index.js'
+import { getFireReviewList } from '@/apis/index.js'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
-import { getLastMonth,checkFireChangeState } from '@/utils/tools.js'
+import { getLastMonth,checkFireApproval } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
+import ProcessReview from "@/component/ProcessReview/index.vue";
+
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '../fire-report/components/EditorForm.vue'
 import { showToast,showLoadingToast } from 'vant';
@@ -156,15 +138,11 @@ const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
 const tabs = ref([
   {
-    title: "辖区火灾",
-    value: 0,
-  },
-  {
-    title: "我的火灾",
+    title: "待审核",
     value: 1,
   },
   {
-    title: "收藏的火灾",
+    title: "已审核",
     value: 2,
   },
 ]);
@@ -176,11 +154,6 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
   options.area = res.HZ_INFO_QY
 })
 onMounted(() => {
-  // 获取火灾标签
-  getFireWarningTag({ tagType: 2 }).then((res) => {
-    options.fireTags = res.data || []
-  })
-  show.value.moreFilter = true
 })
 
 const searchOptions = computed(()=>([
@@ -282,20 +255,17 @@ const searchOptions = computed(()=>([
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
-  onlyMy: false,
+  state: 'running',
   fireStatus: [],
-  fireInfoTag: [],
-  warningArea: [],
-  orgId: [],
+  fireCode: '',
+  fireGroup: [],
   time: getLastMonth(),
-  fireLevel: [],
-  fireCause: [],
-  area: [],
 }
 const show = ref({})
 const isEdit = ref(false)
 const isDraft = ref(false)
 const relevanceDraft = ref(null)
+const tabType = ref('running')
 const refreshCallback = () => {
   proListRef.value.filter()
 }
@@ -309,40 +279,12 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
-const handleCollect = async (row, state) => {
-  const res = await collectFireWarning({
-    focusAppid: row.boFireInfoId,
-    focusCode: row.fireCode,
-    focusType: '3',
-    deleteFlag: state ? '1' : '2',
-  })
-  showToast(state ? '收藏成功' : '取消收藏成功')
-  proListRef.value.filter()
-}
 // 查询辖区火灾
 const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }
-// 查询我的火灾
-const handleMyFire = () => {
-  proListRef.value.query = {
-    onlyMy: true,
-    time: getLastMonth(),
-    unEditFlag: false,
-    orgId: [],
-  }
-  proListRef.value.filter()
-}
-// 查询收藏的火灾
-const handleMyCollect = () => {
-  proListRef.value.query = {
-    onlyMy: false,
-    myCollect: true,
-    orgId: [],
-  }
-  proListRef.value.filter()
-}
+
 // 申请更正
 const handleRecheck = (row) => {
   if (row.isLock === '1') {
@@ -354,12 +296,27 @@ const handleRecheck = (row) => {
 }
 // tab切换
 const onTabChangeFn = (val,val1)=>{
-  const getMap = [getPrefectureFire,handleMyFire,handleMyCollect]
-  getMap[val]()
+  const paramsMap = ['','running','completed']
+  tabType.value = paramsMap[val]
+  proListRef.value.query.state = paramsMap[val]
+  proListRef.value.filter()
 }
 const handleItem = (record)=>{
   selectVisible
 }
+const handleReview = (row) => {
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  currentRow.value = row
+  show.value.reviewVisible = true
+}
+const approvalCallback = () => {
+  show.value.reviewVisible = false
+  proListRef.value.filter()
+}
+
 </script>
   <style lang="scss" scoped>
   .fire-manage{

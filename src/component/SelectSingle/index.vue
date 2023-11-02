@@ -90,14 +90,14 @@ const handleCancel = () => {
   selectVisible.value = false;
 };
 
-const isRequired = ()=>{
+const isRequired = computed(()=>{
   if(props.required){
     return true
   }else{
     return props.rules.some(item=>item.required)
   }
   return false
-}
+})
 
 defineOptions({
   name: "SelectSingle",
@@ -116,7 +116,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
   />
-  <van-popup v-model:show="selectVisible" position="bottom">
+  <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="select-single">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">

@@ -14,7 +14,6 @@ const fieldExist = inject('fieldExist')
 const refreshField = inject('refreshField')
 
 const onIsFirefightFacility = (e) => {
-  // debugger;
   if (e === '2') {
     form.value.fireFacilities.autoAlarm.value = undefined
     form.value.fireFacilities.autoAlarmInstall.value = undefined
@@ -213,7 +212,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.autoAlarm.rules"
             id="autoAlarm"
             v-model:value="form.fireFacilities.autoAlarm.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.install"
             allow-clear
             placeholder="请选择自动报警系统"
@@ -231,7 +230,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoAlarmInstall.rules"
                 id="autoAlarmInstall"
                 v-model:value="form.fireFacilities.autoAlarmInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.installRange"
                 :field-names="{ value: 'boDictId', label: 'dictName' }"
                 allow-clear
@@ -247,7 +246,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoAlarmStart.rules"
                 id="autoAlarmStart"
                 v-model:value="form.fireFacilities.autoAlarmStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.start"
                 allow-clear
                 placeholder="请选择是否启动"
@@ -263,7 +262,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoAlarmEffect.rules"
                 id="autoAlarmEffect"
                 v-model:value="form.fireFacilities.autoAlarmEffect.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.effect"
                 allow-clear
                 placeholder="请选择是否有效"
@@ -278,7 +277,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoAlarmNotStart.rules"
                 id="autoAlarmNotStart"
                 v-model:value="form.fireFacilities.autoAlarmNotStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.notStart"
                 allow-clear
                 placeholder="请选择未启动原因"
@@ -297,7 +296,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoAlarmNotInstall.rules"
                 id="autoAlarmNotInstall"
                 v-model:value="form.fireFacilities.autoAlarmNotInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.uninstall"
                 allow-clear
                 placeholder="请选择未安装原因"
@@ -317,7 +316,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.autoFireFight.rules"
             id="autoFireFight"
             v-model:value="form.fireFacilities.autoFireFight.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.install"
             allow-clear
             placeholder="请选择自动灭火系统"
@@ -335,7 +334,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoFireFightInstall.rules"
                 id="autoFireFightInstall"
                 v-model:value="form.fireFacilities.autoFireFightInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.installRange"
                 :field-names="{ value: 'boDictId', label: 'dictName' }"
                 allow-clear
@@ -350,7 +349,7 @@ const onFireShutterStart = () => {
                 name="fireFacilities,autoFireFightStart,value"
                 id="autoFireFightStart"
                 v-model:value="form.fireFacilities.autoFireFightStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.start"
                 allow-clear
                 placeholder="请选择是否启动"
@@ -366,7 +365,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoFireFightEffect.rules"
                 id="autoFireFightEffect"
                 v-model:value="form.fireFacilities.autoFireFightEffect.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.effect"
                 allow-clear
                 placeholder="请选择是否有效"
@@ -381,7 +380,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoFireFightNotStart.rules"
                 id="autoFireFightNotStart"
                 v-model:value="form.fireFacilities.autoFireFightNotStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.notStart"
                 allow-clear
                 placeholder="请选择未启动原因"
@@ -400,7 +399,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.autoFireFightNotInstall.rules"
                 id="autoFireFightNotInstall"
                 v-model:value="form.fireFacilities.autoFireFightNotInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.uninstall"
                 allow-clear
                 placeholder="请选择未安装原因"
@@ -420,7 +419,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.indoorHydrant.rules"
             id="indoorHydrant"
             v-model:value="form.fireFacilities.indoorHydrant.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.install"
             allow-clear
             placeholder="请选择室内消火栓系统"
@@ -438,7 +437,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.indoorHydrantInstall.rules"
                 id="indoorHydrantInstall"
                 v-model:value="form.fireFacilities.indoorHydrantInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.installRange"
                 :field-names="{ value: 'boDictId', label: 'dictName' }"
                 allow-clear
@@ -453,7 +452,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.indoorHydrantStart.rules"
                 id="indoorHydrantStart"
                 v-model:value="form.fireFacilities.indoorHydrantStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.start"
                 allow-clear
                 placeholder="请选择是否启动"
@@ -469,7 +468,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.indoorHydrantEffect.rules"
                 id="indoorHydrantEffect"
                 v-model:value="form.fireFacilities.indoorHydrantEffect.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.effect"
                 allow-clear
                 placeholder="请选择是否有效"
@@ -484,7 +483,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.indoorHydrantNotStart.rules"
                 id="indoorHydrantNotStart"
                 v-model:value="form.fireFacilities.indoorHydrantNotStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.notStart"
                 allow-clear
                 placeholder="请选择未启动原因"
@@ -503,7 +502,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.indoorHydrantNotInstall.rules"
                 id="indoorHydrantNotInstall"
                 v-model:value="form.fireFacilities.indoorHydrantNotInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.uninstall"
                 allow-clear
                 placeholder="请选择未安装原因"
@@ -523,7 +522,7 @@ const onFireShutterStart = () => {
               :rules="form.fireFacilities.smokeControl.rules"
               id="smokeControl"
               v-model:value="form.fireFacilities.smokeControl.value"
-              v-preview-text="showPreview"
+              :showPreview="showPreview"
               :options="options.install"
               allow-clear
               placeholder="请选择防排烟系统"
@@ -541,7 +540,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.smokeControlInstall.rules"
                 id="smokeControlInstall"
                 v-model:value="form.fireFacilities.smokeControlInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.installRange"
                 :field-names="{ value: 'boDictId', label: 'dictName' }"
                 allow-clear
@@ -557,7 +556,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.smokeControlStart.rules"
                 id="smokeControlStart"
                 v-model:value="form.fireFacilities.smokeControlStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.start"
                 allow-clear
                 placeholder="请选择是否启动"
@@ -573,7 +572,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.smokeControlEffect.rules"
                 id="smokeControlEffect"
                 v-model:value="form.fireFacilities.smokeControlEffect.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.effect"
                 allow-clear
                 placeholder="请选择是否有效"
@@ -589,7 +588,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.smokeControlNotStart.rules"
                 id="smokeControlNotStart"
                 v-model:value="form.fireFacilities.smokeControlNotStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.notStart"
                 allow-clear
                 placeholder="请选择未启动原因"
@@ -608,7 +607,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.smokeControlNotInstall.rules"
                 id="smokeControlNotInstall"
                 v-model:value="form.fireFacilities.smokeControlNotInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.uninstall"
                 allow-clear
                 placeholder="请选择未安装原因"
@@ -628,7 +627,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.fireShutter.rules"
             id="fireShutter"
             v-model:value="form.fireFacilities.fireShutter.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.install"
             allow-clear
             placeholder="请选择防火卷帘"
@@ -646,7 +645,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.fireShutterInstall.rules"
                 id="fireShutterInstall"
                 v-model:value="form.fireFacilities.fireShutterInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.installRange"
                 allow-clear
                 placeholder="请选择安装范围"
@@ -661,7 +660,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.fireShutterStart.rules"
                 id="fireShutterStart"
                 v-model:value="form.fireFacilities.fireShutterStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.start"
                 allow-clear
                 placeholder="请选择是否启动"
@@ -677,7 +676,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.fireShutterEffect.rules"
                 id="fireShutterEffect"
                 v-model:value="form.fireFacilities.fireShutterEffect.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.effect"
                 allow-clear
                 placeholder="请选择是否有效"
@@ -692,7 +691,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.fireShutterNotStart.rules"
                 id="fireShutterNotStart"
                 v-model:value="form.fireFacilities.fireShutterNotStart.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.notStart"
                 allow-clear
                 placeholder="请选择未启动原因"
@@ -711,7 +710,7 @@ const onFireShutterStart = () => {
                 :rules="form.fireFacilities.fireShutterNotInstall.rules"
                 id="fireShutterNotInstall"
                 v-model:value="form.fireFacilities.fireShutterNotInstall.value"
-                v-preview-text="showPreview"
+                :showPreview="showPreview"
                 :options="options.uninstall"
                 allow-clear
                 placeholder="请选择未安装原因"
@@ -732,7 +731,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.emergencyLight.rules"
             id="emergencyLight"
             v-model:value="form.fireFacilities.emergencyLight.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.regulation"
             allow-clear
             placeholder="请选择应急疏散照明"
@@ -747,7 +746,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.lightNonConformance.rules"
             id="lightNonConformance"
             v-model:value="form.fireFacilities.lightNonConformance.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.lightNonConformance"
             allow-clear
             placeholder="请选择不符合规定原因"
@@ -765,7 +764,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.networking.rules"
             id="networking"
             v-model:value="form.fireFacilities.networking.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             allow-clear
             :options="options.networking"
             placeholder="请选择联网情况"
@@ -780,7 +779,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.networkAlarm.rules"
             id="networkAlarm"
             v-model:value="form.fireFacilities.networkAlarm.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.networkAlarm"
             allow-clear
             placeholder="请选择联网报警方式"
@@ -798,7 +797,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.fireCompartment.rules"
             id="fireCompartment"
             v-model:value="form.fireFacilities.fireCompartment.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.regulation"
             allow-clear
             placeholder="请选择防火分区"
@@ -832,7 +831,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.fireSeparation.rules"
             id="fireSeparation"
             v-model:value="form.fireFacilities.fireSeparation.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.regulation"
             allow-clear
             placeholder="请选择防火间距"
@@ -866,7 +865,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.escapeRoute.rules"
             id="escapeRoute"
             v-model:value="form.fireFacilities.escapeRoute.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.regulation"
             allow-clear
             placeholder="请选择疏散通道"
@@ -881,7 +880,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.routeNonConformance.rules"
             id="routeNonConformance"
             v-model:value="form.fireFacilities.routeNonConformance.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.routeNonConformance"
             allow-clear
             placeholder="请选择不符合规定原因"
@@ -899,7 +898,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.emergencyExit.rules"
             id="emergencyExit"
             v-model:value="form.fireFacilities.emergencyExit.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.regulation"
             allow-clear
             placeholder="请选择紧急出口"
@@ -914,7 +913,7 @@ const onFireShutterStart = () => {
             :rules="form.fireFacilities.exitNonConformance.rules"
             id="exitNonConformance"
             v-model:value="form.fireFacilities.exitNonConformance.value"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.exitNonConformance"
             allow-clear
             placeholder="请选择不符合规定原因"

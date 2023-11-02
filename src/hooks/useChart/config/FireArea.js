@@ -42,7 +42,6 @@ const options = {
         distanceToLabelLine: -80,
         // formatter:'{b}: {c}:{"人"}'
         formatter(val) {
-          // debugger;
           const { name, value } = val.data
           return `${name}:${value}`
         },

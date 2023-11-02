@@ -73,7 +73,7 @@
               class="item-btn"
               @click.stop="handleclick({type:'return' ,record})"
             >
-              回退
+              退回
             </van-button>
             <van-button
               size="mini"
@@ -112,9 +112,13 @@
     />
   </ProModal>
   <!-- 转派窗口 -->
-  <!-- <DialogInfo v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
-    <TransferTask :setHandleOk="{setHandleOk}" :current-row="currentRow" />
-  </DialogInfo> -->
+  <DialogInfo v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
+    <TransferTask :current-row="currentRow" :set-handle-ok="setHandleOk" @finish-callback="refreshCallback" />
+  </DialogInfo>
+  <!-- 退回窗口 -->
+  <DialogInfo title="退回" v-model:visible="show.rejectVisible" v-slot="{setHandleOk}">
+    <ApplyReject :setHandleOk="setHandleOk" :current-row="currentRow" @finish-callback="refreshCallback" />
+  </DialogInfo>
 </div>
 </template>
 
@@ -122,12 +126,14 @@
 import {  
   // deleteFireReportDraft, 
   getFireReportList } from '@/apis/index.js'
+import { showToast } from 'vant';
 import { computed, createVNode, onMounted, ref,provide } from 'vue'
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from './components/EditorForm.vue'
 import PoliceForm from '@/views/policeEntryForm/index.vue';
 import TransferTask from './components/transfer-task.vue'
+import ApplyReject from './components/apply-reject.vue'
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
@@ -148,7 +154,7 @@ provide('isShowTemporary', isShowTemporary)
 
 const handleInput = (row) => {
   if (row.isLock === '1') {
-    message.warning(MSG_LOCKING_TEXT)
+    showToast(MSG_LOCKING_TEXT)
     return
   }
   currentRow.value = row
@@ -158,7 +164,6 @@ const handleInput = (row) => {
   isShowTemporary.value = true
 }
 const handleLook = (row) => {
-  debugger
   currentRow.value = { ...row, boFireInfoId: undefined }
   isDraft.value = false
   isEdit.value = false
@@ -168,12 +173,17 @@ const handleTransfer = (row) => {
   currentRow.value = row
   show.value.transferVisible = true
 }
+const handleReject = (row) => {
+  currentRow.value = row
+  show.value.rejectVisible = true
+}
 const handleclick = ({type,record})=>{
   isShowTemporary.value = false
   const map = {
     'editor':handleInput,
     'look':handleLook,
-    'transfer':handleTransfer
+    'transfer':handleTransfer,
+    'return':handleReject
   }
   map[type](record)
 }
@@ -183,7 +193,6 @@ const handleItem = (record)=>{
 
 
 const postTransfer = (callback)=>{
-  debugger;
   callback(()=>{
 
   })
@@ -214,7 +223,7 @@ const handleAddUnDispatch = () => {
 }
 const setHandleOk = ()=>{}
 </script>
-<style>
+<style lang="scss" scoped>
 .fire-report{
   .list-item {
     display: flex;
