@@ -98,15 +98,6 @@ const handleCancel = () => {
   selectVisible.value = false;
 };
 
-const isRequired = computed(()=>{
-  if(props.required){
-    return true
-  }else{
-    return props.rules.some(item=>item.required)
-  }
-  return false
-})
-
 defineOptions({
   name: "SelectSingle",
 });
