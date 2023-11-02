@@ -38,8 +38,8 @@ onMounted(() => {
 const onAfterRead = (file) => {
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
-  formData.append('attachmentType', 'image')
-  formData.append('extend2', '照片')
+  formData.append('attachmentType', 'file')
+  formData.append('extend2', '其他附件')
   formData.append('file', file.file)
   return uploadFile(formData).then(res => {
     if (res?.attachmentId) {

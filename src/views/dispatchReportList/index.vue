@@ -4,7 +4,7 @@ import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
 import { generateColorByState } from "@/utils/tools.js";
-import PoliceForm from '@/views/policeEntryForm/index.vue';
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
@@ -92,7 +92,7 @@ const refreshCallback = () => {
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
-            <div>{{ record.dispatchedTime }}</div>
+            <div class="test-timeout">{{ record.dispatchedTime }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
@@ -137,11 +137,7 @@ const refreshCallback = () => {
     </ProModal>
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceForm
-        :current-row="currentRow"
-        :show-preview="true"
-        :show-steps="true"
-      />
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 退回说明 -->
     <ProModal v-model:visible="show.rejectVisible" title="退回说明">

@@ -282,6 +282,7 @@ onMounted(() => {
       }
     }
     .item-type {
+      max-width: calc(100% - 20px);
       margin: 0 0 8px 10px;
       span {
         display: inline-block;
