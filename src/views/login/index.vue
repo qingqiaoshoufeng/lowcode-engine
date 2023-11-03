@@ -8,24 +8,26 @@
                     v-model="loginForm.loginid" 
                     left-icon="manager"
                     name="validatorMessage" 
-                    placeholder="校验函数返回错误提示"
-                    :rules="[{ validator: validatorMessage }]" 
+                    placeholder="请输入账号"
+                    :required="true"
                 />
                 <van-field 
                     v-model="loginForm.password" 
                     left-icon="lock"
                     name="validatorMessage" 
-                    placeholder="校验函数返回错误提示"
-                    :rules="[{ validator: validatorMessage }]" 
+                    placeholder="请输入密码"
+                    type="password"
+                    :required="true"
                 />
                 <div class="validator">
                   <van-field 
                     class="verification"
-                    v-model="loginForm.password" 
+                    v-model="loginForm.jcaptchaCode" 
                     :left-icon="verification"
                     name="validatorMessage" 
-                    placeholder="校验函数返回错误提示"
-                    :rules="[{ validator: validatorMessage }]" 
+                    placeholder="请输入验证码"
+                    :rules="[{ required: true, message: '请输入验证码' }]"
+                    type="number"
                   />
                   <img :src="imgUrl" alt="" @click="getCode"/>
                 </div>
@@ -54,9 +56,9 @@ const store = useStore()
 const imgUrl = ref(null)
 console.log(store);
 const loginForm = ref({
-  loginid: 'admin@ln',
+  loginid: '',
   password: 'Xf119@119',
-  jcaptchaCode: 3195
+  jcaptchaCode: ''
 })
 const handleUserRegister = () => { }
 const initStore = async () => {

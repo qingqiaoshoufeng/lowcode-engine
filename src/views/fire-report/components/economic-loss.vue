@@ -196,6 +196,9 @@ const validateDirectDamage = (rule, value, callback) => {
   margin-bottom: 20px;
   color: red;
   padding: 12px 0 0 20px;
+  &::after{
+    display: none !important;
+  }
 }
 
 </style>

@@ -9,6 +9,8 @@ const form = inject('form')
 
 const isDetail = inject('isDetail')
 
+const isShowTemporary = inject('isShowTemporary')
+
 const isEdit = inject('isEdit')
 
 const currentRow = inject('currentRow')
@@ -70,7 +72,7 @@ const onDelete = async(val,val1)=>{
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit,
+          deletable:isEdit || isShowTemporary.value,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
@@ -91,7 +93,7 @@ onMounted(() => {
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit,
+          deletable:isEdit || isShowTemporary.value,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
@@ -109,9 +111,9 @@ onMounted(() => {
   
     <div :gutter="gutter">
       <div :span="24">
+        <van-cell title="火灾照片" required class="item-cell">
         <van-uploader
             name="firePhoto,photos,value"
-            label="火灾照片"
             :rules="form.firePhoto.photos.rules"
             v-model="form.firePhoto.photos.value"
             accept="image/png, image/jpeg, image/jpg"
@@ -126,9 +128,26 @@ onMounted(() => {
             :after-read="OnAfterRead"
             @delete="onDelete"
           />
-          <span v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
+        </van-cell>
+        <span class="tip" v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
       </div>
     </div>
   </van-cell-group>
 </template>
+<style lang="scss" scoped>
+.item-cell {
+    flex-direction: column;
+    :deep(.van-cell__value) {
+      display: flex;
+
+    }
+    &::after{
+      display: none;
+    }
+  }
+  .tip{
+    padding: 0 16px;
+    display: block;
+  }
+</style>
 
