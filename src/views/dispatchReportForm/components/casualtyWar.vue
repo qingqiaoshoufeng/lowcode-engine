@@ -84,17 +84,17 @@ const handleDeleteDead = (index) => {
   );
 };
 
-const validateCard = (rule, value, callback) => {
+const validateCard = (value, rule) => {
   if (!value) {
     if (form.value.casualtyWar.idNumber?.rules[0]?.required) {
-      callback(new Error("请输入身份证号码"));
+      return "请输入身份证号码";
     } else {
-      callback();
+      return '';
     }
   } else if (!validIdCode(value)) {
-    callback(new Error("请输入正确身份证号码"));
+    return "请输入正确身份证号码";
   } else {
-    callback();
+    return '';
   }
 };
 
