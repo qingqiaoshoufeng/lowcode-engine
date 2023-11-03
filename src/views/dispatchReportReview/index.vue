@@ -138,6 +138,7 @@ onMounted(() => {
   <div class="dispatch-review-list">
     <ProList
       ref="proListRef"
+      title="出动审核"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDispatchReviewList"
       :tabs="tabs"

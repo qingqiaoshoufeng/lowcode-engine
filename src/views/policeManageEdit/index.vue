@@ -48,6 +48,7 @@ const finishCallback = () => {
   <div class="police-manage-edit">
     <ProList
       ref="proListRef"
+      title="警情修改"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningManage"
       :tabs="[]"

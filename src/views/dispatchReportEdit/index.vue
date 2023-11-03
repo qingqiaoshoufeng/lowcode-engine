@@ -52,6 +52,7 @@ const refreshCallback = () => {
   <div class="dispatch-report-edit">
     <ProList
       ref="proListRef"
+      title="出动修改"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDispatchManageList"
       :tabs="[]"

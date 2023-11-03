@@ -54,6 +54,7 @@ const refreshCallback = () => {
   <div class="dispatch-report-list">
     <ProList
       ref="proListRef"
+      title="出动填报"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getReportList"
       :tabs="[]"

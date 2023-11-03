@@ -270,6 +270,7 @@ onMounted(() => {
   <div class="police-manage-list">
     <ProList
       ref="proListRef"
+      title="警情管理"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningManage"
       :tabs="tabs"

@@ -247,6 +247,7 @@ onMounted(() => {
   <div class="dispatch-manage-list">
     <ProList
       ref="proListRef"
+      title="出动管理"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDispatchManageList"
       :tabs="tabs"

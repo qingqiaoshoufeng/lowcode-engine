@@ -6,10 +6,6 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  leftText: {
-    type: String,
-    default: "返回",
-  },
   visible: {
     type: Boolean,
     default: false,
@@ -21,6 +17,9 @@ const props = defineProps({
   showBack: {
     type: Boolean,
     default: false,
+  },
+  leftBackFn: {
+    type: Function,
   }
 });
 
@@ -56,6 +55,10 @@ const setHandleOk = (fn, loadings) => {
 };
 
 const onLeftBack = () => {
+  if (props.leftBackFn) {
+    props.leftBackFn()
+    return
+  }
   showModal.value = false;
 }
 
@@ -66,13 +69,11 @@ defineOptions({
 
 <template>
   <div class="pro-modal" v-if="showModal">
-    <div class="back" v-if="showBack">
-      <van-nav-bar
-        :title="title"
-        :left-text="leftText ? leftText : ''"
-        left-arrow
-        @click-left="onLeftBack"
-      />
+    <div v-if="showBack" class="back" >
+      <div class="arrow">
+        <van-icon @click="onLeftBack" name="arrow-left" />
+      </div>
+      <div>{{ title }}</div>
     </div>
     <div class="header" v-if="showHeader">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
@@ -96,6 +97,21 @@ defineOptions({
   background-color: white;
   .back {
     height: 44px;
+    background: #0C207F;
+    display: flex;
+    position: relative;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    .arrow{
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      font-size: 18px;
+      transform: translateY(-50%);
+    }
   }
   .header {
     width: 100%;
