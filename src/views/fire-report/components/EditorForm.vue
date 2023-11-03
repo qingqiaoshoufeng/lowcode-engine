@@ -998,7 +998,7 @@ const onSideBarChange = (e, k) => {
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->
-                <ProCard v-if="!showDraft" title="简要情况" id="basicInfo" :showOpenClose="!showPreview">
+                <ProCard v-if="!showDraft" title="简要情况" id="briefSituation" :showOpenClose="!showPreview">
                   <BriefSituation />
                 </ProCard>
                 <!-- 基本信息 -->

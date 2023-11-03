@@ -15,7 +15,7 @@ import { gutter } from '@/utils/constants.js'
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 // import SelectCascader from '@/components/select-cascader/index.vue'
 import { useUpload } from '@/hooks/useUpload.js'
-import { getAttachmentFile } from '@/apis/index.js'
+import { getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { nonnegativeNumberReg, validateTelePhone } from '@/utils/validate.js'
 
 
@@ -92,16 +92,63 @@ const fireTypeDisabled = computed(() => {
   }
   return value
 })
+const onDelete = async(val,val1)=>{
+  const res = await onRemove(val)
+  if(res === true){
+    getAttachmentFile({
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessType: 'safetyFile',
+    }).then((res) => {
+      form.value.firePhoto.photos.value = res.data.map((item) => {
+        return {
+          isImage: true,
+          deletable:isEdit || isShowTemporary.value,
+          ...item,
+          uid: item.attachmentId,
+          name: item.attachmentName,
+          status: 'done',
+          url: `/acws/rest/attachments/${item.attachmentId}`,
+        }
+      }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+    })
+  }
+}
+
+const OnAfterRead = async(file) => {
+  const formData = new FormData()
+  formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId)
+  formData.append('attachmentType', 'safetyFile')
+  formData.append('extend2', '其他附件')
+  formData.append('file', file.file)
+  await uploadFile(formData)
+  getAttachmentFile({
+    businessObjId: currentRow?.boFireInfoId || localFireInfoId,
+    businessType: 'safetyFile',
+  }).then((res) => {
+    form.value.firePhoto.photos.value = res.data.map((item) => {
+      return {
+        isImage: true,
+        deletable:isDetail,
+        ...item, 
+        uid: item.attachmentId,
+        name: item.attachmentName,
+        status: 'done',
+        url: `/acws/rest/attachments/${item.attachmentId}`,
+      }
+    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+  })
+}
 
 onMounted(() => {
   if (isDetail || isEdit || (relevanceDraft && relevanceDraft.boFireInfoId) || currentRow?.boFireInfoId) {
     getAttachmentFile({
-      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessObjId: currentRow?.boFireInfoId || localFireInfoId,
       businessType: 'safetyFile',
     }).then((res) => {
       form.value.basicInfo.attach.value = res.data.map((item) => {
         return {
           ...item,
+          deletable:isEdit || isShowTemporary.value,
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
@@ -427,6 +474,8 @@ const showFireInspectionScope = computed(() => {
   const filter = options.value?.fireInspectionScope?.filter(item => ids.includes(item.boDictId)).map(item => item.dictName).join(',')
   return filter.includes('消防安全重点单位')
 })
+
+
 
 // const showOutdoorBridge = computed(() => {
 //   const { fireType, firePlace } = form.value.basicInfo
@@ -1180,34 +1229,16 @@ const showFireInspectionScope = computed(() => {
     </div>
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
       <div :span="24">
-        <van-uploader v-model="fileList" preview-size="5rem" />
-        <!-- <a-form-item
-          :name="['basicInfo', 'attach', 'value']"
-          label="相关附件上传"
-          :rules="form.basicInfo.attach.rules"
-        >
-          <a-upload
+          <van-cell title="相关附件上传" required class="item-cell">
+          <van-uploader
+            name="basicInfo.attach.value"
+            :rules="form.basicInfo.attach.rules"
             id="attach"
-            v-model:file-list="form.basicInfo.attach.value"
-            name="file"
-            :multiple="true"
-            action="/acws/rest/attachments"
-            :data="{ businessId: currentRow?.boFireInfoId || localFireInfoId, attachmentType: 'safetyFile', extend2: '其他附件' }"
-            :show-upload-list="isDetail ? { showRemoveIcon: false } : true"
-            @remove="onRemove"
-          >
-            <a-button v-if="!isDetail && form.basicInfo.attach?.value?.length < 3">
-              <upload-outlined />
-              选择文件
-            </a-button>
-          </a-upload>
-          <FieldAnnotation
-            remark-field="attach"
-            field-module="basicInfo"
-            :exist-data="fieldExist?.attach"
-            @refresh-callback="refreshField"
+            v-model="form.basicInfo.attach.value"
+            :after-read="OnAfterRead"
+            @delete="onDelete"
           />
-        </a-form-item> -->
+        </van-cell>
       </div>
     </div>
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
@@ -1293,5 +1324,14 @@ const showFireInspectionScope = computed(() => {
     // transform: scaleY(.5);
   }
 }
+.item-cell {
+    flex-direction: column;
+    :deep(.van-cell__value) {
+      display: flex;
 
+    }
+    &::after{
+      display: none;
+    }
+  }
 </style>

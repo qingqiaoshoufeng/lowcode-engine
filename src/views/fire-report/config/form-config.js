@@ -170,7 +170,7 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '请选择事故形态' }],
       },
       fireSite: { // 起火位置
-        value: '',
+        value: undefined,
         rules: [{ required: true, message: '请选择起火位置' }],
       },
       initialFuelsType: { // 起火物类型

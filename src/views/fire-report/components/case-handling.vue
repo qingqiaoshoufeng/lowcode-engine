@@ -61,7 +61,7 @@ const handleDeletePerson = (index) => {
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
-          name="caseHandling,handleTwoCase,value"
+          name="caseHandling.handleTwoCase.value"
           label="两案处理情况-是否立案"
           :rules="form.caseHandling.handleTwoCase.rules"
         >
@@ -82,7 +82,7 @@ const handleDeletePerson = (index) => {
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
         <van-field 
-          name="caseHandling,penaltyNum,value"
+          name="caseHandling.penaltyNum.value"
           label="追究人数（人）"
           :rules="form.caseHandling.penaltyNum.rules"
           id="penaltyNum"
@@ -98,7 +98,7 @@ const handleDeletePerson = (index) => {
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
         <van-field 
-          name="caseHandling,suggestDealNum,value"
+          name="caseHandling.suggestDealNum.value"
           label="建议处理人数（人）"
           :rules="form.caseHandling.suggestDealNum.rules"
           id="suggestDealNum"
@@ -116,7 +116,7 @@ const handleDeletePerson = (index) => {
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
-          name="caseHandling,firePenalty,value"
+          name="caseHandling.firePenalty.value"
           label="火灾处罚情况-是否立案"
           :rules="form.caseHandling.firePenalty.rules"
         >
@@ -142,7 +142,7 @@ const handleDeletePerson = (index) => {
       <div v-for="(item, index) in form.caseHandling.fireInfoOrgList" :key="index" :gutter="gutter">
         <div :span="8">
           <van-field 
-            :name="`caseHandling,fireInfoOrgList,${index},orgName`"
+            :name="`caseHandling.fireInfoOrgList.${index},orgName`"
             label="单位名称"
             :rules="form.caseHandling.orgName.rules"
             id="orgName"
@@ -156,7 +156,7 @@ const handleDeletePerson = (index) => {
         </div>
         <div :span="8">
           <van-field 
-            :name="`caseHandling,fireInfoOrgList,${index},legalPerson`"
+            :name="`caseHandling.fireInfoOrgList.${index}.legalPerson`"
             label="法人代表"
             :rules="form.caseHandling.legalPerson.rules"
             id="legalPerson"
@@ -170,7 +170,7 @@ const handleDeletePerson = (index) => {
         </div>
         <div :span="8">
           <SelectSingle
-            :name="`caseHandling,fireInfoOrgList,${index},penalty`"
+            :name="`caseHandling.fireInfoOrgList.${index}.penalty`"
             label="行政处罚"
             :rules="form.caseHandling.penalty.rules"
             id="penalty"
@@ -216,7 +216,7 @@ const handleDeletePerson = (index) => {
         </div>
         <div :span="8">
           <SelectSingle
-            :name="`caseHandling,fireInfoPersonList,${index},gender`"
+            :name="`caseHandling.fireInfoPersonList.${index}.gender`"
             label="性别"
             :rules="form.caseHandling.gender.rules"
             id="gender"
@@ -230,7 +230,7 @@ const handleDeletePerson = (index) => {
         </div>
         <div :span="8">
           <SelectSingle
-            :name="`caseHandling,fireInfoPersonList,${index},adminSanction`"
+            :name="`caseHandling.fireInfoPersonList.${index}.adminSanction`"
             label="行政处罚"
             :rules="form.caseHandling.adminSanction.rules"
             id="adminSanction"

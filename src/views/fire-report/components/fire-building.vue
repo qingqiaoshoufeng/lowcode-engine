@@ -159,7 +159,7 @@ const onBuildTag = (val) => {
     <div>
       <div v-if="showSevereFire" :span="24">
         <van-field 
-          :name="['fireBuilding', 'buildTag', 'value']"
+          name="fireBuilding.buildTag.value"
           label="建筑标签"
           :rules="form.fireBuilding.buildTag.rules"
           class="define-check"
@@ -324,7 +324,7 @@ const onBuildTag = (val) => {
     <div :gutter="gutter">
       <div v-if="showSevereFire" :span="8">
         <AreaCascader
-          :name="['fireBuilding', 'buildUse', 'value']"
+          name="fireBuilding.buildUse.value"
           label="建筑使用用途"
           :rules="form.fireBuilding.buildUse.rules"
           id="buildUse"
@@ -340,7 +340,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
-          :name="['fireBuilding', 'isSpread', 'value']"
+          name="fireBuilding.isSpread.value"
           :fieldNames="{label:'label',value:'value'}"
           label="是否蔓延"
           :rules="form.fireBuilding.isSpread.rules"
@@ -354,7 +354,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
-          :name="['fireBuilding', 'isLoud', 'value']"
+          name="fireBuilding.isLoud.value"
           label="是否发生轰燃"
           :rules="form.fireBuilding.isLoud.rules"
           :fieldNames="{label:'label',value:'value'}"
@@ -372,7 +372,7 @@ const onBuildTag = (val) => {
       <div :span="8">
         <SelectSingle
           :fieldNames="{label:'label',value:'value'}"
-          :name="['fireBuilding', 'isWindowOpened', 'value']"
+          name="fireBuilding.isWindowOpened.value"
           label="失火建筑门窗在过程中是否开启"
           :rules="form.fireBuilding.isWindowOpened.rules"
           id="isWindowOpened"
