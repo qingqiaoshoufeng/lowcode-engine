@@ -36,7 +36,7 @@ export const request = window.__axios = axios.create({
   timeout: 1000 * 12
 })
 // 设置post请求头
-request.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// request.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 /**
  * 请求拦截器
  * 每次请求前，如果存在token则在请求头中携带token
