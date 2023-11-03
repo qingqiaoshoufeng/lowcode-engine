@@ -157,15 +157,15 @@ const getSystemDictSync = store.getters['dict/getSystemDictSync']
 const tabs = ref([
   {
     title: "辖区火灾",
-    value: 0,
-  },
-  {
-    title: "我的火灾",
     value: 1,
   },
   {
-    title: "收藏的火灾",
+    title: "我的火灾",
     value: 2,
+  },
+  {
+    title: "收藏的火灾",
+    value: 3,
   },
 ]);
 const options = {}
@@ -354,7 +354,7 @@ const handleRecheck = (row) => {
 }
 // tab切换
 const onTabChangeFn = (val,val1)=>{
-  const getMap = [getPrefectureFire,handleMyFire,handleMyCollect]
+  const getMap = ['',getPrefectureFire,handleMyFire,handleMyCollect]
   getMap[val]()
 }
 const handleItem = (record)=>{
