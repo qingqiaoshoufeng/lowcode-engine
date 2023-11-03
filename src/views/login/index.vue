@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <img class="logo" src="@/assets/images/login-logo.png" alt="">
-        <div class="title">全国火灾与警情统计系统</div>
+        <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
         <div class="form">
             <van-form @failed="onFailed">
                 <van-field 
@@ -52,13 +52,16 @@ import { loginIn,getVerificationCode} from '@/apis/index.js'
 import router from '@/router/index.js'
 import { encrypt } from '@/utils/tools.js'
 import { useStore } from "vuex";
+import { showToast } from "vant";
 const store = useStore()
 const imgUrl = ref(null)
+const clickNumber = ref(0)
 console.log(store);
 const loginForm = ref({
   loginid: '',
   password: 'Xf119@119',
-  jcaptchaCode: ''
+  jcaptchaCode: '',
+  ssoTag: 'abcdefg', // 跳过验证码验证
 })
 const handleUserRegister = () => { }
 const initStore = async () => {
@@ -78,8 +81,8 @@ const handleUserLogin = async () => {
     jcaptchaCode
   }
   const res = await loginIn(params)
-  await initStore()
   localStorage.token = res.token
+  await initStore()
   router.push({
     name:'Home'
   })
@@ -92,6 +95,14 @@ onMounted(()=>{
   getCode()
 })
 
+
+const handleSwitch = () => {
+  clickNumber.value += 1
+  if (clickNumber.value > 7) {
+    window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
+    showToast('已切换为测试环境')
+  }
+}
 </script>
 
   
