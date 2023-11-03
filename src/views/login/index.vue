@@ -29,7 +29,7 @@
                     :rules="[{ required: true, message: '请输入验证码' }]"
                     type="number"
                   />
-                  <img :src="imgUrl" alt="" @click="getCode"/>
+                  <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
                 </div>
                 <van-button 
                     class="submit" 
@@ -38,7 +38,7 @@
                     type="primary" 
                     native-type="submit"
                     @click="handleUserLogin"
-                >提交</van-button>
+                >登录</van-button>
             </van-form>
         </div>
     </div>
@@ -137,10 +137,14 @@ onMounted(()=>{
         background-color: #7485CB !important;
         height: 36px;
     }
-    img{
+    .img{
       width: 105px;
       height: 40px;
       margin-top: 17px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
     }
     .validator{
       display:flex;
