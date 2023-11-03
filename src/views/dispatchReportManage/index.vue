@@ -335,7 +335,7 @@ onMounted(() => {
     </ProList>
 
     <!-- 出动详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动详情">
       <DispatchForm
         :current-row="currentRow"
         :is-detail="true"

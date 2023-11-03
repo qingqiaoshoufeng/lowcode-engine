@@ -212,14 +212,14 @@ onMounted(() => {
     </ProList>
 
     <!-- 出动填报详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动填报详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动填报详情">
       <DispatchForm
         :current-row="currentRow"
         :is-detail="true"
       />
     </ProModal>
     <!-- 出动审核详情 -->
-    <ProModal v-model:visible="show.reviewVisible" :showHeader="false" title="出动审核详情">
+    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="出动审核详情">
       <template #default="{ setHandleOk }">
         <DispatchForm
           :current-row="currentRow"

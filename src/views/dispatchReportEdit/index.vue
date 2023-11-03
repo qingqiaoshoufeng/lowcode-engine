@@ -110,14 +110,14 @@ const refreshCallback = () => {
     </ProList>
 
     <!-- 出动填报详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动填报详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动填报详情">
       <DispatchForm
         :is-detail="true"
         :current-row="currentRow"
       />
     </ProModal>
     <!-- 出动填报 -->
-    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报">
+    <ProModal v-model:visible="show.editVisible" :showBack="true" :showHeader="false" title="出动填报">
       <template #default="{ setHandleOk, closeModal }">
         <DispatchForm
           :current-row="currentRow"

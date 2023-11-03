@@ -6,6 +6,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  leftText: {
+    type: String,
+    default: "返回",
+  },
   visible: {
     type: Boolean,
     default: false,
@@ -13,6 +17,10 @@ const props = defineProps({
   showHeader: {
     type: Boolean,
     default: true,
+  },
+  showBack: {
+    type: Boolean,
+    default: false,
   }
 });
 
@@ -47,24 +55,33 @@ const setHandleOk = (fn, loadings) => {
   loading.value = loadings;
 };
 
+const onLeftBack = () => {
+  showModal.value = false;
+}
+
 defineOptions({
   name: "ProModal",
 });
 </script>
-<script>
-export default {
-  name:'ProModal'
-}
-</script>
 
 <template>
   <div class="pro-modal" v-if="showModal">
+    <div class="back" v-if="showBack">
+      <van-nav-bar
+        :title="title"
+        :left-text="leftText ? leftText : ''"
+        left-arrow
+        @click-left="onLeftBack"
+      />
+    </div>
     <div class="header" v-if="showHeader">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
       <div class="modal-title">{{ title }}</div>
       <van-button type="primary" size="small" @click="handleOk">确定</van-button>
     </div>
-    <slot name="default" :set-handle-ok="setHandleOk" :handle-ok="handleOk" :close-modal="closeModal" />
+    <div class="pro-wrapper">
+      <slot name="default" :set-handle-ok="setHandleOk" :handle-ok="handleOk" :close-modal="closeModal" />
+    </div>
   </div>
 </template>
 
@@ -77,6 +94,9 @@ export default {
   top: 0;
   z-index: 99;
   background-color: white;
+  .back {
+    height: 44px;
+  }
   .header {
     width: 100%;
     height: 44px;
@@ -90,6 +110,9 @@ export default {
       flex: 1;
       text-align: center;
     }
+  }
+  .pro-wrapper {
+    height: calc(100% - 44px);
   }
 }
 </style>
