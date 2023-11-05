@@ -31,6 +31,8 @@ const severityConfig = store.state?.rules?.ruleConfig?.severityConfig|| []
 
 const form = inject('form')
 
+const isShowTemporary = inject('isShowTemporary')
+
 const formRef = inject('formRef')
 
 const isEdit = inject('isEdit')
@@ -188,21 +190,25 @@ const disabledDate = (current) => {
   return current && current > Date.now()
 }
 
-const validateFireDate = (rule, value, callback) => {
+const validateFireDate = (value) => {
   const { fireDate } = form.value.basicInfo
   if (!value) {
     if (!fireDate.rules[0].required) {
-      callback()
+      // callback()
+      return true
     }
     else {
-      callback(new Error('请选择起火时间'))
+      return '请选择起火时间'
+      // callback(new Error(''))
     }
   }
   else if (currentRow?.warningDate && fireDate?.value?.valueOf() > currentRow.warningDate) {
-    callback(new Error('起火时间不能晚于接警时间'))
+    // callback(new Error('起火时间不能晚于接警时间'))
+    return '起火时间不能晚于接警时间'
   }
   else {
-    callback()
+    // callback()
+    return true
   }
 }
 
@@ -226,21 +232,24 @@ const onSeverity = () => {
   }
 }
 
-const validateBurnedArea = (rule, value, callback) => {
+const validateBurnedArea = (val) => {
   const { burnedArea, severity, fireType } = form.value.basicInfo
-  if (!value && value !== 0) {
+  if (!val && val !== 0) {
     if (!burnedArea.rules[0].required) {
-      callback()
+      return true
     }
     else {
-      callback(new Error('请输入过火面积'))
+      return '请输入过火面积'
+      // callback(new Error(''))
     }
   }
-  else if (!nonnegativeNumberReg.test(value)) {
-    callback(new Error('请输入正确过火面积'))
+  else if (!nonnegativeNumberReg.test(val)) {
+    // callback(new Error('请输入正确过火面积'))
+    return '请输入正确过火面积'
   }
   else {
-    callback()
+    return true
+    // callback()
   }
 }
 
@@ -340,20 +349,23 @@ const fireCauseChange = (value, selectedOptions) => {
   }
 }
 
-const validateFireTel = (rule, value, callback) => {
+const validateFireTel = (value) => {
   if (!value) {
     if (!form.value.basicInfo.fireTel.rules[0].required) {
-      callback()
+      return true
     }
     else {
-      callback(new Error('请输入失火单位/户主联系电话'))
+      return '请输入失火单位/户主联系电话'
+      // callback(new Error('请输入失火单位/户主联系电话'))
     }
   }
   else if (!validateTelePhone(value)) {
-    callback(new Error('请输入正确失火单位/户主联系电话'))
+    return '请输入正确失火单位/户主联系电话'
+    // callback(new Error('请输入正确失火单位/户主联系电话'))
   }
   else {
-    callback()
+    return true
+    // callback()
   }
 }
 
@@ -500,6 +512,7 @@ const showFireInspectionScope = computed(() => {
     </div>
     <div class="severity">
       <SelectSingle
+        name="basicInfo.severity.value"
         v-model:value="form.basicInfo.severity.value"
         :showPreview="showPreview"
         label="严重程度"
@@ -535,7 +548,7 @@ const showFireInspectionScope = computed(() => {
           title="请选择起火时间"
           label="起火时间："
           placeholder="请选择起火时间"
-          :rules="[{ required: true, message: '请选择起火时间' }]"
+          :rules="[{ validator: validateFireDate, trigger: 'blur' }, ...form.basicInfo.fireDate.rules]"
         />
       </div>
       <div class="noDispatchArea">
@@ -551,8 +564,9 @@ const showFireInspectionScope = computed(() => {
       <div class="fireDirection">
         <van-field
           label="起火地点"
+          required
           v-model="form.basicInfo.fireDirection.value"
-          name="起火地点"
+          name="basicInfo.fireDirection.value"
           placeholder="请输入起火地点"
           :rules="form.basicInfo.fireDirection.rules"
           v-preview-text="showPreview"
@@ -561,7 +575,7 @@ const showFireInspectionScope = computed(() => {
   
       <div class="noDispatchArea">
         <AreaCascader
-          name="noDispatchArea"
+          name="basicInfo.noDispatchArea.value"
           v-model:value="form.basicInfo.noDispatchArea.value"
           :showPreview="showPreview"
           :readonly="showPreview"
@@ -585,9 +599,9 @@ const showFireInspectionScope = computed(() => {
       <div class="fireOrgname">
         <van-field
           label="单位/户主/个体户名称"
-          v-model:value="form.basicInfo.fireOrgname.value"
+          v-model="form.basicInfo.fireOrgname.value"
           v-preview-text="showPreview"
-          name="单位/户主/个体户名称"
+          name="basicInfo.fireOrgname.value"
           placeholder="单位/户主/个体户名称"
           :rules="form.basicInfo.fireOrgname.rules"
         />
@@ -595,9 +609,10 @@ const showFireInspectionScope = computed(() => {
       <div class="fireTel">
         <van-field
           label="失火单位/户主联系电话"
-          v-model:value="form.basicInfo.fireTel.value"
+          v-model="form.basicInfo.fireTel.value"
           v-preview-text="showPreview"
-          name="失火单位/户主联系电话"
+          name="basicInfo.fireTel.value"
+          required
           placeholder="失火单位/户主联系电话"
           :rules="[{ validator: validateFireTel, trigger: 'blur' }, ...form.basicInfo.fireTel.rules]"
         />
@@ -605,9 +620,9 @@ const showFireInspectionScope = computed(() => {
       <div v-if="!showOtherMinor" class="socialCreditCode">
         <van-field
           label="单位统一社会信用代码"
-          v-model:value="form.basicInfo.socialCreditCode.value"
+          v-model="form.basicInfo.socialCreditCode.value"
           v-preview-text="showPreview"
-          name="单位统一社会信用代码"
+          name="basicInfo.socialCreditCode.value"
           placeholder="单位统一社会信用代码"
           :rules="form.basicInfo.socialCreditCode.rules"
         />
@@ -618,6 +633,7 @@ const showFireInspectionScope = computed(() => {
           :showPreview="showPreview"
           :options="options.fireCause"
           label="起火原因"
+          required
           placeholder="请选择起火原因"
           :rules="form.basicInfo.fireCause.rules"
           @change="fireCauseChange"
@@ -625,7 +641,7 @@ const showFireInspectionScope = computed(() => {
       </div>
       <div>
         <van-field 
-          name="caseHandling,penaltyNum,value"
+          name="caseHandling.penaltyNum.value"
           :disabled="!importantEdit"
           label="过火面积（平方米）"
           :rules="[{ validator: validateBurnedArea, trigger: 'blur' }, ...form.basicInfo.burnedArea.rules]"
@@ -633,6 +649,7 @@ const showFireInspectionScope = computed(() => {
           v-model="form.basicInfo.burnedArea.value" 
           v-preview-text="showPreview"
           id="penaltyNum"
+          required
           :maxlength="10"
           style="width: 100%"
           allow-clear
@@ -661,13 +678,14 @@ const showFireInspectionScope = computed(() => {
           :options="options.firePlace"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           label="起火场所"
+          required
           placeholder="请选择起火场所"
           :rules="form.basicInfo.area.rules"
           @change="firePlaceChange"
         />
       </div>
       <div v-if="showisLaborIntensive"  class="isLaborIntensive">
-        <van-field name="是否属于劳动密集型" label="是否属于劳动密集型" >
+        <van-field name="basicInfo.isLaborIntensive.value" label="是否属于劳动密集型" >
           <template #input>
             <van-radio-group class="field-radio" v-preview-text="showPreview" v-model="form.basicInfo.isLaborIntensive.value" direction="horizontal">
               <van-radio name="1">是</van-radio>
@@ -693,12 +711,12 @@ const showFireInspectionScope = computed(() => {
           label="其他说明"
           v-model:value="form.basicInfo.otherFirePlace.value"
           v-preview-text="showPreview"
-          name="其他说明"
+          name="basicInfo.otherFirePlace.value"
           placeholder="请输入其他说明"
           :rules="form.basicInfo.otherFirePlace.rules"
         />
       </div>
-      <div v-if="showOtherFirePlace" class="otherFirePlace">
+      <!-- <div v-if="showOtherFirePlace" class="otherFirePlace">
         <van-field 
           label="其他说明"
           v-model:value="form.basicInfo.otherFirePlace.value"
@@ -707,7 +725,7 @@ const showFireInspectionScope = computed(() => {
           placeholder="请输入其他说明"
           :rules="form.basicInfo.otherFirePlace.rules"
         />
-      </div>
+      </div> -->
       <div v-if="showResidence" class="fireDate">
         <SelectSingle
           id="liveType"
@@ -721,8 +739,6 @@ const showFireInspectionScope = computed(() => {
           :required="true"
           :rules="form.basicInfo.liveType.rules"
           title="请选择居住形式"
-          @change="fireTypeChange"
-
         />
       </div>
       <div v-if="showVehicleFire" class="vehicleType">
@@ -735,7 +751,6 @@ const showFireInspectionScope = computed(() => {
           :options="options.vehicleType"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           :field-name="['basicInfo', 'vehicleType', 'value']"
-          :form-ref="formRef"
           placeholder="请选择交通工具类型"
           @change="vehicleTypeChange"
           v-preview-text="showPreview"
@@ -762,7 +777,7 @@ const showFireInspectionScope = computed(() => {
         />
       </div>
       <div v-if="showLowSpeed" class="isRepack">
-        <van-field name="是否改装" label="是否改装" >
+        <van-field name="basicInfo.isRepack.value" label="是否改装" >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -814,7 +829,7 @@ const showFireInspectionScope = computed(() => {
             :maxlength="20"
             aria-autocomplete="none"
             placeholder="请输入车辆VIN码"
-            name="车辆VIN码"
+            name="basicInfo.vinCode.value"
           />
         </div>
         <div v-if="showVinCode">
@@ -828,7 +843,7 @@ const showFireInspectionScope = computed(() => {
             :maxlength="20"
             aria-autocomplete="none"
             placeholder="请输入车牌号"
-            name="车牌号"
+            name="basicInfo.carNumber.rules"
           />
         </div>
         <div class="driveState" >
@@ -849,7 +864,7 @@ const showFireInspectionScope = computed(() => {
     </template>
     <div v-if="showResidence" :gutter="gutter">
       <div class="isPoorHouse">
-        <van-field name="是否属于扶贫安置房" label="是否属于扶贫安置房" >
+        <van-field name="basicInfo.isPoorHouse.value" label="是否属于扶贫安置房" >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -863,7 +878,7 @@ const showFireInspectionScope = computed(() => {
         </van-field>
       </div>
       <div class="isChangeUseType">
-        <van-field name="是否变更使用性质" label="是否变更使用性质" >
+        <van-field name="basicInfo.isChangeUseType.value" label="是否变更使用性质" >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -917,8 +932,8 @@ const showFireInspectionScope = computed(() => {
             :options="options.fireSite"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'fireSite', 'value']"
-            :form-ref="formRef"
             placeholder="请选择起火位置"
+            required
             v-preview-text="showPreview"
         />
       </div>
@@ -929,13 +944,14 @@ const showFireInspectionScope = computed(() => {
           label="起火物名称"
           :rules="form.basicInfo.initialFuels.rules"
           id="initialFuels"
-          v-model:value="form.basicInfo.initialFuels.value"
+          v-model="form.basicInfo.initialFuels.value"
           v-preview-text="showPreview"
           allow-clear
+          required
           :maxlength="50"
           aria-autocomplete="none"
           placeholder="请输入起火物名称"
-          name="起火物名称"
+          name="basicInfo.initialFuels.value"
         />
       </div>
       <div :span="8">
@@ -943,12 +959,12 @@ const showFireInspectionScope = computed(() => {
             label="起火物类型"
             :rules="form.basicInfo.initialFuelsType.rules"
             id="initialFuelsType"
+            required
             v-model:value="form.basicInfo.initialFuelsType.value"
             :showPreview="showPreview"
             :options="options.initialFuelsType"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'initialFuelsType', 'value']"
-            :form-ref="formRef"
             show-description
             title="请选择起火物类型"
             placeholder="请选择起火物类型或者指标说明"
@@ -962,14 +978,15 @@ const showFireInspectionScope = computed(() => {
         <van-field
           label="引火源名称"
           :rules="form.basicInfo.igniteSource.rules"
+          required
           id="igniteSource"
-          v-model:value="form.basicInfo.igniteSource.value"
+          v-model="form.basicInfo.igniteSource.value"
           v-preview-text="showPreview"
           allow-clear
           :maxlength="50"
           aria-autocomplete="none"
           placeholder="请输入引火源名称"
-          name="起火物名称"
+          name="basicInfo.igniteSource.value"
         />
       </div>
       <div :span="8">
@@ -982,8 +999,8 @@ const showFireInspectionScope = computed(() => {
             :options="options.igniteSourceType"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             :field-name="['basicInfo', 'igniteSourceType', 'value']"
-            :form-ref="formRef"
             show-description
+            required
             title="请选择引火源类型"
             placeholder="请选择引火源类型或者指标说明"
             @change="initialFuelsTypeChange"
@@ -997,13 +1014,14 @@ const showFireInspectionScope = computed(() => {
           label="引起火灾人员年龄"
           :rules="form.basicInfo.firePersonAge.rules"
           id="firePersonAge"
-          v-model:value="form.basicInfo.firePersonAge.value"
+          v-model="form.basicInfo.firePersonAge.value"
           v-preview-text="showPreview"
           allow-clear
           :maxlength="3"
           aria-autocomplete="none"
           placeholder="请输入引起火灾人员年龄"
-          name="起火物名称"
+          name="basicInfo.firePersonAge.value"
+          type="digit"
         />
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
@@ -1087,20 +1105,20 @@ const showFireInspectionScope = computed(() => {
           label="其他单位说明"
           :rules="form.basicInfo.otherOrgRemark.rules"
           id="otherOrgRemark"
-          v-model:value="form.basicInfo.otherOrgRemark.value"
+          v-model="form.basicInfo.otherOrgRemark.value"
           v-preview-text="showPreview"
           :maxlength="100"
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入其他单位说明"
-          name="请输入其他单位说明"
+          name="basicInfo.otherOrgRemark.value"
         />
       </div>
     </div>
     <div :gutter="gutter">
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
-          name="是否保险" 
+          name="basicInfo.isInsurance.value" 
           label="是否保险" 
           :rules="form.basicInfo.isInsurance.rules">
           <template #input>
@@ -1138,7 +1156,7 @@ const showFireInspectionScope = computed(() => {
     </div>
     <div :gutter="gutter">
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
-        <van-field name="是否单方面火灾" label="是否单方面火灾" :rules="form.basicInfo.isOnesided.rules">
+        <van-field name="basicInfo.isOnesided.value" label="是否单方面火灾" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -1209,7 +1227,7 @@ const showFireInspectionScope = computed(() => {
     <div :gutter="gutter">
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
-          name="是否属于安全生产事故"   
+          name="basicInfo.isSafetyAccident.value"   
           label="是否属于安全生产事故"
           :rules="form.basicInfo.isSafetyAccident.rules">
           <template #input>
@@ -1244,10 +1262,11 @@ const showFireInspectionScope = computed(() => {
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
       <div :span="24">
         <van-field
+          name="basicInfo.fileRemark.value"
           label="相关文件资料描述"
           :rules="form.basicInfo.fileRemark.rules"
           id="fileRemark"
-          v-model:value="form.basicInfo.fileRemark.value"
+          v-model="form.basicInfo.fileRemark.value"
           v-preview-text="showPreview"
           :rows="6"
           :maxlength="1000"

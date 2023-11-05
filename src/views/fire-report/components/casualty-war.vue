@@ -123,17 +123,21 @@ const onDeadIdType = (index) => {
 const validateCard = (rule, value, callback) => {
   if (!value) {
     if (form.value.casualtyWar.idNumber?.rules[0]?.required) {
-      callback(new Error('请输入身份证号码'))
+      // callback(new Error('请输入身份证号码'))
+      return '请输入身份证号码'
     }
     else {
-      callback()
+      return true
+      // callback()
     }
   }
   else if (!validIdCode(value)) {
-    callback(new Error('请输入正确身份证号码'))
+    return '请输入正确身份证号码'
+    // callback(new Error('请输入正确身份证号码'))
   }
   else {
-    callback()
+    return true
+    // callback()
   }
 }
 
@@ -203,10 +207,10 @@ const bigInjured = computed(() => {
 </script>
 
 <template>
-  <van-cell-group class="rootform1">
+  <van-cell-group class="rootform1 fire-casualtyWar">
     <div :gutter="gutter">
       <div :span="8">
-        <van-field name="是否有人员受伤" label="是否有人员受伤"
+        <van-field name="casualtyWar.isInjured.value" label="是否有人员受伤"
           :rules="form.casualtyWar.isInjured.rules" >
           <template #input>
             <van-radio-group 
@@ -233,6 +237,7 @@ const bigInjured = computed(() => {
         <div :span="8">
           <SelectSingle
             label="伤亡情况"
+            name="casualtyWar.minorInjury.value"
             :rules="form.casualtyWar.minorInjury.rules"
             id="minorInjury"
             v-model:value="form.casualtyWar.minorInjury.value"
@@ -267,289 +272,290 @@ const bigInjured = computed(() => {
         </div>
       </div>
       <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="injured-item">
-        <div class="injured-message">
+        <div class="injured-message title flex-wrapper">
           受伤人员{{ index + 1 }}
-        </div>
-        <div :gutter="gutter">
-          <div :span="8">
-            <SelectSingle
-              label="伤亡情况"
-              :rules="form.casualtyWar.minorInjury.rules"
-              id="minorInjury"
-              v-model:value="form.casualtyWar.minorInjury.value"
-              :showPreview="showPreview"
-              :options="options.injuryType"
-              allow-clear
-              disabled
-              :field-names="{label:'label',value:'value'}"
-              :required="true"
-              placeholder="请选择是伤亡情况"
-              title="请选择是伤亡情况"
-            />
-          </div>
-          <div :span="8">
-            <van-field
-              label="人员姓名"
-              :rules="form.casualtyWar.name.rules"
-              id="name"
-              v-model:value="item.name"
-              v-preview-text="showPreview"
-              :maxlength="20"
-              allow-clear
-              aria-autocomplete="none"
-              placeholder="请输入人员姓名"
-              name="人员姓名"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="民族"
-              :rules="form.casualtyWar.nation.rules"
-              id="nation"
-              v-model:value="item.nation"
-              :showPreview="showPreview"
-              :options="options.nation"
-              allow-clear
-              show-search
-              :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择民族"
-              :required="true"
-              title="请选择民族"
-            />
-            <van-button 
-              v-if="!isDetail && importantEdit" 
+          <div class="border-minus1 border-mius1" v-if="!isDetail && importantEdit" >
+            <van-icon 
               class="form-col-delete"
               title="删除该受重伤人员"
-              icon="plus" type="primary" 
+              name="minus"
+              type="default"
+              size="12"
+              color="#444"
+              style="margin: 0 20px"
               @click="handleDeleteInjury(index)"
             />
           </div>
         </div>
-
-        <div :gutter="gutter">
-          <div :span="8">
-            <SelectSingle
-              label="证件类型"
-              :rules="form.casualtyWar.idType.rules"
-              id="idType"
-              v-model:value="item.idType"
-              :showPreview="showPreview"
-              :options="options.idType"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择证件类型"
-              @change="onInjuryIdType(index)"
-              :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
-              title="请选择证件类型"
-            />
-          </div>
-          <div :span="8">
-            <van-field
-              label="证件号码"
-              :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
-              id="idNumber"
-              v-model:value="item.idNumber"
-              v-preview-text="showPreview"
-              style="width: 100%"
-              :maxlength="50"
-              allow-clear
-              aria-autocomplete="none"
-              placeholder="请输入证件号码"
-              name="请输入证件号码"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="人员性别"
-              :rules="form.casualtyWar.gender.rules"
-              id="gender"
-              v-model:value="item.gender"
-              :showPreview="showPreview"
-              :options="options.gender"
-              :placeholder="item.genderHolder"
-              :disabled="!item.disabled"
-              :field-names="{ value: 'value', label: 'label' }"
-              title="请选择人员性别"
-            />
-          </div>
-          <div :span="8">
-            <van-field 
-              label="人员年龄"
-              :rules="form.casualtyWar.age.rules"
-              id="age"
-              v-model="item.age"
-              v-preview-text="showPreview"
-              style="width: 100%"
-              :maxlength="3"
-              :placeholder="item.ageHolder"
-              :disabled="!item.disabled"
-              aria-autocomplete="none"
-              allow-clear
-              name="casualtyWar,age,value"
-              type="number" 
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="人员来源"
-              :rules="form.casualtyWar.injurySource.rules"
-              id="injurySource"
-              v-model:value="item.injurySource"
-              :showPreview="showPreview"
-              :options="options.injurySource"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择人员来源"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="来源详情"
-              label="来源详情"
-              id="injurySourceInfo"
-              v-model:value="item.injurySourceInfo"
-              :showPreview="showPreview"
-              :options="options.injurySourceInfo"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择来源详情"
-              :rules="form.casualtyWar.injurySourceInfo.rules"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="职业"
-              :rules="form.casualtyWar.job.rules"
-              id="job"
-              v-model:value="item.job"
-              :showPreview="showPreview"
-              :options="options.job"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择职业"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="健康状况"
-              label="健康状况"
-              :rules="form.casualtyWar.health.rules"
-              id="health"
-              v-model:value="item.health"
-              :showPreview="showPreview"
-              :options="options.health"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择健康状况"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="受教育程度"
-              label="受教育程度"
-              :rules="form.casualtyWar.schooling.rules"
-              id="schooling"
-              v-model:value="item.schooling"
-              :showPreview="showPreview"
-              :options="options.schooling"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择受教育程度"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="致伤原因"
-              label="致伤原因"
-              :rules="form.casualtyWar.injuryCause.rules"
-              id="injuryCause"
-              v-model:value="item.injuryCause"
-              :showPreview="showPreview"
-              :options="options.injuryCause"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择致伤原因"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="人为因素"
-              label="人为因素"
-              :rules="form.casualtyWar.humanCause.rules"
-              id="injuryBehavior"
-              v-model:value="item.injuryBehavior"
-              :showPreview="showPreview"
-              :options="options.injuryBehavior"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择受伤时行为"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="受伤时行为"
-              label="受伤时行为"
-              :rules="form.casualtyWar.injuryBehavior.rules"
-              id="injuryBehavior"
-              v-model:value="item.injuryBehavior"
-              :showPreview="showPreview"
-              :options="options.injuryBehavior"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择受伤时行为"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="身体主要症状"
-              label="身体主要症状"
-              :rules="form.casualtyWar.mainSymptoms.rules"
-              v-model:value="item.injuryPart"
-              :showPreview="showPreview"
-              :options="options.injuryPart"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择受伤部位"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="受伤部位"
-              label="受伤部位"
-              :rules="form.casualtyWar.injuryPart.rules"
-              id="mainSymptoms"
-              v-model:value="item.mainSymptoms"
-              v-preview-text="showPreview"
-              :options="options.mainSymptoms"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择身体主要症状"
-            />
-          </div>
+        <div :span="8">
+          <SelectSingle
+            label="伤亡情况"
+            :name="`casualtyWar.injuredList.${index}.injuryType`"
+            :rules="form.casualtyWar.minorInjury.rules"
+            id="minorInjury"
+            v-model:value="item.injuryType"
+            :showPreview="showPreview"
+            :options="options.injuryType"
+            allow-clear
+            disabled
+            :field-names="{label:'label',value:'value'}"
+            :required="true"
+            placeholder="请选择是伤亡情况"
+            title="请选择是伤亡情况"
+          />
+        </div>
+        <div :span="8">
+          <van-field
+            label="人员姓名"
+            :rules="form.casualtyWar.name.rules"
+            id="name"
+            v-model="item.name"
+            v-preview-text="showPreview"
+            :maxlength="20"
+            allow-clear
+            aria-autocomplete="none"
+            placeholder="请输入人员姓名"
+            :name="`casualtyWar.injuredList.${index}.name`"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.nation`"
+            label="民族"
+            :rules="form.casualtyWar.nation.rules"
+            id="nation"
+            v-model:value="item.nation"
+            :showPreview="showPreview"
+            :options="options.nation"
+            allow-clear
+            show-search
+            :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择民族"
+            :required="true"
+            title="请选择民族"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            label="证件类型"
+            :name="`casualtyWar.injuredList.${index}.idType`"
+            :rules="form.casualtyWar.idType.rules"
+            id="idType"
+            v-model:value="item.idType"
+            :showPreview="showPreview"
+            :options="options.idType"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择证件类型"
+            @change="onInjuryIdType(index)"
+            :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
+            title="请选择证件类型"
+          />
+        </div>
+        <div :span="8">
+          <van-field
+            label="证件号码"
+            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
+            id="idNumber"
+            v-model:value="item.idNumber"
+            v-preview-text="showPreview"
+            style="width: 100%"
+            :maxlength="50"
+            allow-clear
+            aria-autocomplete="none"
+            placeholder="请输入证件号码"
+            :name="`casualtyWar.injuredList.${index}.idNumber`"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            label="人员性别"
+            :name="`casualtyWar.injuredList.${index}.gender`"
+            :rules="form.casualtyWar.gender.rules"
+            id="gender"
+            v-model:value="item.gender"
+            :showPreview="showPreview"
+            :options="options.gender"
+            :placeholder="item.genderHolder"
+            :disabled="!item.disabled"
+            :field-names="{ value: 'value', label: 'label' }"
+            title="请选择人员性别"
+          />
+        </div>
+        <div :span="8">
+          <van-field 
+            label="人员年龄"
+            :rules="form.casualtyWar.age.rules"
+            id="age"
+            :name="`casualtyWar.injuredList.${index}.age`"
+            v-model="item.age"
+            v-preview-text="showPreview"
+            style="width: 100%"
+            :maxlength="3"
+            :placeholder="item.ageHolder"
+            :disabled="!item.disabled"
+            aria-autocomplete="none"
+            allow-clear
+            type="number" 
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.injurySource`"
+            label="人员来源"
+            :rules="form.casualtyWar.injurySource.rules"
+            id="injurySource"
+            v-model:value="item.injurySource"
+            :showPreview="showPreview"
+            :options="options.injurySource"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择人员来源"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.injurySourceInfo`"
+            label="来源详情"
+            id="injurySourceInfo"
+            v-model:value="item.injurySourceInfo"
+            :showPreview="showPreview"
+            :options="options.injurySourceInfo"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择来源详情"
+            :rules="form.casualtyWar.injurySourceInfo.rules"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.job`"
+            label="职业"
+            :rules="form.casualtyWar.job.rules"
+            id="job"
+            v-model:value="item.job"
+            :showPreview="showPreview"
+            :options="options.job"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择职业"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.health`"
+            label="健康状况"
+            :rules="form.casualtyWar.health.rules"
+            id="health"
+            v-model:value="item.health"
+            :showPreview="showPreview"
+            :options="options.health"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择健康状况"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.schooling`"
+            label="受教育程度"
+            :rules="form.casualtyWar.schooling.rules"
+            id="schooling"
+            v-model:value="item.schooling"
+            :showPreview="showPreview"
+            :options="options.schooling"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择受教育程度"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.injuryCause`"
+            label="致伤原因"
+            :rules="form.casualtyWar.injuryCause.rules"
+            id="injuryCause"
+            v-model:value="item.injuryCause"
+            :showPreview="showPreview"
+            :options="options.injuryCause"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择致伤原因"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.humanCause`"
+            label="人为因素"
+            :rules="form.casualtyWar.humanCause.rules"
+            id="injuryBehavior"
+            v-model:value="item.injuryBehavior"
+            :showPreview="showPreview"
+            :options="options.injuryBehavior"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择受伤时行为"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            label="受伤时行为"
+            :name="`casualtyWar.injuredList.${index}.injuryBehavior`"
+            :rules="form.casualtyWar.injuryBehavior.rules"
+            id="injuryBehavior"
+            v-model:value="item.injuryBehavior"
+            :showPreview="showPreview"
+            :options="options.injuryBehavior"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择受伤时行为"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.mainSymptoms`"
+            label="身体主要症状"
+            :rules="form.casualtyWar.mainSymptoms.rules"
+            v-model:value="item.injuryPart"
+            :showPreview="showPreview"
+            :options="options.injuryPart"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择受伤部位"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.injuredList.${index}.injuryPart`"
+            label="受伤部位"
+            :rules="form.casualtyWar.injuryPart.rules"
+            id="mainSymptoms"
+            v-model:value="item.mainSymptoms"
+            v-preview-text="showPreview"
+            :options="options.mainSymptoms"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择身体主要症状"
+          />
         </div>
       </div>
-      <div v-if="!isDetail && importantEdit">
-        <div span="24">
-          <!-- <a-form-item title="新增受重伤人员"> -->
-            <van-button 
-              v-if="!isDetail && importantEdit" 
-              class="form-col-delete"
-              title="删除该受重伤人员"
-              icon="plus" type="primary" 
-              @click="handleDeleteInjury(index)"
-            />
-            <!-- <a-button type="dashed" block @click="handleAddInjury">
-              <PlusOutlined />
-            </a-button> -->
-          <!-- </a-form-item> -->
-        </div>
-      </div>
+      <van-button 
+        v-if="!isDetail && importantEdit" 
+        class="form-col-delete add"
+        title="新增受重伤人员"
+        icon="plus"  
+        size="small"
+        type="default" 
+        @click="handleAddInjury(index)"
+        style="margin: 0 20px"
+      >
+        新增受重伤人员
+      </van-button>
     </template>
-    <div :gutter="gutter">
       <div :span="8">
         <van-field 
-          name="是否有人员死亡"
+          name="casualtyWar.isInjured.value"
           label="是否有人员死亡"
           :rules="form.casualtyWar.isDead.rules"
         >
@@ -568,287 +574,290 @@ const bigInjured = computed(() => {
           </template>
         </van-field>
       </div>
-    </div>
     <!-- 死亡人员 -->
     <template v-if="form.casualtyWar.isDead.value === '1'">
       <div class="dead-message">
         死亡人员信息（合计死亡 {{ form.casualtyWar.deadList?.length }} 人）
       </div>
       <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="dead-item">
-        <div class="injured-message">
+        <div class="injured-message title flex-wrapper">
           死亡人员{{ index + 1 }}
-        </div>
-        <div :gutter="gutter">
-          <div :span="8">
-            <SelectSingle
-              name="伤亡情况"
-              label="伤亡情况"
-              :rules="form.casualtyWar.injuryType.rules"
-              id="injuryType"
-              v-model:value="item.injuryType"
-              :showPreview="showPreview"
-              :options="options.injuryType"
-              allow-clear
-              placeholder="请输入伤亡情况"
-              disabled
-              :field-names="{ value: 'value', label: 'label' }"
-            />
-          </div>
-          <div :span="8">
-            <van-field
-              name="人员姓名"
-              label="人员姓名"
-              :rules="form.casualtyWar.name.rules"
-              id="nation"
-              v-model:value="item.nation"
-              v-preview-text="showPreview"
-              :options="options.nation"
-              allow-clear
-              show-search
-              :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择民族"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="民族"
-              label="民族"
-              :rules="form.casualtyWar.nation.rules"
-              id="injuryType"
-              v-model:value="item.injuryType"
-              :showPreview="showPreview"
-              :options="options.injuryType"
-              allow-clear
-              placeholder=""
-              disabled
-              :field-names="{ value: 'value', label: 'label' }"
+          <div class="border-minus1" v-if="!isDetail && importantEdit" >
+            <van-icon 
+              class="form-col-delete"
+              title="删除该死亡人员"
+              name="minus"
+              type="default"
+              size="12"
+              color="black"
+              style="margin: 0 20px"
+              @click="handleDeleteDead(index)"
             />
           </div>
         </div>
-
-        <div :gutter="gutter">
-          <div :span="8">
-            <SelectSingle
-              label="证件类型"
-              :rules="form.casualtyWar.idType.rules"
-              id="idType"
-              v-model:value="item.idType"
-              v-preview-text="showPreview"
-              :options="options.idType"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择证件类型"
-              @change="onInjuryIdType(index)"
-              :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
-              title="请选择证件类型"
-            />
-          </div>
-          <div :span="8">
-            <van-field
-              name="证件号码"
-              label="证件号码"
-              :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
-              id="idNumber"
-              v-model:value="item.idNumber"
-              v-preview-text="showPreview"
-              style="width: 100%"
-              :maxlength="50"
-              allow-clear
-              aria-autocomplete="none"
-              placeholder="请输入证件号码"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="人员性别"
-              label="人员性别"
-              :rules="form.casualtyWar.gender.rules"
-              id="gender"
-              v-model:value="item.gender"
-              :showPreview="showPreview"
-              :options="options.gender"
-              :placeholder="item.genderHolder"
-              :disabled="!item.disabled"
-              allow-clear
-            />
-          </div>
-          <div :span="8">
-            <van-field 
-              label="人员年龄"
-              :rules="form.casualtyWar.age.rules"
-              id="age"
-              v-model="item.age"
-              v-preview-text="showPreview"
-              :placeholder="item.ageHolder"
-              style="width: 100%"
-              :maxlength="3"
-              aria-autocomplete="none"
-              :disabled="!item.disabled"
-              allow-clear
-              name="casualtyWar,age,value"
-              type="number" 
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="人员来源"
-              :rules="form.casualtyWar.injurySource.rules"
-              id="injurySource"
-              v-model:value="item.injurySource"
-              :showPreview="showPreview"
-              :options="options.injurySource"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择人员来源"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="来源详情"
-              label="来源详情"
-              id="injurySourceInfo"
-              v-model:value="item.injurySourceInfo"
-              :showPreview="showPreview"
-              :options="options.injurySourceInfo"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择来源详情"
-              :rules="form.casualtyWar.injurySourceInfo.rules"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              label="职业"
-              :rules="form.casualtyWar.job.rules"
-              id="job"
-              v-model:value="item.job"
-              :showPreview="showPreview"
-              :options="options.job"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择职业"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="健康状况"
-              label="健康状况"
-              :rules="form.casualtyWar.health.rules"
-              id="health"
-              v-model:value="item.health"
-              :showPreview="showPreview"
-              :options="options.health"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择健康状况"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="受教育程度"
-              label="受教育程度"
-              :rules="form.casualtyWar.schooling.rules"
-              id="schooling"
-              v-model:value="item.schooling"
-              :showPreview="showPreview"
-              :options="options.schooling"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              allow-clear
-              placeholder="请选择受教育程度"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="致死原因"
-              label="致死原因"
-              :rules="[{ required: form.casualtyWar.injuryCause.rules[0].required, message: '请选择致死原因' }]"
-              id="injuryCause"
-              v-model:value="item.injuryCause"
-              :showPreview="showPreview"
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              :options="options.injuryCause"
-              allow-clear
-              placeholder="请选择致死原因"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="人为因素"
-              label="人为因素"
-              :rules="form.casualtyWar.humanCause.rules"
-              id="injuryBehavior"
-              v-model:value="item.injuryBehavior"
-              :showPreview="showPreview"
-              :options="options.injuryBehavior"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择受伤时行为"
-            />
-          </div>
-          <div :span="8">
-            <SelectSingle
-              name="受害时行为"
-              label="受害时行为"
-              :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
-              id="injuryBehavior"
-              v-model:value="item.injuryBehavior"
-              :showPreview="showPreview"
-              :options="options.injuryBehavior"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择受害时行为"
-            />
-          </div>
-        </div>
-
-        <div :gutter="gutter">
-          <div :span="8">
-            <SelectSingle
-              name="发现尸体位置"
-              label="发现尸体位置"
-              :rules="form.casualtyWar.bodyLocation.rules"
-              id="bodyLocation"
-              v-model:value="item.bodyLocation"
-              :showPreview="showPreview"
-              :options="options.bodyLocation"
-              allow-clear
-              :field-names="{ value: 'boDictId', label: 'dictName' }"
-              placeholder="请选择发现尸体位置"
-            />
-          </div>
-          <div :span="8">
-            <CascaderSingle
-              name="死亡时间"
-              label="死亡时间"
-              :rules="form.casualtyWar.deathDate.rules"
-              id="deathDate"
-              v-model:value="item.deathDate"
-              :showPreview="showPreview"
-              :options="options.deathDate"
-              :field-names="{ value: 'boDictId', text: 'dictName' }"
-              placeholder="请选择死亡时间"
-              allow-clear
-              :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
-            />
-          </div>
-        </div>
-      </div>
-      <div v-if="!isDetail && importantEdit">
-        <div span="24">
-          <van-button 
-            @click="handleAddDead"
-            title="新增死亡人员"
-            icon="plus" 
-            type="primary" 
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.injuryType`"
+            label="伤亡情况"
+            :rules="form.casualtyWar.injuryType.rules"
+            id="injuryType"
+            v-model:value="item.injuryType"
+            :showPreview="showPreview"
+            :options="options.injuryType"
+            allow-clear
+            placeholder="请输入伤亡情况"
+            disabled
+            :field-names="{ value: 'value', label: 'label' }"
           />
-          <!-- <a-form-item title="新增死亡人员">
-            <a-button type="dashed" block @click="handleAddDead">
-              <PlusOutlined />
-            </a-button>
-          </a-form-item> -->
+        </div>
+        <div :span="8">
+          <van-field
+            :name="`casualtyWar.deadList.${index}.name`"
+            label="人员姓名"
+            :rules="form.casualtyWar.name.rules"
+            id="nation"
+            v-model:value="item.nation"
+            v-preview-text="showPreview"
+            :options="options.nation"
+            allow-clear
+            show-search
+            :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择民族"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.nation`"
+            label="民族"
+            :rules="form.casualtyWar.nation.rules"
+            id="injuryType"
+            v-model:value="item.injuryType"
+            :showPreview="showPreview"
+            :options="options.injuryType"
+            allow-clear
+            placeholder=""
+            disabled
+            :field-names="{ value: 'value', label: 'label' }"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.idType`"
+            label="证件类型"
+            :rules="form.casualtyWar.idType.rules"
+            id="idType"
+            v-model:value="item.idType"
+            v-preview-text="showPreview"
+            :options="options.idType"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择证件类型"
+            @change="onInjuryIdType(index)"
+            :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
+            title="请选择证件类型"
+          />
+        </div>
+        <div :span="8">
+          <van-field
+            :name="`casualtyWar.deadList.${index}.idNumber`"
+            label="证件号码"
+            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
+            id="idNumber"
+            v-model:value="item.idNumber"
+            v-preview-text="showPreview"
+            style="width: 100%"
+            :maxlength="50"
+            allow-clear
+            aria-autocomplete="none"
+            placeholder="请输入证件号码"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.gender`"
+            label="人员性别"
+            :rules="form.casualtyWar.gender.rules"
+            id="gender"
+            v-model:value="item.gender"
+            :showPreview="showPreview"
+            :options="options.gender"
+            :placeholder="item.genderHolder"
+            :disabled="!item.disabled"
+            allow-clear
+          />
+        </div>
+        <div :span="8">
+          <van-field 
+            label="人员年龄"
+            :rules="form.casualtyWar.age.rules"
+            id="age"
+            v-model="item.age"
+            v-preview-text="showPreview"
+            :placeholder="item.ageHolder"
+            style="width: 100%"
+            :maxlength="3"
+            aria-autocomplete="none"
+            :disabled="!item.disabled"
+            allow-clear
+            :name="`casualtyWar.deadList.${index}.ageHolder`"
+            type="number" 
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            label="人员来源"
+            :name="`casualtyWar.deadList.${index}.injurySource`"
+            :rules="form.casualtyWar.injurySource.rules"
+            id="injurySource"
+            v-model:value="item.injurySource"
+            :showPreview="showPreview"
+            :options="options.injurySource"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择人员来源"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.injurySourceInfo`"
+            label="来源详情"
+            id="injurySourceInfo"
+            v-model:value="item.injurySourceInfo"
+            :showPreview="showPreview"
+            :options="options.injurySourceInfo"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择来源详情"
+            :rules="form.casualtyWar.injurySourceInfo.rules"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            label="职业"
+            :name="`casualtyWar.deadList.${index}.job`"
+            :rules="form.casualtyWar.job.rules"
+            id="job"
+            v-model:value="item.job"
+            :showPreview="showPreview"
+            :options="options.job"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择职业"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.health`"
+            label="健康状况"
+            :rules="form.casualtyWar.health.rules"
+            id="health"
+            v-model:value="item.health"
+            :showPreview="showPreview"
+            :options="options.health"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择健康状况"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.schooling`"
+            label="受教育程度"
+            :rules="form.casualtyWar.schooling.rules"
+            id="schooling"
+            v-model:value="item.schooling"
+            :showPreview="showPreview"
+            :options="options.schooling"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择受教育程度"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.injuryCause`"
+            label="致死原因"
+            :rules="[{ required: form.casualtyWar.injuryCause.rules[0].required, message: '请选择致死原因' }]"
+            id="injuryCause"
+            v-model:value="item.injuryCause"
+            :showPreview="showPreview"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            :options="options.injuryCause"
+            allow-clear
+            placeholder="请选择致死原因"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.humanCause`"
+            label="人为因素"
+            :rules="form.casualtyWar.humanCause.rules"
+            id="injuryBehavior"
+            v-model:value="item.injuryBehavior"
+            :showPreview="showPreview"
+            :options="options.injuryBehavior"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择受伤时行为"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+            :name="`casualtyWar.deadList.${index}.injuryBehavior`"
+            label="受害时行为"
+            :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
+            id="injuryBehavior"
+            v-model:value="item.injuryBehavior"
+            :showPreview="showPreview"
+            :options="options.injuryBehavior"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择受害时行为"
+          />
+        </div>
+        <div :span="8">
+          <SelectSingle
+           :name="`casualtyWar.deadList.${index}.bodyLocation`"
+            label="发现尸体位置"
+            :rules="form.casualtyWar.bodyLocation.rules"
+            id="bodyLocation"
+            v-model:value="item.bodyLocation"
+            :showPreview="showPreview"
+            :options="options.bodyLocation"
+            allow-clear
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            placeholder="请选择发现尸体位置"
+          />
+        </div>
+        <div :span="8">
+          <CascaderSingle
+            :name="`casualtyWar.deadList.${index}.deathDate`"
+            label="死亡时间"
+            :rules="form.casualtyWar.deathDate.rules"
+            id="deathDate"
+            v-model:value="item.deathDate"
+            :showPreview="showPreview"
+            :options="options.deathDate"
+            :field-names="{ value: 'boDictId', text: 'dictName' }"
+            placeholder="请选择死亡时间"
+            allow-clear
+            :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
+          />
         </div>
       </div>
+      <van-button 
+        v-if="!isDetail && importantEdit"
+        class="add"
+        @click="handleAddDead"
+        title="新增死亡人员"
+        icon="plus" 
+        type="default" 
+        size="small"
+        style="margin: 0 20px"
+      >
+        新增死亡人员
+      </van-button >
     </template>
 </van-cell-group>
 </template>
@@ -858,6 +867,10 @@ const bigInjured = computed(() => {
   .injured-message {
     color: red;
     margin-bottom: 20px;
+    margin: 5px 15px;
+    &::after{
+      display: none !important;
+    }
   }
   .dead-message {
     color: red;
@@ -865,9 +878,50 @@ const bigInjured = computed(() => {
   }
   .injured-item {
     padding-right: 0px;
+    border: 1px solid #ebebeb;
+    margin: 10px 10px;
+    .title {
+      // display: flex;
+      align-items: center;
+      margin: 10px 20px 10px 20px;
+
+    }
+    .title i {
+      margin-left: auto;
+    }
   }
   .dead-item {
-    padding-right: 0px;
+    // padding-right: 0px;
+    border: 1px solid #ebebeb;
+    margin: 10px 10px;
+    .title {
+      display: flex;
+      align-items: center;
+      margin: 10px 20px 0 20px;
+    }
+    .title i {
+      margin-left: auto;
+    }
+  }
+  .add{
+    width: calc(100% - 40px);
+    &::after{
+      display: none;
+    }
+  }
+  .flex-wrapper{
+    display: flex;
+    justify-content: space-between;
+  }
+  .border-minus1 {
+    border-radius: 50% !important;
+    border: 2px solid #444 !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
+
 </style>

@@ -72,7 +72,6 @@ const handleDeletePerson = (index) => {
               v-model="form.caseHandling.handleTwoCase.value"
               v-preview-text="showPreview"
               @change="onHandleTwoCase"
-              :disabled="!importantEdit"
               direction="horizontal">
               <van-radio name="1">是</van-radio>
               <van-radio name="2">否</van-radio>
@@ -136,10 +135,24 @@ const handleDeletePerson = (index) => {
       </div>
     </div>
     <template v-if="form.caseHandling.firePenalty.value === '1'">
-      <div style="border-color: #A4A4A4" dashed>
+      <div class="list-title" style="border-color: #A4A4A4" dashed>
         处罚单位列表
       </div>
-      <div v-for="(item, index) in form.caseHandling.fireInfoOrgList" :key="index" :gutter="gutter">
+      <div class="dead-item" v-for="(item, index) in form.caseHandling.fireInfoOrgList" :key="index" :gutter="gutter">
+        <div class="flex-wrapper">
+            <div class="border-minus1 border-mius1" v-if="!isDetail" >
+              <van-icon 
+                class="form-col-delete"
+                title="删除该处罚单位"
+                name="minus"
+                type="default"
+                size="12"
+                color="#444"
+                style="margin: 0 20px"
+                @click="handleDeleteUnit(index)"
+              />
+            </div>
+          </div>
         <div :span="8">
           <van-field 
             :name="`caseHandling.fireInfoOrgList.${index},orgName`"
@@ -183,26 +196,44 @@ const handleDeletePerson = (index) => {
           />
         </div>
       </div>
-      <div v-if="!isDetail">
-        <div span="24">
-          <van-button 
-            @click="handleAddDead"
-            title="新增死亡人员"
-            icon="plus" 
-            type="primary" 
-          />
-        </div>
-      </div>
+  
+      <van-button 
+        v-if="!isDetail"
+        @click="handleAddUnit"
+        title="新增处罚单位"
+        icon="plus" 
+        type="default" 
+        handleAddUnit
+        size="small"
+        style="margin: 0 20px"
+        class="add"
+      >
+        新增处罚单位
+      </van-button >
     </template>
 
     <template v-if="form.caseHandling.firePenalty.value === '1'">
-      <div style="border-color: #A4A4A4" dashed>
+      <div class="list-title" style="border-color: #A4A4A4" dashed>
         处罚个人列表
       </div>
-      <div v-for="(item, index) in form.caseHandling.fireInfoPersonList" :key="index" :gutter="gutter">
+      <div class="dead-item" v-for="(item, index) in form.caseHandling.fireInfoPersonList" :key="index" :gutter="gutter">
+        <div class="flex-wrapper">
+            <div class="border-minus1 border-mius1" v-if="!isDetail" >
+              <van-icon 
+                class="form-col-delete"
+                title="删除该处罚个人"
+                name="minus"
+                type="default"
+                size="12"
+                color="#444"
+                style="margin: 0 20px"
+                @click="handleDeletePerson(index)"
+              />
+            </div>
+          </div>
         <div :span="8">
           <van-field 
-            :name="`caseHandling,a,${index},name`"
+            :name="`caseHandling,fireInfoPersonList,${index},name`"
             label="姓名"
             :rules="form.caseHandling.name.rules"
             id="name"
@@ -239,25 +270,67 @@ const handleDeletePerson = (index) => {
             :options="options.penalty"
             allow-clear
             placeholder="请选择行政处罚"
-            :field-names="{ value: 'value', label: 'label' }"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
           />
         </div>
       </div>
-      <div v-if="!isDetail">
-        <div span="24">
-          <van-button 
-              @click="handleAddDead"
-              title="新增处罚个人"
-              icon="plus" 
-              type="primary" 
-            />
-          <!-- <a-form-item title="新增处罚个人">
-            <a-button type="dashed" block @click="handleAddPerson">
-              <PlusOutlined />
-            </a-button>
-          </a-form-item> -->
-        </div>
-      </div>
+      <van-button 
+        v-if="!isDetail"
+        @click="handleAddPerson"
+        title="新增处罚个人"
+        class="add"
+        icon="plus" 
+        type="default" 
+        size="small"
+        style="margin: 0 20px"
+        >
+          新增处罚个人
+        </van-button>
     </template>
   </van-cell-group>
 </template>
+<style lang="scss" scoped>
+  .dead-item {
+    // padding-right: 0px;
+    border: 1px solid #ebebeb;
+    margin: 10px 10px;
+    .title {
+      display: flex;
+      align-items: center;
+      margin: 10px 20px 0 20px;
+    }
+    .title i {
+      margin-left: auto;
+    }
+  }
+  .add{
+    width: calc(100% - 40px);
+    &::after{
+      display: none;
+    }
+  }
+  .list-title{
+    padding: 5px 10px;
+    &::after{
+      display: none;
+    }
+  }
+  .flex-wrapper{
+    margin-left:auto;
+    padding-top: 10px;
+    padding-right: 16px;
+    &::after{
+      display: none;
+    }
+  }
+  .border-minus1 {
+    margin-left: auto;
+    border-radius: 50% !important;
+    border: 2px solid #444 !important;
+    width: 16px !important;
+    height: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+</style>

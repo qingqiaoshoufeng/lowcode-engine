@@ -48,35 +48,36 @@ const onBuildType = () => {
   }
 }
 
-const validateBuildFloor = (rule, value, callback) => {
+const validateBuildFloor = (value) => {
   const { buildType, buildFloor, buildUse } = form.value.fireBuilding
   const filter = options.value.buildType?.filter(item => item.boDictId === buildType.value)
   const use = options.value.buildUse?.filter(item => item.boDictId === buildUse.value?.[0])
   if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '居住使用' && (buildFloor.value < 1 || buildFloor.value > 10)) {
-    callback(new Error('建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层'))
+    return '建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层'
   }
   else if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '公共使用' && (buildFloor.value < 1 || buildFloor.value > 9)) {
-    callback(new Error('建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层'))
+    return '建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层'
   }
   else if (filter?.[0]?.dictName === '高层' && use?.[0]?.dictName === '居住使用' && buildFloor.value < 8) {
-    callback(new Error('建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上'))
+    return '建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上'
   }
   else if (filter?.[0]?.dictName === '高层' && use?.[0]?.dictName === '公共使用' && buildFloor.value < 7) {
-    callback(new Error('建筑类别为高层，建筑使用用途为公共时，建筑总楼层数可选范围为7层以上'))
+    return '建筑类别为高层，建筑使用用途为公共时，建筑总楼层数可选范围为7层以上'
   }
   else if (!value && value !== 0) {
     if (!buildFloor.rules[0].required) {
       callback()
     }
     else {
-      callback(new Error('请输入建筑总楼层'))
+      return '请输入建筑总楼层'
     }
   }
   else if (!positiveIntegerReg.test(value) || value === 0) {
-    callback(new Error('请输入正确建筑总楼层'))
+    return '请输入正确建筑总楼层'
   }
   else {
-    callback()
+    return true
+    // callback()
   }
 }
 
@@ -97,28 +98,34 @@ const onBuildUse = (value, selectedOptions) => {
   }
 }
 
-const validateFireFloor = (rule, value, callback) => {
+const validateFireFloor = (value) => {
   const { fireBuilding } = form.value
   const filter = options.value.buildType?.filter(item => item.boDictId === fireBuilding.buildType.value)
   if (fireBuilding.buildFloor.value < fireBuilding.fireFloor.value) {
-    callback(new Error('失火楼层不能大于建筑总楼层'))
+    return '失火楼层不能大于建筑总楼层'
+    // callback(new Error('失火楼层不能大于建筑总楼层'))
   }
   else if (!value && value !== 0) {
     if (!fireBuilding.fireFloor.rules[0].required) {
-      callback()
+      return true
+      // callback()
     }
     else {
-      callback(new Error('请输入失火楼层'))
+      // callback(new Error('请输入失火楼层'))
+      return '请输入失火楼层'
     }
   }
   else if (filter?.[0]?.dictName === '地下' && !integerReg.test(value)) {
-    callback(new Error('请输入正确失火楼层'))
+    return ('请输入正确失火楼层')
+    // callback(new Error('请输入正确失火楼层'))
   }
   else if (filter?.[0]?.dictName !== '地下' && (!positiveIntegerReg.test(value) || value === 0)) {
-    callback(new Error('请输入正确失火楼层'))
+    return '请输入正确失火楼层'
+    // callback(new Error('请输入正确失火楼层'))
   }
   else {
-    callback()
+    // callback()
+    return true
   }
 }
 
@@ -190,7 +197,7 @@ const onBuildTag = (val) => {
     <div :gutter="gutter">
       <div :span="8">
         <SelectSingle
-          name="建筑类别"
+          name="fireBuilding.buildType.value"
           label="建筑类别"
           :rules="form.fireBuilding.buildType.rules"
           id="buildType"
@@ -206,7 +213,7 @@ const onBuildTag = (val) => {
       </div>
       <div :span="8">
         <SelectSingle
-          name="fireBuilding,buildStructure,value"
+          name="fireBuilding.buildStructure.value"
           label="建筑结构"
           :rules="form.fireBuilding.buildStructure.rules"
           id="buildStructure"
@@ -221,7 +228,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
-          name="fireBuilding,fireResistanceRating,value"
+          name="fireBuilding.fireResistanceRating.value"
           label="耐火等级"
           :rules="form.fireBuilding.fireResistanceRating.rules"
           id="fireResistanceRating"
@@ -239,7 +246,7 @@ const onBuildTag = (val) => {
     <div :gutter="gutter">
       <div v-if="showSevereFire" :span="8">
         <van-field 
-          name="fireBuilding,buildFloor,value"
+          name="fireBuilding.buildFloor.value"
           label="建筑总楼层"
           :rules="[{ validator: validateBuildFloor, trigger: 'blur' }, ...form.fireBuilding.buildFloor.rules]"
           id="buildFloor"
@@ -257,7 +264,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
-          name="fireBuilding,fireFloor,value"
+          name="fireBuilding.fireFloor.value"
           label="失火楼层"
           :rules="[{ validator: validateFireFloor, trigger: 'blur' }, ...form.fireBuilding.fireFloor.rules]"
           id="fireFloor"
@@ -273,7 +280,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
-          name="fireBuilding,buildAllArea,value"
+          name="fireBuilding.buildAllArea.value"
           label="总建筑面积（平方米）"
           :rules="form.fireBuilding.buildAllArea.rules"
           id="buildAllArea"
@@ -289,7 +296,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
-          name="fireBuilding,buildFloorArea,value"
+          name="fireBuilding.buildFloorArea.value"
           label="单层建筑面积（平方米）"
           :rules="form.fireBuilding.buildFloorArea.rules"
           id="buildFloorArea"
@@ -305,7 +312,7 @@ const onBuildTag = (val) => {
       </div>
       <div v-if="showHousingLife" :span="8">
         <van-field 
-          name="fireBuilding,housingLife,value"
+          name="fireBuilding.housingLife.value"
           label="房龄"
           :rules="form.fireBuilding.housingLife.rules"
           id="housingLife"
@@ -323,7 +330,7 @@ const onBuildTag = (val) => {
 
     <div :gutter="gutter">
       <div v-if="showSevereFire" :span="8">
-        <AreaCascader
+        <CascaderSingle
           name="fireBuilding.buildUse.value"
           label="建筑使用用途"
           :rules="form.fireBuilding.buildUse.rules"
@@ -331,7 +338,6 @@ const onBuildTag = (val) => {
           v-model:value="form.fireBuilding.buildUse.value"
           v-preview-text="showPreview"
           :options="options.buildUse"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
           placeholder="请选择建筑使用用途"
           allow-clear
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"

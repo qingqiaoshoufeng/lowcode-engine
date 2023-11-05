@@ -111,6 +111,7 @@ const props = defineProps({
   }
 })
 
+const formRef = ref(null)
 const emits = defineEmits(['finishCallback'])
 const isShowTemporary = inject('isShowTemporary')
 // const bus = inject('bus')
@@ -125,13 +126,11 @@ const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
-const { form, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig()
+const { form, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(formRef)
 
 const showPreview = ref(null)
 
 const importantEdit = ref(true) // 重要信息更正
-
-const formRef = ref(null)
 
 const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
@@ -893,25 +892,25 @@ const setTemporary = async()=>{
 
 onMounted(() => {
   props.setHandleOk && props.setHandleOk((finishFn) => {
-    formRef.value.validate().then(async (values) => {
-      if (values) {
-        if (props.isApproval) {
-          show.value.approvalVisible = true
-        }
-        else if (props.isAgain) {
-          await submit()
-          loading.value = againLoading.value
-          await againSubmit()
-          await finishFn()
+    formRef.value.validate().then(async (values) => {   
+      if (props.isApproval) {
+        show.value.approvalVisible = true
+      }
+      else if (props.isAgain) {
+        await submit()
+        loading.value = againLoading.value
+        await againSubmit()
+        await finishFn()
+      }
+      else {
+        if (!props.showDraft && false
+        //  && checkFieldWarning(fieldExist.value)
+        ) {
+          // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
         }
         else {
-          if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
-            // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
-          }
-          else {
-            await submit()
-            await finishFn()
-          }
+          await submit()
+          await finishFn()
         }
       }
     })
@@ -976,7 +975,7 @@ const onSideBarChange = (e, k) => {
 </script>
 
 <template>
-  <div class="editor-form">
+  <div class="editor-form" >
     <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
@@ -994,7 +993,7 @@ const onSideBarChange = (e, k) => {
       <div class="form-right">
          <div class="box">
             <div class="wrapper">
-              <van-form>
+              <van-form ref="formRef">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->

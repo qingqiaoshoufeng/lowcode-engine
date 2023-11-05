@@ -8,7 +8,7 @@ import { getTypeText } from '@/utils/tools.js'
 
 // const useForm = Form.useForm
 
-export const useFormConfig = () => {
+export const useFormConfig = (fromRef) => {
   const formOrigin = {
     fireInfo: {
       title: '警情信息',
@@ -817,7 +817,13 @@ export const useFormConfig = () => {
     //   }
     // })
   }
-
+  const handleUseForm1 = ()=>{
+    // const res = fromRef.value.getValidationStatus()
+    // Object.keys(res).forEach(item=>{
+    //   item.startsWith('')
+    // })
+    // console.log(res);
+  }
   // 根据模版生成简要情况
   const generateRemarkField = (detail) => {
     const { basicInfo, casualtyWar, economicLoss } = form.value
@@ -880,9 +886,11 @@ export const useFormConfig = () => {
     () => form.value,
     () => {
       nextTick(() => {
-        Object.keys(form.value).forEach((key) => {
-          handleUseForm(key, form.value[key])
-        })
+        handleUseForm1()
+       
+        // Object.keys(form.value).forEach((key) => {
+        //   handleUseForm(key, form.value[key])
+        // })
       })
     },
     { deep: true },
@@ -1361,7 +1369,7 @@ export const useFormConfig = () => {
     // 其他附件
     // form.value.otherAttach.attach.rules[0].required = value
     // form.value.otherAttach.otherRemark.rules[0].required = value
-    formRef.value?.clearValidate()
+    // formRef.value?.clearValidate()
   }
 
   // 校验是否对异常项进行批注
