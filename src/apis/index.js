@@ -20,6 +20,7 @@ export * from './business/data-approval.js'
 
 
 
+
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {
   return request.post('/acws/rest/biz/firewarning/save', data)

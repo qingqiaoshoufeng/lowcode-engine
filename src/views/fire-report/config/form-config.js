@@ -1,12 +1,12 @@
 import { nextTick, ref, watch } from 'vue'
-// import { Form } from '@castle/ant-design-vue'
+import { Form } from '@castle/ant-design-vue'
 import dayjs from 'dayjs'
 import { cloneDeep, pickBy, toArray } from 'lodash-es'
 import { checkAffectedHouse, checkBurnedArea, checkFireDisposalCost, checkFireInjuryCost, checkFireResistanceRating } from './tool.js'
 import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from '@/utils/validate.js'
 import { getTypeText } from '@/utils/tools.js'
 
-// const useForm = Form.useForm
+const useForm = Form.useForm
 
 export const useFormConfig = (fromRef) => {
   const formOrigin = {
@@ -800,30 +800,34 @@ export const useFormConfig = (fromRef) => {
       return rules
     })())
 
-    // const { validate, validateInfos } = useForm(modelRef, rulesRef)
+    const { validate, validateInfos } = useForm(modelRef, rulesRef)
 
-    // validate().finally(() => {
-    //   const allFormItem = toArray(validateInfos)
-    //   const allFormItemNum = document.getElementById(key)?.querySelectorAll('.ant-form-item-required')?.length
-    //   if (!allFormItemNum || allFormItem <= 0) {
-    //     form.value[key].validateStatus = true
-    //     form.value[key].validateProgress = 100
-    //   }
-    //   else {
-    //     const passFormItemNum = allFormItem.filter(i => i.validateStatus === 'success' && i.required).length
+    validate().finally(() => {
+      // if (key === 'firePhoto') {
+      //   debugger
+      // }
+      const allFormItem = toArray(validateInfos)
+      const allFormItemNum = document.getElementById(key)?.querySelectorAll('.van-field__label--required')?.length
+      if (!allFormItemNum || allFormItem <= 0) {
+        form.value[key].validateStatus = true
+        form.value[key].validateProgress = 100
+      }
+      else {
+        const passFormItemNum = allFormItem.filter(i => i.validateStatus === 'success' && i.required).length
 
-    //     form.value[key].validateStatus = allFormItemNum === passFormItemNum
-    //     form.value[key].validateProgress = Math.round(passFormItemNum / allFormItemNum * 100)
-    //   }
-    // })
+        form.value[key].validateStatus = allFormItemNum === passFormItemNum
+        form.value[key].validateProgress = Math.round(passFormItemNum / allFormItemNum * 100)
+      }
+    })
   }
-  const handleUseForm1 = ()=>{
-    // const res = fromRef.value.getValidationStatus()
-    // Object.keys(res).forEach(item=>{
-    //   item.startsWith('')
-    // })
-    // console.log(res);
-  }
+  // const handleUseForm1 = ()=>{
+  //   const res = fromRef.value.getValidationStatus()
+  //   debugger;
+  //   Object.keys(res).forEach(item=>{
+  //     item.startsWith('')
+  //   })
+  //   console.log(res);
+  // }
   // 根据模版生成简要情况
   const generateRemarkField = (detail) => {
     const { basicInfo, casualtyWar, economicLoss } = form.value
@@ -886,8 +890,6 @@ export const useFormConfig = (fromRef) => {
     () => form.value,
     () => {
       nextTick(() => {
-        handleUseForm1()
-       
         // Object.keys(form.value).forEach((key) => {
         //   handleUseForm(key, form.value[key])
         // })

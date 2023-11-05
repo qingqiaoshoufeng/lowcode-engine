@@ -13,6 +13,11 @@ defineOptions({
   name: "ProSteps",
 });
 </script>
+<script>
+export default {
+  name: "ProSteps"
+}
+</script>
 
 <template>
   <div id="proSteps" class="pro-steps">
