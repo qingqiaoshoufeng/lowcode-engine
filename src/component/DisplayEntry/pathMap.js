@@ -10,6 +10,10 @@ export const pathMap = {
   'huozaiguanli': "/fire-manage",
   'huozaixiugai': "/fire-edit",
   'huozaishenhe':"/fire-review",
-  "jingqinggengzhengshenpi": "/policeRecheckApproval"
+  "jingqinggengzhengshenpi": "/policeRecheckApproval",
+  "jingqingzuofeishenpi": "/policeAbolishApproval",
+  "chudonggengzhengshenpi": "/dispatchRecheckApproval",
+  "huozaigengzhengshenpi": "/fireRecheckApproval",
+  "shenqingjilu": "/applyRecord",
 }
   

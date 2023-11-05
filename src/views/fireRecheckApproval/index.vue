@@ -23,10 +23,10 @@ const searchOptions = ref([
     value: 'time',
   },
   {
-    title: '警情编号',
+    title: '火灾编号',
     type: 'input',
-    placeholder: '请输入警情编号',
-    value: "warningCode",
+    placeholder: '请输入火灾编号',
+    value: "fireCode",
   },
   {
     title: '申请单位',
@@ -49,7 +49,7 @@ const searchOptions = ref([
 ])
 
 const defaultFilterValue = {
-  recheckType: 1,
+  recheckType: 3,
   state: 'running',
   time: getLastMonth(),
   applyGroup: [],
@@ -125,10 +125,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="police-recheck-approval">
+  <div class="fire-recheck-approval">
     <ProList
       ref="proListRef"
-      title="警情更正审批"
+      title="火灾更正审批"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningEditApproval"
       :tabs="tabs"
@@ -204,8 +204,8 @@ onMounted(() => {
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
-    <!-- 警情更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="警情更正审批">
+    <!-- 火灾更正审批 -->
+    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="火灾更正审批">
       <!-- <template #default="{ setHandleOk }">
         <PoliceEntryDetail
           :current-row="currentRow"
@@ -220,7 +220,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.police-recheck-approval {
+.fire-recheck-approval {
   height: 100%;
   background-color: #f6f7f8;
   .list-tabs {
