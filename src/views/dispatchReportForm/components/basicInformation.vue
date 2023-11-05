@@ -161,6 +161,7 @@ const onDealSituation = (value, option) => {
       required
       name="blockingTime"
       label="疏通耗时(分钟)："
+      label-width="128px"
       placeholder="请输入疏通耗时"
       :rules="form.basicInformation.blockingTime.rules"
     />

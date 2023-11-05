@@ -75,21 +75,6 @@ const OnCarNum = () => {
 
   checkIsResponseTruck(form.value);
 };
-
-const validateCommander = (rule, value, callback) => {
-  const { investForce } = form.value;
-  if (!value && value !== 0) {
-    if (!investForce.commander.rules[0].required) {
-      callback();
-    } else {
-      callback(new Error("请输入指挥员人数"));
-    }
-  } else if (!positiveIntegerReg.test(value)) {
-    callback(new Error("请输入正确指挥员人数"));
-  } else {
-    callback();
-  }
-};
 </script>
 
 <template>

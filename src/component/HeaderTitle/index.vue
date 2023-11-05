@@ -1,10 +1,10 @@
 <template>
-<div class="header-title" >
-  <div class="arrow">
-    <van-icon @click="router.go(-1)" name="arrow-left" />
+  <div class="header-title" >
+    <div class="arrow">
+      <van-icon @click="router.go(-1)" name="arrow-left" />
+    </div>
+    <div>{{ title }}</div>
   </div>
-  <div>{{ title }}</div>
-</div>
 </template>
 <script setup>
 import router from '@/router/index.js'
@@ -12,7 +12,7 @@ import router from '@/router/index.js'
 const props = defineProps({
   title:{
     type:String,
-    default:'标题'
+    default:''
   }
 })
 </script>
@@ -28,7 +28,7 @@ export default {
   background: #0C207F;
   display: flex;
   position: relative;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   text-align: center;
   justify-content: center;

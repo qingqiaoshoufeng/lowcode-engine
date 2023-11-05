@@ -2,8 +2,13 @@
 import { ref, onMounted, provide, nextTick, computed } from "vue";
 import { useList } from "@/utils/curd.js";
 import { cloneDeep } from 'lodash-es'
+import HeaderTitle from '../HeaderTitle/index.vue'
 
 const props = defineProps({
+  title: {
+    type:String,
+    default:''
+  },
   tabs: {
     type: Array,
     default: () => [],
@@ -132,6 +137,7 @@ export default {
 
 <template>
   <div class="pro-list">
+    <HeaderTitle :title="title" />
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab

@@ -247,6 +247,7 @@ onMounted(() => {
   <div class="dispatch-manage-list">
     <ProList
       ref="proListRef"
+      title="出动管理"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDispatchManageList"
       :tabs="tabs"
@@ -335,7 +336,7 @@ onMounted(() => {
     </ProList>
 
     <!-- 出动详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动详情">
       <DispatchForm
         :current-row="currentRow"
         :is-detail="true"

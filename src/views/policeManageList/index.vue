@@ -270,6 +270,7 @@ onMounted(() => {
   <div class="police-manage-list">
     <ProList
       ref="proListRef"
+      title="警情管理"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningManage"
       :tabs="tabs"
@@ -359,7 +360,7 @@ onMounted(() => {
     </ProList>
 
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 申请更正 -->

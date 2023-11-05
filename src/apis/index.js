@@ -15,6 +15,7 @@ export * from './business/home.js'
 export * from './business/fire-report.js'
 export * from './business/fire-manage.js'
 export * from './business/fire-review.js'
+export * from './business/data-approval.js'
 
 
 

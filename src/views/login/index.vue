@@ -83,7 +83,7 @@ const handleUserLogin = async () => {
   const res = await loginIn(params)
   localStorage.token = res.token
   await initStore()
-  router.push({
+  router.replace({
     name:'Home'
   })
 };

@@ -9,6 +9,7 @@ export const pathMap = {
   'huozaitianbao': "/fire-report",
   'huozaiguanli': "/fire-manage",
   'huozaixiugai': "/fire-edit",
-  'huozaishenhe':"/fire-review"
+  'huozaishenhe':"/fire-review",
+  "jingqinggengzhengshenpi": "/policeRecheckApproval"
 }
   

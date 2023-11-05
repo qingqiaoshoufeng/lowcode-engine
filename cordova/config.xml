@@ -9,6 +9,7 @@
     <preference name="Scheme" value="http" />
     <preference name="hostname" value="localhost" />
     <preference name="AndroidInsecureFileModeEnabled" value="true" />
+    <preference name="SplashScreenDelay" value="2000" />
     <content src="index.html" />
     <access origin="*"/>
     <allow-intent href="http://*/*"/>
@@ -28,6 +29,20 @@
         <config-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-config>
+
+        <splash src="res/start.png" density="land-hdpi" />
+        <splash src="res/start.png" density="land-ldpi" />
+        <splash src="res/start.png" density="land-mdpi" />
+        <splash src="res/start.png" density="land-xhdpi" />
+        <splash src="res/start@2x.png" density="land-xxhdpi" />
+        <splash src="res/start@2x.png" density="land-xxxhdpi" />
+
+        <splash src="res/start.png" density="port-hdpi" />
+        <splash src="res/start.png" density="port-ldpi" />
+        <splash src="res/start.png" density="port-mdpi" />
+        <splash src="res/start.png" density="port-xhdpi" />
+        <splash src="res/start@2x.png" density="port-xxhdpi" />
+        <splash src="res/start@2x.png" density="port-xxxhdpi" /> 
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*"/>
