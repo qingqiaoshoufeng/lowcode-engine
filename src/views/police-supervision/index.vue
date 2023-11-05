@@ -4,8 +4,6 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireReviewList"
-        :tabs="tabs"
-        :onTabFn="onTabChangeFn"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="list-tabs1" >
@@ -14,12 +12,12 @@
             title="选择时间"
             @change="onTimeChange"
           />
-          <SelectMore
+          <!-- <SelectMore
             v-if="options.fireCause"
             :options="searchOptions"
             :reset-fn="resetForm"
             @confirmCallback="onSearchConfirm"
-          />
+          /> -->
         </div>
       </template>
         <template #list="{ record }">
@@ -131,7 +129,7 @@ import ProcessReview from "@/component/ProcessReview/index.vue";
 
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '../fire-report/components/EditorForm.vue'
-import { showToast,showLoadingToast,closeToast} from 'vant';
+import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 

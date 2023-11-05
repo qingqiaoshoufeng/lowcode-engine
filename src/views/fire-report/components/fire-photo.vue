@@ -108,26 +108,32 @@ onMounted(() => {
 
 <template>
   <van-cell-group class="rootform1">
-  
     <div :gutter="gutter">
       <div :span="24">
         <van-cell title="火灾照片" required class="item-cell">
-        <van-uploader
-            name="firePhoto,photos,value"
-            :rules="form.firePhoto.photos.rules"
-            v-model="form.firePhoto.photos.value"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-            preview-full-image
-            preview-image
-            :max-count="9"
-            :max-size="10 * 1000 * 1000000"
-            :readonly="isDetail"
-            :deletable="!isDetail"
-            :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
-            :after-read="OnAfterRead"
-            @delete="onDelete"
-          />
+            <van-field
+              name="firePhoto.photos.value"
+              :rules="form.firePhoto.photos.rules"
+              :required="true"
+              label="火灾照片"
+            >
+              <template #input>
+                <van-uploader
+                  v-model="form.firePhoto.photos.value"
+                  accept="image/png, image/jpeg, image/jpg"
+                  multiple
+                  preview-full-image
+                  preview-image
+                  :max-count="9"
+                  :max-size="10 * 1000 * 1000000"
+                  :readonly="isDetail"
+                  :deletable="!isDetail"
+                  :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
+                  :after-read="OnAfterRead"
+                  @delete="onDelete"
+                />
+            </template>
+          </van-field>
         </van-cell>
         <span class="tip" v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
       </div>
@@ -140,6 +146,10 @@ onMounted(() => {
     :deep(.van-cell__value) {
       display: flex;
 
+    }
+    :deep(.van-field__label--required){
+      width: 0 !important;
+      overflow: hidden;
     }
     &::after{
       display: none;
