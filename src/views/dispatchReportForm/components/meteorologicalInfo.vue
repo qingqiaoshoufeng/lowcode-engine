@@ -10,6 +10,19 @@ const options = inject("options");
 </script>
 
 <template>
+  <SelectSingle
+    v-model:value="form.basicInformation.weather.value"
+    :showPreview="showPreview"
+    :readonly="true"
+    name="weather"
+    required
+    :options="options.weather"
+    :field-names="{ value: 'boDictId', label: 'dictName' }"
+    title="请选择天气"
+    label="天气："
+    placeholder="请选择天气"
+    :rules="form.basicInformation.weather.rules"
+  />
   <van-field
     v-model="form.basicInformation.temperature.value"
     v-preview-text="showPreview"
@@ -25,17 +38,17 @@ const options = inject("options");
     <template #extra>°C</template>
   </van-field>
   <SelectSingle
-    v-model:value="form.basicInformation.weather.value"
+    v-model:value="form.basicInformation.windDirection.value"
     :showPreview="showPreview"
     :readonly="true"
-    name="weather"
+    name="windDirection"
     required
-    :options="options.weather"
+    :options="options.windDirection"
     :field-names="{ value: 'boDictId', label: 'dictName' }"
-    title="请选择天气"
-    label="天气："
-    placeholder="请选择天气"
-    :rules="form.basicInformation.weather.rules"
+    title="请选择风向"
+    label="风向："
+    placeholder="请选择风向"
+    :rules="form.basicInformation.windDirection.rules"
   />
   <SelectSingle
     v-model:value="form.basicInformation.wind.value"
@@ -49,18 +62,5 @@ const options = inject("options");
     label="风力："
     placeholder="请选择风力"
     :rules="form.basicInformation.wind.rules"
-  />
-  <SelectSingle
-    v-model:value="form.basicInformation.windDirection.value"
-    :showPreview="showPreview"
-    :readonly="true"
-    name="windDirection"
-    required
-    :options="options.windDirection"
-    :field-names="{ value: 'boDictId', label: 'dictName' }"
-    title="请选择风向"
-    label="风向："
-    placeholder="请选择风向"
-    :rules="form.basicInformation.windDirection.rules"
   />
 </template>
