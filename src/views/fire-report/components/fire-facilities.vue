@@ -182,7 +182,7 @@ const onFireShutterStart = () => {
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
-          name="是否安装消防设施"
+          name="fireFacilities.isFirefightFacility.value"
           label="是否安装消防设施"
           :rules="form.fireFacilities.isFirefightFacility.rules"
         >

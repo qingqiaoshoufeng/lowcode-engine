@@ -111,7 +111,7 @@ onMounted(() => {
     <div :gutter="gutter">
       <div :span="24">
         <van-field
-          name="otherAttach,otherRemark,value"
+          name="otherAttach.otherRemark.value"
           label="补充说明"
           :rules="form.otherAttach.otherRemark.rules"
           id="otherRemark"

@@ -17,7 +17,7 @@ const refreshField = inject('refreshField')
     <div :gutter="gutter">
       <div :span="24">
         <van-field
-          name="fireCourse,firePassage,value"
+          name="fireCourse.firePassage.value"
           label="起火经过"
           :rules="form.fireCourse.firePassage.rules"
           id="firePassage"

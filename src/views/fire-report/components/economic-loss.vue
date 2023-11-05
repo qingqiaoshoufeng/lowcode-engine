@@ -42,25 +42,30 @@ watch(() => form.value.economicLoss, () => {
   form.value.economicLoss.directEconomicLoss.value = loss
 }, { deep: true })
 
-const validateDirectDamage = (rule, value, callback) => {
+const validateDirectDamage = (val) => {
   const { basicInfo, economicLoss } = form.value
-  if ((Number(economicLoss.directDamage.value) > severityConfig?.[2]?.value?.[1]
-    || Number(economicLoss.directDamage.value) < severityConfig?.[2]?.value?.[0]) && basicInfo.severity.value === '1') {
-    callback(new Error(`轻微火灾的直接财产损失要在${severityConfig?.[2]?.value?.[0]}-${severityConfig?.[2]?.value?.[1]}元范围内！`))
+  if ((Number(val) > severityConfig?.[2]?.value?.[1]
+    || Number(val) < severityConfig?.[2]?.value?.[0]) && basicInfo.severity.value === '1') {
+    return `轻微火灾的直接财产损失要在${severityConfig?.[2]?.value?.[0]}-${severityConfig?.[2]?.value?.[1]}元范围内！`
+    // callback(new Error())
   }
-  else if (!value && value !== 0) {
+  else if (!val && val !== 0) {
     if (!economicLoss.directDamage.rules[0].required) {
-      callback()
+      // callback()
+      return true
     }
     else {
-      callback(new Error('请输入直接财产损失'))
+      return '请输入直接财产损失'
+      // callback(new Error('请输入直接财产损失'))
     }
   }
-  else if (!nonnegativeNumberReg.test(value)) {
-    callback(new Error('请输入正确直接财产损失'))
+  else if (!nonnegativeNumberReg.test(val)) {
+    return '请输入正确直接财产损失'
+    // callback(new Error('请输入正确直接财产损失'))
   }
   else {
-    callback()
+    return true
+    // callback()
   }
 }
 </script>
@@ -73,7 +78,7 @@ const validateDirectDamage = (rule, value, callback) => {
     <div :gutter="gutter">
       <div :span="8">
         <SelectSingle
-          name="economicLoss,inspectMethod,value"
+          name="economicLoss.inspectMethod.value"
           label="调查方式"
           :rules="form.economicLoss.inspectMethod.rules"
           id="inspectMethod"
@@ -87,7 +92,7 @@ const validateDirectDamage = (rule, value, callback) => {
       </div>
       <div :span="8">
         <van-field 
-          name="economicLoss,directDamage,value"
+          name="economicLoss.directDamage.value"
           label="直接财产损失（元)"
           :rules="[{ validator: validateDirectDamage, trigger: 'blur' }, ...form.economicLoss.directDamage.rules]"
           id="directDamage"
@@ -104,7 +109,7 @@ const validateDirectDamage = (rule, value, callback) => {
       </div>
       <div :span="8">
         <van-field 
-         name="economicLoss,fireDisposalCost,value"
+         name="economicLoss.fireDisposalCost.value"
           label="火灾现场处置费用（元)"
           :rules="form.economicLoss.fireDisposalCost.rules"
           id="fireDisposalCost"
@@ -124,7 +129,7 @@ const validateDirectDamage = (rule, value, callback) => {
     <div :gutter="gutter">
       <div :span="8">
           <van-field 
-            name="economicLoss,fireInjuryCost,value"
+            name="economicLoss.fireInjuryCost.value"
             label="人身伤亡医疗支出（元)"
             :rules="form.economicLoss.fireInjuryCost.rules"
             id="fireInjuryCost"
@@ -141,7 +146,7 @@ const validateDirectDamage = (rule, value, callback) => {
       </div>
       <div :span="8">
          <van-field 
-            name="economicLoss,otherExpense,value"
+            name="economicLoss.otherExpense.value"
             label="其他费用（元)"
             :rules="form.economicLoss.otherExpense.rules"
             id="otherExpense"
@@ -157,7 +162,7 @@ const validateDirectDamage = (rule, value, callback) => {
       </div>
       <div :span="8">
         <SelectSingle
-          name="economicLoss,costSource,value"
+          name="economicLoss.costSource.value"
           label="损失来源"
           :rules="form.economicLoss.costSource.rules"
           id="costSource"
@@ -171,7 +176,7 @@ const validateDirectDamage = (rule, value, callback) => {
       </div>
       <div :span="8">
           <van-field 
-            name="economicLoss,affectedHouse,value"
+            name="economicLoss.affectedHouse.value"
             label="受灾户数（户）"
             :rules="form.economicLoss.affectedHouse.rules"
             id="affectedHouse"
