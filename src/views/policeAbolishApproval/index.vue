@@ -11,7 +11,7 @@ import {
 } from "@/utils/tools.js";
 import { applyType } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getFireWarningEditApproval } from "@/apis/index.js";
+import { getFireWarningAbolishApproval } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
 
@@ -38,18 +38,10 @@ const searchOptions = ref([
     headersDisabled: true,
     value: 'orgIds',
   },
-  {
-    title: '申请类型',
-    type: 'select-single',
-    placeholder: '请选择申请类型',
-    options: [],
-    fieldNames: { value: 'value', label: 'label' },
-    value: 'applyType',
-  },
 ])
 
 const defaultFilterValue = {
-  recheckType: 1,
+  recheckType: 4,
   state: 'running',
   time: getLastMonth(),
   applyGroup: [],
@@ -125,12 +117,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="police-recheck-approval">
+  <div class="police-abolish-approval">
     <ProList
       ref="proListRef"
-      title="警情更正审批"
+      title="警情作废审批"
       :defaultFilterValue="defaultFilterValue"
-      :getListFn="getFireWarningEditApproval"
+      :getListFn="getFireWarningAbolishApproval"
       :tabs="tabs"
       rowKey="boFireWarningId"
       :showLoad="false"
@@ -204,8 +196,8 @@ onMounted(() => {
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
-    <!-- 警情更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="警情更正审批">
+    <!-- 警情作废审批 -->
+    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="警情作废审批">
       <!-- <template #default="{ setHandleOk }">
         <PoliceEntryDetail
           :current-row="currentRow"
@@ -220,7 +212,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.police-recheck-approval {
+.police-abolish-approval {
   height: 100%;
   background-color: #f6f7f8;
   .list-tabs {
