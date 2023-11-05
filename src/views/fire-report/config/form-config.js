@@ -818,7 +818,6 @@ export const useFormConfig = (fromRef) => {
     // })
   }
   const handleUseForm1 = ()=>{
-    debugger
     // const res = fromRef.value.getValidationStatus()
     // Object.keys(res).forEach(item=>{
     //   item.startsWith('')
