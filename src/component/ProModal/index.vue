@@ -29,7 +29,7 @@ const loading = ref(false);
 
 const showModal = ref(false);
 
-watch(() => props.visible,(newValue) => {
+watch(() => props.visible, (newValue) => {
   showModal.value = newValue;
 });
 
@@ -60,6 +60,7 @@ const onLeftBack = () => {
     return
   }
   showModal.value = false;
+  emit('update:visible', showModal.value)
 }
 
 defineOptions({
