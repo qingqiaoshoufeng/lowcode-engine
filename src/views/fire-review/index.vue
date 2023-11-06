@@ -239,7 +239,7 @@ const onTabChangeFn = (val,val1)=>{
   proListRef.value.filter()
 }
 const handleItem = (record)=>{
-  selectVisible
+  // selectVisible
 }
 const handleReview = (row) => {
   if (row.isLock === '1') {

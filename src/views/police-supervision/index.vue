@@ -6,18 +6,20 @@
         :getListFn="getFireReviewList"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
-        <div class="list-tabs1" >
-          <SelectTime
-            v-model:value="filterFormState.time"
-            title="选择时间"
-            @change="onTimeChange"
-          />
-          <!-- <SelectMore
-            v-if="options.fireCause"
-            :options="searchOptions"
-            :reset-fn="resetForm"
-            @confirmCallback="onSearchConfirm"
-          /> -->
+        <div class="form">
+          <TipsSelectedMultiple :list="menus" v-model="defaultFilterValue.tags" />
+          <div class="list-tabs1">
+            <SelectTime
+              v-model:value="filterFormState.time"
+              title="选择时间"
+              @change="onTimeChange"
+            />
+            <SelectMore
+              :options="searchOptions"
+              :reset-fn="resetForm"
+              @confirmCallback="onSearchConfirm"
+            />
+          </div>
         </div>
       </template>
         <template #list="{ record }">
@@ -133,17 +135,6 @@ import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
-
-const tabs = ref([
-  {
-    title: "待审核",
-    value: 1,
-  },
-  {
-    title: "已审核",
-    value: 2,
-  },
-]);
 const options = {}
 getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM'], null, (res) => {
   options.fireStatus = res.HZ_STATUS
@@ -153,7 +144,36 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
 })
 onMounted(() => {
 })
-
+const menus = [
+  {
+    label: '作废警情',
+    value: 'cancelFlag',
+  },
+  {
+    label: '跨省警情',
+    value: 'crossProvinceFlag',
+  },
+  {
+    label: '跨市警情',
+    value: 'crossCityFlag',
+  },
+  {
+    label: '驳回过的警情',
+    value: 'rejectFlag',
+  },
+  {
+    label: '大规模出动警情',
+    value: 'largeDispatchFlag',
+  },
+  {
+    label: '指挥部出动警情',
+    value: 'headFlag', 
+  },
+  {
+    label: '重要信息更正警情',
+    value: 'importantWarningFlag',
+  },
+]
 const searchOptions = computed(()=>([
   {
     title: '选择时间',
@@ -161,31 +181,16 @@ const searchOptions = computed(()=>([
     placeholder: '请选择时间',
     value: 'time',
   },
-  
   {
-    title: '火灾编号',
-    type: 'input',
-    placeholder: '请输入火灾编号',
-    value: "fireCode",
-  },
-  {
-    title: '状态',
-    type: 'select',
-    placeholder: '请选择状态',
-    options: options.fireStatus,
-    fieldNames: { value: 'boDictId', label: 'dictName' },
-    value: 'fireStatus',
-  },
-  {
-    title: '责任区大队',
+    title: '所属队伍',
     type: 'select-org',
-    placeholder: '请选择责任区大队',
+    placeholder: '请选择所属队伍',
     params: { permission: true },
     single: false,
     selectLeaf: false,
     headersDisabled: true,
     value: 'orgList',
-  },
+  }
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);
@@ -214,28 +219,7 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
-// 查询辖区火灾
-const getPrefectureFire = ()=>{
-  proListRef.value.query.unEditFlag = false
-  proListRef.value.filter()
-}
 
-// 申请更正
-const handleRecheck = (row) => {
-  if (row.isLock === '1') {
-    showToast(MSG_LOCKING_TEXT)
-    return
-  }
-  currentRow.value = row
-  show.value.recheckVisible = true
-}
-// tab切换
-const onTabChangeFn = (val,val1)=>{
-  const paramsMap = ['','running','completed']
-  tabType.value = paramsMap[val]
-  proListRef.value.query.state = paramsMap[val]
-  proListRef.value.filter()
-}
 const handleItem = (record)=>{
   selectVisible
 }
