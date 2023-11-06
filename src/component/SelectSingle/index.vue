@@ -105,6 +105,10 @@ defineOptions({
 
 <template>
   <van-field
+    class="select_single "
+    :class="{
+      'van-field--disabled':$attrs.disabled
+    }"
     v-model="selectText"
     v-preview-text="showPreview"
     is-link
@@ -151,9 +155,13 @@ defineOptions({
 </template>
 
 <style lang="scss" scoped>
+.van-field--disabled{
+  pointer-events: none;
+}
 .select-single {
   display: flex;
   flex-direction: column;
+
   .header {
     width: 100%;
     height: 44px;
@@ -183,4 +191,6 @@ defineOptions({
     }
   }
 }
+
+
 </style>

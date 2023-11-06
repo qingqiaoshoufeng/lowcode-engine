@@ -814,7 +814,7 @@ const showFireInspectionScope = computed(() => {
             label="车辆VIN码"
             :rules="form.basicInfo.vinCode.rules"
             id="车辆VIN码"
-            v-model:value="form.basicInfo.vinCode.value"
+            v-model="form.basicInfo.vinCode.value"
             v-preview-text="showPreview"
             allow-clear
             :maxlength="20"
@@ -828,7 +828,7 @@ const showFireInspectionScope = computed(() => {
             label="车牌号"
             :rules="form.basicInfo.carNumber.rules"
             id="carNumber"
-            v-model:value="form.basicInfo.carNumber.value"
+            v-model="form.basicInfo.carNumber.value"
             v-preview-text="showPreview"
             allow-clear
             :maxlength="20"
