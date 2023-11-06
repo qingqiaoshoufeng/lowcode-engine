@@ -177,7 +177,6 @@ onMounted(() => {
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
-              v-p="['admin', 'police-manage:abolish']"
               type="success"
               size="mini"
               color="#1989fa"
