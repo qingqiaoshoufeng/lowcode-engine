@@ -614,7 +614,7 @@ const initDynamicDict = () => {
     if (investForce.dispatchTruckList.value) { // 消防车辆信息
       cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
       investForce.dispatchTruckList.value?.forEach((item) => {
-        if (!cars.includes(item.boFireTruckId)) {
+        if (item && !cars.includes(item.boFireTruckId)) {
           dispatchTruckListOptions.value.push({
             boFireTruckId: item.boFireTruckId,
             truckNumber: item.truckNumber,
@@ -798,7 +798,7 @@ const getSubmitParams = () => {
       params.fireDispatchTruckList.push(...list)
     }
     if (form.value.investForce.isReturnTruck.value === '1') {
-      const list = fixCarParams(investForce.midwayCar.value)
+      const list = fixCarParams(investForce.midwayCar.list)
       params.fireDispatchRetrunTruckList.push(...list)
     }
     if (investForce.haveVolunteer.value === '1') {

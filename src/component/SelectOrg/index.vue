@@ -133,7 +133,6 @@ const getItem = (item) => {
 };
 
 const showCheck = (item) => {
-  let result = false;
   if (props.selectLeaf) {
     return item.isLeaf;
   }
@@ -145,7 +144,7 @@ const showCheck = (item) => {
   if (!props.single) {
     return true
   }
-  return result;
+  return true;
 };
 
 onMounted(() => {

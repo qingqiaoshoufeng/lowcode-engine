@@ -4,7 +4,7 @@ import { useDetail, useSubmit } from '@castle/castle-use'
 import dayjs from 'dayjs'
 import PloceTabs from './policeTabs.vue'
 import DispatchForm from '@/views/dispatchReportForm/index.vue'
-// import FireForm from '@/pages/entry-review/index/fire-report/_form.vue'
+import FireForm from '@/views/fire-report/components/EditorForm.vue'
 import PoliceForm from '@/views/policeEntryForm/index.vue'
 import ProcessReview from '@/component/ProcessReview/index.vue'
 import ProModal from "@/component/ProModal/index";
@@ -162,13 +162,12 @@ const finishCallback = (row) => {
       </div>
     </div>
     <div v-else-if="selectTabRow?.boFireInfoId" class="tab-pane-content">
-      <!-- <FireForm
+      <FireForm
         :is-police="true"
         :current-row="selectTabRow"
         :is-detail="true"
-        :show-export-pdf="showExportPdf"
         render-dom=".police-tabs.police-tabs-line"
-      /> -->
+      />
     </div>
     <div v-else-if="selectTabRow?.boFireDispatchId" class="tab-pane-content">
       <DispatchForm
@@ -176,7 +175,6 @@ const finishCallback = (row) => {
         :current-row="selectTabRow"
         :is-detail="true"
         :offset="160"
-        :show-export-pdf="showExportPdf"
       />
     </div>
     <div v-else-if="selectTabRow?.boFireWarningId" class="tab-pane-content">
