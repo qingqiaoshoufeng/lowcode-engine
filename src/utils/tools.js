@@ -365,7 +365,7 @@ export const fixCarParams = (list) => {
     return []
   }
   return list.map((item) => {
-    return { truckNumber: item.label, boFireTruckId: item.value }
+    return { truckNumber: item.label || item.truckNumber, truckCode: item.truckCode, boFireTruckId: item.value || item.boFireTruckId }
   })
 }
 

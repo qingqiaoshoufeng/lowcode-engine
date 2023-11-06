@@ -193,7 +193,7 @@ onMounted(() => {
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
-            <div>{{ record.dispatchInput }}</div>
+            <div>{{ record.inputForce }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>

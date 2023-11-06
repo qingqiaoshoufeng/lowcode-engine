@@ -70,6 +70,10 @@ const onDispatchTruck = (value, items) => {
   OnCarNum()
 };
 
+const onMidwayCarTruck = (value, items) => {
+  form.value.investForce.midwayCar.list = items
+}
+
 const OnCarNum = () => {
   checkDispatchNum(form.value);
 
@@ -140,6 +144,7 @@ const OnCarNum = () => {
         label-width="152px"
         placeholder="请选择中途返回车辆信息"
         title="请选择中途返回车辆信息"
+        @change="onMidwayCarTruck"
       />
     </template>
     <SelectMultiple

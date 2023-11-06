@@ -756,7 +756,7 @@ const validateHeadquarters = (value, rule) => {
       >
         <template #button>
           <van-button size="small" type="primary" @click="handleLngLat"
-            >选择经纬度</van-button
+            >自动获取</van-button
           >
         </template>
       </van-field>
@@ -777,11 +777,6 @@ const validateHeadquarters = (value, rule) => {
           { validator: validateLat, trigger: 'onBlur' },
         ]"
       >
-        <template #button>
-          <van-button size="small" type="primary" @click="handleLngLat"
-            >选择经纬度</van-button
-          >
-        </template>
       </van-field>
       <CascaderSingle
         v-model:value="form.warningType"
@@ -1068,14 +1063,14 @@ const validateHeadquarters = (value, rule) => {
         :required="true"
         label="全勤指挥部："
         label-width="102px"
-        placeholder="无"
+        placeholder="未出动"
         title="请选择全勤指挥部"
         :rules="[{ required: false, validator: validateHeadquarters, message: '请选择全勤指挥部'}]"
         :params="{ deptType: 2 }"
         :select-leaf="false"
         :headers-disabled="false"
         class="special-place"
-        :class="{'special-no-data': showPreview && form.headquarters?.length <= 0}"
+        :class="{'special-header-data': showPreview && form.headquarters?.length <= 0}"
       />
       <SelectMultiple
         v-model:value="form.otherCity"
@@ -1116,7 +1111,7 @@ const validateHeadquarters = (value, rule) => {
         autosize
         label="警情描述："
         type="textarea"
-        maxlength="500"
+        maxlength="300"
         placeholder="请输入警情描述"
         show-word-limit
         :class="{'form-textarea': !showPreview}"
@@ -1198,6 +1193,12 @@ const validateHeadquarters = (value, rule) => {
   :deep(.special-place) {
     .van-field__control::placeholder {
       color: rgba(0, 0, 0, 0.85) !important;
+    }
+  }
+  :deep(.special-header-data) {
+    .van-field__value::after {
+      content: '未出动';
+      color: #323233;
     }
   }
   :deep(.special-no-data) {

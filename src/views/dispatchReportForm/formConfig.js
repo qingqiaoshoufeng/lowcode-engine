@@ -1482,7 +1482,8 @@ export const useFormConfig = () => {
     }
     form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
     if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {
-      form.value.investForce.midwayCar.value = fixCarInfo(fireDispatchRetrunTruckList)
+      form.value.investForce.midwayCar.list = fixCarInfo(fireDispatchRetrunTruckList)
+      form.value.investForce.midwayCar.value = form.value.investForce.midwayCar.list?.map(item => item.boFireTruckId)
     }
     form.value.investForce.fireBoatNum.value = fireDispatchItem?.fireBoatNum
     form.value.investForce.fireAirplaneNum.value = fireDispatchItem?.fireAirplaneNum
