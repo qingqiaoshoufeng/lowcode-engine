@@ -6,6 +6,7 @@
         :getListFn="getFireReviewList"
         :tabs="tabs"
         :onTabFn="onTabChangeFn"
+        title="火灾审核"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="list-tabs1" >
@@ -212,6 +213,8 @@ const onSearchConfirm = () => {
     closeToast();
   });
 }
+
+
 const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
@@ -253,6 +256,13 @@ const approvalCallback = () => {
   show.value.reviewVisible = false
   proListRef.value.filter()
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 
 </script>
   <style lang="scss" scoped>

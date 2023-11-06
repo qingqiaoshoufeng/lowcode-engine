@@ -248,7 +248,7 @@ const onBuildTag = (val) => {
         <van-field 
           name="fireBuilding.buildFloor.value"
           label="建筑总楼层"
-          :rules="[{ validator: validateBuildFloor, trigger: 'blur' }, ...form.fireBuilding.buildFloor.rules]"
+          :rules="[{ validator: validateBuildFloor, trigger: 'onBlur' }, ...form.fireBuilding.buildFloor.rules]"
           id="buildFloor"
           v-model="form.fireBuilding.buildFloor.value"
           v-preview-text="showPreview"
@@ -266,7 +266,7 @@ const onBuildTag = (val) => {
         <van-field 
           name="fireBuilding.fireFloor.value"
           label="失火楼层"
-          :rules="[{ validator: validateFireFloor, trigger: 'blur' }, ...form.fireBuilding.fireFloor.rules]"
+          :rules="[{ validator: validateFireFloor, trigger: 'onBlur' }, ...form.fireBuilding.fireFloor.rules]"
           id="fireFloor"
           v-model="form.fireBuilding.fireFloor.value"
           v-preview-text="showPreview"

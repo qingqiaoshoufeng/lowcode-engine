@@ -28,16 +28,16 @@ watch(() => form.value.economicLoss, () => {
   let loss = 0
   const { directDamage, fireDisposalCost, fireInjuryCost, otherExpense } = form.value.economicLoss
   if (directDamage.value > 0) {
-    loss += directDamage.value
+    loss += Number(directDamage.value)
   }
   if (fireDisposalCost.value > 0) {
-    loss += fireDisposalCost.value
+    loss += Number(fireDisposalCost.value)
   }
   if (fireInjuryCost.value > 0) {
-    loss += fireInjuryCost.value
+    loss +=  Number(fireInjuryCost.value)
   }
   if (otherExpense.value > 0) {
-    loss += otherExpense.value
+    loss += Number(otherExpense.value)
   }
   form.value.economicLoss.directEconomicLoss.value = loss
 }, { deep: true })
@@ -94,7 +94,7 @@ const validateDirectDamage = (val) => {
         <van-field 
           name="economicLoss.directDamage.value"
           label="直接财产损失（元)"
-          :rules="[{ validator: validateDirectDamage, trigger: 'blur' }, ...form.economicLoss.directDamage.rules]"
+          :rules="[{ validator: validateDirectDamage, trigger: 'onBlur' }, ...form.economicLoss.directDamage.rules]"
           id="directDamage"
           v-model="form.economicLoss.directDamage.value"
           v-preview-text="showPreview"

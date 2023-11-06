@@ -5,14 +5,15 @@
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireReportList"
       :tabs="[]"
+      title="火灾填报"
     >
       <template #list="{ record }">
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-              {{ record.dispatchStatusValue }}
-            </div> -->
+            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
+              {{ record.dispatchStatusValue || '待填报'}}
+            </div>
           </div>
           <div class="item-type">
             <span>{{ record.warningTypeValue }}</span>

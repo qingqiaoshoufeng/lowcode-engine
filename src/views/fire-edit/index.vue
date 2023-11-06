@@ -4,14 +4,15 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireManageList"
+        title="火灾修改"
       >
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click="handleItem(record)" v-if="checkChange(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
-              <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-                {{ record.dispatchStatusValue }}
-              </div> -->
+              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+                {{ record.fireStatusValue }}
+              </div>
             </div>
             <div class="item-type">
               <span>{{ record.firePlaceValue }}</span>
@@ -129,11 +130,8 @@ const handleInput = (row) => {
   isEdit.value = false
   show.value.editVisible = true
 }
-const handleLook = (row) => {
-  currentRow.value = { ...row, boFireInfoId: undefined }
-  isDraft.value = false
-  isEdit.value = false
-  show.value.lookVisible = true
+const checkChange = (record) => {
+  return record.updatePermission && (['待更正', '更正中', '被退回', '被驳回', '待完善'].includes(record.fireStatusValue) || record.taskId)
 }
 
 // 查询辖区火灾
@@ -141,6 +139,7 @@ const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }
+
 const handleEdit = (row) => {
   currentRow.value = row
   relevanceDraft.value = null

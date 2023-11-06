@@ -93,7 +93,7 @@ onMounted(() => {
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit || isShowTemporary.value,
+          deletable:isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,

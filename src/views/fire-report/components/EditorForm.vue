@@ -485,7 +485,6 @@ const initDetail = () => {
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
-
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })

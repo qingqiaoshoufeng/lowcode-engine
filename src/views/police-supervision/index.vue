@@ -3,11 +3,11 @@
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
-        :getListFn="getFireReviewList"
+        :getListFn="getFireWarningSupervision"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
-          <TipsSelectedMultiple :list="menus" v-model="defaultFilterValue.tags" />
+          <SelectTags class="select_tags" :menus="menus" :selects="proListRef?.query?.tags" :select-callback="selectTagsCallback" />
           <div class="list-tabs1">
             <SelectTime
               v-model:value="filterFormState.time"
@@ -26,12 +26,12 @@
           <div class="list-item" @click="handleItem(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningAddr }}</div>
-              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
-                {{ record.fireStatusValue }}
+              <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+                {{ record.warningStatusValue }}
               </div>
             </div>
             <div class="item-type">
-              <span>{{ record.fireTypeValue }}</span>
+              <span>{{ record.warningTypeValue }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -51,8 +51,8 @@
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.dutyOrgName }}</div>
+              <div style="color: #929398">稽查标签：</div>
+              <div>{{ record.auditLabel }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
@@ -121,57 +121,48 @@
   
 <script setup>
 import { getFireReviewList } from '@/apis/index.js'
+import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkFireApproval } from '@/utils/tools.js'
-import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
+// import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
-import ProcessReview from "@/component/ProcessReview/index.vue";
-
+import { getFireWarningSupervision } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
-import EditorForm from '../fire-report/components/EditorForm.vue'
 import { showToast,showLoadingToast,closeToast } from 'vant';
-import store from '@/store/index.js'
-const getSystemDictSync = store.getters['dict/getSystemDictSync']
+// import store from '@/store/index.js'
 
-const options = {}
-getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM'], null, (res) => {
-  options.fireStatus = res.HZ_STATUS
-  options.fireLevel = res.HZ_INFO_HZDJ
-  options.fireCause = toRaw(res.HZ_QHYY)
-  options.area = res.HZ_INFO_QY
-})
 onMounted(() => {
 })
 const menus = [
   {
     label: '作废警情',
-    value: 'cancelFlag',
+    key: 'cancelFlag',
   },
   {
     label: '跨省警情',
-    value: 'crossProvinceFlag',
+    key: 'crossProvinceFlag',
   },
   {
     label: '跨市警情',
-    value: 'crossCityFlag',
+    key: 'crossCityFlag',
   },
   {
     label: '驳回过的警情',
-    value: 'rejectFlag',
+    key: 'rejectFlag',
   },
   {
     label: '大规模出动警情',
-    value: 'largeDispatchFlag',
+    key: 'largeDispatchFlag',
   },
   {
     label: '指挥部出动警情',
-    value: 'headFlag', 
+    key: 'headFlag',
   },
   {
     label: '重要信息更正警情',
-    value: 'importantWarningFlag',
+    key: 'importantWarningFlag',
   },
 ]
 const searchOptions = computed(()=>([
@@ -186,25 +177,21 @@ const searchOptions = computed(()=>([
     type: 'select-org',
     placeholder: '请选择所属队伍',
     params: { permission: true },
-    single: false,
+    single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'orgList',
+    value: 'createUserOrg',
   }
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
-  state: 'running',
-  fireStatus: [],
-  fireCode: '',
-  fireGroup: [],
+  tags: [],
   time: getLastMonth(),
+  createUserOrg: [],
 }
+
 const show = ref({})
-const isEdit = ref(false)
-const isDraft = ref(false)
-const relevanceDraft = ref(null)
 const tabType = ref('running')
 const refreshCallback = () => {
   proListRef.value.filter()
@@ -219,25 +206,14 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
-
-const handleItem = (record)=>{
-  selectVisible
-}
-const handleReview = (row) => {
-  if (row.isLock === '1') {
-    showToast(MSG_LOCKING_TEXT)
-    return
-  }
-  currentRow.value = row
-  show.value.reviewVisible = true
-}
-const approvalCallback = () => {
-  show.value.reviewVisible = false
-  proListRef.value.filter()
+const selectTagsCallback = (selects) => {
+  proListRef.value.query.tags = selects
+  onSearchConfirm()
+  // finishCallback()
 }
 
 </script>
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
   .fire-manage{
     .list-item {
       display: flex;
@@ -399,5 +375,8 @@ const approvalCallback = () => {
   .item-collect {
         font-size: 20px;
         margin-right: auto;
+      }
+      .select_tags{
+        border-top: 10px solid #fff;
       }
   </style>

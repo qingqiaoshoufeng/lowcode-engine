@@ -2,6 +2,7 @@
   <div class="fire-manage">
     <ProList
         ref="proListRef"
+        title="火灾管理"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireManageList"
         :tabs="tabs"
@@ -26,9 +27,9 @@
           <div class="list-item" @click="handleItem(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
-              <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-                {{ record.dispatchStatusValue }}
-              </div> -->
+              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+                {{ record.fireStatusValue }}
+              </div>
             </div>
             <div class="item-type">
               <span>{{ record.firePlaceValue }}</span>
@@ -292,6 +293,13 @@ const defaultFilterValue = {
   fireCause: [],
   area: [],
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 const show = ref({})
 const isEdit = ref(false)
 const isDraft = ref(false)

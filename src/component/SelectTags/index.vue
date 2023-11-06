@@ -3,13 +3,13 @@
   <div class="wrapper">
     <div 
       class="tip_item" 
-      :class="{'is_active'
-      :defaultValue === item.value}" 
-      v-for="item in list" 
+      :class="{'is_active':value.some(itm=>(itm.key === item.key))}" 
+      v-for="item in menus" 
       :key="item.label"
       @click="click(item)"
     >
      {{ item.label }}
+     <img v-show="value.some(itm=>(itm.key === item.key))" src="~@/assets/images/selected_angle.png" alt="">
     </div>
   </div>
 </div>
@@ -17,44 +17,59 @@
 <script setup>
 import { ref } from 'vue'
 const props = defineProps({
-  list:{
+  menus:{
     type:Array,
     default:()=>([])
   },
-  defaultValue:{
+  selects:{
     type:Array,
     default:()=>([])
+  },
+  selectCallback:{
+    type:Function
   }
 })
-const emit = defineEmits(['update:defaultValue'])
+
+const value = ref([])
+const emit = defineEmits(['update:value'])
 const click = (data)=>{
-  if(props.defaultValue.includes(data.value)){
-    emit('update:defaultValue',[...props.defaultValue,data.value])
+  let selects
+  if(value.value.some(item=>item.key === data.key)){
+    selects = value.value.filter(item=>item.key === data.key)
   }else{
-    emit('update:defaultValue',props.defaultValue.filter(item=>item.value === data.value))
+    selects= [...value.value,{
+      checked: data.key,
+      hidden: false,
+      key: data.key,
+      label:data.label,
+    }]
   }
+  value.value = selects
+  props.selectCallback(value)
 }
 </script>
 <script>
 export default {
-  name:'TipsSelectedMultiple'
+  name:'SelectTags'
 }
 </script>
 <style lang="scss" scoped>
 .tips-selected-multiple{
   overflow-x: scroll;
+  padding-bottom: 7px;
   .wrapper{
     // width: auto;
     display: inline-block;
-    overflow: hidden;
     display: flex;
+    background-color: #fff;
+    padding-bottom: 5px;
     .tip_item {
       flex-shrink: 0;
       flex-grow: 0;
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color: #1942A8;
+      color: #333333;
       line-height: 17px;
       // display: inline-block;
       float: left;
@@ -64,10 +79,19 @@ export default {
       border-radius: 2px;
       border: 1px solid #E0E0E0;
       background-color: #fff;
+      margin-left: 10px;
+      position: relative;
+      img{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 14px;
+        height: 14px;
+      }
     }
     .tip_item.is_active{
-      border: 1px solid #E0E0E0;
-
+      border: 1px solid #1942A8;
+      color: #1942A8;
     }
   }
 }

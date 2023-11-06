@@ -356,7 +356,7 @@ const bigInjured = computed(() => {
         <div :span="8">
           <van-field
             label="证件号码"
-            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
+            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             id="idNumber"
             v-model:value="item.idNumber"
             v-preview-text="showPreview"
@@ -662,7 +662,7 @@ const bigInjured = computed(() => {
           <van-field
             :name="`casualtyWar.deadList.${index}.idNumber`"
             label="证件号码"
-            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
+            :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             id="idNumber"
             v-model:value="item.idNumber"
             v-preview-text="showPreview"

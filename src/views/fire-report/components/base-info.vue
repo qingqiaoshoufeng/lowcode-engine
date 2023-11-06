@@ -548,12 +548,14 @@ const showFireInspectionScope = computed(() => {
           title="请选择起火时间"
           label="起火时间："
           placeholder="请选择起火时间"
-          :rules="[{ validator: validateFireDate, trigger: 'blur' }, ...form.basicInfo.fireDate.rules]"
+          :rules="[{ validator: validateFireDate, trigger: 'onBlur' }, ...form.basicInfo.fireDate.rules]"
         />
       </div>
-      <div class="noDispatchArea">
+      <div class="noDispatchArea" v-if="unDispatch">
           <AreaCascader
-            name="noDispatchArea"
+            name="basicInfo.noDispatchArea.value"
+            label="行政区域"
+            :rules="form.basicInfo.noDispatchArea.rules"
             v-model:value="form.basicInfo.noDispatchArea.value"
             :showPreview="showPreview"
             :readonly="showPreview"
@@ -570,18 +572,6 @@ const showFireInspectionScope = computed(() => {
           placeholder="请输入起火地点"
           :rules="form.basicInfo.fireDirection.rules"
           v-preview-text="showPreview"
-        />
-      </div>
-  
-      <div class="noDispatchArea">
-        <AreaCascader
-          name="basicInfo.noDispatchArea.value"
-          v-model:value="form.basicInfo.noDispatchArea.value"
-          :showPreview="showPreview"
-          :readonly="showPreview"
-          :show-all-area="!!showPreview"
-          :required="!showPreview"
-          :rules="[{ required: true, message: '请选择行政区域' }]"
         />
       </div>
       <div class="area">
@@ -614,7 +604,7 @@ const showFireInspectionScope = computed(() => {
           name="basicInfo.fireTel.value"
           required
           placeholder="失火单位/户主联系电话"
-          :rules="[{ validator: validateFireTel, trigger: 'blur' }, ...form.basicInfo.fireTel.rules]"
+          :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, ...form.basicInfo.fireTel.rules]"
         />
       </div>
       <div v-if="!showOtherMinor" class="socialCreditCode">
@@ -644,7 +634,7 @@ const showFireInspectionScope = computed(() => {
           name="caseHandling.penaltyNum.value"
           :disabled="!importantEdit"
           label="过火面积（平方米）"
-          :rules="[{ validator: validateBurnedArea, trigger: 'blur' }, ...form.basicInfo.burnedArea.rules]"
+          :rules="[{ validator: validateBurnedArea, trigger: 'onBlur' }, ...form.basicInfo.burnedArea.rules]"
           @blur="checkBurnedArea(form)"
           v-model="form.basicInfo.burnedArea.value" 
           v-preview-text="showPreview"
@@ -663,7 +653,8 @@ const showFireInspectionScope = computed(() => {
           v-model:value="form.basicInfo.fireLevel.value"
           :showPreview="showPreview"
           label="火灾等级"
-          :options="options.isResearch"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          :options="options.fireLevel"
           :rules="form.basicInfo.fireLevel.rules"
           placeholder="请选择火灾等级"
           title="请选择火灾等级"
