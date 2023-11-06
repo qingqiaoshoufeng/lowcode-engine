@@ -1037,8 +1037,8 @@ const onSideBarChange = (e, k) => {
                   <OtherAttach />
                 </ProCard>
                 <!-- 操作记录 -->
-                <ProCard title="操作记录" id="proSteps" v-if="isDetail" :data="form?.proSteps?.fireInfoTransferList?.value" :showOpenClose="!showPreview">
-                  <ProSteps />
+                <ProCard title="操作记录" id="proSteps" v-if="isDetail">
+                  <ProSteps :data="form?.proSteps?.fireInfoTransferList?.value" :withHeader="false" :showOpenClose="!showPreview" />
                 </ProCard>
               </van-form>
               <div class="form-footer" v-if="!showPreview">

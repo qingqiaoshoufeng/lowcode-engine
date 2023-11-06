@@ -7,6 +7,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  withHeader:{
+    default:true,
+    type:Boolean
+  }
 });
 
 defineOptions({
@@ -21,7 +25,7 @@ export default {
 
 <template>
   <div id="proSteps" class="pro-steps">
-    <div id="proSteps-title" class="steps-header">
+    <div id="proSteps-title" v-if="withHeader" class="steps-header">
       <img src="@/assets/images/icon_title@2x.png" alt="" />
       <strong>操作记录</strong>
     </div>
