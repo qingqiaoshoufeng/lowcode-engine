@@ -773,7 +773,6 @@ const showFireInspectionScope = computed(() => {
           placeholder="请选择起火时充电状态"
           :required="true"
           title="请选择起火时充电状态"
-          @change="fireTypeChange"
         />
       </div>
       <div v-if="showLowSpeed" class="isRepack">
