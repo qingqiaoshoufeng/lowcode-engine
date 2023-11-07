@@ -108,14 +108,9 @@
       </template>
     </ProModal>
     <!-- 查看详情 -->
-    <ProModal
-      v-model:visible="show.lookVisible"
-      title="火灾填报详情"
-      :ok-display="false"
-      :footer="null"
-      pro-card-id="card-wrap"
-    >
-      <EditorForm :current-row="currentRow" :is-detail="true" />
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
   </div>
 </template>
@@ -124,6 +119,7 @@
 import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
@@ -207,6 +203,11 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
+
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
+};
 
 const handleReject = (row) => {
   if (row.isLock === '1') {

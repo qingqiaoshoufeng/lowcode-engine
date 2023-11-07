@@ -455,7 +455,7 @@ const initWatch = () => {
   })
   // 只有当填报状态下才自动生成处置过程
   // debugger;
-  if ((isShowTemporary.value) || props.isDetail) {
+  if ((isShowTemporary?.value) || props.isDetail) {
     watch(() => [form.value, detail.value], () => {
       generateRemarkField(detail.value)
     }, { deep: true })
