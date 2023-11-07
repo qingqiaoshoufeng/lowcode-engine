@@ -104,12 +104,12 @@ const onDelete = async(val,val1)=>{
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit || isShowTemporary.value,
+          deletable:!isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
         }
       }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
     })
@@ -130,12 +130,12 @@ const OnAfterRead = async(file) => {
     form.value.firePhoto.photos.value = res.data.map((item) => {
       return {
         isImage: true,
-        deletable:isDetail,
+        deletable:!isDetail,
         ...item, 
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `/acws/rest/attachments/${item.attachmentId}`,
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
@@ -154,7 +154,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
         }
       })
     })
@@ -332,6 +332,7 @@ const vehicleTypeChange = (value, selectedOptions) => {
 }
 
 const initialFuelsTypeChange = (value, selectedOptions) => {
+  debugger;
   if (selectedOptions) {
     form.value.basicInfo.initialFuelsType.text = selectedOptions.map(item => item.dictName) || []
   }
@@ -929,7 +930,6 @@ const showFireInspectionScope = computed(() => {
         />
       </div>
     </div>
-    <div :gutter="gutter">
       <div>
         <van-field
           label="起火物名称"
@@ -963,8 +963,7 @@ const showFireInspectionScope = computed(() => {
             v-preview-text="showPreview"
         />
       </div>
-    </div>
-    <div :gutter="gutter">
+    
       <div :span="8">
         <van-field
           label="引火源名称"
@@ -998,8 +997,8 @@ const showFireInspectionScope = computed(() => {
             v-preview-text="showPreview"
         />
       </div>
-    </div>
-    <div>
+   
+    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field
           label="引起火灾人员年龄"
@@ -1044,8 +1043,6 @@ const showFireInspectionScope = computed(() => {
         />
 
       </div>
-    </div>
-    <div :gutter="gutter">
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <CascaderSingle
           label="所属行业"
@@ -1074,8 +1071,8 @@ const showFireInspectionScope = computed(() => {
           title="请选择经济类型"
         />
       </div>
-    </div>
-    <div :gutter="gutter">
+    
+    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <SelectSingle
           label="事故牵头调查部门"
@@ -1105,8 +1102,8 @@ const showFireInspectionScope = computed(() => {
           name="basicInfo.otherOrgRemark.value"
         />
       </div>
-    </div>
-    <div :gutter="gutter">
+    
+    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
           name="basicInfo.isInsurance.value" 
@@ -1144,8 +1141,8 @@ const showFireInspectionScope = computed(() => {
           title="请选择警情标签"
         />
       </div>
-    </div>
-    <div :gutter="gutter">
+    
+    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field name="basicInfo.isOnesided.value" label="是否单方面火灾" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
@@ -1161,8 +1158,8 @@ const showFireInspectionScope = computed(() => {
           </template>
         </van-field>
       </div>
-    </div>
-    <div :gutter="gutter">
+    
+    
       <div v-if="!showOtherMinor" :span="8">
         <SelectSingle
           label="监督检查情况"
@@ -1214,8 +1211,8 @@ const showFireInspectionScope = computed(() => {
           title="请选择消防安全重点单位"
         />
       </div>
-    </div>
-    <div :gutter="gutter">
+    
+    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
           name="basicInfo.isSafetyAccident.value"   
@@ -1235,7 +1232,7 @@ const showFireInspectionScope = computed(() => {
           </template>
         </van-field>
       </div>
-    </div>
+    
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
       <div :span="24">
           <van-cell title="相关附件上传" required class="item-cell">
