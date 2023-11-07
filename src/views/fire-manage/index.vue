@@ -366,7 +366,7 @@ const onTabChangeFn = (val,val1)=>{
   getMap[val]()
 }
 const handleItem = (record)=>{
-  selectVisible
+  // selectVisible
 }
 </script>
   <style lang="scss" scoped>

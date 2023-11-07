@@ -9,14 +9,14 @@ const handlePreview = (el, binding, vnode) => {
   const renderDom = document.createElement('p')
   const wrapper = vnode.el.querySelector('.van-field__value')
   const cell = vnode.el.querySelector('.van-cell__value')
-  const radioGroup = vnode.el.querySelector('.van-cell__value .van-radio-group')
+  const radioGroup = vnode.el.querySelector('.van-cell__value .van-radio-group') || el.className.includes('van-radio-group') 
 
   if (vnode.el.querySelector('.van-field__body')?.querySelector('input')) {
     textValue = vnode.el.querySelector('.van-field__body')?.querySelector('input')?.value
   } else if (vnode.el.querySelector('.van-field__body')?.querySelector('textarea')) {
     textValue = vnode.el.querySelector('.van-field__body')?.querySelector('textarea')?.value
   } else if (radioGroup) {
-    textValue = vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText
+    textValue = vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText || el.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText
   }
 
   if (textValue && wrapper) {
@@ -61,12 +61,15 @@ const handlePreview = (el, binding, vnode) => {
   if (vnode.el.querySelector('.van-radio-group')) {
     vnode.el.querySelector('.van-radio-group').style.display = 'none'
   }
-
+  
   // 屏蔽点击事件
   vnode.el.addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
   }, true)
+  if(textValue && el.children[0] && el.children[0].ariaChecked){
+    el.innerText = textValue
+  }
 }
 
 export default {
