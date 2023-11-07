@@ -131,7 +131,7 @@ const form = ref({
   isOtherProvince: "2", // 是否存在跨省增援
   otherProvince: [], // 增援总队
   isOtherCity: "2", // 是否跨市增援
-  otherCity: [], // 增援支队
+  otherCity: [], // 增援支队（本省）
   warningTag: [], // 警情标签
   warningInfo: "", // 警情描述
   warningStatus: "", // 状态
@@ -574,7 +574,7 @@ onMounted(() => {
       options.value.otherProvinceOptions.push(...res.items);
     }
   });
-  // 获取增援支队
+  // 获取增援支队（本省）
   getOtherProvince({ deptType: 1, deptLevel: 3 }).then((res) => {
     if (res.items) {
       options.value.otherCityOptions.push(...res.items);
@@ -1079,11 +1079,11 @@ const validateHeadquarters = (value, rule) => {
         name="otherCity"
         :options="options.otherCityOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"
-        :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队'}]"
+        :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队（本省）'}]"
         :required="true"
-        label="增援支队："
+        label="增援支队（本省）："
         placeholder="无"
-        title="请选择增援支队"
+        title="请选择增援支队（本省）"
         class="special-place"
         :class="{'special-no-data': showPreview && form.otherCity?.length <= 0}"
       />
@@ -1106,6 +1106,7 @@ const validateHeadquarters = (value, rule) => {
         v-model="form.warningInfo"
         v-preview-text="showPreview"
         :readonly="showPreview"
+        :required="true"
         name="warningInfo"
         rows="4"
         autosize
