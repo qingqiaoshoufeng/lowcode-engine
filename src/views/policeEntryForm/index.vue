@@ -890,7 +890,7 @@ const validateHeadquarters = (value, rule) => {
         name="warningTel"
         label="联系方式："
         placeholder="请输入联系方式"
-        maxlength="12"
+        maxlength="13"
         :required="false"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
       />

@@ -204,8 +204,14 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 警情更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="警情更正审批">
-      <!-- <template #default="{ setHandleOk }">
+    <ProModal
+      v-model:visible="show.reviewVisible"
+      :showBack="false"
+      :showHeader="true"
+      ok-text="审批"
+      title="警情更正审批"
+    >
+      <template #default="{ setHandleOk }">
         <PoliceEntryDetail
           :current-row="currentRow"
           :is-approval="true"
@@ -213,7 +219,7 @@ onMounted(() => {
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />
-      </template> -->
+      </template>
     </ProModal>
   </div>
 </template>

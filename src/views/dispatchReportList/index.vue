@@ -3,7 +3,7 @@ import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
-import { generateColorByState } from "@/utils/tools.js";
+import { generateColorByState, checkTimeout } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
@@ -93,7 +93,12 @@ const refreshCallback = () => {
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
-            <div class="test-timeout">{{ record.dispatchedTime }}</div>
+            <div v-if="checkTimeout(record.dispatchedTime)" class="test-timeout">
+              {{ record.dispatchedTime }}
+            </div>
+            <div v-else>
+              {{ record.dispatchedTime }}
+            </div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
