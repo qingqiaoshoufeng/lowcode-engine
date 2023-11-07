@@ -782,7 +782,7 @@ const validateHeadquarters = (value, rule) => {
         v-model:value="form.warningType"
         v-model:text="form.warningTypeText"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="warningType"
         :options="options.warningTypeOptions"
         :required="true"
@@ -847,7 +847,7 @@ const validateHeadquarters = (value, rule) => {
         v-if="showWarningLevel || form.warningLevel"
         v-model:value="form.warningLevel"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="warningLevel"
         required
         :options="options.warningLevelOptions"
@@ -872,7 +872,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectSingle
         v-model:value="form.warningSource"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="warningSource"
         required
         :options="options.warningSource"
@@ -922,7 +922,7 @@ const validateHeadquarters = (value, rule) => {
         v-model:value="form.naturalDisasterType"
         v-model:text="form.naturalDisasterTypeText"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="naturalDisasterType"
         :options="options.naturalDisasterOptions"
         :required="true"
@@ -947,7 +947,7 @@ const validateHeadquarters = (value, rule) => {
         v-if="showTyphoonType"
         v-model:value="form.typhoonType"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="typhoonType"
         :options="options.typhoonType"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -972,7 +972,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectMultiple
         v-model:value="form.warningTag"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="warningTag"
         :options="options.warningTagOptions"
         :field-names="{ value: 'boFireTagId', label: 'tagName' }"
@@ -999,7 +999,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectOrg
         v-model:value="form.dutyGroup"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="dutyGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
@@ -1013,7 +1013,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectSingle
         v-model:value="form.firstGroup"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="firstGroup"
         :options="form.dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1027,7 +1027,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectSingle
         v-model:value="form.mainGroup"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="mainGroup"
         :options="form.dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1042,7 +1042,7 @@ const validateHeadquarters = (value, rule) => {
         v-if="showAreaDutyGroup"
         v-model:value="form.areaDutyGroup"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="areaDutyGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
@@ -1075,7 +1075,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectMultiple
         v-model:value="form.otherCity"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="otherCity"
         :options="options.otherCityOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1090,7 +1090,7 @@ const validateHeadquarters = (value, rule) => {
       <SelectMultiple
         v-model:value="form.otherProvince"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="otherProvince"
         :options="options.otherProvinceOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"
