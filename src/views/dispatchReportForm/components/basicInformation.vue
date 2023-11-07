@@ -62,19 +62,17 @@ const onDealSituation = (value, option) => {
       :rules="form.basicInformation.dealSituation.rules"
       @change="onDealSituation"
     />
-    <SelectSingle
+    <van-field
       v-if="showNotDealReason"
-      v-model:value="form.basicInformation.notDealReason.value"
-      :showPreview="showPreview"
-      :readonly="true"
-      name="notDealReason"
+      v-model="form.basicInformation.notDealReason.value"
+      v-preview-text="showPreview"
+      :readonly="showPreview"
+      maxlength="100"
       required
-      :options="options.notDealReason"
-      :field-names="{ value: 'boDictId', label: 'dictName' }"
-      title="请选择未处置原因"
+      name="notDealReason"
       label="未处置原因："
-      label-width="102px"
-      placeholder="请选择未处置原因"
+      label-width="132px"
+      placeholder="请输入未处置原因"
       :rules="form.basicInformation.notDealReason.rules"
     />
     <van-field
@@ -123,7 +121,7 @@ const onDealSituation = (value, option) => {
       :rules="form.basicInformation.trappedPerson.rules"
       @blur="checkTrappedPerson(detail, form)"
     />
-    <SelectSingle
+    <!-- <SelectSingle
       v-if="showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.industryDepartment.value"
       :showPreview="showPreview"
@@ -137,7 +135,7 @@ const onDealSituation = (value, option) => {
       label-width="120px"
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
-    />
+    /> -->
     <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" v-preview-text="showPreview" required class="field-radio">
       <template #default>
         <van-radio-group

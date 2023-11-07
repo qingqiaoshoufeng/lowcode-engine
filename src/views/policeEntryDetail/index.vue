@@ -120,7 +120,7 @@ onMounted(async () => {
         }
       })
       if (!selectTabRow.value?.boFireInfoId && !selectTabRow.value?.boFireDispatchId) {
-        selectTabRow.value = props.currentRow
+        selectTabRow.value = { ...props.currentRow, type: 1 }
       }
       await loadDetail()
       fireWarningInfo.value = detail.value
