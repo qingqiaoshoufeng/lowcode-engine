@@ -209,6 +209,10 @@ export const useFormConfig = (fromRef) => {
         value: undefined,
         // rules: [{ required: true, message: '请选择所属行业' }],
       },
+      industryDepartment: { // 行业主管部门
+        value: undefined,
+        // rules: [{ required: true, message: '请选择行业主管部门' }],
+      },
       economicType: { // 经济类型
         value: undefined,
         // rules: [{ required: true, message: '请选择经济类型' }],

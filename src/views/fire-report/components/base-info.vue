@@ -380,6 +380,14 @@ const onLeadInspectionOrg = () => {
   }
 }
 
+const isShowIndustryAndEconomicType = computed(()=>{
+  if(form.value.basicInfo.firePlace.value === "2023020800484" && form.value.basicInfo.liveType ==="2023020801655" ){
+    return false
+  }else{
+    return true
+  }
+})
+
 const onBuildStructure = () => {
   const { buildStructure } = form.value.basicInfo
   const filter = options.value.buildStructure?.filter(item => item.boDictId === buildStructure.value)
@@ -531,6 +539,7 @@ const showFireInspectionScope = computed(() => {
         :options="fireTypeOptions"
         :rules="form.basicInfo.fireType.rules"
         :required="true"
+        :disabled="fireTypeDisabled"
         placeholder="请选择火灾类型"
         title="请选择火灾类型"
         :showPreview="showPreview"
@@ -1042,7 +1051,7 @@ const showFireInspectionScope = computed(() => {
         />
 
       </div>
-      <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
+      <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
         <CascaderSingle
           label="所属行业"
           :rules="form.basicInfo.industry.rules"
@@ -1053,10 +1062,25 @@ const showFireInspectionScope = computed(() => {
           :field-name="{ value: 'boDictId', text: 'dictName' }"
           placeholder="请选择所属行业"
           allow-clear
+          required
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
         />
       </div>
-      <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
+      <div v-if="!showBuildingMinor && !showOtherMinor">
+        <SelectSingle
+          label="行业主管部门"
+          :rules="form.basicInfo.industryDepartment.rules"
+          id="economicType"
+          v-model:value="form.basicInfo.industryDepartment.value"
+          :showPreview="showPreview"
+          :options="options.industryDepartment"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          allow-clear
+          placeholder="请选择行业主管部门"
+          title="请选择行业主管部门"
+        />
+      </div>
+      <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
         <SelectSingle
           label="经济类型"
           :rules="form.basicInfo.economicType.rules"
@@ -1066,6 +1090,7 @@ const showFireInspectionScope = computed(() => {
           :options="options.economicType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
+          required
           placeholder="请选择经济类型"
           title="请选择经济类型"
         />
