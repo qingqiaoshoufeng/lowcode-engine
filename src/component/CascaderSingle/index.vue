@@ -119,6 +119,6 @@ defineOptions({
 
 <style lang="scss" scoped>
 .single-wrapper {
-  max-height: 50vh;
+  // max-height: 50vh;
 }
 </style>
