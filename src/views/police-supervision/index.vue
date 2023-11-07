@@ -86,28 +86,18 @@
           </div>
         </template>
     </ProList>
-    <!-- 火灾填报审核 -->
-    <ProModal
-      v-model:visible="show.reviewVisible"
-      title="火灾审核详情"
-      :ok-display="true"
-      ok-text="审核"
-      pro-card-id="card-wrap"
-    >
+    <!-- 驳回 -->
+    <ProModal v-model:visible="show.rejectVisible" title="发起驳回说明">
       <template #default="{ setHandleOk }">
-        <EditorForm
-          :showReviewDialog="showReviewDialog"
-          :set-handle-ok="setHandleOk"
+        <ApplyReject
+          type="1"
           :current-row="currentRow"
-          :is-edit="true"
-          :is-approval="true"
-          :is-review="true"
-          process-key="fireInfoFlow"
-          @finish-callback="approvalCallback"
+          :selected-keys="selectedRowKeys"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
         />
       </template>
     </ProModal>
-    <!-- 查看详情 -->
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
@@ -120,6 +110,7 @@ import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import ApplyReject from "./apply-reject.vue";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
@@ -217,11 +208,17 @@ const handleReject = (row) => {
   currentRow.value = row
   show.value.rejectVisible = true
 }
+const finishCallback = () => {
+  currentRow.value = null
+  selectedRows.value = []
+  selectedRowKeys.value = []
+  proListRef.value.filter()
+}
 
 const selectTagsCallback = (selects) => {
   proListRef.value.query.tags = selects
   onSearchConfirm()
-  // finishCallback()
+  finishCallback()
 }
 
 </script>
