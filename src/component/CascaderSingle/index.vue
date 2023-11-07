@@ -78,6 +78,13 @@ const onFinish = ({ selectedOptions }) => {
   selectVisible.value = false;
 };
 
+const handleShow = () => {
+  if (props.$attrs?.disabled) {
+    return
+  }
+  selectVisible.value = true
+}
+
 defineOptions({
   name: "CascaderSingle",
 });
@@ -93,7 +100,7 @@ defineOptions({
     :label="label"
     :placeholder="placeholder"
     :rules="rules"
-    @click="selectVisible = true"
+    @click="handleShow"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="single-wrapper">
