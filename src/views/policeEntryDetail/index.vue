@@ -8,6 +8,7 @@ import FireForm from '@/views/fire-report/components/EditorForm.vue'
 import PoliceForm from '@/views/policeEntryForm/index.vue'
 import ProcessReview from '@/component/ProcessReview/index.vue'
 import ProModal from "@/component/ProModal/index";
+import DialogInfo from '@/component/DialogInfo/index.vue'
 import { approveProcessActions, getFireWarningDetail, getFireWarningTabs } from '@/apis/index.js'
 import { useModal } from '@/hooks/useModal.js'
 
@@ -185,7 +186,7 @@ const finishCallback = (row) => {
         :is-approval="isApproval"
       />
     </div>
-    <ProModal v-model:visible="show.approvalVisible" :showHeader="false" title="新建警情">
+    <DialogInfo v-model:visible="show.approvalVisible" title="警情审批">
       <template #default="{ setHandleOk }">
         <ProcessReview
           :process-key="props.processKey"
@@ -195,7 +196,7 @@ const finishCallback = (row) => {
           @finish-callback="approvalCallback"
         />
       </template>
-    </ProModal>
+    </DialogInfo>
   </div>
 </template>
 

@@ -42,7 +42,12 @@
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
-            <div>{{ record.dispatchedInfoTime }}</div>
+            <div v-if="checkTimeout(record.dispatchedInfoTime)" class="test-timeout">
+              {{ record.dispatchedInfoTime }}
+            </div>
+            <div v-else>
+              {{ record.dispatchedInfoTime }}
+            </div>
           </div>
           <div class="item-line" />
           <div class="item-operate">
@@ -129,7 +134,7 @@ import {
   getFireReportList } from '@/apis/index.js'
 import { showToast } from 'vant';
 import { computed, createVNode, onMounted, ref,provide } from 'vue'
-import { generateColorByState } from "@/utils/tools.js";
+import { generateColorByState, checkTimeout } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from './components/EditorForm.vue'
 import PoliceForm from '@/views/policeEntryForm/index.vue';

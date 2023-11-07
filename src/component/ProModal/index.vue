@@ -10,6 +10,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  okText: {
+    type: String,
+    default: "确定",
+  },
   showHeader: {
     type: Boolean,
     default: true,
@@ -79,7 +83,7 @@ defineOptions({
     <div class="header" v-if="showHeader">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
       <div class="modal-title">{{ title }}</div>
-      <van-button type="primary" size="small" @click="handleOk">确定</van-button>
+      <van-button type="primary" size="small" @click="handleOk">{{ okText }}</van-button>
     </div>
     <div class="pro-wrapper">
       <slot name="default" :set-handle-ok="setHandleOk" :handle-ok="handleOk" :close-modal="closeModal" />

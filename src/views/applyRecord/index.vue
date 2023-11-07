@@ -5,13 +5,14 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import ApplyDetail from './components/applyDetail.vue';
 import {
   generateColorByState,
   getLastMonth,
 } from "@/utils/tools.js";
-import { applyType } from '@/utils/constants.js';
+import { applyRecordType, applyStatus } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getFireWarningEditApproval } from "@/apis/index.js";
+import { getApplyRecordList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
 
@@ -38,7 +39,7 @@ const searchOptions = ref([
     single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'orgIds',
+    value: 'applyUnit',
   },
   {
     title: '状态',
@@ -46,15 +47,15 @@ const searchOptions = ref([
     placeholder: '请选择状态',
     options: [],
     fieldNames: { value: 'value', label: 'label' },
-    value: 'applyType',
+    value: 'applyStatus',
   },
 ])
 
 const defaultFilterValue = {
-  recheckType: 1,
-  state: 'running',
+  applyType: '1',
   time: getLastMonth(),
-  applyGroup: [],
+  applyUnit: [],
+  applyStatus: undefined,
 };
 
 const { show } = useModal();
@@ -87,7 +88,8 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  searchOptions.value[3].options = applyType
+  searchOptions.value[1].options = applyRecordType
+  searchOptions.value[3].options = applyStatus
   nextTick(() => {
     proListRef.value?.filter();
   });
@@ -100,7 +102,7 @@ onMounted(() => {
       ref="proListRef"
       title="申请记录"
       :defaultFilterValue="defaultFilterValue"
-      :getListFn="getFireWarningEditApproval"
+      :getListFn="getApplyRecordList"
       rowKey="boFireWarningId"
       :showLoad="false"
     >
@@ -122,9 +124,6 @@ onMounted(() => {
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.statusValue)">
-              {{ record.statusValue }}
-            </div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
@@ -134,7 +133,7 @@ onMounted(() => {
           <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">申请单位：</div>
-            <div>{{ record.createOrg }}</div>
+            <div>{{ record.createOrgName }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
@@ -156,7 +155,10 @@ onMounted(() => {
 
     <!-- 申请单详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="申请单详情">
-      <PoliceEntryDetail :current-row="currentRow" />
+      <ApplyDetail
+        :apply-type="proListRef?.query?.applyType"
+        :current-row="currentRow"
+      />
     </ProModal>
   </div>
 </template>

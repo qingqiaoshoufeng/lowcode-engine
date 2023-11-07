@@ -109,7 +109,6 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  searchOptions.value[3].options = applyType
   nextTick(() => {
     proListRef.value?.filter();
   });
@@ -196,16 +195,22 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 警情作废审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="警情作废审批">
-      <!-- <template #default="{ setHandleOk }">
+    <ProModal
+      v-model:visible="show.reviewVisible"
+      :showBack="false"
+      :showHeader="true"
+      ok-text="审批"
+      title="警情作废审批"
+    >
+      <template #default="{ setHandleOk }">
         <PoliceEntryDetail
           :current-row="currentRow"
           :is-approval="true"
-          process-key="applyEditFlow"
+          process-key="warningCancel"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />
-      </template> -->
+      </template>
     </ProModal>
   </div>
 </template>

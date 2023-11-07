@@ -17,6 +17,7 @@ export * from './business/fire-manage.js'
 export * from './business/fire-review.js'
 export * from './business/data-approval.js'
 export * from './business/statistical-supervision.js'
+export * from './business/apply-record.js'
 
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {

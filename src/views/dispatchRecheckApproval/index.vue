@@ -4,7 +4,7 @@ import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
-import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import DispatchReportForm from '@/views/dispatchReportForm/index.vue';
 import {
   generateColorByState,
   getLastMonth,
@@ -204,16 +204,16 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 出动更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="出动更正审批">
-      <!-- <template #default="{ setHandleOk }">
-        <PoliceEntryDetail
+    <ProModal v-model:visible="show.reviewVisible" :showBack="false" :showHeader="true" title="出动更正审批">
+      <template #default="{ setHandleOk }">
+        <DispatchReportForm
           :current-row="currentRow"
           :is-approval="true"
           process-key="applyEditFlow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />
-      </template> -->
+      </template>
     </ProModal>
   </div>
 </template>
