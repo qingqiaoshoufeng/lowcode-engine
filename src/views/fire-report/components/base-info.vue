@@ -332,7 +332,6 @@ const vehicleTypeChange = (value, selectedOptions) => {
 }
 
 const initialFuelsTypeChange = (value, selectedOptions) => {
-  debugger;
   if (selectedOptions) {
     form.value.basicInfo.initialFuelsType.text = selectedOptions.map(item => item.dictName) || []
   }

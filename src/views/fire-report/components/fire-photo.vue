@@ -52,12 +52,12 @@ const OnAfterRead = async(file) => {
     form.value.firePhoto.photos.value = res.data.map((item) => {
       return {
         isImage: true,
-        deletable:isDetail,
+        deletable:!isDetail,
         ...item, 
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `/acws/rest/attachments/${item.attachmentId}`,
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
@@ -72,7 +72,7 @@ const onDelete = async(val,val1)=>{
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit || isShowTemporary.value,
+          deletable:!isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,

@@ -15,6 +15,7 @@ export const pathMap = {
   "chudonggengzhengshenpi": "/dispatchRecheckApproval",
   "huozaigengzhengshenpi": "/fireRecheckApproval",
   "shenqingjilu": "/applyRecord",
-  "jingqingzhiliangjiandu":"police-supervision"
+  "jingqingzhiliangjiandu":"police-supervision",
+  "huozaizhiliangjiandu":"fire-supervision"
 }
   

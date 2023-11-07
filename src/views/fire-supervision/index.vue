@@ -3,7 +3,7 @@
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
-        :getListFn="getFireWarningSupervision"
+        :getListFn="getFireSupervisionList"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -72,11 +72,11 @@
                 查看
               </van-button>
               <van-button
-                v-p="['admin', 'police-supervision:back']"
+                v-p="['admin', 'fire-supervision:back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                v-if="checkRejectState(record.warningStatusValue)"
+                v-if="checkInputRejectState(record.fireStatusValue)"
                 type="link"
                 @click="handleReject(record)"
               >
@@ -127,9 +127,9 @@ import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
-import { generateColorByState } from "@/utils/tools.js";
+import { generateColorByState ,checkInputRejectState} from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
-import { getFireWarningSupervision } from '@/apis/index.js'
+import { getFireSupervisionList } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
 // import store from '@/store/index.js'
@@ -138,32 +138,24 @@ onMounted(() => {
 })
 const menus = [
   {
-    label: '作废警情',
-    key: 'cancelFlag',
+    label: '亡人火灾',
+    key: 'deadFire',
   },
   {
-    label: '跨省警情',
-    key: 'crossProvinceFlag',
+    label: '重要信息更正火灾',
+    key: 'recheckFire',
   },
   {
-    label: '跨市警情',
-    key: 'crossCityFlag',
+    label: '驳回过的火灾',
+    key: 'rejectFire',
   },
   {
-    label: '驳回过的警情',
-    key: 'rejectFlag',
+    label: '过火面积超100平方的建构筑轻微火灾',
+    key: 'buildingsBurnedArea',
   },
   {
-    label: '大规模出动警情',
-    key: 'largeDispatchFlag',
-  },
-  {
-    label: '指挥部出动警情',
-    key: 'headFlag',
-  },
-  {
-    label: '重要信息更正警情',
-    key: 'importantWarningFlag',
+    label: '过火面积超500平方的非建构筑火灾',
+    key: 'nonBuildingsBurnedArea',
   },
 ]
 const searchOptions = computed(()=>([
@@ -181,7 +173,7 @@ const searchOptions = computed(()=>([
     single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'createUserOrg',
+    value: 'unit',
   }
 ]))
 const currentRow = ref({})
@@ -189,7 +181,7 @@ const proListRef = ref(null);
 const defaultFilterValue = {
   tags: [],
   time: getLastMonth(),
-  createUserOrg: [],
+  unit: [],
 }
 
 const show = ref({})

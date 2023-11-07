@@ -454,7 +454,8 @@ const initWatch = () => {
     initDraftRules(!props.showDraft, formRef)
   })
   // 只有当填报状态下才自动生成处置过程
-  if ((props.setHandleExtend && typeof props.setHandleExtend === 'function') || props.isDetail) {
+  // debugger;
+  if ((isShowTemporary.value) || props.isDetail) {
     watch(() => [form.value, detail.value], () => {
       generateRemarkField(detail.value)
     }, { deep: true })
