@@ -112,16 +112,16 @@ onMounted(async () => {
         else if (item.boFireWarningId) {
           item.type = 1
         }
-        if (currentRow?.boFireDispatchId === item.boFireDispatchId && !selectTabRow.value) {
+        if (item.boFireDispatchId && currentRow?.boFireDispatchId === item.boFireDispatchId && !selectTabRow.value) {
           selectTabRow.value = item
         }
-        else if (currentRow?.boFireInfoId === item.boFireInfoId && !selectTabRow.value) {
-          selectTabRow.value = item
-        }
-        else if (currentRow?.boFireWarningId === item.boFireWarningId && !selectTabRow.value) {
+        else if (item.boFireInfoId && currentRow?.boFireInfoId === item.boFireInfoId && !selectTabRow.value) {
           selectTabRow.value = item
         }
       })
+      if (!selectTabRow.value?.boFireInfoId && !selectTabRow.value?.boFireDispatchId) {
+        selectTabRow.value = props.currentRow
+      }
       await loadDetail()
       fireWarningInfo.value = detail.value
       localFireWarningId.value = detail.value?.boFireWarningId

@@ -95,7 +95,7 @@ const onDelete = (file) => {
   <ProCard title="现场照片" id="scenePhoto" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
-        <van-cell title="出动现场照片：" required class="item-cell">
+        <van-cell title="现场照片：" required class="item-cell">
           <van-uploader
             v-model="form.scenePhoto.photos.value"
             accept="image/png, image/jpeg, image/jpg"

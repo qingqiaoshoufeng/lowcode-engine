@@ -1058,9 +1058,9 @@ export const useFormConfig = () => {
       title: '现场照片',
       fieldAnnotation: false, // 批注
       fieldWarning: '',
-      photos: { // 出动现场照片
+      photos: { // 现场照片
         value: [],
-        rules: [{ required: true, message: '请选择出动现场照片' }],
+        rules: [{ required: true, message: '请选择现场照片' }],
       },
     },
     otherAttach: { // 其他附件
