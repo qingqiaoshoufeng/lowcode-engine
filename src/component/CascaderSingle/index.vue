@@ -79,7 +79,7 @@ const onFinish = ({ selectedOptions }) => {
 };
 
 const handleShow = () => {
-  if (props.$attrs?.disabled) {
+  if (props.$attrs?.disabled || props.showPreview) {
     return
   }
   selectVisible.value = true

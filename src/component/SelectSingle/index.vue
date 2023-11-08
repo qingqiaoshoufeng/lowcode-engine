@@ -91,7 +91,7 @@ const handleShow = () => {
   if (props.checkShowFn && props.checkShowFn()) {
     return;
   }
-  if (props.$attrs?.disabled) {
+  if (props.$attrs?.disabled || props.showPreview) {
     return
   }
   selectVisible.value = true;

@@ -692,8 +692,8 @@ const validateHeadquarters = (value, rule) => {
         :disabled="!showPreview"
         required
         name="warningName"
-        label="警情名称："
-        placeholder="请输入警情名称"
+        label="警情标题："
+        placeholder="请输入警情标题"
       />
       <SelectDateTime
         v-model:value="form.warningDate"
@@ -1107,6 +1107,7 @@ const validateHeadquarters = (value, rule) => {
         maxlength="300"
         placeholder="请输入警情描述"
         show-word-limit
+        :rules="[{ required: true, message: '请输入警情描述'}]"
         :class="{'form-textarea': !showPreview}"
       />
     </van-form>

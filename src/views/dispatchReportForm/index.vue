@@ -1176,6 +1176,14 @@ const onSubmit = async () => {
 
 onMounted(() => {
   console.log('init', result)
+  props.setHandleOk && props.setHandleOk(async (finishFn) => {
+    if (props.isApproval && checkFieldWarning(fieldExist.value)) {
+      // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+    }
+    else if (props.isApproval) {
+      show.value.approvalVisible = true
+    }
+  }, loading)
 })
 
 const onFailed = (errorInfo) => {
@@ -1357,11 +1365,11 @@ const onSideBarChange = (e, k) => {
     <ProModal v-model:visible="show.approvalVisible" title="出动审核">
       <template #default="{ setHandleOk }">
         <ProcessReview
-        :process-key="props.processKey"
-        :current-row="props.currentRow"
-        :set-handle-ok="setHandleOk"
-        :label-text="labelText"
-        @finish-callback="approvalCallback"
+          :process-key="props.processKey"
+          :current-row="props.currentRow"
+          :set-handle-ok="setHandleOk"
+          :label-text="labelText"
+          @finish-callback="approvalCallback"
         />
       </template>
     </ProModal>
