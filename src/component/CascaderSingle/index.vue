@@ -51,7 +51,7 @@ const selectText = ref("");
 
 watch(() => props.value, (val) => {
   nextTick(() => {
-    if (props.value && !selectValue.value) {
+    if (props.value && selectValue.value?.length <= 0) {
       selectValue.value = props.value;
       if (props.text) {
         selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
