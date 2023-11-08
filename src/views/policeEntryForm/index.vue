@@ -403,18 +403,10 @@ const { loading, submit } = useSubmit((res) => {
     if (boWarningYyjId) {
       params.boWarningYyjId = boWarningYyjId
     }
-    if (params.otherCity) {
-      params.isOtherCity = '1'
-    }
-    if (params.otherProvince) {
-      params.isOtherProvince = '1'
-    }
-    if (params.headquarters) {
-      params.isHeadquarters = '1'
-    }
-    if (props.isConfirm) {
-      params.confirmFlag = '1'
-    }
+    params.isOtherCity = params.otherCity ? '1' : '2'
+    params.isOtherProvince = params.otherProvince ? '1' : '2'
+    params.isHeadquarters = params.headquarters ? '1' : '2'
+    params.confirmFlag = props.isConfirm ? '1' : '2'
     return saveFireWarning(params)
   },
 })

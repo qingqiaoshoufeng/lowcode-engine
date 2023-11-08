@@ -199,18 +199,29 @@ onMounted(() => {
       </template>
     </ProList>
 
-    <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
-      <PoliceEntryDetail :current-row="currentRow" />
+    <!-- 出动填报详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动填报详情">
+      <DispatchReportForm
+        :current-row="currentRow"
+        :is-detail="true"
+      />
     </ProModal>
     <!-- 出动更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="false" :showHeader="true" title="出动更正审批">
+    <ProModal
+      v-model:visible="show.reviewVisible"
+      :showBack="false"
+      :showHeader="true"
+      ok-text="审批"
+      title="出动更正审批"
+    >
       <template #default="{ setHandleOk }">
         <DispatchReportForm
-          :current-row="currentRow"
-          :is-approval="true"
-          process-key="applyEditFlow"
           :set-handle-ok="setHandleOk"
+          :current-row="currentRow"
+          :is-detail="true"
+          :is-approval="true"
+          label-text="审批"
+          process-key="applyEditFlow"
           @finish-callback="finishCallback"
         />
       </template>
