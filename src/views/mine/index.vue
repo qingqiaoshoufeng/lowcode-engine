@@ -24,7 +24,7 @@ const router = useRouter();
 
 const handleOut = () => {
   showLoadingToast()
-  loginOut({}).then(res => {
+  loginOut({}).finally(() => {
     closeToast()
     localStorage.token = ''
     router.replace({

@@ -313,7 +313,7 @@ const onBuildTag = (val) => {
       <div v-if="showHousingLife" :span="8">
         <van-field 
           name="fireBuilding.housingLife.value"
-          label="房龄"
+          label="房龄（年）"
           :rules="form.fireBuilding.housingLife.rules"
           id="housingLife"
           v-model="form.fireBuilding.housingLife.value"

@@ -174,28 +174,41 @@ onMounted(() => {
             <div style="color: #929398">申请人：</div>
             <div>{{ record.createUserName }}</div>
           </div>
-          <div class="item-field">
-            <img
-              src="../../assets/images/icon-area@2x.png"
-              style="width: 13px; height: 15px; margin-right: 8px"
-              alt=""
-            />
-            <div style="color: #929398">申请原因：</div>
-            <div>{{ record.recheckReason }}</div>
-          </div>
-          <div class="item-line" />
-          <div class="item-operate" @click.stop>
-            <van-button
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleApproval(record)"
-              v-if="proListRef?.query?.state === 'running'"
-            >
-              审批
-            </van-button>
-          </div>
+          <template v-if="record.statusValue === '已审批'">
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">审批意见：</div>
+              <div>{{ record.suggest }}</div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">申请原因：</div>
+              <div>{{ record.recheckReason }}</div>
+            </div>
+            <div class="item-line" />
+            <div class="item-operate" @click.stop>
+              <van-button
+                type="success"
+                size="mini"
+                color="#1989fa"
+                class="item-btn"
+                @click="handleApproval(record)"
+                v-if="proListRef?.query?.state === 'running'"
+              >
+                审批
+              </van-button>
+            </div>
+          </template>
         </div>
       </template>
     </ProList>

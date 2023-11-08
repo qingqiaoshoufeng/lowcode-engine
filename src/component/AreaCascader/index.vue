@@ -26,6 +26,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  readonly: {
+    type: Boolean,
+    default: true,
+  },
   rules: {
     type: Array,
     default: () => [],
@@ -235,6 +239,7 @@ export default {
     is-link
     v-bind="$attrs"
     :required="required"
+    :readonly="readonly"
     :label="label"
     :placeholder="placeholder"
     :rules="rules"
