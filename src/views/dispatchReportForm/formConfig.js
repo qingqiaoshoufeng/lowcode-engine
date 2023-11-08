@@ -518,9 +518,9 @@ export const useFormConfig = () => {
       },
       // governmentCommand: { // 政府指挥
       //   title: '政府指挥',
-      isCommand: { // 是否有政府指挥
+      isCommand: { // 政府到场指挥情况
         value: '2',
-        rules: [{ required: true, message: '请选择是否有政府指挥' }],
+        rules: [{ required: true, message: '请选择政府到场指挥情况' }],
       },
       fireDispatchZfList: [], // 指挥人员
       name: { // 姓名

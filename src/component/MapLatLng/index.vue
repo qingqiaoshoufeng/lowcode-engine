@@ -72,7 +72,7 @@ const drawMaker = (currentLat, currentLng) => {
   L.popup({ closeButton: false }).setLatLng({
     lat: currentLat,
     lng: currentLng,
-  }).setContent(`经度：${currentLat}<br/>纬度：${currentLng}`).openOn(leafletObj.value)
+  }).setContent(`经度：${currentLng}<br/>纬度：${currentLat}`).openOn(leafletObj.value)
   makerList.value = [{
     latitude: currentLat,
     longitude: currentLng,
