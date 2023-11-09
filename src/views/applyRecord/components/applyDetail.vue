@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useDetail } from "@castle/castle-use";
 import { useModal } from "@/hooks/useModal.js";
 import { getApplyDetail } from "@/apis/index.js";
-import { formatYmdHm } from "@/utils/tools.js";
+import { formatYmdHm, generateColorByState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
@@ -74,7 +74,12 @@ const getCurrentStatus = (item) => {
       <template v-else-if="applyType === '4'">
         <van-field label="备注：" :model-value="detail?.cancelRemark" readonly />
       </template>
-      <van-field label="申请单状态：" :model-value="detail?.statusValue" readonly />
+      <van-field
+        label="申请单状态："
+        :model-value="detail?.statusValue"
+        readonly
+        :class="generateColorByState(detail?.status)"
+      />
       <template v-if="applyType === '1' || applyType === '4'">
         <van-field
           label="关联警情编号："
@@ -160,6 +165,15 @@ const getCurrentStatus = (item) => {
 .apply-detail {
   height: 100%;
   background-color: #f6f7f8;
+  :deep(.state-wait .van-field__control) {
+    color: #f2b34c !important;
+  }
+  :deep(.state-finish .van-field__control) {
+    color: #34c38f !important;
+  }
+  :deep(.state-reject .van-field__control) {
+    color: #ff4d16 !important;
+  }
   .link-code {
     :deep(.van-field__control) {
       color: blue;
