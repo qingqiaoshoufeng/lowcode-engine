@@ -1,14 +1,13 @@
 <template>
-  <div class="police-supervision">
+  <div class="fire-timeout">
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
-        :getListFn="getDispatchSupervisionList"
-        title="火灾质量监督"
+        :getListFn="getFireTimeout"
+        title="火灾超时统计"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
-          <SelectTags class="select_tags" :menus="menus" :selects="proListRef?.query?.tags" :select-callback="selectTagsCallback" />
           <div class="list-tabs1">
             <SelectTime
               v-model:value="filterFormState.time"
@@ -52,18 +51,18 @@
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.areaDutyGroupName }}</div>
+              <div style="color: #929398">超期类型：</div>
+              <div>{{ record.overTimeType }}</div>
             </div>
-            <!-- <div class="item-field">
+            <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火场所：</div>
-              <div>{{ record.firePlaceValue }}</div>
-            </div> -->
+              <div style="color: #929398">超期时长：</div>
+              <div>{{ record.overTimeHoursValue }}</div>
+            </div>
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button
-                v-p="['admin', 'fire-supervision:look']"
+                v-p="['admin', 'fire-timeout:look']"
                 type="link"
                 size="mini"
                 color="#1989fa"
@@ -73,15 +72,14 @@
                 查看
               </van-button>
               <van-button
-                v-p="['admin', 'fire-supervision:back']"
+                v-p="['admin', 'fire-timeout:back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                v-if="checkInputRejectState(record.fireStatusValue)"
                 type="link"
                 @click="handleReject(record)"
               >
-                驳回
+                备注
               </van-button>
             </div>
           </div>
@@ -91,7 +89,7 @@
     <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
       <template v-slot="{setHandleOk}">
         <ApplyReject
-          type="3"
+          type="1"
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
@@ -99,15 +97,12 @@
         />
       </template>
     </DialogInfo>
-    <!-- 查看详情 -->
-    <ProModal
-      v-model:visible="show.lookVisible"
-      title="火灾填报详情"
-      :ok-display="false"
-      :footer="null"
-      pro-card-id="card-wrap"
-    >
-      <EditorForm :current-row="currentRow" :is-detail="true" />
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="火灾详情">
+      <EditorForm
+        :is-detail="true"
+        :current-row="currentRow"
+      />
     </ProModal>
   </div>
 </template>
@@ -116,40 +111,26 @@
 import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
-import ApplyReject from "@/views/police-supervision/apply-reject.vue";
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
+// import ApplyReject from "./apply-reject.vue";
+import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
-import { generateColorByState ,checkInputRejectState} from "@/utils/tools.js";
-import SelectMore from "@/component/SelectMore/index";
-import { getDispatchSupervisionList } from '@/apis/index.js'
+import { generateColorByState } from "@/utils/tools.js";
+import SelectMore from "@/component/SelectMore/index"; 
+import { getFireTimeout } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
-// import store from '@/store/index.js'
-
+import store from '@/store/index.js'
+const getSystemDictSync = store.getters['dict/getSystemDictSync']
+const options = {}
+getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
+  options.timeOutType = res.HZ_TIMEOUT_TYPE
+  options.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
+})
 onMounted(() => {
 })
-const menus = [
-  {
-    label: '亡人火灾',
-    key: 'deadFire',
-  },
-  {
-    label: '重要信息更正火灾',
-    key: 'recheckFire',
-  },
-  {
-    label: '驳回过的火灾',
-    key: 'rejectFire',
-  },
-  {
-    label: '过火面积超100平方的建构筑轻微火灾',
-    key: 'buildingsBurnedArea',
-  },
-  {
-    label: '过火面积超500平方的非建构筑火灾',
-    key: 'nonBuildingsBurnedArea',
-  },
-]
 const searchOptions = computed(()=>([
   {
     title: '选择时间',
@@ -165,15 +146,39 @@ const searchOptions = computed(()=>([
     single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'queryOrd',
-  }
+    value: 'unit',
+  },
+  {
+    title: '超时时长',
+    type: 'input-range',
+    placeholder: ['请输入超时时长（小时）','请输入超时时长（小时）'],
+    value: ['timeOutHoursStart','timeOutHoursEnd'],
+  },
+  {
+    title: '火灾类型',
+    type: 'cascader',
+    placeholder: '请选择警情类型',
+    fieldNames: { value: 'boDictId', text: 'dictName' },
+    options: options.fireType,
+    value: 'fireType',
+  },
+  {
+    title: '超时类型',
+    type: 'select-single',
+    placeholder: '请选择超时类型',
+    options: options.timeOutType,
+    value: 'timeOutType',
+  },
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
-  tags: [],
   time: getLastMonth(),
-  queryOrd: [],
+  unit: [],
+  timeOutHoursStart: '',
+  timeOutHoursEnd: '',
+  fireType: [],
+  timeOutType: undefined,
 }
 
 const show = ref({})
@@ -184,13 +189,18 @@ const refreshCallback = () => {
 const onSearchConfirm = () => {
   showLoadingToast();
   proListRef.value.filter().then((res) => {
-    closeToast(); 
+    closeToast();
   });
 }
 const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
+
+const handleItem = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
+};
 
 const handleReject = (row) => {
   if (row.isLock === '1') {
@@ -207,12 +217,12 @@ const finishCallback = () => {
 const selectTagsCallback = (selects) => {
   proListRef.value.query.tags = selects
   onSearchConfirm()
-  // finishCallback()
+  finishCallback()
 }
 
 </script>
 <style lang="scss" scoped>
-  .police-supervision{
+  .fire-timeout{
     .list-item {
       display: flex;
       flex-direction: column;
@@ -292,7 +302,84 @@ const selectTagsCallback = (selects) => {
     display: flex;
     padding: 10px 16px 0 16px;
   }
-  
+  // .list-item {
+  //   display: flex;
+  //   flex-direction: column;
+  //   background: #ffffff;
+  //   margin-top: 10px;
+  //   .item-header {
+  //     display: flex;
+  //     padding: 8px 10px;
+  //     .item-title {
+  //       width: 260px;
+  //       font-size: 16px;
+  //       font-weight: bold;
+  //       white-space: nowrap;
+  //       overflow: hidden;
+  //       text-overflow: ellipsis;
+  //     }
+  //     .item-state {
+  //       width: 57px;
+  //       height: 24px;
+  //       font-size: 12px;
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //       border-radius: 2px;
+  //       margin-left: auto;
+  //     }
+  //   }
+  //   .item-field {
+  //     font-size: 14px;
+  //     color: #1f1f1f;
+  //     display: flex;
+  //     align-items: center;
+  //     padding: 0 0 8px 10px;
+  //     img {
+  //       width: 14px;
+  //       height: 14px;
+  //       margin-right: 6px;
+  //     }
+  //   }
+  //   .item-type {
+  //     margin: 0 0 8px 10px;
+  //     span {
+  //       display: inline-block;
+  //       font-size: 12px;
+  //       font-family: PingFangSC-Regular, PingFang SC;
+  //       font-weight: 400;
+  //       color: #fc2902;
+  //       background: #ffefec;
+  //       border-radius: 2px;
+  //       padding: 4px 10px;
+  //     }
+  //   }
+  //   .item-line {
+  //     width: 100%;
+  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
+  //   }
+  //   .item-operate {
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: flex-end;
+  //     padding: 8px 10px;
+  //     .item-collect {
+  //       font-size: 20px;
+  //       margin-right: auto;
+  //     }
+  //     .item-btn {
+  //       padding: 0 16px;
+  //       margin-left: 10px;
+  //       :deep(.van-button__content) {
+  //         height: 18px;
+  //       }
+  //       :deep(.van-button__text) {
+  //         white-space: nowrap;
+  //         word-break: break-all;
+  //       }
+  //     }
+  //   }
+  // }
   .item-collect {
         font-size: 20px;
         margin-right: auto;

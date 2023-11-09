@@ -20,6 +20,9 @@ const props = defineProps({
   setHandleOk: {
     type: Function,
   },
+  finishCallback:{
+    type: Function,
+  }
 })
 
 const emits = defineEmits(['finishCallback'])
@@ -82,10 +85,9 @@ const { loading, submit } = useSubmit(() => {
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
     formRef.value.validate().then(async (values) => {
-      if (values) {
-        await submit()
-        await finishFn()
-      }
+      await submit()
+      props.finishCallback()
+      finishFn()
     })
   }, loading)
 })
@@ -110,6 +112,7 @@ onMounted(() => {
       :field-names="{label:'label',value:'value'}"
       :required="true"
       title="请选择驳回原因" 
+      teleport="body"
     />
     <van-field
       name="rejectRemark"

@@ -15,7 +15,12 @@ export const pathMap = {
   "chudonggengzhengshenpi": "/dispatchRecheckApproval",
   "huozaigengzhengshenpi": "/fireRecheckApproval",
   "shenqingjilu": "/applyRecord",
-  "jingqingzhiliangjiandu":"police-supervision",
-  "huozaizhiliangjiandu":"fire-supervision"
+  "jingqingzhiliangjiandu":"/police-supervision",
+  "huozaizhiliangjiandu":"/fire-supervision",
+  "chudongzhiliangjiandu":'/dispatch-supervision',
+  "jingqingchaoshitongji":"/police-timeout",
+  "huozaichaoshitongji":"/fire-timeout",
+  "chudongchaoshitongji":"/dispatch-timeout",
+  "weitianbaoduizhantongji":"station-timeout"
 }
   

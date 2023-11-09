@@ -149,7 +149,7 @@ import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
 import { formatYmdHm } from "@/utils/format.js";
-import EditorForm from '../fire-report/components/EditorForm.vue'
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import { showToast,showLoadingToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
@@ -245,7 +245,7 @@ const searchOptions = computed(()=>([
     placeholder: '请选择火灾等级',
     fieldNames:{ value: 'boDictId', label: 'dictName' },
     value: 'fireLevel',
-    options: options.fireStatus,
+    options: options.fireLevel,
   },
   {
     title: '起火原因',

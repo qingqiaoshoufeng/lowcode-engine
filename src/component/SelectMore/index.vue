@@ -133,6 +133,16 @@ defineOptions({
               :placeholder="item.placeholder"
             />
           </template>
+          <template v-else-if="item.type === 'input-range'">
+            <Input-Range
+              v-model:start="query[item.value[0]]"
+              v-model:end="query[item.value[1]]"
+              :required="false"
+              :readonly="true"
+              label=""
+              :placeholder="item.placeholder"
+            />
+          </template>
         </div>
       </div>
       <div class="select-footer">

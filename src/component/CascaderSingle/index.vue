@@ -39,6 +39,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  readonly:{
+    default:true,
+    type: Boolean,
+  }
 });
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
@@ -101,6 +105,7 @@ defineOptions({
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
+    :readonly="readonly"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="single-wrapper">

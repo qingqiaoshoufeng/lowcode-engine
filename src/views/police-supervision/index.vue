@@ -4,6 +4,7 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireWarningSupervision"
+        title="警情质量监督"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -87,17 +88,17 @@
         </template>
     </ProList>
     <!-- 驳回 -->
-    <ProModal v-model:visible="show.rejectVisible" title="发起驳回说明">
-      <template #default="{ setHandleOk }">
+    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+      <template v-slot="{setHandleOk}">
         <ApplyReject
           type="1"
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
+          :finish-callback="finishCallback"
         />
       </template>
-    </ProModal>
+    </DialogInfo>
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
@@ -210,8 +211,6 @@ const handleReject = (row) => {
 }
 const finishCallback = () => {
   currentRow.value = null
-  selectedRows.value = []
-  selectedRowKeys.value = []
   proListRef.value.filter()
 }
 

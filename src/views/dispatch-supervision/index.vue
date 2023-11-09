@@ -1,10 +1,10 @@
 <template>
-  <div class="police-supervision">
+  <div class="dispatch-supervision">
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getDispatchSupervisionList"
-        title="火灾质量监督"
+        title="出动质量监督"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -52,8 +52,8 @@
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.areaDutyGroupName }}</div>
+              <div style="color: #929398">出动队伍：</div>
+              <div>{{ record.dispatchGroupName }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
@@ -63,7 +63,7 @@
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button
-                v-p="['admin', 'fire-supervision:look']"
+                v-p="['admin', 'dispatch-supervision:look']"
                 type="link"
                 size="mini"
                 color="#1989fa"
@@ -77,7 +77,7 @@
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                v-if="checkInputRejectState(record.fireStatusValue)"
+                v-if="checkInputRejectState(record.dispatchStatusValue)"
                 type="link"
                 @click="handleReject(record)"
               >
@@ -91,7 +91,7 @@
     <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
       <template v-slot="{setHandleOk}">
         <ApplyReject
-          type="3"
+          type="2"
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
@@ -130,24 +130,52 @@ onMounted(() => {
 })
 const menus = [
   {
-    label: '亡人火灾',
-    key: 'deadFire',
+    label: '跨省增援',
+    key: 'crossProvinceFlag',
   },
   {
-    label: '重要信息更正火灾',
-    key: 'recheckFire',
+    label: '跨市增援',
+    key: 'crossCityFlag',
   },
   {
-    label: '驳回过的火灾',
-    key: 'rejectFire',
+    label: '参战人员伤亡',
+    key: 'injuryFlag',
   },
   {
-    label: '过火面积超100平方的建构筑轻微火灾',
-    key: 'buildingsBurnedArea',
+    label: '人车比异常',
+    key: 'personCarRatioFlag',
   },
   {
-    label: '过火面积超500平方的非建构筑火灾',
-    key: 'nonBuildingsBurnedArea',
+    label: '时速异常',
+    key: 'carSpeedFlag',
+  },
+  {
+    label: '现场距离异常',
+    key: 'distanceFlag',
+  },
+  {
+    label: '无车辆出动的抢险救援/火灾',
+    key: 'noDispatchFlag',
+  },
+  {
+    label: '现场被困超20人',
+    key: 'trappedFlag',
+  },
+  {
+    label: '抢救人员/疏散人员超20人',
+    key: 'rescueFlag',
+  },
+  {
+    label: '抢救财产/保护财产超1千万',
+    key: 'rescuePropertyFlag',
+  },
+  {
+    label: '全勤指挥部出动',
+    key: 'headFlag',
+  },
+  {
+    label: '驳回过的出动',
+    key: 'rejectFlag',
   },
 ]
 const searchOptions = computed(()=>([
@@ -212,7 +240,7 @@ const selectTagsCallback = (selects) => {
 
 </script>
 <style lang="scss" scoped>
-  .police-supervision{
+  .dispatch-supervision{
     .list-item {
       display: flex;
       flex-direction: column;
