@@ -28,7 +28,7 @@ const options = inject("options");
     v-preview-text="showPreview"
     :readonly="showPreview"
     type="number"
-    maxlength="10"
+    maxlength="5"
     required
     name="temperature"
     label="气温："

@@ -8,7 +8,11 @@ const relations = {
   轻微火灾标准校验: 'severityConfig',
 }
 
-const getters = {}
+const getters = {
+  getAllRules(state) {
+    return state.ruleConfig
+  }
+}
 
 const state = {
   ruleConfig: {

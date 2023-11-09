@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
 // import { notification } from '@castle/ant-design-vue'
-// import { useRuleConfig } from '@/store/index.js'
+import store from '@/store/index.js'
 
 // 校验到场时间
 export const checkAttendanceDate = (form, prompt = true) => {
-  // const { ruleConfig: { speedConfig } } = useRuleConfig()
+  const { speedConfig } = store.getters['rules/getAllRules']
 
   // form.basicInformation.attendanceDate.warning = false
   // form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('attendanceDate:true;', 'attendanceDate:false;')
@@ -51,7 +51,7 @@ export const checkIsResponseTruck = (form, prompt = true) => {
 
 // 校验现场被困人数（人）
 export const checkTrappedPerson = (detail, form, prompt = true) => {
-  // const { ruleConfig: { trappedConfig } } = useRuleConfig()
+  const { trappedConfig } = store.getters['rules/getAllRules']
   // const { basicInformation } = form
   // if (detail?.warningLevelValue === '一级' && (basicInformation.trappedPerson.value > trappedConfig?.value?.[1] || basicInformation.trappedPerson.value < trappedConfig?.value?.[0])) {
   //   form.basicInformation.trappedPerson.warning = true
@@ -66,7 +66,7 @@ export const checkTrappedPerson = (detail, form, prompt = true) => {
 
 // 校验现场距离
 export const checkFireDistance = (form, prompt = true) => {
-  // const { ruleConfig: { distanceConfig } } = useRuleConfig()
+  const { distanceConfig } = store.getters['rules/getAllRules']
 
   // form.basicInformation.fireDistance.warning = false
   // form.basicInformation.fireDistance.warningText = ''
@@ -88,7 +88,7 @@ export const checkFireDistance = (form, prompt = true) => {
 
 // 校验车辆
 export const checkDispatchTruckList = (form, prompt = true) => {
-  // const { ruleConfig: { distanceConfig } } = useRuleConfig()
+  const { distanceConfig } = store.getters['rules/getAllRules']
 
   // const { fireDistance } = form.basicInformation
   // if (Number(fireDistance.value) <= distanceConfig?.[0]?.value && form.investForce.dispatchTruckList.value?.length > 0) {
@@ -106,7 +106,7 @@ export const checkDispatchTruckList = (form, prompt = true) => {
 
 // 校验出动人数
 export const checkDispatchNum = (form, prompt = true) => {
-  // const { ruleConfig: { carRateConfig } } = useRuleConfig()
+  const { carRateConfig } = store.getters['rules/getAllRules']
 
   // const { commander, firemen, dispatchTruckList } = form.investForce
   // if (dispatchTruckList.value?.length > 0 && commander.value && firemen.value
