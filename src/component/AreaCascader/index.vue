@@ -26,6 +26,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  readonly: {
+    type: Boolean,
+    default: true,
+  },
   rules: {
     type: Array,
     default: () => [],
@@ -86,24 +90,22 @@ const returnChild = (item) => {
   return item.hasChild ? [] : undefined
 }
 
-watch(
-  () => props.reportName,
-  () => {
-    getSystemArea({
-      reportName: props.reportName,
-      showAllArea: props.showAllArea,
-      ...props.params,
-    }).then((res) => {
-      if (res) {
-        areaOptions.value = res.map((item) => {
-          return {
-            ...item,
-            isLeaf: returnLeaf(item),
-          };
-        });
-      }
-    });
-  }
+watch(() => props.reportName, () => {
+  getSystemArea({
+    reportName: props.reportName,
+    showAllArea: props.showAllArea,
+    ...props.params,
+  }).then((res) => {
+    if (res) {
+      areaOptions.value = res.map((item) => {
+        return {
+          ...item,
+          isLeaf: returnLeaf(item),
+        };
+      });
+    }
+  });
+}
 );
 
 onMounted(() => {
@@ -188,6 +190,9 @@ onMounted(() => {
 });
 
 const onChange = ({value, selectedOptions, tabIndex}) => {
+  if (selectedOptions?.length > 1 && !selectedOptions[selectedOptions.length - 1].hasChild) {
+    return
+  }
   const targetOption = selectedOptions[tabIndex];
   showLoadingToast()
   getSystemArea({
@@ -234,6 +239,7 @@ export default {
     is-link
     v-bind="$attrs"
     :required="required"
+    :readonly="readonly"
     :label="label"
     :placeholder="placeholder"
     :rules="rules"

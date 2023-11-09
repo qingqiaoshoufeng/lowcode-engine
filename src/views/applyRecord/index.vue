@@ -8,6 +8,7 @@ import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ApplyDetail from './components/applyDetail.vue';
 import {
   generateColorByState,
+  generateTextByStatus,
   getLastMonth,
 } from "@/utils/tools.js";
 import { applyRecordType, applyStatus } from '@/utils/constants.js';
@@ -124,6 +125,9 @@ onMounted(() => {
         <div class="list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
+            <div class="item-state" :class="generateColorByState(record.status)">
+              {{ generateTextByStatus(record.status) }}
+            </div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />

@@ -469,7 +469,7 @@ export const useFormConfig = (fromRef) => {
           { pattern: nonnegativeNumberReg, message: '请输入正确单层建筑面积' },
         ],
       },
-      housingLife: { // 房龄
+      housingLife: { // 房龄（年）
         value: '',
         rules: [
           // { required: true, message: '请输入房龄' },

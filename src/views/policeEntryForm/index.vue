@@ -403,18 +403,10 @@ const { loading, submit } = useSubmit((res) => {
     if (boWarningYyjId) {
       params.boWarningYyjId = boWarningYyjId
     }
-    if (params.otherCity) {
-      params.isOtherCity = '1'
-    }
-    if (params.otherProvince) {
-      params.isOtherProvince = '1'
-    }
-    if (params.headquarters) {
-      params.isHeadquarters = '1'
-    }
-    if (props.isConfirm) {
-      params.confirmFlag = '1'
-    }
+    params.isOtherCity = params.otherCity ? '1' : '2'
+    params.isOtherProvince = params.otherProvince ? '1' : '2'
+    params.isHeadquarters = params.headquarters ? '1' : '2'
+    params.confirmFlag = props.isConfirm ? '1' : '2'
     return saveFireWarning(params)
   },
 })
@@ -700,8 +692,8 @@ const validateHeadquarters = (value, rule) => {
         :disabled="!showPreview"
         required
         name="warningName"
-        label="警情名称："
-        placeholder="请输入警情名称"
+        label="警情标题："
+        placeholder="请输入警情标题"
       />
       <SelectDateTime
         v-model:value="form.warningDate"
@@ -1115,6 +1107,7 @@ const validateHeadquarters = (value, rule) => {
         maxlength="300"
         placeholder="请输入警情描述"
         show-word-limit
+        :rules="[{ required: true, message: '请输入警情描述'}]"
         :class="{'form-textarea': !showPreview}"
       />
     </van-form>

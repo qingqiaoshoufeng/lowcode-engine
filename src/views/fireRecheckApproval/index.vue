@@ -4,7 +4,7 @@ import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
-import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import {
   generateColorByState,
   getLastMonth,
@@ -151,7 +151,7 @@ onMounted(() => {
         </div>
       </template>
       <template #list="{ record }">
-        <div class="list-item" @click="handleItem(record)">
+        <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.statusValue)">
@@ -173,28 +173,41 @@ onMounted(() => {
             <div style="color: #929398">申请人：</div>
             <div>{{ record.createUserName }}</div>
           </div>
-          <div class="item-field">
-            <img
-              src="../../assets/images/icon-area@2x.png"
-              style="width: 13px; height: 15px; margin-right: 8px"
-              alt=""
-            />
-            <div style="color: #929398">申请原因：</div>
-            <div>{{ record.recheckReason }}</div>
-          </div>
-          <div class="item-line" />
-          <div class="item-operate" @click.stop>
-            <van-button
-              type="success"
-              size="mini"
-              color="#1989fa"
-              class="item-btn"
-              @click="handleApproval(record)"
-              v-if="proListRef?.query?.state === 'running'"
-            >
-              审批
-            </van-button>
-          </div>
+          <template v-if="record.statusValue === '已审批'">
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">审批意见：</div>
+              <div>{{ record.suggest }}</div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">申请原因：</div>
+              <div>{{ record.recheckReason }}</div>
+            </div>
+            <div class="item-line" />
+            <div class="item-operate" @click.stop>
+              <van-button
+                type="success"
+                size="mini"
+                color="#1989fa"
+                class="item-btn"
+                @click="handleApproval(record)"
+                v-if="proListRef?.query?.state === 'running'"
+              >
+                审批
+              </van-button>
+            </div>
+          </template>
         </div>
       </template>
     </ProList>
@@ -204,16 +217,24 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 火灾更正审批 -->
-    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="火灾更正审批">
-      <!-- <template #default="{ setHandleOk }">
-        <PoliceEntryDetail
+    <ProModal
+      v-model:visible="show.reviewVisible"
+      :showBack="false"
+      :showHeader="true"
+      ok-text="审批"
+      title="火灾更正审批"
+    >
+      <template #default="{ setHandleOk }">
+        <EditorForm
           :current-row="currentRow"
+          :is-detail="true"
           :is-approval="true"
+          label-text="审批"
           process-key="applyEditFlow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />
-      </template> -->
+      </template>
     </ProModal>
   </div>
 </template>
@@ -225,84 +246,6 @@ onMounted(() => {
   .list-tabs {
     display: flex;
     padding: 10px 16px 0 16px;
-  }
-  .list-item {
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    margin-top: 10px;
-    .item-header {
-      display: flex;
-      padding: 8px 10px;
-      .item-title {
-        width: 260px;
-        font-size: 16px;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .item-state {
-        width: 57px;
-        height: 24px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 2px;
-        margin-left: auto;
-      }
-    }
-    .item-field {
-      font-size: 14px;
-      color: #1f1f1f;
-      display: flex;
-      align-items: center;
-      padding: 0 0 8px 10px;
-      img {
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-      }
-    }
-    .item-type {
-      margin: 0 0 8px 10px;
-      span {
-        display: inline-block;
-        font-size: 12px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #fc2902;
-        background: #ffefec;
-        border-radius: 2px;
-        padding: 4px 10px;
-      }
-    }
-    .item-line {
-      width: 100%;
-      border-top: 1px solid rgba(31, 31, 31, 0.15);
-    }
-    .item-operate {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 8px 10px;
-      .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .item-btn {
-        padding: 0 16px;
-        margin-left: 10px;
-        :deep(.van-button__content) {
-          height: 18px;
-        }
-        :deep(.van-button__text) {
-          white-space: nowrap;
-          word-break: break-all;
-        }
-      }
-    }
   }
 }
 </style>

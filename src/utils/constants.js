@@ -1,13 +1,16 @@
 import dayjs from 'dayjs'
 
 export const dateTimeRange = {
-  本日: [dayjs().startOf('day'), dayjs().endOf('day')],
+  今日: [dayjs().startOf('day'), dayjs().endOf('day')],
+  昨日: [dayjs().subtract(1, 'day').startOf('day'), dayjs().subtract(1, 'day').endOf('day')],
   本周: [dayjs().startOf('week'), dayjs().endOf('week')],
+  上周: [dayjs().subtract(1, 'week').startOf('week'), dayjs().subtract(1, 'week').endOf('week')],
   本月: [dayjs().startOf('month'), dayjs().endOf('month')],
+  上月: [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')],
   本年: [dayjs().startOf('year'), dayjs().endOf('year')],
+  去年: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
   // 近一周: [dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
   近一个月: [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')],
-  去年: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
 }
 
 export const gutter = 40

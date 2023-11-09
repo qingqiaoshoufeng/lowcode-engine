@@ -177,8 +177,8 @@ watch(
             icon-size="16px"
             direction="horizontal"
           >
-            <van-radio name="1">是</van-radio>
-            <van-radio name="2">否</van-radio>
+            <van-radio name="1">有</van-radio>
+            <van-radio name="2">无</van-radio>
           </van-radio-group>
         </template>
       </van-cell>
@@ -422,8 +422,8 @@ watch(
             icon-size="16px"
             direction="horizontal"
           >
-            <van-radio name="1">是</van-radio>
-            <van-radio name="2">否</van-radio>
+            <van-radio name="1">有</van-radio>
+            <van-radio name="2">无</van-radio>
           </van-radio-group>
         </template>
       </van-cell>
