@@ -89,7 +89,8 @@
     <!-- 火灾填报审核 -->
     <ProModal
       v-model:visible="show.reviewVisible"
-      title="火灾审核详情"
+      :showBack="true" :showHeader="false" 
+      title="火灾详情"
       :ok-display="true"
       ok-text="审核"
       pro-card-id="card-wrap"
