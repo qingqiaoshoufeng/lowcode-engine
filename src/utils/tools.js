@@ -148,6 +148,15 @@ export const generateColorByState = (state) => {
   }
 }
 
+export const generateColorByDeptNatureValue = (val) =>{
+  const map = {
+    "国家队":"state-finish-text",
+    "企业专职队":"state-wait-text",
+    "志愿消防队":"state-reject-text" 
+  }
+  return map
+}
+
 // 不同状态颜色
 export const generateTextByState = (state) => {
   switch (state) {
