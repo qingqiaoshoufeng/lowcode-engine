@@ -57,7 +57,10 @@
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">超期时长：</div>
-              <div>{{ record.overTimeHoursValue }}</div>
+              <div class="flex">
+                <span class="info">{{ record.overTimeHoursValue }}</span>
+                <van-icon @click.stop="handleReason(record)" v-if="record.overTimeReason" name="comment-o" />
+              </div>
             </div>
             <div class="item-line" />
             <div class="item-operate" @click.stop>
@@ -77,7 +80,7 @@
                 color="#1989fa"
                 class="item-btn"
                 type="link"
-                @click="handleReject(record)"
+                @click="handleRemark(record)"
               >
                 备注
               </van-button>
@@ -85,15 +88,27 @@
           </div>
         </template>
     </ProList>
-    <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+       <!-- 超时原因 -->
+       <DialogInfo v-model:visible="show.reasonVisible" title="超时原因详情">
       <template v-slot="{setHandleOk}">
-        <ApplyReject
-          type="1"
+        <LookReason
+          :data-type="3"
+          :current-row="currentRow"
+          :set-handle-ok="setHandleOk"
+          v-if="show.reasonVisible"
+        />
+      </template>
+    </DialogInfo>
+    <!-- 填写超时原因 -->
+    <DialogInfo v-model:visible="show.remarkVisible" title="超时原因">
+      <template v-slot="{setHandleOk}">
+        <RemarkReason
+          :data-type="3"
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
-          :finish-callback="finishCallback"
+          @finish-callback="finishCallback"
+          v-if="show.remarkVisible"
         />
       </template>
     </DialogInfo>
@@ -108,13 +123,10 @@
 </template>
   
 <script setup>
-import { getFireReviewList } from '@/apis/index.js'
-import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
-import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import RemarkReason from '@/views/police-timeout/remark-reason.vue';
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
-// import ApplyReject from "./apply-reject.vue";
-import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
+import LookReason from '@/views/police-timeout/look-reason.vue';
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
@@ -220,6 +232,16 @@ const selectTagsCallback = (selects) => {
   finishCallback()
 }
 
+const handleRemark = (row) => {
+  currentRow.value = row
+  show.value.remarkVisible = true
+}
+
+const handleReason = (row) => {
+  currentRow.value = row
+  show.value.reasonVisible = true
+}
+
 </script>
 <style lang="scss" scoped>
   .fire-timeout{
@@ -256,6 +278,16 @@ const selectTagsCallback = (selects) => {
         display: flex;
         align-items: center;
         padding: 0 0 8px 10px;
+        .flex{
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-right: 20px;
+          .info{
+            margin-right: 50px;
+          }
+        }
         img {
           width: 14px;
           height: 14px;

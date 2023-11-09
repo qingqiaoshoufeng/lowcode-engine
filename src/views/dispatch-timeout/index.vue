@@ -59,7 +59,7 @@
               <div style="color: #929398">超期时长：</div>
               <div class="flex">
                 <span class="info">{{ record.timeoutTimeValue }}</span>
-                <van-icon @click="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
+                <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
               </div>
             </div>
             <div class="item-line" />
@@ -80,7 +80,7 @@
                 color="#1989fa"
                 class="item-btn"
                 type="link"
-                @click="handleReject(record)"
+                @click="handleRemark(record)"
               >
                 备注
               </van-button>
@@ -89,7 +89,7 @@
         </template>
     </ProList>
     <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+    <!-- <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
       <template v-slot="{setHandleOk}">
         <ApplyReject
           type="1"
@@ -99,7 +99,7 @@
           :finish-callback="finishCallback"
         />
       </template>
-    </DialogInfo>
+    </DialogInfo> -->
     <!-- 出动详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动详情">
       <DispatchForm
@@ -111,9 +111,10 @@
      <DialogInfo v-model:visible="show.reasonVisible" title="超时原因详情">
       <template v-slot="{setHandleOk}">
         <LookReason
-          :data-type="1"
+          :data-type="2"
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
+          v-if="show.reasonVisible"
         />
       </template>
     </DialogInfo>
@@ -121,11 +122,11 @@
     <DialogInfo v-model:visible="show.remarkVisible" title="超时原因">
       <template v-slot="{setHandleOk}">
         <RemarkReason
-          :data-type="1"
+          :data-type="2"
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
-          :finish-callback="finishCallback"
+          @finish-callback="finishCallback"
         />
       </template>
     </DialogInfo>
@@ -294,6 +295,16 @@ const selectTagsCallback = (selects) => {
         display: flex;
         align-items: center;
         padding: 0 0 8px 10px;
+        .flex{
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-right: 20px;
+          .info{
+            margin-right: 50px;
+          }
+        }
         img {
           width: 14px;
           height: 14px;
@@ -340,84 +351,6 @@ const selectTagsCallback = (selects) => {
     display: flex;
     padding: 10px 16px 0 16px;
   }
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-collect {
-  //       font-size: 20px;
-  //       margin-right: auto;
-  //     }
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
   .item-collect {
         font-size: 20px;
         margin-right: auto;

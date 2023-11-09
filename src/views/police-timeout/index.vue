@@ -59,7 +59,7 @@
               <div style="color: #929398">超期时长：</div>
               <div class="flex">
                 <span class="info">{{ record.timeoutTimeValue }}</span>
-                <van-icon @click="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
+                <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
               </div>
             </div>
             <div class="item-line" />
@@ -95,6 +95,7 @@
           :data-type="1"
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
+          v-if="show.reasonVisible"
         />
       </template>
     </DialogInfo>
@@ -106,7 +107,8 @@
           :current-row="currentRow"
           :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
-          :finish-callback="finishCallback"
+          @finish-callback="finishCallback"
+          v-if="show.remarkVisible"
         />
       </template>
     </DialogInfo>

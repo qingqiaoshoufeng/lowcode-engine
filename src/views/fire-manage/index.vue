@@ -241,7 +241,7 @@ const searchOptions = computed(()=>([
   },
   {
     title: '火灾等级',
-    type: 'select-single',
+    type: 'select',
     placeholder: '请选择火灾等级',
     fieldNames:{ value: 'boDictId', label: 'dictName' },
     value: 'fireLevel',

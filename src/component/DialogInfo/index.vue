@@ -7,7 +7,7 @@
     </div>
   </template>
   <div class="content">
-    <slot :setHandleOk="setHandleOk" />
+    <slot v-if="visible" :setHandleOk="setHandleOk" />
   </div>
 </van-dialog>
 </template>

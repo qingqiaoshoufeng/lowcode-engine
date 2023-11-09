@@ -60,7 +60,7 @@ onMounted(() => {
         v-model="form.remarkContent"
         placeholder="请输入超时原因"
         :rows="6"
-        :maxlength="500"
+        :maxlength="500" 
         show-count
         type="textarea" 
         required
