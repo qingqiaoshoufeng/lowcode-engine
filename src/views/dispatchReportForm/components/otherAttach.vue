@@ -28,7 +28,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: "done",
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });

@@ -19,10 +19,10 @@ const localFireDispatchId = inject("localFireDispatchId");
 const onChange = (file, fileList, event) => {
   form.value.scenePhoto.photos.value?.forEach((item, i) => {
     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-      item.url = `/acws/rest/attachments/${
+      item.url = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
-      item.thumbUrl = `/acws/rest/attachments/${
+      item.thumbUrl = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
     }
@@ -45,7 +45,7 @@ onMounted(() => {
           name: item.attachmentName,
           status: "done",
           isImage: true,
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });

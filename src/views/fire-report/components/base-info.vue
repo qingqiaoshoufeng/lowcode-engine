@@ -109,7 +109,7 @@ const onDelete = async(val,val1)=>{
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
     })
@@ -135,7 +135,7 @@ const OnAfterRead = async(file) => {
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
@@ -154,7 +154,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
     })
