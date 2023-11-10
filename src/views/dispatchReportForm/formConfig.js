@@ -1158,15 +1158,16 @@ export const useFormConfig = () => {
       content = content.replace('【警情录入单位】', distributeOrgName)
     }
     if (warningTypeText?.length > 0) {
-      content = content.replace('【警情末级类型】', warningTypeText.pop())
+      content = content.replace('【警情末级类型】', cloneDeep(warningTypeText.pop()))
     }
     if (warningAddr) {
       content = content.replace('【警情地址】', warningAddr)
     }
     if (warningTypeText?.length > 0) {
-      content = content.replace('【（社会救助末级指标）】', warningTypeText.pop())
-      content = content.replace('【（公共服务末级指标）】', warningTypeText.pop())
-      content = content.replace('【虚假警末级指标】', warningTypeText.pop())
+      content = content.replace('【（社会救助末级指标）】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【（公共服务末级指标）】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【虚假警末级指标】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【抢险救援末级指标】', cloneDeep(warningTypeText).pop())
     }
     if (basicInformation.dispatchDate.value) {
       content = content.replace('【出动时间】', dayjs(basicInformation.dispatchDate.value).format('MM月DD日HH时mm分'))

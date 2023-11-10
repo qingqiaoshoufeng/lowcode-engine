@@ -612,6 +612,7 @@ const showFireInspectionScope = computed(() => {
           v-preview-text="showPreview"
           name="basicInfo.fireTel.value"
           required
+          maxlength="15"
           placeholder="失火单位/户主联系电话"
           :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, ...form.basicInfo.fireTel.rules]"
         />
