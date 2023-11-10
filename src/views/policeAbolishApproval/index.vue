@@ -105,6 +105,7 @@ const onSearchConfirm = () => {
 }
 
 const finishCallback = () => {
+  show.value.reviewVisible = false
   proListRef.value.filter()
 }
 

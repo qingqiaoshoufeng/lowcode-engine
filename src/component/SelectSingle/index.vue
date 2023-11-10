@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, computed, useAttrs, nextTick } from "vue";
 
 const props = defineProps({
   value: {
@@ -46,6 +46,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const selectValue = ref("");
@@ -91,7 +93,7 @@ const handleShow = () => {
   if (props.checkShowFn && props.checkShowFn()) {
     return;
   }
-  if (props.$attrs?.disabled || props.showPreview) {
+  if (attrs?.disabled || props.showPreview) {
     return
   }
   selectVisible.value = true;
