@@ -35,7 +35,7 @@ const emit = defineEmits(['update:value'])
 const click = (data)=>{
   let selects
   if(value.value.some(item=>item.key === data.key)){
-    selects = value.value.filter(item=>item.key === data.key)
+    selects = value.value.filter(item=>item.key !== data.key)
   }else{
     selects= [...value.value,{
       checked: data.key,
