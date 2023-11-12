@@ -838,10 +838,10 @@ export const useFormConfig = (fromRef) => {
     const { warningAddr, extinctDate } = detail
     let content = ''
     if (basicInfo.fireType?.text?.includes('交通工具火灾')) {
-      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接财产损失【直接财产损失】元。'
+      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
-      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接财产损失【直接财产损失】元。'
+      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     // 替换各个字段
     if (basicInfo.fireDate.value) {
@@ -883,8 +883,8 @@ export const useFormConfig = (fromRef) => {
     if (casualtyWar.isDead.value !== '1' && casualtyWar.isInjured.value !== '1') {
       content = content.replace('造成【亡人数】死【伤人数】伤', '无人员伤亡')
     }
-    if (economicLoss.directDamage.value > 0) {
-      content = content.replace('【直接财产损失】', economicLoss.directDamage.value)
+    if (economicLoss.directEconomicLoss.value > 0) {
+      content = content.replace('【直接经济损失】', economicLoss.directEconomicLoss.value)
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')
     form.value.briefSituation.content.value = content
