@@ -618,7 +618,7 @@ const validateFireTel = (value, rule) => {
   if (!value) {
     return '';
   } else if (filter?.[0]?.dictName === "电话报警" && !validateTelePhone(value)) {
-    return "请输入正确报警人联系方式";
+    return "请输入正确格式，注意：固定电话请在区号后加“-”隔开";
   } else {
     return '';
   }

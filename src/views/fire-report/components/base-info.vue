@@ -360,8 +360,8 @@ const validateFireTel = (value) => {
     }
   }
   else if (!validateTelePhone(value)) {
-    return '请输入正确失火单位/户主联系电话'
-    // callback(new Error('请输入正确失火单位/户主联系电话'))
+    return '请输入正确格式，注意：固定电话请在区号后加“-”隔开'
+    // callback(new Error('请输入正确格式，注意：固定电话请在区号后加“-”隔开'))
   }
   else {
     return true

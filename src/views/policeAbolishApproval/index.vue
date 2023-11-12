@@ -105,6 +105,7 @@ const onSearchConfirm = () => {
 }
 
 const finishCallback = () => {
+  show.value.reviewVisible = false
   proListRef.value.filter()
 }
 
@@ -150,19 +151,23 @@ onMounted(() => {
             </div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">申请时间：</div>
-            <div>{{ formatYmdHm(record.createDate) }}</div>
-          </div>
-          <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">申请单位：</div>
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">申请人：</div>
-            <div>{{ record.createUserName }}</div>
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">申请时间：</div>
+            <div>{{ formatYmdHm(record.createDate) }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">申请原因：</div>
+            <div>{{ record.cancelReasonValue }}</div>
           </div>
           <template v-if="record.statusValue === '已审批'">
             <div class="item-field">
@@ -176,15 +181,6 @@ onMounted(() => {
             </div>
           </template>
           <template v-else>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">申请原因：</div>
-              <div>{{ record.cancelReasonValue }}</div>
-            </div>
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button

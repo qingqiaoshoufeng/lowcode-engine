@@ -205,6 +205,12 @@ const showFireSite = computed(() => {
   else if (fireType?.text?.includes('交通工具火灾') && !checkArray(vehicleType?.text, ['乘用车', '客车', '货车', '低速电动车', '铁路交通', '城市轨道交通', '水运交通', '航空航天'])) {
     return false
   }
+  else if (fireType?.text?.includes('户外植被火灾')) {
+    return false
+  }
+  else if (fireType?.text?.includes('垃圾及废弃物火灾')) {
+    return false
+  }
   return true
 })
 

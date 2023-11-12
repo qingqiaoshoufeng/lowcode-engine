@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, useAttrs, computed, nextTick } from "vue";
 import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
@@ -47,6 +47,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const selectValue = ref("");
@@ -83,7 +85,7 @@ const onFinish = ({ selectedOptions }) => {
 };
 
 const handleShow = () => {
-  if (props.$attrs?.disabled || props.showPreview) {
+  if (attrs?.disabled || props.showPreview) {
     return
   }
   selectVisible.value = true

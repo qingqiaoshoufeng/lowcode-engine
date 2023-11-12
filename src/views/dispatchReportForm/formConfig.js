@@ -291,7 +291,7 @@ export const useFormConfig = () => {
       },
       haveProfessor: { // 是否有社会技术专家
         value: '2',
-        rules: [{ required: true, message: '请选择是否有车辆出动' }],
+        rules: [{ required: true, message: '请选择是否有社会技术专家' }],
       },
       technician: [], // 技术专家（社会）
       otherMember: { // 其他人员
@@ -470,7 +470,7 @@ export const useFormConfig = () => {
         ],
       },
       isResponseTruck: { // 是否有车辆出动
-        value: '2',
+        value: '1',
         rules: [{ required: true, message: '请选择是否有车辆出动' }],
       },
       dispatchTruckList: { // 消防车辆信息

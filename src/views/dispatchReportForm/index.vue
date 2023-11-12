@@ -646,7 +646,7 @@ const initWatch = () => {
     }
     initDynamicDict()
     nextTick(() => {
-      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
+      showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.basicInfoHead.dispatchDate.value))
     })
     resolve()
   })

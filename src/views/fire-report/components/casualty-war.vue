@@ -120,7 +120,7 @@ const onDeadIdType = (index) => {
   }
 }
 
-const validateCard = (rule, value, callback) => {
+const validateCard = (value, rule) => {
   if (!value) {
     if (form.value.casualtyWar.idNumber?.rules[0]?.required) {
       // callback(new Error('请输入身份证号码'))
