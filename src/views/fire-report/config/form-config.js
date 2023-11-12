@@ -194,7 +194,7 @@ export const useFormConfig = (fromRef) => {
         value: '',
         rules: [
           // { required: true, message: '请输入引起火灾人员年龄' },
-          { pattern: nonZeroPositiveInteger, message: '请输入正确引起火灾人员年龄' },
+          // { pattern: nonZeroPositiveInteger, message: '请输入正确引起火灾人员年龄' },
         ],
       },
       schooling: { // 受教育程度
