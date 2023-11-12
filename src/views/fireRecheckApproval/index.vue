@@ -8,6 +8,7 @@ import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import {
   generateColorByState,
   getLastMonth,
+  generateColorByType,
 } from "@/utils/tools.js";
 import { applyType } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
@@ -160,19 +161,30 @@ onMounted(() => {
             </div>
           </div>
           <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">申请时间：</div>
-            <div>{{ formatYmdHm(record.createDate) }}</div>
-          </div>
-          <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">申请单位：</div>
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
+            <img src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">申请时间：</div>
+            <div>{{ formatYmdHm(record.createDate) }}</div>
+          </div>
+          <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">申请人：</div>
-            <div>{{ record.createUserName }}</div>
+            <div style="color: #929398">申请类型：</div>
+            <span :class="generateColorByType(record.applyTypeValue)" class="text-nowrap">
+              {{ record.applyTypeValue }}
+            </span>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">申请原因：</div>
+            <div>{{ record.recheckReason }}</div>
           </div>
           <template v-if="record.statusValue === '已审批'">
             <div class="item-field">
@@ -186,15 +198,6 @@ onMounted(() => {
             </div>
           </template>
           <template v-else>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">申请原因：</div>
-              <div>{{ record.recheckReason }}</div>
-            </div>
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button
