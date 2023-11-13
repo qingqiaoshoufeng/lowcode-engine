@@ -883,7 +883,7 @@ export const useFormConfig = (fromRef) => {
     if (casualtyWar.isDead.value !== '1' && casualtyWar.isInjured.value !== '1') {
       content = content.replace('造成【亡人数】死【伤人数】伤', '无人员伤亡')
     }
-    if (economicLoss.directEconomicLoss.value > 0) {
+    if (economicLoss.directEconomicLoss.value || economicLoss.directEconomicLoss.value === 0) {
       content = content.replace('【直接经济损失】', economicLoss.directEconomicLoss.value)
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')

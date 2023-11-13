@@ -8,6 +8,7 @@ import { showToast, showLoadingToast, closeToast } from "vant";
 import { getReportTemplateList, collectFireWarning } from "@/apis/index.js";
 import { useModal } from '@/hooks/useModal.js'
 import { showImagePreview } from 'vant';
+import { debounce } from 'throttle-debounce'
 
 const defaultFilterValue = {
   templateType: 1,
@@ -81,14 +82,15 @@ const handleChange = (row) => {
 };
 
 const handleItem = (row) => {
-  showImagePreview(['https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg']);
+  showImagePreview([`${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${row.attachmentId}`]);
 };
 
+const startSearchFn = debounce(1000, () => {
+  proListRef.value.filter();
+})
+
 const onSearchConfirm = () => {
-  showLoadingToast();
-  proListRef.value.filter().then((res) => {
-    closeToast();
-  });
+  startSearchFn();
 }
 
 onMounted(() => {
@@ -143,7 +145,7 @@ onMounted(() => {
             <div class="item-title">{{ record.templateName }}</div>
           </div>
           <div class="card-img" @click="handleItem(record)">
-            <img :src="`/acws/rest/attachments/${record.attachmentId}`" alt="">
+            <img :src="record.url" alt="">
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>

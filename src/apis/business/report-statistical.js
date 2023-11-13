@@ -21,6 +21,7 @@ export function getReportTemplateList(data) {
         return {
           ...item,
           templateStatus: item.templateStatus === '1',
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       }),
     }

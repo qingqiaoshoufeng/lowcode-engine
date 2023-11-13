@@ -1196,10 +1196,10 @@ export const useFormConfig = () => {
     if (battleResult.rescueNum.value >= 0 || battleResult.evacuateNum.value >= 0) {
       content = content.replace('【抢救人数+疏散人数】', battleResult.rescueNum.value + battleResult.evacuateNum.value)
     }
-    if (battleResult.emergencyNum.value) {
+    if (battleResult.emergencyNum.value || battleResult.emergencyNum.value === 0) {
       content = content.replace('【抢救财产价值】', battleResult.emergencyNum.value)
     }
-    if (battleResult.protectNum.value) {
+    if (battleResult.protectNum.value || battleResult.protectNum.value === 0) {
       content = content.replace('【保护财产价值】', battleResult.protectNum.value)
     }
     if (basicInformation.notDealReason.value) {
