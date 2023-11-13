@@ -59,15 +59,16 @@ const getCurrentStatus = (item) => {
 <template>
   <div class="apply-detail">
     <van-cell-group>
+      <h3 class="detail-title">申请单信息</h3>
       <van-field label="申请单位：" :model-value="detail?.applyOrg" readonly />
+      <van-field label="申请人：" :model-value="detail?.createUserName" readonly />
+      <van-field label="申请时间：" :model-value="detail?.createDate" readonly />
       <template v-if="applyType !== '4'">
         <van-field label="申请原因：" :model-value="detail?.recheckReason" readonly />
       </template>
       <template v-else>
         <van-field label="申请原因：" :model-value="detail?.cancelReasonValue" readonly />
       </template>
-      <van-field label="申请人：" :model-value="detail?.createUserName" readonly />
-      <van-field label="申请时间：" :model-value="detail?.createDate" readonly />
       <template v-if="applyType !== '4' && applyType !== '2'">
         <van-field label="更正类型：" :model-value="detail?.applyTypeValue" readonly />
       </template>
@@ -115,6 +116,7 @@ const getCurrentStatus = (item) => {
       </template>
     </van-cell-group>
     <div class="record-steps">
+      <h3 class="detail-title">审批记录</h3>
       <van-steps direction="vertical" :active="-1">
         <van-step
           v-for="(item, index) in detail?.commentsInfo"
@@ -184,6 +186,10 @@ const getCurrentStatus = (item) => {
     :deep(.van-step__title) {
       color: #323232;
     }
+  }
+  .detail-title {
+    background-color: white;
+    padding: 10px 0 4px 16px;
   }
 }
 </style>
