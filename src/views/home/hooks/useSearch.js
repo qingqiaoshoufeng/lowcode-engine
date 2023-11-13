@@ -61,7 +61,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     return params
   }
   const getStatisticsInfoList = (res) => {
-    debugger
     if (state.isStanding === false) {
       const data = res.dateAnalysisHeadResult
       if (data) {
@@ -144,8 +143,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     }
   }
   // 获取百万人口火灾
-  const getFireInfoList = (res) => {
-    debugger
+  const getFireInfoList = (res) => {    
     state.FireInfoList = res.fireCountList || ''
     // const key = (params.annual === 2) ? 'deCount' : 'hzCount'
     // state.FireInfoList = state.FireInfoListMap?.[key] || ''
@@ -444,7 +442,6 @@ const fightListMap2 = [
 
 
 const getStatisticsInfo = (data, type, flag) => {
-  debugger;
   let map
   const typeMap = {
     policelistMap: 1,
