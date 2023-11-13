@@ -3,7 +3,7 @@ import { showLoadingToast,closeToast  } from 'vant';
 import router from '@/router/index.js'
 import Time from '@/utils/time.js'
 import { cardList} from '../config.js'
-import { getDataAnalysis,getFireNotice,getFirelist ,getAnnualList,getDispatchInfo,getAverageTime,getStylePercent } from '@/apis/index.js'
+import { gethomePageInfo,getFireNotice,getFirelist ,getAnnualList,getDispatchInfo,getAverageTime,getStylePercent } from '@/apis/index.js'
 import store from '@/store'
 console.log(store);
 
@@ -60,100 +60,179 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     }
     return params
   }
+  const getStatisticsInfoList = (res) => {
+    if (state.isStanding === false) {
+      const data = res.dateAnalysisHeadResult
+      if (data) {
+        const allMapData = {
+          ...data.dispatchStatisticsVO || {},
+          ...data.fireHeadStatisticsVo || {},
+          ...data.warningHeadStatisticsVo || {},
+        }
+        state.statisticsList = [
+          ...getStatisticsInfo(allMapData, 'firelistMap', state.isStanding, 'dispatchStatisticsVO'),
+          ...getStatisticsInfo(allMapData, 'policelistMap', state.isStanding, 'dispatchStatisticsVO'),
+          ...getStatisticsInfo(allMapData, 'dispatchListMap', state.isStanding, 'dispatchStatisticsVO'),
+        ]
+      }
+    }
+    else {
+      const data = res.dateAnalysisHeadResult
+      const allMapData = {
+        ...data.dispatchStatisticsVO || {},
+        ...data.warningHeadStatisticsVo || {},
+      }
+      state.fitghtList = getStatisticsInfo(res.dateAnalysisFiveResult || {}, 'fightListMap2', state.isStanding)
+      state.policelist = getStatisticsInfo(allMapData, 'policelistMap2', state.isStanding, 'dispatchStatisticsVO')
+      state.dispatchList = getStatisticsInfo(allMapData, 'dispatchListMap2', state.isStanding, 'dispatchStatisticsVO')
+    }
+  }
+  const getFireAllocationList = (res) => {
+    const data = res?.dispatchSituationVO?.dispatchAreaVO
+    if (data) {
+      state.FireAllocationList = [
+        { value: data?.cssq, name: '城市市区' },
+        { value: data?.jzzq, name: '集镇镇区' },
+        { value: data?.kfq, name: '开发区' },
+        { value: data?.lyq, name: '旅游区' },
+        { value: data?.rural, name: '乡村' },
+        { value: data?.xccq, name: '县城城区' },
+      ]
+    }
+  }
+
+  // 获取接警出动情况
+  const getDealAllocationList = (res) => {
+    const data = res?.dispatchSituationVO
+    if (data) {
+      state.DealAllocationList = [
+        { value: data.implement, name: '到场实施处置' },
+        { value: data.noImplement, name: '到场未实施处置' },
+        { value: data.middleReturn, name: '中途返回' },
+      ]
+    }
+  }
+
   // 获取火灾相关信息
-  const getFireInfo = async()=>{
-    const res = await getFirelist(formatParams())
-    console.log(res,'getFireInfo');
-    state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
+  const getFireInfo = async (res) => {
+    // state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
     state.InitialFuelsList = res?.dateAnalysisSevenResult?.dateAnalysisSevenResultList || ''
-    state.FireSiteList = res?.dateAnalysisThreeResult?.threeResultsFire || ''
-    if(state.isStanding === false){
-      state.statisticsList = [
-        ...state.statisticsList,
-        ...getStatisticsInfo(res,'firelistMap',state.isStanding)
-      ]
-      state.fireCardInfo = {
-        name:'火灾起数',
-        number:res?.dateAnalysisHeadResult?.fireCount,
-        percent:res?.dateAnalysisHeadResult?.fireCountYOY
-      }
-    }
+    state.FireSiteList = res?.dateAnalysisFirePlaceResult?.firePlaceResultList?.reverse() || ''
   }
-  // 获取警情接口
-  const getPoliceInfo = async()=>{
-    const res = await getDataAnalysis(formatParams())
-    console.log(res,'getPoliceInfo');
-    state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
-    if(state.isStanding === false){
-      state.statisticsList = [
-        ...state.statisticsList,
-        ...getStatisticsInfo(res,'policelistMap',state.isStanding)
-      ]
-      state.policeCardInfo = {
-        name:'警情总数',
-        number:res?.dateAnalysisHeadResult?.qsWarningNum,
-        percent:res?.dateAnalysisHeadResult?.qsWarningNumYOY
-      }
-    }else{
-      state.WayTimeList =[
-        [
-          res?.dateAnalysisSixResult?.dateOne,
-          res?.dateAnalysisSixResult?.dateTwo,
-          res?.dateAnalysisSixResult?.dateThree,
-          res?.dateAnalysisSixResult?.dateFour
-        ]
-      ]
-      state.FightingTimeList =[ 
-        [
-          res?.dateAnalysisSevenResult?.dateOne,
-          res?.dateAnalysisSevenResult?.dateTwo,
-          res?.dateAnalysisSevenResult?.dateThree,
-          res?.dateAnalysisSevenResult?.dateFour,
-          res?.dateAnalysisSevenResult?.dateFive,
-          res?.dateAnalysisSevenResult?.dateSix,
-        ]
-      ]
-      state.policelist = getStatisticsInfo(res,'policelistMap2',state.isStanding)
-      state.fitghtList =  getStatisticsInfo(res,'fightListMap2',state.isStanding,'dateAnalysisFiveResult')
-    }
-  }
+
   // 获取榜单列表
-  const getRank = async(params= {})=>{
-    const res = await getAnnualList({...formatParams(),annual:1,...params,})
-    console.log(res,'getRank');
-    state.rankList = res
+  const getRank = async (params = {}) => {
+    const key = (params.annual === 1) ? 'warList' : 'fireList'
+
+    state.rankList = state.rankListMap?.[key] || ''
+  }
+  const getAnsweringAlarmList = (params) => {
+    const key = (params.annual === 2) ? 'reinforcement' : 'tripRespond'
+    state.AnsweringAlarmList = state.AnsweringAlarmInfoList?.[key]?.map((item) => {
+      return {
+        type: key,
+        ...item,
+      }
+    }) || ''
   }
 
-  // 获取出动信息
-  const getDispatch = async()=>{
-    const res = await getDispatchInfo(formatParams())
-    console.log(res,'getDispatch');
-    if(state.isStanding === false){
-      state.statisticsList = [
-        ...state.statisticsList,
-        ...getStatisticsInfo(res,'dispatchListMap',state.isStanding)
-      ]
-      state.dispatchCardInfo = {
-        name:'出动次数',
-        number:res?.totalDispatch || 0,
-        percent:res?.totalDispatchPro || 0,
-      }
-    }else{
-      state.dispatchList = getStatisticsInfo(res,'dispatchListMap2',state.isStanding)
+  const getInitialFuelsList = (res) => {
+    const data = res?.dateAnalysisFirePlaceResult
+    if (data) {
+      state.InitialFuelsList = data.qhwResult
     }
   }
-  // 获取火灾平均时长
-  const getDispatchInfoList = async()=>{
-    const res = await getAverageTime(formatParams())
-    state.DispatchInfoList = res
-    console.log(res,'getDispatchInfoList');
+  // 获取百万人口火灾
+  const getFireInfoList = (res) => {    
+    state.FireInfoList = res.fireCountList || ''
+    // const key = (params.annual === 2) ? 'deCount' : 'hzCount'
+    // state.FireInfoList = state.FireInfoListMap?.[key] || ''
+  }
+  // 获取途中分布时长
+  const getWayTimeList = (res) => {
+    const data = res.dateAnalysisSixResult
+    if (data) {
+      state.WayTimeList = [
+        [
+          data.dateOne,
+          data.dateTwo,
+          data.dateThree,
+          data.dateFour,
+        ],
+      ]
+    }
+  }
+  // 获取战斗时长分布
+  const getFightingTimeList = (res) => {
+    const data = res.dateAnalysisSevenResult
+    if (data) {
+      state.FightingTimeList = [
+        [
+          data.dateOne,
+          data.dateTwo,
+          data.dateThree,
+          data.dateFour,
+          data.dateFive,
+          data.dateSix,
+        ],
+      ]
+    }
   }
 
+  
+  // 获取火灾平均时长
+  const getDispatchInfoList = async (res) => {
+    state.DispatchInfoList = res?.fireAvgTimeVO?.fireAvgTimeVOList || []
+  }
   // 获取参展形式列表
-  const getStyle= async()=>{
-    const res = await getStylePercent(formatParams())
-    state.FireAreaList = res
-    console.log(res,'getStyle');
+  const getStyle = async (res) => {
+    const data = res.dateAnalysisCzResultList
+    if (data) {
+      state.FireAreaList = data
+    }
+  }
+  // 获取页面数据
+  const postHomePageInfo = async () => {
+    const res = await gethomePageInfo({
+      ...formatParams(),
+      isStanding: state.isStanding,
+    })
+    if (state.isStanding) {
+      getStatisticsInfoList(res)
+      getWayTimeList(res)
+      getFightingTimeList(res)
+      getStyle(res)
+    }
+    else {
+      state.rankListMap = res.homePageAnnualVO || {}
+      state.AnsweringAlarmInfoList = res.dispatchSituationVO || {}
+      state.FireInfoListMap = res.fireCountList?.reduce((current, item) => {
+        const { county, hzCount, deCount } = item
+        current.hzCount.push({
+          name: county,
+          value: hzCount,
+          type: 'hzCount',
+        })
+        current.deCount.push({
+          name: county,
+          value: deCount,
+          type: 'deCount',
+        })
+        return current
+      }, {
+        hzCount: [],
+        deCount: [],
+      })
+      getFireInfo(res)
+      getStatisticsInfoList(res)
+      getDispatchInfoList(res)
+      getRank({ annual: 1 })
+      getFireAllocationList(res)
+      getDealAllocationList(res)
+      getAnsweringAlarmList({ annual: 1 })
+      getInitialFuelsList(res)
+      getFireInfoList(res)
+    }
   }
 
   // 获取通知列表
@@ -175,12 +254,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       message: '加载中...',
     });
     Promise.all([
-      getPoliceInfo(),
-      getFireInfo(),
-      getRank(),
-      getDispatch(),
-      getDispatchInfoList(),
-      getStyle(),
+      postHomePageInfo(),
       getFireNoticeList()
     ]).then((res)=>{
       closeToast();
@@ -190,16 +264,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   watch(()=>state.currentTime,(val)=>{
     getAllData()
   })
-  // getPoliceInfo()
-  // getFireInfo()
-  // getRank()
-  // getDispatch()
-  // getDispatchInfoList()
-  // getStyle()
-  // getFireNoticeList()
-  // onMounted(()=>{
-    
-  // })
   return {
     ...toRefs(state),
     openTimePop,
@@ -377,41 +441,47 @@ const fightListMap2 = [
 
 
 
-const getStatisticsInfo = (data,type,flag,infoKey = 'dateAnalysisHeadResult')=>{
+const getStatisticsInfo = (data, type, flag) => {
   let map
   const typeMap = {
-    policelistMap:1,
-    firelistMap:3,
-    dispatchListMap:2,
+    policelistMap: 1,
+    firelistMap: 3,
+    dispatchListMap: 2,
   }
-  if(flag){
+  if (flag) {
     map = {
       policelistMap2,
       dispatchListMap2,
-      fightListMap2
+      fightListMap2,
     }
-  }else{
+  }
+  else {
     map = {
       policelistMap,
       firelistMap,
-      dispatchListMap
+      dispatchListMap,
     }
   }
-  return map[type].map(item=>{
-    let number,percent
-    if(type === 'dispatchListMap'){
-      number = data?.[item.numberKey]
-      percent= data?.[item.YOYkey]
-    }else{
-      number = data?.[infoKey]?.[item.numberKey]
-      percent= data?.[infoKey]?.[item.YOYkey]
-    }
+  return map[type].map((item) => {
+    // let number, percent
+    // if (['dispatchListMap', 'dispatchListMap2'].includes(type)) {
+    const number = data?.[item.numberKey]
+    const percent = data?.[item.YOYkey]
+    // }
+    // else {
+    //   // debugger
+    //   number = data?.[item.numberKey]
+    //   percent = data?.[item.YOYkey]
+    //   // number = data[item.numberKey]
+    //   // percent = data[item.YOYkey]
+    // }
     return {
-      title:item.label,
+      title: item.label,
       number,
       percent,
-      type:typeMap[type]
+      type: typeMap[type],
     }
   })
 }
+
 

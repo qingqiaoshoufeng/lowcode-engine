@@ -73,9 +73,9 @@ export default {
       return {}
     }
     const data = val.reduce((current, item) => {
-      const { hzCount, dictNameLvl2 } = item
+      const { hzCount, firePlace } = item
       current[0].push(hzCount)
-      current[1].push(dictNameLvl2)
+      current[1].push(firePlace)
       return current
     }, [
       [],

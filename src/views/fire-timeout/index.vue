@@ -189,7 +189,7 @@ const defaultFilterValue = {
   unit: [],
   timeOutHoursStart: '',
   timeOutHoursEnd: '',
-  fireType: [],
+  fireType: undefined,
   timeOutType: undefined,
 }
 
@@ -208,6 +208,13 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 
 const handleItem = (row) => {
   currentRow.value = row

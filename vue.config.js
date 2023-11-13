@@ -544,7 +544,10 @@ module.exports = {
       proxy: {
         '/acws': {
           // target: loadEnv(mode, process.cwd()).VITE_API_URL,
+          // target: 'http://10.13.5.47:8080',
+          // target: 'http://172.18.203.18:8080', 
           target: 'http://10.13.5.47:8080',
+          // target: 'http://172.18.203.23:8080', // 潘恒
           changeOrigin: true,
           // secure: false,
         },

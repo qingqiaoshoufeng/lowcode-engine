@@ -206,7 +206,7 @@ const defaultFilterValue = {
   queryOrd: [],
   timeoutDateStart: '',
   timeoutDateEnd: '',
-  warningType: [],
+  warningType: undefined,
   timeOutType: undefined,
 }
 
@@ -229,6 +229,13 @@ const handleLook = (row) => {
 const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
+};
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
 };
 
 const handleRemark = (row) => {
