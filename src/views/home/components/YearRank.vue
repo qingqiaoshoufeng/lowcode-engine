@@ -18,7 +18,7 @@
           <template v-if="currentTab === 1">
             <div class="name">{{ item.name || item.warningName }}</div>
             <div class="times">{{ item.qs ? (item.qs + '起') : '-' }}</div>
-            <div class="cars">{{ item.qs ? (item.car + '辆' ) : '-' }}</div>
+            <!-- <div class="cars">{{ item.qs ? (item.car + '辆' ) : '-' }}</div> -->
             <div class="people">{{item.qs ? (item.person + '人') : '-'  }}</div>
           </template>
           <template v-else>
@@ -133,8 +133,8 @@ export default {
           justify-content: center;
         }
         .name{
-          max-width: 140px;
-          width: 140px;
+          max-width: 180px;
+          width: 180px;
           // flex-shrink: 0;
           // flex-grow: 0;
           text-overflow: ellipsis;
@@ -157,10 +157,15 @@ export default {
         .times,.cars{
           width:64px;
           text-align: center;
+          height: 34px;
         }
         .deadNum{
           width:80px;
           text-align: center;
+          height: 34px;
+        }
+        .people{
+          height: 34px;
         }
       }
       .no_line{

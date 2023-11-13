@@ -192,7 +192,7 @@ const defaultFilterValue = {
   timeoutStart: '',
   timeoutEnd: '',
   timeout:[],
-  warningType: [],
+  warningType: undefined,
   timeOutType: undefined,
 }
 
@@ -234,6 +234,13 @@ const selectTagsCallback = (selects) => {
   onSearchConfirm()
   finishCallback()
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 
 const handleRemark = (row) => {
   currentRow.value = row

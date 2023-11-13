@@ -34,7 +34,7 @@ onMounted(() => {
   <div class="look-reason">
     <van-cell title="备注人" :value="detail?.createUserName"  />
     <van-cell title="单位" :value="detail?.createOrgName" />
-    <van-cell title="备注时间" :value="detail?.updateDate" />
+    <van-cell title="备注时间" :value="formatYmdHm(detail?.updateDate)" />
     <van-cell title="超时原因" :value="detail?.remarkContent"  />
   </div>
 </template>

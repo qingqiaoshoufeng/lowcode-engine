@@ -61,4 +61,9 @@ export function updateMessage(params) {
   return axios.get('/acws/rest/biz/firestatistics/usermessage/update', { params })
 }
 
+// 获取用户信息
+export function gethomePageInfo(params) {
+  const url = params.isStanding ? '/acws/rest/biz/analysis/dataAnalysis/homePage/orgquery' : '/acws/rest/biz/analysis/dataAnalysis/homePage/query'
+  return axios.get(url, { params })
+}
 
