@@ -3,6 +3,7 @@ import { ref, onMounted, nextTick } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
+import ReportGenerate from "./components/reportGenerate.vue";
 import { statType } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getReportTemplateList, collectFireWarning } from "@/apis/index.js";
@@ -79,7 +80,7 @@ const handleCollect = async (row, state) => {
 
 const handleChange = (row) => {
   currentRow.value = row
-  show.value.recheckVisible = true
+  show.value.lookVisible = true
 };
 
 const handleItem = (row) => {
@@ -121,7 +122,7 @@ onMounted(() => {
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getReportTemplateList"
         :tabs="tabs"
-        rowKey="boFireWarningId"
+        rowKey="id"
         :showLoad="false"
         :showBack="false"
         :onTabFn="onTabFn"
@@ -218,9 +219,9 @@ onMounted(() => {
         </div>
       </template>
     </van-image-preview>
-    <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
-      <!-- <PoliceEntryDetail :current-row="currentRow" /> -->
+    <!-- 报表查询 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="报表查询">
+      <ReportGenerate :current-row="currentRow" />
     </ProModal>
   </div>
 </template>
@@ -237,8 +238,6 @@ onMounted(() => {
     padding: 10px 12px 0 12px;
   }
   :deep(.van-image-preview__cover) {
-    width: 100%;
-    height: 100%;
     .rote-btn {
       color: white;
       font-size: 18px;
