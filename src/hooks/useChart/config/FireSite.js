@@ -51,7 +51,7 @@ const options = {
       name: '火灾起数',
       type: 'bar',
       data: [5, 20, 36, 10, 10, 20],
-      barWidth: 14,
+      barWidth: 10,
       color: '#5088EC',
       // barGap: 0,
     },

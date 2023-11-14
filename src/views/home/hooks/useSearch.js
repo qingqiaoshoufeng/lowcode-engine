@@ -33,6 +33,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     FireAreaList:'',
     FireSiteList:'',
     // DispatchInfoList:[] // 出动平均时长列表
+    generalInfo:[]
 
   })
 
@@ -190,8 +191,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       },
       state.dispatchCardInfo={
         name:'火灾起数',
-        percent:data.fireHeadStatisticsVo?.hzpjWarningNumYOY,
-        number:data.fireHeadStatisticsVo?.hzpjWarningNum
+        percent:data.fireHeadStatisticsVo?.fireCountYOY,
+        number:data.fireHeadStatisticsVo?.fireCount
       },
       state.fireCardInfo={
         name:'出动总队次',
@@ -211,6 +212,15 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     if (data) {
       state.FireAreaList = data
     }
+  }
+
+  // 获取概况文本
+  const getGeneralInfo = (res) => {
+    state.generalInfo = [
+        res?.warningOverview || '',
+        res?.dispatchOverview || '',
+        res?.fireOverview || '',
+    ]
   }
   // 获取页面数据
   const postHomePageInfo = async () => {
@@ -254,6 +264,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       getAnsweringAlarmList({ annual: 1 })
       getInitialFuelsList(res)
       getFireInfoList(res)
+      getGeneralInfo(res)
     }
   }
 
