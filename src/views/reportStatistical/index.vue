@@ -37,23 +37,22 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
+const isRote = ref(false)
+
 const onTabFn = (name, title) => {
   if (title === tabs.value[1].title) {
-    proListRef.value.query = defaultFilterValue
     proListRef.value.query.templateType = 2;
     showLoadingToast();
     proListRef.value.filter().then(() => {
       closeToast();
     });
   } else if (title === tabs.value[2].title) {
-    proListRef.value.query = defaultFilterValue
     proListRef.value.query.templateType = 3;
     showLoadingToast();
     proListRef.value.filter().then(() => {
       closeToast();
     });
   } else if (title === tabs.value[0].title) {
-    proListRef.value.query = defaultFilterValue
     proListRef.value.query.templateType = 1;
     showLoadingToast();
     proListRef.value.filter().then(() => {
@@ -82,8 +81,19 @@ const handleChange = (row) => {
 };
 
 const handleItem = (row) => {
-  showImagePreview([`${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${row.attachmentId}`]);
+  currentRow.value = row
+  show.value.imageVisible = true
 };
+
+const handleRote = () => {
+  isRote.value = !isRote.value
+}
+
+const handleClose = () => {
+  isRote.value = false
+  currentRow.value = null
+  show.value.imageVisible = false
+}
 
 const startSearchFn = debounce(1000, () => {
   proListRef.value.filter();
@@ -187,6 +197,20 @@ onMounted(() => {
       </template>
     </ProList>
 
+    <van-image-preview
+      v-model:show="show.imageVisible"
+      :images="[currentRow?.url]"
+      :class="{'rote-wrapper': isRote}"
+      :show-index="false"
+      :closeable="true"
+      @close="handleClose"
+    >
+      <template #cover>
+        <div class="rote-btn">
+          <van-icon name="exchange" @click="handleRote" />
+        </div>
+      </template>
+    </van-image-preview>
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <!-- <PoliceEntryDetail :current-row="currentRow" /> -->
@@ -201,6 +225,26 @@ onMounted(() => {
   .list-tabs {
     display: flex;
     padding: 10px 16px 0 16px;
+  }
+  :deep(.van-image-preview__cover) {
+    width: 100%;
+    height: 100%;
+    .rote-btn {
+      color: white;
+      font-size: 18px;
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2222;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.rote-wrapper {
+  .van-image__img {
+    transform: rotate(90deg) !important;
   }
 }
 </style>
