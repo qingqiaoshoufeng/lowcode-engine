@@ -17,7 +17,7 @@
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}</div>
-                <div class="percent">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
+                <div class="percent" :class="getStatusColor(itm.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
@@ -55,6 +55,10 @@ const {
   tabList,tabChange} = useTab({
   list:[
     {
+      label:'概况',
+      value:0,
+    },
+    {
       label:'警情',
       value:1,
     },
@@ -67,10 +71,19 @@ const {
       value:3,
     },
   ],
-  defaultTab:1,
+  defaultTab:0,
   handleChange:props.handleChange,
   paramsKey:'annual'
 })
+
+const getStatusColor = (val) => {
+  if ((val || '-').includes('-') && val !== '-') {
+    return 'green'
+  }
+  else {
+    return 'orange'
+  }
+}
 </script>
 <script>
 export default {
@@ -139,12 +152,20 @@ export default {
         overflow: hidden;
         word-break: break-all;
         white-space: nowrap;
+        max-width: 60%;
+        overflow: hidden;
       }
       .percent{
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         color: #FF7F2C;
+        max-width: 40%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        white-space: nowrap;
       }
     }
    

@@ -3,7 +3,7 @@ import { showLoadingToast,closeToast  } from 'vant';
 import router from '@/router/index.js'
 import Time from '@/utils/time.js'
 import { cardList} from '../config.js'
-import { gethomePageInfo,getFireNotice,getFirelist ,getAnnualList,getDispatchInfo,getAverageTime,getStylePercent } from '@/apis/index.js'
+import { gethomePageInfo,getFireNotice} from '@/apis/index.js'
 import store from '@/store'
 console.log(store);
 
@@ -180,7 +180,27 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       ]
     }
   }
-
+  // 获取卡片信息
+  const getCardInfo = (res) =>{
+    const data = res.dateAnalysisHeadResult
+    if (data) {
+      state.policeCardInfo={
+        name:'警情总数',
+        percent:data.warningHeadStatisticsVo?.qsWarningNumYOY,
+        number:data.warningHeadStatisticsVo?.qsWarningNum
+      },
+      state.dispatchCardInfo={
+        name:'火灾起数',
+        percent:data.fireHeadStatisticsVo?.hzpjWarningNumYOY,
+        number:data.fireHeadStatisticsVo?.hzpjWarningNum
+      },
+      state.fireCardInfo={
+        name:'出动总队次',
+        percent:data.dispatchStatisticsVO?.totalDispatchPro,
+        number:data.dispatchStatisticsVO?.totalDispatch
+      }
+    }
+  }
   
   // 获取火灾平均时长
   const getDispatchInfoList = async (res) => {
@@ -228,6 +248,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       getFireInfo(res)
       getStatisticsInfoList(res)
       getDispatchInfoList(res)
+      getCardInfo(res),
       getRank({ annual: 1 })
       getFireAllocationList(res)
       getDealAllocationList(res)
@@ -284,110 +305,130 @@ const getCurrentTime = ()=>{
 // 非队站枚举
 const policelistMap = [
   {
-    label:'警情总数',
-    numberKey:'qsWarningNum',
-    YOYkey:'qsWarningNumYOY'
+    label: '警情总数',
+    numberKey: 'qsWarningNum',
+    YOYkey: 'qsWarningNumYOY',
   },
   {
-    label:'火灾扑救',
-    numberKey:'fireCount',
-    YOYkey:'hzpjWarningNumYOY'
+    label: '火灾扑救',
+    numberKey: 'hzpjWarningNum',
+    YOYkey: 'hzpjWarningNumYOY',
   },
   {
-    label:'抢险救援',
-    numberKey:'qxjyWarningNum',
-    YOYkey:'qxjyWarningNumYOY'
+    label: '抢险救援',
+    numberKey: 'qxjyWarningNum',
+    YOYkey: 'qxjyWarningNumYOY',
   },
   {
-    label:'社会救助',
-    numberKey:'shjzWarningNum',
-    YOYkey:'shjzWarningNumYOY'
+    label: '社会救助',
+    numberKey: 'shjzWarningNum',
+    YOYkey: 'shjzWarningNumYOY',
   },
   {
-    label:'安保勤务',
-    numberKey:'abqwWarningNum',
-    YOYkey:'abqwWarningNumYOY'
+    label: '安保勤务',
+    numberKey: 'abqwWarningNum',
+    YOYkey: 'abqwWarningNumYOY',
   },
   {
-    label:'虚假警',
-    numberKey:'xjjWarningNum',
-    YOYkey:'xjjWarningNumYOY'
-  }
+    label: '虚假警',
+    numberKey: 'xjjWarningNum',
+    YOYkey: 'xjjWarningNumYOY',
+  },
+  {
+    label: '指挥部出动警情',
+    numberKey: 'headWarningNum',
+    YOYkey: 'headWarningNumPro',
+  },
+  {
+    label: '跨省跨市警情',
+    numberKey: 'otherNum',
+    YOYkey: 'otherNumPro',
+  },
 ]
 
 const firelistMap = [
   {
-    label:'火灾起数',
-    numberKey:'hzpjWarningNum',
-    YOYkey:'hzpjWarningNumYOY'
+    label: '火灾起数',
+    numberKey: 'fireCount',
+    YOYkey: 'fireCountYOY',
   },
   {
-    label:'非轻微火灾',
-    numberKey:'nonMinorFireCount',
-    YOYkey:'nonMinorFireCountYOY'
+    label: '非轻微火灾',
+    numberKey: 'nonMinorFireCount',
+    YOYkey: 'nonMinorFireCountYOY',
   },
   {
-    label:'未出动火灾',
-    numberKey:'noFireOccurredCount',
-    YOYkey:'noFireOccurredCountYOY'
+    label: '未出动火灾',
+    numberKey: 'noFireOccurredCount',
+    YOYkey: 'noFireOccurredCountYOY',
   },
   {
-    label:'死亡人数',
-    numberKey:'deCount',
-    YOYkey:'deCountYOY'
+    label: '死亡人数',
+    numberKey: 'deCount',
+    YOYkey: 'deCountYOY',
   },
   {
-    label:'受伤人数',
-    numberKey:'ssCount',
-    YOYkey:'ssCountYOY'
+    label: '受伤人数',
+    numberKey: 'ssCount',
+    YOYkey: 'ssCountYOY',
   },
   {
-    label:'直接经济损失',
-    numberKey:'disCount',
-    YOYkey:'disCountYOY'
+    label: '直接经济损失',
+    numberKey: 'disCount',
+    YOYkey: 'disCountYOY',
   },
 ]
 
 const dispatchListMap = [
   {
-    label:'出动总队次',
-    numberKey:'totalDispatch',
-    YOYkey:'totalDispatchPro'
+    label: '出动队次',
+    numberKey: 'totalDispatch',
+    YOYkey: 'totalDispatchPro',
   },
   {
-    label:'火灾扑救次数',
-    numberKey:'hzpj',
-    YOYkey:'hzpjPro'
+    label: '出动人次',
+    numberKey: 'person',
+    YOYkey: 'personPro',
   },
   {
-    label:'抢险救援次数',
-    numberKey:'qxjy',
-    YOYkey:'qxjyPro'
+    label: '火灾扑救次数',
+    numberKey: 'hzpj',
+    YOYkey: 'hzpjPro',
   },
   {
-    label:'国家队出动队次',
-    numberKey:'national',
-    YOYkey:'nationalPro'
+    label: '抢险救援次数',
+    numberKey: 'qxjy',
+    YOYkey: 'qxjyPro',
   },
   {
-    label:'专职队出动队次',
-    numberKey:'dedicated',
-    YOYkey:'dedicatedPro'
+    label: '国家队出动队次',
+    numberKey: 'national',
+    YOYkey: 'nationalPro',
   },
   {
-    label:'全勤指挥部出动队次',
-    numberKey:'headquarters',
-    YOYkey:'headquartersPro'
+    label: '专职队出动队次',
+    numberKey: 'dedicated',
+    YOYkey: 'dedicatedPro',
   },
   {
-    label:'抢救被困人数',
-    numberKey:'rescueNum',
-    YOYkey:'rescueNumPro'
-  },{
-    label:'抢救财产（万元）',
-    numberKey:'protectNum',
-    YOYkey:'protectNumPro'
-  }
+    label: '全勤指挥部出动队次',
+    numberKey: 'headquarters',
+    YOYkey: 'headquartersPro',
+  },
+  {
+    label: '抢救被困人数',
+    numberKey: 'rescueNum',
+    YOYkey: 'rescueNumPro',
+  }, {
+    label: '抢救财产价值（万元）',
+    numberKey: 'protectNum',
+    YOYkey: 'protectNumPro',
+  },
+  {
+    label: '保护财产价值（万元）',
+    numberKey: 'protectNum',
+    YOYkey: 'protectNumPro',
+  },
 ]
 
 // 队站枚举
