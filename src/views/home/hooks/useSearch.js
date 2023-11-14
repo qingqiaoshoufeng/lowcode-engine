@@ -61,8 +61,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     return params
   }
   const getStatisticsInfoList = (res) => {
+    const data = res.dateAnalysisHeadResult
     if (state.isStanding === false) {
-      const data = res.dateAnalysisHeadResult
       if (data) {
         const allMapData = {
           ...data.dispatchStatisticsVO || {},
@@ -78,7 +78,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     }
     else {
       if(data){
-        const data = res.dateAnalysisHeadResult
         const allMapData = {
           ...data.dispatchStatisticsVO || {},
           ...data.warningHeadStatisticsVo || {},
