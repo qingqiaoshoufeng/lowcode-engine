@@ -141,32 +141,22 @@ const onSearchConfirm = () => {
     closeToast();
   });
 }
-const handleLook = (row) => {
-  currentRow.value = row
-  show.value.lookVisible = true
-}
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 
 const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 };
 
-const handleReject = (row) => {
-  if (row.isLock === '1') {
-    showToast(MSG_LOCKING_TEXT)
-    return
-  }
-  currentRow.value = row
-  show.value.rejectVisible = true
-}
 const finishCallback = () => {
   currentRow.value = null
   proListRef.value.filter()
-}
-const selectTagsCallback = (selects) => {
-  proListRef.value.query.tags = selects
-  onSearchConfirm()
-  finishCallback()
 }
 
 </script>
