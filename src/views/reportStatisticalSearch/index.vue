@@ -18,6 +18,10 @@ const { show } = useModal();
 const { luckyOption } = useExcelConfig();
 
 const active = ref(0);
+
+const handleSearch = () => {};
+
+const handleReset = () => {};
 </script>
 
 <template>
@@ -28,10 +32,8 @@ const active = ref(0);
     </van-tabs>
 
     <div class="search-btn">
-      <van-button type="primary" block>
-        查询
-      </van-button>
-      <van-button type="primary" block style="margin-left: 20px;">
+      <van-button type="primary" block> 查询 </van-button>
+      <van-button type="primary" block style="margin-left: 20px">
         重置
       </van-button>
     </div>

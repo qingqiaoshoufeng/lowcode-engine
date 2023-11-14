@@ -59,7 +59,7 @@ const getCurrentStatus = (item) => {
 <template>
   <div class="apply-detail">
     <van-cell-group>
-      <h3 class="detail-title">申请单信息</h3>
+      <h2 class="detail-title">申请单信息</h2>
       <van-field label="申请单位：" :model-value="detail?.applyOrg" readonly />
       <van-field label="申请人：" :model-value="detail?.createUserName" readonly />
       <van-field label="申请时间：" :model-value="detail?.createDate" readonly />
@@ -84,7 +84,7 @@ const getCurrentStatus = (item) => {
       <template v-if="applyType === '1' || applyType === '4'">
         <van-field
           label="关联警情编号："
-          label-width="100px"
+          label-width="112px"
           :model-value="detail?.warningCode"
           readonly
           class="link-code"
@@ -95,7 +95,7 @@ const getCurrentStatus = (item) => {
       <template v-else-if="applyType === '2'">
         <van-field
           label="关联出动编号："
-          label-width="100px"
+          label-width="112px"
           :model-value="detail?.dispatchCode"
           readonly
           class="link-code"
@@ -106,7 +106,7 @@ const getCurrentStatus = (item) => {
       <template v-else-if="applyType === '3'">
         <van-field
           label="关联火灾编号："
-          label-width="100px"
+          label-width="112px"
           :model-value="detail?.fireCode"
           readonly
           class="link-code"
@@ -116,7 +116,7 @@ const getCurrentStatus = (item) => {
       </template>
     </van-cell-group>
     <div class="record-steps">
-      <h3 class="detail-title">审批记录</h3>
+      <h2 class="detail-title">审批记录</h2>
       <van-steps direction="vertical" :active="-1">
         <van-step
           v-for="(item, index) in detail?.commentsInfo"
@@ -128,15 +128,16 @@ const getCurrentStatus = (item) => {
             <van-icon v-if="getCurrentStatus(item) === 'process'" name="circle" color="blue" />
           </template>
           <template v-if="index !== (detail?.commentsInfo?.length - 1)">
+            <p style="font-weight: bold;">{{ item.commentDate ? dayjs(item.commentDate).format('YYYY-MM-DD HH:mm') : '' }}</p>
             <p>审批单位：{{ item.commentOrgName }}</p>
             <p v-if="item.commentUserName">审批人员：{{ item.commentUserName }}</p>
             <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.comment }}</p>
             <p v-if="getCurrentStatus(item) !== 'process'">备注：{{ item.remark }}</p>
           </template>
           <template v-else>
+            <p style="font-weight: bold;">{{ item.commentDate ? dayjs(item.commentDate).format('YYYY-MM-DD HH:mm') : '' }}</p>
             <p>申请单位：{{ item.commentOrgName }}</p>
             <p>申请人员：{{ item.commentUserName }}</p>
-            <p>申请时间：{{ item.commentDate ? dayjs(item.commentDate).format('YYYY-MM-DD HH:mm') : '' }}</p>
           </template>
         </van-step>
       </van-steps>
@@ -166,6 +167,7 @@ const getCurrentStatus = (item) => {
 <style lang="scss" scoped>
 .apply-detail {
   height: 100%;
+  overflow-y: auto;
   background-color: #f6f7f8;
   :deep(.state-wait .van-field__control) {
     color: #f2b34c !important;

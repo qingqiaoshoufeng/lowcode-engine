@@ -110,7 +110,7 @@ defineOptions({
 
 <template>
   <van-field
-    class="select_single "
+    class="select_single"
     :class="{
       'van-field--disabled':$attrs.disabled
     }"
@@ -196,6 +196,4 @@ defineOptions({
     }
   }
 }
-
-
 </style>

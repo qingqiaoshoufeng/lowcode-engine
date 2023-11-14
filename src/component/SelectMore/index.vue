@@ -25,6 +25,8 @@ watch(()=>props.options,()=>{
   instance.proxy.$forceUpdate();
 })
 
+const label = ref("选择更多条件");
+
 const query = inject("query");
 
 const selectVisible = ref(false);
@@ -48,8 +50,11 @@ defineOptions({
 </script>
 
 <template>
-  <van-cell
-    title="选择更多条件"
+  <van-field
+    v-model="label"
+    :readonly="true"
+    label=""
+    label-width="0px"
     @click="handleMore"
     style="margin-left: 10px"
     is-link

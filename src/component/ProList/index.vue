@@ -37,6 +37,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showBack: {
+    type: Boolean,
+    default: true,
+  },
   onTabFn: {
     type: Function,
     default: () => {},
@@ -137,7 +141,7 @@ export default {
 
 <template>
   <div class="pro-list">
-    <HeaderTitle :title="title" />
+    <HeaderTitle v-if="showBack" :title="title" />
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab
@@ -179,6 +183,8 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  .list-search {
+  }
   .list-wrapper {
     flex: 1;
     overflow-y: auto;
