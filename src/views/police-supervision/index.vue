@@ -214,6 +214,13 @@ const finishCallback = () => {
   proListRef.value.filter()
 }
 
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
+
 const selectTagsCallback = (selects) => {
   proListRef.value.query.tags = selects
   onSearchConfirm()

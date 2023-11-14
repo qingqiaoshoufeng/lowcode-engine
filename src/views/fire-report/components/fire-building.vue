@@ -169,12 +169,12 @@ const onBuildTag = (val) => {
           name="fireBuilding.buildTag.value"
           label="建筑标签"
           :rules="form.fireBuilding.buildTag.rules"
-          class="define-check"
         >
           <template #input>
             <van-checkbox-group 
               id="buildTag"
               v-preview-text="showPreview"
+              class="muti-check"
               style="width: 100%"
               placeholder="请选择建筑标签"
               :modelValue="form.fireBuilding.buildTag.value" 
@@ -287,6 +287,7 @@ const onBuildTag = (val) => {
           v-model="form.fireBuilding.buildAllArea.value"
           v-preview-text="showPreview"
           style="width: 100%"
+          required
           :maxlength="10"
           allow-clear
           aria-autocomplete="none"
@@ -304,6 +305,7 @@ const onBuildTag = (val) => {
           v-preview-text="showPreview"
           style="width: 100%"
           :maxlength="10"
+          required
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入单层建筑面积"
@@ -337,6 +339,7 @@ const onBuildTag = (val) => {
           id="buildUse"
           v-model:value="form.fireBuilding.buildUse.value"
           v-preview-text="showPreview"
+          showPreview
           :options="options.buildUse"
           placeholder="请选择建筑使用用途"
           allow-clear

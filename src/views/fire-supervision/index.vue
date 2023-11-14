@@ -3,7 +3,7 @@
     <ProList
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
-        :getListFn="getDispatchSupervisionList"
+        :getListFn="getFireSupervisionList"
         title="火灾质量监督"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
@@ -82,7 +82,7 @@
                 @click="handleReject(record)"
               >
                 驳回
-              </van-button>
+              </van-button> 
             </div>
           </div>
         </template>
@@ -121,7 +121,7 @@ import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState ,checkInputRejectState} from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
-import { getDispatchSupervisionList } from '@/apis/index.js'
+import { getFireSupervisionList } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
 // import store from '@/store/index.js'
@@ -191,6 +191,13 @@ const handleLook = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 
 const handleReject = (row) => {
   if (row.isLock === '1') {

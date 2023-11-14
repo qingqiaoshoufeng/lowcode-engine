@@ -153,6 +153,7 @@ const validateDirectDamage = (val) => {
             v-model="form.economicLoss.otherExpense.value"
             v-preview-text="showPreview"
             style="width: 100%"
+            required
             allow-clear
             aria-autocomplete="none"
             :maxlength="10"

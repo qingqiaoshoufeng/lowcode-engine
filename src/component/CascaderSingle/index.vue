@@ -108,6 +108,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
     :readonly="readonly"
+    class="cascader-single"
   />
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="single-wrapper">

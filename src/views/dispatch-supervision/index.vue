@@ -209,6 +209,13 @@ const tabType = ref('running')
 const refreshCallback = () => {
   proListRef.value.filter()
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 const onSearchConfirm = () => {
   showLoadingToast();
   proListRef.value.filter().then((res) => {

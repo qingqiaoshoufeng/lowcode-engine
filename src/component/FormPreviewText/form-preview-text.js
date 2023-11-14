@@ -1,3 +1,4 @@
+
 const handlePreview = (el, binding, vnode) => {
   const parentNode = el.parentNode
   if (!parentNode || !binding.value) {
@@ -18,6 +19,26 @@ const handlePreview = (el, binding, vnode) => {
   } else if (radioGroup) {
     textValue = vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText || el.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText
   }
+  if(el.className.includes('muti-check')){
+    // debugger;
+    const context = Array.from(el.querySelectorAll('[aria-checked="true"]')).map(item=>{
+      return item.children[1].innerText
+    }).join()
+    el.innerText = context
+  }
+  // if(el.className.includes('cascader-single')){
+  //   // const context = el.querySelector('input').value
+  //   const icon = el.querySelector('i')
+  //   console.log('icon',icon);
+  //   if(icon){
+  //     debugger
+  //     el.removeChild(icon)
+     
+  //     console.log('icon',icon);
+  //   }
+  //   el.classList.add('p_e_n')
+  //   // right.innerText = context
+  // }
 
   if (textValue && wrapper) {
     // 多次渲染要先移除

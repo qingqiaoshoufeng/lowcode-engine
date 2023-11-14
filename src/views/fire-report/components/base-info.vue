@@ -150,7 +150,7 @@ onMounted(() => {
       form.value.basicInfo.attach.value = res.data.map((item) => {
         return {
           ...item,
-          deletable:isEdit || isShowTemporary.value,
+          deletable:!isDetail,
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',

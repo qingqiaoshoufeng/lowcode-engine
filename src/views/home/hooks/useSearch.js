@@ -77,14 +77,16 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       }
     }
     else {
-      const data = res.dateAnalysisHeadResult
-      const allMapData = {
-        ...data.dispatchStatisticsVO || {},
-        ...data.warningHeadStatisticsVo || {},
+      if(data){
+        const data = res.dateAnalysisHeadResult
+        const allMapData = {
+          ...data.dispatchStatisticsVO || {},
+          ...data.warningHeadStatisticsVo || {},
+        }
+        state.fitghtList = getStatisticsInfo(res.dateAnalysisFiveResult || {}, 'fightListMap2', state.isStanding)
+        state.policelist = getStatisticsInfo(allMapData, 'policelistMap2', state.isStanding, 'dispatchStatisticsVO')
+        state.dispatchList = getStatisticsInfo(allMapData, 'dispatchListMap2', state.isStanding, 'dispatchStatisticsVO')
       }
-      state.fitghtList = getStatisticsInfo(res.dateAnalysisFiveResult || {}, 'fightListMap2', state.isStanding)
-      state.policelist = getStatisticsInfo(allMapData, 'policelistMap2', state.isStanding, 'dispatchStatisticsVO')
-      state.dispatchList = getStatisticsInfo(allMapData, 'dispatchListMap2', state.isStanding, 'dispatchStatisticsVO')
     }
   }
   const getFireAllocationList = (res) => {
