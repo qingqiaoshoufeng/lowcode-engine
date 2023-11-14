@@ -5,6 +5,7 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import SelectSingle from "@/component/SelectSingle/index";
 import ApplyDetail from './components/applyDetail.vue';
 import {
   generateColorByState,
@@ -24,14 +25,6 @@ const searchOptions = ref([
     type: 'select-range',
     placeholder: '请选择时间',
     value: 'time',
-  },
-  {
-    title: '申请类型',
-    type: 'select-single',
-    placeholder: '请选择申请类型',
-    options: [],
-    fieldNames: { value: 'value', label: 'label' },
-    value: 'applyType',
   },
   {
     title: '申请单位',
@@ -90,8 +83,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  searchOptions.value[1].options = applyRecordType
-  searchOptions.value[3].options = applyStatus
+  searchOptions.value[2].options = applyStatus
   nextTick(() => {
     proListRef.value?.filter();
   });
@@ -110,6 +102,19 @@ onMounted(() => {
     >
       <template #search="{ filterFormState, resetForm }">
         <div class="list-tabs">
+          <SelectSingle
+            v-model:value="filterFormState.applyType"
+            :readonly="true"
+            name="applyType"
+            :options="applyRecordType"
+            :field-names="{ value: 'value', label: 'label' }"
+            placeholder="请选择申请类型"
+            title="请选择申请类型"
+            label-width="0px"
+            style="margin-right: 10px;"
+            :rules="[{ required: true, message: '请选择申请类型' }]"
+            @change="onTimeChange"
+          />
           <SelectTime
             v-model:value="filterFormState.time"
             title="选择时间"
@@ -176,7 +181,7 @@ onMounted(() => {
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
   .list-item {
     display: flex;

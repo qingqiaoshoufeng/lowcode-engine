@@ -250,7 +250,7 @@ const selectTagsCallback = (selects) => {
   }
   .list-tabs1 {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
   // .list-item {
   //   display: flex;

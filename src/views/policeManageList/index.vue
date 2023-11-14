@@ -393,7 +393,7 @@ onMounted(() => {
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
 }
 </style>
