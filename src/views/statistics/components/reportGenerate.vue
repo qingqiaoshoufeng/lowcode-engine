@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
 import { showToast } from "vant";
 import { cloneDeep } from 'lodash-es'
@@ -8,6 +8,7 @@ import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
 import { getRangeByCode } from "@/utils/_xlsxspread.min.js";
 import { reportStyle, statType } from "@/utils/constants.js";
+import { getLastMonth } from "@/utils/tools.js";
 import {
   getReportTemplateList,
   getSourceOption,
@@ -64,10 +65,12 @@ const { options } = useOptions({
 const { luckyOption } = useExcelConfig();
 
 const form = ref({
+  time: getLastMonth(),
   reportStyle: '1',
   reportClass: undefined,
   reportNick: undefined,
   searchDimension: 2,
+  dataTimeSource: '',
 })
 
 const searchLoading = ref(false)
@@ -138,7 +141,7 @@ const handleSearch = () => {
     areaId: form.value.areaId,
     perTypes: form.value.perTypes?.join(','),
     staticFlag: form.value.searchDimension,
-    dataTimeSource: form.value.dataTimeSource,
+    dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.type = props.searchType
@@ -184,6 +187,11 @@ const handleSearch = () => {
           celldata: luckysheetData,
           luckysheet_select_save: [], // 选中的区域
         }],
+        hook: {
+          workbookCreateAfter: function() {
+            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+          }
+        }
       })
       window.luckysheet.setRangeMerge('all', {
         range: getRangeByCode(data?.mergeCells),
@@ -201,9 +209,6 @@ const handleSearch = () => {
         widthObj[i] = Math.max(...columnData) * 14 + 14
       }
       window.luckysheet.setColumnWidth(widthObj)
-      if (data?.mergeCells[1]) {
-        window.luckysheet.setRangeShow(data?.mergeCells[1], { show: false, order: 0 })
-      }
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -254,7 +259,7 @@ const handleDefineSearch = () => {
     id: selectReport.value?.id,
     querytype: 1,
     staticFlag: form.value.searchDimension,
-    dataTimeSource: form.value.dataTimeSource,
+    dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.querytype = props.searchType
@@ -298,6 +303,11 @@ const handleDefineSearch = () => {
           celldata: luckysheetData,
           luckysheet_select_save: [], // 选中的区域
         }],
+        hook: {
+          workbookCreateAfter: function() {
+            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+          }
+        }
       })
       window.luckysheet.setRangeMerge('all', {
         range: getRangeByCode(data?.mergeCells),
@@ -311,9 +321,6 @@ const handleDefineSearch = () => {
         widthObj[i] = Math.max(...columnData) * 14 + 14
       }
       window.luckysheet.setColumnWidth(widthObj)
-      if (data?.mergeCells[1]) {
-        window.luckysheet.setRangeShow(data?.mergeCells[1], { show: false, order: 0 })
-      }
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -323,14 +330,12 @@ const handleDefineSearch = () => {
   })
 }
 
-const handleReset = () => {};
-
 const onReportStyle = () => {
   form.value.reportNick = undefined
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   selectReport.value = null
   options.value.reportNick = []
@@ -361,7 +366,7 @@ const onReportClass = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   selectReport.value = null
   options.value.reportNick = []
@@ -397,8 +402,17 @@ const initType = () => {
   else if (selectReport.value?.id && selectReport.value?.templateType === '自定义报表') {
     getTemplateParams({ id: selectReport.value?.id }).then((res) => {
       if (res?.length > 0) {
+        options.value.queryType = res?.map((item) => {
+          return {
+            ...item,
+            key: item.boFireReportTypeId,
+            value: item.reportName,
+          }
+        })
         reportType.value = res[0].reportType
         reportName.value = res[0].reportName
+        form.value.queryType = res[0].boFireReportTypeId
+        console.log(reportType.value, reportName.value, form.value.queryType)
       }
     })
   }
@@ -408,7 +422,7 @@ const onReportNick = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   reportType.value = ''
   reportName.value = ''
@@ -434,14 +448,13 @@ const initOptions = () => {
     }
   })
   getSourceOption().then((res) => {
-    options.value.dataTimeSource = res.map((item) => {
-      const { paramValue: value, showValue: label } = item
+    options.value.dataTimeSource = res.map((item, index) => {
       return ({
-        value,
-        label,
+        value: index === 0 ? '1' : item.paramValue,
+        label: item.showValue,
       })
     })
-    form.value.dataTimeSource = res[0]?.paramValue
+    form.value.dataTimeSource = '1'
   })
 }
 
@@ -515,22 +528,42 @@ onMounted(() => {
         label="报表维度："
         placeholder="请选择报表维度"
         :rules="[{ required: true, message: '请选择报表维度' }]"
-        :disabled="options.queryType?.length <= 0"
+        :disabled="form.reportStyle === '1' ? options.queryType?.length <= 0 : true"
       />
-      <SelectOrg
-        v-model:value="form.createUserOrg"
-        :readonly="true"
-        name="createUserOrg"
-        :field-names="{ value: 'organizationid', label: 'name' }"
-        :required="false"
-        label="所属队伍："
-        placeholder="请选择所属队伍"
-        title="请选择所属队伍"
-        :rules="[{ required: false, message: '请选择所属队伍' }]"
-        :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
-        :select-leaf="false"
-        :single="true"
-      />
+      <template v-if="form.reportStyle === '1'">
+        <SelectOrg
+          v-model:value="form.createUserOrg"
+          :readonly="true"
+          name="createUserOrg"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="false"
+          label="所属队伍："
+          placeholder="请选择所属队伍"
+          title="请选择所属队伍"
+          :rules="[{ required: false, message: '请选择所属队伍' }]"
+          :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
+          :select-leaf="false"
+          :single="true"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+        />
+      </template>
+      <template v-else>
+        <SelectOrg
+          v-model:value="form.createUserOrg"
+          :readonly="true"
+          name="createUserOrg"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="false"
+          label="所属队伍："
+          placeholder="请选择所属队伍"
+          title="请选择所属队伍"
+          :rules="[{ required: false, message: '请选择所属队伍' }]"
+          :disabled="!(reportType === '3' || reportType === '2')"
+          :select-leaf="false"
+          :single="true"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+        />
+      </template>
       <AreaCascader
         v-model:value="form.areaId"
         :required="false"

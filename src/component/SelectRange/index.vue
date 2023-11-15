@@ -43,15 +43,9 @@ watch(
   () => props.value,
   (val) => {
     if (props.value) {
-      startDate.value = props.value?.[0]
-        ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-")
-        : [];
-      endDate.value = props.value?.[1]
-        ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-")
-        : [];
-      selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join(
-        "-"
-      )}`;
+      startDate.value = props.value?.[0] ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-") : [];
+      endDate.value = props.value?.[1] ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-") : [];
+      selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
     } else {
       startDate.value = [];
       endDate.value = [];
@@ -62,11 +56,17 @@ watch(
 );
 
 const onConfirm = () => {
-  selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join(
-    "-"
-  )}`;
-  emit("update:value", [dayjs(startDate.value), dayjs(endDate.value), ""]);
-  emit("change", [dayjs(startDate.value), dayjs(endDate.value), ""]);
+  selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
+  emit("update:value", [
+    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
+    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
+    ""
+  ]);
+  emit("change", [
+    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
+    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
+    ""
+  ]);
   selectVisible.value = false;
 };
 
