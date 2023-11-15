@@ -70,6 +70,7 @@ const form = ref({
   reportClass: undefined,
   reportNick: undefined,
   searchDimension: 2,
+  dataTimeSource: '',
 })
 
 const searchLoading = ref(false)
@@ -140,7 +141,7 @@ const handleSearch = () => {
     areaId: form.value.areaId,
     perTypes: form.value.perTypes?.join(','),
     staticFlag: form.value.searchDimension,
-    dataTimeSource: form.value.dataTimeSource,
+    dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.type = props.searchType
@@ -258,7 +259,7 @@ const handleDefineSearch = () => {
     id: selectReport.value?.id,
     querytype: 1,
     staticFlag: form.value.searchDimension,
-    dataTimeSource: form.value.dataTimeSource,
+    dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.querytype = props.searchType
@@ -334,7 +335,7 @@ const onReportStyle = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   selectReport.value = null
   options.value.reportNick = []
@@ -365,7 +366,7 @@ const onReportClass = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   selectReport.value = null
   options.value.reportNick = []
@@ -411,6 +412,7 @@ const initType = () => {
         reportType.value = res[0].reportType
         reportName.value = res[0].reportName
         form.value.queryType = res[0].boFireReportTypeId
+        console.log(reportType.value, reportName.value, form.value.queryType)
       }
     })
   }
@@ -420,7 +422,7 @@ const onReportNick = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = undefined
+  form.value.time = getLastMonth()
   form.value.perTypes = []
   reportType.value = ''
   reportName.value = ''
@@ -446,14 +448,13 @@ const initOptions = () => {
     }
   })
   getSourceOption().then((res) => {
-    options.value.dataTimeSource = res.map((item) => {
-      const { paramValue: value, showValue: label } = item
+    options.value.dataTimeSource = res.map((item, index) => {
       return ({
-        value,
-        label,
+        value: index === 0 ? '1' : item.paramValue,
+        label: item.showValue,
       })
     })
-    form.value.dataTimeSource = res[0]?.paramValue
+    form.value.dataTimeSource = '1'
   })
 }
 
@@ -529,20 +530,40 @@ onMounted(() => {
         :rules="[{ required: true, message: '请选择报表维度' }]"
         :disabled="form.reportStyle === '1' ? options.queryType?.length <= 0 : true"
       />
-      <SelectOrg
-        v-model:value="form.createUserOrg"
-        :readonly="true"
-        name="createUserOrg"
-        :field-names="{ value: 'organizationid', label: 'name' }"
-        :required="false"
-        label="所属队伍："
-        placeholder="请选择所属队伍"
-        title="请选择所属队伍"
-        :rules="[{ required: false, message: '请选择所属队伍' }]"
-        :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
-        :select-leaf="false"
-        :single="true"
-      />
+      <template v-if="form.reportStyle === '1'">
+        <SelectOrg
+          v-model:value="form.createUserOrg"
+          :readonly="true"
+          name="createUserOrg"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="false"
+          label="所属队伍："
+          placeholder="请选择所属队伍"
+          title="请选择所属队伍"
+          :rules="[{ required: false, message: '请选择所属队伍' }]"
+          :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
+          :select-leaf="false"
+          :single="true"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+        />
+      </template>
+      <template v-else>
+        <SelectOrg
+          v-model:value="form.createUserOrg"
+          :readonly="true"
+          name="createUserOrg"
+          :field-names="{ value: 'organizationid', label: 'name' }"
+          :required="false"
+          label="所属队伍："
+          placeholder="请选择所属队伍"
+          title="请选择所属队伍"
+          :rules="[{ required: false, message: '请选择所属队伍' }]"
+          :disabled="!(reportType === '3' || reportType === '2')"
+          :select-leaf="false"
+          :single="true"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+        />
+      </template>
       <AreaCascader
         v-model:value="form.areaId"
         :required="false"

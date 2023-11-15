@@ -60,11 +60,11 @@ const emit = defineEmits(["update:value", "change"]);
 
 const areaOptions = ref([]);
 
-const areaCascaderValue = ref('')
+const areaCascaderValue = ref('');
 
 const areaValue = ref([]);
 
-const areaText = ref("")
+const areaText = ref("");
 
 const selectVisible = ref(false);
 
