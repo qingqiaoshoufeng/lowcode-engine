@@ -214,11 +214,19 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   }
 
   // 获取概况文本
+  // 格式化数据
+  const formatGeneralInfo = (val) => {
+    const r = /[0-9][\.]*/g
+    // const r = /[^\d\.]/g
+    return val.replace(r, (str) => {
+      return `<span style="color:#FC5B3F">${str}</span>`
+    })
+  }
   const getGeneralInfo = (res) => {
     state.generalInfo = [
-        res?.warningOverview || '',
-        res?.dispatchOverview || '',
-        res?.fireOverview || '',
+      formatGeneralInfo(res?.warningOverview || '').slice(0, -1),
+      formatGeneralInfo(res?.dispatchOverview || '').slice(0, -1),
+      formatGeneralInfo(res?.fireOverview || '').slice(0, -1),
     ]
   }
   // 获取页面数据
@@ -452,9 +460,13 @@ const dispatchListMap2 = [
   },
   {
     label:'出动车辆数',
+    numberKey:'car',
+    YOYkey:'carPro'
   },
   {
     label:'出动人数',
+    numberKey:'person',
+    YOYkey:'personPro'
   },
   {
     label:'抢险救援次数',
@@ -462,9 +474,9 @@ const dispatchListMap2 = [
     YOYkey:'qxjyPro'
   },
   ,{
-    label:'抢救财产价值（万元）',
-    numberKey:'protectNum',
-    YOYkey:'protectNumPro'
+    label:'火灾扑救次数',
+    numberKey:'hzpj',
+    YOYkey:'hzpjPro'
   }
 ]
 

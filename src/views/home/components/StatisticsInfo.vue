@@ -12,8 +12,7 @@
       </div>
       <div v-if="currentTab === 0 && withTab" class="general">
           <div class="wrapper">
-            <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item">
-              {{ itm }}
+            <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm">
             </div>
           </div>
         </div>

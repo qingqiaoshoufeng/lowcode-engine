@@ -56,7 +56,7 @@ const {
   tabList,tabChange} = useTab({
   list:[
     {
-      label:'警接警出动',
+      label:'接警出动',
       value:1,
     },
     {
