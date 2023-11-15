@@ -15,6 +15,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  showBack: {
+    type: Boolean,
+    default: true,
+  },
   resetFn: {
     type: Function,
   }
@@ -44,6 +48,11 @@ const handleConfirm = () => {
   selectVisible.value = false;
 }
 
+const onLeftBack = () => {
+  selectVisible.value = false;
+  emit('update:visible', selectVisible.value)
+}
+
 defineOptions({
   name: "SelectMore",
 });
@@ -61,6 +70,12 @@ defineOptions({
   />
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">
+      <div v-if="showBack" class="back" >
+        <div class="arrow">
+          <van-icon @click="onLeftBack" name="arrow-left" />
+        </div>
+        <div>选择更多条件</div>
+      </div>
       <div class="select-more">
         <div v-for="item in options" :key="item.title" class="more-item">
           <div class="more-title">{{ item.title }}</div>
@@ -165,8 +180,26 @@ defineOptions({
 <style lang="scss" scoped>
 .select-wrapper {
   height: 100vh;
+  .back {
+    height: 44px;
+    background: #0C207F;
+    display: flex;
+    position: relative;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    .arrow {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      font-size: 18px;
+      transform: translateY(-50%);
+    }
+  }
   .select-more {
-    height: calc(100vh - 48px);
+    height: calc(100vh - 92px);
     display: flex;
     flex-direction: column;
     padding: 10px 16px;

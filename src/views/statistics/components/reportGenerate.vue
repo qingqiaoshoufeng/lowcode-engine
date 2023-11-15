@@ -648,13 +648,9 @@ onMounted(() => {
   .report-content {
     width: 100%;
     height: 100%;
-    margin: 20px 0 0 0;
     overflow-x: auto;
     position: relative;
     .my-table-box {
-      margin: 0px 0px;
-      padding: 0px 0px;
-      position: absolute;
       width: 100%;
       height: 100%;
       .luckysheet-work-area {
@@ -676,9 +672,6 @@ onMounted(() => {
       }
     }
     .my-table-define {
-      margin: 0px;
-      padding: 0px;
-      position: absolute;
       width: 100%;
       height: 100%;
       .luckysheet-work-area {

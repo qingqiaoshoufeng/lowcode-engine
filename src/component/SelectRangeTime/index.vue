@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import dayjs from "dayjs";
+import { showToast } from "vant";
 
 const props = defineProps({
   value: {
@@ -39,7 +40,11 @@ const selectVisible = ref(false);
 
 const startDate = ref([]);
 
+const startTime = ref(['00', '00']);
+
 const endDate = ref([]);
+
+const endTime = ref(['23', '59']);
 
 const selectText = ref("");
 
@@ -48,11 +53,15 @@ watch(
   (val) => {
     if (props.value) {
       startDate.value = props.value?.[0] ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-") : [];
+      startTime.value = props.value?.[0] ? dayjs(props.value?.[0]).format("HH:mm:ss").split(":").slice(0, 2) : [];
       endDate.value = props.value?.[1] ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-") : [];
-      selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
+      endTime.value = props.value?.[1] ? dayjs(props.value?.[1]).format("HH:mm:ss").split(":").slice(0, 2) : [];
+      selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
     } else {
       startDate.value = [];
+      startTime.value = ['00', '00']
       endDate.value = [];
+      endTime.value = ['23', '59']
       selectText.value = "";
     }
   },
@@ -60,17 +69,15 @@ watch(
 );
 
 const onConfirm = () => {
-  selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
-  emit("update:value", [
-    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
-    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
-    ""
-  ]);
-  emit("change", [
-    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
-    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
-    ""
-  ]);
+  const start = dayjs(startDate.value.join("-") + " " + startTime.value.join(":"));
+  const end = dayjs(endDate.value.join("-") + " " + endTime.value.join(":"));
+  if (start?.valueOf() >= end?.valueOf()) {
+    showToast('开始时间不能晚于结束时间')
+    return
+  }
+  selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
+  emit("update:value", [start, end, ""]);
+  emit("change", [start, end, ""]);
   selectVisible.value = false;
 };
 
@@ -108,14 +115,24 @@ defineOptions({
           @confirm="onConfirm"
           @cancel="onCancel"
         >
-          <van-date-picker
-            v-model="startDate"
-            :max-date="maxDate"
-          />
-          <van-date-picker
-            v-model="endDate"
-            :max-date="maxDate"
-          />
+          <div class="wrapper-card">
+            <van-date-picker
+              v-model="startDate"
+              :max-date="maxDate"
+            />
+            <van-time-picker
+              v-model="startTime"
+            />
+          </div>
+          <div class="wrapper-card">
+            <van-date-picker
+              v-model="endDate"
+              :max-date="maxDate"
+            />
+            <van-time-picker
+              v-model="endTime"
+            />
+          </div>
         </van-picker-group>
       </div>
     </div>
@@ -129,6 +146,12 @@ defineOptions({
   .single-wrapper {
     max-height: 50vh;
     overflow-y: auto;
+    .wrapper-card {
+      display: flex;
+      :deep(.van-picker) {
+        flex: 1;
+      }
+    }
     .selected-icon {
       background-color: white;
       border: white;
