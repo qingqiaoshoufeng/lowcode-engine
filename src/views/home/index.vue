@@ -22,7 +22,7 @@
         <Chart class="mt10" title="百万人口火灾" type="FireInfo" :chartData="FireInfoList"/>
         <Chart class="mt10" title="火警平均出动时长（分钟)" type="DispatchInfo" :chartData="DispatchInfoList" />
         <YearRank class="mt10 year_rank" title="全年榜单 TOP10"  type="FireInfo" :handleChange="getRank" :list="rankList"/>
-        <Chart class="mt10 w380" title="高频起火场所" type="FireSite" :chart-data="FireSiteList" />
+        <Chart class="mt10 w380" title="高频起火场所 TOP10" type="FireSite" :chart-data="FireSiteList" />
         <Chart class="mt10" title="高频起火原因" type="InitialFuels" :chartData="InitialFuelsList" />
       </template>
       <template v-else> 

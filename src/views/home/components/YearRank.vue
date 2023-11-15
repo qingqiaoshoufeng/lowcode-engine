@@ -157,15 +157,16 @@ export default {
         .times,.cars{
           width:64px;
           text-align: center;
-          height: 34px;
+          line-height: 34px;
+
         }
         .deadNum{
           width:80px;
           text-align: center;
-          height: 34px;
+          line-height: 34px;
         }
         .people{
-          height: 34px;
+          line-height: 34px;
         }
       }
       .no_line{
