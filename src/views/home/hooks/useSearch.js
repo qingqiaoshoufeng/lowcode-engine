@@ -5,7 +5,6 @@ import Time from '@/utils/time.js'
 import { cardList} from '../config.js'
 import { gethomePageInfo,getFireNotice} from '@/apis/index.js'
 import store from '@/store'
-console.log(store);
 
 export default function useSearch({dataPickerRef,statisticsInfoRef}){
   const ORGLEVEL = store.state.userInfo?.userInfo?.ORGLEVEL
@@ -33,6 +32,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     FireAreaList:'',
     FireSiteList:'',
     // DispatchInfoList:[] // 出动平均时长列表
+    generalInfo:[]
 
   })
 
@@ -61,8 +61,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     return params
   }
   const getStatisticsInfoList = (res) => {
+    const data = res.dateAnalysisHeadResult
     if (state.isStanding === false) {
-      const data = res.dateAnalysisHeadResult
       if (data) {
         const allMapData = {
           ...data.dispatchStatisticsVO || {},
@@ -78,7 +78,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     }
     else {
       if(data){
-        const data = res.dateAnalysisHeadResult
         const allMapData = {
           ...data.dispatchStatisticsVO || {},
           ...data.warningHeadStatisticsVo || {},
@@ -191,8 +190,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       },
       state.dispatchCardInfo={
         name:'火灾起数',
-        percent:data.fireHeadStatisticsVo?.hzpjWarningNumYOY,
-        number:data.fireHeadStatisticsVo?.hzpjWarningNum
+        percent:data.fireHeadStatisticsVo?.fireCountYOY,
+        number:data.fireHeadStatisticsVo?.fireCount
       },
       state.fireCardInfo={
         name:'出动总队次',
@@ -212,6 +211,15 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     if (data) {
       state.FireAreaList = data
     }
+  }
+
+  // 获取概况文本
+  const getGeneralInfo = (res) => {
+    state.generalInfo = [
+        res?.warningOverview || '',
+        res?.dispatchOverview || '',
+        res?.fireOverview || '',
+    ]
   }
   // 获取页面数据
   const postHomePageInfo = async () => {
@@ -255,6 +263,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       getAnsweringAlarmList({ annual: 1 })
       getInitialFuelsList(res)
       getFireInfoList(res)
+      getGeneralInfo(res)
     }
   }
 
@@ -433,7 +442,7 @@ const dispatchListMap = [
 
 // 队站枚举
 const policelistMap2 = [
-  ...policelistMap
+  ...policelistMap.filter(item=>!['指挥部出动警情','跨省跨市警情'].includes(item.label))
 ]
 const dispatchListMap2 = [
   {

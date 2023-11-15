@@ -10,14 +10,21 @@
           @click="tabChange(item.value)"
         >{{ item.label }}</div>
       </div>
-      <div class="card_list">
+      <div v-if="currentTab === 0 && withTab" class="general">
+          <div class="wrapper">
+            <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item">
+              {{ itm }}
+            </div>
+          </div>
+        </div>
+      <div v-else class="card_list">
           <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
                 <div class="title">{{ item.title }}</div>
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}</div>
-                <div class="percent" :class="getStatusColor(itm.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
+                <div class="percent" :class="getStatusColor(item.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
@@ -34,6 +41,9 @@ const props = defineProps({
       number:'数量',
       percent:'百分比',
     })
+  },
+  generalInfo: {
+    type: Array,
   },
   color:{
     type:String
@@ -167,6 +177,12 @@ export default {
         word-break: break-all;
         white-space: nowrap;
       }
+      .percent.green{
+        color: #4ED274 ;
+      }
+      .percent.orange{
+        color: #FF7F2C ;
+      }
     }
    
   }
@@ -174,6 +190,17 @@ export default {
         color: #1833A9 !important;
         background-color: #FFFFFD !important;
       }
+}
+
+
+.general{
+  padding: 0 6px;
+  .generalInfo_item{
+    padding: 5px 5px;
+    text-indent: 2em;
+    background: linear-gradient(93deg, #E5F0FF 0%, #FFFFFF 100%);
+    margin-top: 8px;
+  }
 }
 .ml9{
   margin-left: 9px;

@@ -1,5 +1,5 @@
 <template>
-<van-dialog class="dialog—info" v-bind="$attrs" :show="visible" :title="title" show-cancel-button @confirm="confirm" @cancel="cancel">
+<van-dialog class="dialog—info" v-bind="$attrs" :show="visible" :title="title" @confirm="confirm" @cancel="cancel">
   <template v-slot:title>
     <div class="header">
       <div class="title">{{title }}</div>

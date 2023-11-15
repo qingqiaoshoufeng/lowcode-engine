@@ -68,7 +68,7 @@ const initStore = async () => {
   const storeList = ['rules', 'userInfo', 'dict','menuInfo']
   const isInited = await Promise.all(
     storeList.map(item => {
-      store.dispatch(item + '/init')
+      return store.dispatch(item + '/init')
     })
   )
   return isInited

@@ -7,8 +7,8 @@ const useUserInfo = defineStore('userInfo', {
   }),
 
   actions: {
-    init() {
-      getUserInfo().then((res) => {
+    init:async function() {
+      return await getUserInfo().then((res) => {
         if (res?.data) {
           this.$state.userInfo = res.data
         }
