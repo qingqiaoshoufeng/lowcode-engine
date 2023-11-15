@@ -96,7 +96,9 @@ watch(
     if (newValue?.length > 0) {
       selectValue.value = newValue;
       selectText.value = newValue?.[2]
-      console.log(newValue)
+    } else {
+      selectValue.value = '';
+      selectText.value = ''
     }
   },
   { immediate: true }

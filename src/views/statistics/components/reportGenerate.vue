@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
 import { showToast } from "vant";
 import { cloneDeep } from 'lodash-es'
@@ -8,6 +8,7 @@ import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
 import { getRangeByCode } from "@/utils/_xlsxspread.min.js";
 import { reportStyle, statType } from "@/utils/constants.js";
+import { getLastMonth } from "@/utils/tools.js";
 import {
   getReportTemplateList,
   getSourceOption,
@@ -64,6 +65,7 @@ const { options } = useOptions({
 const { luckyOption } = useExcelConfig();
 
 const form = ref({
+  time: getLastMonth(),
   reportStyle: '1',
   reportClass: undefined,
   reportNick: undefined,
@@ -184,6 +186,11 @@ const handleSearch = () => {
           celldata: luckysheetData,
           luckysheet_select_save: [], // 选中的区域
         }],
+        hook: {
+          workbookCreateAfter: function() {
+            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+          }
+        }
       })
       window.luckysheet.setRangeMerge('all', {
         range: getRangeByCode(data?.mergeCells),
@@ -201,9 +208,6 @@ const handleSearch = () => {
         widthObj[i] = Math.max(...columnData) * 14 + 14
       }
       window.luckysheet.setColumnWidth(widthObj)
-      if (data?.mergeCells[1]) {
-        window.luckysheet.setRangeShow(data?.mergeCells[1], { show: false, order: 0 })
-      }
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -298,6 +302,11 @@ const handleDefineSearch = () => {
           celldata: luckysheetData,
           luckysheet_select_save: [], // 选中的区域
         }],
+        hook: {
+          workbookCreateAfter: function() {
+            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+          }
+        }
       })
       window.luckysheet.setRangeMerge('all', {
         range: getRangeByCode(data?.mergeCells),
@@ -311,9 +320,6 @@ const handleDefineSearch = () => {
         widthObj[i] = Math.max(...columnData) * 14 + 14
       }
       window.luckysheet.setColumnWidth(widthObj)
-      if (data?.mergeCells[1]) {
-        window.luckysheet.setRangeShow(data?.mergeCells[1], { show: false, order: 0 })
-      }
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -322,8 +328,6 @@ const handleDefineSearch = () => {
     searchLoading.value = false
   })
 }
-
-const handleReset = () => {};
 
 const onReportStyle = () => {
   form.value.reportNick = undefined
@@ -397,8 +401,16 @@ const initType = () => {
   else if (selectReport.value?.id && selectReport.value?.templateType === '自定义报表') {
     getTemplateParams({ id: selectReport.value?.id }).then((res) => {
       if (res?.length > 0) {
+        options.value.queryType = res?.map((item) => {
+          return {
+            ...item,
+            key: item.boFireReportTypeId,
+            value: item.reportName,
+          }
+        })
         reportType.value = res[0].reportType
         reportName.value = res[0].reportName
+        form.value.queryType = res[0].boFireReportTypeId
       }
     })
   }
@@ -515,7 +527,7 @@ onMounted(() => {
         label="报表维度："
         placeholder="请选择报表维度"
         :rules="[{ required: true, message: '请选择报表维度' }]"
-        :disabled="options.queryType?.length <= 0"
+        :disabled="form.reportStyle === '1' ? options.queryType?.length <= 0 : true"
       />
       <SelectOrg
         v-model:value="form.createUserOrg"
