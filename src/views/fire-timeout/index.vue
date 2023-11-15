@@ -89,7 +89,7 @@
         </template>
     </ProList>
        <!-- 超时原因 -->
-       <DialogInfo v-model:visible="show.reasonVisible" title="超时原因详情">
+       <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
       <template v-slot="{setHandleOk}">
         <LookReason
           :data-type="3"

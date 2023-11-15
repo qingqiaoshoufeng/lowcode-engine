@@ -52,6 +52,11 @@
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <div style="color: #929398">稽查标签：</div>
+              <div>{{ record.auditLabel }}</div>
+            </div>
+            <div class="item-field">
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">出动队伍：</div>
               <div>{{ record.dispatchGroupName }}</div>
             </div>
