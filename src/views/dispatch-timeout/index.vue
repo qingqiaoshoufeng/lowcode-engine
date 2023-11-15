@@ -154,7 +154,7 @@ import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 const options = {}
 getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
-  options.timeOutType = res.HZ_TIMEOUT_TYPE
+  options.timeOutType = res.CD_TIMEOUT_TYPE
   options.warningType = res.JQ_TYPE
 })
 onMounted(() => {
@@ -194,6 +194,7 @@ const searchOptions = computed(()=>([
     title: '超时类型',
     type: 'select-single',
     placeholder: '请选择超时类型',
+    fieldNames:{ value: 'dictName', label: 'dictName' },
     options: options.timeOutType,
     value: 'timeOutType',
   },

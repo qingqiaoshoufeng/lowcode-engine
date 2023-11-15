@@ -89,7 +89,7 @@
         </template>
     </ProList>
     <!-- 超时原因 -->
-    <DialogInfo v-model:visible="show.reasonVisible" title="超时原因详情">
+    <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
       <template v-slot="{setHandleOk}">
         <LookReason
           :data-type="1"
@@ -180,6 +180,7 @@ const searchOptions = computed(()=>([
     type: 'select-single',
     placeholder: '请选择超时类型',
     options: options.timeOutType,
+    fieldNames:{ value: 'dictName', label: 'dictName' },
     value: 'timeOutType',
   },
 ]))

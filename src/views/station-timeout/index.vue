@@ -4,7 +4,7 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getUnworkTimeout"
-        title="警情超时统计"
+        title="未填报队站统计"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">

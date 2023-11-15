@@ -10,7 +10,7 @@
           @click="tabChange(item.value)"
         >{{ item.label }}</div>
       </div>
-      <div v-if="currentTab === 0" class="general">
+      <div v-if="currentTab === 0 && withTab" class="general">
           <div class="wrapper">
             <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item">
               {{ itm }}

@@ -5,7 +5,6 @@ import Time from '@/utils/time.js'
 import { cardList} from '../config.js'
 import { gethomePageInfo,getFireNotice} from '@/apis/index.js'
 import store from '@/store'
-console.log(store);
 
 export default function useSearch({dataPickerRef,statisticsInfoRef}){
   const ORGLEVEL = store.state.userInfo?.userInfo?.ORGLEVEL
@@ -443,7 +442,7 @@ const dispatchListMap = [
 
 // 队站枚举
 const policelistMap2 = [
-  ...policelistMap
+  ...policelistMap.filter(item=>!['指挥部出动警情','跨省跨市警情'].includes(item.label))
 ]
 const dispatchListMap2 = [
   {

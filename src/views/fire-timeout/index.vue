@@ -179,6 +179,7 @@ const searchOptions = computed(()=>([
     type: 'select-single',
     placeholder: '请选择超时类型',
     options: options.timeOutType,
+    fieldNames:{ value: 'dictName', label: 'dictName' },
     value: 'timeOutType',
   },
 ]))
