@@ -107,12 +107,15 @@
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
-      title="火灾填报详情"
+      title="出动填报详情"
       :ok-display="false"
       :footer="null"
       pro-card-id="card-wrap"
     >
-      <EditorForm :current-row="currentRow" :is-detail="true" />
+      <DispatchForm
+        :current-row="currentRow"
+        :is-detail="true"
+      />
     </ProModal>
   </div>
 </template>
@@ -122,6 +125,7 @@ import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import ApplyReject from "@/views/police-supervision/apply-reject.vue";
+import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState ,checkInputRejectState} from "@/utils/tools.js";

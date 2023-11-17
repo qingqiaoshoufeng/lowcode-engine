@@ -4,6 +4,9 @@
       <van-icon @click="router.go(-1)" name="arrow-left" />
     </div>
     <div>{{ title }}</div>
+    <div class="explain">
+      <slot name="explain" />
+    </div>
   </div>
 </template>
 <script setup>
@@ -39,6 +42,11 @@ export default {
     left: 16px;
     font-size: 18px;
     transform: translateY(-50%);
+  }
+  .explain{
+    position: absolute;
+    right: 16px;
+    bottom: 9px;
   }
 }
 </style>

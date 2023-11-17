@@ -5,6 +5,8 @@
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getDispatchTimeout"
         title="出动超时统计"
+        showExplain
+        :showExplainFn="showExplainFn"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -100,7 +102,7 @@
         />
       </template>
     </DialogInfo> -->
-    <!-- 出动详情 -->
+    <!-- 出动详情 --> RegularLook
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动详情">
       <DispatchForm
         :current-row="currentRow"
@@ -116,6 +118,12 @@
           :set-handle-ok="setHandleOk"
           v-if="show.reasonVisible"
         />
+      </template>
+    </DialogInfo>
+   <!-- 规则查看 -->
+   <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
+      <template v-slot="{setHandleOk}">
+        <RegularLook :type="2" />
       </template>
     </DialogInfo>
     <!-- 填写超时原因 -->
@@ -140,6 +148,7 @@ import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 // import ApplyReject from "./apply-reject.vue";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
+import RegularLook from '@/views/police-timeout/regular-look.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import RemarkReason from '@/views/police-timeout/remark-reason.vue';
 import LookReason from '@/views/police-timeout/look-reason.vue';
@@ -153,7 +162,7 @@ import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 const options = {}
-getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
+getSystemDictSync(['JQ_TYPE', 'CD_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.CD_TIMEOUT_TYPE
   options.warningType = res.JQ_TYPE
 })
@@ -260,6 +269,10 @@ const handleReject = (row) => {
 const finishCallback = () => {
   currentRow.value = null
   proListRef.value.filter()
+}
+
+const showExplainFn = ()=>{
+  show.value.regularVisible = true
 }
 const selectTagsCallback = (selects) => {
   proListRef.value.query.tags = selects

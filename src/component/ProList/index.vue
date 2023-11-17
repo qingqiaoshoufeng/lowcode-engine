@@ -9,6 +9,13 @@ const props = defineProps({
     type:String,
     default:''
   },
+  showExplain:{
+    type: Boolean,
+    default: false,
+  },
+  showExplainFn:{
+    type:Function
+  },
   tabs: {
     type: Array,
     default: () => [],
@@ -141,7 +148,11 @@ export default {
 
 <template>
   <div class="pro-list">
-    <HeaderTitle v-if="showBack" :title="title" />
+    <HeaderTitle v-if="showBack" :title="title">
+      <template v-if="showExplain" v-slot:explain>
+        <div @click="showExplainFn" class="explain">规则说明</div>
+      </template>
+    </HeaderTitle>
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab
@@ -184,6 +195,13 @@ export default {
   display: flex;
   flex-direction: column;
   .list-search {
+  }
+  .explain{
+    font-size: 16px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 22px;
   }
   .list-wrapper {
     flex: 1;

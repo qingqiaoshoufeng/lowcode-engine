@@ -7,6 +7,8 @@ const form = inject('form')
 
 const showPreview = inject('showPreview')
 
+const isRequired = inject('isRequired')
+
 const isDetail = inject('isDetail')
 
 const options = inject('options')
@@ -63,6 +65,7 @@ const handleDeletePerson = (index) => {
         <van-field 
           name="caseHandling.handleTwoCase.value"
           label="两案处理情况-是否立案"
+          :required="isRequired"
           :rules="form.caseHandling.handleTwoCase.rules"
         >
           <template #input>
@@ -118,6 +121,7 @@ const handleDeletePerson = (index) => {
           name="caseHandling.firePenalty.value"
           label="火灾处罚情况-是否立案"
           :rules="form.caseHandling.firePenalty.rules"
+          :required="isRequired"
         >
           <template #input>
             <van-radio-group 

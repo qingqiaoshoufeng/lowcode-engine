@@ -126,8 +126,10 @@ const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
-const { form, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(formRef)
+const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(formRef)
 
+
+provide('isRequired',isRequired)
 const showPreview = ref(null)
 
 const importantEdit = ref(true) // 重要信息更正

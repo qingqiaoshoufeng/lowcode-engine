@@ -11,6 +11,8 @@ const form = inject('form')
 
 const showDraft = inject('showDraft')
 
+const isRequired = inject('isRequired')
+
 const showPreview = inject('showPreview')
 
 const options = inject('options')
@@ -169,6 +171,7 @@ const onBuildTag = (val) => {
           name="fireBuilding.buildTag.value"
           label="建筑标签"
           :rules="form.fireBuilding.buildTag.rules"
+          :required="isRequired"
         >
           <template #input>
             <van-checkbox-group 
@@ -249,6 +252,7 @@ const onBuildTag = (val) => {
           name="fireBuilding.buildFloor.value"
           label="建筑总楼层"
           :rules="[{ validator: validateBuildFloor, trigger: 'onBlur' }, ...form.fireBuilding.buildFloor.rules]"
+          :required="isRequired"
           id="buildFloor"
           v-model="form.fireBuilding.buildFloor.value"
           v-preview-text="showPreview"
@@ -266,6 +270,7 @@ const onBuildTag = (val) => {
         <van-field 
           name="fireBuilding.fireFloor.value"
           label="失火楼层"
+          :required="isRequired"
           :rules="[{ validator: validateFireFloor, trigger: 'onBlur' }, ...form.fireBuilding.fireFloor.rules]"
           id="fireFloor"
           v-model="form.fireBuilding.fireFloor.value"
@@ -287,7 +292,7 @@ const onBuildTag = (val) => {
           v-model="form.fireBuilding.buildAllArea.value"
           v-preview-text="showPreview"
           style="width: 100%"
-          required
+          :required="isRequired"
           :maxlength="10"
           allow-clear
           aria-autocomplete="none"
@@ -300,12 +305,12 @@ const onBuildTag = (val) => {
           name="fireBuilding.buildFloorArea.value"
           label="单层建筑面积（平方米）"
           :rules="form.fireBuilding.buildFloorArea.rules"
+          :required="isRequired"
           id="buildFloorArea"
           v-model="form.fireBuilding.buildFloorArea.value"
           v-preview-text="showPreview"
           style="width: 100%"
           :maxlength="10"
-          required
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入单层建筑面积"

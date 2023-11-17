@@ -18,6 +18,8 @@ const showDraft = inject('showDraft')
 
 const options = inject('options')
 
+const isRequired = inject('isRequired')
+
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
@@ -94,6 +96,7 @@ const validateDirectDamage = (val) => {
         <van-field 
           name="economicLoss.directDamage.value"
           label="直接财产损失（元)"
+          :required="isRequired"
           :rules="[{ validator: validateDirectDamage, trigger: 'onBlur' }, ...form.economicLoss.directDamage.rules]"
           id="directDamage"
           v-model="form.economicLoss.directDamage.value"
@@ -112,6 +115,7 @@ const validateDirectDamage = (val) => {
          name="economicLoss.fireDisposalCost.value"
           label="火灾现场处置费用（元)"
           :rules="form.economicLoss.fireDisposalCost.rules"
+          :required="isRequired"
           id="fireDisposalCost"
           v-model="form.economicLoss.fireDisposalCost.value"
           v-preview-text="showPreview"
@@ -132,6 +136,7 @@ const validateDirectDamage = (val) => {
             name="economicLoss.fireInjuryCost.value"
             label="人身伤亡医疗支出（元)"
             :rules="form.economicLoss.fireInjuryCost.rules"
+            :required="isRequired"
             id="fireInjuryCost"
             v-model="form.economicLoss.fireInjuryCost.value"
             v-preview-text="showPreview"
@@ -153,7 +158,7 @@ const validateDirectDamage = (val) => {
             v-model="form.economicLoss.otherExpense.value"
             v-preview-text="showPreview"
             style="width: 100%"
-            required
+            :required="isRequired"
             allow-clear
             aria-autocomplete="none"
             :maxlength="10"
@@ -180,6 +185,7 @@ const validateDirectDamage = (val) => {
             name="economicLoss.affectedHouse.value"
             label="受灾户数（户）"
             :rules="form.economicLoss.affectedHouse.rules"
+            :required="isRequired"
             id="affectedHouse"
             v-model="form.economicLoss.affectedHouse.value"
             v-preview-text="showPreview"

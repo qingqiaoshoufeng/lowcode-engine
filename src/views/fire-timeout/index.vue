@@ -5,6 +5,8 @@
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireTimeout"
         title="火灾超时统计"
+        showExplain
+        :showExplainFn="showExplainFn"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -99,6 +101,12 @@
         />
       </template>
     </DialogInfo>
+     <!-- 规则查看 -->
+   <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
+      <template v-slot="{setHandleOk}">
+        <RegularLook :type="3" />
+      </template>
+    </DialogInfo>
     <!-- 填写超时原因 -->
     <DialogInfo v-model:visible="show.remarkVisible" title="超时原因">
       <template v-slot="{setHandleOk}">
@@ -130,6 +138,7 @@ import LookReason from '@/views/police-timeout/look-reason.vue';
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
+import RegularLook from '@/views/police-timeout/regular-look.vue';
 import SelectMore from "@/component/SelectMore/index"; 
 import { getFireTimeout } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
@@ -143,6 +152,9 @@ getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
 })
 onMounted(() => {
 })
+const showExplainFn = ()=>{
+  show.value.regularVisible = true
+}
 const searchOptions = computed(()=>([
   {
     title: '选择时间',

@@ -9,6 +9,8 @@ const form = inject('form')
 
 const isDetail = inject('isDetail')
 
+const isRequired = inject('isRequired')
+
 const isShowTemporary = inject('isShowTemporary')
 
 const isEdit = inject('isEdit')
@@ -114,7 +116,7 @@ onMounted(() => {
             <van-field
               name="firePhoto.photos.value"
               :rules="form.firePhoto.photos.rules"
-              :required="true"
+              :required="isRequired"
               label="火灾照片"
             >
               <template #input>

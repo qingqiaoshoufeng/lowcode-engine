@@ -11,6 +11,8 @@ const isDetail = inject('isDetail')
 
 const showPreview = inject('showPreview')
 
+// const isRequired = inject('isRequired')
+
 const isEdit = inject('isEdit')
 
 const currentRow = inject('currentRow')
@@ -100,9 +102,9 @@ onMounted(() => {
         <van-cell title="相关附件上传" class="item-cell">
           <van-uploader
             name="basicInfo.attach.value"
-            :rules="form.basicInfo.attach.rules"
+            :rules="form.otherAttach.attach.rules"
             id="attach"
-            v-model="form.otherAttach.attach.value"
+            v-model="form.otherAttach.attach.value" 
             :after-read="OnAfterRead"
             @delete="onDelete"
           />

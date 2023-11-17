@@ -20,6 +20,8 @@ const showPreview = inject('showPreview')
 
 const options = inject('options')
 
+const isRequired = inject('isRequired')
+
 const importantEdit = inject('importantEdit')
 
 const fieldExist = inject('fieldExist')
@@ -211,6 +213,7 @@ const bigInjured = computed(() => {
     <div :gutter="gutter">
       <div :span="8">
         <van-field name="casualtyWar.isInjured.value" label="是否有人员受伤"
+          :required="isRequired"
           :rules="form.casualtyWar.isInjured.rules" >
           <template #input>
             <van-radio-group 
@@ -323,6 +326,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.injuredList.${index}.nation`"
             label="民族"
             :rules="form.casualtyWar.nation.rules"
+            :required="isRequired"
             id="nation"
             v-model:value="item.nation"
             :showPreview="showPreview"
@@ -332,7 +336,6 @@ const bigInjured = computed(() => {
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择民族"
-            :required="true"
             title="请选择民族"
           />
         </div>
@@ -357,6 +360,7 @@ const bigInjured = computed(() => {
           <van-field
             label="证件号码"
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
+            :required="isRequired"
             id="idNumber"
             v-model:value="item.idNumber"
             v-preview-text="showPreview"
@@ -387,6 +391,7 @@ const bigInjured = computed(() => {
           <van-field 
             label="人员年龄"
             :rules="form.casualtyWar.age.rules"
+            :required="isRequired"
             id="age"
             :name="`casualtyWar.injuredList.${index}.age`"
             v-model="item.age"
@@ -405,6 +410,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.injuredList.${index}.injurySource`"
             label="人员来源"
             :rules="form.casualtyWar.injurySource.rules"
+            :required="isRequired"
             id="injurySource"
             v-model:value="item.injurySource"
             :showPreview="showPreview"
@@ -425,6 +431,7 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择来源详情"
+            :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
           />
         </div>
@@ -433,6 +440,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.injuredList.${index}.job`"
             label="职业"
             :rules="form.casualtyWar.job.rules"
+            :required="isRequired"
             id="job"
             v-model:value="item.job"
             :showPreview="showPreview"
@@ -447,6 +455,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.injuredList.${index}.health`"
             label="健康状况"
             :rules="form.casualtyWar.health.rules"
+            :required="isRequired"
             id="health"
             v-model:value="item.health"
             :showPreview="showPreview"
@@ -558,6 +567,7 @@ const bigInjured = computed(() => {
           name="casualtyWar.isInjured.value"
           label="是否有人员死亡"
           :rules="form.casualtyWar.isDead.rules"
+          :required="isRequired"
         >
           <template #input>
             <van-radio-group 
@@ -631,6 +641,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.deadList.${index}.nation`"
             label="民族"
             :rules="form.casualtyWar.nation.rules"
+            :required="isRequired"
             id="injuryType"
             v-model:value="item.injuryType"
             :showPreview="showPreview"
@@ -646,6 +657,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.deadList.${index}.idType`"
             label="证件类型"
             :rules="form.casualtyWar.idType.rules"
+            :required="isRequired"
             id="idType"
             v-model:value="item.idType"
             v-preview-text="showPreview"
@@ -664,6 +676,7 @@ const bigInjured = computed(() => {
             label="证件号码"
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             id="idNumber"
+            :required="isRequired"
             v-model:value="item.idNumber"
             v-preview-text="showPreview"
             style="width: 100%"
@@ -691,6 +704,7 @@ const bigInjured = computed(() => {
           <van-field 
             label="人员年龄"
             :rules="form.casualtyWar.age.rules"
+            :required="isRequired"
             id="age"
             v-model="item.age"
             v-preview-text="showPreview"
@@ -709,6 +723,7 @@ const bigInjured = computed(() => {
             label="人员来源"
             :name="`casualtyWar.deadList.${index}.injurySource`"
             :rules="form.casualtyWar.injurySource.rules"
+            :required="isRequired"
             id="injurySource"
             v-model:value="item.injurySource"
             :showPreview="showPreview"
@@ -729,6 +744,7 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择来源详情"
+            :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
           />
         </div>
@@ -737,6 +753,7 @@ const bigInjured = computed(() => {
             label="职业"
             :name="`casualtyWar.deadList.${index}.job`"
             :rules="form.casualtyWar.job.rules"
+            :required="isRequired"
             id="job"
             v-model:value="item.job"
             :showPreview="showPreview"
@@ -751,6 +768,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.deadList.${index}.health`"
             label="健康状况"
             :rules="form.casualtyWar.health.rules"
+            :required="isRequired"
             id="health"
             v-model:value="item.health"
             :showPreview="showPreview"
@@ -835,6 +853,7 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.deadList.${index}.deathDate`"
             label="死亡时间"
             :rules="form.casualtyWar.deathDate.rules"
+            :required="isRequired"
             id="deathDate"
             v-model:value="item.deathDate"
             :showPreview="showPreview"

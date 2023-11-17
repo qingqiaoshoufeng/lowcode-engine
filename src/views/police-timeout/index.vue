@@ -1,10 +1,12 @@
 <template>
   <div class="police-timeout">
     <ProList
+        showExplain
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getPoliceTimeout"
         title="警情超时统计"
+        :showExplainFn="showExplainFn"
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
@@ -112,6 +114,12 @@
         />
       </template>
     </DialogInfo>
+     <!-- 规则查看 -->
+     <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
+      <template v-slot="{setHandleOk}">
+        <RegularLook :type="1" />
+      </template>
+    </DialogInfo>
      <!-- 警情详情 -->
      <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
@@ -124,6 +132,7 @@ import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import RegularLook from '@/views/police-timeout/regular-look.vue';
 import RemarkReason from '@/views/police-timeout/remark-reason.vue';
 import LookReason from '@/views/police-timeout/look-reason.vue';
 // import ApplyReject from "./apply-reject.vue";
@@ -229,6 +238,10 @@ const handleReject = (row) => {
 const finishCallback = () => {
   currentRow.value = null
   proListRef.value.filter()
+}
+
+const showExplainFn = ()=>{
+  show.value.regularVisible = true
 }
 const selectTagsCallback = (selects) => {
   proListRef.value.query.tags = selects

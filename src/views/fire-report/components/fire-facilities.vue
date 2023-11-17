@@ -7,6 +7,8 @@ const form = inject('form')
 
 const showPreview = inject('showPreview')
 
+const isRequired = inject('isRequired')
+
 const options = inject('options')
 
 const fieldExist = inject('fieldExist')
@@ -184,6 +186,7 @@ const onFireShutterStart = () => {
         <van-field 
           name="fireFacilities.isFirefightFacility.value"
           label="是否安装消防设施"
+          :required="isRequired"
           :rules="form.fireFacilities.isFirefightFacility.rules"
         >
           <template #input>

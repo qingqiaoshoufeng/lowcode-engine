@@ -7,6 +7,8 @@ const form = inject('form')
 
 const showPreview = inject('showPreview')
 
+const isRequired = inject('isRequired')
+
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
@@ -20,10 +22,10 @@ const refreshField = inject('refreshField')
           name="fireCourse.firePassage.value"
           label="起火经过"
           :rules="form.fireCourse.firePassage.rules"
+          :required="isRequired"
           id="firePassage"
           v-model="form.fireCourse.firePassage.value"
           v-preview-text="showPreview"
-          :required="true"
           :rows="6"
           :maxlength="1000"
           show-count

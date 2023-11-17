@@ -764,7 +764,7 @@ export const useFormConfig = (fromRef) => {
   }
 
   const form = ref(cloneDeep(formOrigin))
-
+  const isRequired = ref(true)
   const handleUseForm = (key, data) => {
     const modelRef = ref(pickBy(data, (v, k) => {
       if (key !== 'casualtyWar') {
@@ -903,6 +903,7 @@ export const useFormConfig = (fromRef) => {
   )
 
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
+  // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   const initFormWhenChange = (draft) => {
     form.value.fireInfo = cloneDeep(formOrigin.fireInfo)
     if (draft) {
@@ -921,6 +922,8 @@ export const useFormConfig = (fromRef) => {
     // form.value.basicInfo.fireType.text = []
     // form.value.basicInfo.fireCause.value = undefined
     // form.value.basicInfo.fireCause.text = []
+    // form.value.basicInfo.noCause.value = undefined
+    // form.value.basicInfo.noCause.text = []
     // form.value.basicInfo.burnedArea.value = ''
     // form.value.basicInfo.fireLevel.value = ''
     // form.value.basicInfo.firePlace.value = undefined
@@ -955,12 +958,13 @@ export const useFormConfig = (fromRef) => {
     form.value.basicInfo.schooling.value = undefined
     form.value.basicInfo.health.value = undefined
     form.value.basicInfo.industry.value = undefined
+    form.value.basicInfo.industryDepartment.value = undefined
     form.value.basicInfo.economicType.value = undefined
     form.value.basicInfo.leadInspectionOrg.value = undefined
     form.value.basicInfo.otherOrgRemark.value = ''
     form.value.basicInfo.isInsurance.value = '2'
     form.value.basicInfo.insuranceInfo.value = undefined
-    form.value.basicInfo.isResearch.value = '2'
+    // form.value.basicInfo.isResearch.value = '2'
     form.value.basicInfo.isOnesided.value = '2'
     form.value.basicInfo.fireInspection.value = undefined
     form.value.basicInfo.fireInspectionScope.value = undefined
@@ -1226,6 +1230,7 @@ export const useFormConfig = (fromRef) => {
     // form.value.basicInfo.severity.rules[0].required = value
     // form.value.basicInfo.noDispatchArea.rules[0].required = value
     // form.value.basicInfo.fireDate.rules[0].required = value
+    isRequired.value = value
     form.value.basicInfo.fireDirection.rules[0].required = value
     form.value.basicInfo.area.rules[0].required = value
     // form.value.basicInfo.isUrbanVillages.rules[0].required = value
@@ -1403,5 +1408,5 @@ export const useFormConfig = (fromRef) => {
     return result
   }
 
-  return { form, handleUseForm, initFormWhenChange, initFormByDetail, initDraftRules, checkFieldWarning, generateRemarkField }
+  return { form, isRequired, handleUseForm, initFormWhenChange, initFormByDetail, initDraftRules, checkFieldWarning, generateRemarkField }
 }
