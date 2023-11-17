@@ -406,6 +406,7 @@ const validateDealEndDate = (value, rule) => {
       :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInformation.returnDate.rules]"
     />
     <van-field
+      v-if="!showMidwayReturn"
       v-model="form.basicInformation.presentSpeed.value"
       v-preview-text="showPreview"
       :readonly="showPreview"

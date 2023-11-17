@@ -457,7 +457,7 @@ const initWatch = () => {
     form.value.basicInfo.severity.value,
   ], () => {
     initFormWhenChange()
-    initDraftRules(!props.showDraft, formRef)
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
   // 只有当填报状态下才自动生成处置过程
   // debugger;
