@@ -62,7 +62,7 @@ const handleSearch = () => {
   <div class="global-search">
     <ProList
       ref="proListRef"
-      title="警情修改"
+      title="全局搜索"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getGlobalSearchList"
       :tabs="tabs"
