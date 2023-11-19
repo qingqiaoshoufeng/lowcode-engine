@@ -2,6 +2,7 @@ import axios from 'axios'
 import { request } from '@/plugins/axios/index.js'
 
 export * from './system/login.js'
+export * from './system/user-manage.js'
 export * from './business/police-confirm.js'
 export * from './business/police-entry.js'
 export * from './business/police-manage.js'
