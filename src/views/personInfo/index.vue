@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import dayjs from 'dayjs'
 import { getUserDetail, getAttachmentFile, uploadFile } from '@/apis/index.js';
 import { useDetail, useSubmit } from '@castle/castle-use';
 import HeaderTitle from "@/component/HeaderTitle/index.vue";
@@ -14,13 +15,21 @@ const getAvatar = () => {
     businessType: 'userImage',
   }).then((res) => {
     if (res.data.length > 0) {
+      const imgs = res.data.map(item => {
+        return {
+          ...item,
+          createDate: dayjs(item.createDate)?.valueOf(),
+        }
+      }).sort((a, b) => {
+        return b.createDate - a.createDate
+      })
       form.value.img = [{
-        ...res.data?.[0],
-        uid: res.data?.[0]?.attachmentId,
-        name: res.data?.[0]?.attachmentName,
+        ...imgs?.[0],
+        uid: imgs?.[0]?.attachmentId,
+        name: imgs?.[0]?.attachmentName,
         status: "done",
         isImage: true,
-        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${res.data?.[0]?.attachmentId}`,
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`,
       }]
     }
     else {
@@ -33,8 +42,9 @@ const { detail, loadDetail } = useDetail({
   getDetailFn: () => getUserDetail().then((res) => {
     if (res) {
       form.value.userId = res.userId
+      getAvatar()
     }
-    getAvatar()
+    return res
   }),
 })
 
