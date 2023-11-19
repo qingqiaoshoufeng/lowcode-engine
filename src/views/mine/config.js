@@ -27,5 +27,6 @@ export const entryList = [
   {
     icon:editor,
     label:'修改密码',
+    path: '/changePassword',
   }
 ]

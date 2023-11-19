@@ -1,6 +1,6 @@
 <template>
     <div class="entry_list">
-        <van-cell v-for="item in list" :key="item.label" title="单元格" is-link>
+        <van-cell v-for="item in list" :key="item.label" title="单元格" is-link @click="handleItem(item)">
             <template #title>
                 <div class="title">
                     <img :src="item.icon" alt="">
@@ -13,12 +13,24 @@
   
 <script setup>
 import {defineProps } from "vue";
+import { useRouter } from "vue-router";
+
 const props = defineProps({
   list:{
     default:()=>([]),
     type:Array
   }
 })
+
+const router = useRouter();
+
+const handleItem = (item) => {
+  if (item.path) {
+    router.push({
+      path: item.path,
+    })
+  }
+}
 
 </script>
 <script>
