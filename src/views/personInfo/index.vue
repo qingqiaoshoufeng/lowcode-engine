@@ -112,6 +112,9 @@ onMounted(() => {
     :deep(.van-uploader__preview) {
       margin: 0 0;
     }
+    :deep(.van-image__img) {
+      border-radius: 50%;
+    }
   }
 }
 </style>

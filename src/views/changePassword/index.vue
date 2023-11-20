@@ -75,7 +75,7 @@ onMounted(() => {
         <van-field
           v-model="form.oldPassword"
           required
-          :type="form.oldPasswordShow ? 'password' : ''"
+          :type="form.oldPasswordShow ? '' : 'password'"
           maxlength="20"
           name="oldPassword"
           label="旧密码："
@@ -84,7 +84,7 @@ onMounted(() => {
         >
           <template #button>
             <span @click="() => (form.oldPasswordShow = !form.oldPasswordShow)">
-              <van-icon name="closed-eye" v-if="form.oldPasswordShow" />
+              <van-icon name="closed-eye" v-if="!form.oldPasswordShow" />
               <van-icon name="eye-o" v-else />
             </span>
           </template>
@@ -92,7 +92,7 @@ onMounted(() => {
         <van-field
           v-model="form.password"
           required
-          :type="form.passwordShow ? 'password' : ''"
+          :type="form.passwordShow ? '' : 'password'"
           maxlength="20"
           name="password"
           label="新密码："
@@ -104,7 +104,7 @@ onMounted(() => {
         >
           <template #button>
             <span @click="() => (form.passwordShow = !form.passwordShow)">
-              <van-icon name="closed-eye" v-if="form.passwordShow" />
+              <van-icon name="closed-eye" v-if="!form.passwordShow" />
               <van-icon name="eye-o" v-else />
             </span>
           </template>
@@ -112,7 +112,7 @@ onMounted(() => {
         <van-field
           v-model="form.confirmPassword"
           required
-          :type="form.confirmPasswordShow ? 'password' : ''"
+          :type="form.confirmPasswordShow ? '' : 'password'"
           maxlength="20"
           name="confirmPassword"
           label="确认密码："
@@ -124,7 +124,7 @@ onMounted(() => {
         >
         <template #button>
             <span @click="() => (form.confirmPasswordShow = !form.confirmPasswordShow)">
-              <van-icon name="closed-eye" v-if="form.confirmPasswordShow" />
+              <van-icon name="closed-eye" v-if="!form.confirmPasswordShow" />
               <van-icon name="eye-o" v-else />
             </span>
           </template>
