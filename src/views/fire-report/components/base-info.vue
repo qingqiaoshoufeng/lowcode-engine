@@ -4,7 +4,7 @@ import AreaCascader from '@/component/AreaCascader/index.vue'
 import SelectDateTime from "@/component/SelectDateTime/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
-
+import { showDialog } from 'vant';
 import store from '@/store/index.js'
 import dayjs from 'dayjs'
 // import { message, notification } from '@castle/ant-design-vue'
@@ -164,25 +164,25 @@ onMounted(() => {
 })
 
 watch(() => form.value, () => {
-  const { directDamage } = form.value.economicLoss
+  const { directEconomicLoss } = form.value.economicLoss
   const { injuredList, deadList } = form.value.casualtyWar
-  if (deadList?.length >= 30 || injuredList?.length >= 100 || directDamage.value >= 100000000) { // 特别重大事故
+  if (deadList?.length >= 30 || injuredList?.length >= 100 || directEconomicLoss.value >= 100000000) { // 特别重大事故
     const filter = options.value?.fireLevel?.filter(item => item.dictName === '特大火灾')
     form.value.basicInfo.fireLevel.value = filter && filter[0].boDictId
   }
   else if ((deadList?.length >= 10 && deadList?.length < 30)
     || (injuredList?.length >= 50 && injuredList?.length < 100)
-    || (directDamage.value >= 50000000 && directDamage.value < 100000000)) { // 重大事故
+    || (directEconomicLoss.value >= 50000000 && directEconomicLoss.value < 100000000)) { // 重大事故
     const filter = options.value?.fireLevel?.filter(item => item.dictName === '重大火灾')
     form.value.basicInfo.fireLevel.value = filter && filter[0].boDictId
   }
   else if ((deadList?.length >= 3 && deadList?.length < 10)
     || (injuredList?.length >= 10 && injuredList?.length < 50)
-    || (directDamage.value >= 10000000 && directDamage.value < 50000000)) { // 较大事故
+    || (directEconomicLoss.value >= 10000000 && directEconomicLoss.value < 50000000)) { // 较大事故
     const filter = options.value?.fireLevel?.filter(item => item.dictName === '较大火灾')
     form.value.basicInfo.fireLevel.value = filter && filter[0].boDictId
   }
-  else if (deadList?.length < 3 || injuredList?.length < 10 || directDamage.value < 100000000) { // 一般事故
+  else if (deadList?.length < 3 || injuredList?.length < 10 || directEconomicLoss.value < 100000000) { // 一般事故
     const filter = options.value?.fireLevel?.filter(item => item.dictName === '一般火灾')
     form.value.basicInfo.fireLevel.value = filter && filter[0].boDictId
   }
@@ -497,12 +497,21 @@ const showFireInspectionScope = computed(() => {
   return filter.includes('消防安全重点单位')
 })
 
-
-
 // const showOutdoorBridge = computed(() => {
 //   const { fireType, firePlace } = form.value.basicInfo
 //   return fireType?.text?.includes('露天场所火灾') && firePlace?.text?.indexOf('桥梁') > -1
 // })
+
+const onFireLevel = () => {
+  showDialog({ message: `
+    根据生产安全事故(以下简称事故)造成的人员伤亡或者直接经济损失，事故一般分为以下等级：
+    (1)特别重大事故，是指造成30人以上死亡，或者100人以上重伤(包括急性工业中毒，下同)或者1亿元以上直接经济损失的事故。
+    (2) 重大事故，是指造成10人以上30人以下死亡，或者50人以上100人以下重伤，或者5000万元以上1亿元以下直接经济损失的事故。
+    (3)较大事故，是指造成3人以上10人以下死亡，或者10人以上50人以下重伤，或者1000万元以上5000万元以下直接经济损失的事故。
+    (4)一般事故，是指造成3人以下死亡，或者10人以下重伤，或者1000万元以下直接经济损失的事故。
+    本条第一款所称的“以上”包括本数，所称的“以下”不包括本数
+  ` });
+}
 </script>
 
 <template>
@@ -665,6 +674,7 @@ const showFireInspectionScope = computed(() => {
         <SelectSingle
           v-model:value="form.basicInfo.fireLevel.value"
           :showPreview="showPreview"
+          :is-link="false"
           label="火灾等级"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           :options="options.fireLevel"
@@ -672,6 +682,9 @@ const showFireInspectionScope = computed(() => {
           placeholder="请选择火灾等级"
           title="请选择火灾等级"
           disabled
+          right-icon="question-o"
+          class="fire-level-item"
+          @click-right-icon.stop="onFireLevel"
         />
       </div>
       <div class="firePlace">

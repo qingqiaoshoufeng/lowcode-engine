@@ -93,7 +93,7 @@ onMounted(async () => {
     if (res?.data) {
       const { data } = res
       // selectTabRow.value = props.currentRow
-      tabsData.value = [...data?.fireWarningList, ...data?.fireList, ...data?.dispatchList]
+      tabsData.value = [data?.fireWarningList, ...data?.fireList, ...data?.dispatchList]
       tabsData.value.forEach((item) => {
         if (item.boFireInfoId) {
           item.type = 5
