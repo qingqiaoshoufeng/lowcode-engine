@@ -2,7 +2,7 @@
     <div class="entry_list">
         <van-cell v-for="item in list" :key="item.label" title="单元格" is-link>
             <template #title>
-                <div class="title">
+                <div class="title" @click="item.click">
                     <img :src="item.icon" alt="">
                     <div class="label">{{ item.label }}</div>
                 </div>

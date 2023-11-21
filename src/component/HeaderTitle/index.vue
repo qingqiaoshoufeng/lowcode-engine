@@ -3,7 +3,11 @@
     <div class="arrow">
       <van-icon @click="router.go(-1)" name="arrow-left" />
     </div>
-    <div>{{ title }}</div>
+    <div v-if="withCheck">
+      <slot name="check" />
+    </div>
+    <div v-else>{{ title }}</div>
+   
     <div class="explain">
       <slot name="explain" />
     </div>
@@ -16,6 +20,10 @@ const props = defineProps({
   title:{
     type:String,
     default:''
+  },
+  withCheck:{
+    type:Boolean,
+    default:false
   }
 })
 </script>
