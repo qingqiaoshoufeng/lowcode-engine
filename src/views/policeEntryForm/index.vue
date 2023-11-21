@@ -387,7 +387,7 @@ const { loading, submit } = useSubmit((res) => {
       warningArea: values.warningArea.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
-      warningType: values.warningType?.join(','),
+      warningType: values.warningType?.pop(),
       dispatchGroup: values.dispatchGroup.map(item => item.organizationid).join(','),
       areaDutyGroup: values.areaDutyGroup.map(item => item.organizationid).join(','), // 取最后一级
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',

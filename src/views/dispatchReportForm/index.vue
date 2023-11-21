@@ -695,7 +695,7 @@ const getSubmitParams = () => {
         dealEndDate: basicInformation.dealEndDate.value?.valueOf(),
         returnLateReason: basicInformation.returnLateReason.value,
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.join(','),
+        warningType: draftInfo.warningType.value?.pop(),
         partakeType: draftInfo.partakeType.value,
         temperature: basicInformation.temperature.value,
         weather: basicInformation.weather.value,
@@ -883,7 +883,7 @@ const getSubmitParams = () => {
         attendanceDate: basicInfoHead?.attendanceDate.value?.valueOf(),
         evacuateDate: basicInfoHead?.evacuateDate.value?.valueOf(),
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.join(','),
+        warningType: draftInfo.warningType.value?.pop(),
         partakeType: draftInfo.partakeType.value,
       },
       fireDispatchHead: {
