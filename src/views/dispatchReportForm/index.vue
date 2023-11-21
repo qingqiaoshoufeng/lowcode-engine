@@ -268,7 +268,7 @@ const sections = computed(() => {
     }
     extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
-    if (props.isDetail) {
+    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
       extra.proSteps = proSteps
     }
     return extra
@@ -290,12 +290,12 @@ const sections = computed(() => {
     }
     extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
-    if (props.isDetail) {
+    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
       extra.proSteps = proSteps
     }
     return extra
   case '指挥':
-    if (props.isDetail) {
+    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
       return {
         ...extra,
         basicInfoHead,
@@ -489,6 +489,7 @@ const initDetail = () => {
       const id = currentRow?.boFireDispatchId
       getDispatchDetailHeadquarter(id).then((res) => {
         if (res) {
+          dispatchDetail.value = res
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
@@ -501,6 +502,7 @@ const initDetail = () => {
       const id = currentRow?.boFireDispatchId
       getDispatchDetail(id).then((res) => {
         if (res) {
+          dispatchDetail.value = res
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
@@ -1341,7 +1343,11 @@ const onSideBarChange = (e, k) => {
           <BattleConsume />
         </template>
         <!-- 操作记录 -->
-        <ProSteps v-if="isDetail" :data="form?.proSteps?.fireDispatchTransferVOList?.value" />
+        <ProSteps
+          v-if="isDetail || (isApproval && labelText === '审核')"
+          :data="form?.proSteps?.fireDispatchTransferVOList?.value"
+          :detail="dispatchDetail"
+        />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">

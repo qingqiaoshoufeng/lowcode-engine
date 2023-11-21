@@ -1113,7 +1113,12 @@ const validateHeadquarters = (value, rule) => {
     </van-form>
 
     <!-- 操作记录 -->
-    <ProSteps v-if="showSteps" class="steps-box" :data="form?.transferList" />
+    <ProSteps
+      v-if="showSteps"
+      class="steps-box"
+      :data="form?.transferList"
+      :detail="detail"
+    />
 
     <div class="form-footer" v-if="!showPreview">
       <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
