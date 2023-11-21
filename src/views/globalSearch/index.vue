@@ -15,7 +15,6 @@ const defaultFilterValue = {
 };
 
 const resultValue = ref("");
-// 查询结果：共查询到{{ 0 }}起警情记录
 
 const tabs = ref([
   {
@@ -52,7 +51,14 @@ const handleItem = (row) => {
 
 const handleSearch = () => {
   showLoadingToast();
-  proListRef.value.filter().then(() => {
+  proListRef.value.filter().then((res) => {
+    if (proListRef.value.query.type === 1) {
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起警情记录`
+    } else if (proListRef.value.query.type === 2 || proListRef.value.query.type === 3) {
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起出动记录`
+    } else if (proListRef.value.query.type === 4) {
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起火灾记录`
+    }
     closeToast();
   });
 }
@@ -151,6 +157,11 @@ const handleSearch = () => {
       }
     }
     .search-result {
+      margin-left: 12px;
+      span {
+        color: red;
+        margin: 0 10px;
+      }
     }
   }
 }

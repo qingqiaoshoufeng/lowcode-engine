@@ -37,8 +37,6 @@ export const entryList = [
   {
     icon:editor,
     label:'修改密码',
-    click:function(){
-      router.push('/password-change')
-    }
+    path: '/changePassword',
   }
 ]

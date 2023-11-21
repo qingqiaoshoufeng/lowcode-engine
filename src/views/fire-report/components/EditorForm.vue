@@ -294,7 +294,7 @@ const sections = computed(() => {
   result.firePhoto = firePhoto
   result.fireCourse = fireCourse
   result.otherAttach = otherAttach
-  if (props.isDetail) {
+  if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
     result.proSteps = proSteps
   }
   return result
@@ -502,6 +502,7 @@ const initDetail = () => {
     const id = currentRow?.boFireInfoId
     getFireReportDetail(id).then((res) => {
       if (res) {
+        fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
         }
@@ -618,11 +619,11 @@ const getSubmitParams = () => {
       fireOrgname: basicInfo.fireOrgname?.value,
       fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
-      fireType: basicInfo.fireType?.completeValue?.join(','),
+      fireType: basicInfo.fireType?.completeValue?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),
       burnedArea: basicInfo.burnedArea?.value,
       fireLevel: basicInfo.fireLevel?.value,
-      firePlace: basicInfo.firePlace?.value?.join(','),
+      firePlace: basicInfo.firePlace?.value?.pop(),
       isLaborIntensive: basicInfo.isLaborIntensive?.value,
       plantRiskClassification: basicInfo.plantRiskClassification?.value,
       otherFirePlace: basicInfo.otherFirePlace?.value,
@@ -1046,8 +1047,13 @@ const onSideBarChange = (e, k) => {
                   <OtherAttach />
                 </ProCard>
                 <!-- 操作记录 -->
-                <ProCard title="操作记录" id="proSteps" v-if="isDetail">
-                  <ProSteps :data="form?.proSteps?.fireInfoTransferList?.value" :withHeader="false" :showOpenClose="!showPreview" />
+                <ProCard title="操作记录" id="proSteps" v-if="isDetail || (isApproval && labelText === '审核')">
+                  <ProSteps
+                    :data="form?.proSteps?.fireInfoTransferList?.value"
+                    :withHeader="false"
+                    :showOpenClose="!showPreview"
+                    :detail="fireDetail"
+                  />
                 </ProCard>
               </van-form>
               <div class="form-footer" v-if="!showPreview">

@@ -1,11 +1,11 @@
 <template>
-    <div class="info_card">
+    <div class="info_card" @click="handleEnter">
         <img class="avatar" v-if="info?.img" :src="info?.img">
         <img class="avatar" v-else src="@/assets/images/avatar.png">
         <div class="info">
             <div class="top">
                 <div class="name">{{info.userName}}</div> 
-                <div class="editor">
+                <div class="editor" @click.stop="handleEdit">
                     <span>编辑资料</span>
                     <van-icon name="edit" color="#1E86FE" />
                 </div>
@@ -18,11 +18,25 @@
 <script setup>
 import {ref,computed} from 'vue'
 import store from '@/store/index.js'
-console.log(store);
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 const info = computed(()=>{
   return store.state.userInfo.userInfo.USERMESSAGE
 })
  
+const handleEnter = () => {
+  router.push({
+    path: '/personInfo',
+  })
+}
+
+const handleEdit = () => {
+  router.replace({
+    path: '/personInfoEdit',
+  })
+}
 </script>
     
 <style scoped lang="scss">

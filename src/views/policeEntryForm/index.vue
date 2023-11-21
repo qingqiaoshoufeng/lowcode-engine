@@ -387,7 +387,7 @@ const { loading, submit } = useSubmit((res) => {
       warningArea: values.warningArea.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
-      warningType: values.warningType?.join(','),
+      warningType: values.warningType?.pop(),
       dispatchGroup: values.dispatchGroup.map(item => item.organizationid).join(','),
       areaDutyGroup: values.areaDutyGroup.map(item => item.organizationid).join(','), // 取最后一级
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',
@@ -1113,7 +1113,12 @@ const validateHeadquarters = (value, rule) => {
     </van-form>
 
     <!-- 操作记录 -->
-    <ProSteps v-if="showSteps" class="steps-box" :data="form?.transferList" />
+    <ProSteps
+      v-if="showSteps"
+      class="steps-box"
+      :data="form?.transferList"
+      :detail="detail"
+    />
 
     <div class="form-footer" v-if="!showPreview">
       <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
