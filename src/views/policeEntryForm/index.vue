@@ -370,10 +370,10 @@ const { loading, submit } = useSubmit((res) => {
     emits('finishCallback')
   }
   else {
-    // showSuccessModal({ title: '派发成功！', okText: '查看已派发', pathName: 'police-manage' }, () => {
+    // showSuccessModal({ title: '发送成功！', okText: '查看已发送', pathName: 'police-manage' }, () => {
     //   props.refreshCallback()
     // })
-    showToast('派发成功！')
+    showToast('发送成功！')
     emits('finishCallback')
   }
 }, {

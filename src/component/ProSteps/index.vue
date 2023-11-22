@@ -174,9 +174,10 @@ export default {
 }
 .steps-next {
   display: flex;
+  flex-direction: column;
   margin: 20px 0 0 0;
   &-current {
-    margin-right: 40px;
+    margin-bottom: 10px;
   }
 }
 </style>

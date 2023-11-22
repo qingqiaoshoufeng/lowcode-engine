@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 export const useSuccess = () => {
   const router = useRouter()
 
-  const showSuccessModal = ({ title = '派发成功！', okText = '查看已派发', cancelText = '返回列表页', pathName, query }, fn) => {
+  const showSuccessModal = ({ title = '发送成功！', okText = '查看已发送', cancelText = '返回列表页', pathName, query }, fn) => {
     // Modal.confirm({
     //   title,
     //   icon: createVNode(CheckCircleOutlined, { style: 'color: #52c41a' }),
