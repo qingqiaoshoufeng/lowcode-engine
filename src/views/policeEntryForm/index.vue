@@ -391,7 +391,7 @@ const { loading, submit } = useSubmit((res) => {
       dispatchGroup: values.dispatchGroup.map(item => item.organizationid).join(','),
       areaDutyGroup: values.areaDutyGroup.map(item => item.organizationid).join(','), // 取最后一级
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',
-      naturalDisasterType: values.naturalDisasterType ? values.naturalDisasterType.join(',') : '',
+      naturalDisasterType: values.naturalDisasterType ? values.naturalDisasterType.pop() : '',
       headquarters: values.headquarters ? values.headquarters.map(item => item.organizationid).join(',') : '',
       otherProvince: values.otherProvince ? values.otherProvince.join(',') : '',
       otherCity: values.otherCity ? values.otherCity.join(',') : '',
@@ -585,6 +585,9 @@ onMounted(() => {
 });
 
 const handleLngLat = () => {
+  if (props.isConfirm) {
+    return
+  }
   if (!form.value.warningArea) {
     showToast("请先选择行政区域");
     return;
@@ -705,6 +708,7 @@ const validateHeadquarters = (value, rule) => {
         title="请选择接警时间"
         label="接警时间："
         placeholder="请选择接警时间"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择接警时间' }]"
       />
       <AreaCascader
@@ -716,6 +720,7 @@ const validateHeadquarters = (value, rule) => {
         :show-all-area="showPreview"
         :required="!showPreview"
         :rules="[{ required: true, message: '请选择行政区域' }]"
+        :disabled="isConfirm"
         @change="onAreaChange"
       />
       <van-field
@@ -727,6 +732,7 @@ const validateHeadquarters = (value, rule) => {
         name="warningAddr"
         label="警情地址："
         placeholder="请输入警情地址"
+        :disabled="isConfirm"
         :rules="[{ validator: validateWarningAddr, trigger: 'onBlur' }]"
       />
       <van-field
@@ -745,6 +751,7 @@ const validateHeadquarters = (value, rule) => {
           { required: true, message: '请输入经度坐标' },
           { validator: validateLng, trigger: 'onBlur' },
         ]"
+        :disabled="isConfirm"
       >
         <template #button>
           <van-button size="small" type="primary" @click="handleLngLat"
@@ -768,6 +775,7 @@ const validateHeadquarters = (value, rule) => {
           { required: true, message: '请输入纬度坐标' },
           { validator: validateLat, trigger: 'onBlur' },
         ]"
+        :disabled="isConfirm"
       >
       </van-field>
       <CascaderSingle
@@ -794,6 +802,7 @@ const validateHeadquarters = (value, rule) => {
         label="要人安保："
         label-width="100px"
         class="switch-wrapper"
+        :disabled="isConfirm"
       >
         <template #input>
           <van-switch
@@ -813,6 +822,7 @@ const validateHeadquarters = (value, rule) => {
         label="是否发生火灾："
         label-width="120px"
         class="switch-wrapper"
+        :disabled="isConfirm"
       >
         <template #input>
           <van-switch
@@ -833,6 +843,7 @@ const validateHeadquarters = (value, rule) => {
         name="warningTypeOther"
         label="其他说明："
         placeholder="请输入其他说明"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请输入其他说明' }]"
       />
       <SelectSingle
@@ -847,6 +858,7 @@ const validateHeadquarters = (value, rule) => {
         title="请选择警情等级"
         label="警情等级："
         placeholder="请选择警情等级"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择警情等级' }]"
       />
       <van-field
@@ -860,6 +872,7 @@ const validateHeadquarters = (value, rule) => {
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
+        :disabled="isConfirm"
       />
       <SelectSingle
         v-model:value="form.warningSource"
@@ -872,6 +885,7 @@ const validateHeadquarters = (value, rule) => {
         label="报警来源："
         placeholder="请选择报警来源"
         title="请选择报警来源"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择报警来源' }]"
       />
       <van-field
@@ -880,10 +894,11 @@ const validateHeadquarters = (value, rule) => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         name="warningTel"
-        label="联系方式："
-        placeholder="请输入联系方式"
+        label="报警人联系方式："
+        placeholder="请输入报警人联系方式"
         maxlength="13"
         :required="false"
+        :disabled="isConfirm"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
       />
       <van-field
@@ -894,6 +909,7 @@ const validateHeadquarters = (value, rule) => {
         label="是否自然灾害引发："
         label-width="150px"
         class="switch-wrapper"
+        :disabled="isConfirm"
       >
         <template #input>
           <template v-if="showPreview">
@@ -922,6 +938,7 @@ const validateHeadquarters = (value, rule) => {
         label="自然灾害类型："
         label-width="118px"
         placeholder="请选择自然灾害类型"
+        :disabled="isConfirm"
       />
       <van-field
         v-if="showNaturalDisasterOther || form.naturalDisasterOther"
@@ -933,6 +950,7 @@ const validateHeadquarters = (value, rule) => {
         name="naturalDisasterOther"
         label="其他说明："
         placeholder="请输入其他说明"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请输入其他说明' }]"
       />
       <SelectSingle
@@ -945,6 +963,7 @@ const validateHeadquarters = (value, rule) => {
         :field-names="{ value: 'boDictId', label: 'dictName' }"
         label="台风编号："
         placeholder="请选择台风编号"
+        :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择台风编号' }]"
       />
       <van-field
@@ -960,6 +979,7 @@ const validateHeadquarters = (value, rule) => {
         :rules="[
           { pattern: /^[A-Za-z0-9]*$/, message: '请输入正确119警情编号' },
         ]"
+        :disabled="isConfirm"
       />
       <SelectMultiple
         v-model:value="form.warningTag"
@@ -973,6 +993,7 @@ const validateHeadquarters = (value, rule) => {
         label="警情标签："
         placeholder="请选择警情标签"
         title="请选择警情标签"
+        :disabled="isConfirm"
       />
       <SelectOrg
         v-model:value="form.dispatchGroup"
@@ -986,6 +1007,7 @@ const validateHeadquarters = (value, rule) => {
         title="请选择出动队伍"
         :rules="[{ required: true, message: '请选择出动队伍' }]"
         :params="{ deptType: 1 }"
+        :disabled="isConfirm"
         @change="onChangeDispatchGroup"
       />
       <SelectOrg
@@ -1001,6 +1023,7 @@ const validateHeadquarters = (value, rule) => {
         :single="true"
         :rules="[{ required: true, message: '请选择辖区队站' }]"
         :params="{ deptType: 1 }"
+        :disabled="isConfirm"
       />
       <SelectSingle
         v-model:value="form.firstGroup"
@@ -1015,6 +1038,7 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择首到队站"
         :rules="[{ required: true, message: '请选择首到队站' }]"
         :checkShowFn="handleMain"
+        :disabled="isConfirm"
       />
       <SelectSingle
         v-model:value="form.mainGroup"
@@ -1029,6 +1053,7 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择主战队站"
         :rules="[{ required: true, message: '请选择主战队站' }]"
         :checkShowFn="handleMain"
+        :disabled="isConfirm"
       />
       <SelectOrg
         v-if="showAreaDutyGroup"
@@ -1045,6 +1070,7 @@ const validateHeadquarters = (value, rule) => {
         :single="true"
         :rules="[{ required: true, message: '请选择责任区大队' }]"
         :params="{ deptType: 1, deptLevel: 4 }"
+        :disabled="isConfirm"
       />
       <SelectOrg
         v-model:value="form.headquarters"
@@ -1063,6 +1089,7 @@ const validateHeadquarters = (value, rule) => {
         :headers-disabled="false"
         class="special-place"
         :class="{'special-header-data': showPreview && form.headquarters?.length <= 0}"
+        :disabled="isConfirm"
       />
       <SelectMultiple
         v-model:value="form.otherCity"
@@ -1109,6 +1136,7 @@ const validateHeadquarters = (value, rule) => {
         show-word-limit
         :rules="[{ required: true, message: '请输入警情描述'}]"
         :class="{'form-textarea': !showPreview}"
+        :disabled="isConfirm"
       />
     </van-form>
 
