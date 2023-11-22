@@ -1,0 +1,20 @@
+export const fromConfig = [
+  {
+    rules:[{required:true,message:'请输入原密码'}],
+    label:"原密码",
+    placeholder:"请输入原密码",
+    key:'password'
+  },
+  {
+    rules:[{required:true,message:'请输入新密码'}],
+    label:"新密码",
+    placeholder:"请输入新密码",
+    key:'newPassword'
+  },
+  {
+    rules:[{required:true,message:'请输入确认密码'}],
+    label:"确认密码",
+    placeholder:"请输入确认密码",
+    key:'confirmPassword'
+  }
+]

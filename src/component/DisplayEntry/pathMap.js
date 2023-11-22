@@ -22,6 +22,24 @@ export const pathMap = {
   "jingqingchaoshitongji":"/police-timeout",
   "huozaichaoshitongji":"/fire-timeout",
   "chudongchaoshitongji":"/dispatch-timeout",
-  "weitianbaoduizhantongji":"station-timeout"
+  "weitianbaoduizhantongji":"station-timeout",
+  "policeDispatched":'have-done-info/policeDispatched',
+  "policeRejected":'have-done-info/policeRejected',
+  "policeAmend":'have-done-info/policeAmend',
+  "policeInvalid":'have-done-info/policeInvalid',
+  "policeConfirmed":'have-done-info/policeConfirmed',
+  "policeDispatchArea":'have-done-info/policeDispatchArea',
+  "dispatchFilled":'have-done-info/dispatchFilled',
+  "dispatchReviewed":'have-done-info/dispatchReviewed',
+  "dispatchIdRejected":'have-done-info/dispatchIdRejected',
+  "dispatchAmend":'have-done-info/dispatchAmend',
+  "fireFilled":'have-done-info/fireFilled',
+  "fireReviewed":'have-done-info/fireReviewed',
+  "fireReject":'have-done-info/fireReject',
+  "fireAmend":'have-done-info/fireAmend',
 }
+
+
+// policeDispatched,policeRejected,policeAmend,policeInvalid,policeConfirmed,policeDispatchArea,dispatchFilled
+// ,dispatchReviewed,dispatchIdRejected,dispatchAmend,fireFilled,fireReviewed,fireReject,fireAmend
   

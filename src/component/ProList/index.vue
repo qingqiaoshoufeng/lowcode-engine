@@ -5,6 +5,10 @@ import { cloneDeep } from 'lodash-es'
 import HeaderTitle from '../HeaderTitle/index.vue'
 
 const props = defineProps({
+  showTotal:{
+    type: Boolean,
+    default: false,
+  },
   title: {
     type:String,
     default:''
@@ -153,6 +157,9 @@ export default {
         <div @click="showExplainFn" class="explain">规则说明</div>
       </template>
     </HeaderTitle>
+    <div class="total" v-if="showTotal">
+      <strong>查询结果：</strong><span>共查到</span><span class="total-num">{{total}}</span><span>起记录</span>
+    </div>
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab
@@ -181,7 +188,7 @@ export default {
           @load="onLoad"
         >
           <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content van-clearfix">
-            <slot name="list" :record="item" :index="index" />
+            <slot name="list" :tabsActive="tabsActive" :record="item" :index="index" />
           </div>
         </van-list>
       </template>
@@ -202,6 +209,12 @@ export default {
     font-weight: 500;
     color: #FFFFFF;
     line-height: 22px;
+  }
+  .total{
+    padding: 10px 0 0 16px;
+    .total-num{
+      color: #FC5B3F;
+    }
   }
   .list-wrapper {
     flex: 1;
