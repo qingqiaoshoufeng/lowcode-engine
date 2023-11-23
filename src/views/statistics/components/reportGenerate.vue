@@ -73,6 +73,8 @@ const form = ref({
   dataTimeSource: '',
 })
 
+const openState = ref(false)
+
 const searchLoading = ref(false)
 
 const reportName = ref('')
@@ -150,6 +152,7 @@ const handleSearch = () => {
   searchReportByTemplate(params).then((res) => {
     searchLoading.value = false
     if (res?.data?.data) {
+      openState.value = true
       const data = res?.data?.data
       tableStream.value = data
 
@@ -268,6 +271,7 @@ const handleDefineSearch = () => {
   searchReportByDefine(params).then((res) => {
     searchLoading.value = false
     if (res?.data?.data) {
+      openState.value = true
       const data = res?.data?.data
       tableStream.value = data
 
@@ -478,6 +482,10 @@ const initForm = () => {
   initOptions()
 }
 
+const handleOpen = () => {
+  openState.value = !openState.value
+}
+
 onMounted(() => {
   initForm()
 })
@@ -489,7 +497,7 @@ onMounted(() => {
       <van-tab title="固定报表" name="1"></van-tab>
       <van-tab title="自定义报表" name="2"></van-tab>
     </van-tabs>
-    <van-form ref="formRef">
+    <van-form ref="formRef" :style="{ 'height': openState ? '0px' : 'unset', 'overflow': 'hidden'}">
       <SelectSingle
         v-model:value="form.reportClass"
         :readonly="true"
@@ -627,6 +635,14 @@ onMounted(() => {
       >
         查询
       </van-button>
+      <van-button
+        size="small"
+        block
+        style="margin-left: 10px;"
+        @click="handleOpen"
+      >
+        {{ openState ? '收起' : '展开' }}
+      </van-button>
     </div>
 
     <div class="report-content">
@@ -647,7 +663,7 @@ onMounted(() => {
   }
   .report-content {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 120px);
     overflow-x: auto;
     position: relative;
     .my-table-box {
