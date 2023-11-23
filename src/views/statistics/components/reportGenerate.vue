@@ -558,7 +558,7 @@ onMounted(() => {
           :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
       <template v-else>
@@ -575,7 +575,7 @@ onMounted(() => {
           :disabled="!(reportType === '3' || reportType === '2')"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
       <AreaCascader
