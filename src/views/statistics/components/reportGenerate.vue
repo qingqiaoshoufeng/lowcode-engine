@@ -73,6 +73,8 @@ const form = ref({
   dataTimeSource: '',
 })
 
+const openState = ref(false)
+
 const searchLoading = ref(false)
 
 const reportName = ref('')
@@ -150,6 +152,7 @@ const handleSearch = () => {
   searchReportByTemplate(params).then((res) => {
     searchLoading.value = false
     if (res?.data?.data) {
+      openState.value = true
       const data = res?.data?.data
       tableStream.value = data
 
@@ -173,42 +176,44 @@ const handleSearch = () => {
 
       luckyOption.value.container = 'my-table-box'
 
-      window.luckysheet.create({
-        ...luckyOption.value,
-        data: [{
-          index: 0,
-          status: 1,
-          order: 0,
-          scrollLeft: 0,
-          scrollTop: 0,
-          defaultRowHeight: 32, // 自定义行高
-          row: totalData.length, // 行数
-          column: totalData[0].length, // 列数
-          celldata: luckysheetData,
-          luckysheet_select_save: [], // 选中的区域
-        }],
-        hook: {
-          workbookCreateAfter: function() {
-            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+      nextTick(() => {
+        window.luckysheet.create({
+          ...luckyOption.value,
+          data: [{
+            index: 0,
+            status: 1,
+            order: 0,
+            scrollLeft: 0,
+            scrollTop: 0,
+            defaultRowHeight: 32, // 自定义行高
+            row: totalData.length, // 行数
+            column: totalData[0].length, // 列数
+            celldata: luckysheetData,
+            luckysheet_select_save: [], // 选中的区域
+          }],
+          hook: {
+            workbookCreateAfter: function() {
+              window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+            }
           }
+        })
+        window.luckysheet.setRangeMerge('all', {
+          range: getRangeByCode(data?.mergeCells),
+        })
+        const widthObj = {}
+        let passNumber = 3
+        if (selectReport.value?.templateCode === 'GD_HZ202310160006') {
+          passNumber = 4
         }
-      })
-      window.luckysheet.setRangeMerge('all', {
-        range: getRangeByCode(data?.mergeCells),
-      })
-      const widthObj = {}
-      let passNumber = 3
-      if (selectReport.value?.templateCode === 'GD_HZ202310160006') {
-        passNumber = 4
-      }
-      for (let i = 0; i < totalData[0].length; i++) {
-        const columnData = totalData.map(row => row[i]).map(item => String(item).length)
-        for (let i = 0; i < passNumber; i++) {
-          columnData.shift()
+        for (let i = 0; i < totalData[0].length; i++) {
+          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          for (let i = 0; i < passNumber; i++) {
+            columnData.shift()
+          }
+          widthObj[i] = Math.max(...columnData) * 14 + 14
         }
-        widthObj[i] = Math.max(...columnData) * 14 + 14
-      }
-      window.luckysheet.setColumnWidth(widthObj)
+        window.luckysheet.setColumnWidth(widthObj)
+      })
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -268,6 +273,7 @@ const handleDefineSearch = () => {
   searchReportByDefine(params).then((res) => {
     searchLoading.value = false
     if (res?.data?.data) {
+      openState.value = true
       const data = res?.data?.data
       tableStream.value = data
 
@@ -289,38 +295,44 @@ const handleDefineSearch = () => {
         }
       }
 
-      window.luckysheet.create({
-        ...luckyOption.value,
-        data: [{
-          index: 0,
-          status: 1,
-          order: 0,
-          scrollLeft: 0,
-          scrollTop: 0,
-          defaultRowHeight: 32, // 自定义行高
-          row: totalData.length, // 行数
-          column: totalData[0].length, // 列数
-          celldata: luckysheetData,
-          luckysheet_select_save: [], // 选中的区域
-        }],
-        hook: {
-          workbookCreateAfter: function() {
-            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+      luckyOption.value.container = 'my-table-define'
+
+      console.log('window.luckysheet：', window.luckysheet)
+
+      nextTick(() => {
+        window.luckysheet.create({
+          ...luckyOption.value,
+          data: [{
+            index: 0,
+            status: 1,
+            order: 0,
+            scrollLeft: 0,
+            scrollTop: 0,
+            defaultRowHeight: 32, // 自定义行高
+            row: totalData.length, // 行数
+            column: totalData[0].length, // 列数
+            celldata: luckysheetData,
+            luckysheet_select_save: [], // 选中的区域
+          }],
+          hook: {
+            workbookCreateAfter: function() {
+              window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+            }
           }
+        })
+        window.luckysheet.setRangeMerge('all', {
+          range: getRangeByCode(data?.mergeCells),
+        })
+        const widthObj = {}
+        for (let i = 0; i < totalData[0].length; i++) {
+          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          columnData.shift()
+          columnData.shift()
+          columnData.shift()
+          widthObj[i] = Math.max(...columnData) * 14 + 14
         }
+        window.luckysheet.setColumnWidth(widthObj)
       })
-      window.luckysheet.setRangeMerge('all', {
-        range: getRangeByCode(data?.mergeCells),
-      })
-      const widthObj = {}
-      for (let i = 0; i < totalData[0].length; i++) {
-        const columnData = totalData.map(row => row[i]).map(item => String(item).length)
-        columnData.shift()
-        columnData.shift()
-        columnData.shift()
-        widthObj[i] = Math.max(...columnData) * 14 + 14
-      }
-      window.luckysheet.setColumnWidth(widthObj)
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -478,6 +490,10 @@ const initForm = () => {
   initOptions()
 }
 
+const handleOpen = () => {
+  openState.value = !openState.value
+}
+
 onMounted(() => {
   initForm()
 })
@@ -489,7 +505,7 @@ onMounted(() => {
       <van-tab title="固定报表" name="1"></van-tab>
       <van-tab title="自定义报表" name="2"></van-tab>
     </van-tabs>
-    <van-form ref="formRef">
+    <van-form ref="formRef" :style="{ 'height': openState ? '0px' : 'unset', 'overflow': 'hidden'}">
       <SelectSingle
         v-model:value="form.reportClass"
         :readonly="true"
@@ -544,7 +560,7 @@ onMounted(() => {
           :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
       <template v-else>
@@ -561,7 +577,7 @@ onMounted(() => {
           :disabled="!(reportType === '3' || reportType === '2')"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
       <AreaCascader
@@ -627,11 +643,19 @@ onMounted(() => {
       >
         查询
       </van-button>
+      <van-button
+        size="small"
+        block
+        style="margin-left: 10px;"
+        @click="handleOpen"
+      >
+        {{ openState ? '收起' : '展开' }}
+      </van-button>
     </div>
 
     <div class="report-content">
-      <p id="my-table-box" ref="reportContentRef" class="my-table-box" />
-      <p id="my-define-box" ref="reportDefineRef" class="my-table-define" />
+      <p v-if="form.reportStyle === '1'" id="my-table-box" ref="reportContentRef" class="my-table-box" />
+      <p v-if="form.reportStyle === '2'" id="my-table-define" ref="reportDefineRef" class="my-table-define" />
     </div>
   </div>
 </template>
@@ -647,7 +671,7 @@ onMounted(() => {
   }
   .report-content {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 120px);
     overflow-x: auto;
     position: relative;
     .my-table-box {

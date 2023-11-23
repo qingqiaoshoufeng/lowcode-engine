@@ -838,10 +838,10 @@ export const useFormConfig = (fromRef) => {
     const { warningAddr, extinctDate } = detail
     let content = ''
     if (basicInfo.fireType?.text?.includes('交通工具火灾')) {
-      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
+      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
-      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
+      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     // 替换各个字段
     if (basicInfo.fireDate.value) {
@@ -863,7 +863,10 @@ export const useFormConfig = (fromRef) => {
       content = content.replace('【起火物】', cloneDeep(basicInfo.initialFuelsType.text)?.pop())
     }
     if (extinctDate) {
-      content = content.replace('【熄灭时间】', dayjs(extinctDate).format('MM月DD日HH时mm分'))
+      content = content.replace('【扑灭时间】', dayjs(extinctDate).format('MM月DD日HH时mm分'))
+    }
+    else {
+      content = content.replace('，【扑灭时间】扑灭')
     }
     if (basicInfo.fireCause.text?.length > 0) {
       content = content.replace('【起火原因】', cloneDeep(basicInfo.fireCause.text)?.pop())
