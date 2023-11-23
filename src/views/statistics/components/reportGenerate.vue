@@ -176,42 +176,44 @@ const handleSearch = () => {
 
       luckyOption.value.container = 'my-table-box'
 
-      window.luckysheet.create({
-        ...luckyOption.value,
-        data: [{
-          index: 0,
-          status: 1,
-          order: 0,
-          scrollLeft: 0,
-          scrollTop: 0,
-          defaultRowHeight: 32, // 自定义行高
-          row: totalData.length, // 行数
-          column: totalData[0].length, // 列数
-          celldata: luckysheetData,
-          luckysheet_select_save: [], // 选中的区域
-        }],
-        hook: {
-          workbookCreateAfter: function() {
-            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+      nextTick(() => {
+        window.luckysheet.create({
+          ...luckyOption.value,
+          data: [{
+            index: 0,
+            status: 1,
+            order: 0,
+            scrollLeft: 0,
+            scrollTop: 0,
+            defaultRowHeight: 32, // 自定义行高
+            row: totalData.length, // 行数
+            column: totalData[0].length, // 列数
+            celldata: luckysheetData,
+            luckysheet_select_save: [], // 选中的区域
+          }],
+          hook: {
+            workbookCreateAfter: function() {
+              window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+            }
           }
+        })
+        window.luckysheet.setRangeMerge('all', {
+          range: getRangeByCode(data?.mergeCells),
+        })
+        const widthObj = {}
+        let passNumber = 3
+        if (selectReport.value?.templateCode === 'GD_HZ202310160006') {
+          passNumber = 4
         }
-      })
-      window.luckysheet.setRangeMerge('all', {
-        range: getRangeByCode(data?.mergeCells),
-      })
-      const widthObj = {}
-      let passNumber = 3
-      if (selectReport.value?.templateCode === 'GD_HZ202310160006') {
-        passNumber = 4
-      }
-      for (let i = 0; i < totalData[0].length; i++) {
-        const columnData = totalData.map(row => row[i]).map(item => String(item).length)
-        for (let i = 0; i < passNumber; i++) {
-          columnData.shift()
+        for (let i = 0; i < totalData[0].length; i++) {
+          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          for (let i = 0; i < passNumber; i++) {
+            columnData.shift()
+          }
+          widthObj[i] = Math.max(...columnData) * 14 + 14
         }
-        widthObj[i] = Math.max(...columnData) * 14 + 14
-      }
-      window.luckysheet.setColumnWidth(widthObj)
+        window.luckysheet.setColumnWidth(widthObj)
+      })
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
@@ -295,38 +297,40 @@ const handleDefineSearch = () => {
 
       luckyOption.value.container = 'my-table-define'
 
-      window.luckysheet.create({
-        ...luckyOption.value,
-        data: [{
-          index: 0,
-          status: 1,
-          order: 0,
-          scrollLeft: 0,
-          scrollTop: 0,
-          defaultRowHeight: 32, // 自定义行高
-          row: totalData.length, // 行数
-          column: totalData[0].length, // 列数
-          celldata: luckysheetData,
-          luckysheet_select_save: [], // 选中的区域
-        }],
-        hook: {
-          workbookCreateAfter: function() {
-            window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+      nextTick(() => {
+        window.luckysheet.create({
+          ...luckyOption.value,
+          data: [{
+            index: 0,
+            status: 1,
+            order: 0,
+            scrollLeft: 0,
+            scrollTop: 0,
+            defaultRowHeight: 32, // 自定义行高
+            row: totalData.length, // 行数
+            column: totalData[0].length, // 列数
+            celldata: luckysheetData,
+            luckysheet_select_save: [], // 选中的区域
+          }],
+          hook: {
+            workbookCreateAfter: function() {
+              window.luckysheet.setRangeShow({ row: [0, 0], column: [0, 0] }, { show: false, order: 0 })
+            }
           }
+        })
+        window.luckysheet.setRangeMerge('all', {
+          range: getRangeByCode(data?.mergeCells),
+        })
+        const widthObj = {}
+        for (let i = 0; i < totalData[0].length; i++) {
+          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          columnData.shift()
+          columnData.shift()
+          columnData.shift()
+          widthObj[i] = Math.max(...columnData) * 14 + 14
         }
+        window.luckysheet.setColumnWidth(widthObj)
       })
-      window.luckysheet.setRangeMerge('all', {
-        range: getRangeByCode(data?.mergeCells),
-      })
-      const widthObj = {}
-      for (let i = 0; i < totalData[0].length; i++) {
-        const columnData = totalData.map(row => row[i]).map(item => String(item).length)
-        columnData.shift()
-        columnData.shift()
-        columnData.shift()
-        widthObj[i] = Math.max(...columnData) * 14 + 14
-      }
-      window.luckysheet.setColumnWidth(widthObj)
     }
     else {
       showToast(res?.data?.msg || '报表生成出错，请重试')
