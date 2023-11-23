@@ -297,6 +297,8 @@ const handleDefineSearch = () => {
 
       luckyOption.value.container = 'my-table-define'
 
+      console.log('window.luckysheet：', window.luckysheet)
+
       nextTick(() => {
         window.luckysheet.create({
           ...luckyOption.value,
