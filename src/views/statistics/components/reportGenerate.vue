@@ -293,6 +293,8 @@ const handleDefineSearch = () => {
         }
       }
 
+      luckyOption.value.container = 'my-table-define'
+
       window.luckysheet.create({
         ...luckyOption.value,
         data: [{
@@ -646,8 +648,8 @@ onMounted(() => {
     </div>
 
     <div class="report-content">
-      <p id="my-table-box" ref="reportContentRef" class="my-table-box" />
-      <p id="my-define-box" ref="reportDefineRef" class="my-table-define" />
+      <p v-if="form.reportStyle === '1'" id="my-table-box" ref="reportContentRef" class="my-table-box" />
+      <p v-if="form.reportStyle === '2'" id="my-table-define" ref="reportDefineRef" class="my-table-define" />
     </div>
   </div>
 </template>
