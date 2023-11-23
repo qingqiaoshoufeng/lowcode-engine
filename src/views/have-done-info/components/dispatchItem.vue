@@ -1,5 +1,5 @@
 <template>
-  <div class="pro-list-item" @click="handleItem(record)">
+  <div class="pro-list-item">
     <div class="item-header">
       <div class="item-title">{{ record.warningAddr }}</div>
       <div class="item-state" v-if="['policeAmend','policeInvalid'].includes(type)" :class="generateColorByState(record.warningStatusValue)">

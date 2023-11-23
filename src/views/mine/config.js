@@ -20,6 +20,9 @@ export const entryList = [
   {
     icon:message,
     label:'我的消息',
+    click:function(){
+      router.push('/messageList')
+    }
   },
   {
     icon:collect,

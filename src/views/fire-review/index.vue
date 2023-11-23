@@ -23,68 +23,68 @@
           />
         </div>
       </template>
-        <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
-            <div class="item-header">
-              <div class="item-title">{{ record.warningAddr }}</div>
-              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
-                {{ record.fireStatusValue }}
-              </div>
-            </div>
-            <div class="item-type">
-              <span>{{ record.fireTypeValue }}</span>
-            </div>
-            <div class="item-field">
-              <img 
-                style="width: 13px; height: 15px; margin-right: 8px" 
-                src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
-            </div>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">行政区域：</div>
-              <div>{{ record.warningAreaValue }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.dutyOrgName }}</div>
-            </div>
-            <!-- <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火场所：</div>
-              <div>{{ record.firePlaceValue }}</div>
-            </div> -->
-            <div class="item-line" />
-            <div class="item-operate" @click.stop>
-              <van-button
-                v-p="['admin', 'fire-report:look']"
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click.stop="handleLook(record)"
-              >
-                查看
-              </van-button>
-              <van-button
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                v-if="tabType === 'running' && checkFireApproval(record.fireStatusValue)" 
-                @click="handleReview(record)"
-              >
-                审核
-              </van-button>
+      <template #list="{ record }">
+        <div class="list-item" @click="handleItem(record)">
+          <div class="item-header">
+            <div class="item-title">{{ record.warningAddr }}</div>
+            <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+              {{ record.fireStatusValue }}
             </div>
           </div>
-        </template>
+          <div class="item-type">
+            <span>{{ record.fireTypeValue }}</span>
+          </div>
+          <div class="item-field">
+            <img 
+              style="width: 13px; height: 15px; margin-right: 8px" 
+              src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">接警时间：</div>
+            <div>{{ formatYmdHm(record.warningDate) }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">行政区域：</div>
+            <div>{{ record.warningAreaValue }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">责任区大队：</div>
+            <div>{{ record.dutyOrgName }}</div>
+          </div>
+          <!-- <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">起火场所：</div>
+            <div>{{ record.firePlaceValue }}</div>
+          </div> -->
+          <div class="item-line" />
+          <div class="item-operate" @click.stop>
+            <van-button
+              v-p="['admin', 'fire-report:look']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click.stop="handleLook(record)"
+            >
+              查看
+            </van-button>
+            <van-button
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              v-if="tabType === 'running' && checkFireApproval(record.fireStatusValue)" 
+              @click="handleReview(record)"
+            >
+              审核
+            </van-button>
+          </div>
+        </div>
+      </template>
     </ProList>
     <!-- 火灾填报审核 -->
     <ProModal

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4293084 */
-  src: url('iconfont.woff2?t=1697677774895') format('woff2'),
-       url('iconfont.woff?t=1697677774895') format('woff'),
-       url('iconfont.ttf?t=1697677774895') format('truetype');
+  src: url('iconfont.woff2?t=1700557887722') format('woff2'),
+       url('iconfont.woff?t=1700557887722') format('woff'),
+       url('iconfont.ttf?t=1700557887722') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,62 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dispatchIdRejected:before {
+  content: "\e651";
+}
+
+.icon-dispatchReviewed:before {
+  content: "\e652";
+}
+
+.icon-policeDispatched:before {
+  content: "\e653";
+}
+
+.icon-policeRejected:before {
+  content: "\e654";
+}
+
+.icon-dispatchAmend:before {
+  content: "\e655";
+}
+
+.icon-fireReviewed:before {
+  content: "\e656";
+}
+
+.icon-fireReject:before {
+  content: "\e657";
+}
+
+.icon-policeAmend:before {
+  content: "\e658";
+}
+
+.icon-fireAmend:before {
+  content: "\e659";
+}
+
+.icon-fireFilled:before {
+  content: "\e64c";
+}
+
+.icon-dispatchFilled:before {
+  content: "\e64d";
+}
+
+.icon-policeInvalid:before {
+  content: "\e64e";
+}
+
+.icon-policeConfirmed:before {
+  content: "\e64f";
+}
+
+.icon-policeDispatchArea:before {
+  content: "\e650";
 }
 
 .icon-huozaichaoshitongji:before {

@@ -164,37 +164,12 @@
           </div>
       </template>
     </ProList>
-    <!-- 火灾填报审核 -->
-    <ProModal
-      v-model:visible="show.reviewVisible"
-      :showBack="true" :showHeader="false" 
-      title="火灾详情"
-      :ok-display="true"
-      ok-text="审核"
-      pro-card-id="card-wrap"
-    >
-      <template #default="{ setHandleOk }">
-        <EditorForm
-          :showReviewDialog="showReviewDialog"
-          :set-handle-ok="setHandleOk"
-          :current-row="currentRow"
-          :is-edit="true"
-          :is-approval="true"
-          :is-review="true"
-          process-key="fireInfoFlow"
-          @finish-callback="approvalCallback"
-        />
+    <ProModal showBack v-model:visible="show.lookVisible" :showHeader="false" :title="title">
+      <template #default="{ setHandleOk, setHandleExtend }">
+        <LookFireWarning v-if="lookType === 1" :current-row="currentRow" :is-detail="true"  />
+        <DispatchForm v-if="lookType === 2" :current-row="currentRow" :is-detail="true"  />
+        <FireForm v-if="lookType === 3" :current-row="currentRow" :is-detail="true"  />
       </template>
-    </ProModal>
-    <!-- 查看详情 -->
-    <ProModal
-      v-model:visible="show.lookVisible"
-      title="火灾填报详情"
-      :ok-display="false"
-      :footer="null"
-      pro-card-id="card-wrap"
-    >
-      <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
   </div>
 </template>
@@ -202,18 +177,14 @@
 <script setup>
 import { getMineCollect ,getFocus,collectFireWarning} from '@/apis/index.js'
 import { computed,ref} from 'vue'
-import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
-import { getLastMonth,checkFireApproval } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
-import SelectMore from "@/component/SelectMore/index";
-import ProcessReview from "@/component/ProcessReview/index.vue";
-
+import FireForm from '@/views/fire-report/components/EditorForm.vue'
+import LookFireWarning from '@/views/policeEntryDetail/index.vue'
+import DispatchForm from '@/views/dispatchReportForm/index.vue'
 import { formatYmdHm } from "@/utils/format.js";
-import EditorForm from '../fire-report/components/EditorForm.vue'
 import { showToast,showLoadingToast,closeToast} from 'vant';
 import store from '@/store/index.js'
-const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
 const statisticsTotal = ref({})
 
@@ -267,6 +238,8 @@ const searchOptions = computed(()=>([
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);
+const lookType = ref(1)
+const title = ref('警情详情')
 const defaultFilterValue = {
   offset: 1,
   limit: 10,
@@ -283,6 +256,8 @@ const refreshCallback = () => {
 //     closeToast();
 //   });
 // }
+
+
 
 const handleCollect = async (row, state,type) => {
   let focusAppid, focusCode
@@ -327,17 +302,10 @@ const getStatistics = () => {
 }
 getStatistics()
 
-// 申请更正
-const handleRecheck = (row) => {
-  if (row.isLock === '1') {
-    showToast(MSG_LOCKING_TEXT)
-    return
-  }
-  currentRow.value = row
-  show.value.recheckVisible = true
-}
 // tab切换
 const onTabChangeFn = (val,val1)=>{
+  lookType.value = val
+  const titleMap = ['','警情详情','出动填报详情','火灾填报详情']
   const paramsMap = [
     '',
     '/acws/rest/biz/firewarning/query',
@@ -346,10 +314,12 @@ const onTabChangeFn = (val,val1)=>{
   ]
   // tabType.value = paramsMap[val]
   proListRef.value.query.url = paramsMap[val]
+  title.value = titleMap[val]
   proListRef.value.filter()
 }
 const handleItem = (record)=>{
-  // selectVisible
+  currentRow.value = record
+  show.value.lookVisible =true
 }
 const handleReview = (row) => {
   if (row.isLock === '1') {

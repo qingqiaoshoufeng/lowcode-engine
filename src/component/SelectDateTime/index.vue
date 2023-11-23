@@ -110,7 +110,13 @@ defineOptions({
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
-  />
+  >
+    <template v-slot:label="">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom" @closed="onClose">
     <div class="select-date-time">
       <div class="header">

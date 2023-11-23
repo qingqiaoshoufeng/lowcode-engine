@@ -33,7 +33,7 @@ const props = defineProps({
 const emit = defineEmits(["update:value", "change"]);
 
 const options = ref([
-{
+  {
     label: '今日',
     value: '今日',
     time: [dayjs().startOf('day'), dayjs().endOf('day')],
@@ -142,7 +142,13 @@ defineOptions({
     :placeholder="placeholder"
     :rule="rule"
     @click="handleShow"
-  />
+  >
+    <template v-slot:label="">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-single">
       <div class="header">

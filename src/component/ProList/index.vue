@@ -154,8 +154,11 @@ export default {
   <div class="pro-list">
     <HeaderTitle v-if="showBack" :title="title">
       <template v-if="showExplain" v-slot:explain>
-        <div @click="showExplainFn" class="explain">规则说明</div>
+        <slot name="explain">
+          <div @click="showExplainFn" class="explain">规则说明</div>
+        </slot>
       </template>
+      
     </HeaderTitle>
     <div class="total" v-if="showTotal">
       <strong>查询结果：</strong><span>共查到</span><span class="total-num">{{total}}</span><span>起记录</span>

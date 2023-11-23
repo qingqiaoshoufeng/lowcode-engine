@@ -19,6 +19,7 @@ const defaultFilterValue = {
 const { show } = useModal();
 
 const currentRow = ref(null);
+const isDraft = ref(false)
 
 const proListRef = ref(null);
 
@@ -38,6 +39,7 @@ const handleInput = (row) => {
 
 const handleItem = (row) => {
   currentRow.value = row
+  isDraft.value = false
   show.value.lookVisible = true
 };
 
@@ -131,7 +133,7 @@ const refreshCallback = () => {
     <ProModal v-model:visible="show.editVisible" :showBack="true" :showHeader="false" title="出动填报">
       <template #default="{ setHandleOk, closeModal }">
         <DispatchForm
-          :show-draft="false"
+          :show-draft="isDraft"
           :is-edit="false"
           :isInput="true"
           :current-row="currentRow"

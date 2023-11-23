@@ -123,3 +123,7 @@ $fc:#fff;
     display: flex;
     justify-content: $type;
 }
+
+.van-field__label--required:has(.field-annotation){
+    display: flex !important;
+}

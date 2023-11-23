@@ -1,9 +1,9 @@
 <template>
-<van-dialog class="dialog—info" v-bind="$attrs" :show="visible" :title="title" @confirm="confirm" @cancel="cancel">
+<van-dialog class="dialog—info" v-bind="$attrs" :show="visible" :title="title" @confirm.stop="confirm" @cancel.stop="cancel">
   <template v-slot:title>
     <div class="header">
       <div class="title">{{title }}</div>
-      <div class="cha" @click="close">×</div>
+      <div class="cha" @click.stop="close">×</div>
     </div>
   </template>
   <div class="content">

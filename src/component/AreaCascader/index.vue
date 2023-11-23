@@ -244,7 +244,13 @@ export default {
     :placeholder="placeholder"
     :rules="rules"
     @click="selectVisible = true"
-  />
+  >
+    <template v-slot:label="">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <!-- 弹窗 -->
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">

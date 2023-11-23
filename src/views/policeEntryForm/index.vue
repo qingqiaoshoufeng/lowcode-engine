@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, inject, nextTick } from "vue";
+import { ref, onMounted, computed, inject, nextTick ,provide } from "vue";
 import dayjs from "dayjs";
 import { showToast } from "vant";
 import { useSubmit } from '@castle/castle-use';
@@ -13,10 +13,11 @@ import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProSteps from "@/component/ProSteps/index.vue";
+import { v4 as uuidv4 } from 'uuid'
 import {
   confirmPolice,
   // deleteFormFieldAnnotation,
-  // getFieldAnnotationDetail,
+  getFieldAnnotationDetail,
   getFireWarningDetail,
   getFireWarningTag,
   getOtherProvince,
@@ -84,7 +85,16 @@ const { options } = useOptions({
   otherProvinceOptions: [],
 });
 
+const fieldExist = ref({})
+
 const formRef = ref(null);
+
+const localFireWarningId = ref(props.currentRow?.boFireWarningId || uuidv4())
+
+provide('localFireWarningId', localFireWarningId)
+provide('dataType', 1)
+
+provide('showPreview', ref(props.showPreview))
 
 const loadDetail = ref(true);
 
@@ -356,6 +366,23 @@ const onChangeDispatchGroup = (values, items, texts) => {
   }
 
   formRef.value.resetValidation(['dispatchGroup', 'mainGroup', 'firstGroup'])
+}
+
+const refreshField = () => {
+  if (props.currentRow?.boFireWarningId || localFireWarningId.value) {
+    getFieldAnnotationDetail({
+      dataId: props.currentRow?.boFireWarningId || localFireWarningId.value,
+      dataType: 1,
+    }).then((res) => {
+      fieldExist.value = res?.data
+      if (res?.fieldModules?.policeWarning) {
+        emits('updateField', true)
+      }
+      else {
+        emits('updateField', false)
+      }
+    })
+  }
 }
 
 const { loading, submit } = useSubmit((res) => {
@@ -684,7 +711,8 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请输入警情概况"
         show-word-limit
         :class="{ 'form-textarea': !showPreview }"
-      />
+      >
+    </van-field>
       <van-field
         v-model="form.warningName"
         v-preview-text="showPreview"
@@ -694,7 +722,18 @@ const validateHeadquarters = (value, rule) => {
         name="warningName"
         label="警情标题："
         placeholder="请输入警情标题"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="警情标题："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningName"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningName"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectDateTime
         v-model:value="form.warningDate"
         :showPreview="showPreview"
@@ -706,7 +745,18 @@ const validateHeadquarters = (value, rule) => {
         label="接警时间："
         placeholder="请选择接警时间"
         :rules="[{ required: true, message: '请选择接警时间' }]"
-      />
+      > 
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="接警时间："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningDate"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningDate"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectDateTime>
       <AreaCascader
         v-if="!loadDetail"
         name="warningArea"
@@ -717,7 +767,18 @@ const validateHeadquarters = (value, rule) => {
         :required="!showPreview"
         :rules="[{ required: true, message: '请选择行政区域' }]"
         @change="onAreaChange"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="行政区域："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningArea"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningArea"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </AreaCascader>
       <van-field
         v-model="form.warningAddr"
         v-preview-text="showPreview"
@@ -728,7 +789,18 @@ const validateHeadquarters = (value, rule) => {
         label="警情地址："
         placeholder="请输入警情地址"
         :rules="[{ validator: validateWarningAddr, trigger: 'onBlur' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="警情地址："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningAddr"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningAddr"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.warningLng"
         v-preview-text="showPreview"
@@ -746,6 +818,16 @@ const validateHeadquarters = (value, rule) => {
           { validator: validateLng, trigger: 'onBlur' },
         ]"
       >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="经度坐标："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningLng"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningLng"
+            @refresh-callback="refreshField"
+          />
+        </template>
         <template #button>
           <van-button size="small" type="primary" @click="handleLngLat"
             >自动获取</van-button
@@ -769,6 +851,16 @@ const validateHeadquarters = (value, rule) => {
           { validator: validateLat, trigger: 'onBlur' },
         ]"
       >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="纬度坐标："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningType"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningType"
+            @refresh-callback="refreshField"
+          />
+        </template>
       </van-field>
       <CascaderSingle
         v-model:value="form.warningType"
@@ -784,7 +876,18 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择警情类型"
         :rules="[{ required: true, message: '请选择警情类型' }]"
         @change="warningTypeChange"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="警情类型："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningType"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningType"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </CascaderSingle>
       <van-field
         v-if="showVipSecurity"
         v-preview-text="showPreview"
@@ -801,6 +904,16 @@ const validateHeadquarters = (value, rule) => {
             size="20"
             active-value="1"
             inactive-value="2"
+          />
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="要人安保："
+            :id="currentRow?.boFireWarningId"
+            remark-field="vipSecurity"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.vipSecurity"
+            @refresh-callback="refreshField"
           />
         </template>
       </van-field>
@@ -822,6 +935,16 @@ const validateHeadquarters = (value, rule) => {
             inactive-value="2"
           />
         </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否发生火灾："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isHappenFire"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isHappenFire"
+            @refresh-callback="refreshField"
+          />
+        </template>
       </van-field>
       <van-field
         v-if="showWarningTypeOther || form.warningTypeOther"
@@ -834,7 +957,18 @@ const validateHeadquarters = (value, rule) => {
         label="其他说明："
         placeholder="请输入其他说明"
         :rules="[{ required: true, message: '请输入其他说明' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="其他说明："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningTypeOther"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningTypeOther"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectSingle
         v-if="showWarningLevel || form.warningLevel"
         v-model:value="form.warningLevel"
@@ -848,7 +982,18 @@ const validateHeadquarters = (value, rule) => {
         label="警情等级："
         placeholder="请选择警情等级"
         :rules="[{ required: true, message: '请选择警情等级' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="警情等级："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningLevel"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningLevel"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <van-field
         v-model="form.warningOrgname"
         v-preview-text="showPreview"
@@ -860,7 +1005,18 @@ const validateHeadquarters = (value, rule) => {
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            :label="`${labelWarningOrgname}：`"
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningOrgname"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningOrgname"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectSingle
         v-model:value="form.warningSource"
         :showPreview="showPreview"
@@ -873,7 +1029,18 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择报警来源"
         title="请选择报警来源"
         :rules="[{ required: true, message: '请选择报警来源' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="报警来源："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningSource"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningSource"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <van-field
         v-if="!showSecurityService"
         v-model="form.warningTel"
@@ -885,7 +1052,18 @@ const validateHeadquarters = (value, rule) => {
         maxlength="13"
         :required="false"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="联系方式："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningTel"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningTel"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-if="showNaturalDisaster || form.isNaturalDisaster"
         :readonly="showPreview"
@@ -908,6 +1086,16 @@ const validateHeadquarters = (value, rule) => {
             />
           </template>
         </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否自然灾害引发："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isNaturalDisaster"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isNaturalDisaster"
+            @refresh-callback="refreshField"
+          />
+        </template>
       </van-field>
       <CascaderSingle
         v-if="form.isNaturalDisaster === '1'"
@@ -922,7 +1110,18 @@ const validateHeadquarters = (value, rule) => {
         label="自然灾害类型："
         label-width="118px"
         placeholder="请选择自然灾害类型"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="自然灾害类型："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isNaturalDisaster"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isNaturalDisaster"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </CascaderSingle>
       <van-field
         v-if="showNaturalDisasterOther || form.naturalDisasterOther"
         v-model="form.naturalDisasterOther"
@@ -934,7 +1133,18 @@ const validateHeadquarters = (value, rule) => {
         label="其他说明："
         placeholder="请输入其他说明"
         :rules="[{ required: true, message: '请输入其他说明' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="其他说明："
+            :id="currentRow?.boFireWarningId"
+            remark-field="naturalDisasterOther"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.naturalDisasterOther"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectSingle
         v-if="showTyphoonType"
         v-model:value="form.typhoonType"
@@ -946,7 +1156,18 @@ const validateHeadquarters = (value, rule) => {
         label="台风编号："
         placeholder="请选择台风编号"
         :rules="[{ required: true, message: '请选择台风编号' }]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="台风编号："
+            :id="currentRow?.boFireWarningId"
+            remark-field="typhoonType"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.typhoonType"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <van-field
         v-model="form.warningCodeYyj"
         v-preview-text="showPreview"
@@ -960,7 +1181,18 @@ const validateHeadquarters = (value, rule) => {
         :rules="[
           { pattern: /^[A-Za-z0-9]*$/, message: '请输入正确119警情编号' },
         ]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="119警情编号："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningCodeYyj"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningCodeYyj"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectMultiple
         v-model:value="form.warningTag"
         :showPreview="showPreview"
@@ -973,7 +1205,18 @@ const validateHeadquarters = (value, rule) => {
         label="警情标签："
         placeholder="请选择警情标签"
         title="请选择警情标签"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="119警情编号："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningCodeYyj"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningCodeYyj"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
       <SelectOrg
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
@@ -987,7 +1230,18 @@ const validateHeadquarters = (value, rule) => {
         :rules="[{ required: true, message: '请选择出动队伍' }]"
         :params="{ deptType: 1 }"
         @change="onChangeDispatchGroup"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="出动队伍："
+            :id="currentRow?.boFireWarningId"
+            remark-field="dispatchGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.dispatchGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectOrg>
       <SelectOrg
         v-model:value="form.dutyGroup"
         :showPreview="showPreview"
@@ -1001,7 +1255,18 @@ const validateHeadquarters = (value, rule) => {
         :single="true"
         :rules="[{ required: true, message: '请选择辖区队站' }]"
         :params="{ deptType: 1 }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="辖区队站："
+            :id="currentRow?.boFireWarningId"
+            remark-field="dutyGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.dutyGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectOrg>
       <SelectSingle
         v-model:value="form.firstGroup"
         :showPreview="showPreview"
@@ -1015,7 +1280,18 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择首到队站"
         :rules="[{ required: true, message: '请选择首到队站' }]"
         :checkShowFn="handleMain"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="首到队站："
+            :id="currentRow?.boFireWarningId"
+            remark-field="firstGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.firstGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <SelectSingle
         v-model:value="form.mainGroup"
         :showPreview="showPreview"
@@ -1029,7 +1305,18 @@ const validateHeadquarters = (value, rule) => {
         placeholder="请选择主战队站"
         :rules="[{ required: true, message: '请选择主战队站' }]"
         :checkShowFn="handleMain"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="主战队站："
+            :id="currentRow?.boFireWarningId"
+            remark-field="mainGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.mainGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <SelectOrg
         v-if="showAreaDutyGroup"
         v-model:value="form.areaDutyGroup"
@@ -1045,7 +1332,18 @@ const validateHeadquarters = (value, rule) => {
         :single="true"
         :rules="[{ required: true, message: '请选择责任区大队' }]"
         :params="{ deptType: 1, deptLevel: 4 }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="责任区大队："
+            :id="currentRow?.boFireWarningId"
+            remark-field="areaDutyGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.areaDutyGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectOrg>
       <SelectOrg
         v-model:value="form.headquarters"
         :showPreview="showPreview"
@@ -1063,7 +1361,18 @@ const validateHeadquarters = (value, rule) => {
         :headers-disabled="false"
         class="special-place"
         :class="{'special-header-data': showPreview && form.headquarters?.length <= 0}"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="责任区大队："
+            :id="currentRow?.boFireWarningId"
+            remark-field="areaDutyGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.areaDutyGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectOrg>
       <SelectMultiple
         v-model:value="form.otherCity"
         :showPreview="showPreview"
@@ -1078,7 +1387,18 @@ const validateHeadquarters = (value, rule) => {
         title="请选择增援支队（本省）"
         class="special-place"
         :class="{'special-no-data': showPreview && form.otherCity?.length <= 0}"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="增援支队（本省）："
+            :id="currentRow?.boFireWarningId"
+            remark-field="otherCity"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.otherCity"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
       <SelectMultiple
         v-model:value="form.otherProvince"
         :showPreview="showPreview"
@@ -1093,7 +1413,18 @@ const validateHeadquarters = (value, rule) => {
         title="请选择增援总队"
         class="special-place"
         :class="{'special-no-data': showPreview && form.otherProvince?.length <= 0}"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="增援总队："
+            :id="currentRow?.boFireWarningId"
+            remark-field="otherProvince"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.otherProvince"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
       <van-field
         v-model="form.warningInfo"
         v-preview-text="showPreview"
@@ -1109,7 +1440,18 @@ const validateHeadquarters = (value, rule) => {
         show-word-limit
         :rules="[{ required: true, message: '请输入警情描述'}]"
         :class="{'form-textarea': !showPreview}"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="警情描述："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningInfo"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningInfo"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </van-form>
 
     <!-- 操作记录 -->
