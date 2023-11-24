@@ -38,6 +38,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  previewText: {
+    type: String,
+    default: '',
+  },
   showAllArea: {
     type: Boolean,
     default: false,
@@ -109,7 +113,7 @@ watch(() => props.reportName, () => {
 );
 
 onMounted(() => {
-  if (props.value?.length > 1) {
+  if (props.value?.length > 1 && (!props.preview || !props.previewText)) {
     Promise.all([
       getSystemArea({
         reportName: props.reportName,
@@ -233,24 +237,29 @@ export default {
 </script>
 
 <template>
-  <van-field
-    v-model="areaText"
-    v-preview-text="showPreview"
-    is-link
-    v-bind="$attrs"
-    :required="required"
-    :readonly="readonly"
-    :label="label"
-    :placeholder="placeholder"
-    :rules="rules"
-    @click="selectVisible = true"
-  >
-    <template v-slot:label="">
-      <slot name="label">
-        <div class="field-annotation">{{ label }}</div>
-      </slot>
-    </template>
-  </van-field>
+  <template v-if="preview && previewText">
+    {{ previewText }}
+  </template>
+  <template v-else>
+    <van-field
+      v-model="areaText"
+      v-preview-text="showPreview"
+      is-link
+      v-bind="$attrs"
+      :required="required"
+      :readonly="readonly"
+      :label="label"
+      :placeholder="placeholder"
+      :rules="rules"
+      @click="selectVisible = true"
+    >
+      <template v-slot:label="">
+        <slot name="label">
+          <div class="field-annotation">{{ label }}</div>
+        </slot>
+      </template>
+    </van-field>
+  </template>
   <!-- 弹窗 -->
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">
