@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, useAttrs } from "vue";
 import { cloneDeep } from "lodash-es";
 import { getSystemArea } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from 'vant';
@@ -72,6 +72,8 @@ const areaText = ref("");
 
 const selectVisible = ref(false);
 
+const attrs = useAttrs();
+
 watch(() => props.value, (newValue) => {
   if (newValue?.length > 0) {
     areaValue.value = cloneDeep(newValue);
@@ -113,7 +115,7 @@ watch(() => props.reportName, () => {
 );
 
 onMounted(() => {
-  if (props.value?.length > 1 && (!props.preview || !props.previewText)) {
+  if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
     Promise.all([
       getSystemArea({
         reportName: props.reportName,
@@ -226,6 +228,13 @@ const onFinish = ({ selectedOptions }) => {
   emit("change", areaValue.value, selectedOptions);
 };
 
+const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
+  selectVisible.value = true;
+};
+
 defineOptions({
   name: "AreaCascader",
 });
@@ -237,7 +246,7 @@ export default {
 </script>
 
 <template>
-  <template v-if="preview && previewText">
+  <template v-if="showPreview && previewText">
     {{ previewText }}
   </template>
   <template v-else>
@@ -251,7 +260,7 @@ export default {
       :label="label"
       :placeholder="placeholder"
       :rules="rules"
-      @click="selectVisible = true"
+      @click="handleShow"
     >
       <template v-slot:label="">
         <slot name="label">

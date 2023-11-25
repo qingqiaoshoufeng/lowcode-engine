@@ -836,7 +836,7 @@ const validateHeadquarters = (value, rule) => {
             @refresh-callback="refreshField"
           />
         </template>
-        <template #button>
+        <template v-if="!isConfirm" #button>
           <van-button size="small" type="primary" @click="handleLngLat"
             >自动获取</van-button
           >
@@ -1491,7 +1491,7 @@ const validateHeadquarters = (value, rule) => {
       :detail="detail"
     />
 
-    <div class="form-footer" v-if="!showPreview">
+    <div class="form-footer" v-if="!showPreview && !isConfirm">
       <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
         派发
       </van-button>
