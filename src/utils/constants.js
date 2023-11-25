@@ -650,3 +650,14 @@ export const month = [
     value: '12',
   },
 ]
+
+export const reinforceOptionsList = [
+  {
+    label: '跨省增援',
+    value: 1,
+  },
+  {
+    label: '跨市增援',
+    value: 2,
+  },
+]

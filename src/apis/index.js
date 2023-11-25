@@ -23,6 +23,7 @@ export * from './business/report-statistical.js'
 export * from './business/global-search.js'
 export * from './business/mine-collect.js'
 export * from './business/message.js'
+export * from './business/police-redeploy.js'
 
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {

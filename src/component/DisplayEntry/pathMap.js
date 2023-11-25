@@ -37,6 +37,8 @@ export const pathMap = {
   "fireReviewed":'have-done-info/fireReviewed',
   "fireReject":'have-done-info/fireReject',
   "fireAmend":'have-done-info/fireAmend',
+  "jingqingqueren": '/policeConfirm',
+  "jingqingzhuanpai": '/policeTransfer',
 }
 
 
