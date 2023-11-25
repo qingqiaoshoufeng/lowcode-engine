@@ -239,8 +239,8 @@ export default {
       </template>
     </DialogInfo>
       <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="showVisible = true">
-      <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true">
-      <div class="label" @click.stop="" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
+      <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->
+      <div class="label" @click.stop="showVisible = true" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
   </div>
 </template>
 
@@ -331,7 +331,7 @@ export default {
   .field-exist, .field-icon {
     width: 20px;
     height: 18px;
-    visibility: hidden;
+    // visibility: hidden;
   }
 }
 </style>
