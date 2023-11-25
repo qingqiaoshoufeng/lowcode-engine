@@ -580,14 +580,27 @@ onMounted(() => {
           :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
-      <AreaCascader
-        v-model:value="form.areaId"
-        :required="false"
-        :readonly="true"
-        label="行政区域："
-        :report-name="reportName"
-        :params="{ staticFlag: form.searchDimension }"
-      />
+      <template v-if="form.reportStyle === '1'">
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="false"
+          :readonly="true"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+          :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
+        />
+      </template>
+      <template v-else>
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="false"
+          :readonly="true"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+        />
+      </template>
       <SelectRange
         v-model:value="form.time"
         :required="true"
