@@ -92,12 +92,6 @@ const getCode = async ()=>{
   imgUrl.value = await getVerificationCode()
 }
 
-const initUpdate = () => {
-  var e = document.createEvent('Events');
-  document.createEvent('Events').initEvent("deviceready", true, false); 
-  document.dispatchEvent(e);
-}
-
 onMounted(()=>{
   getCode()
 })
@@ -107,7 +101,6 @@ const handleSwitch = () => {
   if (clickNumber.value > 7) {
     window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
     getCode()
-    initUpdate()
     showToast('已切换为测试环境')
   }
 }
