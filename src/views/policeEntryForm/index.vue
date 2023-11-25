@@ -769,7 +769,7 @@ const validateHeadquarters = (value, rule) => {
         :preview-text="form.warningAreaText?.length > 0 ? form.warningAreaText?.join('/') : form.warningAreaText"
         :readonly="showPreview"
         :show-all-area="showPreview"
-        :required="!showPreview"
+        :required="true"
         :rules="[{ required: true, message: '请选择行政区域' }]"
         :disabled="isConfirm"
         @change="onAreaChange"

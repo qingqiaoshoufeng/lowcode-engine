@@ -5,16 +5,15 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
-import {
-  generateColorByState,
-  getLastMonth,
-} from "@/utils/tools.js";
+import PoliceBack from "./police-back.vue";
+import PoliceTransfer from './police-transfer.vue';
+import { generateColorByState } from "@/utils/tools.js";
 import { reinforceOptionsList } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getPoliceRedeployList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js';
-import { useStore } from "vuex";
+import store from '@/store/index.js'
 
 const searchOptions = ref([
   {
@@ -73,8 +72,8 @@ const searchOptions = ref([
 
 const defaultFilterValue = {
   onlyMy: '2',
-  time: getLastMonth(),
-  warningType: [],
+  time: [],
+  warningType: undefined,
   warningTag: [],
   warningStatus: [],
   mainGroup: [],
@@ -97,8 +96,6 @@ const tabs = ref([
 
 const { show } = useModal();
 
-const store = useStore();
-
 const currentRow = ref(null);
 
 const proListRef = ref(null);
@@ -119,10 +116,15 @@ const onTabFn = (name, title) => {
   }
 };
 
-const handleApproval = (row) => {
+const handleTransfer = (row) => {
   currentRow.value = row
-  show.value.reviewVisible = true
+  show.value.transferVisible = true
 };
+
+const handleBack = (row) => {
+  currentRow.value = row
+  show.value.backVisible = true
+}
 
 const handleItem = (row) => {
   currentRow.value = row
@@ -144,7 +146,8 @@ const onSearchConfirm = () => {
 }
 
 const finishCallback = () => {
-  show.value.reviewVisible = false
+  show.value.backVisible = true
+  show.value.transferVisible = false
   proListRef.value.filter()
 }
 
@@ -153,9 +156,22 @@ onMounted(() => {
   searchOptions.value[4].options = res.JQ_TYPE
   searchOptions.value[5].options = reinforceOptionsList
   searchOptions.value[6].options = res.JQ_STATUS
+  // 初始化
   nextTick(() => {
-    proListRef.value?.filter();
-  });
+    const orgLevel = store.state.userInfo?.userInfo?.ORGLEVEL
+    if (orgLevel === 2) {
+      proListRef.value.query.provinceFlag = '1'
+      proListRef.value.query.provinceTransfer = '1'
+      proListRef.value.filter()
+    }
+    else if (orgLevel === 3) {
+      proListRef.value.query.cityFlag = '1'
+      proListRef.value.query.cityTransfer = '1'
+      proListRef.value.filter()
+    } else {
+      proListRef.value.filter()
+    }
+  })
 });
 </script>
 
@@ -241,8 +257,8 @@ onMounted(() => {
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleApproval(record)"
-              v-if="proListRef?.query?.onlyMy === '1'"
+              @click="handleTransfer(record)"
+              v-if="proListRef?.query?.onlyMy === '2'"
             >
               转派
             </van-button>
@@ -251,8 +267,8 @@ onMounted(() => {
               size="mini"
               color="#1989fa"
               class="item-btn"
-              @click="handleApproval(record)"
-              v-if="proListRef?.query?.onlyMy === '1'"
+              @click="handleBack(record)"
+              v-if="proListRef?.query?.onlyMy === '2'"
             >
               退回
             </van-button>
@@ -265,19 +281,21 @@ onMounted(() => {
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
-    <!-- 警情作废审批 -->
-    <ProModal
-      v-model:visible="show.reviewVisible"
-      :showBack="false"
-      :showHeader="true"
-      ok-text="审批"
-      title="警情作废审批"
-    >
+    <!-- 警情转派 -->
+    <ProModal v-model:visible="show.transferVisible" title="警情转派">
       <template #default="{ setHandleOk }">
-        <PoliceEntryDetail
+        <PoliceTransfer
           :current-row="currentRow"
-          :is-approval="true"
-          process-key="warningCancel"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="finishCallback"
+        />
+      </template>
+    </ProModal>
+    <!-- 警情退回 -->
+    <ProModal v-model:visible="show.backVisible" title="警情退回">
+      <template #default="{ setHandleOk }">
+        <PoliceBack
+          :current-row="currentRow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />

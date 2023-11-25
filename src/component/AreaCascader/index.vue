@@ -176,6 +176,8 @@ onMounted(() => {
         return temp?.areaName
       })?.join('/')
     });
+  } else if (props.showPreview && props.previewText) {
+    areaText.value = props.previewText
   } else {
     getSystemArea({
       reportName: props.reportName,
@@ -247,7 +249,18 @@ export default {
 
 <template>
   <template v-if="showPreview && previewText">
-    {{ previewText }}
+    <van-field
+      v-model="areaText"
+      v-preview-text="showPreview"
+      is-link
+      v-bind="$attrs"
+      :required="required"
+      :readonly="readonly"
+      :label="label"
+      :placeholder="placeholder"
+      :rules="rules"
+    >
+    </van-field>
   </template>
   <template v-else>
     <van-field
