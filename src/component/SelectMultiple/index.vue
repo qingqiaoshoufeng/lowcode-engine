@@ -107,7 +107,7 @@ defineOptions({
     :rules="rules"
     @click="handleShow"
   >
-  <template v-slot:label="">
+  <template v-slot:label="" v-if="label">
       <slot name="label">
         <div class="field-annotation">{{ label }}</div>
       </slot>

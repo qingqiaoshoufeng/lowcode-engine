@@ -110,9 +110,9 @@ defineOptions({
     :readonly="readonly"
     class="cascader-single"
   >
-  <template v-slot:label="">
+  <template v-slot:label="" v-if="label">
       <slot name="label">
-        <div class="field-annotation">{{ label }}</div>
+        <div v-if="label" class="field-annotation">{{ label }}</div>
       </slot>
     </template>
   </van-field>
