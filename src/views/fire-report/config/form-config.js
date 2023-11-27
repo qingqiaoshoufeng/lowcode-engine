@@ -866,7 +866,7 @@ export const useFormConfig = (fromRef) => {
       content = content.replace('【扑灭时间】', dayjs(extinctDate).format('MM月DD日HH时mm分'))
     }
     else {
-      content = content.replace('，【扑灭时间】扑灭')
+      content = content.replace('，【扑灭时间】扑灭', '')
     }
     if (basicInfo.fireCause.text?.length > 0) {
       content = content.replace('【起火原因】', cloneDeep(basicInfo.fireCause.text)?.pop())

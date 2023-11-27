@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
 import { getDispatchGroup } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
 
@@ -67,6 +67,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
+
+const attrs = useAttrs();
 
 const selectVisible = ref(false);
 
@@ -158,6 +160,9 @@ onMounted(() => {
 });
 
 const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
   selectVisible.value = true;
 };
 

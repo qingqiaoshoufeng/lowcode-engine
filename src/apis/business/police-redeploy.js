@@ -31,6 +31,7 @@ export function getPoliceRedeployList(data) {
   if (!data.provinceFlag && !data.cityFlag) {
     return Promise.resolve({
       list: [],
+      total: 0,
     })
   }
   return request.get('/acws/rest/biz/firewarning/query', {

@@ -63,7 +63,7 @@ const loginForm = ref({
   jcaptchaCode: '',
   ssoTag: 'abcdefg', // 跳过验证码验证
 })
-const handleUserRegister = () => { }
+
 const initStore = async () => {
   const storeList = ['rules', 'userInfo', 'dict','menuInfo']
   const isInited = await Promise.all(
@@ -87,6 +87,7 @@ const handleUserLogin = async () => {
     name:'Home'
   })
 };
+
 const getCode = async ()=>{
   imgUrl.value = await getVerificationCode()
 }
@@ -95,16 +96,15 @@ onMounted(()=>{
   getCode()
 })
 
-
 const handleSwitch = () => {
   clickNumber.value += 1
   if (clickNumber.value > 7) {
     window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
+    getCode()
     showToast('已切换为测试环境')
   }
 }
 </script>
-
   
 <style scoped lang="scss">
 .login {

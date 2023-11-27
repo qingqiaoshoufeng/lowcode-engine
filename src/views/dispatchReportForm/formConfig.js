@@ -328,7 +328,7 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '请输入过程描述' }],
       },
       attach: { // 其他附件
-        value: undefined,
+        value: [],
         // rules: [{ required: true, message: '请选择其他附件' }],
       },
     },

@@ -53,11 +53,12 @@ const handleSearch = () => {
   showLoadingToast();
   proListRef.value.filter().then((res) => {
     if (proListRef.value.query.type === 1) {
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起警情记录`
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireWarning?.warningCount || 0 }</span>起警情记录`
     } else if (proListRef.value.query.type === 2 || proListRef.value.query.type === 3) {
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起出动记录`
+      const num = proListRef.value.result?.fireDispatch?.dispatchCount || proListRef.value.result?.fireDispatchHead?.dispatchCount || 0 || 0
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ num }</span>起出动记录`
     } else if (proListRef.value.query.type === 4) {
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.list?.length || 0 }</span>起火灾记录`
+      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireInfo?.fireCount || 0 }</span>起火灾记录`
     }
     closeToast();
   });
@@ -73,6 +74,7 @@ const handleSearch = () => {
       :getListFn="getGlobalSearchList"
       :tabs="tabs"
       :showLoad="false"
+      :showBack="false"
       :onTabFn="onTabFn"
     >
       <template #search="{ filterFormState }">
@@ -133,7 +135,7 @@ const handleSearch = () => {
 
 <style lang="scss" scoped>
 .global-search {
-  height: 100vh;
+  height: calc(100vh - 92px);
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;

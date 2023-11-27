@@ -27,6 +27,11 @@ export function getFireWarningDetail119(id) {
   return request.get(`/acws/rest/biz/firewarningyyj/warningyyj/${id}`)
 }
 
+// 获取全勤指挥部
+export function getHeaderOrg() {
+  return request.get('/acws/rest/biz/firewarning/selecthead')
+}
+
 // 119警情挂起
 export function hangupFireWarning(data) {
   return request.post('/acws/rest/biz/firewarningyyj/updatewarningyyj', data)

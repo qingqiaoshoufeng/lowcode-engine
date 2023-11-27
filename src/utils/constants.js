@@ -661,3 +661,41 @@ export const reinforceOptionsList = [
     value: 2,
   },
 ]
+
+export const statisticRange = [{
+  dictName: '节假日',
+  boDictId: '1',
+},
+{
+  dictName: '按季',
+  boDictId: '2',
+},
+{
+  dictName: '按月',
+  boDictId: '3',
+},
+{
+  dictName: '按日',
+  boDictId: '4',
+},
+{
+  dictName: '按时',
+  boDictId: '5',
+}]
+
+export const seasonRange = [{
+  dictName: '一季度',
+  boDictId: '1',
+},
+{
+  dictName: '二季度',
+  boDictId: '2',
+},
+{
+  dictName: '三季度',
+  boDictId: '3',
+},
+{
+  dictName: '四季度',
+  boDictId: '4',
+}]

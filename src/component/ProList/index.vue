@@ -79,6 +79,7 @@ const {
   loading,
   pageChange,
   filter,
+  result,
 } = useList(props.paginationConfig.alias, {
   getListFn: props.getListFn,
   immediate: false,
@@ -141,6 +142,7 @@ defineExpose({
   list,
   query,
   total,
+  result,
   resetForm,
 })
 </script>
