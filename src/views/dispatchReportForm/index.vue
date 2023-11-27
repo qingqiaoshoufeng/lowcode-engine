@@ -1212,7 +1212,7 @@ const onSideBarChange = (e, k) => {
     <div class="form-left">
       <van-sidebar v-model="sideBarActive">
         <template v-for="(item, k) in sections" :key="k">
-          <van-sidebar-item to="#otherAttach" @click="onSideBarChange(item, k)">
+          <van-sidebar-item @click="onSideBarChange(item, k)">
             <template #title>{{ item?.title }}</template>
           </van-sidebar-item>
         </template>
