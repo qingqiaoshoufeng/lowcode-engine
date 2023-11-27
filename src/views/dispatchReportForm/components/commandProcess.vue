@@ -8,6 +8,10 @@ const form = inject("form");
 
 const isDetail = inject("isDetail");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 const isEdit = inject("isEdit");
@@ -55,7 +59,17 @@ onMounted(() => {
         show-word-limit
         :rules="form.commandProcess.rescueMethod.rules"
         :class="{ 'form-textarea': !showPreview }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="处置对策："
+            remark-field="rescueMethod"
+            field-module="commandProcess"
+            :exist-data="fieldExist?.rescueMethod"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.commandProcess.actionPlan.value"
         v-preview-text="showPreview"
@@ -70,7 +84,17 @@ onMounted(() => {
         show-word-limit
         :rules="form.commandProcess.actionPlan.rules"
         :class="{ 'form-textarea': !showPreview }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="行动方案："
+            remark-field="actionPlan"
+            field-module="commandProcess"
+            :exist-data="fieldExist?.actionPlan"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.commandProcess.commandProcess.value"
         v-preview-text="showPreview"
@@ -85,7 +109,17 @@ onMounted(() => {
         show-word-limit
         :rules="form.commandProcess.commandProcess.rules"
         :class="{ 'form-textarea': !showPreview }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="过程描述："
+            remark-field="commandProcess"
+            field-module="commandProcess"
+            :exist-data="fieldExist?.commandProcess"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </van-cell-group>
   </ProCard>
 </template>

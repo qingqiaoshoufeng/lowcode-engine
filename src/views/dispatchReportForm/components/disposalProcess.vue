@@ -5,6 +5,10 @@ import ProCard from "@/component/ProCard/index.vue";
 const form = inject("form");
 
 const showPreview = inject("showPreview");
+
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
 </script>
 
 <template>
@@ -25,7 +29,17 @@ const showPreview = inject("showPreview");
         show-word-limit
         :rules="form.disposalProcess.fireProcess.rules"
         :class="{ 'form-textarea': !showPreview }"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="处置经过："
+            remark-field="fireProcess"
+            field-module="disposalProcess"
+            :exist-data="fieldExist?.fireProcess"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </van-cell-group>
   </ProCard>
 </template>

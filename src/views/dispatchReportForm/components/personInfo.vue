@@ -7,6 +7,10 @@ const form = inject('form')
 
 const showDraft = inject('showDraft')
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isEdit = inject('isEdit')
 
 const isDetail = inject('isDetail')
@@ -77,7 +81,19 @@ onMounted(() => {
             label-width="108px"
             placeholder="请选择指挥员姓名"
             :rules="form.personInfo.headerName.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="指挥员姓名："
+                remark-field="commandLeader"
+                remark-field2="headerName"
+                :remark-field2-id="index"
+                field-module="personInfo"
+                :exist-data="fieldExist?.commandLeader?.[index]?.headerName"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.position"
             :showPreview="showPreview"
@@ -90,7 +106,19 @@ onMounted(() => {
             label="指挥角色："
             placeholder="请选择指挥角色"
             :rules="form.personInfo.position.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="指挥角色："
+                remark-field="commandLeader"
+                remark-field2="position"
+                :remark-field2-id="index"
+                field-module="personInfo"
+                :exist-data="fieldExist?.commandLeader?.[index]?.position"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <template v-if="!isDetail">
           <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddHeader">
@@ -98,7 +126,7 @@ onMounted(() => {
           </van-button>
         </template>
       </div>
-      <van-cell title="是否有社会技术专家：" required v-preview-text="showPreview" class="field-radio-label">
+      <!-- <van-cell title="是否有社会技术专家：" required v-preview-text="showPreview" class="field-radio-label">
         <template #default>
           <van-radio-group
             v-model="form.personInfo.haveProfessor.value"
@@ -110,7 +138,34 @@ onMounted(() => {
             <van-radio name="2">否</van-radio>
           </van-radio-group>
         </template>
-      </van-cell>
+      </van-cell> -->
+      <van-field 
+          name="personInfo.haveProfessor.value" 
+          label="是否有社会技术专家：" 
+          :rules="form.personInfo.haveProfessor.rules"
+        >
+          <template #input>
+            <van-radio-group
+              v-model:value="form.personInfo.haveProfessor.value"
+              v-preview-text="showPreview"
+              icon-size="16px"
+              direction="horizontal"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否有社会技术专家："
+              remark-field="haveProfessor"
+              field-module="personInfo"
+              :exist-data="fieldExist?.haveProfessor"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+      
       <div v-if="form.personInfo.haveProfessor.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.personInfo.technician" :key="index" class="block-dynamic-item">
           <div class="title">技术专家{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteTechnician(index)" /></div>
@@ -125,7 +180,19 @@ onMounted(() => {
             label-width="128px"
             placeholder="请输入技术专家"
             :rules="form.personInfo.name.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="技术专家(社会)："
+                remark-field="technician"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="personInfo"
+                :exist-data="fieldExist?.technician?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <template v-if="!isDetail">
           <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddTechnician">

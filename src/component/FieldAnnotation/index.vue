@@ -250,6 +250,7 @@ export default {
   // position: absolute;
   // top: -28px;
   // right: -8px;
+  pointer-events: all;
   img{
     position: absolute;
     right: 0;

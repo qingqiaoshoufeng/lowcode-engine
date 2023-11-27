@@ -6,6 +6,10 @@ import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 const currentRow = inject("currentRow");
@@ -159,7 +163,17 @@ watch(() => form.value.deployEquipment, () => {
         placeholder="请输入全勤指挥部名称"
         :disabled="!showPreview"
         :rules="form.basicInfoHead.headquarterName.rules"
-      />
+      >
+        <template v-slot:label="">
+            <FieldAnnotation
+              label="全勤指挥部名称："
+              remark-field="headquarterName"
+              field-module="basicInfoHead"
+              :exist-data="fieldExist?.headquarterName"
+              @refresh-callback="refreshField"
+            />
+          </template>
+      </van-field>  
       <SelectDateTime
         v-model:value="form.basicInfoHead.dispatchDate.value"
         :show-preview="showPreview"
@@ -171,7 +185,17 @@ watch(() => form.value.deployEquipment, () => {
         label="出动时间："
         placeholder="请选择出动时间"
         :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="出动时间："
+            remark-field="dispatchDate"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.dispatchDate"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectDateTime>  
       <SelectDateTime
         v-model:value="form.basicInfoHead.attendanceDate.value"
         :show-preview="showPreview"
@@ -183,7 +207,17 @@ watch(() => form.value.deployEquipment, () => {
         label="到场时间："
         placeholder="请选择到场时间"
         :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
-      />
+      >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="到场时间："
+              remark-field="attendanceDate"
+              field-module="basicInfoHead"
+              :exist-data="fieldExist?.attendanceDate"
+              @refresh-callback="refreshField"
+            />
+          </template>
+      </SelectDateTime> 
       <SelectDateTime
         v-model:value="form.basicInfoHead.evacuateDate.value"
         :show-preview="showPreview"
@@ -195,7 +229,17 @@ watch(() => form.value.deployEquipment, () => {
         label="撤离时间："
         placeholder="请选择撤离时间"
         :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="撤离时间："
+            remark-field="evacuateDate"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.evacuateDate"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectDateTime> 
       <van-field
         v-model="form.basicInfoHead.personNum.value"
         v-preview-text="showPreview"
@@ -209,7 +253,17 @@ watch(() => form.value.deployEquipment, () => {
         placeholder="请输入人员数量"
         :disabled="!showPreview"
         :rules="form.basicInfoHead.personNum.rules"
-      />
+      >
+       <template v-slot:label="">
+          <FieldAnnotation
+            label="人员数量(人)："
+            remark-field="personNum"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.personNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.basicInfoHead.truckNum.value"
         v-preview-text="showPreview"
@@ -223,7 +277,17 @@ watch(() => form.value.deployEquipment, () => {
         placeholder="请输入出动车辆"
         :disabled="!showPreview"
         :rules="form.basicInfoHead.truckNum.rules"
-      />
+      > 
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="出动车辆(辆)："
+            remark-field="truckNum"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.truckNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="diffTime"
         v-preview-text="showPreview"
@@ -235,7 +299,17 @@ watch(() => form.value.deployEquipment, () => {
         placeholder="请输入指挥时长"
         :disabled="!showPreview"
         :rules="form.basicInfoHead.commandTime.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="指挥时长："
+            remark-field="diffTime"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.diffTime"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </van-cell-group>
   </ProCard>
 </template>

@@ -1,4 +1,4 @@
-<script setup>
+<script setup>-close
 import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
@@ -268,7 +268,7 @@ const sections = computed(() => {
     }
     extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
-    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
+    if (props.isDetail) {
       extra.proSteps = proSteps
     }
     return extra
@@ -290,12 +290,12 @@ const sections = computed(() => {
     }
     extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
-    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
+    if (props.isDetail) {
       extra.proSteps = proSteps
     }
     return extra
   case '指挥':
-    if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
+    if (props.isDetail) {
       return {
         ...extra,
         basicInfoHead,
@@ -373,6 +373,8 @@ provide('isEdit', props.isEdit)
 
 provide('fieldExist', fieldExist)
 
+provide('dataType', 2)
+
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
@@ -381,6 +383,48 @@ const initPoliceDetail = () => {
     })
   })
 }
+
+const refreshField = () => {
+  if (localFireDispatchId.value) {
+    getFieldAnnotationDetail({
+      dataId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+      dataType: 2,
+    }).then((res) => {
+      if (res) {
+        const { data, fieldModules } = res
+        fieldExist.value = data
+        form.value.basicInformation.fieldAnnotation = fieldModules?.basicInformation
+        form.value.basicInfoHead.fieldAnnotation = fieldModules?.basicInfoHead
+        form.value.personInfo.fieldAnnotation = fieldModules?.personInfo
+        // form.value.commandMode.fieldAnnotation = fieldModules?.commandMode
+        form.value.commandProcess.fieldAnnotation = fieldModules?.commandProcess
+        form.value.deployEquipment.fieldAnnotation = fieldModules?.deployEquipment
+        form.value.investForce.fieldAnnotation = fieldModules?.investForce
+        form.value.casualtyWar.fieldAnnotation = fieldModules?.casualtyWar
+        form.value.battleResult.fieldAnnotation = fieldModules?.battleResult
+        form.value.battleConsume.fieldAnnotation = fieldModules?.battleConsume
+        form.value.disposalProcess.fieldAnnotation = fieldModules?.disposalProcess
+        form.value.scenePhoto.fieldAnnotation = fieldModules?.scenePhoto
+        form.value.otherAttach.fieldAnnotation = fieldModules?.otherAttach
+      }
+    })
+  }
+}
+
+const deleteField = (remarkField, remarkField2) => {
+  deleteFormFieldAnnotation({
+    dataId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+    dataType: 2,
+    remarkField,
+    remarkField2,
+  }).then((res) => {
+    refreshField()
+  })
+}
+
+provide('refreshField', refreshField)
+
+provide('deleteField', deleteField)
 
 const initDict = () => {
   return new Promise((resolve) => {
@@ -489,7 +533,6 @@ const initDetail = () => {
       const id = currentRow?.boFireDispatchId
       getDispatchDetailHeadquarter(id).then((res) => {
         if (res) {
-          dispatchDetail.value = res
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
@@ -502,7 +545,6 @@ const initDetail = () => {
       const id = currentRow?.boFireDispatchId
       getDispatchDetail(id).then((res) => {
         if (res) {
-          dispatchDetail.value = res
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
@@ -616,7 +658,7 @@ const initDynamicDict = () => {
     if (investForce.dispatchTruckList.value) { // 消防车辆信息
       cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
       investForce.dispatchTruckList.value?.forEach((item) => {
-        if (item && !cars.includes(item.boFireTruckId)) {
+        if (!cars.includes(item.boFireTruckId)) {
           dispatchTruckListOptions.value.push({
             boFireTruckId: item.boFireTruckId,
             truckNumber: item.truckNumber,
@@ -648,7 +690,7 @@ const initWatch = () => {
     }
     initDynamicDict()
     nextTick(() => {
-      showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.basicInfoHead.dispatchDate.value))
+      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
     })
     resolve()
   })
@@ -697,7 +739,7 @@ const getSubmitParams = () => {
         dealEndDate: basicInformation.dealEndDate.value?.valueOf(),
         returnLateReason: basicInformation.returnLateReason.value,
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.pop(),
+        warningType: draftInfo.warningType.value?.join(','),
         partakeType: draftInfo.partakeType.value,
         temperature: basicInformation.temperature.value,
         weather: basicInformation.weather.value,
@@ -800,7 +842,7 @@ const getSubmitParams = () => {
       params.fireDispatchTruckList.push(...list)
     }
     if (form.value.investForce.isReturnTruck.value === '1') {
-      const list = fixCarParams(investForce.midwayCar.list)
+      const list = fixCarParams(investForce.midwayCar.value)
       params.fireDispatchRetrunTruckList.push(...list)
     }
     if (investForce.haveVolunteer.value === '1') {
@@ -885,7 +927,7 @@ const getSubmitParams = () => {
         attendanceDate: basicInfoHead?.attendanceDate.value?.valueOf(),
         evacuateDate: basicInfoHead?.evacuateDate.value?.valueOf(),
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.pop(),
+        warningType: draftInfo.warningType.value?.join(','),
         partakeType: draftInfo.partakeType.value,
       },
       fireDispatchHead: {
@@ -1178,14 +1220,6 @@ const onSubmit = async () => {
 
 onMounted(() => {
   console.log('init', result)
-  props.setHandleOk && props.setHandleOk(async (finishFn) => {
-    if (props.isApproval && checkFieldWarning(fieldExist.value)) {
-      // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
-    }
-    else if (props.isApproval) {
-      show.value.approvalVisible = true
-    }
-  }, loading)
 })
 
 const onFailed = (errorInfo) => {
@@ -1219,7 +1253,7 @@ const onSideBarChange = (e, k) => {
       </van-sidebar>
     </div>
     <div class="form-right">
-      <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+      <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" required="auto">
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">
@@ -1343,11 +1377,7 @@ const onSideBarChange = (e, k) => {
           <BattleConsume />
         </template>
         <!-- 操作记录 -->
-        <ProSteps
-          v-if="isDetail || (isApproval && labelText === '审核')"
-          :data="form?.proSteps?.fireDispatchTransferVOList?.value"
-          :detail="dispatchDetail"
-        />
+        <ProSteps v-if="isDetail" :data="form?.proSteps?.fireDispatchTransferVOList?.value" />
       </van-form>
 
       <div class="form-footer" v-if="!showPreview">
@@ -1371,11 +1401,11 @@ const onSideBarChange = (e, k) => {
     <ProModal v-model:visible="show.approvalVisible" title="出动审核">
       <template #default="{ setHandleOk }">
         <ProcessReview
-          :process-key="props.processKey"
-          :current-row="props.currentRow"
-          :set-handle-ok="setHandleOk"
-          :label-text="labelText"
-          @finish-callback="approvalCallback"
+        :process-key="props.processKey"
+        :current-row="props.currentRow"
+        :set-handle-ok="setHandleOk"
+        :label-text="labelText"
+        @finish-callback="approvalCallback"
         />
       </template>
     </ProModal>

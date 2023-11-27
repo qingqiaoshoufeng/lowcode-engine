@@ -8,6 +8,10 @@ const form = inject("form");
 
 const isDetail = inject("isDetail");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isEdit = inject("isEdit");
 
 const currentRow = inject("currentRow");
@@ -110,7 +114,17 @@ const onDelete = (file) => {
             :after-read="onAfterRead"
             :before-delete="onDelete"
           />
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="相关附件上传："
+              remark-field="photos"
+              field-module="scenePhoto"
+              :exist-data="fieldExist?.photos"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
+
       </div>
     </van-cell-group>
   </ProCard>

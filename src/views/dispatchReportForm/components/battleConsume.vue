@@ -5,6 +5,10 @@ import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isDetail = inject("isDetail");
 
 const showPreview = inject("showPreview");
@@ -166,7 +170,17 @@ onMounted(() => {
         label-width="118px"
         placeholder="请选择指挥车辆信息"
         title="请选择指挥车辆信息"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="指挥车辆信息："
+            remark-field="blockingTime"
+            field-module="basicInformation"
+            :exist-data="fieldExist?.blockingTime"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
       <van-field
         v-if="showMainGroup || showReinforce"
         v-model="form.battleConsume.wastageTruckExplain.value"
@@ -178,7 +192,17 @@ onMounted(() => {
         label-width="110px"
         placeholder="请输入车辆损耗说明"
         :rules="form.battleConsume.wastageTruckExplain.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="车辆损耗说明："
+            remark-field="wastageTruckExplain"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.wastageTruckExplain"
+            @refresh-callback="refreshField"
+          />
+      </template>
+    </van-field>
       <van-field
         v-if="showMainGroup || showReinforce"
         v-model="form.battleConsume.fuel.value"
@@ -190,7 +214,17 @@ onMounted(() => {
         label="燃油(升)："
         placeholder="请输入燃油量"
         :rules="form.battleConsume.fuel.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="燃油(升)："
+            remark-field="fuel"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.fuel"
+            @refresh-callback="refreshField"
+          />
+      </template>
+    </van-field>
       <!-- 灭火器材耗损 -->
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
         <van-field
@@ -204,7 +238,17 @@ onMounted(() => {
           label-width="130px"
           placeholder="请输入机动消防泵数量"
           :rules="form.battleConsume.waterPump.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="机动消防泵(含浮艇泵)(台)："
+              remark-field="waterPump"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterPump"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.hoseReel.value"
           v-preview-text="showPreview"
@@ -216,7 +260,17 @@ onMounted(() => {
           label-width="130px"
           placeholder="请输入移动式水带卷盘或水带槽数量"
           :rules="form.battleConsume.hoseReel.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="移动式水带卷盘或水带槽(个)："
+              remark-field="hoseReel"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.hoseReel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireGun.value"
           v-preview-text="showPreview"
@@ -228,7 +282,17 @@ onMounted(() => {
           label-width="138px"
           placeholder="请输入移动式消防炮数量"
           :rules="form.battleConsume.fireGun.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="移动式消防炮(个)："
+              remark-field="fireGun"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireGun"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.airForm.value"
           v-preview-text="showPreview"
@@ -240,7 +304,17 @@ onMounted(() => {
           label-width="120px"
           placeholder="请输入空气泡沫枪数量"
           :rules="form.battleConsume.airForm.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="空气泡沫枪(个)："
+              remark-field="airForm"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.airForm"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.formTank.value"
           v-preview-text="showPreview"
@@ -252,7 +326,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入泡沫液桶数量"
           :rules="form.battleConsume.formTank.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="泡沫液桶(个)："
+              remark-field="formTank"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.formTank"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.ladder.value"
           v-preview-text="showPreview"
@@ -263,7 +347,17 @@ onMounted(() => {
           label="梯子(把)："
           placeholder="请输入梯子数量"
           :rules="form.battleConsume.ladder.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="梯子(把)："
+              remark-field="ladder"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.ladder"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.waterBand.value"
           v-preview-text="showPreview"
@@ -274,7 +368,17 @@ onMounted(() => {
           label="水带(米)："
           placeholder="请输入水带长度"
           :rules="form.battleConsume.waterBand.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="水带(米)："
+              remark-field="waterBand"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterBand"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireHydrantHandle.value"
           v-preview-text="showPreview"
@@ -286,7 +390,17 @@ onMounted(() => {
           label-width="120px"
           placeholder="请输入消防栓扳手数量"
           :rules="form.battleConsume.fireHydrantHandle.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防栓扳手(把)："
+              remark-field="fireHydrantHandle"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireHydrantHandle"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.waterGun.value"
           v-preview-text="showPreview"
@@ -297,7 +411,17 @@ onMounted(() => {
           label="水枪(个)："
           placeholder="请输入水枪数量"
           :rules="form.battleConsume.waterGun.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="水枪(个)："
+              remark-field="waterGun"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterGun"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.waterMainfold.value"
           v-preview-text="showPreview"
@@ -308,7 +432,18 @@ onMounted(() => {
           label="分水器(只)："
           placeholder="请输入分水器数量"
           :rules="form.battleConsume.waterMainfold.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="分水器(只)："
+              remark-field="waterMainfold"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterMainfold"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+        
         <van-field
           v-model="form.battleConsume.entryTool.value"
           v-preview-text="showPreview"
@@ -320,7 +455,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入破拆工具数量"
           :rules="form.battleConsume.entryTool.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="破拆工具(个)："
+              remark-field="entryTool"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.entryTool"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireExtinguisher.value"
           v-preview-text="showPreview"
@@ -331,7 +476,17 @@ onMounted(() => {
           label="灭火机(只)："
           placeholder="请输入灭火机数量"
           :rules="form.battleConsume.fireExtinguisher.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="灭火机(只)："
+              remark-field="fireExtinguisher"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireExtinguisher"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.firePump.value"
           v-preview-text="showPreview"
@@ -342,7 +497,17 @@ onMounted(() => {
           label="手抬泵(个)："
           placeholder="请输入手抬泵量"
           :rules="form.battleConsume.firePump.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="手抬泵(个)："
+              remark-field="firePump"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.firePump"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </template>
       <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
         <div v-for="(item, index) in form.battleConsume.lossOtherEquipments" :key="index" class="block-dynamic-item">
@@ -358,7 +523,19 @@ onMounted(() => {
             label-width="130px"
             placeholder="请输入其他物品名称"
             :rules="form.battleConsume.otherName.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="其他物品(名称)："
+                remark-field="lossOtherEquipments"
+                remark-field2="otherName"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherEquipments?.[index]?.otherName"
+                @refresh-callback="refreshField"
+              />
+            </template>
+        </van-field>
           <van-field
             v-model="item.otherAmount"
             v-preview-text="showPreview"
@@ -370,7 +547,19 @@ onMounted(() => {
             label="数量："
             placeholder="请输入数量"
             :rules="form.battleConsume.otherAmount.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="数量："
+                remark-field="lossOtherPersonal"
+                remark-field2="otherAmount"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherPersonal?.[index]?.otherAmount"
+                @refresh-callback="refreshField"
+              />
+            </template>
+        </van-field>
         </div>
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddEquipments">
           新增物品（灭火器材）
@@ -389,7 +578,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入消防头盔数量"
           :rules="form.battleConsume.fireHat.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防头盔(个)："
+              remark-field="fireHat"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireHat"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.protectiveSuit.value"
           v-preview-text="showPreview"
@@ -401,7 +600,17 @@ onMounted(() => {
           label-width="130px"
           placeholder="请输入消防员灭火防护服数量"
           :rules="form.battleConsume.protectiveSuit.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防员灭火防护服(套)："
+              remark-field="protectiveSuit"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.protectiveSuit"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireGlove.value"
           v-preview-text="showPreview"
@@ -413,7 +622,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入消防手套数量"
           :rules="form.battleConsume.fireGlove.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防手套(副)："
+              remark-field="fireGlove"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireGlove"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.lapBelt.value"
           v-preview-text="showPreview"
@@ -425,7 +644,17 @@ onMounted(() => {
           label-width="138px"
           placeholder="请输入消防安全腰带数量"
           :rules="form.battleConsume.lapBelt.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防安全腰带(根)："
+              remark-field="lapBelt"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.lapBelt"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.protectiveBoots.value"
           v-preview-text="showPreview"
@@ -437,7 +666,17 @@ onMounted(() => {
           label-width="168px"
           placeholder="请输入消防员灭火防护靴数量"
           :rules="form.battleConsume.protectiveBoots.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防员灭火防护靴(双)："
+              remark-field="protectiveBoots"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.protectiveBoots"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireRebreather.value"
           v-preview-text="showPreview"
@@ -449,7 +688,17 @@ onMounted(() => {
           label-width="130px"
           placeholder="请输入双正式压消防空气呼吸器数量"
           :rules="form.battleConsume.fireRebreather.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="双正式压消防空气呼吸器(副)："
+              remark-field="fireRebreather"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireRebreather"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireLight.value"
           v-preview-text="showPreview"
@@ -461,7 +710,17 @@ onMounted(() => {
           label-width="156px"
           placeholder="请输入佩戴式防爆照灯数量"
           :rules="form.battleConsume.fireLight.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="佩戴式防爆照灯(个)："
+              remark-field="fireLight"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireLight"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireRescuer.value"
           v-preview-text="showPreview"
@@ -473,7 +732,17 @@ onMounted(() => {
           label-width="136px"
           placeholder="请输入消防员呼救器数量"
           :rules="form.battleConsume.fireRescuer.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防员呼救器(个)："
+              remark-field="fireRescuer"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireRescuer"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.positionLamp.value"
           v-preview-text="showPreview"
@@ -484,7 +753,17 @@ onMounted(() => {
           label="方位灯(个)："
           placeholder="请输入方位灯数量"
           :rules="form.battleConsume.positionLamp.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="方位灯(个)："
+              remark-field="positionLamp"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.positionLamp"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.safetyRope.value"
           v-preview-text="showPreview"
@@ -496,7 +775,17 @@ onMounted(() => {
           label-width="120px"
           placeholder="请输入消防安全绳数量"
           :rules="form.battleConsume.safetyRope.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防安全绳(根)："
+              remark-field="safetyRope"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.safetyRope"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.battleConsume.fireAxe.value"
           v-preview-text="showPreview"
@@ -508,7 +797,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入消防腰斧数量"
           :rules="form.battleConsume.fireAxe.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防腰斧(个)："
+              remark-field="fireAxe"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.fireAxe"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.interphone.value"
           v-preview-text="showPreview"
@@ -519,7 +818,17 @@ onMounted(() => {
           label="对讲机(个)："
           placeholder="请输入对讲机数量"
           :rules="form.battleConsume.interphone.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="对讲机(个)："
+              remark-field="interphone"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.interphone"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.transferImage.value"
           v-preview-text="showPreview"
@@ -530,7 +839,17 @@ onMounted(() => {
           label="图传(个)："
           placeholder="请输入图传数量"
           :rules="form.battleConsume.transferImage.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="图传(个)："
+              remark-field="transferImage"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.transferImage"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.uav.value"
           v-preview-text="showPreview"
@@ -541,7 +860,17 @@ onMounted(() => {
           label="无人机(架)："
           placeholder="请输入无人机数量"
           :rules="form.battleConsume.uav.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="无人机(架)："
+              remark-field="uav"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.uav"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
       </template>
       <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
         <div v-for="(item, index) in form.battleConsume.lossOtherPersonal" :key="index" class="block-dynamic-item">
@@ -557,7 +886,19 @@ onMounted(() => {
             label-width="130px"
             placeholder="请输入其他物品名称"
             :rules="form.battleConsume.otherName.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="其他物品(名称)："
+                remark-field="lossOtherPersonal"
+                remark-field2="otherName"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherPersonal?.[index]?.otherName"
+                @refresh-callback="refreshField"
+              />
+            </template>
+        </van-field>  
           <van-field
             v-model="item.otherAmount"
             v-preview-text="showPreview"
@@ -569,7 +910,19 @@ onMounted(() => {
             label="数量："
             placeholder="请输入数量"
             :rules="form.battleConsume.otherAmount.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="数量："
+                remark-field="lossOtherPersonal"
+                remark-field2="otherAmount"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherPersonal?.[index]?.otherAmount"
+                @refresh-callback="refreshField"
+              />
+            </template>
+        </van-field>  
         </div>
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddPersnal">
           新增物品（个人装备）
@@ -588,7 +941,17 @@ onMounted(() => {
           label-width="110px"
           placeholder="请输入泡沫液量"
           :rules="form.battleConsume.foamLiquid.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="泡沫液(千克)："
+              remark-field="foamLiquid"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.foamLiquid"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.dryPowder.value"
           v-preview-text="showPreview"
@@ -599,7 +962,17 @@ onMounted(() => {
           label="干粉(千克)："
           placeholder="请输入干粉量"
           :rules="form.battleConsume.dryPowder.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="干粉(千克)："
+              remark-field="dryPowder"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.dryPowder"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.carbonDioxide.value"
           v-preview-text="showPreview"
@@ -611,7 +984,17 @@ onMounted(() => {
           label-width="120px"
           placeholder="请输入二氧化碳量"
           :rules="form.battleConsume.carbonDioxide.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="二氧化碳(千克)："
+              remark-field="carbonDioxide"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.carbonDioxide"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
         <van-field
           v-model="form.battleConsume.haloalkane.value"
           v-preview-text="showPreview"
@@ -622,7 +1005,17 @@ onMounted(() => {
           label="卤代烷(升)："
           placeholder="请输入卤代烷量"
           :rules="form.battleConsume.haloalkane.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="卤代烷(升)："
+              remark-field="haloalkane"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.haloalkane"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>  
       </template>
       <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
         <div v-for="(item, index) in form.battleConsume.lossOtherAgent" :key="index" class="block-dynamic-item">
@@ -638,7 +1031,19 @@ onMounted(() => {
             label-width="130px"
             placeholder="请输入其他物品名称"
             :rules="form.battleConsume.otherName.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="其他物品(名称)："
+                remark-field="lossOtherAgent"
+                remark-field2="otherName"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherAgent?.[index]?.otherName"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>  
           <van-field
             v-model="item.otherAmount"
             v-preview-text="showPreview"
@@ -650,7 +1055,19 @@ onMounted(() => {
             label="数量："
             placeholder="请输入数量"
             :rules="form.battleConsume.otherAmount.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="数量："
+                remark-field="lossOtherAgent"
+                remark-field2="otherAmount"
+                :remark-field2-id="index"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.lossOtherAgent?.[index]?.otherAmount"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>  
         </div>
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px;" v-if="!isDetail" @click="handleAddAgent">
           新增物品（灭火药剂）
@@ -693,7 +1110,17 @@ onMounted(() => {
           label-width="104px"
           placeholder="请输入冷却水量"
           :rules="form.battleConsume.coolingWater.rules"
-        />
+        >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="冷却水(吨)："
+                remark-field="coolingWater"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.coolingWater"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>  
         <van-field
           v-model="form.battleConsume.totalWater.value"
           v-preview-text="showPreview"
@@ -705,7 +1132,17 @@ onMounted(() => {
           label-width="104px"
           placeholder="请输入用水总量"
           :rules="form.battleConsume.totalWater.rules"
-        />
+        >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="用水总量(吨)："
+                remark-field="totalWater"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.totalWater"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>  
         <van-field
           v-model="form.battleConsume.waterInterrupt.value"
           v-preview-text="showPreview"
@@ -717,8 +1154,18 @@ onMounted(() => {
           label-width="136px"
           placeholder="请输入无故供水中断次数"
           :rules="form.battleConsume.waterInterrupt.rules"
-        />
-        <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio">
+        >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="无故供水中断(次)："
+                remark-field="waterInterrupt"
+                field-module="battleConsume"
+                :exist-data="fieldExist?.waterInterrupt"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>  
+        <!-- <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio">
           <template #default>
             <van-radio-group
               v-model="form.battleConsume.waterDamage.value"
@@ -729,7 +1176,33 @@ onMounted(() => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
-        </van-cell>
+        </van-cell> -->
+        <van-field 
+          name="basicInformation.isBlocking.value" 
+          label="水渍损失：" 
+          :rules="form.battleConsume.waterDamage.rules"
+        >
+          <template #input>
+            <van-radio-group
+              v-model="form.battleConsume.waterDamage.value"
+              v-preview-text="showPreview"
+              icon-size="16px"
+              direction="horizontal"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="水渍损失："
+              remark-field="waterDamage"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterDamage"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </template>
     </van-cell-group>
   </ProCard>

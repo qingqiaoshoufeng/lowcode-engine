@@ -8,6 +8,10 @@ const store = useStore();
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showDraft = inject("showDraft");
 
 const showPreview = inject("showPreview");
@@ -277,7 +281,17 @@ const validateDealEndDate = (value, rule) => {
       placeholder="请选择出动时间"
       :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInformation.dispatchDate.rules]"
       @change="checkAttendanceDate(form), checkReturnSpeed(form)"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="出动时间："
+          remark-field="dispatchDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.dispatchDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showMidwayReturn"
       v-model:value="form.basicInformation.midwayReturnDate.value"
@@ -291,7 +305,17 @@ const validateDealEndDate = (value, rule) => {
       label-width="118px"
       placeholder="请选择中途返回时间"
       :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInformation.midwayReturnDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="中途返回时间："
+          remark-field="midwayReturnDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.midwayReturnDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.attendanceDate.value"
@@ -305,7 +329,17 @@ const validateDealEndDate = (value, rule) => {
       placeholder="请选择到场时间"
       :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInformation.attendanceDate.rules]"
       @change="checkAttendanceDate(form), checkReturnSpeed(form)"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="到场时间："
+          remark-field="attendanceDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.attendanceDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.carryoutDate.value"
@@ -317,7 +351,17 @@ const validateDealEndDate = (value, rule) => {
       label="展开时间："
       placeholder="请选择展开时间"
       :rules="[{ validator: validateCarryout, trigger: 'onBlur' }, ...form.basicInformation.carryoutDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="展开时间："
+          remark-field="carryoutDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.carryoutDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.waterflowDate.value"
@@ -329,7 +373,17 @@ const validateDealEndDate = (value, rule) => {
       label="出水时间："
       placeholder="请选择出水时间"
       :rules="[{ validator: validateWaterflow, trigger: 'onBlur' }, ...form.basicInformation.waterflowDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="展开时间："
+          remark-field="waterflowDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.waterflowDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice && showMainGroup"
       v-model:value="form.basicInformation.controllingDate.value"
@@ -341,7 +395,17 @@ const validateDealEndDate = (value, rule) => {
       label="控制时间："
       placeholder="请选择控制时间"
       :rules="form.basicInformation.controllingDate.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="控制时间："
+          remark-field="controllingDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.controllingDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.washDate.value"
@@ -353,7 +417,17 @@ const validateDealEndDate = (value, rule) => {
       label="洗消时间："
       placeholder="请选择洗消时间"
       :rules="form.basicInformation.washDate.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="洗消时间："
+          remark-field="washDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.washDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
@@ -366,7 +440,17 @@ const validateDealEndDate = (value, rule) => {
       label="扑灭时间："
       placeholder="请选择扑灭时间"
       :rules="[{ validator: validateExtinguish, trigger: 'onBlur' }, ...form.basicInformation.extinctDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="扑灭时间："
+          remark-field="extinctDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.extinctDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"
@@ -379,7 +463,17 @@ const validateDealEndDate = (value, rule) => {
       label="结束时间："
       placeholder="请选择结束时间"
       :rules="[{ validator: validateEnd, trigger: 'onBlur' }, ...form.basicInformation.endDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="结束时间："
+          remark-field="endDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.endDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.evacuateDate.value"
@@ -392,7 +486,17 @@ const validateDealEndDate = (value, rule) => {
       label="撤离时间："
       placeholder="请选择撤离时间"
       :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInformation.evacuateDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="撤离时间："
+          remark-field="evacuateDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.evacuateDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <SelectDateTime
       v-model:value="form.basicInformation.returnDate.value"
       :show-preview="showPreview"
@@ -404,7 +508,17 @@ const validateDealEndDate = (value, rule) => {
       label="归队时间："
       placeholder="请选择归队时间"
       :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInformation.returnDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="归队时间："
+          remark-field="returnDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.returnDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
     <van-field
       v-if="!showMidwayReturn"
       v-model="form.basicInformation.presentSpeed.value"
@@ -418,7 +532,17 @@ const validateDealEndDate = (value, rule) => {
       placeholder="请输入到场时速"
       :rules="form.basicInformation.presentSpeed.rules"
       :disabled="!showPreview"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="归队到场时速(公里/小时)："
+          remark-field="presentSpeed"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.presentSpeed"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field> 
     <SelectSingle
       v-if="showReturnSlow"
       v-model:value="form.basicInformation.returnLateReason.value"
@@ -433,7 +557,16 @@ const validateDealEndDate = (value, rule) => {
       label-width="116px"
       placeholder="请选择到场时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="到场时速异常原因："
+          field-module="basicInformation"
+          :exist-data="fieldExist?.returnLateReason"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectSingle> 
     <SelectDateTime
       v-if="showDealSituation && showMainGroup"
       v-model:value="form.basicInformation.dealEndDate.value"
@@ -447,6 +580,16 @@ const validateDealEndDate = (value, rule) => {
       label-width="116px"
       placeholder="请选择警情处置结束时间"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="警情处置结束时间："
+          remark-field="dealEndDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.dealEndDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime> 
   </van-cell-group>
 </template>

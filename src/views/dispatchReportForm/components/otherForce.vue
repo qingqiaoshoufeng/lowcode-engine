@@ -6,6 +6,10 @@ const form = inject("form");
 
 const isDetail = inject("isDetail");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 const options = inject("options");
@@ -47,7 +51,7 @@ const onHaveVolunteer = (e) => {
 
 <template>
   <van-cell-group>
-    <van-cell title="是否有志愿队力量：" required v-preview-text="showPreview" class="field-radio">
+    <!-- <van-cell title="是否有志愿队力量：" required v-preview-text="showPreview" class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.haveVolunteer.value"
@@ -59,7 +63,33 @@ const onHaveVolunteer = (e) => {
           <van-radio name="2">无</van-radio>
         </van-radio-group>
       </template>
-    </van-cell>
+    </van-cell> -->
+    <van-field 
+      name="investForce.haveVolunteer.value" 
+      label="是否有志愿队力量：" 
+      :rules="form.investForce.haveVolunteer.rules"
+    >
+      <template #input>
+        <van-radio-group
+          v-model:value="form.investForce.haveVolunteer.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          direction="horizontal"
+        >
+          <van-radio name="1">是</van-radio>
+          <van-radio name="2">否</van-radio>
+        </van-radio-group>
+      </template>
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="是否有志愿队力量："
+          remark-field="haveVolunteer"
+          field-module="investForce"
+          :exist-data="fieldExist?.haveVolunteer"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <div v-if="form.investForce.haveVolunteer.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.volunteerList" :key="index" class="block-dynamic-item">
         <div class="title">志愿队{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteVolunteer(index)" /></div>
@@ -76,7 +106,19 @@ const onHaveVolunteer = (e) => {
           label-width="104px"
           placeholder="请选择志愿队类型"
           :rules="form.investForce.groupType.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="志愿队类型："
+              remark-field="volunteerList"
+              remark-field2="groupType"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.volunteerList?.[index]?.groupType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
         <van-field
           v-model="item.orgName1"
           v-preview-text="showPreview"
@@ -88,7 +130,19 @@ const onHaveVolunteer = (e) => {
           label-width="104px"
           placeholder="请输入志愿队名称"
           :rules="form.investForce.orgName1.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="志愿队名称："
+              remark-field="volunteerList"
+              remark-field2="orgName1"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.volunteerList?.[index]?.orgName1"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="item.peopleNum"
           v-preview-text="showPreview"
@@ -100,7 +154,19 @@ const onHaveVolunteer = (e) => {
           label="人数(人)："
           placeholder="请输入人数"
           :rules="form.investForce.peopleNum.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="人数(人)："
+              remark-field="volunteerList"
+              remark-field2="peopleNum"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.volunteerList?.[index]?.peopleNum"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="item.trunkNum"
           v-preview-text="showPreview"
@@ -112,7 +178,19 @@ const onHaveVolunteer = (e) => {
           label="车数(辆)："
           placeholder="请输入车数"
           :rules="form.investForce.trunkNum.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="车数(辆)："
+              remark-field="volunteerList"
+              remark-field2="trunkNum"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.volunteerList?.[index]?.trunkNum"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="item.boatNum"
           v-preview-text="showPreview"
@@ -124,7 +202,18 @@ const onHaveVolunteer = (e) => {
           label="艇(艘)："
           placeholder="请输入艇数"
           :rules="form.investForce.boatNum.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              remark-field="volunteerList"
+              remark-field2="boatNum"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.volunteerList?.[index]?.boatNum"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <template v-if="!isDetail">
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddVolunteer">
