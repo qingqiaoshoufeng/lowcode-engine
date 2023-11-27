@@ -22,6 +22,7 @@ import {
   getFireWarningTag,
   getOtherProvince,
   saveFireWarning,
+  getHeaderOrg,
   // updateFormFieldAnnotationIds,
 } from "@/apis/index.js";
 import { generateByKeyValue, getTypeText, scrollFormFailed } from '@/utils/tools.js'
@@ -587,6 +588,12 @@ onMounted(() => {
   warningLevelOptions = res.JQ_LEVEL;
   options.value.warningSource = res.JQ_LY;
   options.value.typhoonType = res.TP_TYPE;
+  // 获取全勤指挥部
+  getHeaderOrg().then((res) => {
+    if (res) {
+      options.value.headquarters = res
+    }
+  })
   // 获取增援总队
   getOtherProvince({ deptType: 1, deptLevel: 2 }).then((res) => {
     if (res.items) {
@@ -1371,11 +1378,12 @@ const validateHeadquarters = (value, rule) => {
           />
         </template>
       </SelectOrg>
-      <SelectOrg
+      <SelectMultiple
         v-model:value="form.headquarters"
         :showPreview="showPreview"
         :readonly="showPreview"
         name="headquarters"
+        :options="options.headquarters"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
         label="全勤指挥部："
@@ -1383,16 +1391,13 @@ const validateHeadquarters = (value, rule) => {
         placeholder="未出动"
         title="请选择全勤指挥部"
         :rules="[{ required: false, validator: validateHeadquarters, message: '请选择全勤指挥部'}]"
-        :params="{ deptType: 2 }"
-        :select-leaf="false"
-        :headers-disabled="false"
         class="special-place"
         :class="{'special-header-data': showPreview && form.headquarters?.length <= 0}"
         :disabled="isConfirm"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="责任区大队："
+            label="全勤指挥部："
             :id="currentRow?.boFireWarningId"
             remark-field="areaDutyGroup"
             field-module="policeWarning"
@@ -1400,7 +1405,7 @@ const validateHeadquarters = (value, rule) => {
             @refresh-callback="refreshField"
           />
         </template>
-      </SelectOrg>
+      </SelectMultiple>
       <SelectMultiple
         v-model:value="form.otherCity"
         :showPreview="showPreview"

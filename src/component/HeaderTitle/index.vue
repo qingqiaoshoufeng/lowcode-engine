@@ -1,6 +1,6 @@
 <template>
   <div class="header-title" >
-    <div class="arrow">
+    <div v-if="showArrow" class="arrow">
       <van-icon @click="router.go(-1)" name="arrow-left" />
     </div>
     <div v-if="withCheck">
@@ -24,6 +24,10 @@ const props = defineProps({
   withCheck:{
     type:Boolean,
     default:false
+  },
+  showArrow: {
+    type: Boolean,
+    default: true
   }
 })
 </script>

@@ -18,6 +18,7 @@ export function useList(paginationKeys = {}, { getListFn, transformQuery, transf
   const limit = ref(20)
   const total = ref(0)
   const query = ref({})
+  const result = ref({})
 
   const _query = computed(() => {
     const pagination = {
@@ -39,6 +40,7 @@ export function useList(paginationKeys = {}, { getListFn, transformQuery, transf
       getListFn(_query.value)
         .then((res) => {
           const resData = transformRes ? transformRes(res) : res
+          result.value = res
           list.value = resData[paginationKeys.list || 'list']
           total.value = resData[paginationKeys.total || 'total']
           // page.value = resData[paginationKeys.page || 'page']
@@ -90,6 +92,7 @@ export function useList(paginationKeys = {}, { getListFn, transformQuery, transf
     loadList,
     loadMore,
     filter,
+    result,
     pageChange,
   }
 }
