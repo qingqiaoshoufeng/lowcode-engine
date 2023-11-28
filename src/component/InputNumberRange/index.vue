@@ -63,9 +63,9 @@ defineOptions({
 
 <template>
   <div class="input-number-range">
+    <span class="range-label">{{ label }}</span>
     <van-field
       v-model="rangeValue[0]"
-      :label="label"
       :placeholder="placeholder[0]"
       type="number"
       @change="onMinChange"
@@ -84,5 +84,10 @@ defineOptions({
 .input-number-range {
   display: flex;
   align-items: center;
+  background-color: white;
+  padding: 0px 10px;
+  .range-label {
+    min-width: 100px;
+  }
 }
 </style>

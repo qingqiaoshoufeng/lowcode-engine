@@ -698,6 +698,13 @@ const initWatch = () => {
 
 const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail])
 
+const getPersonNum = () => {
+  if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
+    return form.value.investForce.commander?.value?.length + form.value.investForce.firemen?.value?.length
+  }
+  return 0
+}
+
 const getSubmitParams = () => {
   const {
     draftInfo,
@@ -755,6 +762,8 @@ const getSubmitParams = () => {
         groupLeader: investForce.groupLeader.value?.join(','),
         commander: investForce.commander.value?.join(','),
         firemen: investForce.firemen.value?.join(','),
+        inputPersonNum: getPersonNum(),
+        inputCarNum: form.investForce?.dispatchTruckList.value?.length || 0,
         isResponseTruck: investForce.isResponseTruck.value,
         isReturnTruck: investForce.isReturnTruck.value,
         fireBoatNum: investForce.fireBoatNum.value,

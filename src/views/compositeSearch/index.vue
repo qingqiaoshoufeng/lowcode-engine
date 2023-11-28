@@ -15,11 +15,15 @@ const { show } = useModal();
 
 const searchType = ref(1)
 
+const searchDimension = ref(2)
+
 provide('form', form)
 
 provide('searchType', searchType)
 
 provide('options', options)
+
+provide('searchDimension', searchDimension)
 
 const searchCallback = () => {
   show.value.resultVisible = true

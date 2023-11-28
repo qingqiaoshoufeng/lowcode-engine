@@ -1,14 +1,24 @@
 <script setup>
 import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
-import { getDispatchGroup } from "@/apis/index.js";
-import { showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
   value: {
-    type: Array,
-    default: () => [],
+    type: [String, Array],
+    default: "",
+  },
+  text: {
+    type: [String, Array],
+    default: "",
+  },
+  required: {
+    type: Boolean,
+    default: false,
   },
   title: {
+    type: String,
+    default: "",
+  },
+  label: {
     type: String,
     default: "",
   },
@@ -25,14 +35,6 @@ const props = defineProps({
     type: Number,
     default: -1,
   },
-  required: {
-    type: Boolean,
-    default: false,
-  },
-  label: {
-    type: String,
-    default: "",
-  },
   placeholder: {
     type: String,
     default: "",
@@ -47,23 +49,16 @@ const props = defineProps({
   },
   fieldNames: {
     type: Object,
-    default: () => ({ value: "organizationid", label: "name" }),
+    default: () => ({ value: "boDictId", label: "dictName" }),
   },
-  headersDisabled: {
-    // 全勤指挥部是否能选择
-    type: Boolean,
-    default: true,
-  },
-  params: {
-    type: Object,
-    default: () => {},
-  },
-  disabledKey: {
-    type: String,
-  },
-  disabledValue: {
+  options: {
     type: Array,
+    default: () => [],
   },
+  readonly:{
+    default:true,
+    type: Boolean,
+  }
 });
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
@@ -72,7 +67,7 @@ const attrs = useAttrs();
 
 const selectVisible = ref(false);
 
-const tabs = ref([{ name: "请选择", organizationid: 0 }]);
+const tabs = ref([{ title: "请选择", key: 0 }]);
 
 const tabsActive = ref(0);
 
@@ -91,9 +86,9 @@ const selectTextValue = computed(() => {
 watch(() => props.value, (newVal, oldVal) => {
   nextTick(() => {
     if (props.value) {
-      selectItem.value = props.value;
-      selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
-      selectText.value = props.value.map((item) => item[props.fieldNames.label]);
+    //   selectItem.value = props.value
+    //   selectValue.value = props.value
+    //   selectText.value = props.value
     } else {
       selectItem.value = [];
       selectValue.value = [];
@@ -103,61 +98,31 @@ watch(() => props.value, (newVal, oldVal) => {
 }, { immediate: true })
 
 const renderChecked = (item) => {
-  return selectValue.value?.indexOf(item.organizationid) > -1;
+  return selectValue.value?.indexOf(item.key) > -1; // TODO
 }
 
 const getItem = (item) => {
-  if (item.hasChildren && props.single && props.selectLeaf) {
-    item.selectable = false;
-  } else if (item.hasChildren && !props.single && props.selectLeaf) {
-    item.selectable = false;
-    item.checkable = false;
-  } else if (!props.single) {
-    item.selectable = false;
-    item.checkable = true;
-  } else {
-    item.selectable = true;
-  }
-  if (!props.headersDisabled) {
-    item.disabled = item.isheadquarters !== 1;
-  }
-  if (props.selectLevel > 0 && props.selectLevel === item.orgLevel) {
-    item.isLeaf = true;
-  } else {
-    item.isLeaf = !item.hasChildren;
-  }
   return {
     ...item,
     checked: renderChecked(item),
-    title: item[props.fieldNames.title],
-    key: item[props.fieldNames.key],
+    title: item[props.fieldNames.label],
+    key: item[props.fieldNames.value],
   };
 };
 
+watch(() => props.options, () => {
+  treeData.value = [props.options?.map(getItem)];
+}, { immediate: true, deep: true })
+
 const showCheck = (item) => {
   if (props.selectLeaf) {
-    return item.isLeaf;
-  }
-  if (!props.headersDisabled && item.isheadquarters === 1) {
-    return true;
-  } else if (!props.headersDisabled && item.isheadquarters !== 1) {
-    return false
+    return !item.hasChildren;
   }
   if (!props.single) {
     return true
   }
   return true;
 };
-
-onMounted(() => {
-  getDispatchGroup({
-    ...props.params,
-    disabledKey: props.disabledKey,
-    disabledValue: props.disabledValue,
-  }).then((res) => {
-    treeData.value = [res?.items?.map(getItem)];
-  });
-});
 
 const handleShow = () => {
   if (attrs?.disabled || props.showPreview) {
@@ -178,62 +143,35 @@ const handleOk = () => {
 };
 
 const handleCheck = (item) => {
-  if (props.single && item.checked) {
-    // 已经选中的要重置
-    treeData.value.forEach(arr => {
-      arr.forEach(i => {
-        if (i.organizationid !== item.organizationid && i.checked) {
-          i.checked = false
-        }
-      })
-    })
-    selectValue.value = [item.organizationid];
-    selectText.value = [item.name];
-    selectItem.value = [item];
-    emit("update:value", selectItem.value);
-    emit("update:text", selectText.value);
-    emit("change", selectValue.value, selectItem.value, selectText.value);
-    selectVisible.value = false;
-    return
-  }
+//   if (props.single && item.checked) {
+//   }
   if (item.checked) {
-    selectValue.value.push(item.organizationid);
-    selectText.value.push(item.name);
+    selectValue.value.push(item.key);
+    selectText.value.push(item.title);
     selectItem.value.push(item);
   } else {
-    selectValue.value = selectValue.value.filter((temp) => temp !== item.organizationid);
-    selectText.value = selectText.value.filter((temp) => temp !== item.name);
-    selectItem.value = selectItem.value.filter((temp) => temp.organizationid !== item.organizationid);
+    selectValue.value = selectValue.value.filter((temp) => temp !== item.key); // TODO
+    selectText.value = selectText.value.filter((temp) => temp !== item.title); // TODO
+    selectItem.value = selectItem.value.filter((temp) => temp.key !== item.key); // TODO
   }
 };
 
 const handleEnter = (item) => {
   if (item.hasChildren) {
-    showLoadingToast();
-    getDispatchGroup({
-      ...props.params,
-      parentOrganizationId: item.organizationid,
-      disabledKey: props.disabledKey,
-      disabledValue: props.disabledValue,
-    }).then((res) => {
-      closeToast();
-      const currentIndex = tabs.value.findIndex(
-        (node) => node.orgLevel === item.orgLevel
-      );
-      if (currentIndex > -1) {
-        treeData.value = treeData.value.slice(0, currentIndex + 1);
-        tabs.value = tabs.value.slice(0, currentIndex);
-        tabs.value.push(item);
-        tabs.value.push({ name: "请选择", organizationid: 0 });
-        tabsActive.value = 0;
-      } else {
-        tabs.value = tabs.value.filter((tab) => tab.organizationid !== 0);
-        tabs.value.push(item);
-        tabs.value.push({ name: "请选择", organizationid: 0 });
-        tabsActive.value = 0;
-      }
-      treeData.value.push(res.items.map(getItem));
-    });
+    const currentIndex = tabs.value.findIndex((node) => node.key === item.key);
+    if (currentIndex > -1) {
+      treeData.value = treeData.value.slice(0, currentIndex + 1);
+      tabs.value = tabs.value.slice(0, currentIndex);
+      tabs.value.push(item);
+      tabs.value.push({ title: "请选择", key: 0 });
+      tabsActive.value = 0;
+    } else {
+      tabs.value = tabs.value.filter((tab) => tab.key !== 0);
+      tabs.value.push(item);
+      tabs.value.push({ title: "请选择", key: 0 });
+      tabsActive.value = 0;
+    }
+    treeData.value.push(item.children?.map(getItem));
   }
 };
 
@@ -241,45 +179,42 @@ const handleDelete = (item) => {
   // 已经选中的要重置
   treeData.value.forEach(arr => {
     arr.forEach(i => {
-      if (i.organizationid === item.organizationid) {
+      if (i.key === item.key) {
         i.checked = false
       }
     })
   })
-  selectValue.value = selectValue.value.filter((temp) => temp !== item.organizationid);
-  selectText.value = selectText.value.filter((temp) => temp !== item.name);
-  selectItem.value = selectItem.value.filter((temp) => temp.organizationid !== item.organizationid);
+  selectValue.value = selectValue.value.filter((temp) => temp !== item.key); // TODO
+  selectText.value = selectText.value.filter((temp) => temp !== item.title); // TODO
+  selectItem.value = selectItem.value.filter((temp) => temp.key !== item.key); // TODO
 }
 
 defineOptions({
-  name: "SelectOrg",
+  name: "CascaderMultiple",
 });
 </script>
-<script>
-export default {
-  name:'SelectOrg'
-}
-</script>
+
 <template>
   <van-field
     v-model="selectTextValue"
     is-link
     v-preview-text="showPreview"
     v-bind="$attrs"
+    :readonly="readonly"
     :required="required"
     :label="label"
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
   >
-  <template v-slot:label="" v-if="label">
-    <slot name="label">
-      <div class="field-annotation">{{ label }}</div>
-    </slot>
-  </template>
+    <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
   </van-field>
   <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
-    <div class="select-org">
+    <div class="cascader-multiple">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">
           取消
@@ -293,32 +228,32 @@ export default {
         <div class="content-selects">
           <van-tag
             v-for="item in selectItem"
-            :key="item.organizationid"
+            :key="item.key"
             closeable
             plain
             size="medium"
             type="primary"
             @close="handleDelete(item)"
           >
-            {{ item.name }}
+            {{ item.title }}
           </van-tag>
         </div>
         <div class="content-tabs">
           <van-tabs v-model:active="tabsActive" swipe-threshold="1" shrink>
             <van-tab
               v-for="(temp, index) in tabs"
-              :title="temp.name"
-              :key="temp.organizationid"
-              :name="temp.organizationid"
+              :title="temp.title"
+              :key="temp.key"
+              :name="temp.key"
             >
               <div class="content-list">
                 <div
                   v-for="item in treeData[index]"
-                  :key="item.organizationid"
+                  :key="item.key"
                   class="item"
                   @click="handleEnter(item)"
                 >
-                  <div class="item-title">{{ item.name }}</div>
+                  <div class="item-title">{{ item.title }}</div>
                   <van-checkbox
                     v-if="showCheck(item)"
                     v-model="item.checked"
@@ -338,7 +273,7 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.select-org {
+.cascader-multiple {
   display: flex;
   flex-direction: column;
   .header {

@@ -164,6 +164,7 @@ const sections = computed(() => {
       return {
         title: form.value[ele].title,
         link: ele,
+        children: form.value[ele],
       }
     }),
   }, {
@@ -179,6 +180,7 @@ const sections = computed(() => {
         return {
           title: form.value[ele].title,
           link: ele,
+          children: form.value[ele],
         }
       })],
   }, {
@@ -194,6 +196,7 @@ const sections = computed(() => {
         return {
           title: form.value[ele].title,
           link: ele,
+          children: form.value[ele],
         }
       })],
   }, {
@@ -249,16 +252,21 @@ const onSideBarChange = (e, k) => {
       </van-sidebar>
     </div>
     <div class="composite-search-form">
-      <div v-for="(item, k) in sections" :key="k">
-        <div v-for="(temp) in item.children" :key="temp.title">
-          {{ temp.title }}
-          <div v-for="(i, j) in temp?.children" :key="j">
-            <template v-if="(typeof i === 'object')">
-              <FormItem :fieldObj="i" />
-            </template>
+      <van-form ref="formRef">
+        <div v-for="(item, k) in sections" :key="k">
+          <div v-for="(temp) in item.children" :key="temp.title">
+            <div class="search-form-header">
+              <img src="@/assets/images/icon_title@2x.png" alt="" />
+              {{ temp.title }}
+            </div>
+            <div v-for="(i, j) in temp?.children" :key="j">
+              <template v-if="(typeof i === 'object')">
+                <FormItem :fieldObj="i" />
+              </template>
+            </div>
           </div>
         </div>
-      </div>
+      </van-form>
     </div>
   </div>
 </template>
@@ -303,6 +311,20 @@ const onSideBarChange = (e, k) => {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    .search-form-header {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      padding: 6px 6px;
+      background-color: white;
+      margin-top: 10px;
+      padding-left: 16px;
+      img {
+        width: 14px;
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
   }
 }
 </style>

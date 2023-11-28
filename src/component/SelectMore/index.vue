@@ -145,7 +145,7 @@ defineOptions({
             />
           </template>
           <template v-else-if="item.type === 'select-range'">
-            <SelectRange 
+            <SelectRange
               v-model:value="query[item.value]"
               :required="false"
               :readonly="true"
