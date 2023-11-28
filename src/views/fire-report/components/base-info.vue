@@ -520,33 +520,53 @@ const onFireLevel = () => {
       <SelectSingle
         v-model:value="form.basicInfo.isResearch.value"
         :showPreview="showPreview"
-        label="是否调查"
+        label="是否调查："
         :options="options.isResearch"
         :field-names="{label:'label',value:'value'}"
         :rules="form.basicInfo.isResearch.rules"
         :required="isRequired"
         placeholder="请选择是否正在调查"
         title="请选择是否正在调查" 
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否调查："
+            remark-field="isResearch"
+            field-module="basicInfo"
+            :exist-data="fieldExist?.isResearch"
+            @refresh-callback="refreshField"
+          />
+      </template>
+    </SelectSingle>
     </div>
     <div class="severity">
       <SelectSingle
         name="basicInfo.severity.value"
         v-model:value="form.basicInfo.severity.value"
         :showPreview="showPreview"
-        label="严重程度"
+        label="严重程度："
         :options="options.severity"
         :field-names="{label:'label',value:'value'}"
         :rules="form.basicInfo.severity.rules"
         :required="true"
         placeholder="请选择严重程度"
         title="请选择严重程度"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="严重程度："
+            remark-field="severity"
+            field-module="basicInfo"
+            :exist-data="fieldExist?.severity"
+            @refresh-callback="refreshField"
+          />
+      </template>
+    </SelectSingle>
     </div>
     <div class="fireType">
       <SelectSingle
         v-model:value="form.basicInfo.fireType.value"
-        label="火灾类型"
+        label="火灾类型："
         :options="fireTypeOptions"
         :rules="form.basicInfo.fireType.rules"
         :required="true"
@@ -555,7 +575,17 @@ const onFireLevel = () => {
         title="请选择火灾类型"
         :showPreview="showPreview"
         @change="fireTypeChange"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="火灾类型："
+            remark-field="fireType"
+            field-module="basicInfo"
+            :exist-data="fieldExist?.fireType"
+            @refresh-callback="refreshField"
+          />
+      </template>
+    </SelectSingle>
     </div>
       <div class="fireDate">
         <SelectDateTime
@@ -569,30 +599,60 @@ const onFireLevel = () => {
           label="起火时间："
           placeholder="请选择起火时间"
           :rules="[{ validator: validateFireDate, trigger: 'onBlur' }, ...form.basicInfo.fireDate.rules]"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="火灾类型："
+              remark-field="fireDate"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireDate"
+              @refresh-callback="refreshField"
+            />
+        </template>
+      </SelectDateTime>
       </div>
       <div class="noDispatchArea" v-if="unDispatch">
           <AreaCascader
             name="basicInfo.noDispatchArea.value"
-            label="行政区域"
+            label="行政区域："
             :rules="form.basicInfo.noDispatchArea.rules"
             v-model:value="form.basicInfo.noDispatchArea.value"
             :showPreview="showPreview"
             :readonly="showPreview"
             :show-all-area="!!showPreview"
             :required="!showPreview"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="行政区域："
+                remark-field="noDispatchArea"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.noDispatchArea"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </AreaCascader>
       </div>
       <div class="fireDirection">
         <van-field
-          label="起火地点"
+          label="起火地点："
           v-model="form.basicInfo.fireDirection.value"
           name="basicInfo.fireDirection.value"
           placeholder="请输入起火地点"
           :rules="form.basicInfo.fireDirection.rules"
           :required="isRequired"
           v-preview-text="showPreview"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="行政区域："
+              remark-field="fireDirection"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireDirection"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div class="area">
         <CascaderSingle
@@ -601,25 +661,45 @@ const onFireLevel = () => {
           :options="options.area"
           :required="isRequired"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
-          label="区域"
+          label="起火地点："
           placeholder="请选择区域"
           :rules="form.basicInfo.area.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火地点："
+              remark-field="area"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.area"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div class="fireOrgname">
         <van-field
-          label="单位/户主/个体户名称"
+          label="单位/户主/个体户名称："
           v-model="form.basicInfo.fireOrgname.value"
           v-preview-text="showPreview"
           name="basicInfo.fireOrgname.value"
           placeholder="单位/户主/个体户名称"
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="单位/户主/个体户名称："
+              remark-field="fireOrgname"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireOrgname"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div class="fireTel">
         <van-field
-          label="失火单位/户主联系电话"
+          label="失火单位/户主联系电话："
           v-model="form.basicInfo.fireTel.value"
           v-preview-text="showPreview"
           name="basicInfo.fireTel.value"
@@ -627,35 +707,65 @@ const onFireLevel = () => {
           maxlength="15"
           placeholder="失火单位/户主联系电话"
           :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, ...form.basicInfo.fireTel.rules]"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="失火单位/户主联系电话："
+              remark-field="fireTel"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireTel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="!showOtherMinor" class="socialCreditCode">
         <van-field
-          label="单位统一社会信用代码"
+          label="单位统一社会信用代码："
           v-model="form.basicInfo.socialCreditCode.value"
           v-preview-text="showPreview"
           name="basicInfo.socialCreditCode.value"
           placeholder="单位统一社会信用代码"
           :rules="form.basicInfo.socialCreditCode.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="单位统一社会信用代码："
+              remark-field="socialCreditCode"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.socialCreditCode"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div class="fireCause">
         <CascaderSingle 
           v-model:value="form.basicInfo.fireCause.value"
           :showPreview="showPreview"
           :options="options.fireCause"
-          label="起火原因"
+          label="起火原因："
           :required="isRequired"
           placeholder="请选择起火原因"
           :rules="form.basicInfo.fireCause.rules"
           @change="fireCauseChange"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火原因："
+              remark-field="fireCause"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireCause"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div>
         <van-field 
           name="caseHandling.penaltyNum.value"
           :disabled="!importantEdit"
-          label="过火面积（平方米）"
+          label="过火面积（平方米）："
           :rules="[{ validator: validateBurnedArea, trigger: 'onBlur' }, ...form.basicInfo.burnedArea.rules]"
           @blur="checkBurnedArea(form)"
           v-model="form.basicInfo.burnedArea.value" 
@@ -668,14 +778,24 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入过火面积"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="过火面积（平方米）："
+              remark-field="fireCause"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireCause"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field >
       </div>
       <div class="fireLevel">
         <SelectSingle
           v-model:value="form.basicInfo.fireLevel.value"
           :showPreview="showPreview"
           :is-link="false"
-          label="火灾等级"
+          label="火灾等级："
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           :options="options.fireLevel"
           :rules="form.basicInfo.fireLevel.rules"
@@ -685,7 +805,17 @@ const onFireLevel = () => {
           right-icon="question-o"
           class="fire-level-item"
           @click-right-icon.stop="onFireLevel"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="火灾等级："
+              remark-field="fireLevel"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireLevel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div class="firePlace">
         <CascaderSingle
@@ -694,17 +824,27 @@ const onFireLevel = () => {
           :showPreview="showPreview"
           :options="options.firePlace"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
-          label="起火场所"
+          label="起火场所："
           :required="isRequired"
           placeholder="请选择起火场所"
           :rules="form.basicInfo.firePlace.rules"
           @change="firePlaceChange"
-        />
+        >
+         <template v-slot:label="">
+            <FieldAnnotation
+              label="起火场所："
+              remark-field="firePlace"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.firePlace"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div v-if="showisLaborIntensive"  class="isLaborIntensive">
         <van-field 
           name="basicInfo.isLaborIntensive.value" 
-          label="是否属于劳动密集型" 
+          label="是否属于劳动密集型：" 
           :rules="form.basicInfo.isLaborIntensive.rules"
           :required="isRequired"
         >
@@ -714,30 +854,59 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否属于劳动密集型：" 
+              remark-field="isLaborIntensive"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isLaborIntensive"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div v-if="showplantRiskClassification"  class="plantRiskClassification">
         <SelectSingle
           v-model:value="form.basicInfo.plantRiskClassification.value"
-          label="厂房火灾危险性分类"
+          label="厂房火灾危险性分类："
           :options="options.plantRiskClassification"
           :rules="form.basicInfo.plantRiskClassification.rules"
           :required="isRequired"
           placeholder="请选择厂房火灾危险性分类"
           title="请选择厂房火灾危险性分类"
           :showPreview="showPreview"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="厂房火灾危险性分类："
+              remark-field="plantRiskClassification"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.plantRiskClassification"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showOtherFirePlace" class="otherFirePlace">
         <van-field
-          label="其他说明"
+          label="其他说明："
           v-model:value="form.basicInfo.otherFirePlace.value"
           v-preview-text="showPreview"
           name="basicInfo.otherFirePlace.value"
           placeholder="请输入其他说明"
           :rules="form.basicInfo.otherFirePlace.rules"
           :required="isRequired"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="其他说明："
+              remark-field="otherFirePlace"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.otherFirePlace"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="showResidence" class="fireDate">
         <SelectSingle
@@ -748,15 +917,25 @@ const onFireLevel = () => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择居住形式"
-          label="居住形式"
+          label="居住形式："
           :required="isRequired"
           :rules="form.basicInfo.liveType.rules"
           title="请选择居住形式"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="居住形式："
+              remark-field="liveType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.liveType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showVehicleFire" class="vehicleType">
         <CascaderSingle
-          label="交通工具类型"
+          label="交通工具类型："
           :rules="form.basicInfo.vehicleType.rules"
           :required="isRequired"
           id="vehicleType"
@@ -768,14 +947,24 @@ const onFireLevel = () => {
           placeholder="请选择交通工具类型"
           @change="vehicleTypeChange"
           v-preview-text="showPreview"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="交通工具类型："
+              remark-field="vehicleType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.vehicleType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
 
     <div orientation="left" orientation-margin="0px" style="border-color: #A4A4A4" dashed ></div>
     <template v-if="showVehicleFire">
       <div v-if="showBatteryType" class="chargeState" >
         <SelectSingle
-          label="起火时充电状态"
+          label="起火时充电状态："
           :rules="form.basicInfo.chargeState.rules"
           :required="isRequired"
           id="chargeState"
@@ -786,12 +975,22 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择起火时充电状态"
           title="请选择起火时充电状态"
-        />
+        >
+         <template v-slot:label="">
+            <FieldAnnotation
+              label="起火时充电状态："
+              remark-field="chargeState"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.chargeState"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showLowSpeed" class="isRepack">
         <van-field 
           name="basicInfo.isRepack.value" 
-          label="是否改装" 
+          label="是否改装：" 
           :rules="form.basicInfo.isRepack.rules"
           :required="isRequired"
         >
@@ -805,11 +1004,20 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否改装：" 
+              remark-field="isRepack"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isRepack"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div v-if="showBatteryType || showLowSpeed">
         <SelectSingle
-          label="电池类型"
+          label="电池类型："
           :rules="form.basicInfo.batteryType.rules"
           :required="isRequired"
           id="batteryType"
@@ -820,11 +1028,21 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择电池类型"
           title="请选择电池类型"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="电池类型："
+              remark-field="batteryType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.batteryType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
-      <div v-if="showBatteryType || showLowSpeed">
+      <!-- <div v-if="showBatteryType || showLowSpeed">
         <SelectSingle
-          label="电池类型"
+          label="电池类型："
           :rules="form.basicInfo.batteryType.rules"
           id="batteryType"
           v-model:value="form.basicInfo.batteryType.value"
@@ -834,11 +1052,21 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择电池类型"
           title="请选择电池类型"
-      />
-      </div>
+      >
+        <template v-slot:label="">
+            <FieldAnnotation
+              label="电池类型："
+              remark-field="batteryType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.batteryType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
+      </div> -->
         <div v-if="showVinCode">
           <van-field
-            label="车辆VIN码"
+            label="车辆VIN码："
             :rules="form.basicInfo.vinCode.rules"
             :required="isRequired"
             id="车辆VIN码"
@@ -849,7 +1077,17 @@ const onFireLevel = () => {
             aria-autocomplete="none"
             placeholder="请输入车辆VIN码"
             name="basicInfo.vinCode.value"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="车辆VIN码："
+                remark-field="vinCode"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.vinCode"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div v-if="showVinCode">
           <van-field
@@ -864,11 +1102,21 @@ const onFireLevel = () => {
             aria-autocomplete="none"
             placeholder="请输入车牌号"
             name="basicInfo.carNumber.rules"
-          />
+          >
+           <template v-slot:label="">
+              <FieldAnnotation
+                label="车辆VIN码："
+                remark-field="carNumber"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.carNumber"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div class="driveState" >
           <SelectSingle
-            label="行驶状态"
+            label="行驶状态："
             :rules="form.basicInfo.driveState.rules"
             :required="isRequired"
             id="driveState"
@@ -879,14 +1127,24 @@ const onFireLevel = () => {
             allow-clear
             placeholder="请选择行驶状态"
             title="请选择行驶状态"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="行驶状态："
+                remark-field="driveState"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.driveState"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
     </template>
     <div v-if="showResidence" :gutter="gutter">
       <div class="isPoorHouse">
         <van-field 
           name="basicInfo.isPoorHouse.value" 
-          label="是否属于扶贫安置房"
+          label="是否属于扶贫安置房："
           :rules="form.basicInfo.isPoorHouse.rules"
           :required="isRequired"
         >
@@ -900,12 +1158,21 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否属于扶贫安置房："
+              remark-field="isPoorHouse"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isPoorHouse"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div class="isChangeUseType">
         <van-field 
           name="basicInfo.isChangeUseType.value"  
-          label="是否变更使用性质"
+          label="是否变更使用性质："
           :required="isRequired"
           :rules="form.basicInfo.isChangeUseType.rules" >
           <template #input>
@@ -919,11 +1186,20 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否变更使用性质："
+              remark-field="isChangeUseType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isChangeUseType"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div v-if="form.basicInfo.isChangeUseType.value === '1'">
         <SelectSingle
-          label="变更后使用性质"
+          label="变更后使用性质："
           :rules="form.basicInfo.useType.rules"
           :required="isRequired"
           id="useType"
@@ -934,44 +1210,74 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择变更后使用性质"
           title="请选择变更后使用性质"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="变更后使用性质："
+              remark-field="useType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.useType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
     </div>
     <div :gutter="gutter">
       <div :span="8">
         <CascaderSingle
-            label="事故形态"
-            :rules="form.basicInfo.firePattern.rules"
-            :required="isRequired"
-            :showPreview="showPreview"
-            id="firePattern"
-            v-model:value="form.basicInfo.firePattern.value"
-            :options="options.firePattern"
-            :field-names="{ value: 'boDictId', text: 'dictName' }"
-            :field-name="['basicInfo', 'firePattern', 'value']"
-            placeholder="请选择事故形态"
-            v-preview-text="showPreview"
-        />
+          label="事故形态："
+          :rules="form.basicInfo.firePattern.rules"
+          :required="isRequired"
+          :showPreview="showPreview"
+          id="firePattern"
+          v-model:value="form.basicInfo.firePattern.value"
+          :options="options.firePattern"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          :field-name="['basicInfo', 'firePattern', 'value']"
+          placeholder="请选择事故形态"
+          v-preview-text="showPreview"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="事故形态："
+              remark-field="firePattern"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.firePattern"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div v-if="showFireSite" :span="8">
         <CascaderSingle
-            label="起火位置"
-            :rules="form.basicInfo.fireSite.rules"
-            id="fireSite"
-            v-model:value="form.basicInfo.fireSite.value"
-            :showPreview="showPreview"
-            :options="options.fireSite"
-            :field-names="{ value: 'boDictId', text: 'dictName' }"
-            :field-name="['basicInfo', 'fireSite', 'value']"
-            placeholder="请选择起火位置"
-            :required="isRequired"
-            v-preview-text="showPreview"
-        />
+          label="起火位置："
+          :rules="form.basicInfo.fireSite.rules"
+          id="fireSite"
+          v-model:value="form.basicInfo.fireSite.value"
+          :showPreview="showPreview"
+          :options="options.fireSite"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          :field-name="['basicInfo', 'fireSite', 'value']"
+          placeholder="请选择起火位置"
+          :required="isRequired"
+          v-preview-text="showPreview"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火位置："
+              remark-field="fireSite"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireSite"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
     </div>
       <div>
         <van-field
-          label="起火物名称"
+          label="起火物名称："
           :rules="form.basicInfo.initialFuels.rules"
           id="initialFuels"
           v-model="form.basicInfo.initialFuels.value"
@@ -982,30 +1288,50 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入起火物名称"
           name="basicInfo.initialFuels.value"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火物名称："
+              remark-field="initialFuels"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.initialFuels"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div :span="8">
         <CascaderSingle
-            label="起火物类型"
-            :rules="form.basicInfo.initialFuelsType.rules"
-            id="initialFuelsType"
-            :required="isRequired"
-            v-model:value="form.basicInfo.initialFuelsType.value"
-            :showPreview="showPreview"
-            :options="options.initialFuelsType"
-            :field-names="{ value: 'boDictId', text: 'dictName' }"
-            :field-name="['basicInfo', 'initialFuelsType', 'value']"
-            show-description
-            title="请选择起火物类型"
-            placeholder="请选择起火物类型或者指标说明"
-            @change="initialFuelsTypeChange"
-            v-preview-text="showPreview"
-        />
+          label="起火物类型："
+          :rules="form.basicInfo.initialFuelsType.rules"
+          id="initialFuelsType"
+          :required="isRequired"
+          v-model:value="form.basicInfo.initialFuelsType.value"
+          :showPreview="showPreview"
+          :options="options.initialFuelsType"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          :field-name="['basicInfo', 'initialFuelsType', 'value']"
+          show-description
+          title="请选择起火物类型"
+          placeholder="请选择起火物类型或者指标说明"
+          @change="initialFuelsTypeChange"
+          v-preview-text="showPreview"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火物类型："
+              remark-field="initialFuelsType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.initialFuelsType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
     
       <div :span="8">
         <van-field
-          label="引火源名称"
+          label="引火源名称："
           :rules="form.basicInfo.igniteSource.rules"
           :required="isRequired"
           id="igniteSource"
@@ -1016,31 +1342,51 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入引火源名称"
           name="basicInfo.igniteSource.value"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="引火源名称："
+              remark-field="igniteSource"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.igniteSource"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div :span="8">
         <CascaderSingle
-            label="引火源类型"
-            :rules="form.basicInfo.igniteSourceType.rules"
-            id="igniteSourceType"
-            v-model:value="form.basicInfo.igniteSourceType.value"
-            :showPreview="showPreview"
-            :options="options.igniteSourceType"
-            :field-names="{ value: 'boDictId', text: 'dictName' }"
-            :field-name="['basicInfo', 'igniteSourceType', 'value']"
-            show-description
-            :required="isRequired"
-            title="请选择引火源类型"
-            placeholder="请选择引火源类型或者指标说明"
-            @change="initialFuelsTypeChange"
-            v-preview-text="showPreview"
-        />
+          label="引火源类型："
+          :rules="form.basicInfo.igniteSourceType.rules"
+          id="igniteSourceType"
+          v-model:value="form.basicInfo.igniteSourceType.value"
+          :showPreview="showPreview"
+          :options="options.igniteSourceType"
+          :field-names="{ value: 'boDictId', text: 'dictName' }"
+          :field-name="['basicInfo', 'igniteSourceType', 'value']"
+          show-description
+          :required="isRequired"
+          title="请选择引火源类型"
+          placeholder="请选择引火源类型或者指标说明"
+          @change="initialFuelsTypeChange"
+          v-preview-text="showPreview"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="引火源类型："
+              remark-field="igniteSourceType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.igniteSourceType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
    
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field
-          label="引起火灾人员年龄"
+          label="引起火灾人员年龄："
           :rules="form.basicInfo.firePersonAge.rules"
           id="firePersonAge"
           v-model="form.basicInfo.firePersonAge.value"
@@ -1051,11 +1397,21 @@ const onFireLevel = () => {
           placeholder="请输入引起火灾人员年龄"
           name="basicInfo.firePersonAge.value"
           type="digit"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="引起火灾人员年龄："
+              remark-field="firePersonAge"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.firePersonAge"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <SelectSingle
-          label="受教育程度"
+          label="受教育程度："
           :rules="form.basicInfo.schooling.rules"
           id="schooling"
           v-model:value="form.basicInfo.schooling.value"
@@ -1065,11 +1421,21 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择受教育程度"
           title="请选择受教育程度"
-        />
+        >
+        <template v-slot:label="">
+          <FieldAnnotation
+              label="受教育程度："
+              remark-field="schooling"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.schooling"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <SelectSingle
-          label="健康状况"
+          label="健康状况："
           :rules="form.basicInfo.health.rules"
           id="health"
           v-model:value="form.basicInfo.health.value"
@@ -1079,12 +1445,21 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择健康状况"
           title="请选择健康状况"
-        />
-
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="健康状况："
+              remark-field="health"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.health"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
         <CascaderSingle
-          label="所属行业"
+          label="所属行业："
           :rules="form.basicInfo.industry.rules"
           id="industry"
           v-model:value="form.basicInfo.industry.value"
@@ -1095,11 +1470,21 @@ const onFireLevel = () => {
           allow-clear
           required
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="所属行业："
+              remark-field="industry"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.industry"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor">
         <SelectSingle
-          label="行业主管部门"
+          label="行业主管部门："
           :rules="form.basicInfo.industryDepartment.rules"
           id="economicType"
           v-model:value="form.basicInfo.industryDepartment.value"
@@ -1109,11 +1494,21 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择行业主管部门"
           title="请选择行业主管部门"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="行业主管部门："
+              remark-field="industryDepartment"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.industryDepartment"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
         <SelectSingle
-          label="经济类型"
+          label="经济类型："
           :rules="form.basicInfo.economicType.rules"
           id="economicType"
           v-model:value="form.basicInfo.economicType.value"
@@ -1124,13 +1519,21 @@ const onFireLevel = () => {
           required
           placeholder="请选择经济类型"
           title="请选择经济类型"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="经济类型："
+              remark-field="economicType"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.economicType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
-    
-    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <SelectSingle
-          label="事故牵头调查部门"
+          label="事故牵头调查部门："
           :rules="form.basicInfo.leadInspectionOrg.rules"
           :required="isRequired"
           id="leadInspectionOrg"
@@ -1142,11 +1545,21 @@ const onFireLevel = () => {
           placeholder="请选择事故牵头调查部门"
           @change="onLeadInspectionOrg"
           title="请选择事故牵头调查部门"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="事故牵头调查部门："
+              remark-field="leadInspectionOrg"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.leadInspectionOrg"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showOtherOrgRemark" :span="8">
         <van-field
-          label="其他单位说明"
+          label="其他单位说明："
           :rules="form.basicInfo.otherOrgRemark.rules"
           :required="isRequired"
           id="otherOrgRemark"
@@ -1157,14 +1570,22 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入其他单位说明"
           name="basicInfo.otherOrgRemark.value"
-        />
+        >
+         <template v-slot:label="">
+            <FieldAnnotation
+              label="其他单位说明："
+              remark-field="otherOrgRemark"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.otherOrgRemark"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
-    
-    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
           name="basicInfo.isInsurance.value" 
-          label="是否保险" 
+          label="是否保险：" 
           :rules="form.basicInfo.isInsurance.rules">
           <template #input>
             <van-radio-group 
@@ -1177,11 +1598,20 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否保险："
+              remark-field="isInsurance"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isInsurance"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div v-if="form.basicInfo.isInsurance.value === '1'" :span="8">
         <SelectMultiple
-          label="保险类型"
+          label="保险类型："
           :rules="form.basicInfo.insuranceInfo.rules"
           :required="isRequired"
           id="insuranceInfo"
@@ -1196,12 +1626,22 @@ const onFireLevel = () => {
           max-tag-count="responsive"
           placeholder="请选择保险类型"
           title="请选择警情标签"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="保险类型："
+              remark-field="insuranceInfo"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.insuranceInfo"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectMultiple>
       </div>
     
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
-        <van-field name="basicInfo.isOnesided.value" label="是否单方面火灾" :rules="form.basicInfo.isOnesided.rules">
+        <van-field name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -1213,13 +1653,22 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否单方面火灾："
+              remark-field="isOnesided"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isOnesided"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
     
     
       <div v-if="!showOtherMinor" :span="8">
         <SelectSingle
-          label="监督检查情况"
+          label="监督检查情况："
           :rules="form.basicInfo.fireInspection.rules"
           id="fireInspection"
           v-model:value="form.basicInfo.fireInspection.value"
@@ -1230,30 +1679,50 @@ const onFireLevel = () => {
           placeholder="请选择监督检查情况"
           @change="onFireInspection"
           title="请选择事故牵头调查部门"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="监督检查情况："
+              remark-field="fireInspection"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireInspection"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showFireInspection" :span="8">
         <SelectMultiple
-            label="监督检查范围"
-            :rules="form.basicInfo.fireInspectionScope.rules"
-            :required="isRequired"
-            id="fireInspectionScope"
-            v-model:value="form.basicInfo.fireInspectionScope.value"
-            :showPreview="showPreview"
-            :options="options.fireInspectionScope"
-            :field-names="{ value: 'boDictId', label: 'dictName' }"
-            allow-clear
-            mode="multiple"
-            show-arrow
-            max-tag-count="responsive"
-            placeholder="请选择监督检查范围"
-            @change="onFireInspectionScope"
-            title="请选择监督检查范围"
-        />
+          label="监督检查范围："
+          :rules="form.basicInfo.fireInspectionScope.rules"
+          :required="isRequired"
+          id="fireInspectionScope"
+          v-model:value="form.basicInfo.fireInspectionScope.value"
+          :showPreview="showPreview"
+          :options="options.fireInspectionScope"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
+          allow-clear
+          mode="multiple"
+          show-arrow
+          max-tag-count="responsive"
+          placeholder="请选择监督检查范围"
+          @change="onFireInspectionScope"
+          title="请选择监督检查范围"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="监督检查范围："
+              remark-field="fireInspectionScope"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireInspectionScope"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectMultiple>
       </div>
       <div v-if="showFireInspection && showFireInspectionScope" :span="8">
         <SelectMultiple
-          label="消防安全重点单位"
+          label="消防安全重点单位："
           :rules="form.basicInfo.fireSafetyUnits.rules"
           :required="isRequired"
           id="fireSafetyUnits"
@@ -1268,14 +1737,24 @@ const onFireLevel = () => {
           max-tag-count="responsive"
           @change="onFireInspectionScope"
           title="请选择消防安全重点单位"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="消防安全重点单位："
+              remark-field="fireSafetyUnits"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fireSafetyUnits"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectMultiple>
       </div>
     
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
           name="basicInfo.isSafetyAccident.value"   
-          label="是否属于安全生产事故"
+          label="是否属于安全生产事故："
           :required="isRequired"
           :rules="form.basicInfo.isSafetyAccident.rules">
           <template #input>
@@ -1290,12 +1769,21 @@ const onFireLevel = () => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否属于安全生产事故："
+              remark-field="isSafetyAccident"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.isSafetyAccident"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
     
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
       <div :span="24">
-          <van-cell title="相关附件上传" :required="isRequired" class="item-cell">
+        <van-cell title="相关附件上传：" :required="isRequired" class="item-cell">
           <van-uploader
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"
@@ -1304,6 +1792,15 @@ const onFireLevel = () => {
             :after-read="OnAfterRead"
             @delete="onDelete"
           />
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="相关附件上传："
+              remark-field="attach"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.attach"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
       </div>
     </div>
@@ -1311,7 +1808,7 @@ const onFireLevel = () => {
       <div :span="24">
         <van-field
           name="basicInfo.fileRemark.value"
-          label="相关文件资料描述"
+          label="相关文件资料描述:"
           :rules="form.basicInfo.fileRemark.rules"
           id="fileRemark"
           v-model="form.basicInfo.fileRemark.value"
@@ -1323,7 +1820,17 @@ const onFireLevel = () => {
           placeholder="请输入相关文件资料描述"
           autosize
           type="textarea"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="相关文件资料描述："
+              remark-field="fileRemark"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.fileRemark"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
     </div>
   </van-cell-group>

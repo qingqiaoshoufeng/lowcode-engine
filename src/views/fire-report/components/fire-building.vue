@@ -169,7 +169,7 @@ const onBuildTag = (val) => {
       <div v-if="showSevereFire" :span="24">
         <van-field 
           name="fireBuilding.buildTag.value"
-          label="建筑标签"
+          label="建筑标签："
           :rules="form.fireBuilding.buildTag.rules"
           :required="isRequired"
         >
@@ -193,6 +193,15 @@ const onBuildTag = (val) => {
                 >{{ item.dictName }}</van-checkbox>
             </van-checkbox-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建筑标签："
+              remark-field="buildTag"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildTag"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
     </div>
@@ -201,7 +210,7 @@ const onBuildTag = (val) => {
       <div :span="8">
         <SelectSingle
           name="fireBuilding.buildType.value"
-          label="建筑类别"
+          label="建筑类别："
           :rules="form.fireBuilding.buildType.rules"
           id="buildType"
           v-model:value="form.fireBuilding.buildType.value"
@@ -212,12 +221,22 @@ const onBuildTag = (val) => {
           placeholder="请选择建筑类别"
           @change="onBuildType(), checkFireResistanceRating(form, options)"
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建筑类别："
+              remark-field="buildType"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildType"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div :span="8">
         <SelectSingle
           name="fireBuilding.buildStructure.value"
-          label="建筑结构"
+          label="建筑结构："
           :rules="form.fireBuilding.buildStructure.rules"
           id="buildStructure"
           v-model:value="form.fireBuilding.buildStructure.value"
@@ -227,12 +246,22 @@ const onBuildTag = (val) => {
           allow-clear
           placeholder="请选择建筑结构"
           @change="checkFireResistanceRating(form, options)"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建筑结构："
+              remark-field="buildStructure"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildStructure"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
           name="fireBuilding.fireResistanceRating.value"
-          label="耐火等级"
+          label="耐火等级："
           :rules="form.fireBuilding.fireResistanceRating.rules"
           id="fireResistanceRating"
           v-model:value="form.fireBuilding.fireResistanceRating.value"
@@ -242,7 +271,17 @@ const onBuildTag = (val) => {
           allow-clear
           placeholder="请选择耐火等级"
           @change="checkFireResistanceRating(form, options)"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="耐火等级："
+              remark-field="fireResistanceRating"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.fireResistanceRating"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
     </div>
 
@@ -250,7 +289,7 @@ const onBuildTag = (val) => {
       <div v-if="showSevereFire" :span="8">
         <van-field 
           name="fireBuilding.buildFloor.value"
-          label="建筑总楼层"
+          label="建筑总楼层："
           :rules="[{ validator: validateBuildFloor, trigger: 'onBlur' }, ...form.fireBuilding.buildFloor.rules]"
           :required="isRequired"
           id="buildFloor"
@@ -264,12 +303,22 @@ const onBuildTag = (val) => {
           placeholder="请输入建筑总楼层"
           @change="checkFireResistanceRating(form, options)"
           type="digit" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建筑总楼层："
+              remark-field="buildFloor"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildFloor"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
           name="fireBuilding.fireFloor.value"
-          label="失火楼层"
+          label="失火楼层："
           :required="isRequired"
           :rules="[{ validator: validateFireFloor, trigger: 'onBlur' }, ...form.fireBuilding.fireFloor.rules]"
           id="fireFloor"
@@ -281,7 +330,17 @@ const onBuildTag = (val) => {
           aria-autocomplete="none"
           placeholder="请输入失火楼层"
           type="digit" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="失火楼层："
+              remark-field="fireFloor"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.fireFloor"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
@@ -298,12 +357,22 @@ const onBuildTag = (val) => {
           aria-autocomplete="none"
           placeholder="请输入总建筑面积"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="总建筑面积（平方米）："
+              remark-field="buildAllArea"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildAllArea"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="showSevereFire" :span="8">
         <van-field 
           name="fireBuilding.buildFloorArea.value"
-          label="单层建筑面积（平方米）"
+          label="单层建筑面积（平方米）："
           :rules="form.fireBuilding.buildFloorArea.rules"
           :required="isRequired"
           id="buildFloorArea"
@@ -315,12 +384,22 @@ const onBuildTag = (val) => {
           aria-autocomplete="none"
           placeholder="请输入单层建筑面积"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="总建筑面积（平方米）："
+              remark-field="buildFloorArea"
+            field-module="fireBuilding"
+            :exist-data="fieldExist?.buildFloorArea"
+            @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="showHousingLife" :span="8">
         <van-field 
           name="fireBuilding.housingLife.value"
-          label="房龄（年）"
+          label="房龄（年）："
           :rules="form.fireBuilding.housingLife.rules"
           id="housingLife"
           v-model="form.fireBuilding.housingLife.value"
@@ -331,7 +410,17 @@ const onBuildTag = (val) => {
           aria-autocomplete="none"
           placeholder="请输入房龄"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="房龄（年）："
+              remark-field="housingLife"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.housingLife"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
     </div>
 
@@ -339,7 +428,7 @@ const onBuildTag = (val) => {
       <div v-if="showSevereFire" :span="8">
         <CascaderSingle
           name="fireBuilding.buildUse.value"
-          label="建筑使用用途"
+          label="建筑使用用途："
           :rules="form.fireBuilding.buildUse.rules"
           id="buildUse"
           v-model:value="form.fireBuilding.buildUse.value"
@@ -350,13 +439,23 @@ const onBuildTag = (val) => {
           allow-clear
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
           @change="onBuildUse"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建筑使用用途："
+              remark-field="buildUse"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.buildUse"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </CascaderSingle>
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
           name="fireBuilding.isSpread.value"
           :fieldNames="{label:'label',value:'value'}"
-          label="是否蔓延"
+          label="是否蔓延："
           :rules="form.fireBuilding.isSpread.rules"
           id="isSpread"
           v-model:value="form.fireBuilding.isSpread.value"
@@ -364,12 +463,22 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否蔓延"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否蔓延："
+              remark-field="isSpread"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.isSpread"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
           name="fireBuilding.isLoud.value"
-          label="是否发生轰燃"
+          label="是否发生轰燃："
           :rules="form.fireBuilding.isLoud.rules"
           :fieldNames="{label:'label',value:'value'}"
           id="isLoud"
@@ -378,7 +487,17 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否发生轰燃"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否发生轰燃："
+              remark-field="isLoud"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.isLoud"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
     </div>
 
@@ -387,7 +506,7 @@ const onBuildTag = (val) => {
         <SelectSingle
           :fieldNames="{label:'label',value:'value'}"
           name="fireBuilding.isWindowOpened.value"
-          label="失火建筑门窗在过程中是否开启"
+          label="失火建筑门窗在过程中是否开启："
           :rules="form.fireBuilding.isWindowOpened.rules"
           id="isWindowOpened"
           v-model:value="form.fireBuilding.isWindowOpened.value"
@@ -395,7 +514,17 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择失火建筑门窗在过程中是否开启"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="失火建筑门窗在过程中是否开启："
+              remark-field="isWindowOpened"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.isWindowOpened"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
     </div>
 

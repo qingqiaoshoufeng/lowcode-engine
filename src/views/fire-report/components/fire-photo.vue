@@ -112,7 +112,7 @@ onMounted(() => {
   <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="24">
-        <van-cell title="火灾照片" required class="item-cell">
+        <van-cell title="火灾照片：" required class="item-cell">
             <van-field
               name="firePhoto.photos.value"
               :rules="form.firePhoto.photos.rules"
@@ -134,8 +134,17 @@ onMounted(() => {
                   :after-read="OnAfterRead"
                   @delete="onDelete"
                 />
-            </template>
+              </template>
           </van-field>
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="火灾照片："
+              remark-field="photos"
+              field-module="firePhoto"
+              :exist-data="fieldExist?.photos"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
         <span class="tip" v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
       </div>

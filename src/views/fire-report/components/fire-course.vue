@@ -20,7 +20,7 @@ const refreshField = inject('refreshField')
       <div :span="24">
         <van-field
           name="fireCourse.firePassage.value"
-          label="起火经过"
+          label="起火经过："
           :rules="form.fireCourse.firePassage.rules"
           :required="isRequired"
           id="firePassage"
@@ -33,7 +33,17 @@ const refreshField = inject('refreshField')
           autosize
           type="textarea"
           placeholder="请输入起火经过"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火经过："
+              remark-field="firePassage"
+              field-module="fireCourse"
+              :exist-data="fieldExist?.firePassage"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
     </div>
   </van-cell-group>

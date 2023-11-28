@@ -127,8 +127,18 @@ onMounted(() => {
           placeholder="请输入补充说明"
           autosize
           type="textarea"
-        />
-      </div>
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="补充说明"
+              remark-field="attach"
+              field-module="otherAttach"
+              :exist-data="fieldExist?.attach"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+       </div>
     </div>
   </van-cell-group>
 </template>

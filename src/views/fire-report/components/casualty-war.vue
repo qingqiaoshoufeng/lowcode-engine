@@ -212,7 +212,7 @@ const bigInjured = computed(() => {
   <van-cell-group class="rootform1 fire-casualtyWar">
     <div :gutter="gutter">
       <div :span="8">
-        <van-field name="casualtyWar.isInjured.value" label="是否有人员受伤"
+        <van-field name="casualtyWar.isInjured.value" label="是否有人员受伤："
           :required="isRequired"
           :rules="form.casualtyWar.isInjured.rules" >
           <template #input>
@@ -228,6 +228,15 @@ const bigInjured = computed(() => {
               <van-radio name="2">无</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否有人员受伤："
+              remark-field="isInjured"
+              field-module="casualtyWar"
+              :exist-data="fieldExist?.isInjured"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
     </div>
@@ -239,7 +248,7 @@ const bigInjured = computed(() => {
       <div :gutter="gutter">
         <div :span="8">
           <SelectSingle
-            label="伤亡情况"
+            label="伤亡情况："
             name="casualtyWar.minorInjury.value"
             :rules="form.casualtyWar.minorInjury.rules"
             id="minorInjury"
@@ -252,11 +261,21 @@ const bigInjured = computed(() => {
             :required="true"
             placeholder="请选择是伤亡情况"
             title="请选择是伤亡情况"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="伤亡情况："
+                remark-field="minorInjury"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.minorInjury"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field 
-            label="轻伤人数"
+            label="轻伤人数："
             :rules="form.casualtyWar.injuryNum.rules"
             id="injuryNum"
             v-model="form.casualtyWar.injuryNum.value"
@@ -271,7 +290,17 @@ const bigInjured = computed(() => {
             direction="horizontal"
             name="casualtyWar,injuryNum,value"
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="轻伤人数："
+                remark-field="injuryNum"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuryNum"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
         </div>
       </div>
       <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="injured-item">
@@ -292,7 +321,7 @@ const bigInjured = computed(() => {
         </div>
         <div :span="8">
           <SelectSingle
-            label="伤亡情况"
+            label="伤亡情况："
             :name="`casualtyWar.injuredList.${index}.injuryType`"
             :rules="form.casualtyWar.minorInjury.rules"
             id="minorInjury"
@@ -305,11 +334,23 @@ const bigInjured = computed(() => {
             :required="true"
             placeholder="请选择是伤亡情况"
             title="请选择是伤亡情况"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="伤亡情况："
+                remark-field="injuredList"
+                remark-field2="injuryType"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injuryType"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field
-            label="人员姓名"
+            label="人员姓名："
             :rules="form.casualtyWar.name.rules"
             id="name"
             v-model="item.name"
@@ -319,12 +360,24 @@ const bigInjured = computed(() => {
             aria-autocomplete="none"
             placeholder="请输入人员姓名"
             :name="`casualtyWar.injuredList.${index}.name`"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员姓名："
+                remark-field="injuredList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.nation`"
-            label="民族"
+            label="民族："
             :rules="form.casualtyWar.nation.rules"
             :required="isRequired"
             id="nation"
@@ -337,11 +390,23 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择民族"
             title="请选择民族"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="民族："
+                remark-field="injuredList"
+                remark-field2="nation"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.nation"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
-            label="证件类型"
+            label="证件类型："
             :name="`casualtyWar.injuredList.${index}.idType`"
             :rules="form.casualtyWar.idType.rules"
             id="idType"
@@ -354,11 +419,23 @@ const bigInjured = computed(() => {
             @change="onInjuryIdType(index)"
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             title="请选择证件类型"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="证件类型："
+                remark-field="injuredList"
+                remark-field2="idType"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.idType"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field
-            label="证件号码"
+            label="证件号码："
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             :required="isRequired"
             id="idNumber"
@@ -370,11 +447,23 @@ const bigInjured = computed(() => {
             aria-autocomplete="none"
             placeholder="请输入证件号码"
             :name="`casualtyWar.injuredList.${index}.idNumber`"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="证件号码："
+                remark-field="injuredList"
+                remark-field2="idNumber"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.idNumber"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div :span="8">
           <SelectSingle
-            label="人员性别"
+            label="人员性别："
             :name="`casualtyWar.injuredList.${index}.gender`"
             :rules="form.casualtyWar.gender.rules"
             id="gender"
@@ -385,11 +474,23 @@ const bigInjured = computed(() => {
             :disabled="!item.disabled"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择人员性别"
-          />
+          >
+           <template v-slot:label="">
+              <FieldAnnotation
+                label="人员性别："
+                remark-field="injuredList"
+                remark-field2="gender"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.gender"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field 
-            label="人员年龄"
+            label="人员年龄："
             :rules="form.casualtyWar.age.rules"
             :required="isRequired"
             id="age"
@@ -403,12 +504,24 @@ const bigInjured = computed(() => {
             aria-autocomplete="none"
             allow-clear
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员年龄："
+                remark-field="injuredList"
+                remark-field2="injurySource"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injurySource"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.injurySource`"
-            label="人员来源"
+            label="人员来源："
             :rules="form.casualtyWar.injurySource.rules"
             :required="isRequired"
             id="injurySource"
@@ -418,12 +531,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择人员来源"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员来源："
+                remark-field="injuredList"
+                remark-field2="injurySource"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injurySource"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.injurySourceInfo`"
-            label="来源详情"
+            label="来源详情："
             id="injurySourceInfo"
             v-model:value="item.injurySourceInfo"
             :showPreview="showPreview"
@@ -433,12 +558,24 @@ const bigInjured = computed(() => {
             placeholder="请选择来源详情"
             :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="来源详情："
+                remark-field="injuredList"
+                remark-field2="injurySourceInfo"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injurySourceInfo"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.job`"
-            label="职业"
+            label="职业："
             :rules="form.casualtyWar.job.rules"
             :required="isRequired"
             id="job"
@@ -448,7 +585,19 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择职业"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职业："
+                remark-field="injuredList"
+                remark-field2="job"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.job"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
@@ -463,12 +612,24 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择健康状况"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="健康状况："
+                remark-field="injuredList"
+                remark-field2="health"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.health"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.schooling`"
-            label="受教育程度"
+            label="受教育程度："
             :rules="form.casualtyWar.schooling.rules"
             id="schooling"
             v-model:value="item.schooling"
@@ -477,12 +638,24 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择受教育程度"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受教育程度："
+                remark-field="injuredList"
+                remark-field2="schooling"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.schooling"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.injuryCause`"
-            label="致伤原因"
+            label="致伤原因："
             :rules="form.casualtyWar.injuryCause.rules"
             id="injuryCause"
             v-model:value="item.injuryCause"
@@ -491,12 +664,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择致伤原因"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="致伤原因："
+                remark-field="injuredList"
+                remark-field2="injuryCause"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injuryCause"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.humanCause`"
-            label="人为因素"
+            label="人为因素："
             :rules="form.casualtyWar.humanCause.rules"
             id="injuryBehavior"
             v-model:value="item.injuryBehavior"
@@ -504,12 +689,24 @@ const bigInjured = computed(() => {
             :options="options.injuryBehavior"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            placeholder="请选择受伤时行为"
-          />
+            placeholder="请选择人为因素："
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人为因素："
+                remark-field="injuredList"
+                remark-field2="humanCause"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.humanCause"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
-            label="受伤时行为"
+            label="受伤时行为："
             :name="`casualtyWar.injuredList.${index}.injuryBehavior`"
             :rules="form.casualtyWar.injuryBehavior.rules"
             id="injuryBehavior"
@@ -519,12 +716,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择受伤时行为"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受伤时行为："
+                remark-field="injuredList"
+                remark-field2="injuryBehavior"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injuryBehavior"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.mainSymptoms`"
-            label="身体主要症状"
+            label="身体主要症状："
             :rules="form.casualtyWar.mainSymptoms.rules"
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -532,12 +741,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择受伤部位"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="身体主要症状："
+                remark-field="injuredList"
+                remark-field2="mainSymptoms"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.mainSymptoms"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.injuryPart`"
-            label="受伤部位"
+            label="受伤部位："
             :rules="form.casualtyWar.injuryPart.rules"
             id="mainSymptoms"
             v-model:value="item.mainSymptoms"
@@ -546,7 +767,19 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择身体主要症状"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受伤部位："
+                remark-field="injuredList"
+                remark-field2="mainSymptoms"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.mainSymptoms"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
       </div>
       <van-button 
@@ -565,7 +798,7 @@ const bigInjured = computed(() => {
       <div :span="8">
         <van-field 
           name="casualtyWar.isInjured.value"
-          label="是否有人员死亡"
+          label="是否有人员死亡："
           :rules="form.casualtyWar.isDead.rules"
           :required="isRequired"
         >
@@ -581,6 +814,15 @@ const bigInjured = computed(() => {
               <van-radio name="1">有</van-radio>
               <van-radio name="2">无</van-radio>
             </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否有人员死亡："
+              remark-field="isDead"
+              field-module="casualtyWar"
+              :exist-data="fieldExist?.isDead"
+              @refresh-callback="refreshField"
+            />
           </template>
         </van-field>
       </div>
@@ -608,7 +850,7 @@ const bigInjured = computed(() => {
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.injuryType`"
-            label="伤亡情况"
+            label="伤亡情况："
             :rules="form.casualtyWar.injuryType.rules"
             id="injuryType"
             v-model:value="item.injuryType"
@@ -618,12 +860,24 @@ const bigInjured = computed(() => {
             placeholder="请输入伤亡情况"
             disabled
             :field-names="{ value: 'value', label: 'label' }"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="伤亡情况："
+                remark-field="deadList"
+                remark-field2="injuryType"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injuryType"
+                @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
         </div>
         <div :span="8">
           <van-field
             :name="`casualtyWar.deadList.${index}.name`"
-            label="人员姓名"
+            label="人员姓名："
             :rules="form.casualtyWar.name.rules"
             id="nation"
             v-model:value="item.nation"
@@ -634,12 +888,24 @@ const bigInjured = computed(() => {
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择民族"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员姓名："
+                remark-field="deadList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+          </template>
+        </van-field>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.nation`"
-            label="民族"
+            label="民族："
             :rules="form.casualtyWar.nation.rules"
             :required="isRequired"
             id="injuryType"
@@ -650,12 +916,24 @@ const bigInjured = computed(() => {
             placeholder=""
             disabled
             :field-names="{ value: 'value', label: 'label' }"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="民族："
+                remark-field="deadList"
+                remark-field2="nation"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.nation"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.idType`"
-            label="证件类型"
+            label="证件类型："
             :rules="form.casualtyWar.idType.rules"
             :required="isRequired"
             id="idType"
@@ -668,12 +946,24 @@ const bigInjured = computed(() => {
             @change="onInjuryIdType(index)"
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             title="请选择证件类型"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="证件类型："
+                remark-field="deadList"
+                remark-field2="idType"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.idType"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field
             :name="`casualtyWar.deadList.${index}.idNumber`"
-            label="证件号码"
+            label="证件号码："
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             id="idNumber"
             :required="isRequired"
@@ -684,7 +974,19 @@ const bigInjured = computed(() => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入证件号码"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="证件号码："
+                remark-field="deadList"
+                remark-field2="idNumber"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.idNumber"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div :span="8">
           <SelectSingle
@@ -698,11 +1000,23 @@ const bigInjured = computed(() => {
             :placeholder="item.genderHolder"
             :disabled="!item.disabled"
             allow-clear
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="证件号码："
+                remark-field="deadList"
+                remark-field2="gender"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.gender"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <van-field 
-            label="人员年龄"
+            label="人员年龄："
             :rules="form.casualtyWar.age.rules"
             :required="isRequired"
             id="age"
@@ -716,11 +1030,23 @@ const bigInjured = computed(() => {
             allow-clear
             :name="`casualtyWar.deadList.${index}.ageHolder`"
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员年龄："
+                remark-field="deadList"
+                remark-field2="age"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.age"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
         </div>
         <div :span="8">
           <SelectSingle
-            label="人员来源"
+            label="人员来源："
             :name="`casualtyWar.deadList.${index}.injurySource`"
             :rules="form.casualtyWar.injurySource.rules"
             :required="isRequired"
@@ -731,12 +1057,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择人员来源"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员来源："
+                remark-field="deadList"
+                remark-field2="injurySource"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injurySource"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.injurySourceInfo`"
-            label="来源详情"
+            label="来源详情："
             id="injurySourceInfo"
             v-model:value="item.injurySourceInfo"
             :showPreview="showPreview"
@@ -746,11 +1084,23 @@ const bigInjured = computed(() => {
             placeholder="请选择来源详情"
             :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="来源详情："
+                remark-field="deadList"
+                remark-field2="injurySourceInfo"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injurySourceInfo"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
-            label="职业"
+            label="职业："
             :name="`casualtyWar.deadList.${index}.job`"
             :rules="form.casualtyWar.job.rules"
             :required="isRequired"
@@ -761,12 +1111,24 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择职业"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职业："
+                remark-field="deadList"
+                remark-field2="job"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.job"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.health`"
-            label="健康状况"
+            label="健康状况："
             :rules="form.casualtyWar.health.rules"
             :required="isRequired"
             id="health"
@@ -776,12 +1138,24 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择健康状况"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="健康状况："
+                remark-field="deadList"
+                remark-field2="health"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.health"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.schooling`"
-            label="受教育程度"
+            label="受教育程度："
             :rules="form.casualtyWar.schooling.rules"
             id="schooling"
             v-model:value="item.schooling"
@@ -790,12 +1164,24 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择受教育程度"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受教育程度："
+                remark-field="deadList"
+                remark-field2="schooling"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.schooling"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.injuryCause`"
-            label="致死原因"
+            label="致死原因："
             :rules="[{ required: form.casualtyWar.injuryCause.rules[0].required, message: '请选择致死原因' }]"
             id="injuryCause"
             v-model:value="item.injuryCause"
@@ -804,12 +1190,24 @@ const bigInjured = computed(() => {
             :options="options.injuryCause"
             allow-clear
             placeholder="请选择致死原因"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="致死原因："
+                remark-field="deadList"
+                remark-field2="injuryCause"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injuryCause"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.humanCause`"
-            label="人为因素"
+            label="人为因素："
             :rules="form.casualtyWar.humanCause.rules"
             id="injuryBehavior"
             v-model:value="item.injuryBehavior"
@@ -818,12 +1216,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择受伤时行为"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人为因素："
+                remark-field="deadList"
+                remark-field2="humanCause"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.humanCause"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.injuryBehavior`"
-            label="受害时行为"
+            label="受害时行为："
             :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
             id="injuryBehavior"
             v-model:value="item.injuryBehavior"
@@ -832,12 +1242,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择受害时行为"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受害时行为："
+                remark-field="deadList"
+                remark-field2="injuryBehavior"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injuryBehavior"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
            :name="`casualtyWar.deadList.${index}.bodyLocation`"
-            label="发现尸体位置"
+            label="发现尸体位置："
             :rules="form.casualtyWar.bodyLocation.rules"
             id="bodyLocation"
             v-model:value="item.bodyLocation"
@@ -846,12 +1268,24 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择发现尸体位置"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="发现尸体位置："
+                remark-field="deadList"
+                remark-field2="bodyLocation"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.bodyLocation"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <CascaderSingle
             :name="`casualtyWar.deadList.${index}.deathDate`"
-            label="死亡时间"
+            label="死亡时间："
             :rules="form.casualtyWar.deathDate.rules"
             :required="isRequired"
             id="deathDate"
@@ -862,7 +1296,19 @@ const bigInjured = computed(() => {
             placeholder="请选择死亡时间"
             allow-clear
             :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="死亡时间："
+                remark-field="deadList"
+                remark-field2="deathDate"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.deathDate"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </CascaderSingle>
         </div>
       </div>
       <van-button 

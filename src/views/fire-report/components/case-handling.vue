@@ -64,7 +64,7 @@ const handleDeletePerson = (index) => {
       <div :span="8">
         <van-field 
           name="caseHandling.handleTwoCase.value"
-          label="两案处理情况-是否立案"
+          label="两案处理情况-是否立案："
           :required="isRequired"
           :rules="form.caseHandling.handleTwoCase.rules"
         >
@@ -80,12 +80,21 @@ const handleDeletePerson = (index) => {
               <van-radio name="2">否</van-radio>
             </van-radio-group>
           </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="两案处理情况-是否立案："
+              remark-field="handleTwoCase"
+              field-module="caseHandling"
+              :exist-data="fieldExist?.handleTwoCase"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-field>
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
         <van-field 
           name="caseHandling.penaltyNum.value"
-          label="追究人数（人）"
+          label="追究人数（人）："
           :rules="form.caseHandling.penaltyNum.rules"
           id="penaltyNum"
           v-model="form.caseHandling.penaltyNum.value"
@@ -96,12 +105,22 @@ const handleDeletePerson = (index) => {
           aria-autocomplete="none"
           placeholder="请输入追究人数"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="追究人数（人）："
+              remark-field="penaltyNum"
+              field-module="caseHandling"
+              :exist-data="fieldExist?.penaltyNum"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
         <van-field 
           name="caseHandling.suggestDealNum.value"
-          label="建议处理人数（人）"
+          label="建议处理人数（人）："
           :rules="form.caseHandling.suggestDealNum.rules"
           id="suggestDealNum"
           v-model="form.caseHandling.suggestDealNum.value"
@@ -112,14 +131,24 @@ const handleDeletePerson = (index) => {
           aria-autocomplete="none"
           placeholder="请输入处理人数"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="建议处理人数（人）："
+              remark-field="suggestDealNum"
+              field-module="caseHandling"
+              :exist-data="fieldExist?.suggestDealNum"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
     </div>
     <div :gutter="gutter">
       <div :span="8">
         <van-field 
           name="caseHandling.firePenalty.value"
-          label="火灾处罚情况-是否立案"
+          label="火灾处罚情况-是否立案："
           :rules="form.caseHandling.firePenalty.rules"
           :required="isRequired"
         >
@@ -134,6 +163,15 @@ const handleDeletePerson = (index) => {
               <van-radio name="1">是</van-radio>
               <van-radio name="2">否</van-radio>
             </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="火灾处罚情况-是否立案："
+              remark-field="firePenalty"
+              field-module="caseHandling"
+              :exist-data="fieldExist?.firePenalty"
+              @refresh-callback="refreshField"
+            />
           </template>
         </van-field>
       </div>
@@ -160,7 +198,7 @@ const handleDeletePerson = (index) => {
         <div :span="8">
           <van-field 
             :name="`caseHandling.fireInfoOrgList.${index},orgName`"
-            label="单位名称"
+            label="单位名称："
             :rules="form.caseHandling.orgName.rules"
             id="orgName"
             v-model="item.orgName"
@@ -169,12 +207,24 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入单位名称"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="单位名称："
+                remark-field="fireInfoOrgList"
+                remark-field2="orgName"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoOrgList?.[index]?.orgName"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div :span="8">
           <van-field 
             :name="`caseHandling.fireInfoOrgList.${index}.legalPerson`"
-            label="法人代表"
+            label="法人代表："
             :rules="form.caseHandling.legalPerson.rules"
             id="legalPerson"
             v-model="item.legalPerson"
@@ -183,12 +233,24 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入法人代表"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="法人代表："
+                remark-field="fireInfoOrgList"
+                remark-field2="legalPerson"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoOrgList?.[index]?.legalPerson"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoOrgList.${index}.penalty`"
-            label="行政处罚"
+            label="行政处罚："
             :rules="form.caseHandling.penalty.rules"
             id="penalty"
             v-model:value="item.penalty"
@@ -197,7 +259,19 @@ const handleDeletePerson = (index) => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择行政处罚"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="行政处罚："
+                remark-field="fireInfoOrgList"
+                remark-field2="penalty"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoOrgList?.[index]?.penalty"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
       </div>
   
@@ -238,7 +312,7 @@ const handleDeletePerson = (index) => {
         <div :span="8">
           <van-field 
             :name="`caseHandling,fireInfoPersonList,${index},name`"
-            label="姓名"
+            label="姓名："
             :rules="form.caseHandling.name.rules"
             id="name"
             v-model="item.name"
@@ -247,12 +321,24 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入姓名"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="姓名："
+                remark-field="fireInfoPersonList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoPersonList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
         </div>
         <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoPersonList.${index}.gender`"
-            label="性别"
+            label="性别："
             :rules="form.caseHandling.gender.rules"
             id="gender"
             v-model:value="item.gender"
@@ -261,12 +347,24 @@ const handleDeletePerson = (index) => {
             allow-clear
             placeholder="请选择性别"
             :field-names="{ value: 'value', label: 'label' }"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="性别："
+                remark-field="fireInfoPersonList"
+                remark-field2="gender"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoPersonList?.[index]?.gender"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
         <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoPersonList.${index}.adminSanction`"
-            label="行政处罚"
+            label="行政处罚："
             :rules="form.caseHandling.adminSanction.rules"
             id="adminSanction"
             v-model:value="item.adminSanction"
@@ -275,7 +373,19 @@ const handleDeletePerson = (index) => {
             allow-clear
             placeholder="请选择行政处罚"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="行政处罚："
+                remark-field="fireInfoPersonList"
+                remark-field2="adminSanction"
+                :remark-field2-id="index"
+                field-module="caseHandling"
+                :exist-data="fieldExist?.fireInfoPersonList?.[index]?.adminSanction"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
         </div>
       </div>
       <van-button 

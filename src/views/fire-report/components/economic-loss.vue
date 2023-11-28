@@ -81,7 +81,7 @@ const validateDirectDamage = (val) => {
       <div :span="8">
         <SelectSingle
           name="economicLoss.inspectMethod.value"
-          label="调查方式"
+          label="调查方式："
           :rules="form.economicLoss.inspectMethod.rules"
           id="inspectMethod"
           v-model:value="form.economicLoss.inspectMethod.value"
@@ -90,12 +90,22 @@ const validateDirectDamage = (val) => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择调查方式"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="调查方式："
+              remark-field="inspectMethod"
+              field-module="economicLoss"
+              :exist-data="fieldExist?.inspectMethod"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <div :span="8">
         <van-field 
           name="economicLoss.directDamage.value"
-          label="直接财产损失（元)"
+          label="直接财产损失（元)："
           :required="isRequired"
           :rules="[{ validator: validateDirectDamage, trigger: 'onBlur' }, ...form.economicLoss.directDamage.rules]"
           id="directDamage"
@@ -108,12 +118,22 @@ const validateDirectDamage = (val) => {
           placeholder="请输入直接财产损失"
           aria-autocomplete="none"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="直接财产损失（元)："
+              remark-field="directDamage"
+              field-module="economicLoss"
+              :exist-data="fieldExist?.directDamage"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field >
       </div>
       <div :span="8">
         <van-field 
          name="economicLoss.fireDisposalCost.value"
-          label="火灾现场处置费用（元)"
+          label="火灾现场处置费用（元)："
           :rules="form.economicLoss.fireDisposalCost.rules"
           :required="isRequired"
           id="fireDisposalCost"
@@ -126,7 +146,17 @@ const validateDirectDamage = (val) => {
           placeholder="请输入火灾现场处置费用（元)"
           @blur="checkFireDisposalCost(form)"
           type="number" 
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="火灾现场处置费用（元)："
+              remark-field="fireDisposalCost"
+              field-module="economicLoss"
+              :exist-data="fieldExist?.fireDisposalCost"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field >
       </div>
     </div>
 
@@ -134,7 +164,7 @@ const validateDirectDamage = (val) => {
       <div :span="8">
           <van-field 
             name="economicLoss.fireInjuryCost.value"
-            label="人身伤亡医疗支出（元)"
+            label="人身伤亡医疗支出（元)："
             :rules="form.economicLoss.fireInjuryCost.rules"
             :required="isRequired"
             id="fireInjuryCost"
@@ -147,12 +177,22 @@ const validateDirectDamage = (val) => {
             placeholder="请输入人身伤亡医疗支出"
             @blur="checkFireInjuryCost(form)"
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人身伤亡医疗支出（元)："
+                remark-field="fireInjuryCost"
+                field-module="economicLoss"
+                :exist-data="fieldExist?.fireInjuryCost"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
       </div>
       <div :span="8">
          <van-field 
             name="economicLoss.otherExpense.value"
-            label="其他费用（元)"
+            label="其他费用（元)："
             :rules="form.economicLoss.otherExpense.rules"
             id="otherExpense"
             v-model="form.economicLoss.otherExpense.value"
@@ -164,12 +204,22 @@ const validateDirectDamage = (val) => {
             :maxlength="10"
             placeholder="请输入其他费用"
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="其他费用（元)："
+                remark-field="otherExpense"
+                field-module="economicLoss"
+                :exist-data="fieldExist?.otherExpense"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field >
       </div>
       <div :span="8">
         <SelectSingle
           name="economicLoss.costSource.value"
-          label="损失来源"
+          label="损失来源："
           :rules="form.economicLoss.costSource.rules"
           id="costSource"
           v-model:value="form.economicLoss.costSource.value"
@@ -178,12 +228,22 @@ const validateDirectDamage = (val) => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择损失来源"
-        />
+        >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="损失来源："
+                remark-field="costSource"
+                field-module="economicLoss"
+                :exist-data="fieldExist?.costSource"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
       </div>
       <div :span="8">
           <van-field 
             name="economicLoss.affectedHouse.value"
-            label="受灾户数（户）"
+            label="受灾户数（户）："
             :rules="form.economicLoss.affectedHouse.rules"
             :required="isRequired"
             id="affectedHouse"
@@ -196,7 +256,17 @@ const validateDirectDamage = (val) => {
             placeholder="请输入受灾户数"
             @blur="checkAffectedHouse(form)"
             type="number" 
-          />
+          >
+            <template v-slot:label="">
+                <FieldAnnotation
+                  label="受灾户数（户）："
+                  remark-field="affectedHouse"
+                  field-module="economicLoss"
+                  :exist-data="fieldExist?.affectedHouse"
+                  @refresh-callback="refreshField"
+                />
+              </template>
+          </van-field >
       </div>
     </div>
   </van-cell-group>
