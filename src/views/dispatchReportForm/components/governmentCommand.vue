@@ -4,6 +4,10 @@ import SelectSingle from "@/component/SelectSingle/index";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isDetail = inject("isDetail");
 
 const showPreview = inject("showPreview");
@@ -54,7 +58,7 @@ const onIsCommand = (e) => {
 
 <template>
   <van-cell-group>
-    <van-cell title="政府到场指挥情况：" required v-preview-text="showPreview" class="field-radio">
+    <!-- <van-cell title="政府到场指挥情况：" required v-preview-text="showPreview" class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.isCommand.value"
@@ -66,7 +70,34 @@ const onIsCommand = (e) => {
           <van-radio name="2">无</van-radio>
         </van-radio-group>
       </template>
-    </van-cell>
+    </van-cell> -->
+    <van-field 
+      name="investForce.isCommand.value" 
+      label="政府到场指挥情况：" 
+      :rules="form.investForce.isCommand.rules"
+      required
+    >
+      <template #input>
+        <van-radio-group
+          v-model="form.investForce.isCommand.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          direction="horizontal"
+        >
+          <van-radio name="1">是</van-radio>
+          <van-radio name="2">否</van-radio>
+        </van-radio-group>
+      </template>
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="政府到场指挥情况："
+          remark-field="isCommand"
+          field-module="investForce"
+          :exist-data="fieldExist?.isCommand"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <div v-if="form.investForce.isCommand.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.fireDispatchZfList" :key="index" class="block-dynamic-item">
         <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeletePerson(index)" /></div>
@@ -80,7 +111,19 @@ const onIsCommand = (e) => {
           label="姓名："
           placeholder="请输入姓名"
           :rules="form.investForce.name.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="姓名："
+              remark-field="fireDispatchZfList"
+              remark-field2="name"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchZfList?.[index]?.name"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field> 
         <van-field
           v-model="item.duty"
           v-preview-text="showPreview"
@@ -91,7 +134,19 @@ const onIsCommand = (e) => {
           label="职务："
           placeholder="请输入职务"
           :rules="form.investForce.duty.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="职务："
+              remark-field="fireDispatchZfList"
+              remark-field2="duty"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchZfList?.[index]?.duty"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field> 
         <SelectSingle
           v-model:value="item.level"
           :showPreview="showPreview"
@@ -104,7 +159,19 @@ const onIsCommand = (e) => {
           label="所属级别："
           placeholder="请选择所属级别"
           :rules="form.investForce.level.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="所属级别："
+              remark-field="fireDispatchZfList"
+              remark-field2="level"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchZfList?.[index]?.level"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle> 
       </div>
       <template v-if="!isDetail">
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddPerson">

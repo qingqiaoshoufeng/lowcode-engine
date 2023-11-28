@@ -3,6 +3,10 @@ import { computed, inject } from "vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 // 社会救助/物资保障/送水
@@ -42,7 +46,17 @@ const showDisaster = computed(() => {
         label="送水量(吨)："
         placeholder="请输入送水量"
         :rules="form.basicInformation.deliverWater.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="送水量(吨)："
+            remark-field="deliverWater"
+            field-module="basicInformation"
+            :exist-data="fieldExist?.deliverWater"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </template>
     <template v-if="showDrainWater || showDisaster">
       <van-field
@@ -56,7 +70,17 @@ const showDisaster = computed(() => {
         label="排涝量(吨)："
         placeholder="请输入排涝量"
         :rules="form.basicInformation.drainWater.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="排涝量(吨)："
+            remark-field="drainWater"
+            field-module="basicInformation"
+            :exist-data="fieldExist?.drainWater"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </template>
     <template v-if="showKillArea">
       <van-field
@@ -70,7 +94,17 @@ const showDisaster = computed(() => {
         label="消杀面积(平方)："
         placeholder="请输入消杀面积"
         :rules="form.basicInformation.killArea.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="消杀面积(平方)："
+            remark-field="killArea"
+            field-module="basicInformation"
+            :exist-data="fieldExist?.killArea"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </template>
   </van-cell-group>
 </template>

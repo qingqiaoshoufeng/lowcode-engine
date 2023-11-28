@@ -6,6 +6,10 @@ import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isDetail = inject("isDetail");
 
 const showPreview = inject("showPreview");
@@ -96,6 +100,15 @@ const onDelete = (file) => {
               上传文件
             </van-button>
           </van-uploader>
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="相关附件上传："
+              remark-field="attach"
+              field-module="otherAttach"
+              :exist-data="fieldExist?.attach"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
       </div>
     </van-cell-group>

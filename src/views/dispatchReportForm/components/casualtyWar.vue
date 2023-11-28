@@ -7,6 +7,10 @@ import { getInfoByCard } from "@/utils/tools.js";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isDetail = inject("isDetail");
 
 const showPreview = inject("showPreview");
@@ -170,7 +174,7 @@ watch(
         共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
         {{ form.casualtyWar.deadList?.length }} 人
       </div>
-      <van-cell title="是否有人员受伤：" required v-preview-text="showPreview" class="field-radio">
+      <!-- <van-cell title="是否有人员受伤：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.casualtyWar.isInjured.value"
@@ -181,7 +185,33 @@ watch(
             <van-radio name="2">无</van-radio>
           </van-radio-group>
         </template>
-      </van-cell>
+      </van-cell> -->
+      <van-field 
+          name="casualtyWar.isInjured.value" 
+          label="是否有人员受伤：" 
+          :rules="form.battleConsume.waterDamage.rules"
+        >
+          <template #input>
+            <van-radio-group
+              v-model="form.casualtyWar.isInjured.value"
+              v-preview-text="showPreview"
+              icon-size="16px"
+              direction="horizontal"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否有人员受伤："
+              remark-field="isInjured"
+              field-module="casualtyWar"
+              :exist-data="fieldExist?.isInjured"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       <!-- 受伤人员 -->
       <div v-if="form.casualtyWar.isInjured.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="block-dynamic-item">
@@ -198,7 +228,19 @@ watch(
             label="人员姓名："
             placeholder="请输入人员姓名"
             :rules="form.casualtyWar.name.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员姓名："
+                remark-field="injuredList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -212,7 +254,19 @@ watch(
             label="民族："
             placeholder="请选择民族"
             :rules="form.casualtyWar.nation.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="民族："
+                remark-field="injuredList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
@@ -221,11 +275,23 @@ watch(
             required
             :options="options.identity"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            title="请选择人员身份"
-            label="人员身份："
-            placeholder="请选择人员身份"
+            title="请选择人员性质"
+            label="人员性质："
+            placeholder="请选择人员性质"
             :rules="form.casualtyWar.identity.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员性质："
+                remark-field="injuredList"
+                remark-field2="identity"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.identity"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
@@ -239,7 +305,19 @@ watch(
             label="政治面貌："
             placeholder="请选择政治面貌"
             :rules="form.casualtyWar.politicalOutlook.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="政治面貌："
+                remark-field="injuredList"
+                remark-field2="politicalOutlook"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.politicalOutlook"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectDateTime
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
@@ -253,7 +331,19 @@ watch(
             label-width="130px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="入队时间(进入消防系统)："
+                remark-field="injuredList"
+                remark-field2="teamEntryTime"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.teamEntryTime"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectDateTime> 
           <van-field
             v-model="item.personCode"
             v-preview-text="showPreview"
@@ -265,7 +355,19 @@ watch(
             label-width="112px"
             placeholder="请输入消防证件号"
             :rules="form.casualtyWar.personCode.rules"
-          />
+          >
+           <template v-slot:label="">
+              <FieldAnnotation
+                label="消防证件号："
+                remark-field="injuredList"
+                remark-field2="personCode"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.personCode"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <van-field
             v-model="item.idNumber"
             v-preview-text="showPreview"
@@ -277,7 +379,19 @@ watch(
             label-width="110px"
             placeholder="请输入身份证号码"
             :rules="[{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }]"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="身份证号码："
+                remark-field="injuredList"
+                remark-field2="idNumber"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.idNumber"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
@@ -291,7 +405,19 @@ watch(
             placeholder="请选择人员性别"
             :rules="form.casualtyWar.gender.rules"
             disabled
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员性别："
+                remark-field="injuredList"
+                remark-field2="gender"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.gender"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <van-field
             v-model="item.age"
             v-preview-text="showPreview"
@@ -299,14 +425,26 @@ watch(
             required
             type="number"
             maxlength="3"
-            name="age"
+            :name="`casualtyWar,injuredList,${index},age`"
             label="年龄："
             placeholder="请输入年龄"
             :rules="form.casualtyWar.age.rules"
             disabled
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="年龄："
+                remark-field="injuredList"
+                remark-field2="age"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.age"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <AreaCascader
-            name="nativePlace"
+            :name="`casualtyWar,injuredList,${index},nativePlace`"
             v-model:value="item.nativePlace"
             :showPreview="showPreview"
             :preview-text="item.nativePlaceValue ? item.nativePlaceValue : ''"
@@ -314,7 +452,21 @@ watch(
             :show-all-area="!!showPreview"
             :required="!showPreview"
             :rules="form.casualtyWar.nativePlace.rules"
-          />
+            label="户籍："
+            placeholder="请选择户籍"
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="户籍："
+                remark-field="injuredList"
+                remark-field2="nativePlace"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.nativePlace"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </AreaCascader> 
           <CascaderSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.rescueRank"
@@ -324,10 +476,22 @@ watch(
             :options="options.rescueRank"
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
-            label="消防救援衔"
+            label="消防救援衔："
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="消防救援衔："
+                remark-field="injuredList"
+                remark-field2="rescueRank"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.rescueRank"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </CascaderSingle> 
           <van-field
             v-model="item.bridgingRank"
             v-preview-text="showPreview"
@@ -338,7 +502,19 @@ watch(
             label="职级："
             placeholder="请输入职级"
             :rules="form.casualtyWar.bridgingRank.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职级："
+                remark-field="injuredList"
+                remark-field2="bridgingRank"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.bridgingRank"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <van-field
             v-model="item.duty"
             v-preview-text="showPreview"
@@ -349,7 +525,19 @@ watch(
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职务："
+                remark-field="injuredList"
+                remark-field2="duty"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.duty"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field> 
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -362,7 +550,19 @@ watch(
             label="受伤部位："
             placeholder="请选择受伤部位"
             :rules="form.casualtyWar.injuryPart.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受伤部位："
+                remark-field="injuredList"
+                remark-field2="injuryPart"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injuryPart"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
@@ -375,7 +575,19 @@ watch(
             label="事发阶段："
             placeholder="请选择事发阶段"
             :rules="form.casualtyWar.period.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="事发阶段："
+                remark-field="injuredList"
+                remark-field2="period"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.period"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
@@ -388,7 +600,19 @@ watch(
             label="受伤原因："
             placeholder="请选择受伤原因"
             :rules="form.casualtyWar.injuryReason.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="受伤原因："
+                remark-field="injuredList"
+                remark-field2="injuryReason"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.injuryReason"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
@@ -402,7 +626,19 @@ watch(
             label-width="118px"
             placeholder="请选择防护装备情况"
             :rules="form.casualtyWar.protectDevice.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="防护装备情况："
+                remark-field="deadList"
+                remark-field2="deathDate"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.deathDate"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle> 
         </div>
         <template v-if="!isDetail">
           <van-button
@@ -416,7 +652,7 @@ watch(
           </van-button>
         </template>
       </div>
-      <van-cell title="是否有人员死亡：" required v-preview-text="showPreview" class="field-radio">
+      <!-- <van-cell title="是否有人员死亡：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.casualtyWar.isDead.value"
@@ -427,7 +663,33 @@ watch(
             <van-radio name="2">无</van-radio>
           </van-radio-group>
         </template>
-      </van-cell>
+      </van-cell> -->
+      <van-field 
+          name="casualtyWar.isInjured.value" 
+          label="是否有人员死亡：" 
+          :rules="form.casualtyWar.isDead.rules"
+        >
+          <template #input>
+            <van-radio-group
+              v-model="form.casualtyWar.isDead.value"
+              v-preview-text="showPreview"
+              icon-size="16px"
+              direction="horizontal"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="是否有人员死亡："
+              remark-field="isDead"
+              field-module="casualtyWar"
+              :exist-data="fieldExist?.isDead"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       <!-- 死亡人员 -->
       <div v-if="form.casualtyWar.isDead.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="block-dynamic-item">
@@ -442,7 +704,19 @@ watch(
             label="姓名："
             placeholder="请输入姓名"
             :rules="form.investForce.name.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="姓名："
+                remark-field="deadList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -456,7 +730,19 @@ watch(
             label="民族："
             placeholder="请选择民族"
             :rules="form.casualtyWar.nation.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="民族："
+                remark-field="deadList"
+                remark-field2="nation"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.nation"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
@@ -469,7 +755,19 @@ watch(
             label="人员身份："
             placeholder="请选择人员身份"
             :rules="form.casualtyWar.identity.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员身份："
+                remark-field="deadList"
+                remark-field2="identity"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.identity"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
@@ -483,7 +781,19 @@ watch(
             label="政治面貌："
             placeholder="请选择政治面貌"
             :rules="form.casualtyWar.politicalOutlook.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="政治面貌："
+                remark-field="deadList"
+                remark-field2="politicalOutlook"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.politicalOutlook"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectDateTime
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
@@ -497,7 +807,19 @@ watch(
             label-width="130px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="入队时间(进入消防系统)："
+                remark-field="deadList"
+                remark-field2="teamEntryTime"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.teamEntryTime"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectDateTime>
           <van-field
             v-model="item.personCode"
             v-preview-text="showPreview"
@@ -509,7 +831,19 @@ watch(
             label-width="112px"
             placeholder="请输入消防证件号"
             :rules="form.casualtyWar.personCode.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="消防证件号："
+                remark-field="deadList"
+                remark-field2="personCode"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.personCode"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <van-field
             v-model="item.idNumber"
             v-preview-text="showPreview"
@@ -521,7 +855,19 @@ watch(
             label-width="110px"
             placeholder="请输入身份证号码"
             :rules="[{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }]"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="消防证件号："
+                remark-field="deadList"
+                remark-field2="idNumber"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.idNumber"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
@@ -535,7 +881,19 @@ watch(
             placeholder="请选择人员性别"
             :rules="form.casualtyWar.gender.rules"
             disabled
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员性别："
+                remark-field="deadList"
+                remark-field2="gender"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.gender"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <van-field
             v-model="item.age"
             v-preview-text="showPreview"
@@ -548,7 +906,19 @@ watch(
             placeholder="请输入年龄"
             :rules="form.casualtyWar.age.rules"
             disabled
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="年龄："
+                remark-field="deadList"
+                remark-field2="age"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.age"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <AreaCascader
             name="nativePlace"
             v-model:value="item.nativePlace"
@@ -558,7 +928,21 @@ watch(
             :show-all-area="!!showPreview"
             :required="!showPreview"
             :rules="form.casualtyWar.nativePlace.rules"
-          />
+            label="户籍："
+            placeholder="请选择户籍"
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="户籍："
+                remark-field="deadList"
+                remark-field2="age"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.age"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </AreaCascader>
           <CascaderSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.rescueRank"
@@ -568,10 +952,22 @@ watch(
             :options="options.rescueRank"
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
-            label="消防救援衔"
+            label="消防救援衔："
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="消防救援衔："
+                remark-field="deadList"
+                remark-field2="rescueRank"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.rescueRank"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </CascaderSingle>
           <van-field
             v-model="item.bridgingRank"
             v-preview-text="showPreview"
@@ -582,7 +978,19 @@ watch(
             label="职级："
             placeholder="请输入职级"
             :rules="form.casualtyWar.bridgingRank.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职级："
+                remark-field="deadList"
+                remark-field2="bridgingRank"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.bridgingRank"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <van-field
             v-model="item.duty"
             v-preview-text="showPreview"
@@ -593,7 +1001,19 @@ watch(
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="职务："
+                remark-field="deadList"
+                remark-field2="duty"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.duty"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -607,7 +1027,19 @@ watch(
             label-width="112px"
             placeholder="请选择致命伤部位"
             :rules="form.casualtyWar.injuryPart.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="致命伤部位："
+                remark-field="deadList"
+                remark-field2="injuryPart"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injuryPart"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
@@ -620,7 +1052,19 @@ watch(
             label="事发阶段："
             placeholder="请选择事发阶段"
             :rules="form.casualtyWar.period.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="事发阶段："
+                remark-field="deadList"
+                remark-field2="period"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.period"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
@@ -633,7 +1077,19 @@ watch(
             label="死亡原因："
             placeholder="请选择死亡原因"
             :rules="form.casualtyWar.injuryReason.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="死亡原因："
+                remark-field="deadList"
+                remark-field2="injuryReason"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.injuryReason"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
           <SelectDateTime
             v-model:value="item.deathDate"
             :show-preview="showPreview"
@@ -646,7 +1102,19 @@ watch(
             label-width="130px"
             placeholder="请选择死亡日期"
             :rules="form.casualtyWar.deathDate.rules"
-          />
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="死亡日期："
+                remark-field="deadList"
+                remark-field2="deathDate"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.deathDate"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectDateTime>
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
@@ -660,8 +1128,20 @@ watch(
             label-width="118px"
             placeholder="请选择防护装备情况"
             :rules="form.casualtyWar.protectDevice.rules"
-          />
-          <van-cell title="是否当场死亡：" v-preview-text="showPreview" required class="field-radio-label">
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="防护装备情况："
+                remark-field="deadList"
+                remark-field2="protectDevice"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.protectDevice"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
+          <!-- <van-cell title="是否当场死亡：" v-preview-text="showPreview" required class="field-radio-label">
             <template #default>
               <van-radio-group
                 v-model="form.casualtyWar.isInstantDeath.value"
@@ -672,7 +1152,35 @@ watch(
                 <van-radio name="2">否</van-radio>
               </van-radio-group>
             </template>
-          </van-cell>
+          </van-cell> -->
+          <van-field 
+            name="casualtyWar.isInstantDeath.value" 
+            label="是否当场死亡：" 
+            :rules="form.casualtyWar.isInstantDeath.rules"
+          >
+            <template #input>
+              <van-radio-group
+                v-model="form.casualtyWar.isInstantDeath.value"
+                v-preview-text="showPreview"
+                icon-size="16px"
+                direction="horizontal"
+              >
+                <van-radio name="1">是</van-radio>
+                <van-radio name="2">否</van-radio>
+              </van-radio-group>
+            </template>
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="是否当场死亡："
+                remark-field="deadList"
+                remark-field2="isInstantDeath"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.isInstantDeath"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </div>
         <template v-if="!isDetail">
           <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddDead">
