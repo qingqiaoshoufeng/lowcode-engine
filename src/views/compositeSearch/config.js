@@ -633,87 +633,146 @@ export const useFormConfig = () => {
       // 人员伤亡
       isInjury: { // 是否有人员伤亡
         value: '',
+        type: 'radio-is',
+        label: '是否有人员伤亡',
       },
       injuryType: { // 伤亡情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '伤亡情况',
+        options: 'injuryType',
       },
-      bodyLocation: { // 发现尸体位置
-        value: undefined,
-        back: false,
-      },
-      deathDate: { // 死亡时间
-        value: undefined,
-        back: false,
-      },
-      mainSymptoms: { // 身体主要症状
-        value: undefined,
-        back: false,
-      },
-      injuryPart: { // 受伤部位
-        value: undefined,
-        back: false,
-      },
-      injuryBehavior: { // 受伤/害时行为
-        value: undefined,
-        back: false,
-      },
-      humanCause: { // 人为因素
-        value: undefined,
-        back: false,
-      },
-      injuryCause: { // 伤亡原因
-        value: undefined,
-        back: false,
-      },
-      injurySchooling: { // 受教育程度
-        value: undefined,
-        back: false,
-      },
-      injuryHealth: { // 健康状况
-        value: undefined,
-        back: false,
-      },
-      job: { // 职业
-        value: undefined,
-        back: false,
-      },
-      injurySource: { // 人员来源
-        value: undefined,
-        back: false,
-      },
-      ageMin: { // 年龄
+      deathCountMin: { // 死亡人数
         value: ['', ''],
+        type: 'input-range',
+        label: '死亡人数',
       },
-      gender: { // 性别
-        value: undefined,
-        back: false,
+      injuryCountMin: { // 受伤人数
+        value: ['', ''],
+        type: 'input-range',
+        label: '受伤人数',
       },
-      idNumber: { // 证件号码
+      zsCountMin: { // 重伤人数
+        value: ['', ''],
+        type: 'input-range',
+        label: '重伤人数',
+      },
+      qsCountMin: { // 轻伤人数
+        value: ['', ''],
+        type: 'input-range',
+        label: '轻伤人数',
+      },
+      name: { // 姓名
         value: '',
-      },
-      idType: { // 证件类型
-        value: undefined,
-        back: false,
+        type: 'input',
+        label: '姓名',
       },
       nation: { // 民族
         value: undefined,
         back: false,
       },
-      name: { // 姓名
+      idType: { // 证件类型
+        value: undefined,
+        back: false,
+      },
+      idNumber: { // 证件号码
         value: '',
+        type: 'input',
+        label: '证件号码',
       },
-      qsCountMin: { // 轻伤人数
-        value: ['', ''],
+      gender: { // 性别
+        value: undefined,
+        back: false,
       },
-      zsCountMin: { // 重伤人数
+      ageMin: { // 年龄
         value: ['', ''],
+        type: 'input-range',
+        label: '年龄',
       },
-      injuryCountMin: { // 受伤人数
-        value: ['', ''],
+      injurySource: { // 人员来源
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '人员来源',
+        options: 'injurySource',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      deathCountMin: { // 死亡人数
-        value: ['', ''],
+      job: { // 职业
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '职业',
+        options: 'job',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryHealth: { // 健康状况
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '健康状况',
+        options: 'health',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injurySchooling: { // 受教育程度
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '受教育程度',
+        options: 'schooling',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryCause: { // 伤亡原因
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '伤亡原因',
+        options: 'injuryCause',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      humanCause: { // 人为因素
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '人为因素',
+        options: 'humanCause',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryBehavior: { // 受伤/害时行为
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '受伤/害时行为',
+        options: 'injuryBehavior',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryPart: { // 受伤部位
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '受伤部位',
+        options: 'injuryPart',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      mainSymptoms: { // 身体主要症状
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '身体主要症状',
+        options: 'mainSymptoms',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      bodyLocation: { // 发现尸体位置
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '发现尸体位置',
+        options: 'bodyLocation',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      deathDate: { // 死亡时间 // TODO
+        value: undefined,
+        back: false,
       },
     },
     fireEconomic: {
@@ -722,95 +781,155 @@ export const useFormConfig = () => {
       inspectMethod: { // 调查方式
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '调查方式',
+        options: 'inspectMethod',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       costSource: { // 损失来源
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '损失来源',
+        options: 'costSource',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       directEconomicLossMin: { // 直接经济损失（元)
         value: ['', ''],
+        type: 'input-range',
+        label: '直接经济损失（元)',
       },
       directDamageMin: { // 直接财产损失（元）
         value: ['', ''],
+        type: 'input-range',
+        label: '直接财产损失（元）',
       },
       fireDisposalCostMin: { // 火灾现场处置费用（元)
         value: ['', ''],
+        type: 'input-range',
+        label: '火灾现场处置费用（元）',
       },
-      fireInjuryCostMin: { // 人身伤亡医疗支出（元
+      fireInjuryCostMin: { // 人身伤亡医疗支出（元）
         value: ['', ''],
+        type: 'input-range',
+        label: '人身伤亡医疗支出（元）',
       },
       affectedHouseMin: { // 受灾户数（户）
         value: ['', ''],
+        type: 'input-range',
+        label: '受灾户数（户）',
       },
     },
     fireVehicle: {
       title: '交通工具',
       // 交通工具
-      vehicleType: { // 交通工具类型
+      vehicleType: { // 交通工具类型 // TODO
         value: undefined,
         back: false,
       },
       chargeState: { // 起火时充电状态
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '起火时充电状态',
+        options: 'chargeState',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      batteryType: {
+      batteryType: { // 电池类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '电池类型',
+        options: 'batteryType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isRepack: { // 电力助动车-是否改装
         value: '',
+        type: 'radio-is',
+        label: '电力助动车-是否改装',
       },
       carNumber: { // 车牌号
         value: '',
+        type: 'input',
+        label: '车牌号',
       },
       vinCode: { // 车辆VIN码
         value: '',
+        type: 'input',
+        label: '车辆VIN码',
       },
       driveState: { // 行驶状态
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '行驶状态',
+        options: 'driveState',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
     },
     fireBuilding: {
       title: '建筑信息',
       // 建筑信息
-      buildTag: { // 建筑标签
+      buildTag: { // 建筑标签 // TODO
         value: [],
       },
       buildType: { // 建筑类别
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '建筑类别',
+        options: 'buildType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireResistanceRating: { // 耐火等级
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '耐火等级',
+        options: 'fireResistanceRating',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       buildStructure: { // 建筑结构
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '建筑结构',
+        options: 'buildStructure',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      buildFloorMin: { // 失火楼层
+      buildFloorMin: { // 建筑总楼层
         value: ['', ''],
+        type: 'input-range',
+        label: '建筑总楼层',
       },
       fireFloorMin: { // 失火楼层
         value: ['', ''],
+        type: 'input-range',
+        label: '失火楼层',
       },
       housingLifeMin: { // 房龄（年）
         value: ['', ''],
+        type: 'input-range',
+        label: '房龄（年）',
       },
-      buildUse: { // 建筑使用用途
+      buildUse: { // 建筑使用用途 // TODO
         value: undefined,
         back: false,
       },
       isSpread: { // 是否蔓延
         value: undefined,
+        type: 'radio-is',
+        label: '是否蔓延'
       },
       isLoud: { // 是否发生轰燃
         value: undefined,
+        type: 'radio-is',
+        label: '是否发生轰燃'
       },
       isWindowOpened: { // 失火建筑门窗在过程中是否开启
         value: undefined,
+        type: 'radio-is',
+        label: '失火建筑门窗在过程中是否开启'
       },
     },
     fireFacilities: {
@@ -818,45 +937,79 @@ export const useFormConfig = () => {
       // 火灾信息-消防设施
       isFirefightFacility: { // 是否安装消防设施
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装消防设施'
       },
       autoAlarm: { // 是否安装自动报警系统
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装自动报警系统'
       },
       autoFireFight: { // 是否安装自动灭火系统
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装自动灭火系统'
       },
       indoorHydrant: { // 是否安装室内消防栓系统
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装室内消防栓系统'
       },
       smokeControl: { // 是否安装防排烟系统
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装防排烟系统'
       },
       fireShutter: { // 是否安装防火卷帘
         value: undefined,
+        type: 'radio-is',
+        label: '是否安装防火卷帘'
       },
       emergencyLight: { // 应急疏散照明
         value: undefined,
+        type: 'select-multiple',
+        label: '应急疏散照明',
+        options: 'regulation',
       },
       networking: { // 联网情况
         value: undefined,
+        type: 'select-multiple',
+        label: '联网情况',
+        options: 'networking',
       },
       fireCompartment: { // 防火分区
         value: undefined,
+        type: 'select-multiple',
+        label: '防火分区',
+        options: 'regulation',
       },
       compartmentAreaMin: { // 分区面积（m2）
         value: ['', ''],
+        type: 'input-range',
+        label: '建议处理人数（人）',
       },
       fireSeparation: { // 防火间距
         value: undefined,
+        type: 'select-multiple',
+        label: '防火间距',
+        options: 'regulation',
       },
       separationMeterMin: { // 间距（m2）
         value: ['', ''],
+        type: 'input-range',
+        label: '建议处理人数（人）',
       },
       escapeRoute: { // 疏散通道
         value: undefined,
+        type: 'select-multiple',
+        label: '疏散通道',
+        options: 'regulation',
       },
       emergencyExit: { // 紧急出口
         value: undefined,
+        type: 'select-multiple',
+        label: '紧急出口',
+        options: 'regulation',
       },
     },
     fireOther: {
@@ -864,18 +1017,28 @@ export const useFormConfig = () => {
       // 火灾信息-其他信息
       firePassage: { // 起火经过
         value: '',
+        type: 'input',
+        label: '起火经过',
       },
       handleTwoCase: { // 两案处理-是否立案
         value: undefined,
+        type: 'radio-is',
+        label: '两案处理-是否立案',
       },
       penaltyNumMin: { // 追究人数
         value: ['', ''],
+        type: 'input-range',
+        label: '追究人数（人）',
       },
       suggestDealNumMin: { // 建议处理人数（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '建议处理人数（人）',
       },
       firePenalty: { // 火灾处罚情况-是否立案
         value: undefined,
+        type: 'radio-is',
+        label: '火灾处罚情况-是否立案'
       },
     },
   }

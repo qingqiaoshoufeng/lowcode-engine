@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, inject } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
 import router from "@/router/index.js";
@@ -8,6 +8,8 @@ import { getSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js';
+
+const searchType = inject('searchType');
 
 const store = useStore();
 
@@ -29,8 +31,7 @@ const handleItem = (row) => {
       ref="proListRef"
       title="查询结果"
       :getListFn="getSearchResult"
-      :tabs="tabs"
-      rowKey="boFireWarningId"
+      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : boFireDispatchId)"
       :showLoad="false"
     >
       <template #list="{ record }">
