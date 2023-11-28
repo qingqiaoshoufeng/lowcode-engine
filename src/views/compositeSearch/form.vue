@@ -1,6 +1,7 @@
 <script setup>
 import { computed, inject, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
 import { getFireWarningTag } from '@/apis/index.js';
+import FormItem from './formItem.vue'
 import {
   dispatchInjuryType,
   dispatchType,
@@ -208,13 +209,14 @@ const sections = computed(() => {
         return {
           title: form.value[ele].title,
           link: ele,
+          children: form.value[ele],
         }
       })],
   }]
   return list.filter(val => val.display)
 })
 
-const { sideBarActive } = useIntersection(sections, '.composite-search-form', 50);
+const { sideBarActive } = useIntersection([], '.composite-search-form', 50);
 
 const onSideBarChange = (e, k) => {
   const targetElement = document.getElementById(k);
@@ -240,20 +242,30 @@ const onSideBarChange = (e, k) => {
             :key="temp.title"
             @click="onSideBarChange(temp, i)"
             class="anchor-children"
-        >
+          >
             <template #title>{{ temp?.title }}</template>
           </van-sidebar-item>
         </template>
       </van-sidebar>
     </div>
     <div class="composite-search-form">
+      <div v-for="(item, k) in sections" :key="k">
+        <div v-for="(temp) in item.children" :key="temp.title">
+          {{ temp.title }}
+          <div v-for="(i, j) in temp?.children" :key="j">
+            <template v-if="(typeof i === 'object')">
+              <FormItem :fieldObj="i" />
+            </template>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .composite-search-wrapper {
-  height: 100%;
+  height: calc(100% - 110px);
   display: flex;
   background-color: #F6F8FC;
   .composite-search-anchor {
@@ -288,6 +300,9 @@ const onSideBarChange = (e, k) => {
   }
   .composite-search-form {
     flex: 1;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 </style>

@@ -84,7 +84,7 @@ onMounted(() => {
             preview-image
             :max-size="10 * 1000 * 1000000"
             :deletable="false"
-            :show-upload="!form?.img"
+            :show-upload="form.img?.length <= 0"
             reupload
             :max-count="1"
             :after-read="onAfterRead"
@@ -97,7 +97,7 @@ onMounted(() => {
       <van-cell title="所属角色" :value="detail?.loginUserName" />
       <van-cell title="手机号码" :value="detail?.mobile" />
       <van-cell title="邮箱" :value="detail?.email" />
-      <van-cell title="创建日期" :value="detail?.createDate" />
+      <van-cell title="创建日期" :value="detail?.createTime" />
     </van-cell-group>
   </div>
 </template>

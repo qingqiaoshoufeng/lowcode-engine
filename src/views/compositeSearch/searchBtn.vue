@@ -18,7 +18,7 @@ const handleSearch = () => {
   width: 100%;
   height: 66px;
   position: absolute;
-  bottom: 100px;
+  bottom: 56px;
   padding: 0 16px;
   display: flex;
   align-items: center;
