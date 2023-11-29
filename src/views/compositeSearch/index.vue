@@ -22,7 +22,7 @@ const searchType = ref(1)
 
 const searchDimension = ref(2)
 
-const dataTimeSource = ref(null)
+const dataTimeSource = ref('')
 
 provide('form', form)
 
@@ -36,7 +36,7 @@ provide('searchDimension', searchDimension)
 
 provide('dataTimeSource', dataTimeSource)
 
-const searchCallback = () => {
+const onSearchCallback = () => {
   const { policeBase, fireBase } = form.value
   if (searchType.value !== 4 && !policeBase.warningDate.value?.[0]) {
     showToast('请选择接警时间！')
@@ -60,6 +60,10 @@ const searchCallback = () => {
   queryParams.value.staticFlag = searchDimension.value
   show.value.resultVisible = true
 }
+
+const onInitCallback = (res) => {
+  initSearchParams(res)
+}
 </script>
 
 <template>
@@ -71,7 +75,10 @@ const searchCallback = () => {
       <van-tab title="火灾" :name="4"></van-tab>
     </van-tabs>
     <Form />
-    <SearchBtn @searchCallback="searchCallback" />
+    <SearchBtn
+      @searchCallback="onSearchCallback"
+      @initCallback="onInitCallback"
+    />
 
     <!-- 查询结果 -->
     <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">

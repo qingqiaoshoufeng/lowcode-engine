@@ -827,6 +827,8 @@ export const useFormConfig = () => {
       // 基本信息
       fireDate: { // 起火时间
         value: undefined,
+        type: 'select-range',
+        label: '起火时间',
       },
       statisticRangeHoliday: { // 统计范围--节假日
         value: undefined,

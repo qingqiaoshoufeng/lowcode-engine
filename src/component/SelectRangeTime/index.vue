@@ -58,10 +58,10 @@ watch(
       endTime.value = props.value?.[1] ? dayjs(props.value?.[1]).format("HH:mm:ss").split(":").slice(0, 2) : [];
       selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
     } else {
-      startDate.value = [];
-      startTime.value = ['00', '00']
-      endDate.value = [];
-      endTime.value = ['23', '59']
+      startDate.value = dayjs().subtract(1, 'month').format("YYYY-MM-DD").split("-");
+      startTime.value = ['00', '00'];
+      endDate.value = dayjs().format("YYYY-MM-DD").split("-");
+      endTime.value = ['23', '59'];
       selectText.value = "";
     }
   },
@@ -113,10 +113,10 @@ defineOptions({
     </template>
   </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
-    <div class="select-range">
+    <div class="select-range-time">
       <div class="single-wrapper">
         <van-picker-group
-          title="预约日期"
+          :title="placeholder"
           :tabs="['开始日期', '结束日期']"
           @confirm="onConfirm"
           @cancel="onCancel"
@@ -146,11 +146,11 @@ defineOptions({
 </template>
 
 <style lang="scss" scoped>
-.select-range {
+.select-range-time {
   display: flex;
   flex-direction: column;
   .single-wrapper {
-    max-height: 50vh;
+    // max-height: 50vh;
     overflow-y: auto;
     .wrapper-card {
       display: flex;

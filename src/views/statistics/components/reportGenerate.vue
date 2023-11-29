@@ -18,7 +18,7 @@ import {
 } from "@/apis/index.js";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
-import SelectRange from "@/component/SelectRange/index";
+import SelectRangeTime from "@/component/SelectRangeTime/index";
 import SelectOrg from "@/component/SelectOrg/index";
 import AreaCascader from "@/component/AreaCascader/index";
 
@@ -601,7 +601,7 @@ onMounted(() => {
           :params="{ staticFlag: form.searchDimension }"
         />
       </template>
-      <SelectRange
+      <SelectRangeTime
         v-model:value="form.time"
         :required="true"
         :readonly="true"

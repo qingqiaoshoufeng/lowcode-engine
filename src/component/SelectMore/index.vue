@@ -4,7 +4,7 @@ import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectOrg from "@/component/SelectOrg/index";
-import SelectRange from "@/component/SelectRange/index";
+import SelectRangeTime from "@/component/SelectRangeTime/index";
 import AreaCascader from "@/component/AreaCascader/index";
 import {getCurrentInstance} from 'vue';
 const instance = getCurrentInstance();
@@ -145,7 +145,7 @@ defineOptions({
             />
           </template>
           <template v-else-if="item.type === 'select-range'">
-            <SelectRange
+            <SelectRangeTime
               v-model:value="query[item.value]"
               :required="false"
               :readonly="true"

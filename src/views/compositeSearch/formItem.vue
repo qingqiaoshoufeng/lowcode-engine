@@ -4,7 +4,7 @@ import InputNumberRange from "@/component/InputNumberRange/index.vue";
 import SelectMultiple from '@/component/SelectMultiple/index.vue';
 import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 import SelectOrg from "@/component/SelectOrg/index";
-import SelectRange from "@/component/SelectRange/index";
+import SelectRangeTime from "@/component/SelectRangeTime/index";
 import AreaCascader from "@/component/AreaCascader/index";
 
 const props = defineProps({
@@ -88,7 +88,7 @@ const options = inject('options');
       />
     </template>
     <template v-else-if="fieldObj?.type === 'select-range'">
-      <SelectRange
+      <SelectRangeTime
         v-model:value="fieldObj.value"
         :readonly="true"
         :label="`${fieldObj.label}：`"

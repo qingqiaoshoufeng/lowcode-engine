@@ -315,7 +315,7 @@ const onSideBarChange = (e, k) => {
 
 <style lang="scss" scoped>
 .composite-search-wrapper {
-  height: calc(100% - 110px);
+  height: calc(100% - 100px);
   display: flex;
   background-color: #F6F8FC;
   .composite-search-anchor {
@@ -328,14 +328,14 @@ const onSideBarChange = (e, k) => {
         background-color: #F6F8FC;
       }
       .van-sidebar-item--select {
-        background: #E4E4E4;
-        border-radius: 0px 100px 100px 0px;
+        background-color: #ffffff;
+        // border-radius: 0px 100px 100px 0px;
       }
       .anchor-item {
         font-size: 12px;
         padding: 8px 4px;
         .van-sidebar-item__text {
-          color: #353A45;
+          color: #333333;
           white-space: nowrap;
         }
       }
