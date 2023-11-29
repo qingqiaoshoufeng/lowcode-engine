@@ -49,9 +49,13 @@ export const useFormConfig = () => {
         type: 'input',
         label: '警情标题',
       },
-      warningType: { // 警情类型 // TODO
+      warningType: { // 警情类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '警情类型',
+        options: 'warningType',
+        selectLeaf: false,
       },
       warningLevel: { // 警情等级
         value: undefined,
@@ -272,9 +276,13 @@ export const useFormConfig = () => {
         label: '自然灾害引发',
         options: isNot
       },
-      naturalDisasterType: { // 自然灾害类型 // TODO
+      naturalDisasterType: { // 自然灾害类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '自然灾害类型',
+        options: 'naturalDisasterType',
+        selectLeaf: false,
       },
       isOtherProvince: { // 跨省增援
         value: '',
@@ -374,9 +382,13 @@ export const useFormConfig = () => {
       //   value: [],
       //   back: false,
       // },
-      deptNature: { // 队伍性质 // TODO
+      deptNature: { // 队伍性质
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '队伍性质',
+        options: 'deptNature',
+        selectLeaf: false,
       },
       dispatchType: { // 参战形式
         value: undefined,
@@ -513,9 +525,13 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '指挥员人数',
       },
-      headPersonType: { // 带队指挥员职务 // TODO
+      headPersonType: { // 带队指挥员职务
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '带队指挥员职务',
+        options: 'headPersonType',
+        selectLeaf: false,
       },
       groupLeader: { // 带队指挥员 // TODO
         value: undefined,
@@ -631,16 +647,24 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '年龄',
       },
-      rescueRank: { // 消防救援衔 // TODO
+      rescueRank: { // 消防救援衔
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '消防救援衔',
+        options: 'rescueRank',
+        selectLeaf: false,
       },
       titleRank: { // 衔级
         value: '',
       },
-      duty: { // 职务 // TODO
+      duty: { // 职务
         value: '',
         back: false,
+        type: 'cascader-multiple',
+        label: '职务',
+        options: 'duty',
+        selectLeaf: false,
       },
       teamEntryTime: { // 入队时间（进入消防系统）
         value: undefined,
@@ -835,17 +859,29 @@ export const useFormConfig = () => {
         type: 'input',
         label: '起火地点',
       },
-      area: { // 区域 // TODO
+      area: { // 区域
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '区域',
+        options: 'area',
+        selectLeaf: false,
       },
-      firePlace: { // 起火场所 // TODO
+      firePlace: { // 起火场所
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火场所',
+        options: 'firePlace',
+        selectLeaf: false,
       },
-      fireCause: { // 起火原因 // TODO
+      fireCause: { // 起火原因
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火原因',
+        options: 'fireCause',
+        selectLeaf: false,
       },
       burnedAreaMin: { // 过火面积
         value: ['', ''],
@@ -871,21 +907,37 @@ export const useFormConfig = () => {
         label: '是否轻微火灾',
         options: isNot
       },
-      fireSite: { // 起火位置 // TODO
+      fireSite: { // 起火位置
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火位置',
+        options: 'fireSite',
+        selectLeaf: false,
       },
-      initialFuelsType: { // 起火物类型 // TODO
+      initialFuelsType: { // 起火物类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火物类型',
+        options: 'initialFuelsType',
+        selectLeaf: false,
       },
-      igniteSourceType: { // 引火源类型 // TODO
+      igniteSourceType: { // 引火源类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '引火源类型',
+        options: 'igniteSourceType',
+        selectLeaf: false,
       },
-      firePattern: { // 事故形态 // TODO
+      firePattern: { // 事故形态
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '事故形态',
+        options: 'firePattern',
+        selectLeaf: false,
       },
       liveType: { // 居住形式
         value: undefined,
@@ -939,9 +991,13 @@ export const useFormConfig = () => {
         type: 'input',
         label: '单位统一社会信用代码',
       },
-      industry: { // 所属行业 // TODO
+      industry: { // 所属行业
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '所属行业',
+        options: 'industry',
+        selectLeaf: false,
       },
       industryDepartment: { // 行业主管部门
         value: undefined,
@@ -1185,9 +1241,13 @@ export const useFormConfig = () => {
         options: 'bodyLocation',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      deathDate: { // 死亡时间 // TODO
+      deathDate: { // 死亡时间
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '死亡时间',
+        options: 'deathDate',
+        selectLeaf: false,
       },
     },
     fireEconomic: {
@@ -1238,9 +1298,13 @@ export const useFormConfig = () => {
     fireVehicle: {
       title: '交通工具',
       // 交通工具
-      vehicleType: { // 交通工具类型 // TODO
+      vehicleType: { // 交通工具类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '交通工具类型',
+        options: 'vehicleType',
+        selectLeaf: false,
       },
       chargeState: { // 起火时充电状态
         value: undefined,

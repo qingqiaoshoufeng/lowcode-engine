@@ -1,15 +1,26 @@
 <script setup>
-import { ref, onMounted, nextTick, inject } from "vue";
+import { ref, onMounted, nextTick, inject, watch } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
 import router from "@/router/index.js";
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import SearchInfo from './searchInfo.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js';
 
+const props = defineProps({
+  params: {
+    type: Object,
+    default: () => {},
+  }
+})
+
 const searchType = inject('searchType');
+
+const searchInfo = inject('searchInfo');
 
 const store = useStore();
 
@@ -19,10 +30,28 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
+watch(() => proListRef.value?.result, () => {
+  if (proListRef.value?.result) {
+    searchInfo.value = {
+      ...proListRef.value?.result?.fireWarning,
+      ...proListRef.value?.result?.fireDispatch,
+      ...proListRef.value?.result?.fireDispatchHead,
+      ...proListRef.value?.result?.fireInfo,
+    }
+  }
+})
+
 const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 };
+
+onMounted(() => {
+  nextTick(() => {
+    proListRef.value.query = props.params
+    proListRef.value.filter()
+  })
+})
 </script>
 
 <template>
@@ -33,7 +62,11 @@ const handleItem = (row) => {
       :getListFn="getSearchResult"
       :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : boFireDispatchId)"
       :showLoad="false"
+      :showBack="false"
     >
+      <template #search>
+        <SearchInfo :search-type="searchType" :search-info="searchInfo" />
+      </template>
       <template #list="{ record }">
         <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
@@ -62,10 +95,21 @@ const handleItem = (row) => {
         </div>
       </template>
     </ProList>
+
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+      <PoliceEntryDetail :current-row="currentRow" />
+    </ProModal>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .search-result {
+  height: 100%;
+  background-color: #f6f7f8;
+  .list-tabs {
+    display: flex;
+    padding: 10px 12px 0 12px;
+  }
 }
 </style>

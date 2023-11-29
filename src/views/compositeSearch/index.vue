@@ -3,6 +3,7 @@ import { ref, provide } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
 import Form from './form.vue'
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
@@ -13,19 +14,50 @@ const { options } = useOptions();
 
 const { show } = useModal();
 
+const searchInfo = ref({})
+
+const queryParams = ref({})
+
 const searchType = ref(1)
 
 const searchDimension = ref(2)
+
+const dataTimeSource = ref(null)
 
 provide('form', form)
 
 provide('searchType', searchType)
 
+provide('searchInfo', searchInfo)
+
 provide('options', options)
 
 provide('searchDimension', searchDimension)
 
+provide('dataTimeSource', dataTimeSource)
+
 const searchCallback = () => {
+  const { policeBase, fireBase } = form.value
+  if (searchType.value !== 4 && !policeBase.warningDate.value?.[0]) {
+    showToast('请选择接警时间！')
+    return
+  }
+  if (searchType.value === 4 && !fireBase.fireDate.value?.[0]) {
+    showToast('请选择起火时间！')
+    return
+  }
+  queryParams.value = getSearchParams()
+  queryParams.value.fireType = searchType.value
+  queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
+  const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
+  const keyMap = ['', 'areaGroupStaticFlag', 'dispatchGroupOrgStaticFlag', 'fireHeadStaticFlag']
+  if (searchType.value < 4) {
+    queryParams.value[firstKeyMap[searchType.value]][keyMap[searchType.value]] = searchDimension.value
+  }
+  // 设置查询的历史数据版本
+  queryParams.value.dataTimeSource = dataTimeSource.value
+  // 添加全局的双口径参数
+  queryParams.value.staticFlag = searchDimension.value
   show.value.resultVisible = true
 }
 </script>
@@ -42,8 +74,8 @@ const searchCallback = () => {
     <SearchBtn @searchCallback="searchCallback" />
 
     <!-- 查询结果 -->
-    <ProModal v-model:visible="show.resultVisible" :showHeader="false" title="查询结果">
-      <SearchResult />
+    <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
+      <SearchResult :params="queryParams" />
     </ProModal>
   </div>
 </template>
