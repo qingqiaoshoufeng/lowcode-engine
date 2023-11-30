@@ -104,7 +104,7 @@ const onCancel = () => {
 };
 
 defineOptions({
-  name: "SelectRange",
+  name: "SelectRangeTime",
 });
 </script>
 
