@@ -2,6 +2,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import dayjs from "dayjs";
 import { showToast } from "vant";
+import { dateTimeRange } from '@/utils/constants.js';
 
 const props = defineProps({
   value: {
@@ -81,6 +82,19 @@ const onConfirm = () => {
   selectVisible.value = false;
 };
 
+const handleFast = (item, key) => {
+  const start = item[0];
+  const end = item[1];
+  if (start?.valueOf() >= end?.valueOf()) {
+    showToast('开始时间不能晚于结束时间')
+    return
+  }
+  selectText.value = `${dayjs(start).format("YYYY-MM-DD HH:mm")} ~ ${dayjs(end).format("YYYY-MM-DD HH:mm")}`;
+  emit("update:value", [start, end, ""]);
+  emit("change", [start, end, ""]);
+  selectVisible.value = false;
+}
+
 const handleShow = () => {
   selectVisible.value = true;
 };
@@ -121,6 +135,25 @@ defineOptions({
           @confirm="onConfirm"
           @cancel="onCancel"
         >
+          <template #toolbar>
+            <div class="fast-toolbar">
+              <div class="fast-wrapper">
+                <div class="cancel" @click="onCancel">取消</div>
+                <div class="label">{{ placeholder }}</div>
+                <div class="confirm" @click="onConfirm">确定</div>
+              </div>
+              <div class="fast-btn">
+                <div
+                  v-for="(item, key) in dateTimeRange"
+                  :key="item"
+                  class="fast-btn-item"
+                  @click="handleFast(item, key)"
+                >
+                  {{ key }}
+                </div>
+              </div>
+            </div>
+          </template>
           <div class="wrapper-card">
             <van-date-picker
               v-model="startDate"
@@ -149,6 +182,56 @@ defineOptions({
 .select-range-time {
   display: flex;
   flex-direction: column;
+  :deep(.van-picker__toolbar) {
+    height: unset;
+  }
+  :deep(.fast-toolbar) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  :deep(.fast-wrapper) {
+    width: 100%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 16px;
+    .cancel {
+      color: #969799;
+    }
+    .confirm {
+      color: #1989fa;
+    }
+    .label {
+      width: 100%;
+      font-size: 14px;
+      text-align: center;
+      font-weight: bold;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  }
+  :deep(.fast-btn) {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    padding: 0 16px;
+    .fast-btn-item {
+      padding: 3px 8px;
+      border: 1px solid #1989fa;
+      white-space: nowrap;
+      margin-right: 10px;
+    }
+  }
+  :deep(.fast-btn::-webkit-scrollbar) {
+    display: none;
+  }
   .single-wrapper {
     // max-height: 50vh;
     overflow-y: auto;

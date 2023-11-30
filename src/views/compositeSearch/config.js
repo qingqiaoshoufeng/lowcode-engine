@@ -34,6 +34,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '警情所属队伍',
+        labelWidth: '104px',
         single: false,
         selectLeaf: false,
         headersDisabled: true,
@@ -79,16 +80,19 @@ export const useFormConfig = () => {
         value: '',
         type: 'input',
         label: '119警情编号',
+        labelWidth: '104px',
       },
       warningOrgname: { // 单位/户主/个体户名称
         value: '',
         type: 'input',
         label: '单位/户主/个体户名称',
+        labelWidth: '152px',
       },
       warningTel: { // 报警人联系方式
         value: '',
         type: 'input',
         label: '报警人联系方式',
+        labelWidth: '116px',
       },
       warningInfo: { // 警情描述
         value: '',
@@ -126,6 +130,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '警情处置情况',
+        labelWidth: '104px',
         options: 'warningDealStatus',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -181,6 +186,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '全勤指挥部出动',
+        labelWidth: '116px',
         options: isNot
       },
       fireHeadLevel: { // 指挥部层级
@@ -205,6 +211,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥部出动数',
+        labelWidth: '104px',
       },
       dealMinStart: { // 警情处置时长（分钟）
         value: ['', ''],
@@ -216,6 +223,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '火灾调查单位',
+        labelWidth: '104px',
         single: false,
         selectLeaf: false,
         headersDisabled: true,
@@ -247,6 +255,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '仅专职队出动',
+        labelWidth: '104px',
         options: isNot
       },
       isZf: { // 有政府指挥
@@ -265,6 +274,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '有其他消防救援力量',
+        labelWidth: '142px',
         options: isNot
       },
     },
@@ -274,6 +284,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '自然灾害引发',
+        labelWidth: '104px',
         options: isNot
       },
       naturalDisasterType: { // 自然灾害类型
@@ -281,6 +292,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'cascader-multiple',
         label: '自然灾害类型',
+        labelWidth: '104px',
         options: 'naturalDisasterType',
         selectLeaf: false,
       },
@@ -329,6 +341,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '现场被困人数',
+        labelWidth: '104px',
       },
       // isPublicFireHydrant: { // 是否采用公共消防栓供水
       //   value: '',
@@ -410,6 +423,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '到场时火灾情况',
+        labelWidth: '112px',
         options: 'fireSituation',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -417,22 +431,26 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '行驶距离（公里）',
+        labelWidth: '128px',
       },
       attendanceTimeStart: { // 到场时长（分钟）
         value: ['', ''],
         type: 'input-range',
         label: '到场时长（分钟）',
+        labelWidth: '128px',
       },
       speedStart: { // 到场时速（km/h）
         value: ['', ''],
         type: 'input-range',
         label: '到场时速（km/h）',
+        labelWidth: '136px',
       },
       returnLateReason: { // 到场时速异常原因
         value: undefined,
         back: false,
         type: 'select-multiple',
         label: '到场时速异常原因',
+        labelWidth: '130px',
         options: 'returnLateReason',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -440,6 +458,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '处置（执勤）时长（分钟）',
+        labelWidth: '124px',
       },
       isOtherProvince: { // 是否跨省增援
         value: '',
@@ -467,6 +486,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'select-range',
         label: '中途返回时间',
+        labelWidth: '104px',
       },
       attendanceDate: { // 到场时间
         value: undefined,
@@ -530,6 +550,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'cascader-multiple',
         label: '带队指挥员职务',
+        labelWidth: '112px',
         options: 'headPersonType',
         selectLeaf: false,
       },
@@ -550,6 +571,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否有车辆出动',
+        labelWidth: '112px',
         options: isNot
       },
       dispatchTruckInfo: { // 消防车辆信息 // TODO
@@ -578,6 +600,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '消防直升机数',
+        labelWidth: '104px',
       },
       rescueDogNumMin: { // 搜救犬数
         value: ['', ''],
@@ -684,6 +707,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '防护装备情况',
+        labelWidth: '104px',
         options: 'protectDevice',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -700,6 +724,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '受伤/致命部位',
+        labelWidth: '112px',
         options: 'injuryPart',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -707,6 +732,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否当场死亡',
+        labelWidth: '104px',
         options: isNot
       },
     },
@@ -741,11 +767,13 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '抢救财产价值（元）',
+        labelWidth: '142px',
       },
       protectNumMin: { // 保护财产价值（元）
         value: ['', ''],
         type: 'input-range',
         label: '保护财产价值（元）',
+        labelWidth: '142px',
       },
     },
     dispatchOther: {
@@ -754,17 +782,20 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '消防通道堵塞',
+        labelWidth: '104px',
         options: isNot
       },
       blockingTimeStart: { // 疏通耗时（分钟）
         value: ['', ''],
         type: 'input-range',
         label: '疏通耗时（分钟）',
+        labelWidth: '130px',
       },
       isWastageTruck: { // 是否有车辆损耗
         value: '',
         type: 'radio-is',
         label: '是否有车辆损耗',
+        labelWidth: '112px',
         options: isNot
       },
       fireProcess: { // 处置经过
@@ -785,6 +816,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '全勤指挥部级别',
+        labelWidth: '112px',
         options: 'FireHeadLvl',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -793,6 +825,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '全勤指挥部名称',
+        labelWidth: '112px',
         single: false,
         selectLeaf: false,
         headersDisabled: false,
@@ -820,6 +853,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥时长（小时）',
+        labelWidth: '130px',
       },
     },
     fireBase: {
@@ -851,6 +885,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '火灾调查单位',
+        labelWidth: '104px',
         single: false,
         selectLeaf: false,
         headersDisabled: true,
@@ -907,6 +942,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否轻微火灾',
+        labelWidth: '104px',
         options: isNot
       },
       fireSite: { // 起火位置
@@ -953,12 +989,14 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '是否属于扶贫安置房',
+        labelWidth: '142px',
         options: isNot
       },
       isChangeUseType: { // 是否变更使用性质
         value: undefined,
         type: 'radio-is',
         label: '是否变更使用性质',
+        labelWidth: '136px',
         options: isNot
       },
       useType: { // 变更后使用性质
@@ -966,6 +1004,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '变更后使用性质',
+        labelWidth: '124px',
         options: 'useType',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -973,6 +1012,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '生产安全事故',
+        labelWidth: '104px',
         options: isNot
       },
       isResearch: { // 是否正在调查
@@ -980,6 +1020,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '是否正在调查',
+        labelWidth: '104px',
         options: 'isResearch',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -987,11 +1028,13 @@ export const useFormConfig = () => {
         value: '',
         type: 'input',
         label: '失火单位/户主联系电话',
+        labelWidth: '160px',
       },
       socialCreditCode: { // 单位统一社会信用代码
         value: '',
         type: 'input',
         label: '单位统一社会信用代码',
+        labelWidth: '154px',
       },
       industry: { // 所属行业
         value: undefined,
@@ -1006,6 +1049,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '行业主管部门',
+        labelWidth: '104px',
         options: 'industryDepartment',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1022,6 +1066,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '事故牵头调查部门',
+        labelWidth: '130px',
         options: 'leadInspectionOrg',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1043,6 +1088,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否单方面火灾',
+        labelWidth: '112px',
         options: isNot
       },
       fireInspection: { // 监督检查情况
@@ -1050,6 +1096,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '监督检查情况',
+        labelWidth: '104px',
         options: 'fireInspection',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1057,6 +1104,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '引起火灾人员年龄',
+        labelWidth: '130px',
       },
       schooling: { // 受教育程度
         value: undefined,
@@ -1096,6 +1144,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否有人员伤亡',
+        labelWidth: '112px',
         options: isNot
       },
       injuryType: { // 伤亡情况
@@ -1216,6 +1265,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '受伤/害时行为',
+        labelWidth: '112px',
         options: 'injuryBehavior',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1232,6 +1282,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '身体主要症状',
+        labelWidth: '104px',
         options: 'mainSymptoms',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1240,6 +1291,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '发现尸体位置',
+        labelWidth: '104px',
         options: 'bodyLocation',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1274,12 +1326,14 @@ export const useFormConfig = () => {
       directEconomicLossMin: { // 直接经济损失（元)
         value: ['', ''],
         type: 'input-range',
-        label: '直接经济损失（元)',
+        label: '直接经济损失（元）',
+        labelWidth: '140px',
       },
       directDamageMin: { // 直接财产损失（元）
         value: ['', ''],
         type: 'input-range',
         label: '直接财产损失（元）',
+        labelWidth: '140px',
       },
       fireDisposalCostMin: { // 火灾现场处置费用（元)
         value: ['', ''],
@@ -1295,6 +1349,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '受灾户数（户）',
+        labelWidth: '124px',
       },
     },
     fireVehicle: {
@@ -1305,6 +1360,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'cascader-multiple',
         label: '交通工具类型',
+        labelWidth: '104px',
         options: 'vehicleType',
         selectLeaf: false,
       },
@@ -1313,6 +1369,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '起火时充电状态',
+        labelWidth: '112px',
         options: 'chargeState',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1403,6 +1460,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'cascader-multiple',
         label: '建筑使用用途',
+        labelWidth: '104px',
         options: 'buildUse',
         selectLeaf: false,
       },
@@ -1416,12 +1474,14 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '是否发生轰燃',
+        labelWidth: '104px',
         options: isNot
       },
       isWindowOpened: { // 失火建筑门窗在过程中是否开启
         value: undefined,
         type: 'radio-is',
         label: '失火建筑门窗在过程中是否开启',
+        labelWidth: '130px',
         options: isNot
       },
     },
@@ -1432,6 +1492,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '是否安装消防设施',
+        labelWidth: '130px',
         options: isNot
       },
       autoAlarm: { // 是否安装自动报警系统
@@ -1468,6 +1529,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'select-multiple',
         label: '应急疏散照明',
+        labelWidth: '104px',
         options: 'regulation',
       },
       networking: { // 联网情况
@@ -1486,6 +1548,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       fireSeparation: { // 防火间距
         value: undefined,
@@ -1497,6 +1560,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       escapeRoute: { // 疏散通道
         value: undefined,
@@ -1529,11 +1593,13 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '追究人数（人）',
+        labelWidth: '124px',
       },
       suggestDealNumMin: { // 建议处理人数（人）
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       firePenalty: { // 火灾处罚情况-是否立案
         value: undefined,

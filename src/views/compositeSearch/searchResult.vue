@@ -2,13 +2,10 @@
 import { ref, onMounted, nextTick, inject, watch } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
-import router from "@/router/index.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
-import SearchInfo from './searchInfo.vue'
-import { showToast, showLoadingToast, closeToast } from "vant";
+import SearchInfo from './searchInfo.vue';
 import { getSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js';
 
 const props = defineProps({
@@ -21,8 +18,6 @@ const props = defineProps({
 const searchType = inject('searchType');
 
 const searchInfo = inject('searchInfo');
-
-const store = useStore();
 
 const { show } = useModal();
 

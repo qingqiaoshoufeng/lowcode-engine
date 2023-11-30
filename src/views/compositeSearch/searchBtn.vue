@@ -158,19 +158,21 @@ onMounted(() => {
       <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
     </div>
     <div class="search-btn-wrapper">
-      <div class="search-path" @click="handlePath">
-        查询口径<van-icon name="arrow-down" />
+      <div class="round-wrapper">
+        <div class="search-path" @click="handlePath">
+          查询口径<van-icon name="arrow-down" />
+        </div>
+        <img class="collect" src="../../assets/images/icon-collect@2x.png" @click="handleCollect" />
+        <van-button
+          type="primary"
+          size="small"
+          round
+          style="width: 88px;"
+          @click="handleSearch"
+        >
+          查询
+        </van-button>
       </div>
-      <img class="collect" src="../../assets/images/icon-collect@2x.png" @click="handleCollect" />
-      <van-button
-        type="primary"
-        size="small"
-        round
-        style="width: 88px;"
-        @click="handleSearch"
-      >
-        查询
-      </van-button>
     </div>
   </div>
 </template>
@@ -281,6 +283,17 @@ onMounted(() => {
     align-items: center;
     justify-content: space-between;
     background-color: white;
+    .round-wrapper {
+      width: 100%;
+      height: 40px;
+      padding: 0 10px 0 18px;
+      background: #F6F8FC;
+      border-radius: 25px;
+      border: 1px solid #F6F8FC;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     .search-path {
       i {
         margin-left: 6px;

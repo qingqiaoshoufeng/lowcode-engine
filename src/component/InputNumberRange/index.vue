@@ -63,20 +63,25 @@ defineOptions({
 
 <template>
   <div class="input-number-range">
-    <span class="range-label">{{ label }}</span>
-    <van-field
-      v-model="rangeValue[0]"
-      :placeholder="placeholder[0]"
-      type="number"
-      @change="onMinChange"
-    />
-    <span>~</span>
-    <van-field
-      v-model="rangeValue[1]"
-      :placeholder="placeholder[1]"
-      type="number"
-      @change="onMaxChange"
-    />
+    <van-field :label="`${label}`" v-bind="$attrs">
+      <template #input>
+        <div class="inner-input">
+          <van-field
+            v-model="rangeValue[0]"
+            :placeholder="placeholder[0]"
+            type="number"
+            @change="onMinChange"
+          />
+          <span>~</span>
+          <van-field
+            v-model="rangeValue[1]"
+            :placeholder="placeholder[1]"
+            type="number"
+            @change="onMaxChange"
+          />
+        </div>
+      </template>
+    </van-field>
   </div>
 </template>
 
@@ -85,9 +90,15 @@ defineOptions({
   display: flex;
   align-items: center;
   background-color: white;
-  padding: 0px 10px;
-  .range-label {
-    min-width: 100px;
+  .inner-input {
+    display: flex;
+    align-items: center;
+    :deep(.van-cell) {
+      padding: 0px 0px !important;
+    }
+    :deep(.van-cell::after) {
+      border: none !important;
+    }
   }
 }
 </style>

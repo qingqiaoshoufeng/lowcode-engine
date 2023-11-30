@@ -301,11 +301,11 @@ const onSideBarChange = (e, k) => {
               <img src="@/assets/images/icon_title@2x.png" alt="" />
               {{ temp.title }}
             </div>
-            <div v-for="(i, j) in temp?.children" :key="j">
+            <template v-for="(i, j) in temp?.children" :key="j">
               <template v-if="(typeof i === 'object')">
                 <FormItem :fieldObj="i" />
               </template>
-            </div>
+            </template>
           </div>
         </div>
       </van-form>
@@ -360,7 +360,7 @@ const onSideBarChange = (e, k) => {
       padding: 6px 6px;
       background-color: white;
       margin-top: 10px;
-      padding-left: 16px;
+      padding-left: 10px;
       img {
         width: 14px;
         height: 18px;

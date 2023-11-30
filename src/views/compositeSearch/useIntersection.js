@@ -3,7 +3,7 @@ import { throttle } from 'lodash';
 
 export const useIntersection = (classNames, wrapper = '.form-right', offset = 100) => {
 
-  const sideBarActive = ref(0)
+  const sideBarActive = ref(1)
 
   const callback = () => {
     let visibleIndex = 0;

@@ -28,12 +28,18 @@ const options = inject('options');
         :options="options[fieldObj.options]"
         :field-names="fieldObj.fieldNames ? fieldObj.fieldNames : { value: 'value', label: 'label' }"
         :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
         :title="`请选择${fieldObj.label}`"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'radio-is'">
-      <van-field :label="`${fieldObj.label}：`" :placeholder="`请选择${fieldObj.label}`" class="field-radio item-is-radio">
+      <van-field
+        :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
+        :placeholder="`请选择${fieldObj.label}`"
+        class="field-radio item-is-radio"
+      >
         <template #input>
           <van-radio-group
             v-model="fieldObj.value"
@@ -51,6 +57,7 @@ const options = inject('options');
       <van-field
         v-model="fieldObj.value"
         :label="`${fieldObj?.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请输入${fieldObj?.label}`"
       />
     </template>
@@ -58,6 +65,7 @@ const options = inject('options');
       <InputNumberRange
         v-model:value="fieldObj.value"
         :label="`${fieldObj?.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="fieldObj?.placeholder"
       />
     </template>
@@ -67,6 +75,7 @@ const options = inject('options');
         :readonly="true"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :label="`${fieldObj?.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj?.label}`"
         :title="`请选择${fieldObj?.label}`"
         :single="fieldObj.single"
@@ -82,6 +91,7 @@ const options = inject('options');
         :options="options[fieldObj.options]"
         :field-names="fieldObj.fieldNames ? fieldObj.fieldNames : { value: 'boDictId', label: 'dictName' }"
         :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :select-leaf="fieldObj.selectLeaf"
         :placeholder="`请选择${fieldObj.label}`"
         :title="`请选择${fieldObj.label}`"
@@ -92,6 +102,7 @@ const options = inject('options');
         v-model:value="fieldObj.value"
         :readonly="true"
         :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
       />
     </template>
@@ -100,11 +111,16 @@ const options = inject('options');
         v-model:value="fieldObj.value"
         :readonly="true"
         :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'checkbox'">
-      <van-field :label="`${fieldObj.label}：`" :placeholder="`请选择${fieldObj.label}`">
+      <van-field
+        :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
+        :placeholder="`请选择${fieldObj.label}`"
+      >
         <template #input>
           <van-checkbox-group v-model="fieldObj.value" direction="horizontal">
             <van-checkbox
@@ -124,6 +140,7 @@ const options = inject('options');
 
 <style lang="scss" scoped>
 .search-form-item {
+  position: relative;
   :deep(.van-cell) {
     padding: 10px 10px;
   }
@@ -141,5 +158,13 @@ const options = inject('options');
       margin-left: 0px !important;
     }
   }
+}
+.search-form-item::after {
+  content: '';
+  width: calc(100% - 10px);
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  border: 1px solid #F6F6F6;
 }
 </style>
