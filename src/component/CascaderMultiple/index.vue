@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
+import { findNodeFromTreeById, findParentNodes, traverseTree, treeToArray } from '@/utils/tools.js';
 
 const props = defineProps({
   value: {
-    type: [String, Array],
+    type: Array,
     default: "",
   },
   text: {
-    type: [String, Array],
+    type: Array,
     default: "",
   },
   required: {
@@ -80,31 +81,65 @@ const selectItem = ref([]);
 const selectText = ref([]);
 
 const selectTextValue = computed(() => {
-  return selectText.value?.join(",");
+  return selectText.value?.map(item => item?.join('/'))?.join(",");
 })
 
 watch(() => props.value, (newVal, oldVal) => {
-  nextTick(() => {
-    if (props.value) {
-    //   selectItem.value = props.value
-    //   selectValue.value = props.value
-    //   selectText.value = props.value
-    } else {
-      selectItem.value = [];
-      selectValue.value = [];
-      selectText.value = [];
-    }
-  })
+  if (props.value?.length > 0) {
+    // 构造二维数组
+    selectItem.value = props.value?.map(item => {
+      const items = item?.map(i => {
+        const temp = findNodeFromTreeById({ boDictId: '-1', dictName: '-1', children: props.options }, i, 'boDictId')
+        return { ...temp, key: temp.boDictId, title: temp.dictName }
+      })
+      return items
+    })
+    selectValue.value = props.value
+    // 构造二维数组
+    selectText.value = props.value?.map(item => {
+      const items = item?.map(i => {
+        const temp = findNodeFromTreeById({ boDictId: '-1', dictName: '-1', children: props.options }, i, 'boDictId')
+        return temp?.dictName
+      })
+      return items
+    })
+  } else {
+    selectItem.value = [];
+    selectValue.value = [];
+    selectText.value = [];
+  }
 }, { immediate: true })
 
-const renderChecked = (item) => {
-  return selectValue.value?.indexOf(item.key) > -1; // TODO
-}
-
 const getItem = (item) => {
+  let isIn = false;
+  if (selectValue.value?.length > 0) {
+    // const nodes = findParentNodes({ boDictId: -1, children: props.options }, item?.boDictId)?.filter(i => i.boDictId !== -1)
+    selectValue.value.forEach(temp => {
+      if (temp?.join(',')?.endsWith(item.boDictId)) {
+        isIn = true;
+      }
+      // nodes?.forEach(node => {
+      //   if (temp?.join(',')?.endsWith(node.boDictId)) {
+      //     isIn = true;
+      //   }
+      // })
+    })
+  } else if (props.value?.length > 0) {
+    // const nodes = findParentNodes({ boDictId: -1, children: props.options }, item?.boDictId)?.filter(i => i.boDictId !== -1)
+    props.value.forEach(temp => {
+      if (temp?.join(',')?.endsWith(item.boDictId)) {
+        isIn = true;
+      }
+      // nodes?.forEach(node => {
+      //   if (temp?.join(',')?.endsWith(node.boDictId)) {
+      //     isIn = true;
+      //   }
+      // })
+    })
+  }
   return {
     ...item,
-    checked: renderChecked(item),
+    checked: isIn,
     title: item[props.fieldNames.label],
     key: item[props.fieldNames.value],
   };
@@ -136,29 +171,87 @@ const handleCancel = () => {
 };
 
 const handleOk = () => {
-  emit("update:value", selectItem.value);
+  emit("update:value", selectValue.value);
   emit("update:text", selectText.value);
   emit("change", selectValue.value, selectItem.value, selectText.value);
   selectVisible.value = false;
 };
 
+const getAllChildren = (treeData, nodeId) => {
+  let children = []
+  for (const node of treeData) {
+    if (node.boDictId === nodeId && node.children) {
+      // 如果找到了目标节点，返回它的子节点数组
+      children = node.children
+      break
+    }
+    else if (node.children) {
+      // 否则继续在子节点中递归查找
+      children = children.concat(getAllChildren(node.children, nodeId))
+    }
+  }
+
+  return children?.length > 0 ? treeToArray(children) : []
+}
+
 const handleCheck = (item) => {
-//   if (props.single && item.checked) {
-//   }
+  // 单选
+  // if (props.single && item.checked) {
+  // }
+  // 多选
   if (item.checked) {
-    selectValue.value.push(item.key);
-    selectText.value.push(item.title);
-    selectItem.value.push(item);
+    const nodes = findParentNodes({ boDictId: -1, children: props.options }, item.boDictId)?.filter(i => i.boDictId !== -1)
+    let total = [];
+    if (nodes?.length > 0) {
+      total = [...nodes, item];
+    } else {
+      total = [item];
+    }
+    selectItem.value.push(total);
+    selectValue.value.push(total?.map(i => i.boDictId));
+    selectText.value.push(total?.map(i => i.dictName));
   } else {
-    selectValue.value = selectValue.value.filter((temp) => temp !== item.key); // TODO
-    selectText.value = selectText.value.filter((temp) => temp !== item.title); // TODO
-    selectItem.value = selectItem.value.filter((temp) => temp.key !== item.key); // TODO
+    selectValue.value = selectValue.value.filter((temp) => {
+      if (temp?.join(',')?.endsWith(item.boDictId)) {
+        return false;
+      }
+      return true;
+    });
+    selectText.value = selectText.value.filter((temp) => {
+      if (temp?.join(',')?.endsWith(item.dictName)) {
+        return false;
+      }
+      return true
+    });
+    selectItem.value = selectItem.value.filter((temp) => {
+      if (temp?.map(i => i.boDictId)?.join(',')?.endsWith(item.boDictId)) {
+        return false;
+      }
+      return true;
+    });
+  }
+  if (item.checked && item.hasChildren) {
+    const child = getAllChildren(props.options, item.boDictId)
+    child?.forEach(temp => {
+      const nodes = findParentNodes({ boDictId: -1, children: props.options }, temp.boDictId)?.filter(i => i.boDictId !== -1)
+      let total = [];
+      if (nodes?.length > 0) {
+        total = [...nodes, temp];
+      } else {
+        total = [temp];
+      }
+      if (!selectValue.value?.map(i => i.boDictId)?.includes(total?.map(i => i.boDictId))) {
+        selectItem.value.push(total);
+        selectValue.value.push(total?.map(i => i.boDictId));
+        selectText.value.push(total?.map(i => i.dictName));
+      }
+    })
   }
 };
 
 const handleEnter = (item) => {
   if (item.hasChildren) {
-    const currentIndex = tabs.value.findIndex((node) => node.key === item.key);
+    const currentIndex = tabs.value.findIndex((node) => node.dictLvl === item.dictLvl);
     if (currentIndex > -1) {
       treeData.value = treeData.value.slice(0, currentIndex + 1);
       tabs.value = tabs.value.slice(0, currentIndex);
@@ -177,16 +270,14 @@ const handleEnter = (item) => {
 
 const handleDelete = (item) => {
   // 已经选中的要重置
-  treeData.value.forEach(arr => {
-    arr.forEach(i => {
-      if (i.key === item.key) {
-        i.checked = false
-      }
-    })
-  })
-  selectValue.value = selectValue.value.filter((temp) => temp !== item.key); // TODO
-  selectText.value = selectText.value.filter((temp) => temp !== item.title); // TODO
-  selectItem.value = selectItem.value.filter((temp) => temp.key !== item.key); // TODO
+  selectValue.value = selectValue.value.filter((temp) => temp?.join(',') !== item?.map(i => i.boDictId)?.join(','));
+  selectText.value = selectText.value.filter((temp) => temp?.join(',') !== item?.map(i => i.dictName)?.join(','));
+  selectItem.value = selectItem.value.filter((temp) => {
+    if (temp?.map(i => i.boDictId)?.join(',') !== item?.map(i => i.boDictId)?.join(',')) {
+      return true
+    }
+    return false
+  });
 }
 
 defineOptions({
@@ -235,7 +326,7 @@ defineOptions({
             type="primary"
             @close="handleDelete(item)"
           >
-            {{ item.title }}
+            {{ item?.map(temp => (temp.title || temp.dictName))?.join('/') }}
           </van-tag>
         </div>
         <div class="content-tabs">

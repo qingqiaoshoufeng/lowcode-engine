@@ -223,6 +223,7 @@ defineOptions({
     display: flex;
     padding: 0 16px;
     .fast-btn-item {
+      color: #1989fa;
       padding: 3px 8px;
       border: 1px solid #1989fa;
       white-space: nowrap;

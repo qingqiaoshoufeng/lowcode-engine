@@ -574,9 +574,12 @@ export const useFormConfig = () => {
         labelWidth: '112px',
         options: isNot
       },
-      dispatchTruckInfo: { // 消防车辆信息 // TODO
+      dispatchTruckInfo: { // 消防车辆信息
         value: undefined,
         back: false,
+        type: 'select-car',
+        label: '消防车辆信息',
+        labelWidth: '104px',
       },
       truckType: { // 车辆类型
         value: undefined,
@@ -840,9 +843,12 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '指挥人数',
       },
-      headCarName: { // 指挥车辆名称 // TODO
+      headCarName: { // 指挥车辆名称
         value: undefined,
         back: false,
+        type: 'select-car',
+        label: '指挥车辆名称',
+        labelWidth: '104px',
       },
       headCarNumMin: { // 指挥车辆数
         value: ['', ''],
