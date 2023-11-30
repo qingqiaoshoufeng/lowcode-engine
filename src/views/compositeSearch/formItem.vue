@@ -6,6 +6,7 @@ import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 import SelectOrg from "@/component/SelectOrg/index";
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import SelectCar from '@/component/SelectCar/index.vue';
+import SelectPerson from '@/component/SelectPerson/index.vue';
 import AreaCascader from "@/component/AreaCascader/index";
 
 const props = defineProps({
@@ -109,6 +110,15 @@ const options = inject('options');
     </template>
     <template v-else-if="fieldObj?.type === 'select-car'">
       <SelectCar
+        v-model:value="fieldObj.value"
+        :readonly="true"
+        :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
+        :placeholder="`请选择${fieldObj.label}`"
+      />
+    </template>
+    <template v-else-if="fieldObj?.type === 'select-person'">
+      <SelectPerson
         v-model:value="fieldObj.value"
         :readonly="true"
         :label="`${fieldObj.label}：`"

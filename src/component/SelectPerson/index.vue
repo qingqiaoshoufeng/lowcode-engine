@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch, computed, useAttrs, nextTick } from "vue";
-import { getCarList } from "@/apis/index.js";
+import { getPersonList } from "@/apis/index.js";
 
 const props = defineProps({
   value: {
@@ -45,7 +45,7 @@ watch(() => props.value, (val) => {
   nextTick(() => {
     if (props.value) {
       selectValue.value = props.value;
-      selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+      selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
     } else {
       selectValue.value = [];
       selectText.value = "";
@@ -54,24 +54,24 @@ watch(() => props.value, (val) => {
 }, { immediate: true });
 
 const checkSelect = (item) => {
-  return selectValue.value?.map(item => item.boFireTruckId).includes(item.boFireTruckId)
+  return selectValue.value?.map(item => item.boFireUserId).includes(item.boFireUserId)
 }
 
 const handleItem = (item) => {
-  const filter = selectValue.value?.filter((it) => it.boFireTruckId === item.boFireTruckId);
+  const filter = selectValue.value?.filter((it) => it.boFireUserId === item.boFireUserId);
   if (filter?.length <= 0) {
     selectValue.value.push(item);
   } else {
-    selectValue.value = selectValue.value?.filter((it) => it.boFireTruckId !== item.boFireTruckId);
+    selectValue.value = selectValue.value?.filter((it) => it.boFireUserId !== item.boFireUserId);
   }
-  selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+  selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, item);
 };
 
 const handleDelete = (item) => {
-  selectValue.value = selectValue.value?.filter((it) => it.boFireTruckId !== item.boFireTruckId);
-  selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+  selectValue.value = selectValue.value?.filter((it) => it.boFireUserId !== item.boFireUserId);
+  selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, selectText.value);
 };
@@ -88,8 +88,8 @@ const handleShow = () => {
   }
   selectVisible.value = true;
   nextTick(() => {
+    proListRef.value.query.overQueryFlag = '1'
     proListRef.value.query.status = '1'
-    proListRef.value.query.queryLoanFlag = '1'
     if (proListRef.value.list?.length <= 0) {
       proListRef.value.filter();
     }
@@ -101,13 +101,13 @@ const handleCancel = () => {
 };
 
 defineOptions({
-  name: "SelectCar",
+  name: "SelectPerson",
 });
 </script>
 
 <template>
   <van-field
-    class="select-car-field"
+    class="select-person-field"
     :class="{
       'van-field--disabled': $attrs.disabled,
     }"
@@ -127,7 +127,7 @@ defineOptions({
     </template>
   </van-field>
   <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
-    <div class="select-car">
+    <div class="select-person">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">
           取消
@@ -141,28 +141,28 @@ defineOptions({
         <div class="content-selects">
           <van-tag
             v-for="item in selectValue"
-            :key="item.boFireTruckId"
+            :key="item.boFireUserId"
             closeable
             plain
             size="medium"
             type="primary"
             @close="handleDelete(item)"
           >
-            {{ item.truckCode }}
+            {{ item.userName }}
           </van-tag>
         </div>
         <ProList
           ref="proListRef"
-          title="车辆列表"
-          :getListFn="getCarList"
-          rowKey="boFireTruckId"
+          title="人员列表"
+          :getListFn="getPersonList"
+          rowKey="boFireUserId"
           :showLoad="false"
           :showBack="false"
         >
           <template #list="{ record }">
             <div class="pro-list-item" @click="handleItem(record)">
-              <div class="car-item">
-                <div class="code">{{ record.truckCode }}</div>
+              <div class="person-item">
+                <div class="code">{{ record.userName }}</div>
                 <div class="org">{{ record.organizationName }}</div>
                 <van-icon v-if="checkSelect(record)" name="success" class="icon" />
               </div>
@@ -178,7 +178,7 @@ defineOptions({
 .van-field--disabled {
   pointer-events: none;
 }
-.select-car {
+.select-person {
   height: 62vh;
   display: flex;
   flex-direction: column;
@@ -223,7 +223,7 @@ defineOptions({
     }
   }
   :deep(.pro-list-item) {
-    .car-item {
+    .person-item {
       display: flex;
       align-items: center;
       position: relative;
@@ -244,7 +244,7 @@ defineOptions({
         color: green;
       }
     }
-    .car-item::after {
+    .person-item::after {
       content: "";
       width: 100%;
       height: 1px;

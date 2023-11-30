@@ -554,13 +554,19 @@ export const useFormConfig = () => {
         options: 'headPersonType',
         selectLeaf: false,
       },
-      groupLeader: { // 带队指挥员 // TODO
+      groupLeader: { // 带队指挥员
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '带队指挥员',
+        labelWidth: '100px',
       },
-      fireUserIds: { // 指战员姓名 // TODO
+      fireUserIds: { // 指战员姓名
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '指战员姓名',
+        labelWidth: '100px',
       },
       firemenNumMin: { // 消防员人数
         value: ['', ''],
@@ -834,9 +840,12 @@ export const useFormConfig = () => {
         headersDisabled: false,
         params: {}
       },
-      groupLeader: { // 指挥人员姓名 // TODO
+      groupLeader: { // 指挥人员姓名
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '指挥人员姓名',
+        labelWidth: '104px',
       },
       commanderNumMin: { // 指挥人数
         value: ['', ''],
