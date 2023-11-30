@@ -1,22 +1,46 @@
 <script setup>
 import { computed, inject, onMounted, provide, ref } from "vue";
 import dayjs from "dayjs";
+import { generateColorByState } from '@/utils/tools.js'
 
 const props = defineProps({
   data: {
     type: Array,
     default: () => [],
   },
+  withHeader:{
+    default:true,
+    type:Boolean
+  },
+  detail: {
+    type: Object,
+    default: () => ({}),
+  },
 });
+
+const renderState = (item) => {
+  if (['警情确认', '出动审核', '火灾审核'].includes(item.transferType) && item.advice?.indexOf('退回') > -1) {
+    return true
+  }
+  if (['警情驳回', '出动驳回', '火灾驳回'].includes(item.transferType)) {
+    return true
+  }
+  return false
+}
 
 defineOptions({
   name: "ProSteps",
 });
 </script>
+<script>
+export default {
+  name: "ProSteps"
+}
+</script>
 
 <template>
   <div id="proSteps" class="pro-steps">
-    <div id="proSteps-title" class="steps-header">
+    <div id="proSteps-title" v-if="withHeader" class="steps-header">
       <img src="@/assets/images/icon_title@2x.png" alt="" />
       <strong>操作记录</strong>
     </div>
@@ -25,7 +49,8 @@ defineOptions({
         {{ item.transferType }}
       </div>
       <div class="steps-box">
-        <div class="steps-icon" />
+        <div v-if="renderState(item)" class="steps-icon-red" />
+        <div v-else class="steps-icon" />
         <div v-if="index < data.length - 1" class="steps-line" />
       </div>
       <div class="steps-content">
@@ -33,8 +58,31 @@ defineOptions({
           {{ item.createOrg }}
         </div>
         <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
-        <div v-if="item.advice">审批意见：{{ item.advice }}</div>
-        <div v-if="item.remark">备注：{{ item.remark }}</div>
+        <div v-if="item.advice">审核结果：{{ item.advice }}</div>
+        <div v-if="item.remark">审核意见：{{ item.remark }}</div>
+      </div>
+    </div>
+    <div class="steps-next">
+      <div v-if="detail?.warningStatusValue" class="steps-next-current">
+        当前状态：
+        <span :class="generateColorByState(detail?.warningStatusValue)">
+          {{ detail?.warningStatusValue }}
+        </span>
+      </div>
+      <div v-if="detail?.fireDispatch?.dispatchStatusValue" class="steps-next-current">
+        当前状态：
+        <span :class="generateColorByState(detail?.fireDispatch?.dispatchStatusValue)">
+          {{ detail?.fireDispatch?.dispatchStatusValue }}
+        </span>
+      </div>
+      <div v-if="detail?.fireInfo?.fireStatusValue" class="steps-next-current">
+        当前状态：
+        <span :class="generateColorByState(detail?.fireInfo?.fireStatusValue)">
+          {{ detail?.fireInfo?.fireStatusValue }}
+        </span>
+      </div>
+      <div v-if="detail?.nextDealOrg" class="steps-next-org">
+        下个处理单位：{{ detail?.nextDealOrg }}
       </div>
     </div>
   </div>
@@ -89,6 +137,15 @@ defineOptions({
       border-radius: 100%;
       margin-bottom: 6px;
     }
+    .steps-icon-red {
+      width: 12px;
+      height: 12px;
+      background: #f8d8d8;
+      box-shadow: 0px 0px 4px 0px rgba(255, 103, 103, 0.5);
+      border: 1px solid #FF4D16;
+      border-radius: 100%;
+      margin-bottom: 6px;
+    }
     .steps-line {
       width: 1px;
       min-height: 70px;
@@ -113,6 +170,14 @@ defineOptions({
         color: #7989a1;
       }
     }
+  }
+}
+.steps-next {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0 0;
+  &-current {
+    margin-bottom: 10px;
   }
 }
 </style>

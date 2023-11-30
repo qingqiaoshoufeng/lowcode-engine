@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, computed, useAttrs } from "vue";
 import { cloneDeep } from "lodash-es";
 import { getSystemArea } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from 'vant';
@@ -26,6 +26,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  readonly: {
+    type: Boolean,
+    default: true,
+  },
   rules: {
     type: Array,
     default: () => [],
@@ -33,6 +37,10 @@ const props = defineProps({
   showPreview: {
     type: Boolean,
     default: false,
+  },
+  previewText: {
+    type: String,
+    default: '',
   },
   showAllArea: {
     type: Boolean,
@@ -56,13 +64,15 @@ const emit = defineEmits(["update:value", "change"]);
 
 const areaOptions = ref([]);
 
-const areaCascaderValue = ref('')
+const areaCascaderValue = ref('');
 
 const areaValue = ref([]);
 
-const areaText = ref("")
+const areaText = ref("");
 
 const selectVisible = ref(false);
+
+const attrs = useAttrs();
 
 watch(() => props.value, (newValue) => {
   if (newValue?.length > 0) {
@@ -86,28 +96,26 @@ const returnChild = (item) => {
   return item.hasChild ? [] : undefined
 }
 
-watch(
-  () => props.reportName,
-  () => {
-    getSystemArea({
-      reportName: props.reportName,
-      showAllArea: props.showAllArea,
-      ...props.params,
-    }).then((res) => {
-      if (res) {
-        areaOptions.value = res.map((item) => {
-          return {
-            ...item,
-            isLeaf: returnLeaf(item),
-          };
-        });
-      }
-    });
-  }
+watch(() => props.reportName, () => {
+  getSystemArea({
+    reportName: props.reportName,
+    showAllArea: props.showAllArea,
+    ...props.params,
+  }).then((res) => {
+    if (res) {
+      areaOptions.value = res.map((item) => {
+        return {
+          ...item,
+          isLeaf: returnLeaf(item),
+        };
+      });
+    }
+  });
+}
 );
 
 onMounted(() => {
-  if (props.value?.length > 1) {
+  if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
     Promise.all([
       getSystemArea({
         reportName: props.reportName,
@@ -168,6 +176,8 @@ onMounted(() => {
         return temp?.areaName
       })?.join('/')
     });
+  } else if (props.showPreview && props.previewText) {
+    areaText.value = props.previewText
   } else {
     getSystemArea({
       reportName: props.reportName,
@@ -188,6 +198,9 @@ onMounted(() => {
 });
 
 const onChange = ({value, selectedOptions, tabIndex}) => {
+  if (selectedOptions?.length > 1 && !selectedOptions[selectedOptions.length - 1].hasChild) {
+    return
+  }
   const targetOption = selectedOptions[tabIndex];
   showLoadingToast()
   getSystemArea({
@@ -217,6 +230,13 @@ const onFinish = ({ selectedOptions }) => {
   emit("change", areaValue.value, selectedOptions);
 };
 
+const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
+  selectVisible.value = true;
+};
+
 defineOptions({
   name: "AreaCascader",
 });
@@ -228,17 +248,40 @@ export default {
 </script>
 
 <template>
-  <van-field
-    v-model="areaText"
-    v-preview-text="showPreview"
-    is-link
-    v-bind="$attrs"
-    :required="required"
-    :label="label"
-    :placeholder="placeholder"
-    :rules="rules"
-    @click="selectVisible = true"
-  />
+  <template v-if="showPreview && previewText">
+    <van-field
+      v-model="areaText"
+      v-preview-text="showPreview"
+      is-link
+      v-bind="$attrs"
+      :required="required"
+      :readonly="readonly"
+      :label="label"
+      :placeholder="placeholder"
+      :rules="rules"
+    >
+    </van-field>
+  </template>
+  <template v-else>
+    <van-field
+      v-model="areaText"
+      v-preview-text="showPreview"
+      is-link
+      v-bind="$attrs"
+      :required="required"
+      :readonly="readonly"
+      :label="label"
+      :placeholder="placeholder"
+      :rules="rules"
+      @click="handleShow"
+    >
+      <template v-slot:label="" v-if="label">
+        <slot name="label">
+          <div class="field-annotation">{{ label }}</div>
+        </slot>
+      </template>
+    </van-field>
+  </template>
   <!-- 弹窗 -->
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">

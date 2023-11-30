@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, computed, useAttrs, nextTick } from "vue";
 
 const props = defineProps({
   value: {
@@ -46,11 +46,21 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const selectValue = ref("");
 
 const selectText = ref("");
+
+const isRequired = computed(()=>{
+  if (props.required) {
+    return true
+  } else {
+    return props.rules?.some(item=>item.required)
+  }
+})
 
 watch(() => [props.value, props.options], (val) => {
   nextTick(() => {
@@ -83,21 +93,15 @@ const handleShow = () => {
   if (props.checkShowFn && props.checkShowFn()) {
     return;
   }
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
   selectVisible.value = true;
 };
 
 const handleCancel = () => {
   selectVisible.value = false;
 };
-
-const isRequired = ()=>{
-  if(props.required){
-    return true
-  }else{
-    return props.rules.some(item=>item.required)
-  }
-  return false
-}
 
 defineOptions({
   name: "SelectSingle",
@@ -106,6 +110,10 @@ defineOptions({
 
 <template>
   <van-field
+    class="select_single"
+    :class="{
+      'van-field--disabled':$attrs.disabled
+    }"
     v-model="selectText"
     v-preview-text="showPreview"
     is-link
@@ -115,8 +123,14 @@ defineOptions({
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
-  />
-  <van-popup v-model:show="selectVisible" position="bottom">
+  >
+  <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
+  <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="select-single">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">
@@ -152,9 +166,13 @@ defineOptions({
 </template>
 
 <style lang="scss" scoped>
+.van-field--disabled{
+  pointer-events: none;
+}
 .select-single {
   display: flex;
   flex-direction: column;
+
   .header {
     width: 100%;
     height: 44px;

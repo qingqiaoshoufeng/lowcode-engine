@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
 import { getDispatchGroup } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
 
@@ -68,6 +68,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const tabs = ref([{ name: "请选择", organizationid: 0 }]);
@@ -133,7 +135,6 @@ const getItem = (item) => {
 };
 
 const showCheck = (item) => {
-  let result = false;
   if (props.selectLeaf) {
     return item.isLeaf;
   }
@@ -145,7 +146,7 @@ const showCheck = (item) => {
   if (!props.single) {
     return true
   }
-  return result;
+  return true;
 };
 
 onMounted(() => {
@@ -159,6 +160,9 @@ onMounted(() => {
 });
 
 const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
   selectVisible.value = true;
 };
 
@@ -267,7 +271,13 @@ export default {
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
-  />
+  >
+  <template v-slot:label="" v-if="label">
+    <slot name="label">
+      <div class="field-annotation">{{ label }}</div>
+    </slot>
+  </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="select-org">
       <div class="header">
@@ -275,9 +285,9 @@ export default {
           取消
         </van-button>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" @click="handleOk"
-          >确定</van-button
-        >
+        <van-button type="primary" size="small" @click="handleOk">
+          确定
+        </van-button>
       </div>
       <div class="content-wrapper">
         <div class="content-selects">
@@ -313,7 +323,10 @@ export default {
                     v-if="showCheck(item)"
                     v-model="item.checked"
                     @change="handleCheck(item)"
+                    @click.stop
                   />
+                  <van-icon v-if="item.hasChildren" name="arrow" class="icon-arrow" />
+                  <van-icon v-else name="arrow" class="icon-arrow" style="color: white;" />
                 </div>
               </div>
             </van-tab>
@@ -365,6 +378,9 @@ export default {
         padding: 0 12px;
         .item-title {
           flex: 1;
+        }
+        .icon-arrow {
+          margin-left: 6px;
         }
         .item-success {
           background-color: white;

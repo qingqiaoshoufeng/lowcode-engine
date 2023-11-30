@@ -6,6 +6,10 @@ import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isDetail = inject("isDetail");
 
 const showPreview = inject("showPreview");
@@ -28,7 +32,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: "done",
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });
@@ -38,8 +42,8 @@ onMounted(() => {
 const onAfterRead = (file) => {
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
-  formData.append('attachmentType', 'image')
-  formData.append('extend2', '照片')
+  formData.append('attachmentType', 'file')
+  formData.append('extend2', '其他附件')
   formData.append('file', file.file)
   return uploadFile(formData).then(res => {
     if (res?.attachmentId) {
@@ -96,6 +100,15 @@ const onDelete = (file) => {
               上传文件
             </van-button>
           </van-uploader>
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="相关附件上传："
+              remark-field="attach"
+              field-module="otherAttach"
+              :exist-data="fieldExist?.attach"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
       </div>
     </van-cell-group>

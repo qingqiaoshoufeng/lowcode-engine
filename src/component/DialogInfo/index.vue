@@ -1,13 +1,13 @@
 <template>
-<van-dialog v-bind="$attrs" :show="visible" :title="title" show-cancel-button @confirm="setHandleOk" @cancel="cancel">
+<van-dialog class="dialog—info" v-bind="$attrs" :show="visible" :title="title" @confirm.stop="confirm" @cancel.stop="cancel">
   <template v-slot:title>
     <div class="header">
       <div class="title">{{title }}</div>
-      <div class="cha">×</div>
+      <div class="cha" @click.stop="close">×</div>
     </div>
   </template>
-  <div>
-    <slot :setHandleOk="setHandleOk" />
+  <div class="content">
+    <slot v-if="visible" :setHandleOk="setHandleOk" />
   </div>
 </van-dialog>
 </template>
@@ -24,16 +24,19 @@ const props = defineProps({
     default:'标题'
   }
 })
-// const beforeConfirm = (val)=>{
+let beforeConfirm = (val)=>{
   
-// }
-// const setHandleOk = (fn)=>{
-//   beforeConfirm = fn
-// }
-
-// const confirm = ()=>{
-//   beforeConfirm()
-// }
+}
+const setHandleOk = (fn)=>{
+  beforeConfirm = fn
+}
+const close = ()=>{
+  emit('update:visible',false)
+}
+const confirm = async()=>{
+  beforeConfirm(close)
+  // emit('update:visible',false)
+}
 const emit = defineEmits(['update:visible'])
 const cancel = ()=>{
   emit('update:visible',false)
@@ -51,7 +54,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 19px;
-
+  padding-bottom: 5px;
   .title{
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -64,5 +67,14 @@ export default {
     color:#C8C9CC;
 
   }
+}
+.dialog—info{
+  :deep(.van-dialog__header){
+    padding-top: 13px !important;
+  }
+}
+.content{
+    padding-left: 19px !important;
+    padding-right: 19px !important;
 }
 </style>

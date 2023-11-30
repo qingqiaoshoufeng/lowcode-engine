@@ -1,12 +1,13 @@
 <script setup>
 import { computed, inject, nextTick, onMounted, provide, ref, watch } from 'vue'
 import store from '@/store/index.js'
+import ProCard from "@/component/ProCard/index.vue";
 console.log(store,'store'); 
 // import { message, notification } from '@castle/ant-design-vue'
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import { useAsyncQueue } from '@vueuse/core'
-// import FireInfo from '../dispatch-report/components/_fire-info.vue'
+import FireInfo from '@/views/dispatchReportForm/components/fireInfo.vue'
 import BaseInfo from './base-info.vue'
 import CasualtyWar from './casualty-war.vue'
 import EconomicLoss from './economic-loss.vue'
@@ -19,7 +20,7 @@ import FirePhoto from './fire-photo.vue'
 import OtherAttach from './other-attach.vue'
 import BriefSituation from './fireInfoTransferList_brief-situation.vue'
 import { useFormConfig } from '../config/form-config.js'
-// import ProcessReview from '@/components/process-review/index.vue'
+import ProcessReview from '@/component/ProcessReview/index.vue'
 import { exportPdf } from '@/utils/export-pdf.js'
 import { useOptions } from '@/hooks/useOptions.js'
 // import { useSystemDict } from '@/store/index.js'
@@ -42,6 +43,7 @@ import {
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
 import { value } from 'lodash-es';
+import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const props = defineProps({
@@ -103,8 +105,13 @@ const props = defineProps({
   setHandleExtend: {
     type: Function,
   },
+  isReview:{
+    type: Boolean,
+    default: false,
+  }
 })
 
+const formRef = ref(null)
 const emits = defineEmits(['finishCallback'])
 const isShowTemporary = inject('isShowTemporary')
 // const bus = inject('bus')
@@ -119,13 +126,13 @@ const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
-const { form, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig()
+const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(formRef)
 
+
+provide('isRequired',isRequired)
 const showPreview = ref(null)
 
 const importantEdit = ref(true) // 重要信息更正
-
-const formRef = ref(null)
 
 const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
@@ -186,7 +193,6 @@ const checkArray = (arr, text) => {
   })
   return result
 }
-
 const showFireSite = computed(() => {
   const { fireType, firePlace, vehicleType } = form.value.basicInfo
   if (fireType?.text?.includes('建构筑物火灾') && checkArray(firePlace?.text, ['标志性/点缀性建筑', '废弃建筑', '发电储能场所', '城市地下综合管廊', '其他建构筑物'])) {
@@ -199,6 +205,12 @@ const showFireSite = computed(() => {
     return false
   }
   else if (fireType?.text?.includes('交通工具火灾') && !checkArray(vehicleType?.text, ['乘用车', '客车', '货车', '低速电动车', '铁路交通', '城市轨道交通', '水运交通', '航空航天'])) {
+    return false
+  }
+  else if (fireType?.text?.includes('户外植被火灾')) {
+    return false
+  }
+  else if (fireType?.text?.includes('垃圾及废弃物火灾')) {
     return false
   }
   return true
@@ -282,7 +294,7 @@ const sections = computed(() => {
   result.firePhoto = firePhoto
   result.fireCourse = fireCourse
   result.otherAttach = otherAttach
-  if (props.isDetail) {
+  if (props.isDetail || (props.isApproval && props.labelText === '审核')) {
     result.proSteps = proSteps
   }
   return result
@@ -290,6 +302,11 @@ const sections = computed(() => {
 
 const container = () => {
   return document.querySelector('.tab-pane-content') || document.querySelector('#record-wrap') || document.querySelector('.ant-modal-body')
+}
+
+// 打开审核弹窗
+const showReviewDialog = ()=>{
+  show.value.approvalVisible = true
 }
 
 const refreshField = () => {
@@ -442,10 +459,11 @@ const initWatch = () => {
     form.value.basicInfo.severity.value,
   ], () => {
     initFormWhenChange()
-    initDraftRules(!props.showDraft, formRef)
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
   // 只有当填报状态下才自动生成处置过程
-  if ((props.setHandleExtend && typeof props.setHandleExtend === 'function') || props.isDetail) {
+  // debugger;
+  if ((isShowTemporary?.value) || props.isDetail) {
     watch(() => [form.value, detail.value], () => {
       generateRemarkField(detail.value)
     }, { deep: true })
@@ -476,7 +494,6 @@ const initDetail = () => {
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
-
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
@@ -485,6 +502,7 @@ const initDetail = () => {
     const id = currentRow?.boFireInfoId
     getFireReportDetail(id).then((res) => {
       if (res) {
+        fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
         }
@@ -524,8 +542,7 @@ const initDict = () => {
       'HZ_INFO_SJY', 'HZ_INFO_BXLX', 'HZ_SW_MZ', 'HZ_QHJZ_JZYT', 'HZ_XZCF', 'HZ_INFO_CDZT', 'HZ_INFO_DLLX',
       'HZ_SW_LYXQ', 'HZ_SW_STWZ', 'HZ_SW_ZJLX', 'HZ_INFO_SZ', 'HZ_INFO_LY', 'HZ_INFO_JCQK', 'HZ_INFO_JCQK_JC',
       'CD_CZRY_SEX', 'JQ_TYPE', 'HZ_INFO_HZDJ', 'HZ_QHJZ_JZBQ', 'HZ_INFO_YY', 'HZ_INFO_QY', 'HZ_INFO_QY_QT', 'DEAD_TIME',
-      'HZ_INFO_RWYS', 'WX_FL'], null, (res) => {
-
+      'HZ_INFO_RWYS','CD_HYZG', 'WX_FL'], null, (res) => {
       options.value.firePattern = res.HZ_QHXT_SGXT // 事故形态
       options.value.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
       options.value.firePlace = res.HZ_QHCS // 起火场所类型
@@ -573,6 +590,7 @@ const initDict = () => {
       options.value.fireLevel = res.HZ_INFO_HZDJ // 火灾等级
       options.value.deathDate = res.DEAD_TIME // 死亡时间
       options.value.humanCause = res.HZ_INFO_RWYS // 人为因素
+      options.value.industryDepartment = res.CD_HYZG
       options.value.buildTag = res.HZ_QHJZ_JZBQ?.map((item) => {
         return {
           ...item,
@@ -601,11 +619,11 @@ const getSubmitParams = () => {
       fireOrgname: basicInfo.fireOrgname?.value,
       fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
-      fireType: basicInfo.fireType?.completeValue?.join(','),
+      fireType: basicInfo.fireType?.completeValue?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),
       burnedArea: basicInfo.burnedArea?.value,
       fireLevel: basicInfo.fireLevel?.value,
-      firePlace: basicInfo.firePlace?.value?.join(','),
+      firePlace: basicInfo.firePlace?.value?.pop(),
       isLaborIntensive: basicInfo.isLaborIntensive?.value,
       plantRiskClassification: basicInfo.plantRiskClassification?.value,
       otherFirePlace: basicInfo.otherFirePlace?.value,
@@ -876,31 +894,32 @@ const approvalCallback = async (form) => {
 const setTemporary = async()=>{
   temporaryLoading.value = true
   await temporarySubmit()
-  temporaryLoading = false
+  showToast('暂存成功')
+  temporaryLoading.value = false
 }
 
 
 onMounted(() => {
   props.setHandleOk && props.setHandleOk((finishFn) => {
-    formRef.value.validate().then(async (values) => {
-      if (values) {
-        if (props.isApproval) {
-          show.value.approvalVisible = true
-        }
-        else if (props.isAgain) {
-          await submit()
-          loading.value = againLoading.value
-          await againSubmit()
-          await finishFn()
+    formRef.value.validate().then(async (values) => {   
+      if (props.isApproval) {
+        show.value.approvalVisible = true
+      }
+      else if (props.isAgain) {
+        await submit()
+        loading.value = againLoading.value
+        await againSubmit()
+        await finishFn()
+      }
+      else {
+        if (!props.showDraft && false
+        //  && checkFieldWarning(fieldExist.value)
+        ) {
+          // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
         }
         else {
-          if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
-            // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
-          }
-          else {
-            await submit()
-            await finishFn()
-          }
+          await submit()
+          await finishFn()
         }
       }
     })
@@ -953,10 +972,19 @@ onMounted(() => {
 //     bus.emit('CASTLE__globalLoading', false)
 //   }, 100)
 // }
+const onSideBarChange = (e, k) => {
+  const targetElement = document.getElementById(k);
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      block: 'start',
+      // behavior: 'smooth', // 会影响左侧点击
+    });
+  }
+}
 </script>
 
 <template>
-  <div class="editor-form">
+  <div class="editor-form" >
     <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
@@ -966,63 +994,74 @@ onMounted(() => {
           <van-sidebar-item 
             v-for="(item, k) in sections" 
             :key="k" :title="item.title" 
-            badge="√" 
+            
+            @click="onSideBarChange(item, k)" 
           />
+          <!-- :badge="!isDetail && item.validateProgress >= 100 ? '√' : '×'" -->
         </van-sidebar>
-        <!-- <a-anchor
-          v-if="showPreview !== null && showCurrentDom"
-          :get-container="container"
-          :offset-top="24"
-          :offset-bottom="0"
-          :target-offset="30"
-          :affix="true"
-          class="input-anchor"
-          @click.prevent
-        >
-          <template v-for="(item, k) in sections" :key="k">
-            <a-anchor-link :href="`#${k}-title`">
-              <template #title>
-                <h5 class="anchor-h5">
-                  <span>{{ item.title }}</span>
-                  <check-circle-filled :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" fill style="color: #52c41a;margin-left: 15px;" />
-                  <img v-show="item.fieldWarning?.indexOf('true') > -1 && !showDraft" src="@/assets/images/icon-error@2x.png" style="width: 14px;height: 14px;margin-left: 15px;">
-                  <img v-show="item.fieldAnnotation" src="@/assets/images/icon-edit.png" style="width: 14px;height: 14px;margin-left: 15px;">
-                </h5>
-              </template>
-            </a-anchor-link>
-          </template>
-        </a-anchor> -->
       </div>
       <div class="form-right">
          <div class="box">
             <div class="wrapper">
-              <van-form>
+              <van-form ref="formRef">
                 <!-- 警情信息 -->
-                <!-- <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" /> -->
+                <FireInfo v-if="!showDraft && !isPolice" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->
-                <BriefSituation v-if="!showDraft" />
+                <ProCard v-if="!showDraft" title="简要情况" id="briefSituation" :showOpenClose="!showPreview">
+                  <BriefSituation />
+                </ProCard>
                 <!-- 基本信息 -->
-                <BaseInfo />
+                <ProCard title="基本信息" id="basicInfo" :showOpenClose="!showPreview">
+                  <BaseInfo />
+                </ProCard>
                 <!-- 人员伤亡 -->
-                <CasualtyWar v-if="showSevereFire" />
+                <ProCard v-if="showSevereFire"  title="人员伤亡（不含消防员）" id="casualtyWar" :showOpenClose="!showPreview">
+                  <CasualtyWar />
+                </ProCard>
                 <!-- 经济损失 -->
-                <EconomicLoss />
+                <ProCard title="经济损失" id="economicLoss" :showOpenClose="!showPreview">
+                  <EconomicLoss />
+                </ProCard>
                 <!-- 起火建筑 -->
-                <FireBuilding v-if="showBuildingFire" />
+                <ProCard title="起火建筑" v-if="showBuildingFire" id="fireBuilding" :showOpenClose="!showPreview">
+                  <FireBuilding  />
+                </ProCard>
                 <!-- 消防设施 -->
-                <FireFacilities v-if="showBuildingFire && showSevereFire" />
+                <ProCard title="消防设施" v-if="showBuildingFire && showSevereFire" id="fireFacilities" :showOpenClose="!showPreview">
+                  <FireFacilities  />
+                </ProCard>
                 <!-- 案件办理 -->
-                <CaseHandling v-if="showSevereFire" />
+                <ProCard title="案件办理" v-if="showSevereFire" id="caseHandling" :showOpenClose="!showPreview">
+                  <CaseHandling  />
+                </ProCard>
                 <!-- 火灾照片 -->
-                <FirePhoto />
+                <ProCard title="火灾照片" id="firePhoto" :showOpenClose="!showPreview">
+                  <FirePhoto />
+                </ProCard>
                 <!-- 起火经过 -->
-                <FireCourse />
+                <ProCard title="起火经过" id="fireCourse" :showOpenClose="!showPreview">
+                  <FireCourse />
+                </ProCard>
                 <!-- 其他附件 -->
-                <OtherAttach />
+                <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
+                  <OtherAttach />
+                </ProCard>
+                <!-- 操作记录 -->
+                <ProCard title="操作记录" id="proSteps" v-if="isDetail || (isApproval && labelText === '审核')">
+                  <ProSteps
+                    :data="form?.proSteps?.fireInfoTransferList?.value"
+                    :withHeader="false"
+                    :showOpenClose="!showPreview"
+                    :detail="fireDetail"
+                  />
+                </ProCard>
               </van-form>
               <div class="form-footer" v-if="!showPreview">
-                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click="setTemporary">
+                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click.stop="setTemporary">
                   暂存
+                </van-button>
+                <van-button v-if="isReview" class="temporary" round block type="primary" @click.stop="showReviewDialog">
+                  审核
                 </van-button>
               </div>
             </div>
@@ -1041,17 +1080,34 @@ onMounted(() => {
       </a-button> -->
     <!-- </a-row> -->
   </div>
+
+  <!-- 提交审核 -->
+  <DialogInfo title="火灾审核" v-model:visible="show.approvalVisible" v-slot="{setHandleOk}">
+    <ProcessReview
+      v-if="show.approvalVisible"
+      process-key="fireInfoFlow"
+      :current-row="currentRow"
+      :set-handle-ok="setHandleOk"
+      :label-text="labelText"
+      @finish-callback="approvalCallback"
+    />
+  </DialogInfo>
 </template>
 
 <style lang="scss" scoped>
 .editor-form{
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  // display: flex;
+  // align-items: flex-start;
+  // justify-content: space-between;
   height:calc(100% - 44px);
   .form-left{
     width: 20%;
     display: inline-block;
+    overflow-y: scroll;
+    height: 100%;
+    padding-right: 13px;
+    box-sizing: content-box;
+    overflow-x: hidden;
   }
   .form-right{
     display: inline-block;
@@ -1110,3 +1166,4 @@ onMounted(() => {
   }
 }
 </style>
+

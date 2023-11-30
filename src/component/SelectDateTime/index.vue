@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, useAttrs } from "vue";
 import dayjs from 'dayjs'
 import { showToast } from "vant";
 
@@ -44,6 +44,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const selectText = ref("");
@@ -75,6 +77,9 @@ const handleOk = () => {
 }
 
 const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
   if (!currentDate.value || currentDate.value.length <= 0 || !selectText.value) {
     const current = dayjs();
     currentDate.value = [current.year(), current.month() + 1, current.date()];
@@ -110,7 +115,13 @@ defineOptions({
     :placeholder="placeholder"
     :rules="rules"
     @click="handleShow"
-  />
+  >
+    <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom" @closed="onClose">
     <div class="select-date-time">
       <div class="header">

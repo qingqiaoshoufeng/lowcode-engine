@@ -109,6 +109,7 @@ export const generateByKeyValue = (keys, values, fields, keyType) => {
 // 不同状态颜色
 export const generateColorByState = (state) => {
   switch (state) {
+  case '已发送':
   case '编辑中':
   case '填报中':
   case '复核中':
@@ -140,6 +141,7 @@ export const generateColorByState = (state) => {
   case '已审批':
   case '已挂接':
   case '已转派':
+  case '已完成':
   case '3': // 已审核
   case 'completed': // 已完成
     return { 'state-finish': true } // 绿色
@@ -148,9 +150,19 @@ export const generateColorByState = (state) => {
   }
 }
 
+export const generateColorByDeptNatureValue = (val) =>{
+  const map = {
+    "国家队":"state-finish-text",
+    "企业专职队":"state-wait-text",
+    "志愿消防队":"state-reject-text" 
+  }
+  return map
+}
+
 // 不同状态颜色
 export const generateTextByState = (state) => {
   switch (state) {
+  case '已发送':
   case '编辑中':
   case '填报中':
   case '复核中':
@@ -178,6 +190,7 @@ export const generateTextByState = (state) => {
   case '已审核':
   case '已归档':
   case '已审批':
+  case '已完成':
   case '3': // 已审核
   case 'completed': // 已完成
     return { 'state-finish-text': true } // 绿色
@@ -239,7 +252,7 @@ export const generateColorByVisible = (state) => {
 }
 
 export const checkPoliceChangeState = (status, updatePermission) => {
-  return ['已派发', '填报中', '已填报', '已审核'].includes(status) && updatePermission
+  return ['已派发', '已发送', '填报中', '已填报', '已审核'].includes(status) && updatePermission
 }
 
 export const checkDispatchChangeState = (status, updatePermission) => {
@@ -251,7 +264,7 @@ export const checkFireChangeState = (status, updatePermission) => {
 }
 
 export const checkAbolishState = (status, updatePermission) => {
-  return ['已派发', '被退回', '填报中', '已填报', '已审核', '被驳回', '复核中', '确认中'].includes(status) && updatePermission
+  return ['已派发', '已发送', '被退回', '填报中', '已填报', '已审核', '被驳回', '复核中', '确认中'].includes(status) && updatePermission
 }
 
 export const checkRejectState = (status) => {
@@ -354,7 +367,7 @@ export const fixCarInfo = (list) => {
       ...item,
       key: item.boFireTruckId,
       value: item.boFireTruckId,
-      label: item.truckNumber,
+      label: item.truckCode,
     }
   })
 }
@@ -365,7 +378,7 @@ export const fixCarParams = (list) => {
     return []
   }
   return list.map((item) => {
-    return { truckNumber: item.label, boFireTruckId: item.value }
+    return { truckNumber: item?.option?.truckNumber || item?.truckNumber, truckCode: item?.option?.truckCode || item?.truckCode, boFireTruckId: item.value || item.boFireTruckId }
   })
 }
 

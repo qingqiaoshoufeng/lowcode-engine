@@ -1,13 +1,16 @@
 import dayjs from 'dayjs'
 
 export const dateTimeRange = {
-  本日: [dayjs().startOf('day'), dayjs().endOf('day')],
+  今日: [dayjs().startOf('day'), dayjs().endOf('day')],
+  昨日: [dayjs().subtract(1, 'day').startOf('day'), dayjs().subtract(1, 'day').endOf('day')],
   本周: [dayjs().startOf('week'), dayjs().endOf('week')],
+  上周: [dayjs().subtract(1, 'week').startOf('week'), dayjs().subtract(1, 'week').endOf('week')],
   本月: [dayjs().startOf('month'), dayjs().endOf('month')],
+  上月: [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')],
   本年: [dayjs().startOf('year'), dayjs().endOf('year')],
+  去年: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
   // 近一周: [dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
   近一个月: [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')],
-  去年: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
 }
 
 export const gutter = 40
@@ -647,3 +650,52 @@ export const month = [
     value: '12',
   },
 ]
+
+export const reinforceOptionsList = [
+  {
+    label: '跨省增援',
+    value: 1,
+  },
+  {
+    label: '跨市增援',
+    value: 2,
+  },
+]
+
+export const statisticRange = [{
+  dictName: '节假日',
+  boDictId: '1',
+},
+{
+  dictName: '按季',
+  boDictId: '2',
+},
+{
+  dictName: '按月',
+  boDictId: '3',
+},
+{
+  dictName: '按日',
+  boDictId: '4',
+},
+{
+  dictName: '按时',
+  boDictId: '5',
+}]
+
+export const seasonRange = [{
+  dictName: '一季度',
+  boDictId: '1',
+},
+{
+  dictName: '二季度',
+  boDictId: '2',
+},
+{
+  dictName: '三季度',
+  boDictId: '3',
+},
+{
+  dictName: '四季度',
+  boDictId: '4',
+}]

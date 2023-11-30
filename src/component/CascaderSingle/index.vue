@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, nextTick } from "vue";
+import { onMounted, ref, watch, useAttrs, computed, nextTick } from "vue";
 import { findNodeFromTreeById } from '@/utils/tools.js';
 
 const props = defineProps({
@@ -39,9 +39,15 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  readonly:{
+    default:true,
+    type: Boolean,
+  }
 });
 
 const emit = defineEmits(["update:value", "update:text", "change"]);
+
+const attrs = useAttrs();
 
 const selectVisible = ref(false);
 
@@ -51,7 +57,7 @@ const selectText = ref("");
 
 watch(() => props.value, (val) => {
   nextTick(() => {
-    if (props.value) {
+    if (props.value && selectValue.value?.length <= 0) {
       selectValue.value = props.value;
       if (props.text) {
         selectText.value = props.text?.length > 0 ? props.text.join('/') : props.text;
@@ -61,7 +67,7 @@ watch(() => props.value, (val) => {
           return temp?.dictName
         })?.join('/')
       }
-    } else {
+    } else if (!props.value) {
       selectValue.value =''
       selectText.value = ''
     }
@@ -78,6 +84,13 @@ const onFinish = ({ selectedOptions }) => {
   selectVisible.value = false;
 };
 
+const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
+  selectVisible.value = true
+}
+
 defineOptions({
   name: "CascaderSingle",
 });
@@ -93,8 +106,16 @@ defineOptions({
     :label="label"
     :placeholder="placeholder"
     :rules="rules"
-    @click="selectVisible = true"
-  />
+    @click="handleShow"
+    :readonly="readonly"
+    class="cascader-single"
+  >
+  <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div v-if="label" class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="single-wrapper">
       <van-cascader
@@ -112,6 +133,6 @@ defineOptions({
 
 <style lang="scss" scoped>
 .single-wrapper {
-  max-height: 50vh;
+  // max-height: 50vh;
 }
 </style>

@@ -51,7 +51,7 @@ const options = {
       name: '火灾起数',
       type: 'bar',
       data: [5, 20, 36, 10, 10, 20],
-      barWidth: 14,
+      barWidth: 10,
       color: '#5088EC',
       // barGap: 0,
     },
@@ -73,9 +73,9 @@ export default {
       return {}
     }
     const data = val.reduce((current, item) => {
-      const { hzCount, dictNameLvl2 } = item
+      const { hzCount, firePlace } = item
       current[0].push(hzCount)
-      current[1].push(dictNameLvl2)
+      current[1].push(firePlace)
       return current
     }, [
       [],

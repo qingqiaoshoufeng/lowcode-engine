@@ -37,9 +37,9 @@ export const useUpload = () => {
 
   const onRemove = async(file) => {
     const result = await showConfirmDialog({
-      title: '标题',
+      title: '删除',
       message:
-        '如果解决方法是丑陋的，那就肯定还有更好的解决方法，只是还没有发现而已。',
+        '确定删除该附件/照片吗，删除后将无法再使用！',
     })
     if(result === 'confirm'){
       const res = await deleteAttachmentFile({ attachmentId: file?.response?.attachmentId || file?.attachmentId })

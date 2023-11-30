@@ -21,8 +21,8 @@ const useRuleConfig = defineStore('useRuleConfig', {
   }),
 
   actions: {
-    init() {
-      getAllRules().then((res) => {
+    init:async function() {
+      return await getAllRules().then((res) => {
         if (res?.length > 0) {
           res.forEach((item) => {
             if (item.ruleContent) {

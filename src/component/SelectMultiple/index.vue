@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch, useAttrs, computed } from "vue";
 
 const props = defineProps({
   value: {
@@ -42,6 +42,8 @@ const props = defineProps({
 
 const emit = defineEmits(["update:value", "change"]);
 
+const attrs = useAttrs();
+
 const selectVisible = ref(false);
 
 const selectItem = ref([]);
@@ -53,10 +55,14 @@ const selectText = ref("");
 const checkboxRefs = ref([]);
 
 watch(() => props.value, (val) => {
-  if (props.value) {
+  if (props.value?.length > 0) {
     selectItem.value = props.options?.filter((item) => props.value.includes(item[props.fieldNames.value]));
     selectValue.value = props.value;
-    selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])
+    selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])?.join(",");
+  } else {
+    selectItem.value = []
+    selectValue.value = []
+    selectText.value = ''
   }
 }, { immediate: true })
 
@@ -71,7 +77,7 @@ const handleOk = () => {
   );
   selectText.value = selectItem.value
     ?.map((item) => item[props.fieldNames.label])
-    .join(",");
+    ?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, selectItem.value);
   selectVisible.value = false;
@@ -80,6 +86,13 @@ const handleOk = () => {
 const handleCancel = () => {
   selectVisible.value = false;
 };
+
+const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
+  selectVisible.value = true
+}
 
 defineOptions({
   name: "SelectMultiple",
@@ -96,8 +109,14 @@ defineOptions({
     :label="label"
     :placeholder="placeholder"
     :rules="rules"
-    @click="selectVisible = true"
-  />
+    @click="handleShow"
+  >
+  <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-multiple">
       <div class="header">

@@ -8,6 +8,40 @@ export const pathMap = {
   "chudongshenhe": "/dispatchReportReview",
   'huozaitianbao': "/fire-report",
   'huozaiguanli': "/fire-manage",
-  'huozaixiugai': "/fire-edit"
+  'huozaixiugai': "/fire-edit",
+  'huozaishenhe':"/fire-review",
+  "jingqinggengzhengshenpi": "/policeRecheckApproval",
+  "jingqingzuofeishenpi": "/policeAbolishApproval",
+  "chudonggengzhengshenpi": "/dispatchRecheckApproval",
+  "huozaigengzhengshenpi": "/fireRecheckApproval",
+  "shenqingjilu": "/applyRecord",
+  // "shenqingjilu": "/globalSearch",
+  "jingqingzhiliangjiandu":"/police-supervision",
+  "huozaizhiliangjiandu":"/fire-supervision",
+  "chudongzhiliangjiandu":'/dispatch-supervision',
+  "jingqingchaoshitongji":"/police-timeout",
+  "huozaichaoshitongji":"/fire-timeout",
+  "chudongchaoshitongji":"/dispatch-timeout",
+  "weitianbaoduizhantongji":"station-timeout",
+  "policeDispatched":'have-done-info/policeDispatched',
+  "policeRejected":'have-done-info/policeRejected',
+  "policeAmend":'have-done-info/policeAmend',
+  "policeInvalid":'have-done-info/policeInvalid',
+  "policeConfirmed":'have-done-info/policeConfirmed',
+  "policeDispatchArea":'have-done-info/policeDispatchArea',
+  "dispatchFilled":'have-done-info/dispatchFilled',
+  "dispatchReviewed":'have-done-info/dispatchReviewed',
+  "dispatchIdRejected":'have-done-info/dispatchIdRejected',
+  "dispatchAmend":'have-done-info/dispatchAmend',
+  "fireFilled":'have-done-info/fireFilled',
+  "fireReviewed":'have-done-info/fireReviewed',
+  "fireReject":'have-done-info/fireReject',
+  "fireAmend":'have-done-info/fireAmend',
+  "jingqingqueren": '/policeConfirm',
+  "jingqingzhuanpai": '/policeTransfer',
 }
+
+
+// policeDispatched,policeRejected,policeAmend,policeInvalid,policeConfirmed,policeDispatchArea,dispatchFilled
+// ,dispatchReviewed,dispatchIdRejected,dispatchAmend,fireFilled,fireReviewed,fireReject,fireAmend
   

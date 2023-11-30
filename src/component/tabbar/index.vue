@@ -28,7 +28,7 @@
 import { computed, ref, getCurrentInstance,defineProps } from "vue";
 import { useStore } from "vuex";
 import router from '@/router/index.js'
-// import businessDeactive from '@/assets/images/business-deactive.png'
+import businessDeactive from '@/assets/images/business-deactive.png'
 import businessActive from '@/assets/images/business-active.png'
 import mineActive from '@/assets/images/mine-active.png'
 import mineDeactive from '@/assets/images/mine-deactive.png'
@@ -62,7 +62,7 @@ const menuList = [
   },
   {
     activeImage:businessActive,
-    deactiveImage: businessActive,
+    deactiveImage: businessDeactive,
     label:'业务',
     value: 3,
     path:'/business'
@@ -131,14 +131,14 @@ export default {
       color: #1833A9 ;
     }
   }
-  .wb3{
-    border:3px solid #fff;
-    transform: translateY(-50%);
-    width:40px !important;
-    height: 40px !important;
-  }
-  .ty3{
-    transform:translateY(-9px);
-  }
+  // .wb3{
+  //   border:3px solid #fff;
+  //   transform: translateY(-50%);
+  //   width:40px !important;
+  //   height: 40px !important;
+  // }
+  // .ty3{
+  //   transform:translateY(-9px);
+  // }
 }
 </style>

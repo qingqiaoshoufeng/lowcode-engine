@@ -6,6 +6,118 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "38279819",
+      "name": "jingqingqueren",
+      "font_class": "jingqingqueren",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "38279820",
+      "name": "jingqingzhuanpai",
+      "font_class": "jingqingzhuanpai",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "38211427",
+      "name": "已驳回(1)",
+      "font_class": "dispatchIdRejected",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "38211424",
+      "name": "已审核",
+      "font_class": "dispatchReviewed",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "38211426",
+      "name": "已派发",
+      "font_class": "policeDispatched",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "38211425",
+      "name": "已驳回",
+      "font_class": "policeRejected",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "38211422",
+      "name": "更正已审批(1)",
+      "font_class": "dispatchAmend",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "38211420",
+      "name": "火灾已审核",
+      "font_class": "fireReviewed",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "38211421",
+      "name": "火灾已驳回",
+      "font_class": "fireReject",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "38211418",
+      "name": "更正已审批",
+      "font_class": "policeAmend",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    },
+    {
+      "icon_id": "38211419",
+      "name": "火灾更正已审批",
+      "font_class": "fireAmend",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "38211431",
+      "name": "火灾已填报",
+      "font_class": "fireFilled",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "38211430",
+      "name": "已填报",
+      "font_class": "dispatchFilled",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "38211429",
+      "name": "作废已审批",
+      "font_class": "policeInvalid",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "38211423",
+      "name": "已确认(跨区)",
+      "font_class": "policeConfirmed",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "38211428",
+      "name": "已转派(跨区)",
+      "font_class": "policeDispatchArea",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
       "icon_id": "37738506",
       "name": "火灾超时统计",
       "font_class": "huozaichaoshitongji",

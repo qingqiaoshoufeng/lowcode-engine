@@ -7,23 +7,22 @@ const form = inject('form')
 
 const showPreview = inject('showPreview')
 
+const isRequired = inject('isRequired')
+
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
 </script>
 
 <template>
-  <div id="fireCourse">
-    <h4 id="fireCourse-title">
-      <!-- <file-text-outlined /> -->
-      <strong>起火经过</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="24">
         <van-field
-          name="fireCourse,firePassage,value"
-          label="起火经过"
+          name="fireCourse.firePassage.value"
+          label="起火经过："
           :rules="form.fireCourse.firePassage.rules"
+          :required="isRequired"
           id="firePassage"
           v-model="form.fireCourse.firePassage.value"
           v-preview-text="showPreview"
@@ -34,8 +33,18 @@ const refreshField = inject('refreshField')
           autosize
           type="textarea"
           placeholder="请输入起火经过"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="起火经过："
+              remark-field="firePassage"
+              field-module="fireCourse"
+              :exist-data="fieldExist?.firePassage"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>

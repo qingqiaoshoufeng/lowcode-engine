@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 // import { message } from '@castle/ant-design-vue'
 import { transferFire } from '@/apis/index.js'
+import { showToast } from 'vant';
 // import SelectTree from '@/components/select-tree/index1.vue'
 
 const props = defineProps({
@@ -25,19 +26,18 @@ const formRef = ref(null)
 onMounted(() => {
   props.setHandleOk((finishFn) => {
     formRef.value.validate().then((values) => {
-      if (values) {
-        const fillReportOrg = form.value.team[0]?.organizationid
-        transferFire({ boFireInfoId: props.currentRow.boFireInfoId, fillReportOrg })
-          .then((res) => {
-            if (res?.data?.code === 200) {
-              emits('finishCallback')
-              finishFn()
-            }
-            else {
-              // message.warning(res?.data?.msg)
-            }
-          })
-      }
+      const fillReportOrg = form.value.team[0]?.organizationid
+      transferFire({ boFireInfoId: props.currentRow.boFireInfoId, fillReportOrg })
+        .then((res) => {
+          if (res?.data?.code === 200) {
+            emits('finishCallback')
+            finishFn()
+          }
+          else {
+            showToast(res?.data?.msg)
+            // message.warning()
+          }
+        })
     })
   })
 })
@@ -58,16 +58,6 @@ onMounted(() => {
         :rules="[{ required: true, message: '请选择填报队伍' }]"
         teleport="body"
       />
-      <!-- <SelectTree
-        v-model:value="form.team"
-        title="填报队伍"
-        mode=""
-        max-tag-count=""
-        :single="true"
-        :destroy-on-close="false"
-        :params="{ deptType: 1, permission: true }"
-        :rules="[{ required: true, message: '请选择填报队伍' }]"
-      /> -->
     </van-form>
   </div>
 </template>
@@ -78,6 +68,7 @@ onMounted(() => {
     display: inline-block;
     font-weight: bold;
     padding-bottom: 20px;
+    font-size: 12px;
   }
 }
 </style>

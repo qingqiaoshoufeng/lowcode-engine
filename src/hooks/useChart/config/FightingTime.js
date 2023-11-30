@@ -11,7 +11,9 @@ const mockData = [
 ]
 const legendData = ['<10分钟', '10-20分钟', '30-60分钟', '60-90分钟', '90-120分钟','>=120分钟']
 const options = {
-  tooltip: {},
+  tooltip: {
+    formatter: '<span style="font-size: 14px;font-weight: 400;">{b}：</span>{c}分钟',
+  },
   grid:{
     left:0,
     top:10,

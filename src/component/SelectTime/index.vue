@@ -34,56 +34,54 @@ const emit = defineEmits(["update:value", "change"]);
 
 const options = ref([
   {
-    label: "本日",
-    value: "本日",
-    time: [dayjs().startOf("day"), dayjs().endOf("day")],
+    label: '今日',
+    value: '今日',
+    time: [dayjs().startOf('day'), dayjs().endOf('day')],
   },
   {
-    label: "本周",
-    value: "本周",
-    time: [dayjs().startOf("week"), dayjs().endOf("week")],
+    label: '昨日',
+    value: '昨日',
+    time: [dayjs().subtract(1, 'day').startOf('day'), dayjs().subtract(1, 'day').endOf('day')],
   },
   {
-    label: "本月",
-    value: "本月",
-    time: [dayjs().startOf("month"), dayjs().endOf("month")],
+    label: '本周',
+    value: '本周',
+    time: [dayjs().startOf('week'), dayjs().endOf('week')],
   },
   {
-    label: "本年",
-    value: "本年",
-    time: [dayjs().startOf("year"), dayjs().endOf("year")],
+    label: '上周',
+    value: '上周',
+    time: [dayjs().subtract(1, 'week').startOf('week'), dayjs().subtract(1, 'week').endOf('week')],
   },
   {
-    label: "上月",
-    value: "上月",
-    time: [
-      dayjs().subtract(1, "month").startOf("month"),
-      dayjs().subtract(1, "month").endOf("month"),
-    ],
+    label: '本月',
+    value: '本月',
+    time: [dayjs().startOf('month'), dayjs().endOf('month')],
   },
   {
-    label: "去年",
-    value: "去年",
-    time: [
-      dayjs().subtract(1, "year").startOf("year"),
-      dayjs().subtract(1, "year").endOf("year"),
-    ],
+    label: '上月',
+    value: '上月',
+    time: [dayjs().subtract(1, 'month').startOf('month'), dayjs().subtract(1, 'month').endOf('month')],
   },
   {
-    label: "近一周",
-    value: "近一周",
-    time: [
-      dayjs().subtract(1, "week").startOf("day").add(1, "day"),
-      dayjs().endOf("day"),
-    ],
+    label: '本年',
+    value: '本年',
+    time: [dayjs().startOf('year'), dayjs().endOf('year')],
   },
   {
-    label: "近一月",
-    value: "近一月",
-    time: [
-      dayjs().subtract(1, "month").startOf("day").add(1, "day"),
-      dayjs().endOf("day"),
-    ],
+    label: '去年',
+    value: '去年',
+    time: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
+  },
+  // {
+  //   label: '近一周',
+  //   value: '近一周',
+  //   time: [dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
+  // },
+  {
+    label: '近一月',
+    value: '近一月',
+    time: [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')],
   },
 ]);
 
@@ -98,7 +96,9 @@ watch(
     if (newValue?.length > 0) {
       selectValue.value = newValue;
       selectText.value = newValue?.[2]
-      console.log(newValue)
+    } else {
+      selectValue.value = '';
+      selectText.value = ''
     }
   },
   { immediate: true }
@@ -142,7 +142,13 @@ defineOptions({
     :placeholder="placeholder"
     :rule="rule"
     @click="handleShow"
-  />
+  >
+  <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-single">
       <div class="header">

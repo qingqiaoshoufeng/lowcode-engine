@@ -6,7 +6,7 @@ import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyAbolish from "./apply-abolish.vue";
 import ApplyRecheck from "./apply-recheck.vue";
-import PoliceForm from '@/views/policeEntryForm/index.vue';
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import {
   checkAbolishState,
   checkPoliceChangeState,
@@ -270,6 +270,7 @@ onMounted(() => {
   <div class="police-manage-list">
     <ProList
       ref="proListRef"
+      title="警情管理"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningManage"
       :tabs="tabs"
@@ -292,7 +293,7 @@ onMounted(() => {
         </div>
       </template>
       <template #list="{ record }">
-        <div class="list-item" @click="handleItem(record)">
+        <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -359,12 +360,8 @@ onMounted(() => {
     </ProList>
 
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceForm
-        :current-row="currentRow"
-        :show-preview="true"
-        :show-steps="true"
-      />
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 申请更正 -->
     <ProModal v-model:visible="show.recheckVisible" title="申请更正">
@@ -392,89 +389,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .police-manage-list {
-  height: 100vh;
+  height: 100%;
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;
-    padding: 10px 16px 0 16px;
-  }
-  .list-item {
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    margin-top: 10px;
-    .item-header {
-      display: flex;
-      padding: 8px 10px;
-      .item-title {
-        width: 260px;
-        font-size: 16px;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .item-state {
-        width: 57px;
-        height: 24px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 2px;
-        margin-left: auto;
-      }
-    }
-    .item-field {
-      font-size: 14px;
-      color: #1f1f1f;
-      display: flex;
-      align-items: center;
-      padding: 0 0 8px 10px;
-      img {
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-      }
-    }
-    .item-type {
-      margin: 0 0 8px 10px;
-      span {
-        display: inline-block;
-        font-size: 12px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #fc2902;
-        background: #ffefec;
-        border-radius: 2px;
-        padding: 4px 10px;
-      }
-    }
-    .item-line {
-      width: 100%;
-      border-top: 1px solid rgba(31, 31, 31, 0.15);
-    }
-    .item-operate {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 8px 10px;
-      .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .item-btn {
-        padding: 0 16px;
-        margin-left: 10px;
-        :deep(.van-button__content) {
-          height: 18px;
-        }
-        :deep(.van-button__text) {
-          white-space: nowrap;
-          word-break: break-all;
-        }
-      }
-    }
+    padding: 10px 12px 0 12px;
   }
 }
 </style>

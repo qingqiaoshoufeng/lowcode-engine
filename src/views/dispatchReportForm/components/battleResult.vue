@@ -5,6 +5,10 @@ import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 const showMainGroup = inject("showMainGroup");
@@ -68,7 +72,17 @@ const validateSurvive = (value, rule) => {
           ...form.battleResult.rescueNum.rules,
         ]"
         @blur="onSurviveNum()"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="抢救(人)："
+            remark-field="rescueNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.rescueNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.surviveNum.value"
         v-preview-text="showPreview"
@@ -84,7 +98,17 @@ const validateSurvive = (value, rule) => {
           ...form.battleResult.surviveNum.rules,
         ]"
         @blur="onSurviveNum()"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="生还(人)："
+            remark-field="surviveNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.surviveNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.deathNum.value"
         v-preview-text="showPreview"
@@ -95,7 +119,17 @@ const validateSurvive = (value, rule) => {
         name="deathNum"
         label="死亡(人)："
         placeholder="请输入死亡人数"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="死亡(人)："
+            remark-field="deathNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.deathNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.evacuateNum.value"
         v-preview-text="showPreview"
@@ -106,7 +140,17 @@ const validateSurvive = (value, rule) => {
         label="疏散(人)："
         placeholder="请输入疏散人数"
         :rules="form.battleResult.evacuateNum.rules"
-      />
+      >
+       <template v-slot:label="">
+          <FieldAnnotation
+            label="疏散(人)："
+            remark-field="evacuateNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.evacuateNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.transferNum.value"
         v-preview-text="showPreview"
@@ -117,33 +161,63 @@ const validateSurvive = (value, rule) => {
         label="转移(人)："
         placeholder="请输入转移人数"
         :rules="form.battleResult.transferNum.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="转移(人)："
+            remark-field="transferNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.transferNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.emergencyNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
         type="number"
-        maxlength="20"
+        maxlength="15"
         name="emergencyNum"
         label="抢救财产价值(元)："
         label-width="148px"
         placeholder="请输入抢救财产价值"
         :rules="form.battleResult.emergencyNum.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="抢救财产价值(元)："
+            remark-field="emergencyNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.emergencyNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-model="form.battleResult.protectNum.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
         type="number"
-        maxlength="20"
+        maxlength="15"
         name="protectNum"
         label="保护财产价值(元)："
         label-width="148px"
         placeholder="请输入保护财产价值"
         :rules="form.battleResult.protectNum.rules"
-      />
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="抢救财产价值(元)："
+            remark-field="protectNum"
+            field-module="battleResult"
+            :exist-data="fieldExist?.protectNum"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </van-cell-group>
   </ProCard>
 </template>

@@ -2,6 +2,9 @@ import axios from 'axios'
 import { request } from '@/plugins/axios/index.js'
 
 export * from './system/login.js'
+export * from './system/user-manage.js'
+export * from './system/car-manage.js'
+export * from './system/person-manage.js'
 export * from './business/police-confirm.js'
 export * from './business/police-entry.js'
 export * from './business/police-manage.js'
@@ -14,7 +17,16 @@ export * from './system/login.js'
 export * from './business/home.js'
 export * from './business/fire-report.js'
 export * from './business/fire-manage.js'
-
+export * from './business/fire-review.js'
+export * from './business/data-approval.js'
+export * from './business/statistical-supervision.js'
+export * from './business/apply-record.js'
+export * from './business/report-statistical.js'
+export * from './business/global-search.js'
+export * from './business/mine-collect.js'
+export * from './business/message.js'
+export * from './business/police-redeploy.js'
+export * from './business/composite-search.js'
 
 // 119警情挂接（新建警情）
 export function saveFireWarning(data) {

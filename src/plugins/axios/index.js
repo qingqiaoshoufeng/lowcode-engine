@@ -32,11 +32,11 @@ const toLogin = () => {
 // 创建axios实例
 export const request = window.__axios = axios.create({
   // baseURL: process.env.VUE_APP_BASE_URL,
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://10.13.5.47:8080/' : '/',
+  baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : '/',
   timeout: 1000 * 12
 })
 // 设置post请求头
-request.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// request.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 /**
  * 请求拦截器
  * 每次请求前，如果存在token则在请求头中携带token

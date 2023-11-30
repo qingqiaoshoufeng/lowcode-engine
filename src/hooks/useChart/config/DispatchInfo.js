@@ -56,7 +56,7 @@ const options = {
       name: '火灾起数',
       type: 'bar',
       data: [5, 20, 36, 10, 10, 20],
-      barWidth:18,
+      barWidth:10,
       color:'#5CC97C',
     },
   ]
@@ -79,7 +79,7 @@ export default {
       options.series[index].data = data[index]
     })
     options.xAxis.data = data[1]
-    options.dataZoom.end = Math.floor(100*(3/data[1].length))
+    options.dataZoom.end = Math.floor(100*(8/data[1].length))
     return options
   }
 }

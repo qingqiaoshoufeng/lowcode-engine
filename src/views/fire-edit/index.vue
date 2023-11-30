@@ -4,17 +4,18 @@
         ref="proListRef"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireManageList"
+        title="火灾修改"
       >
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click="handleItem(record)" v-if="checkChange(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
-              <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-                {{ record.dispatchStatusValue }}
-              </div> -->
+              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+                {{ record.fireStatusValue }}
+              </div>
             </div>
             <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
+              <span>{{ record.firePlaceValue }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -37,11 +38,11 @@
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
-            <div class="item-field">
+            <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">起火场所：</div>
               <div>{{ record.firePlaceValue }}</div>
-            </div>
+            </div> -->
             <div class="item-line" />
             <div class="item-operate">
               <van-button
@@ -129,11 +130,8 @@ const handleInput = (row) => {
   isEdit.value = false
   show.value.editVisible = true
 }
-const handleLook = (row) => {
-  currentRow.value = { ...row, boFireInfoId: undefined }
-  isDraft.value = false
-  isEdit.value = false
-  show.value.lookVisible = true
+const checkChange = (record) => {
+  return record.updatePermission && (['待更正', '更正中', '被退回', '被驳回', '待完善'].includes(record.fireStatusValue) || record.taskId)
 }
 
 // 查询辖区火灾
@@ -141,6 +139,7 @@ const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }
+
 const handleEdit = (row) => {
   currentRow.value = row
   relevanceDraft.value = null
@@ -150,7 +149,7 @@ const handleEdit = (row) => {
 }
 const setHandleOk = ()=>{}
 </script>
-  <style lang="scss">
+  <style lang="scss" scoped>
   .fire-manage{
     .list-item {
       display: flex;
@@ -229,7 +228,7 @@ const setHandleOk = ()=>{}
   }
   .list-tabs1 {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
   // .list-item {
   //   display: flex;

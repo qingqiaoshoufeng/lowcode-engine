@@ -291,7 +291,7 @@ export const useFormConfig = () => {
       },
       haveProfessor: { // 是否有社会技术专家
         value: '2',
-        rules: [{ required: true, message: '请选择是否有车辆出动' }],
+        rules: [{ required: true, message: '请选择是否有社会技术专家' }],
       },
       technician: [], // 技术专家（社会）
       otherMember: { // 其他人员
@@ -328,7 +328,7 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '请输入过程描述' }],
       },
       attach: { // 其他附件
-        value: undefined,
+        value: [],
         // rules: [{ required: true, message: '请选择其他附件' }],
       },
     },
@@ -470,7 +470,7 @@ export const useFormConfig = () => {
         ],
       },
       isResponseTruck: { // 是否有车辆出动
-        value: '2',
+        value: '1',
         rules: [{ required: true, message: '请选择是否有车辆出动' }],
       },
       dispatchTruckList: { // 消防车辆信息
@@ -518,9 +518,9 @@ export const useFormConfig = () => {
       },
       // governmentCommand: { // 政府指挥
       //   title: '政府指挥',
-      isCommand: { // 是否有政府指挥
+      isCommand: { // 政府到场指挥情况
         value: '2',
-        rules: [{ required: true, message: '请选择是否有政府指挥' }],
+        rules: [{ required: true, message: '请选择政府到场指挥情况' }],
       },
       fireDispatchZfList: [], // 指挥人员
       name: { // 姓名
@@ -1058,9 +1058,9 @@ export const useFormConfig = () => {
       title: '现场照片',
       fieldAnnotation: false, // 批注
       fieldWarning: '',
-      photos: { // 出动现场照片
+      photos: { // 现场照片
         value: [],
-        rules: [{ required: true, message: '请选择出动现场照片' }],
+        rules: [{ required: true, message: '请选择现场照片' }],
       },
     },
     otherAttach: { // 其他附件
@@ -1094,40 +1094,40 @@ export const useFormConfig = () => {
     let content = ''
     const warningTypeText = cloneDeep(warningTypeValue?.split('/') || draftInfo.warningType?.text)
     if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场未实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，到场时火灾处于【到场时火灾情况】，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '中途返回') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起【警情末级类型】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，【结束时间】处置结束，【归队时间】归队。共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '到场未实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('抢险救援') && basicInformation.dealSituation?.text === '中途返回') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起事故【抢险救援末级指标】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场未实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '中途返回') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场未实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '中途返回') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到报警称：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('安保勤务') && basicInformation.dealSituation?.text === '到场实施处置') {
       content = '【接警时间年月日时分】，【出动队伍所属支队】【出动队伍】出动【车辆数】车【指战员数】人赶赴【警情地址】，就【活动/任务名】开展【安保勤务末级指标类型】工作。【到场时间】到场，【结束时间】任务结束，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
@@ -1158,15 +1158,16 @@ export const useFormConfig = () => {
       content = content.replace('【警情录入单位】', distributeOrgName)
     }
     if (warningTypeText?.length > 0) {
-      content = content.replace('【警情末级类型】', warningTypeText.pop())
+      content = content.replace('【警情末级类型】', cloneDeep(warningTypeText.pop()))
     }
     if (warningAddr) {
       content = content.replace('【警情地址】', warningAddr)
     }
     if (warningTypeText?.length > 0) {
-      content = content.replace('【（社会救助末级指标）】', warningTypeText.pop())
-      content = content.replace('【（公共服务末级指标）】', warningTypeText.pop())
-      content = content.replace('【虚假警末级指标】', warningTypeText.pop())
+      content = content.replace('【（社会救助末级指标）】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【（公共服务末级指标）】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【虚假警末级指标】', cloneDeep(warningTypeText.pop()))
+      content = content.replace('【抢险救援末级指标】', cloneDeep(warningTypeText).pop())
     }
     if (basicInformation.dispatchDate.value) {
       content = content.replace('【出动时间】', dayjs(basicInformation.dispatchDate.value).format('MM月DD日HH时mm分'))
@@ -1195,10 +1196,10 @@ export const useFormConfig = () => {
     if (battleResult.rescueNum.value >= 0 || battleResult.evacuateNum.value >= 0) {
       content = content.replace('【抢救人数+疏散人数】', battleResult.rescueNum.value + battleResult.evacuateNum.value)
     }
-    if (battleResult.emergencyNum.value) {
+    if (battleResult.emergencyNum.value || battleResult.emergencyNum.value === 0) {
       content = content.replace('【抢救财产价值】', battleResult.emergencyNum.value)
     }
-    if (battleResult.protectNum.value) {
+    if (battleResult.protectNum.value || battleResult.protectNum.value === 0) {
       content = content.replace('【保护财产价值】', battleResult.protectNum.value)
     }
     if (basicInformation.notDealReason.value) {
@@ -1482,7 +1483,8 @@ export const useFormConfig = () => {
     }
     form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
     if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {
-      form.value.investForce.midwayCar.value = fixCarInfo(fireDispatchRetrunTruckList)
+      form.value.investForce.midwayCar.list = fixCarInfo(fireDispatchRetrunTruckList)
+      form.value.investForce.midwayCar.value = form.value.investForce.midwayCar.list?.map(item => item.boFireTruckId)
     }
     form.value.investForce.fireBoatNum.value = fireDispatchItem?.fireBoatNum
     form.value.investForce.fireAirplaneNum.value = fireDispatchItem?.fireAirplaneNum

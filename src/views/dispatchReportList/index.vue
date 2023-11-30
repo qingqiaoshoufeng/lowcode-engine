@@ -3,8 +3,8 @@ import { ref } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import ApplyReject from "./apply-reject.vue";
-import { generateColorByState } from "@/utils/tools.js";
-import PoliceForm from '@/views/policeEntryForm/index.vue';
+import { generateColorByState, checkTimeout } from "@/utils/tools.js";
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
 import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
@@ -19,6 +19,7 @@ const defaultFilterValue = {
 const { show } = useModal();
 
 const currentRow = ref(null);
+const isDraft = ref(false)
 
 const proListRef = ref(null);
 
@@ -38,6 +39,7 @@ const handleInput = (row) => {
 
 const handleItem = (row) => {
   currentRow.value = row
+  isDraft.value = false
   show.value.lookVisible = true
 };
 
@@ -54,13 +56,14 @@ const refreshCallback = () => {
   <div class="dispatch-report-list">
     <ProList
       ref="proListRef"
+      title="出动填报"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getReportList"
       :tabs="[]"
       rowKey="boFireDispatchId"
     >
       <template #list="{ record }">
-        <div class="list-item" @click="handleItem(record)">
+        <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
@@ -86,13 +89,18 @@ const refreshCallback = () => {
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
-            <div style="color: #929398">派发单位：</div>
+            <div style="color: #929398">发送单位：</div>
             <div>{{ record.distributeOrgName }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">已派时长：</div>
-            <div>{{ record.dispatchedTime }}</div>
+            <div v-if="checkTimeout(record.dispatchedTime)" class="test-timeout">
+              {{ record.dispatchedTime }}
+            </div>
+            <div v-else>
+              {{ record.dispatchedTime }}
+            </div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
@@ -122,10 +130,10 @@ const refreshCallback = () => {
     </ProList>
 
     <!-- 出动填报 -->
-    <ProModal v-model:visible="show.editVisible" :showHeader="false" title="出动填报">
+    <ProModal v-model:visible="show.editVisible" :showBack="true" :showHeader="false" title="出动填报">
       <template #default="{ setHandleOk, closeModal }">
         <DispatchForm
-          :show-draft="false"
+          :show-draft="isDraft"
           :is-edit="false"
           :isInput="true"
           :current-row="currentRow"
@@ -136,12 +144,8 @@ const refreshCallback = () => {
       </template>
     </ProModal>
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
-      <PoliceForm
-        :current-row="currentRow"
-        :show-preview="true"
-        :show-steps="true"
-      />
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+      <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 退回说明 -->
     <ProModal v-model:visible="show.rejectVisible" title="退回说明">
@@ -162,81 +166,7 @@ const refreshCallback = () => {
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;
-    padding: 10px 16px 0 16px;
-  }
-  .list-item {
-    display: flex;
-    flex-direction: column;
-    background: #ffffff;
-    margin-top: 10px;
-    .item-header {
-      display: flex;
-      padding: 8px 10px;
-      .item-title {
-        width: 260px;
-        font-size: 16px;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .item-state {
-        width: 57px;
-        height: 24px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 2px;
-        margin-left: auto;
-      }
-    }
-    .item-field {
-      font-size: 14px;
-      color: #1f1f1f;
-      display: flex;
-      align-items: center;
-      padding: 0 0 8px 10px;
-      img {
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-      }
-    }
-    .item-type {
-      margin: 0 0 8px 10px;
-      span {
-        display: inline-block;
-        font-size: 12px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #fc2902;
-        background: #ffefec;
-        border-radius: 2px;
-        padding: 4px 10px;
-      }
-    }
-    .item-line {
-      width: 100%;
-      border-top: 1px solid rgba(31, 31, 31, 0.15);
-    }
-    .item-operate {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 8px 10px;
-      .item-btn {
-        padding: 0 16px;
-        margin-left: 10px;
-        :deep(.van-button__content) {
-          height: 18px;
-        }
-        :deep(.van-button__text) {
-          white-space: nowrap;
-          word-break: break-all;
-        }
-      }
-    }
+    padding: 10px 12px 0 12px;
   }
 }
 </style>

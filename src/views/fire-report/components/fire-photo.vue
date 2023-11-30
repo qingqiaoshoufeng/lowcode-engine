@@ -9,6 +9,10 @@ const form = inject('form')
 
 const isDetail = inject('isDetail')
 
+const isRequired = inject('isRequired')
+
+const isShowTemporary = inject('isShowTemporary')
+
 const isEdit = inject('isEdit')
 
 const currentRow = inject('currentRow')
@@ -50,25 +54,16 @@ const OnAfterRead = async(file) => {
     form.value.firePhoto.photos.value = res.data.map((item) => {
       return {
         isImage: true,
-        deletable:isDetail,
+        deletable:!isDetail,
         ...item, 
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `/acws/rest/attachments/${item.attachmentId}`,
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
 }
-// const onChange = (file, fileList, event) => {
-//   form.value.firePhoto.photos.value?.forEach((item, i) => {
-//     debugger
-//     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-//       item.url = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
-//       item.thumbUrl = `/acws/rest/attachments/${item.attachmentId || item.response?.attachmentId}`
-//     }
-//   })
-// }
 const onDelete = async(val,val1)=>{
   const res = await onRemove(val)
   if(res === true){
@@ -79,12 +74,12 @@ const onDelete = async(val,val1)=>{
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit,
+          deletable:!isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
     })
@@ -100,12 +95,12 @@ onMounted(() => {
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
-          deletable:isEdit,
+          deletable:!isDetail,
           ...item,
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
     })
@@ -114,33 +109,66 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="firePhoto">
-    <h4 id="firePhoto-title">
-      <!-- <file-text-outlined /> -->
-      <strong>火灾照片</strong>
-    </h4>
+  <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="24">
-        <van-uploader
-            name="firePhoto,photos,value"
-            label="火灾照片"
-            :rules="form.firePhoto.photos.rules"
-            v-model="form.firePhoto.photos.value"
-            accept="image/png, image/jpeg, image/jpg"
-            multiple
-            preview-full-image
-            preview-image
-            :max-count="9"
-            :max-size="10 * 1000 * 1000000"
-            :readonly="isDetail"
-            :deletable="!isDetail"
-            :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
-            :after-read="OnAfterRead"
-            @delete="onDelete"
-          />
-          <span v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
+        <van-cell title="火灾照片：" required class="item-cell">
+            <van-field
+              name="firePhoto.photos.value"
+              :rules="form.firePhoto.photos.rules"
+              :required="isRequired"
+              label="火灾照片"
+            >
+              <template #input>
+                <van-uploader
+                  v-model="form.firePhoto.photos.value"
+                  accept="image/png, image/jpeg, image/jpg"
+                  multiple
+                  preview-full-image
+                  preview-image
+                  :max-count="9"
+                  :max-size="10 * 1000 * 1000000"
+                  :readonly="isDetail"
+                  :deletable="!isDetail"
+                  :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
+                  :after-read="OnAfterRead"
+                  @delete="onDelete"
+                />
+              </template>
+          </van-field>
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="火灾照片："
+              remark-field="photos"
+              field-module="firePhoto"
+              :exist-data="fieldExist?.photos"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-cell>
+        <span class="tip" v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
       </div>
     </div>
-  </div>
+  </van-cell-group>
 </template>
+<style lang="scss" scoped>
+.item-cell {
+    flex-direction: column;
+    :deep(.van-cell__value) {
+      display: flex;
+
+    }
+    :deep(.van-field__label--required){
+      width: 0 !important;
+      overflow: hidden;
+    }
+    &::after{
+      display: none;
+    }
+  }
+  .tip{
+    padding: 0 16px;
+    display: block;
+  }
+</style>
 

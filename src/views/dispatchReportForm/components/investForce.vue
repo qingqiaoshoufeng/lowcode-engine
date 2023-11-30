@@ -6,6 +6,10 @@ import SelectMultiple from "@/component/SelectMultiple/index";
 
 const form = inject("form");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject("showPreview");
 
 const options = inject("options");
@@ -70,25 +74,14 @@ const onDispatchTruck = (value, items) => {
   OnCarNum()
 };
 
+const onMidwayCarTruck = (value, items) => {
+  form.value.investForce.midwayCar.list = items
+}
+
 const OnCarNum = () => {
   checkDispatchNum(form.value);
 
   checkIsResponseTruck(form.value);
-};
-
-const validateCommander = (rule, value, callback) => {
-  const { investForce } = form.value;
-  if (!value && value !== 0) {
-    if (!investForce.commander.rules[0].required) {
-      callback();
-    } else {
-      callback(new Error("请输入指挥员人数"));
-    }
-  } else if (!positiveIntegerReg.test(value)) {
-    callback(new Error("请输入正确指挥员人数"));
-  } else {
-    callback();
-  }
 };
 </script>
 
@@ -97,7 +90,7 @@ const validateCommander = (rule, value, callback) => {
     <div class="invest-message">
       共投入 {{ form.investForce?.dispatchTruckList.value?.length || 0 }} 车 {{ personNum || 0 }} 人
     </div>
-    <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio">
+    <!-- <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.isResponseTruck.value"
@@ -109,7 +102,33 @@ const validateCommander = (rule, value, callback) => {
           <van-radio name="2">否</van-radio>
         </van-radio-group>
       </template>
-    </van-cell>
+    </van-cell> -->
+    <van-field 
+      name="investForce.isResponseTruck.value" 
+      label="是否有车辆出动：" 
+      :rules="form.investForce.isResponseTruck.rules"
+    >
+      <template #input>
+        <van-radio-group
+          v-model="form.investForce.isResponseTruck.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          direction="horizontal"
+        >
+          <van-radio name="1">是</van-radio>
+          <van-radio name="2">否</van-radio>
+        </van-radio-group>
+      </template>
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="是否有人员受伤："
+          remark-field="isInjured"
+          field-module="casualtyWar"
+          :exist-data="fieldExist?.isInjured"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <template v-if="form.investForce.isResponseTruck.value === '1'">
       <SelectMultiple
         v-model:value="form.investForce.dispatchTruckList.value"
@@ -118,15 +137,25 @@ const validateCommander = (rule, value, callback) => {
         required
         name="dispatchTruckList"
         :options="dispatchTruckListOptions"
-        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.dispatchTruckList.rules"
         label="消防车辆信息："
         label-width="118px"
         placeholder="请选择消防车辆信息"
         title="请选择消防车辆信息"
         @change="onDispatchTruck"
-      />
-      <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio">
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="消防车辆信息："
+            remark-field="dispatchTruckList"
+            field-module="investForce"
+            :exist-data="fieldExist?.dispatchTruckList"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
+      <!-- <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio">
         <template #default>
           <van-radio-group
             v-model="form.investForce.isReturnTruck.value"
@@ -138,7 +167,35 @@ const validateCommander = (rule, value, callback) => {
             <van-radio name="2">否</van-radio>
           </van-radio-group>
         </template>
-      </van-cell>
+      </van-cell> -->
+      <van-field 
+        name="investForce.isReturnTruck.value" 
+        label="是否有车辆中途返回"
+        :rules="form.investForce.isReturnTruck.rules"
+      >
+        <template #input>
+          <van-radio-group
+            v-model:value="form.investForce.isReturnTruck.value"
+            v-preview-text="showPreview"
+            :disabled="form.investForce.isReturnTruck.disabled"
+            @change="onReturnTruck"
+            icon-size="16px"
+            direction="horizontal"
+          >
+            <van-radio name="1">是</van-radio>
+            <van-radio name="2">否</van-radio>
+          </van-radio-group>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否有车辆中途返回："
+            remark-field="isInjured"
+            field-module="casualtyWar"
+            :exist-data="fieldExist?.isInjured"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
     </template>
     <template v-if="form.investForce.isResponseTruck.value === '1' && form.investForce.isReturnTruck.value === '1'">
       <SelectMultiple
@@ -148,14 +205,25 @@ const validateCommander = (rule, value, callback) => {
         required
         name="midwayCar"
         :options="form.investForce.dispatchTruckList.list"
-        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
         label="中途返回车辆信息："
         label-width="152px"
         placeholder="请选择中途返回车辆信息"
         title="请选择中途返回车辆信息"
-      />
+        @change="onMidwayCarTruck"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="中途返回车辆信息："
+            remark-field="midwayCar"
+            field-module="investForce"
+            :exist-data="fieldExist?.midwayCar"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
     </template>
     <SelectMultiple
       v-model:value="form.investForce.groupLeader.value"
@@ -171,7 +239,17 @@ const validateCommander = (rule, value, callback) => {
       label-width="102px"
       placeholder="请选择带队指挥员"
       title="请选择带队指挥员"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="带队指挥员："
+          remark-field="groupLeader"
+          field-module="investForce"
+          :exist-data="fieldExist?.groupLeader"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectMultiple>
     <SelectMultiple
       v-model:value="form.investForce.commander.value"
       :showPreview="showPreview"
@@ -186,7 +264,17 @@ const validateCommander = (rule, value, callback) => {
       placeholder="请选择指挥员"
       title="请选择指挥员"
       @blur="OnCarNum"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="指挥员："
+          remark-field="commander"
+          field-module="investForce"
+          :exist-data="fieldExist?.commander"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectMultiple>
     <SelectMultiple
       v-model:value="form.investForce.firemen.value"
       :showPreview="showPreview"
@@ -201,7 +289,17 @@ const validateCommander = (rule, value, callback) => {
       placeholder="请选择消防员"
       title="请选择消防员"
       @blur="OnCarNum"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="指挥员："
+          remark-field="firemen"
+          field-module="investForce"
+          :exist-data="fieldExist?.firemen"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectMultiple>
     <van-field
       v-if="showDealSituation"
       v-model="form.investForce.fireBoatNum.value"
@@ -213,7 +311,17 @@ const validateCommander = (rule, value, callback) => {
       label="艇(艘)："
       placeholder="请输入艇数量"
       :rules="form.investForce.fireBoatNum.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="艇(艘)："
+          remark-field="fireBoatNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.fireBoatNum"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <van-field
       v-if="showDealSituation"
       v-model="form.investForce.fireAirplaneNum.value"
@@ -226,7 +334,17 @@ const validateCommander = (rule, value, callback) => {
       label-width="120px"
       placeholder="请输入消防直升机数量"
       :rules="form.investForce.fireAirplaneNum.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="消防直升机(架)："
+          remark-field="fireAirplaneNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.fireAirplaneNum"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <van-field
       v-if="showDealSituation"
       v-model="form.investForce.rescueDogNum.value"
@@ -239,7 +357,17 @@ const validateCommander = (rule, value, callback) => {
       label-width="104px"
       placeholder="请输入搜救犬数量"
       :rules="form.investForce.rescueDogNum.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="搜救犬(只)："
+          remark-field="rescueDogNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.rescueDogNum"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <van-field
       v-if="showDealSituation"
       v-model="form.investForce.uavNum.value"
@@ -252,7 +380,17 @@ const validateCommander = (rule, value, callback) => {
       label-width="104px"
       placeholder="请输入无人机数量"
       :rules="form.investForce.uavNum.rules"
-    />
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="无人机(架)："
+          remark-field="uavNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.uavNum"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
   </van-cell-group>
 </template>
 

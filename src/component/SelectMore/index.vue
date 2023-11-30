@@ -4,13 +4,20 @@ import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectOrg from "@/component/SelectOrg/index";
-import SelectRange from "@/component/SelectRange/index";
+import SelectRangeTime from "@/component/SelectRangeTime/index";
 import AreaCascader from "@/component/AreaCascader/index";
+import {getCurrentInstance} from 'vue';
+const instance = getCurrentInstance();
+
 
 const props = defineProps({
   options: {
     type: Array,
     default: () => [],
+  },
+  showBack: {
+    type: Boolean,
+    default: true,
   },
   resetFn: {
     type: Function,
@@ -18,6 +25,11 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:value", "confirmCallback"]);
+watch(()=>props.options,()=>{
+  instance.proxy.$forceUpdate();
+})
+
+const label = ref("选择更多条件");
 
 const query = inject("query");
 
@@ -36,20 +48,34 @@ const handleConfirm = () => {
   selectVisible.value = false;
 }
 
+const onLeftBack = () => {
+  selectVisible.value = false;
+  emit('update:visible', selectVisible.value)
+}
+
 defineOptions({
   name: "SelectMore",
 });
 </script>
 
 <template>
-  <van-cell
-    title="选择更多条件"
+  <van-field
+    v-model="label"
+    :readonly="true"
+    label=""
+    label-width="0px"
     @click="handleMore"
     style="margin-left: 10px"
     is-link
   />
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-wrapper">
+      <div v-if="showBack" class="back" >
+        <div class="arrow">
+          <van-icon @click="onLeftBack" name="arrow-left" />
+        </div>
+        <div>选择更多条件</div>
+      </div>
       <div class="select-more">
         <div v-for="item in options" :key="item.title" class="more-item">
           <div class="more-title">{{ item.title }}</div>
@@ -119,8 +145,18 @@ defineOptions({
             />
           </template>
           <template v-else-if="item.type === 'select-range'">
-            <SelectRange 
+            <SelectRangeTime
               v-model:value="query[item.value]"
+              :required="false"
+              :readonly="true"
+              label=""
+              :placeholder="item.placeholder"
+            />
+          </template>
+          <template v-else-if="item.type === 'input-range'">
+            <Input-Range
+              v-model:start="query[item.value[0]]"
+              v-model:end="query[item.value[1]]"
               :required="false"
               :readonly="true"
               label=""
@@ -144,8 +180,26 @@ defineOptions({
 <style lang="scss" scoped>
 .select-wrapper {
   height: 100vh;
+  .back {
+    height: 44px;
+    background: #0C207F;
+    display: flex;
+    position: relative;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    .arrow {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      font-size: 18px;
+      transform: translateY(-50%);
+    }
+  }
   .select-more {
-    height: calc(100vh - 48px);
+    height: calc(100vh - 92px);
     display: flex;
     flex-direction: column;
     padding: 10px 16px;

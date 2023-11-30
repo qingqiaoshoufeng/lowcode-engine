@@ -1,4 +1,4 @@
-<script setup>
+<script setup>-close
 import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
@@ -96,9 +96,9 @@ const props = defineProps({
     type: String,
     default: '审核',
   },
-  renderDom: {
-    type: String,
-    default: '.ant-modal-content',
+  offset: {
+    type: Number,
+    default: 100,
   },
   showExportPdf: { // 显示导出按钮
     type: Boolean,
@@ -323,7 +323,7 @@ const sections = computed(() => {
   }
 })
 
-const { sideBarActive } = useIntersection(sections);
+const { sideBarActive } = useIntersection(sections, '.form-right', props.offset);
 
 const { detail, loadDetail } = useDetail({
   getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
@@ -373,6 +373,8 @@ provide('isEdit', props.isEdit)
 
 provide('fieldExist', fieldExist)
 
+provide('dataType', 2)
+
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
@@ -381,6 +383,48 @@ const initPoliceDetail = () => {
     })
   })
 }
+
+const refreshField = () => {
+  if (localFireDispatchId.value) {
+    getFieldAnnotationDetail({
+      dataId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+      dataType: 2,
+    }).then((res) => {
+      if (res) {
+        const { data, fieldModules } = res
+        fieldExist.value = data
+        form.value.basicInformation.fieldAnnotation = fieldModules?.basicInformation
+        form.value.basicInfoHead.fieldAnnotation = fieldModules?.basicInfoHead
+        form.value.personInfo.fieldAnnotation = fieldModules?.personInfo
+        // form.value.commandMode.fieldAnnotation = fieldModules?.commandMode
+        form.value.commandProcess.fieldAnnotation = fieldModules?.commandProcess
+        form.value.deployEquipment.fieldAnnotation = fieldModules?.deployEquipment
+        form.value.investForce.fieldAnnotation = fieldModules?.investForce
+        form.value.casualtyWar.fieldAnnotation = fieldModules?.casualtyWar
+        form.value.battleResult.fieldAnnotation = fieldModules?.battleResult
+        form.value.battleConsume.fieldAnnotation = fieldModules?.battleConsume
+        form.value.disposalProcess.fieldAnnotation = fieldModules?.disposalProcess
+        form.value.scenePhoto.fieldAnnotation = fieldModules?.scenePhoto
+        form.value.otherAttach.fieldAnnotation = fieldModules?.otherAttach
+      }
+    })
+  }
+}
+
+const deleteField = (remarkField, remarkField2) => {
+  deleteFormFieldAnnotation({
+    dataId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
+    dataType: 2,
+    remarkField,
+    remarkField2,
+  }).then((res) => {
+    refreshField()
+  })
+}
+
+provide('refreshField', refreshField)
+
+provide('deleteField', deleteField)
 
 const initDict = () => {
   return new Promise((resolve) => {
@@ -552,6 +596,82 @@ const initPerson = (dispatchGroup) => {
   })
 }
 
+const initDynamicDict = () => {
+  if (props.isDetail) {
+    const { battleConsume, deployEquipment, investForce, personInfo } = form.value
+    let cars = ''
+    // const persons = ''
+    // if (investForce.groupLeader.value) { // 带队指挥员
+    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
+    //   investForce.groupLeader.value?.forEach((item) => {
+    //     if (!persons.includes(item.userId)) {
+    //       deptMembersOptions.value.push({
+    //         userId: item.userId,
+    //         userName: item.userName,
+    //         label: item.userName,
+    //         value: item.userId,
+    //       })
+    //     }
+    //   })
+    // }
+    // if (personInfo.commandLeader) { // 指挥员姓名
+    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
+    //   personInfo.commandLeader?.forEach((item) => {
+    //     if (!persons.includes(item.headerName)) {
+    //       deptMembersOptions.value.push({
+    //         userId: item.headerName,
+    //         userName: item.userName,
+    //         label: item.userName,
+    //         value: item.headerName,
+    //       })
+    //     }
+    //   })
+    // }
+    if (battleConsume.wastageTruck.value) { // 损耗车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      battleConsume.wastageTruck.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+    if (deployEquipment.headTruckList.value) { // 指挥车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      deployEquipment.headTruckList.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+    if (investForce.dispatchTruckList.value) { // 消防车辆信息
+      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
+      investForce.dispatchTruckList.value?.forEach((item) => {
+        if (!cars.includes(item.boFireTruckId)) {
+          dispatchTruckListOptions.value.push({
+            boFireTruckId: item.boFireTruckId,
+            truckNumber: item.truckNumber,
+            truckCode: item.truckCode,
+            label: item.truckCode,
+            value: item.boFireTruckId,
+          })
+        }
+      })
+    }
+  }
+}
+
 const initWatch = () => {
   closeToast()
   return new Promise((resolve) => {
@@ -568,6 +688,7 @@ const initWatch = () => {
         generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
       }, { deep: true })
     }
+    initDynamicDict()
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
     })
@@ -576,6 +697,13 @@ const initWatch = () => {
 }
 
 const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail])
+
+const getPersonNum = () => {
+  if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
+    return form.value.investForce.commander?.value?.length + form.value.investForce.firemen?.value?.length
+  }
+  return 0
+}
 
 const getSubmitParams = () => {
   const {
@@ -634,6 +762,8 @@ const getSubmitParams = () => {
         groupLeader: investForce.groupLeader.value?.join(','),
         commander: investForce.commander.value?.join(','),
         firemen: investForce.firemen.value?.join(','),
+        inputPersonNum: getPersonNum(),
+        inputCarNum: form.investForce?.dispatchTruckList.value?.length || 0,
         isResponseTruck: investForce.isResponseTruck.value,
         isReturnTruck: investForce.isReturnTruck.value,
         fireBoatNum: investForce.fireBoatNum.value,
@@ -1114,7 +1244,7 @@ const onSideBarChange = (e, k) => {
   if (targetElement) {
     targetElement.scrollIntoView({
       block: 'start',
-      behavior: 'smooth',
+      // behavior: 'smooth', // 会影响左侧点击
     });
   }
 }
@@ -1125,14 +1255,14 @@ const onSideBarChange = (e, k) => {
     <div class="form-left">
       <van-sidebar v-model="sideBarActive">
         <template v-for="(item, k) in sections" :key="k">
-          <van-sidebar-item to="#otherAttach" @click="onSideBarChange(item, k)">
+          <van-sidebar-item @click="onSideBarChange(item, k)">
             <template #title>{{ item?.title }}</template>
           </van-sidebar-item>
         </template>
       </van-sidebar>
     </div>
     <div class="form-right">
-      <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
+      <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" required="auto">
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">

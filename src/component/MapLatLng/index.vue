@@ -42,9 +42,9 @@ const keyword = ref(`${props.selectArea?.join('')}${props.selectAddr}`)
 
 const tiandituToken = 'cf8b627df2989291ecfc67605220bf98'
 
-const mapTileLayerUrl = `//t{s}.tianditu.gov.cn/DataServer?T=vec_c&x={x}&y={y}&l={z}&tk=${tiandituToken}`
+const mapTileLayerUrl = `http://t{s}.tianditu.gov.cn/DataServer?T=vec_c&x={x}&y={y}&l={z}&tk=${tiandituToken}`
 
-const textTileLayerUrl = `//t{s}.tianditu.gov.cn/DataServer?T=cva_c&X={x}&Y={y}&L={z}&tk=${tiandituToken}`
+const textTileLayerUrl = `http://t{s}.tianditu.gov.cn/DataServer?T=cva_c&X={x}&Y={y}&L={z}&tk=${tiandituToken}`
 
 const EPSG4490 = L.extend({}, L.CRS, {
   code: 'EPSG:4490',
@@ -72,7 +72,7 @@ const drawMaker = (currentLat, currentLng) => {
   L.popup({ closeButton: false }).setLatLng({
     lat: currentLat,
     lng: currentLng,
-  }).setContent(`经度：${currentLat}<br/>纬度：${currentLng}`).openOn(leafletObj.value)
+  }).setContent(`经度：${currentLng}<br/>纬度：${currentLat}`).openOn(leafletObj.value)
   makerList.value = [{
     latitude: currentLat,
     longitude: currentLng,

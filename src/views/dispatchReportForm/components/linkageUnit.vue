@@ -6,6 +6,10 @@ const form = inject('form')
 
 const isDetail = inject('isDetail')
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const showPreview = inject('showPreview')
 
 const options = inject('options')
@@ -45,7 +49,7 @@ const onHaveLinkageUnit = (e) => {
 
 <template>
   <van-cell-group>
-    <van-cell title="是否有联动单位：" required v-preview-text="showPreview" class="field-radio">
+    <!-- <van-cell title="是否有联动单位：" required v-preview-text="showPreview" class="field-radio">
       <template #default>
         <van-radio-group
           v-model="form.investForce.haveLinkageUnit.value"
@@ -53,11 +57,38 @@ const onHaveLinkageUnit = (e) => {
           direction="horizontal"
           @change="onHaveLinkageUnit"
         >
+          <van-radio name="1">有</van-radio>
+          <van-radio name="2">无</van-radio>
+        </van-radio-group>
+      </template>
+    </van-cell> -->
+    <van-field 
+      name="investForce.haveLinkageUnit.value" 
+      label="是否有联动单位："
+      :rules="form.investForce.haveLinkageUnit.rules"
+      required
+    >
+      <template #input>
+        <van-radio-group
+          v-model:value="form.investForce.haveLinkageUnit.value"
+          v-preview-text="showPreview"
+          icon-size="16px"
+          direction="horizontal"
+        >
           <van-radio name="1">是</van-radio>
           <van-radio name="2">否</van-radio>
         </van-radio-group>
       </template>
-    </van-cell>
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="是否有联动单位："
+          remark-field="haveLinkageUnit"
+          field-module="investForce"
+          :exist-data="fieldExist?.haveLinkageUnit"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
     <div v-if="form.investForce.haveLinkageUnit.value === '1'" class="block-dynamic">
       <div v-for="(item, index) in form.investForce.fireDispatchZfList" :key="index" class="block-dynamic-item">
         <div class="title">人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteUnit(index)" /></div>
@@ -71,7 +102,19 @@ const onHaveLinkageUnit = (e) => {
           label="单位名称："
           placeholder="请输入单位名称"
           :rules="form.investForce.orgName.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="单位名称："
+              remark-field="fireDispatchLinkList"
+              remark-field2="orgName"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchLinkList?.[index]?.orgName"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
         <SelectSingle
           v-model:value="item.departmentName"
           :showPreview="showPreview"
@@ -85,7 +128,19 @@ const onHaveLinkageUnit = (e) => {
           label-width="118px"
           placeholder="请选择所属行业部门"
           :rules="form.investForce.departmentName.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="所属行业部门："
+              remark-field="fireDispatchLinkList"
+              remark-field2="departmentName"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchLinkList?.[index]?.departmentName"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
         <SelectSingle
           v-model:value="item.orgLevel"
           :showPreview="showPreview"
@@ -98,7 +153,19 @@ const onHaveLinkageUnit = (e) => {
           label="所属级别："
           placeholder="请选择所属级别"
           :rules="form.investForce.orgLevel.rules"
-        />
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="所属级别："
+              remark-field="fireDispatchLinkList"
+              remark-field2="orgLevel"
+              :remark-field2-id="index"
+              field-module="investForce"
+              :exist-data="fieldExist?.fireDispatchLinkList?.[index]?.orgLevel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
       </div>
       <template v-if="!isDetail">
         <van-button type="default" icon="plus" size="small" style="margin: 0 20px" @click="handleAddUnit">

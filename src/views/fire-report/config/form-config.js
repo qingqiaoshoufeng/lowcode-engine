@@ -1,14 +1,14 @@
 import { nextTick, ref, watch } from 'vue'
-// import { Form } from '@castle/ant-design-vue'
+import { Form } from '@castle/ant-design-vue'
 import dayjs from 'dayjs'
 import { cloneDeep, pickBy, toArray } from 'lodash-es'
 import { checkAffectedHouse, checkBurnedArea, checkFireDisposalCost, checkFireInjuryCost, checkFireResistanceRating } from './tool.js'
 import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from '@/utils/validate.js'
 import { getTypeText } from '@/utils/tools.js'
 
-// const useForm = Form.useForm
+const useForm = Form.useForm
 
-export const useFormConfig = () => {
+export const useFormConfig = (fromRef) => {
   const formOrigin = {
     fireInfo: {
       title: '警情信息',
@@ -170,7 +170,7 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '请选择事故形态' }],
       },
       fireSite: { // 起火位置
-        value: '',
+        value: undefined,
         rules: [{ required: true, message: '请选择起火位置' }],
       },
       initialFuelsType: { // 起火物类型
@@ -194,7 +194,7 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入引起火灾人员年龄' },
-          { pattern: nonZeroPositiveInteger, message: '请输入正确引起火灾人员年龄' },
+          // { pattern: nonZeroPositiveInteger, message: '请输入正确引起火灾人员年龄' },
         ],
       },
       schooling: { // 受教育程度
@@ -208,6 +208,10 @@ export const useFormConfig = () => {
       industry: { // 所属行业
         value: undefined,
         // rules: [{ required: true, message: '请选择所属行业' }],
+      },
+      industryDepartment: { // 行业主管部门
+        value: undefined,
+        // rules: [{ required: true, message: '请选择行业主管部门' }],
       },
       economicType: { // 经济类型
         value: undefined,
@@ -465,7 +469,7 @@ export const useFormConfig = () => {
           { pattern: nonnegativeNumberReg, message: '请输入正确单层建筑面积' },
         ],
       },
-      housingLife: { // 房龄
+      housingLife: { // 房龄（年）
         value: '',
         rules: [
           // { required: true, message: '请输入房龄' },
@@ -760,7 +764,7 @@ export const useFormConfig = () => {
   }
 
   const form = ref(cloneDeep(formOrigin))
-
+  const isRequired = ref(true)
   const handleUseForm = (key, data) => {
     const modelRef = ref(pickBy(data, (v, k) => {
       if (key !== 'casualtyWar') {
@@ -800,34 +804,44 @@ export const useFormConfig = () => {
       return rules
     })())
 
-    // const { validate, validateInfos } = useForm(modelRef, rulesRef)
+    const { validate, validateInfos } = useForm(modelRef, rulesRef)
 
-    // validate().finally(() => {
-    //   const allFormItem = toArray(validateInfos)
-    //   const allFormItemNum = document.getElementById(key)?.querySelectorAll('.ant-form-item-required')?.length
-    //   if (!allFormItemNum || allFormItem <= 0) {
-    //     form.value[key].validateStatus = true
-    //     form.value[key].validateProgress = 100
-    //   }
-    //   else {
-    //     const passFormItemNum = allFormItem.filter(i => i.validateStatus === 'success' && i.required).length
+    validate().finally(() => {
+      // if (key === 'firePhoto') {
+      //   debugger
+      // }
+      const allFormItem = toArray(validateInfos)
+      const allFormItemNum = document.getElementById(key)?.querySelectorAll('.van-field__label--required')?.length
+      if (!allFormItemNum || allFormItem <= 0) {
+        form.value[key].validateStatus = true
+        form.value[key].validateProgress = 100
+      }
+      else {
+        const passFormItemNum = allFormItem.filter(i => i.validateStatus === 'success' && i.required).length
 
-    //     form.value[key].validateStatus = allFormItemNum === passFormItemNum
-    //     form.value[key].validateProgress = Math.round(passFormItemNum / allFormItemNum * 100)
-    //   }
-    // })
+        form.value[key].validateStatus = allFormItemNum === passFormItemNum
+        form.value[key].validateProgress = Math.round(passFormItemNum / allFormItemNum * 100)
+      }
+    })
   }
-
+  // const handleUseForm1 = ()=>{
+  //   const res = fromRef.value.getValidationStatus()
+  //   debugger;
+  //   Object.keys(res).forEach(item=>{
+  //     item.startsWith('')
+  //   })
+  //   console.log(res);
+  // }
   // 根据模版生成简要情况
   const generateRemarkField = (detail) => {
     const { basicInfo, casualtyWar, economicLoss } = form.value
     const { warningAddr, extinctDate } = detail
     let content = ''
     if (basicInfo.fireType?.text?.includes('交通工具火灾')) {
-      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接财产损失【直接财产损失】元。'
+      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
-      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【熄灭时间】熄灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接财产损失【直接财产损失】元。'
+      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     // 替换各个字段
     if (basicInfo.fireDate.value) {
@@ -849,7 +863,10 @@ export const useFormConfig = () => {
       content = content.replace('【起火物】', cloneDeep(basicInfo.initialFuelsType.text)?.pop())
     }
     if (extinctDate) {
-      content = content.replace('【熄灭时间】', dayjs(extinctDate).format('MM月DD日HH时mm分'))
+      content = content.replace('【扑灭时间】', dayjs(extinctDate).format('MM月DD日HH时mm分'))
+    }
+    else {
+      content = content.replace('，【扑灭时间】扑灭', '')
     }
     if (basicInfo.fireCause.text?.length > 0) {
       content = content.replace('【起火原因】', cloneDeep(basicInfo.fireCause.text)?.pop())
@@ -869,8 +886,8 @@ export const useFormConfig = () => {
     if (casualtyWar.isDead.value !== '1' && casualtyWar.isInjured.value !== '1') {
       content = content.replace('造成【亡人数】死【伤人数】伤', '无人员伤亡')
     }
-    if (economicLoss.directDamage.value > 0) {
-      content = content.replace('【直接财产损失】', economicLoss.directDamage.value)
+    if (economicLoss.directEconomicLoss.value || economicLoss.directEconomicLoss.value === 0) {
+      content = content.replace('【直接经济损失】', economicLoss.directEconomicLoss.value)
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')
     form.value.briefSituation.content.value = content
@@ -880,14 +897,15 @@ export const useFormConfig = () => {
     () => form.value,
     () => {
       nextTick(() => {
-        Object.keys(form.value).forEach((key) => {
-          handleUseForm(key, form.value[key])
-        })
+        // Object.keys(form.value).forEach((key) => {
+        //   handleUseForm(key, form.value[key])
+        // })
       })
     },
     { deep: true },
   )
 
+  // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   const initFormWhenChange = (draft) => {
     form.value.fireInfo = cloneDeep(formOrigin.fireInfo)
@@ -907,6 +925,8 @@ export const useFormConfig = () => {
     // form.value.basicInfo.fireType.text = []
     // form.value.basicInfo.fireCause.value = undefined
     // form.value.basicInfo.fireCause.text = []
+    // form.value.basicInfo.noCause.value = undefined
+    // form.value.basicInfo.noCause.text = []
     // form.value.basicInfo.burnedArea.value = ''
     // form.value.basicInfo.fireLevel.value = ''
     // form.value.basicInfo.firePlace.value = undefined
@@ -941,12 +961,13 @@ export const useFormConfig = () => {
     form.value.basicInfo.schooling.value = undefined
     form.value.basicInfo.health.value = undefined
     form.value.basicInfo.industry.value = undefined
+    form.value.basicInfo.industryDepartment.value = undefined
     form.value.basicInfo.economicType.value = undefined
     form.value.basicInfo.leadInspectionOrg.value = undefined
     form.value.basicInfo.otherOrgRemark.value = ''
     form.value.basicInfo.isInsurance.value = '2'
     form.value.basicInfo.insuranceInfo.value = undefined
-    form.value.basicInfo.isResearch.value = '2'
+    // form.value.basicInfo.isResearch.value = '2'
     form.value.basicInfo.isOnesided.value = '2'
     form.value.basicInfo.fireInspection.value = undefined
     form.value.basicInfo.fireInspectionScope.value = undefined
@@ -1212,6 +1233,7 @@ export const useFormConfig = () => {
     // form.value.basicInfo.severity.rules[0].required = value
     // form.value.basicInfo.noDispatchArea.rules[0].required = value
     // form.value.basicInfo.fireDate.rules[0].required = value
+    isRequired.value = value
     form.value.basicInfo.fireDirection.rules[0].required = value
     form.value.basicInfo.area.rules[0].required = value
     // form.value.basicInfo.isUrbanVillages.rules[0].required = value
@@ -1361,7 +1383,7 @@ export const useFormConfig = () => {
     // 其他附件
     // form.value.otherAttach.attach.rules[0].required = value
     // form.value.otherAttach.otherRemark.rules[0].required = value
-    formRef.value?.clearValidate()
+    // formRef.value?.clearValidate()
   }
 
   // 校验是否对异常项进行批注
@@ -1389,5 +1411,5 @@ export const useFormConfig = () => {
     return result
   }
 
-  return { form, handleUseForm, initFormWhenChange, initFormByDetail, initDraftRules, checkFieldWarning, generateRemarkField }
+  return { form, isRequired, handleUseForm, initFormWhenChange, initFormByDetail, initDraftRules, checkFieldWarning, generateRemarkField }
 }

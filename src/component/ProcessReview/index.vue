@@ -79,7 +79,7 @@ defineOptions({
 
 <template>
   <van-form ref="formRef" @submit="onSubmit">
-    <van-field
+    <!-- <van-field
       v-model="form.auditUserName"
       :readonly="true"
       name="auditUserName"
@@ -94,19 +94,20 @@ defineOptions({
       :label="`${labelText}单位：`"
       :placeholder="`请输入${labelText}单位`"
       :disabled="true"
-    />
+    /> -->
     <SelectSingle
       v-model:value="form.approveType"
       :readonly="true"
       name="approveType"
       required
       :options="options.approval"
-      :field-names="{ value: 'boDictId', label: 'dictName' }"
+      :field-names="{ value: 'value', label: 'label' }"
       :title="`请选择${labelText}意见`"
       :label="`${labelText}意见：`"
       :placeholder="`请选择${labelText}意见`"
       :rules="[{ required: true, message: `请选择${labelText}意见` }]"
       @change="onApproveType"
+      teleport="body"
     />
     <van-field
       v-model="form.remark"

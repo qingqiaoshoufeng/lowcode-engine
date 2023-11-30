@@ -2,6 +2,7 @@
   <div class="fire-manage">
     <ProList
         ref="proListRef"
+        title="火灾管理"
         :defaultFilterValue="defaultFilterValue"
         :getListFn="getFireManageList"
         :tabs="tabs"
@@ -15,6 +16,7 @@
             @change="onTimeChange"
           />
           <SelectMore
+            v-if="options.fireCause"
             :options="searchOptions"
             :reset-fn="resetForm"
             @confirmCallback="onSearchConfirm"
@@ -25,12 +27,12 @@
           <div class="list-item" @click="handleItem(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
-              <!-- <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
-                {{ record.dispatchStatusValue }}
-              </div> -->
+              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+                {{ record.fireStatusValue }}
+              </div>
             </div>
             <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
+              <span>{{ record.firePlaceValue }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -53,50 +55,46 @@
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
-            <div class="item-field">
+            <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div style="color: #929398">起火场所：</div>
               <div>{{ record.firePlaceValue }}</div>
-            </div>
+            </div> -->
             <div class="item-line" />
             <div class="item-operate" @click.stop>
+              <van-icon
+                name="star"
+                v-if="record.focusStatus === '1'"
+                style="color: #fed547"
+                class="item-collect"
+                @click="handleCollect(record, false)"
+              />
+              <van-icon
+                name="star-o"
+                v-else
+                class="item-collect"
+                @click="handleCollect(record, true)"
+              />
               <van-button
                 v-p="['admin', 'fire-report:look']"
                 type="success"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                @click.stop="handleclick({type:'look' ,record})"
+                @click.stop="handleLook(record)"
               >
                 查看
               </van-button>
               <van-button
-                v-p="['admin', 'fire-report:input']"
+                v-p="['admin', 'fire-report:look']"
                 type="success"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                @click.stop="handleclick({type:'editor' ,record})"
+                @click.stop="handleRecheck(record)"
+                v-if="checkFireChangeState(record.fireStatusValue, record.updatePermission)"
               >
-                填报
-              </van-button>
-              <van-button
-                v-p="['admin', 'fire-report:reback']"
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click.stop="handleclick({type:'return' ,record})"
-              >
-                回退
-              </van-button>
-              <van-button
-                v-if="record.isDistribute !== '1'" 
-                v-p="['admin', 'fire-report:transfer']" 
-                type="link" 
-                @click="handleTransfer({type:'transfer' ,record})"
-              >
-                转派
+               申请更正
               </van-button>
             </div>
           </div>
@@ -115,33 +113,174 @@
           />
         </template>
     </ProModal>
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true" :showHeader="false" 
+      title="火灾详情"
+      :ok-display="false"
+      :footer="null"
+      pro-card-id="card-wrap"
+    >
+      <EditorForm :current-row="currentRow" :is-detail="true" />
+    </ProModal>
+    <!-- 申请更正 -->
+    <ProModal v-model:visible="show.recheckVisible" title="申请更正">
+      <template #default="{ setHandleOk }">
+        <ApplyRecheck
+          :recheck-type="3"
+          :current-row="currentRow"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="refreshCallback"
+        />
+      </template>
+    </ProModal>
   </div>
 </template>
   
 <script setup>
 import {  
   // deleteFireReportDraft, 
+  getFireWarningTag,
+  collectFireWarning,
   getFireManageList } from '@/apis/index.js'
-import { computed, createVNode, onMounted, ref } from 'vue'
-import { getLastMonth } from '@/utils/tools.js'
+import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
+import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
+import { getLastMonth,checkFireChangeState } from '@/utils/tools.js'
+import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
+import SelectMore from "@/component/SelectMore/index";
+import { formatYmdHm } from "@/utils/format.js";
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
+import { showToast,showLoadingToast } from 'vant';
+import store from '@/store/index.js'
+const getSystemDictSync = store.getters['dict/getSystemDictSync']
+
+
 const tabs = ref([
   {
     title: "辖区火灾",
-    value: 0,
-  },
-  {
-    title: "我的火灾",
     value: 1,
   },
   {
-    title: "收藏的火灾",
+    title: "我的火灾",
     value: 2,
   },
+  {
+    title: "收藏的火灾",
+    value: 3,
+  },
 ]);
-import SelectMore from "@/component/SelectMore/index";
-import { formatYmdHm } from "@/utils/format.js";
-import EditorForm from '../fire-report/components/EditorForm.vue'
+const options = {}
+getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM'], null, (res) => {
+  options.fireStatus = res.HZ_STATUS
+  options.fireLevel = res.HZ_INFO_HZDJ
+  options.fireCause = toRaw(res.HZ_QHYY)
+  options.area = res.HZ_INFO_QY
+})
+onMounted(() => {
+  // 获取火灾标签
+  getFireWarningTag({ tagType: 2 }).then((res) => {
+    options.fireTags = res.data || []
+  })
+  show.value.moreFilter = true
+})
+
+const searchOptions = computed(()=>([
+  {
+    title: '选择时间',
+    type: 'select-range',
+    placeholder: '请选择时间',
+    value: 'time',
+  },
+  {
+    title: '状态',
+    type: 'select',
+    placeholder: '请选择状态',
+    options: options.fireStatus,
+    fieldNames: { value: 'boDictId', label: 'dictName' },
+    value: 'fireStatus',
+  },
+  {
+    title: '火灾编号',
+    type: 'input',
+    placeholder: '请输入火灾编号',
+    value: "fireCode",
+  },
+  {
+    title: '是否轻微火灾',
+    type: 'select-single',
+    placeholder: '请选择是否轻微火灾',
+    fieldNames: { value: 'value', label: 'label' },
+    value: 'severity',
+    options: isNot,
+  },
+  {
+    title: '是否出动',
+    type: 'select-single',
+    placeholder: '请选择是否出动',
+    fieldNames: { value: 'value', label: 'label' },
+    value: 'severity',
+    options: isNot,
+  },
+  {
+    title: '火灾标签',
+    type: 'select-single',
+    placeholder: '请选择火灾标签',
+    fieldNames:"{ label: 'tagName', value: 'boFireTagId' }",
+    value: 'fireTags',
+    options: options.fireTags,
+  },
+  {
+    title: '所属队伍',
+    type: 'select-org',
+    placeholder: '请选择所属队伍',
+    params: { permission: true },
+    single: false,
+    selectLeaf: false,
+    headersDisabled: true,
+    value: 'orgList',
+  },
+  {
+    title: '火灾等级',
+    type: 'select',
+    placeholder: '请选择火灾等级',
+    fieldNames:{ value: 'boDictId', label: 'dictName' },
+    value: 'fireLevel',
+    options: options.fireLevel,
+  },
+  {
+    title: '起火原因',
+    type: 'cascader',
+    placeholder: '请选择起火原因',
+    fieldNames: { value: 'boDictId', text: 'dictName' },
+    options: options.fireCause,
+    value: 'fireCause',
+  },
+  {
+    title: '区域',
+    type: 'cascader',
+    placeholder: '请选择区域',
+    fieldNames: { value: 'boDictId', text: 'dictName' },
+    options: options.area,
+    value: 'area',
+  }, 
+  {
+    title: '是否属于安全生产事故',
+    type: 'select-single',
+    placeholder: '请选择是否属于安全生产事故',
+    fieldNames:{ value: 'value', label: 'label' },
+    value: 'isSafetyAccident',
+    options: isNot,
+  },
+  {
+    title: '是否正在调查',
+    type: 'select-single',
+    placeholder: '请选择是否正在调查',
+    fieldNames:{ value: 'value', label: 'label' },
+    value: 'isSafetyAccident',
+    options: isNot,
+  },
+]))
 const currentRow = ref({})
 const proListRef = ref(null);
 const defaultFilterValue = {
@@ -155,6 +294,13 @@ const defaultFilterValue = {
   fireCause: [],
   area: [],
 }
+
+const onTimeChange = (value) => {
+  showLoadingToast();
+  proListRef.value.filter().then((res) => {
+    closeToast();
+  });
+};
 const show = ref({})
 const isEdit = ref(false)
 const isDraft = ref(false)
@@ -168,23 +314,20 @@ const onSearchConfirm = () => {
     closeToast();
   });
 }
-const handleInput = (row) => {
-  if (row.isLock === '1') {
-    message.warning(MSG_LOCKING_TEXT)
-    return
-  }
-  currentRow.value = row
-  isDraft.value = false
-  isEdit.value = false
-  show.value.editVisible = true
-}
 const handleLook = (row) => {
-  currentRow.value = { ...row, boFireInfoId: undefined }
-  isDraft.value = false
-  isEdit.value = false
+  currentRow.value = row
   show.value.lookVisible = true
 }
-
+const handleCollect = async (row, state) => {
+  const res = await collectFireWarning({
+    focusAppid: row.boFireInfoId,
+    focusCode: row.fireCode,
+    focusType: '3',
+    deleteFlag: state ? '1' : '2',
+  })
+  showToast(state ? '收藏成功' : '取消收藏成功')
+  proListRef.value.filter()
+}
 // 查询辖区火灾
 const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
@@ -209,53 +352,25 @@ const handleMyCollect = () => {
   }
   proListRef.value.filter()
 }
-// 操作按钮
-const handleclick = ({type,record})=>{
-  const map = {
-    'editor':handleInput(record),
-    'look':handleLook(record)
+// 申请更正
+const handleRecheck = (row) => {
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
   }
-  show.value[type] = true
+  currentRow.value = row
+  show.value.recheckVisible = true
 }
-
 // tab切换
 const onTabChangeFn = (val,val1)=>{
-  const getMap = [getPrefectureFire,handleMyFire,handleMyCollect]
+  const getMap = ['',getPrefectureFire,handleMyFire,handleMyCollect]
   getMap[val]()
 }
 const handleItem = (record)=>{
-  selectVisible
+  // selectVisible
 }
-
-  
-  
-  
-const handleEdit = (row) => {
-  currentRow.value = row
-  relevanceDraft.value = null
-  isDraft.value = true
-  isEdit.value = true
-  show.value.editVisible = true
-}
-  
-const handleAddDraft = () => {
-  currentRow.value = null
-  relevanceDraft.value = null
-  isDraft.value = true
-  isEdit.value = false
-  show.value.draftVisible = true
-}
-  
-const handleAddUnDispatch = () => {
-  currentRow.value = null
-  relevanceDraft.value = null
-  isDraft.value = false
-  isEdit.value = false
-  show.value.unDispatchVisible = true
-}
-const setHandleOk = ()=>{}
 </script>
-  <style lang="scss">
+  <style lang="scss" scoped>
   .fire-manage{
     .list-item {
       display: flex;
@@ -334,7 +449,7 @@ const setHandleOk = ()=>{}
   }
   .list-tabs1 {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
   // .list-item {
   //   display: flex;
@@ -414,4 +529,8 @@ const setHandleOk = ()=>{}
   //     }
   //   }
   // }
+  .item-collect {
+        font-size: 20px;
+        margin-right: auto;
+      }
   </style>

@@ -8,17 +8,18 @@ const useSystemDict = defineStore('systemDict', {
   }),
 
   actions: {
-    init() {
-      getFireWarningType().then((res) => {
+    init:async function() {
+      await getFireWarningType().then((res) => {
         if (res && res.items) {
           this.$state.systemDicts = res.items
         }
       })
-      getFireWarningType({ allFlag: true }).then((res) => {
+      await getFireWarningType({ allFlag: true }).then((res) => {
         if (res && res.items) {
           this.$state.systemDictsAll = res.items
         }
       })
+      return true
     },
     getSystemDictSync(dictType, transformRes, callback, detail = false) {
       if (detail) {

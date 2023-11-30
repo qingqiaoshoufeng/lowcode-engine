@@ -8,6 +8,10 @@ const form = inject("form");
 
 const isDetail = inject("isDetail");
 
+const fieldExist = inject('fieldExist')
+
+const refreshField = inject('refreshField')
+
 const isEdit = inject("isEdit");
 
 const currentRow = inject("currentRow");
@@ -19,10 +23,10 @@ const localFireDispatchId = inject("localFireDispatchId");
 const onChange = (file, fileList, event) => {
   form.value.scenePhoto.photos.value?.forEach((item, i) => {
     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-      item.url = `/acws/rest/attachments/${
+      item.url = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
-      item.thumbUrl = `/acws/rest/attachments/${
+      item.thumbUrl = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
     }
@@ -45,7 +49,7 @@ onMounted(() => {
           name: item.attachmentName,
           status: "done",
           isImage: true,
-          url: `/acws/rest/attachments/${item.attachmentId}`,
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });
@@ -95,7 +99,7 @@ const onDelete = (file) => {
   <ProCard title="现场照片" id="scenePhoto" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
-        <van-cell title="出动现场照片：" required class="item-cell">
+        <van-cell title="现场照片：" required class="item-cell">
           <van-uploader
             v-model="form.scenePhoto.photos.value"
             accept="image/png, image/jpeg, image/jpg"
@@ -110,7 +114,17 @@ const onDelete = (file) => {
             :after-read="onAfterRead"
             :before-delete="onDelete"
           />
+          <template v-slot:title="">
+            <FieldAnnotation
+              label="相关附件上传："
+              remark-field="photos"
+              field-module="scenePhoto"
+              :exist-data="fieldExist?.photos"
+              @refresh-callback="refreshField"
+            />
+          </template>
         </van-cell>
+
       </div>
     </van-cell-group>
   </ProCard>

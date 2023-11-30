@@ -138,6 +138,7 @@ onMounted(() => {
   <div class="dispatch-review-list">
     <ProList
       ref="proListRef"
+      title="出动审核"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDispatchReviewList"
       :tabs="tabs"
@@ -192,7 +193,7 @@ onMounted(() => {
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
             <div style="color: #929398">投入力量：</div>
-            <div>{{ record.dispatchInput }}</div>
+            <div>{{ record.inputForce }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
@@ -212,14 +213,14 @@ onMounted(() => {
     </ProList>
 
     <!-- 出动填报详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="出动填报详情">
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="出动填报详情">
       <DispatchForm
         :current-row="currentRow"
         :is-detail="true"
       />
     </ProModal>
     <!-- 出动审核详情 -->
-    <ProModal v-model:visible="show.reviewVisible" :showHeader="false" title="出动审核详情">
+    <ProModal v-model:visible="show.reviewVisible" :showBack="true" :showHeader="false" title="出动审核详情">
       <template #default="{ setHandleOk }">
         <DispatchForm
           :current-row="currentRow"
@@ -240,7 +241,7 @@ onMounted(() => {
   background-color: #f6f7f8;
   .list-tabs {
     display: flex;
-    padding: 10px 16px 0 16px;
+    padding: 10px 12px 0 12px;
   }
   .list-item {
     display: flex;
@@ -282,6 +283,7 @@ onMounted(() => {
       }
     }
     .item-type {
+      max-width: calc(100% - 20px);
       margin: 0 0 8px 10px;
       span {
         display: inline-block;

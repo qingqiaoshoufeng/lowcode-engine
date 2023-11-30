@@ -27,6 +27,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  maxDate: {
+    type: Object,
+    default: new Date(),
+  },
 });
 
 const emit = defineEmits(["update:value", "change"]);
@@ -43,15 +47,9 @@ watch(
   () => props.value,
   (val) => {
     if (props.value) {
-      startDate.value = props.value?.[0]
-        ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-")
-        : [];
-      endDate.value = props.value?.[1]
-        ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-")
-        : [];
-      selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join(
-        "-"
-      )}`;
+      startDate.value = props.value?.[0] ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-") : [];
+      endDate.value = props.value?.[1] ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-") : [];
+      selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
     } else {
       startDate.value = [];
       endDate.value = [];
@@ -62,11 +60,17 @@ watch(
 );
 
 const onConfirm = () => {
-  selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join(
-    "-"
-  )}`;
-  emit("update:value", [dayjs(startDate.value), dayjs(endDate.value), ""]);
-  emit("change", [dayjs(startDate.value), dayjs(endDate.value), ""]);
+  selectText.value = `${startDate.value.join("-")} ~ ${endDate.value.join("-")}`;
+  emit("update:value", [
+    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
+    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
+    ""
+  ]);
+  emit("change", [
+    dayjs(startDate.value).set('hour', 0).set('minute', 0).set('second', 0),
+    dayjs(endDate.value).set('hour', 23).set('minute', 59).set('second', 59),
+    ""
+  ]);
   selectVisible.value = false;
 };
 
@@ -94,18 +98,30 @@ defineOptions({
     :placeholder="placeholder"
     :rule="rule"
     @click="handleShow"
-  />
+  >
+  <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-range">
       <div class="single-wrapper">
         <van-picker-group
-          title="预约日期"
+          :title="placeholder"
           :tabs="['开始日期', '结束日期']"
           @confirm="onConfirm"
           @cancel="onCancel"
         >
-          <van-date-picker v-model="startDate" />
-          <van-date-picker v-model="endDate" />
+          <van-date-picker
+            v-model="startDate"
+            :max-date="maxDate"
+          />
+          <van-date-picker
+            v-model="endDate"
+            :max-date="maxDate"
+          />
         </van-picker-group>
       </div>
     </div>
@@ -117,7 +133,7 @@ defineOptions({
   display: flex;
   flex-direction: column;
   .single-wrapper {
-    max-height: 50vh;
+    // max-height: 50vh;
     overflow-y: auto;
     .selected-icon {
       background-color: white;
