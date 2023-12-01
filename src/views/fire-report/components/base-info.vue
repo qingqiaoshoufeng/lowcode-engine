@@ -602,7 +602,7 @@ const onFireLevel = () => {
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="火灾类型："
+              label="起火时间："
               remark-field="fireDate"
               field-module="basicInfo"
               :exist-data="fieldExist?.fireDate"
@@ -645,7 +645,7 @@ const onFireLevel = () => {
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="行政区域："
+              label="起火地点："
               remark-field="fireDirection"
               field-module="basicInfo"
               :exist-data="fieldExist?.fireDirection"
@@ -1283,7 +1283,7 @@ const onFireLevel = () => {
           v-model="form.basicInfo.initialFuels.value"
           v-preview-text="showPreview"
           allow-clear
-          required="isRequired"
+          :required="isRequired"
           :maxlength="50"
           aria-autocomplete="none"
           placeholder="请输入起火物名称"
@@ -1468,7 +1468,7 @@ const onFireLevel = () => {
           :field-name="{ value: 'boDictId', text: 'dictName' }"
           placeholder="请选择所属行业"
           allow-clear
-          required
+          :required="isRequired"
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
         >
           <template v-slot:label="">
@@ -1516,7 +1516,7 @@ const onFireLevel = () => {
           :options="options.economicType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
-          required
+          :required="isRequired"
           placeholder="请选择经济类型"
           title="请选择经济类型"
         >

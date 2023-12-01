@@ -277,7 +277,7 @@ export default {
     >
       <template v-slot:label="" v-if="label">
         <slot name="label">
-          <div class="field-annotation">{{ label }}</div>
+          <div class="field-annotation1">{{ label }}</div>
         </slot>
       </template>
     </van-field>

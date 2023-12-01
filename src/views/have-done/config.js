@@ -4,7 +4,7 @@ export const menuListMap = [
   [
     {
       iconId:'policeDispatched',
-      menuName:'已派发'
+      menuName:'已发送'
     },
     {
       iconId:'policeRejected',

@@ -58,6 +58,7 @@ const { loading, submit } = useSubmit(() => {
   emits('finishCallback')
 }, {
   submitFn: () => {
+    debugger
     const { currentRow, type, selectedKeys } = props
     const { rejectCause, rejectRemark } = form.value
     let ids = []
@@ -84,6 +85,7 @@ const { loading, submit } = useSubmit(() => {
 
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
+    debugger
     formRef.value.validate().then(async (values) => {
       await submit()
       props.finishCallback()
@@ -94,7 +96,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <van-form ref="formRef" :model="form" label-align="right" :label-col="{ style: { width: '80px' } }" autocomplete="off">
+  <van-form ref="formRef" :model="form" label-align="right" autocomplete="off">
     <a-form-item
       name="rejectCause"
       label="驳回原因"

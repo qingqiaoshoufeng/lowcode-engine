@@ -112,7 +112,7 @@ defineOptions({
   >
   <template v-slot:label="" v-if="label">
       <slot name="label">
-        <div v-if="label" class="field-annotation">{{ label }}</div>
+        <div v-if="label" class="field-annotation1">{{ label }}</div>
       </slot>
     </template>
   </van-field>
