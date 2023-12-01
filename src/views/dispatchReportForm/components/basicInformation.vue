@@ -190,23 +190,13 @@ const onDealSituation = (value, option) => {
       placeholder="请选择行业主管部门"
       :rules="form.basicInformation.industryDepartment.rules"
     /> -->
-    <!-- <van-cell v-if="showFireFighting" title="消防通道是否堵塞：" v-preview-text="showPreview" required class="field-radio">
-      <template #default>
-        <van-radio-group
-          v-model="form.basicInformation.isBlocking.value"
-          icon-size="16px"
-          @change="onIsBlocking"
-          direction="horizontal"
-        >
-          <van-radio name="1">是</van-radio>
-          <van-radio name="2">否</van-radio>
-        </van-radio-group>
-      </template>
-    </van-cell> -->
-    <van-field 
-      name="basicInformation.isBlocking.value" 
-      label="消防通道是否堵塞：" 
+    <van-field
+      v-if="showFireFighting"
+      name="basicInformation.isBlocking.value"
+      label="消防通道是否堵塞："
       :rules="form.basicInformation.isBlocking.rules"
+      required
+      class="field-radio"
     >
       <template #input>
         <van-radio-group

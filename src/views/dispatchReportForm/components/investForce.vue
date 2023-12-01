@@ -3,6 +3,7 @@ import { computed, inject } from "vue";
 import { checkDispatchNum, checkDispatchTruckList, checkIsResponseTruck } from "../tool.js";
 import { positiveIntegerReg } from "@/utils/validate.js";
 import SelectMultiple from "@/component/SelectMultiple/index";
+import SelectCar from "@/component/SelectCar/index";
 
 const form = inject("form");
 
@@ -20,8 +21,6 @@ const showMidwayReturn = inject("showMidwayReturn");
 
 const showDealSituation = inject("showDealSituation");
 
-const dispatchTruckListOptions = inject("dispatchTruckListOptions");
-
 const deptMembersOptions = inject("deptMembersOptions");
 
 const personNum = computed(() => {
@@ -37,7 +36,6 @@ const personNum = computed(() => {
 const onResponseTruck = (e) => {
   if (e === "2") {
     form.value.investForce.dispatchTruckList.value = undefined;
-    form.value.investForce.dispatchTruckList.list = undefined;
     form.value.investForce.midwayCar.value = undefined;
     form.value.investForce.isReturnTruck.value = "2";
   }
@@ -62,8 +60,6 @@ const onReturnTruck = (e) => {
 
 const onDispatchTruck = (value, items) => {
   checkDispatchTruckList(form.value);
-
-  form.value.investForce.dispatchTruckList.list = items
 
   if (form.value.investForce.isResponseTruck.value === "1" && showMidwayReturn.value) {
     form.value.investForce.midwayCar.value = form.value.investForce.dispatchTruckList.value;
@@ -90,10 +86,18 @@ const OnCarNum = () => {
     <div class="invest-message">
       共投入 {{ form.investForce?.dispatchTruckList.value?.length || 0 }} 车 {{ personNum || 0 }} 人
     </div>
-    <!-- <van-cell title="是否有车辆出动：" v-preview-text="showPreview" required class="field-radio">
-      <template #default>
+    <van-field
+      name="investForce.isResponseTruck.value" 
+      label="是否有车辆出动："
+      label-width="122px"
+      required
+      :rules="form.investForce.isResponseTruck.rules"
+      class="field-radio"
+    >
+      <template #input>
         <van-radio-group
           v-model="form.investForce.isResponseTruck.value"
+          v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
           @change="onResponseTruck"
@@ -102,26 +106,9 @@ const OnCarNum = () => {
           <van-radio name="2">否</van-radio>
         </van-radio-group>
       </template>
-    </van-cell> -->
-    <van-field 
-      name="investForce.isResponseTruck.value" 
-      label="是否有车辆出动：" 
-      :rules="form.investForce.isResponseTruck.rules"
-    >
-      <template #input>
-        <van-radio-group
-          v-model="form.investForce.isResponseTruck.value"
-          v-preview-text="showPreview"
-          icon-size="16px"
-          direction="horizontal"
-        >
-          <van-radio name="1">是</van-radio>
-          <van-radio name="2">否</van-radio>
-        </van-radio-group>
-      </template>
       <template v-slot:label="">
         <FieldAnnotation
-          label="是否有人员受伤："
+          label="是否有车辆出动："
           remark-field="isInjured"
           field-module="casualtyWar"
           :exist-data="fieldExist?.isInjured"
@@ -130,19 +117,16 @@ const OnCarNum = () => {
       </template>
     </van-field>
     <template v-if="form.investForce.isResponseTruck.value === '1'">
-      <SelectMultiple
+      <SelectCar
         v-model:value="form.investForce.dispatchTruckList.value"
         :showPreview="showPreview"
-        :readonly="showPreview"
         required
         name="dispatchTruckList"
-        :options="dispatchTruckListOptions"
-        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.dispatchTruckList.rules"
+        :readonly="true"
         label="消防车辆信息："
-        label-width="118px"
+        label-width="112px"
         placeholder="请选择消防车辆信息"
-        title="请选择消防车辆信息"
         @change="onDispatchTruck"
       >
         <template v-slot:label="">
@@ -154,24 +138,13 @@ const OnCarNum = () => {
             @refresh-callback="refreshField"
           />
         </template>
-      </SelectMultiple>
-      <!-- <van-cell title="是否有车辆中途返回：" required v-preview-text="showPreview" class="field-radio">
-        <template #default>
-          <van-radio-group
-            v-model="form.investForce.isReturnTruck.value"
-            icon-size="16px"
-            direction="horizontal"
-            @change="onReturnTruck"
-          >
-            <van-radio name="1">是</van-radio>
-            <van-radio name="2">否</van-radio>
-          </van-radio-group>
-        </template>
-      </van-cell> -->
-      <van-field 
-        name="investForce.isReturnTruck.value" 
-        label="是否有车辆中途返回"
+      </SelectCar>
+      <van-field
+        name="investForce.isReturnTruck.value"
+        label="是否有车辆中途返回："
+        required
         :rules="form.investForce.isReturnTruck.rules"
+        class="field-radio"
       >
         <template #input>
           <van-radio-group
@@ -204,7 +177,7 @@ const OnCarNum = () => {
         :readonly="showPreview"
         required
         name="midwayCar"
-        :options="form.investForce.dispatchTruckList.list"
+        :options="form.investForce.dispatchTruckList.value"
         :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
