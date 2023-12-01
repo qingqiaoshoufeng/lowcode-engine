@@ -162,7 +162,7 @@ onMounted(() => {
         :options="
           showHeadquarter
             ? dispatchTruckListOptions
-            : form.investForce.dispatchTruckList.list
+            : form.investForce.dispatchTruckList.value
         "
         :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
         :rules="form.battleConsume.wastageTruck.rules"
@@ -1155,32 +1155,21 @@ onMounted(() => {
           placeholder="请输入无故供水中断次数"
           :rules="form.battleConsume.waterInterrupt.rules"
         >
-            <template v-slot:label="">
-              <FieldAnnotation
-                label="无故供水中断(次)："
-                remark-field="waterInterrupt"
-                field-module="battleConsume"
-                :exist-data="fieldExist?.waterInterrupt"
-                @refresh-callback="refreshField"
-              />
-            </template>
-          </van-field>  
-        <!-- <van-cell title="水渍损失：" v-preview-text="showPreview" class="field-radio">
-          <template #default>
-            <van-radio-group
-              v-model="form.battleConsume.waterDamage.value"
-              icon-size="16px"
-              direction="horizontal"
-            >
-              <van-radio name="1">是</van-radio>
-              <van-radio name="2">否</van-radio>
-            </van-radio-group>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="无故供水中断(次)："
+              remark-field="waterInterrupt"
+              field-module="battleConsume"
+              :exist-data="fieldExist?.waterInterrupt"
+              @refresh-callback="refreshField"
+            />
           </template>
-        </van-cell> -->
+        </van-field>  
         <van-field 
-          name="basicInformation.isBlocking.value" 
+          name="battleConsume.waterDamage.value" 
           label="水渍损失：" 
           :rules="form.battleConsume.waterDamage.rules"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group

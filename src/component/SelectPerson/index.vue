@@ -137,20 +137,20 @@ defineOptions({
           确定
         </van-button>
       </div>
+      <div class="content-selects">
+        <van-tag
+          v-for="item in selectValue"
+          :key="item.boFireUserId"
+          closeable
+          plain
+          size="medium"
+          type="primary"
+          @close="handleDelete(item)"
+        >
+          {{ item.userName }}
+        </van-tag>
+      </div>
       <div class="single-wrapper">
-        <div class="content-selects">
-          <van-tag
-            v-for="item in selectValue"
-            :key="item.boFireUserId"
-            closeable
-            plain
-            size="medium"
-            type="primary"
-            @close="handleDelete(item)"
-          >
-            {{ item.userName }}
-          </van-tag>
-        </div>
         <ProList
           ref="proListRef"
           title="人员列表"
@@ -182,7 +182,6 @@ defineOptions({
   height: 62vh;
   display: flex;
   flex-direction: column;
-
   .header {
     width: 100%;
     height: 44px;
@@ -215,7 +214,7 @@ defineOptions({
   }
   .single-wrapper {
     height: 50vh;
-    overflow-y: auto;
+    overflow-y: hidden;
     .selected-icon {
       background-color: white;
       border: white;

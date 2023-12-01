@@ -58,24 +58,12 @@ const onIsCommand = (e) => {
 
 <template>
   <van-cell-group>
-    <!-- <van-cell title="政府到场指挥情况：" required v-preview-text="showPreview" class="field-radio">
-      <template #default>
-        <van-radio-group
-          v-model="form.investForce.isCommand.value"
-          icon-size="16px"
-          direction="horizontal"
-          @change="onIsCommand"
-        >
-          <van-radio name="1">有</van-radio>
-          <van-radio name="2">无</van-radio>
-        </van-radio-group>
-      </template>
-    </van-cell> -->
     <van-field 
       name="investForce.isCommand.value" 
       label="政府到场指挥情况：" 
       :rules="form.investForce.isCommand.rules"
       required
+      class="field-radio"
     >
       <template #input>
         <van-radio-group
@@ -83,9 +71,10 @@ const onIsCommand = (e) => {
           v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
+          @change="onIsCommand"
         >
-          <van-radio name="1">是</van-radio>
-          <van-radio name="2">否</van-radio>
+          <van-radio name="1">有</van-radio>
+          <van-radio name="2">无</van-radio>
         </van-radio-group>
       </template>
       <template v-slot:label="">

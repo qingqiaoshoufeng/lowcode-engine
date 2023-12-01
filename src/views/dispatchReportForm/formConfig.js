@@ -475,7 +475,6 @@ export const useFormConfig = () => {
       },
       dispatchTruckList: { // 消防车辆信息
         value: undefined,
-        list: undefined,
         rules: [{ required: true, message: '请选择消防车辆信息' }],
       },
       isReturnTruck: { // 是否有车辆中途返回
@@ -1478,8 +1477,7 @@ export const useFormConfig = () => {
     form.value.investForce.firemen.value = fireDispatchItem?.firemen?.split(',')
     form.value.investForce.isResponseTruck.value = fireDispatchItem?.isResponseTruck
     if (fireDispatchTruckList && fireDispatchTruckList.length > 0) {
-      form.value.investForce.dispatchTruckList.list = fixCarInfo(fireDispatchTruckList)
-      form.value.investForce.dispatchTruckList.value = form.value.investForce.dispatchTruckList.list?.map(item => item.boFireTruckId)
+      form.value.investForce.dispatchTruckList.value = fixCarInfo(fireDispatchTruckList)
     }
     form.value.investForce.isReturnTruck.value = fireDispatchItem?.isReturnTruck || '2'
     if (fireDispatchRetrunTruckList && fireDispatchRetrunTruckList.length > 0) {

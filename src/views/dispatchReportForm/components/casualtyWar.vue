@@ -174,22 +174,12 @@ watch(
         共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
         {{ form.casualtyWar.deadList?.length }} 人
       </div>
-      <!-- <van-cell title="是否有人员受伤：" required v-preview-text="showPreview" class="field-radio">
-        <template #default>
-          <van-radio-group
-            v-model="form.casualtyWar.isInjured.value"
-            icon-size="16px"
-            direction="horizontal"
-          >
-            <van-radio name="1">有</van-radio>
-            <van-radio name="2">无</van-radio>
-          </van-radio-group>
-        </template>
-      </van-cell> -->
-      <van-field 
-          name="casualtyWar.isInjured.value" 
-          label="是否有人员受伤：" 
-          :rules="form.battleConsume.waterDamage.rules"
+      <van-field
+          name="casualtyWar.isInjured.value"
+          label="是否有人员受伤："
+          :rules="form.casualtyWar.isInjured.rules"
+          required
+          class="field-radio"
         >
           <template #input>
             <van-radio-group
@@ -198,8 +188,8 @@ watch(
               icon-size="16px"
               direction="horizontal"
             >
-              <van-radio name="1">是</van-radio>
-              <van-radio name="2">否</van-radio>
+              <van-radio name="1">有</van-radio>
+              <van-radio name="2">无</van-radio>
             </van-radio-group>
           </template>
           <template v-slot:label="">
@@ -652,22 +642,12 @@ watch(
           </van-button>
         </template>
       </div>
-      <!-- <van-cell title="是否有人员死亡：" required v-preview-text="showPreview" class="field-radio">
-        <template #default>
-          <van-radio-group
-            v-model="form.casualtyWar.isDead.value"
-            icon-size="16px"
-            direction="horizontal"
-          >
-            <van-radio name="1">有</van-radio>
-            <van-radio name="2">无</van-radio>
-          </van-radio-group>
-        </template>
-      </van-cell> -->
       <van-field 
-          name="casualtyWar.isInjured.value" 
+          name="casualtyWar.isDead.value"
           label="是否有人员死亡：" 
           :rules="form.casualtyWar.isDead.rules"
+          required
+          class="field-radio"
         >
           <template #input>
             <van-radio-group
@@ -676,8 +656,8 @@ watch(
               icon-size="16px"
               direction="horizontal"
             >
-              <van-radio name="1">是</van-radio>
-              <van-radio name="2">否</van-radio>
+              <van-radio name="1">有</van-radio>
+              <van-radio name="2">无</van-radio>
             </van-radio-group>
           </template>
           <template v-slot:label="">
@@ -1141,22 +1121,12 @@ watch(
               />
             </template>
           </SelectSingle>
-          <!-- <van-cell title="是否当场死亡：" v-preview-text="showPreview" required class="field-radio-label">
-            <template #default>
-              <van-radio-group
-                v-model="form.casualtyWar.isInstantDeath.value"
-                icon-size="16px"
-                direction="horizontal"
-              >
-                <van-radio name="1">是</van-radio>
-                <van-radio name="2">否</van-radio>
-              </van-radio-group>
-            </template>
-          </van-cell> -->
-          <van-field 
-            name="casualtyWar.isInstantDeath.value" 
-            label="是否当场死亡：" 
+          <van-field
+            name="casualtyWar.isInstantDeath.value"
+            label="是否当场死亡："
             :rules="form.casualtyWar.isInstantDeath.rules"
+            required
+            class="field-radio"
           >
             <template #input>
               <van-radio-group

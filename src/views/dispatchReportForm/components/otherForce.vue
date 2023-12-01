@@ -51,23 +51,12 @@ const onHaveVolunteer = (e) => {
 
 <template>
   <van-cell-group>
-    <!-- <van-cell title="是否有志愿队力量：" required v-preview-text="showPreview" class="field-radio">
-      <template #default>
-        <van-radio-group
-          v-model="form.investForce.haveVolunteer.value"
-          icon-size="16px"
-          direction="horizontal"
-          @change="onHaveVolunteer"
-        >
-          <van-radio name="1">有</van-radio>
-          <van-radio name="2">无</van-radio>
-        </van-radio-group>
-      </template>
-    </van-cell> -->
     <van-field 
       name="investForce.haveVolunteer.value" 
       label="是否有志愿队力量：" 
       :rules="form.investForce.haveVolunteer.rules"
+      required
+      class="field-radio"
     >
       <template #input>
         <van-radio-group
@@ -75,9 +64,10 @@ const onHaveVolunteer = (e) => {
           v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
+          @change="onHaveVolunteer"
         >
-          <van-radio name="1">是</van-radio>
-          <van-radio name="2">否</van-radio>
+          <van-radio name="1">有</van-radio>
+          <van-radio name="2">无</van-radio>
         </van-radio-group>
       </template>
       <template v-slot:label="">

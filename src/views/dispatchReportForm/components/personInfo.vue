@@ -126,23 +126,12 @@ onMounted(() => {
           </van-button>
         </template>
       </div>
-      <!-- <van-cell title="是否有社会技术专家：" required v-preview-text="showPreview" class="field-radio-label">
-        <template #default>
-          <van-radio-group
-            v-model="form.personInfo.haveProfessor.value"
-            icon-size="16px"
-            direction="horizontal"
-            @change="onHaveProfessor"
-          >
-            <van-radio name="1">是</van-radio>
-            <van-radio name="2">否</van-radio>
-          </van-radio-group>
-        </template>
-      </van-cell> -->
       <van-field 
           name="personInfo.haveProfessor.value" 
           label="是否有社会技术专家：" 
           :rules="form.personInfo.haveProfessor.rules"
+          required
+          class="field-radio"
         >
           <template #input>
             <van-radio-group
@@ -150,6 +139,7 @@ onMounted(() => {
               v-preview-text="showPreview"
               icon-size="16px"
               direction="horizontal"
+              @change="onHaveProfessor"
             >
               <van-radio name="1">是</van-radio>
               <van-radio name="2">否</van-radio>

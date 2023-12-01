@@ -137,8 +137,6 @@ const userInfo = ref({})
 
 const detachment = ref('');
 
-const dispatchTruckListOptions = ref([]);
-
 const deptMembersOptions = ref([]);
 
 const dispatchDetail = ref(null);
@@ -337,8 +335,6 @@ provide('currentRow', props.currentRow)
 
 provide('localFireDispatchId', localFireDispatchId)
 
-provide('dispatchTruckListOptions', dispatchTruckListOptions)
-
 provide('deptMembersOptions', deptMembersOptions)
 
 provide('showDealSituation', showDealSituation)
@@ -475,7 +471,7 @@ const initDict = () => {
 const initTruckMsg = () => {
   return new Promise((resolve) => {
     getTruckMsg().then(res => {
-      dispatchTruckListOptions.value = res.items || []
+      // dispatchTruckListOptions.value = res.items || []
     }).finally(() => resolve())
   })
 }
@@ -627,48 +623,6 @@ const initDynamicDict = () => {
     //     }
     //   })
     // }
-    if (battleConsume.wastageTruck.value) { // 损耗车辆信息
-      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
-      battleConsume.wastageTruck.value?.forEach((item) => {
-        if (!cars.includes(item.boFireTruckId)) {
-          dispatchTruckListOptions.value.push({
-            boFireTruckId: item.boFireTruckId,
-            truckNumber: item.truckNumber,
-            truckCode: item.truckCode,
-            label: item.truckCode,
-            value: item.boFireTruckId,
-          })
-        }
-      })
-    }
-    if (deployEquipment.headTruckList.value) { // 指挥车辆信息
-      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
-      deployEquipment.headTruckList.value?.forEach((item) => {
-        if (!cars.includes(item.boFireTruckId)) {
-          dispatchTruckListOptions.value.push({
-            boFireTruckId: item.boFireTruckId,
-            truckNumber: item.truckNumber,
-            truckCode: item.truckCode,
-            label: item.truckCode,
-            value: item.boFireTruckId,
-          })
-        }
-      })
-    }
-    if (investForce.dispatchTruckList.value) { // 消防车辆信息
-      cars = dispatchTruckListOptions.value?.map(item => item.boFireTruckId).join(',')
-      investForce.dispatchTruckList.value?.forEach((item) => {
-        if (!cars.includes(item.boFireTruckId)) {
-          dispatchTruckListOptions.value.push({
-            boFireTruckId: item.boFireTruckId,
-            truckNumber: item.truckNumber,
-            truckCode: item.truckCode,
-            label: item.truckCode,
-            value: item.boFireTruckId,
-          })
-        }
-      })
-    }
   }
 }
 
@@ -696,7 +650,7 @@ const initWatch = () => {
   })
 }
 
-const { result } = useAsyncQueue([initDict, initPoliceDetail, initTruckMsg, initWeather, initReport, initPerson, initDetail])
+const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initReport, initPerson, initDetail])
 
 const getPersonNum = () => {
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
@@ -847,7 +801,7 @@ const getSubmitParams = () => {
       isDraft: props.showDraft ? 1 : 2,
     }
     if (form.value.investForce.isResponseTruck.value === '1') {
-      const list = fixCarParams(investForce.dispatchTruckList.list)
+      const list = fixCarParams(investForce.dispatchTruckList.value)
       params.fireDispatchTruckList.push(...list)
     }
     if (form.value.investForce.isReturnTruck.value === '1') {

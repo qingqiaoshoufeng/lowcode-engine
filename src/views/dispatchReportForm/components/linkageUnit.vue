@@ -49,24 +49,12 @@ const onHaveLinkageUnit = (e) => {
 
 <template>
   <van-cell-group>
-    <!-- <van-cell title="是否有联动单位：" required v-preview-text="showPreview" class="field-radio">
-      <template #default>
-        <van-radio-group
-          v-model="form.investForce.haveLinkageUnit.value"
-          icon-size="16px"
-          direction="horizontal"
-          @change="onHaveLinkageUnit"
-        >
-          <van-radio name="1">有</van-radio>
-          <van-radio name="2">无</van-radio>
-        </van-radio-group>
-      </template>
-    </van-cell> -->
     <van-field 
       name="investForce.haveLinkageUnit.value" 
       label="是否有联动单位："
       :rules="form.investForce.haveLinkageUnit.rules"
       required
+      class="field-radio"
     >
       <template #input>
         <van-radio-group
@@ -74,9 +62,10 @@ const onHaveLinkageUnit = (e) => {
           v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"
+          @change="onHaveLinkageUnit"
         >
-          <van-radio name="1">是</van-radio>
-          <van-radio name="2">否</van-radio>
+          <van-radio name="1">有</van-radio>
+          <van-radio name="2">无</van-radio>
         </van-radio-group>
       </template>
       <template v-slot:label="">
