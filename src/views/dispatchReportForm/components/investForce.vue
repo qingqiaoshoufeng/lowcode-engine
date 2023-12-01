@@ -89,6 +89,7 @@ const OnCarNum = () => {
     <van-field
       name="investForce.isResponseTruck.value" 
       label="是否有车辆出动："
+      label-width="122px"
       required
       :rules="form.investForce.isResponseTruck.rules"
       class="field-radio"
@@ -107,7 +108,7 @@ const OnCarNum = () => {
       </template>
       <template v-slot:label="">
         <FieldAnnotation
-          label="是否有人员受伤："
+          label="是否有车辆出动："
           remark-field="isInjured"
           field-module="casualtyWar"
           :exist-data="fieldExist?.isInjured"

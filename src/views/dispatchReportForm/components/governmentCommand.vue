@@ -60,7 +60,7 @@ const onIsCommand = (e) => {
   <van-cell-group>
     <van-field 
       name="investForce.isCommand.value" 
-      label="政府到场指挥情况：" 
+      label="政府到场指挥情况："
       :rules="form.investForce.isCommand.rules"
       required
       class="field-radio"

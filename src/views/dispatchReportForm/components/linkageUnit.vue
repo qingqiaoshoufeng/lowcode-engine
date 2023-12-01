@@ -52,6 +52,7 @@ const onHaveLinkageUnit = (e) => {
     <van-field 
       name="investForce.haveLinkageUnit.value" 
       label="是否有联动单位："
+      label-width="124px"
       :rules="form.investForce.haveLinkageUnit.rules"
       required
       class="field-radio"

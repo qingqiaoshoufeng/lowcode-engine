@@ -1068,7 +1068,6 @@ const onFireLevel = () => {
           <van-field
             label="车辆VIN码："
             :rules="form.basicInfo.vinCode.rules"
-            :required="isRequired"
             id="车辆VIN码"
             v-model="form.basicInfo.vinCode.value"
             v-preview-text="showPreview"
@@ -1105,7 +1104,7 @@ const onFireLevel = () => {
           >
            <template v-slot:label="">
               <FieldAnnotation
-                label="车辆VIN码："
+                label="车牌号："
                 remark-field="carNumber"
                 field-module="basicInfo"
                 :exist-data="fieldExist?.carNumber"

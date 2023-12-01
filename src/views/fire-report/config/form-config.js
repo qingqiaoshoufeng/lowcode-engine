@@ -131,7 +131,7 @@ export const useFormConfig = (fromRef) => {
       },
       vinCode: { // 车辆VIN码
         value: '',
-        rules: [{ required: true, message: '请输入车辆VIN码' }],
+        rules: [{ required: false, message: '请输入车辆VIN码' }],
       },
       carNumber: { // 车牌号
         value: '',
@@ -1255,7 +1255,7 @@ export const useFormConfig = (fromRef) => {
     form.value.basicInfo.isRepack.rules[0].required = value
     form.value.basicInfo.batteryType.rules[0].required = value
     form.value.basicInfo.energyType.rules[0].required = value
-    form.value.basicInfo.vinCode.rules[0].required = value
+    // form.value.basicInfo.vinCode.rules[0].required = value
     form.value.basicInfo.carNumber.rules[0].required = value
     form.value.basicInfo.driveState.rules[0].required = value
     form.value.basicInfo.isPoorHouse.rules[0].required = value

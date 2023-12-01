@@ -177,6 +177,7 @@ watch(
       <van-field
           name="casualtyWar.isInjured.value"
           label="是否有人员受伤："
+          label-width="124px"
           :rules="form.casualtyWar.isInjured.rules"
           required
           class="field-radio"
@@ -644,7 +645,8 @@ watch(
       </div>
       <van-field 
           name="casualtyWar.isDead.value"
-          label="是否有人员死亡：" 
+          label="是否有人员死亡："
+          label-width="124px"
           :rules="form.casualtyWar.isDead.rules"
           required
           class="field-radio"
