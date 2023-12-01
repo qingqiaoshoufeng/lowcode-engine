@@ -102,7 +102,7 @@ const handleSwitch = () => {
     window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
     getCode()
     showToast('已切换为测试环境')
-    checkAppVersion(false)
+    window.checkAppVersion(false)
   }
 }
 </script>
