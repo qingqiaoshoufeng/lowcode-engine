@@ -17,7 +17,7 @@ import {
   statisticRange,
 } from '@/utils/constants.js';
 import { useStore } from "vuex";
-import { useIntersection } from '@/hooks/useIntersection.js';
+import { useIntersection } from './useIntersection.js';
 
 const store = useStore();
 
@@ -164,6 +164,7 @@ const sections = computed(() => {
       return {
         title: form.value[ele].title,
         link: ele,
+        children: form.value[ele],
       }
     }),
   }, {
@@ -174,11 +175,26 @@ const sections = computed(() => {
       {
         title: '警情信息',
         link: 'dispatchStationPolice',
+        children: {
+          warningDate: form.value.policeBase.warningDate,
+          statisticRangeHoliday: form.value.policeBase.statisticRangeHoliday,
+          statisticRangeSeasonMin: form.value.policeBase.statisticRangeSeasonMin,
+          statisticRangeMonthMin: form.value.policeBase.statisticRangeMonthMin,
+          statisticRangeDayMin: form.value.policeBase.statisticRangeDayMin,
+          statisticRangeHourMin: form.value.policeBase.statisticRangeHourMin,
+          warningDate: form.value.policeBase.warningDate,
+          boAreaId: form.value.policeBase.boAreaId,
+          warningAddr: form.value.policeBase.warningAddr,
+          warningType: form.value.policeBase.warningType,
+          warningLevel: form.value.policeBase.warningLevel,
+          warningCode: form.value.policeBase.warningCode,
+        }
       },
       ...keys?.filter(val => val.includes('dispatch') && !val.includes('dispatchHeader'))?.map((ele) => {
         return {
           title: form.value[ele].title,
           link: ele,
+          children: form.value[ele],
         }
       })],
   }, {
@@ -189,11 +205,26 @@ const sections = computed(() => {
       {
         title: '警情信息',
         link: 'dispatchHeaderPolice',
+        children: {
+          warningDate: form.value.policeBase.warningDate,
+          statisticRangeHoliday: form.value.policeBase.statisticRangeHoliday,
+          statisticRangeSeasonMin: form.value.policeBase.statisticRangeSeasonMin,
+          statisticRangeMonthMin: form.value.policeBase.statisticRangeMonthMin,
+          statisticRangeDayMin: form.value.policeBase.statisticRangeDayMin,
+          statisticRangeHourMin: form.value.policeBase.statisticRangeHourMin,
+          warningDate: form.value.policeBase.warningDate,
+          boAreaId: form.value.policeBase.boAreaId,
+          warningAddr: form.value.policeBase.warningAddr,
+          warningType: form.value.policeBase.warningType,
+          warningLevel: form.value.policeBase.warningLevel,
+          warningCode: form.value.policeBase.warningCode,
+        }
       },
       ...keys?.filter(val => val.includes('dispatchHeader'))?.map((ele) => {
         return {
           title: form.value[ele].title,
           link: ele,
+          children: form.value[ele],
         }
       })],
   }, {
@@ -204,6 +235,20 @@ const sections = computed(() => {
       {
         title: '警情信息',
         link: 'firePolice',
+        children: {
+          warningDate: form.value.policeBase.warningDate,
+          statisticRangeHoliday: form.value.policeBase.statisticRangeHoliday,
+          statisticRangeSeasonMin: form.value.policeBase.statisticRangeSeasonMin,
+          statisticRangeMonthMin: form.value.policeBase.statisticRangeMonthMin,
+          statisticRangeDayMin: form.value.policeBase.statisticRangeDayMin,
+          statisticRangeHourMin: form.value.policeBase.statisticRangeHourMin,
+          warningDate: form.value.policeBase.warningDate,
+          boAreaId: form.value.policeBase.boAreaId,
+          warningAddr: form.value.policeBase.warningAddr,
+          warningType: form.value.policeBase.warningType,
+          warningLevel: form.value.policeBase.warningLevel,
+          warningCode: form.value.policeBase.warningCode,
+        }
       },
       ...keys?.filter(val => val.includes('fire'))?.map((ele) => {
         return {
@@ -216,10 +261,10 @@ const sections = computed(() => {
   return list.filter(val => val.display)
 })
 
-const { sideBarActive } = useIntersection([], '.composite-search-form', 50);
+const { sideBarActive } = useIntersection(sections, '.composite-search-form', 160);
 
 const onSideBarChange = (e, k) => {
-  const targetElement = document.getElementById(k);
+  const targetElement = document.getElementById(e.link);
   if (targetElement) {
     targetElement.scrollIntoView({
       block: 'start',
@@ -239,7 +284,7 @@ const onSideBarChange = (e, k) => {
           </van-sidebar-item>
           <van-sidebar-item
             v-for="(temp, i) in item.children"
-            :key="temp.title"
+            :key="temp.link"
             @click="onSideBarChange(temp, i)"
             class="anchor-children"
           >
@@ -249,23 +294,28 @@ const onSideBarChange = (e, k) => {
       </van-sidebar>
     </div>
     <div class="composite-search-form">
-      <div v-for="(item, k) in sections" :key="k">
-        <div v-for="(temp) in item.children" :key="temp.title">
-          {{ temp.title }}
-          <div v-for="(i, j) in temp?.children" :key="j">
-            <template v-if="(typeof i === 'object')">
-              <FormItem :fieldObj="i" />
+      <van-form ref="formRef">
+        <div v-for="(item, k) in sections" :key="k" :id="item.link">
+          <div v-for="(temp) in item.children" :key="temp.title">
+            <div :id="temp.link" class="search-form-header">
+              <img src="@/assets/images/icon_title@2x.png" alt="" />
+              {{ temp.title }}
+            </div>
+            <template v-for="(i, j) in temp?.children" :key="j">
+              <template v-if="(typeof i === 'object')">
+                <FormItem :fieldObj="i" />
+              </template>
             </template>
           </div>
         </div>
-      </div>
+      </van-form>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .composite-search-wrapper {
-  height: calc(100% - 110px);
+  height: calc(100% - 100px);
   display: flex;
   background-color: #F6F8FC;
   .composite-search-anchor {
@@ -278,23 +328,23 @@ const onSideBarChange = (e, k) => {
         background-color: #F6F8FC;
       }
       .van-sidebar-item--select {
-        background: #E4E4E4;
-        border-radius: 0px 100px 100px 0px;
+        background-color: #ffffff;
+        // border-radius: 0px 100px 100px 0px;
       }
-    }
-    .anchor-item {
-      font-size: 12px;
-      padding: 8px 10px;
-      :deep(.van-sidebar-item__text) {
-        color: #353A45;
-        white-space: nowrap;
+      .anchor-item {
+        font-size: 12px;
+        padding: 8px 4px;
+        .van-sidebar-item__text {
+          color: #333333;
+          white-space: nowrap;
+        }
       }
-    }
-    .anchor-children {
-      font-size: 12px;
-      padding: 8px 10px;
-      :deep(.van-sidebar-item__text) {
-        color: #565D6F;
+      .anchor-children {
+        font-size: 12px;
+        padding: 8px 10px;
+        .van-sidebar-item__text {
+          color: #565D6F;
+        }
       }
     }
   }
@@ -303,6 +353,20 @@ const onSideBarChange = (e, k) => {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    .search-form-header {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      padding: 6px 6px;
+      background-color: white;
+      margin-top: 10px;
+      padding-left: 10px;
+      img {
+        width: 14px;
+        height: 18px;
+        margin-right: 10px;
+      }
+    }
   }
 }
 </style>

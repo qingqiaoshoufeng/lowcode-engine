@@ -109,7 +109,7 @@ defineOptions({
     <div class="select-range">
       <div class="single-wrapper">
         <van-picker-group
-          title="预约日期"
+          :title="placeholder"
           :tabs="['开始日期', '结束日期']"
           @confirm="onConfirm"
           @cancel="onCancel"
@@ -133,7 +133,7 @@ defineOptions({
   display: flex;
   flex-direction: column;
   .single-wrapper {
-    max-height: 50vh;
+    // max-height: 50vh;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

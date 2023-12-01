@@ -285,9 +285,9 @@ export default {
           取消
         </van-button>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" @click="handleOk"
-          >确定</van-button
-        >
+        <van-button type="primary" size="small" @click="handleOk">
+          确定
+        </van-button>
       </div>
       <div class="content-wrapper">
         <div class="content-selects">
@@ -323,7 +323,10 @@ export default {
                     v-if="showCheck(item)"
                     v-model="item.checked"
                     @change="handleCheck(item)"
+                    @click.stop
                   />
+                  <van-icon v-if="item.hasChildren" name="arrow" class="icon-arrow" />
+                  <van-icon v-else name="arrow" class="icon-arrow" style="color: white;" />
                 </div>
               </div>
             </van-tab>
@@ -375,6 +378,9 @@ export default {
         padding: 0 12px;
         .item-title {
           flex: 1;
+        }
+        .icon-arrow {
+          margin-left: 6px;
         }
         .item-success {
           background-color: white;

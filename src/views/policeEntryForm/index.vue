@@ -1237,7 +1237,7 @@ const validateHeadquarters = (value, rule) => {
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="119警情编号："
+            label="警情标签："
             :id="currentRow?.boFireWarningId"
             remark-field="warningCodeYyj"
             field-module="policeWarning"

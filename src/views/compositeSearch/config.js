@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import dayjs from 'dayjs'
 import { generateByKeyValue } from '@/utils/tools.js'
+import { install, isCase, isNot } from '@/utils/constants.js'
 
 export const useFormConfig = () => {
   const formOrigin = {
@@ -9,6 +10,8 @@ export const useFormConfig = () => {
       title: '基本信息',
       warningDate: { // 接警时间
         value: undefined,
+        type: 'select-range',
+        label: '接警时间',
       },
       statisticRangeHoliday: { // 统计范围--节假日
         value: undefined,
@@ -29,54 +32,107 @@ export const useFormConfig = () => {
       areaGroup: { // 警情所属队伍
         value: [],
         back: false,
+        type: 'select-org',
+        label: '警情所属队伍',
+        labelWidth: '104px',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       boAreaId: { // // 行政区划
         value: undefined,
+        type: 'area-cascader',
+        label: '行政区划',
       },
       warningAddr: { // 警情地址
         value: '',
+        type: 'input',
+        label: '警情标题',
       },
       warningType: { // 警情类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '警情类型',
+        options: 'warningType',
+        selectLeaf: false,
       },
       warningLevel: { // 警情等级
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '警情等级',
+        options: 'warningLevel',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       warningCode: { // 警情编号
         value: '',
+        type: 'input',
+        label: '警情编号',
       },
       warningName: { // 警情标题
         value: '',
+        type: 'input',
+        label: '警情标题',
       },
       warningCodeYyj: { // 119警情编号
         value: '',
+        type: 'input',
+        label: '119警情编号',
+        labelWidth: '104px',
       },
       warningOrgname: { // 单位/户主/个体户名称
         value: '',
+        type: 'input',
+        label: '单位/户主/个体户名称',
+        labelWidth: '152px',
       },
       warningTel: { // 报警人联系方式
         value: '',
+        type: 'input',
+        label: '报警人联系方式',
+        labelWidth: '116px',
       },
       warningInfo: { // 警情描述
         value: '',
+        type: 'input',
+        label: '警情描述',
       },
       warningTag: { // 警情标签
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '警情标签',
+        options: 'warningTag',
+        fieldNames: { value: 'boFireTagId', label: 'tagName' },
       },
       createOrgId: { // 录入单位
         value: [],
         back: false,
+        type: 'select-org',
+        label: '录入单位',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       warningStatus: { // 警情状态
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '警情状态',
+        options: 'warningStatus',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      warningDealStatus: { // 警情状态
+      warningDealStatus: { // 警情处置情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '警情处置情况',
+        labelWidth: '104px',
+        options: 'warningDealStatus',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
     },
     policeInvest: {
@@ -84,100 +140,208 @@ export const useFormConfig = () => {
       dispatchGroup: { // 出动队伍
         value: [],
         back: false,
+        type: 'select-org',
+        label: '出动队伍',
+        single: false,
+        selectLeaf: true,
+        headersDisabled: true,
+        params: { permission: true }
       },
       mainGroup: { // 主战队伍
         value: [],
         back: false,
+        type: 'select-org',
+        label: '主战队伍',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       firstGroup: { // 首到队伍
         value: [],
         back: false,
+        type: 'select-org',
+        label: '首到队伍',
+        single: false,
+        selectLeaf: true,
+        headersDisabled: true,
+        params: { permission: true }
       },
       dispatchGroupCountMin: { // 出动队伍数
         value: ['', ''],
+        type: 'input-range',
+        label: '出动队伍数',
       },
       dispatchNumMin: { // 作战人员数
         value: ['', ''],
+        type: 'input-range',
+        label: '作战人员数',
       },
       dispatchTruckMin: { // 作战车辆数
         value: ['', ''],
+        type: 'input-range',
+        label: '作战车辆数',
       },
       isHeadquarters: { // 全勤指挥部出动
         value: '',
+        type: 'radio-is',
+        label: '全勤指挥部出动',
+        labelWidth: '116px',
+        options: isNot
       },
       fireHeadLevel: { // 指挥部层级
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '指挥部层级',
+        options: 'fireHeadLevel',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireHead: { // 指挥部名称
         value: [],
         back: false,
+        type: 'select-org',
+        label: '指挥部名称',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: false,
+        params: {}
       },
       personNumMin: { // 指挥部出动数
         value: ['', ''],
+        type: 'input-range',
+        label: '指挥部出动数',
+        labelWidth: '104px',
       },
       dealMinStart: { // 警情处置时长（分钟）
         value: ['', ''],
+        type: 'input-range',
+        label: '警情处置时长（分钟）',
       },
       areaDutyGroup: { // 火灾调查单位
         value: [],
         back: false,
+        type: 'select-org',
+        label: '火灾调查单位',
+        labelWidth: '104px',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       dutyGroup: { // 责任队站
         value: [],
         back: false,
+        type: 'select-org',
+        label: '责任队站',
+        single: false,
+        selectLeaf: true,
+        headersDisabled: true,
+        params: { permission: true }
       },
       isDuty: { // 责任区主战
         value: '',
+        type: 'radio-is',
+        label: '责任区主战',
+        options: isNot
       },
       isDutyGroupDispatch: { // 责任区出动
         value: '',
+        type: 'radio-is',
+        label: '责任区出动',
+        options: isNot
       },
       isOnlyFull: { // 仅专职队出动
         value: '',
+        type: 'radio-is',
+        label: '仅专职队出动',
+        labelWidth: '104px',
+        options: isNot
       },
       isZf: { // 有政府指挥
         value: '',
+        type: 'radio-is',
+        label: '有政府指挥',
+        options: isNot
       },
       isLinkDepartment: { // 有联动力量
         value: '',
+        type: 'radio-is',
+        label: '有联动力量',
+        options: isNot
       },
       isOtherDepartment: { // 有其他消防救援力量
         value: '',
+        type: 'radio-is',
+        label: '有其他消防救援力量',
+        labelWidth: '142px',
+        options: isNot
       },
     },
     policeOther: {
       title: '其他信息',
       isNaturalDisaster: { // 自然灾害引发
         value: '',
+        type: 'radio-is',
+        label: '自然灾害引发',
+        labelWidth: '104px',
+        options: isNot
       },
       naturalDisasterType: { // 自然灾害类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '自然灾害类型',
+        labelWidth: '104px',
+        options: 'naturalDisasterType',
+        selectLeaf: false,
       },
       isOtherProvince: { // 跨省增援
         value: '',
+        type: 'radio-is',
+        label: '跨省增援',
+        options: isNot
       },
       isOtherCity: { // 跨市增援
         value: '',
+        type: 'radio-is',
+        label: '跨市增援',
+        options: isNot
       },
       temperatureMin: { // 气温
         value: ['', ''],
+        type: 'input-range',
+        label: '气温',
       },
       weather: { // 天气
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '天气',
+        options: 'weather',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       wind: { // 风力
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '风力',
+        options: 'wind',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       windDirection: { // 风向
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '风向',
+        options: 'windDirection',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       trappedPersonMin: { // 现场被困人数
         value: ['', ''],
+        type: 'input-range',
+        label: '现场被困人数',
+        labelWidth: '104px',
       },
       // isPublicFireHydrant: { // 是否采用公共消防栓供水
       //   value: '',
@@ -192,23 +356,40 @@ export const useFormConfig = () => {
       // },
       orgName: { // 志愿队名称
         value: '',
+        type: 'input',
+        label: '志愿队名称',
       },
       groupType: { // 志愿队类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '志愿队类型',
+        options: 'groupType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isHappenFire: { // 交通事故是否发生火灾
         value: '',
+        type: 'radio-is',
+        label: '交通事故是否发生火灾',
+        options: isNot
       },
     },
     dispatchBase: {
       title: '基本信息',
       dispatchCode: { // 出动编号
         value: '',
+        type: 'input',
+        label: '出动编号',
       },
       dispatchGroupOrg: { // 出动单位
         value: [],
         back: false,
+        type: 'select-org',
+        label: '出动单位',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       // dispatchGroup: { // 出动队伍
       //   value: [],
@@ -217,34 +398,67 @@ export const useFormConfig = () => {
       deptNature: { // 队伍性质
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '队伍性质',
+        options: 'deptNature',
+        selectLeaf: false,
       },
       dispatchType: { // 参战形式
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '参战形式',
+        options: 'dispatchType',
       },
       dealSituation: { // 处置情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '处置情况',
+        options: 'dealSituation',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireSituation: { // 到场时火灾情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '到场时火灾情况',
+        labelWidth: '112px',
+        options: 'fireSituation',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireDistanceStart: { // 行驶距离（公里）
         value: ['', ''],
+        type: 'input-range',
+        label: '行驶距离（公里）',
+        labelWidth: '128px',
       },
       attendanceTimeStart: { // 到场时长（分钟）
         value: ['', ''],
+        type: 'input-range',
+        label: '到场时长（分钟）',
+        labelWidth: '128px',
       },
       speedStart: { // 到场时速（km/h）
         value: ['', ''],
+        type: 'input-range',
+        label: '到场时速（km/h）',
+        labelWidth: '136px',
       },
-      returnLateReason: { // 归队过慢原因
+      returnLateReason: { // 到场时速异常原因
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '到场时速异常原因',
+        labelWidth: '130px',
+        options: 'returnLateReason',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       dealMinStart: { // 处置（执勤）时长（分钟）
         value: ['', ''],
+        type: 'input-range',
+        label: '处置（执勤）时长（分钟）',
+        labelWidth: '124px',
       },
       isOtherProvince: { // 是否跨省增援
         value: '',
@@ -255,42 +469,69 @@ export const useFormConfig = () => {
       dispatchStatus: { // 报告状态
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '车辆类型',
+        options: 'truckType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
     },
     dispatchTime: {
       title: '时间信息',
       dispatchDate: { // 出动时间
         value: undefined,
+        type: 'select-range',
+        label: '出动时间',
       },
       midwayReturnDate: { // 中途返回时间
         value: undefined,
+        type: 'select-range',
+        label: '中途返回时间',
+        labelWidth: '104px',
       },
       attendanceDate: { // 到场时间
         value: undefined,
+        type: 'select-range',
+        label: '到场时间',
       },
       carryoutDate: { // 展开时间
         value: undefined,
+        type: 'select-range',
+        label: '展开时间',
       },
       waterflowDate: { // 出水时间
         value: undefined,
+        type: 'select-range',
+        label: '出水时间',
       },
       controllingDate: { // 控制时间
         value: undefined,
+        type: 'select-range',
+        label: '控制时间',
       },
       washDate: { // 洗消时间
         value: undefined,
+        type: 'select-range',
+        label: '洗消时间',
       },
       extinctDate: { // 扑灭时间
         value: undefined,
+        type: 'select-range',
+        label: '扑灭时间',
       },
       endDate: { // 结束时间
         value: undefined,
+        type: 'select-range',
+        label: '结束时间',
       },
       evacuateDate: { // 撤离时间
         value: undefined,
+        type: 'select-range',
+        label: '撤离时间',
       },
       returnDate: { // 归队时间
         value: undefined,
+        type: 'select-range',
+        label: '归队时间',
       },
     },
     dispatchInvest: {
@@ -301,47 +542,84 @@ export const useFormConfig = () => {
       },
       commanderNumMin: { // 指挥员人数
         value: ['', ''],
+        type: 'input-range',
+        label: '指挥员人数',
       },
       headPersonType: { // 带队指挥员职务
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '带队指挥员职务',
+        labelWidth: '112px',
+        options: 'headPersonType',
+        selectLeaf: false,
       },
       groupLeader: { // 带队指挥员
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '带队指挥员',
+        labelWidth: '100px',
       },
       fireUserIds: { // 指战员姓名
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '指战员姓名',
+        labelWidth: '100px',
       },
       firemenNumMin: { // 消防员人数
         value: ['', ''],
+        type: 'input-range',
+        label: '消防员人数',
       },
       isDispatchTruck: { // 是否有车辆出动
         value: '',
+        type: 'radio-is',
+        label: '是否有车辆出动',
+        labelWidth: '112px',
+        options: isNot
       },
       dispatchTruckInfo: { // 消防车辆信息
         value: undefined,
         back: false,
+        type: 'select-car',
+        label: '消防车辆信息',
+        labelWidth: '104px',
       },
       truckType: { // 车辆类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '车辆类型',
+        options: 'truckType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       dispatchTruckMin: { // 车辆数
         value: ['', ''],
+        type: 'input-range',
+        label: '车辆数',
       },
       fireBoatNumMin: { // 艇数
         value: ['', ''],
+        type: 'input-range',
+        label: '艇数',
       },
       fireAirplaneNumMin: { // 消防直升机数
         value: ['', ''],
+        type: 'input-range',
+        label: '消防直升机数',
+        labelWidth: '104px',
       },
       rescueDogNumMin: { // 搜救犬数
         value: ['', ''],
+        type: 'input-range',
+        label: '搜救犬数',
       },
       uavMin: { // 无人机数
         value: ['', ''],
+        type: 'input-range',
+        label: '无人机数',
       },
     },
     dispatchCasualty: {
@@ -349,37 +627,65 @@ export const useFormConfig = () => {
       injuryType: { // 伤亡情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '伤亡情况',
+        options: 'dispatchInjuryType',
       },
       deathCountMin: { // 死亡人数
         value: ['', ''],
+        type: 'input-range',
+        label: '死亡人数',
       },
       injuryCountMin: { // 受伤人数
         value: ['', ''],
+        type: 'input-range',
+        label: '受伤人数',
       },
       name: { // 姓名
         value: '',
+        type: 'input',
+        label: '姓名',
       },
       nation: { // 民族
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '民族',
+        options: 'nation',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       politicalOutlook: { // 政治面貌
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '政治面貌',
+        options: 'politicalOutlook',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       idNumber: { // 身份证号码
         value: '',
+        type: 'input',
+        label: '身份证号码',
       },
       gender: { // 性别
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '性别',
+        options: 'gender',
       },
       ageMin: { // 年龄
         value: ['', ''],
+        type: 'input-range',
+        label: '年龄',
       },
       rescueRank: { // 消防救援衔
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '消防救援衔',
+        options: 'rescueRank',
+        selectLeaf: false,
       },
       titleRank: { // 衔级
         value: '',
@@ -387,98 +693,182 @@ export const useFormConfig = () => {
       duty: { // 职务
         value: '',
         back: false,
+        type: 'cascader-multiple',
+        label: '职务',
+        options: 'duty',
+        selectLeaf: false,
       },
       teamEntryTime: { // 入队时间（进入消防系统）
         value: undefined,
+        type: 'select-range',
+        label: '入队时间',
       },
       period: { // 事发阶段
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '事发阶段',
+        options: 'period',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       protectDevice: { // 防护装备情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '防护装备情况',
+        labelWidth: '104px',
+        options: 'protectDevice',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       injuryReason: { // 伤亡原因
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '伤亡原因',
+        options: 'injuryReason',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       injuryPart: { // 受伤/致命部位
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '受伤/致命部位',
+        labelWidth: '112px',
+        options: 'injuryPart',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isInstantDeath: { // 是否当场死亡
         value: '',
+        type: 'radio-is',
+        label: '是否当场死亡',
+        labelWidth: '104px',
+        options: isNot
       },
     },
     dispatchBattle: {
       title: '战斗成果',
       rescueNumMin: { // 抢救（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '抢救（人）',
       },
       surviveNumMin: { // 生还（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '生还（人）',
       },
       deathNumMin: { // 死亡（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '死亡（人）',
       },
       evacuateNumMin: { // 疏散（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '疏散（人）',
       },
       transferNumMin: { // 转移（人）
         value: ['', ''],
+        type: 'input-range',
+        label: '转移（人）',
       },
       emergencyNumMin: { // 抢救财产价值（元）
         value: ['', ''],
+        type: 'input-range',
+        label: '抢救财产价值（元）',
+        labelWidth: '142px',
       },
       protectNumMin: { // 保护财产价值（元）
         value: ['', ''],
+        type: 'input-range',
+        label: '保护财产价值（元）',
+        labelWidth: '142px',
       },
     },
     dispatchOther: {
       title: '其他信息',
       isBlocking: { // 消防通道堵塞
         value: '',
+        type: 'radio-is',
+        label: '消防通道堵塞',
+        labelWidth: '104px',
+        options: isNot
       },
       blockingTimeStart: { // 疏通耗时（分钟）
         value: ['', ''],
+        type: 'input-range',
+        label: '疏通耗时（分钟）',
+        labelWidth: '130px',
       },
       isWastageTruck: { // 是否有车辆损耗
         value: '',
+        type: 'radio-is',
+        label: '是否有车辆损耗',
+        labelWidth: '112px',
+        options: isNot
       },
       fireProcess: { // 处置经过
         value: '',
+        type: 'input',
+        label: '处置经过',
       },
     },
     dispatchHeaderMessage: {
       title: '基本信息',
       dispatchCode: { // 出动编号
         value: '',
+        type: 'input',
+        label: '出动编号',
       },
-      FireHeadLvl: {
+      FireHeadLvl: { // 全勤指挥部级别
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '全勤指挥部级别',
+        labelWidth: '112px',
+        options: 'FireHeadLvl',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireHead: { // 全勤指挥部名称
         value: [],
         back: false,
+        type: 'select-org',
+        label: '全勤指挥部名称',
+        labelWidth: '112px',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: false,
+        params: {}
       },
       groupLeader: { // 指挥人员姓名
         value: undefined,
         back: false,
+        type: 'select-person',
+        label: '指挥人员姓名',
+        labelWidth: '104px',
       },
       commanderNumMin: { // 指挥人数
         value: ['', ''],
+        type: 'input-range',
+        label: '指挥人数',
       },
       headCarName: { // 指挥车辆名称
         value: undefined,
         back: false,
+        type: 'select-car',
+        label: '指挥车辆名称',
+        labelWidth: '104px',
       },
       headCarNumMin: { // 指挥车辆数
         value: ['', ''],
+        type: 'input-range',
+        label: '指挥车辆数',
       },
       headTimeMin: { // 指挥时长（小时）
         value: ['', ''],
+        type: 'input-range',
+        label: '指挥时长（小时）',
+        labelWidth: '130px',
       },
     },
     fireBase: {
@@ -486,6 +876,8 @@ export const useFormConfig = () => {
       // 基本信息
       fireDate: { // 起火时间
         value: undefined,
+        type: 'select-range',
+        label: '起火时间',
       },
       statisticRangeHoliday: { // 统计范围--节假日
         value: undefined,
@@ -506,126 +898,258 @@ export const useFormConfig = () => {
       areaDutyGroupFire: { // 火灾调查单位
         value: [],
         back: false,
+        type: 'select-org',
+        label: '火灾调查单位',
+        labelWidth: '104px',
+        single: false,
+        selectLeaf: false,
+        headersDisabled: true,
+        params: { permission: true }
       },
       fireDirection: { // 起火地点
         value: '',
+        type: 'input',
+        label: '起火地点',
       },
       area: { // 区域
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '区域',
+        options: 'area',
+        selectLeaf: false,
       },
       firePlace: { // 起火场所
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火场所',
+        options: 'firePlace',
+        selectLeaf: false,
       },
       fireCause: { // 起火原因
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火原因',
+        options: 'fireCause',
+        selectLeaf: false,
       },
       burnedAreaMin: { // 过火面积
         value: ['', ''],
+        type: 'input-range',
+        label: '过火面积',
       },
       fireLevel: { // 火灾等级
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '火灾等级',
+        options: 'fireLevel',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireCode: { // 火灾编号
         value: '',
+        type: 'input',
+        label: '火灾编号',
       },
       severity: { // 是否轻微火灾
         value: '',
+        type: 'radio-is',
+        label: '是否轻微火灾',
+        labelWidth: '104px',
+        options: isNot
       },
       fireSite: { // 起火位置
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火位置',
+        options: 'fireSite',
+        selectLeaf: false,
       },
-      initialFuelsType: { // 起火物名称
+      initialFuelsType: { // 起火物类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '起火物类型',
+        options: 'initialFuelsType',
+        selectLeaf: false,
       },
-      igniteSourceType: { // 引火源名称
+      igniteSourceType: { // 引火源类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '引火源类型',
+        options: 'igniteSourceType',
+        selectLeaf: false,
       },
       firePattern: { // 事故形态
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '事故形态',
+        options: 'firePattern',
+        selectLeaf: false,
       },
       liveType: { // 居住形式
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '居住形式',
+        options: 'liveType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isPoorHouse: { // 是否属于扶贫安置房
         value: undefined,
+        type: 'radio-is',
+        label: '是否属于扶贫安置房',
+        labelWidth: '142px',
+        options: isNot
       },
       isChangeUseType: { // 是否变更使用性质
         value: undefined,
+        type: 'radio-is',
+        label: '是否变更使用性质',
+        labelWidth: '136px',
+        options: isNot
       },
       useType: { // 变更后使用性质
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '变更后使用性质',
+        labelWidth: '124px',
+        options: 'useType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isSafetyAccident: { // 生产安全事故
         value: undefined,
+        type: 'radio-is',
+        label: '生产安全事故',
+        labelWidth: '104px',
+        options: isNot
       },
       isResearch: { // 是否正在调查
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '是否正在调查',
+        labelWidth: '104px',
+        options: 'isResearch',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireTel: { // 失火单位/户主联系电话
         value: '',
-        rules: [{ required: false, message: '' }],
+        type: 'input',
+        label: '失火单位/户主联系电话',
+        labelWidth: '160px',
       },
       socialCreditCode: { // 单位统一社会信用代码
         value: '',
+        type: 'input',
+        label: '单位统一社会信用代码',
+        labelWidth: '154px',
       },
       industry: { // 所属行业
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '所属行业',
+        options: 'industry',
+        selectLeaf: false,
       },
       industryDepartment: { // 行业主管部门
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '行业主管部门',
+        labelWidth: '104px',
+        options: 'industryDepartment',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       economicType: { // 经济类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '经济类型',
+        options: 'economicType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       leadInspectionOrg: { // 事故牵头调查部门
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '事故牵头调查部门',
+        labelWidth: '130px',
+        options: 'leadInspectionOrg',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isInsurance: { // 是否保险
         value: '',
+        type: 'radio-is',
+        label: '是否保险',
+        options: isNot
       },
       insuranceInfo: { // 保险类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '保险类型',
+        options: 'insuranceInfo',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isOnesided: { // 是否单方面火灾
         value: '',
+        type: 'radio-is',
+        label: '是否单方面火灾',
+        labelWidth: '112px',
+        options: isNot
       },
       fireInspection: { // 监督检查情况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '监督检查情况',
+        labelWidth: '104px',
+        options: 'fireInspection',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       firePersonAgeMin: { // 引起火灾人员年龄
         value: ['', ''],
+        type: 'input-range',
+        label: '引起火灾人员年龄',
+        labelWidth: '130px',
       },
       schooling: { // 受教育程度
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '受教育程度',
+        options: 'schooling',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       health: { // 健康状况
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '健康状况',
+        options: 'health',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       undo: { // 未出动火灾
         value: '',
+        type: 'radio-is',
+        label: '未出动火灾',
+        options: isNot
       },
       fireStatus: { // 报告状态
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '报告状态',
+        options: 'fireStatus',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
     },
     fireCasualty: {
@@ -635,6 +1159,8 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否有人员伤亡',
+        labelWidth: '112px',
+        options: isNot
       },
       injuryType: { // 伤亡情况
         value: undefined,
@@ -671,10 +1197,18 @@ export const useFormConfig = () => {
       nation: { // 民族
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '民族',
+        options: 'nation',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       idType: { // 证件类型
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '证件类型',
+        options: 'idType',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       idNumber: { // 证件号码
         value: '',
@@ -684,6 +1218,9 @@ export const useFormConfig = () => {
       gender: { // 性别
         value: undefined,
         back: false,
+        type: 'select-multiple',
+        label: '性别',
+        options: 'gender',
       },
       ageMin: { // 年龄
         value: ['', ''],
@@ -743,6 +1280,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '受伤/害时行为',
+        labelWidth: '112px',
         options: 'injuryBehavior',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -759,6 +1297,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '身体主要症状',
+        labelWidth: '104px',
         options: 'mainSymptoms',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -767,12 +1306,17 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '发现尸体位置',
+        labelWidth: '104px',
         options: 'bodyLocation',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      deathDate: { // 死亡时间 // TODO
+      deathDate: { // 死亡时间
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '死亡时间',
+        options: 'deathDate',
+        selectLeaf: false,
       },
     },
     fireEconomic: {
@@ -797,12 +1341,14 @@ export const useFormConfig = () => {
       directEconomicLossMin: { // 直接经济损失（元)
         value: ['', ''],
         type: 'input-range',
-        label: '直接经济损失（元)',
+        label: '直接经济损失（元）',
+        labelWidth: '140px',
       },
       directDamageMin: { // 直接财产损失（元）
         value: ['', ''],
         type: 'input-range',
         label: '直接财产损失（元）',
+        labelWidth: '140px',
       },
       fireDisposalCostMin: { // 火灾现场处置费用（元)
         value: ['', ''],
@@ -818,20 +1364,27 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '受灾户数（户）',
+        labelWidth: '124px',
       },
     },
     fireVehicle: {
       title: '交通工具',
       // 交通工具
-      vehicleType: { // 交通工具类型 // TODO
+      vehicleType: { // 交通工具类型
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '交通工具类型',
+        labelWidth: '104px',
+        options: 'vehicleType',
+        selectLeaf: false,
       },
       chargeState: { // 起火时充电状态
         value: undefined,
         back: false,
         type: 'select-multiple',
         label: '起火时充电状态',
+        labelWidth: '112px',
         options: 'chargeState',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -847,6 +1400,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '电力助动车-是否改装',
+        options: isNot
       },
       carNumber: { // 车牌号
         value: '',
@@ -870,8 +1424,12 @@ export const useFormConfig = () => {
     fireBuilding: {
       title: '建筑信息',
       // 建筑信息
-      buildTag: { // 建筑标签 // TODO
+      buildTag: { // 建筑标签
         value: [],
+        type: 'checkbox',
+        label: '建筑标签',
+        // fieldNames: { value: 'boDictId', label: 'dictName' },
+        options: 'buildTag',
       },
       buildType: { // 建筑类别
         value: undefined,
@@ -912,24 +1470,34 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '房龄（年）',
       },
-      buildUse: { // 建筑使用用途 // TODO
+      buildUse: { // 建筑使用用途
         value: undefined,
         back: false,
+        type: 'cascader-multiple',
+        label: '建筑使用用途',
+        labelWidth: '104px',
+        options: 'buildUse',
+        selectLeaf: false,
       },
       isSpread: { // 是否蔓延
         value: undefined,
         type: 'radio-is',
-        label: '是否蔓延'
+        label: '是否蔓延',
+        options: isNot
       },
       isLoud: { // 是否发生轰燃
         value: undefined,
         type: 'radio-is',
-        label: '是否发生轰燃'
+        label: '是否发生轰燃',
+        labelWidth: '104px',
+        options: isNot
       },
       isWindowOpened: { // 失火建筑门窗在过程中是否开启
         value: undefined,
         type: 'radio-is',
-        label: '失火建筑门窗在过程中是否开启'
+        label: '失火建筑门窗在过程中是否开启',
+        labelWidth: '130px',
+        options: isNot
       },
     },
     fireFacilities: {
@@ -938,37 +1506,45 @@ export const useFormConfig = () => {
       isFirefightFacility: { // 是否安装消防设施
         value: undefined,
         type: 'radio-is',
-        label: '是否安装消防设施'
+        label: '是否安装消防设施',
+        labelWidth: '130px',
+        options: isNot
       },
       autoAlarm: { // 是否安装自动报警系统
         value: undefined,
         type: 'radio-is',
-        label: '是否安装自动报警系统'
+        label: '是否安装自动报警系统',
+        options: install
       },
       autoFireFight: { // 是否安装自动灭火系统
         value: undefined,
         type: 'radio-is',
-        label: '是否安装自动灭火系统'
+        label: '是否安装自动灭火系统',
+        options: install
       },
       indoorHydrant: { // 是否安装室内消防栓系统
         value: undefined,
         type: 'radio-is',
-        label: '是否安装室内消防栓系统'
+        label: '是否安装室内消防栓系统',
+        options: install
       },
       smokeControl: { // 是否安装防排烟系统
         value: undefined,
         type: 'radio-is',
-        label: '是否安装防排烟系统'
+        label: '是否安装防排烟系统',
+        options: install
       },
       fireShutter: { // 是否安装防火卷帘
         value: undefined,
         type: 'radio-is',
-        label: '是否安装防火卷帘'
+        label: '是否安装防火卷帘',
+        options: install
       },
       emergencyLight: { // 应急疏散照明
         value: undefined,
         type: 'select-multiple',
         label: '应急疏散照明',
+        labelWidth: '104px',
         options: 'regulation',
       },
       networking: { // 联网情况
@@ -987,6 +1563,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       fireSeparation: { // 防火间距
         value: undefined,
@@ -998,6 +1575,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       escapeRoute: { // 疏散通道
         value: undefined,
@@ -1024,21 +1602,25 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '两案处理-是否立案',
+        options: isCase
       },
       penaltyNumMin: { // 追究人数
         value: ['', ''],
         type: 'input-range',
         label: '追究人数（人）',
+        labelWidth: '124px',
       },
       suggestDealNumMin: { // 建议处理人数（人）
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
+        labelWidth: '140px',
       },
       firePenalty: { // 火灾处罚情况-是否立案
         value: undefined,
         type: 'radio-is',
-        label: '火灾处罚情况-是否立案'
+        label: '火灾处罚情况-是否立案',
+        options: isCase
       },
     },
   }
