@@ -32,8 +32,8 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     FireAreaList:'',
     FireSiteList:'',
     // DispatchInfoList:[] // 出动平均时长列表
-    generalInfo:[]
-
+    generalInfo:[],
+    formInfo: [],
   })
 
   const openTimePop = ()=>{
@@ -229,6 +229,14 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       formatGeneralInfo(res?.fireOverview || '').slice(0, -1),
     ]
   }
+  // 获取形式分析数据
+  const getFormInfo = (res) => {
+    if (res?.formalAnalysis && res?.formalAnalysis?.length) {
+      state.formInfo = res?.formalAnalysis.map((item) => {
+        return formatGeneralInfo(item)
+      })
+    }
+  }
   // 获取页面数据
   const postHomePageInfo = async () => {
     const res = await gethomePageInfo({
@@ -272,6 +280,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       getInitialFuelsList(res)
       getFireInfoList(res)
       getGeneralInfo(res)
+      getFormInfo(res)
     }
   }
 

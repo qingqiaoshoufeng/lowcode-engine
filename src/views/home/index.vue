@@ -18,7 +18,7 @@
       </div>
       <NoticeList class="notice_list" :list="noticeList" @click="goNotice"/>
       <template v-if="!isStanding">
-        <StatisticsInfo :generalInfo="generalInfo" class="pt10 statistics_info" ref="statisticsInfoRef" :list="statisticsList" title="整体概况" :withTab="!isStanding" />
+        <StatisticsInfo :formInfo="formInfo" :generalInfo="generalInfo" class="pt10 statistics_info" ref="statisticsInfoRef" :list="statisticsList" title="整体概况" :withTab="!isStanding" />
         <Chart class="mt10" title="百万人口火灾" type="FireInfo" :chartData="FireInfoList"/>
         <Chart class="mt10" title="火警平均出动时长（分钟)" type="DispatchInfo" :chartData="DispatchInfoList" />
         <YearRank class="mt10 year_rank" title="全年榜单 TOP10"  type="FireInfo" :handleChange="getRank" :list="rankList"/>
@@ -81,6 +81,7 @@ const {
   rankList,
   FireSiteList,
   generalInfo,
+  formInfo,
   getRank,
   goNotice
 } = useSearch({dataPickerRef,statisticsInfoRef})

@@ -11,11 +11,15 @@
         >{{ item.label }}</div>
       </div>
       <div v-if="currentTab === 0 && withTab" class="general">
-          <div class="wrapper">
-            <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm">
-            </div>
-          </div>
+        <div class="wrapper">
+          <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
         </div>
+      </div>
+      <div v-else-if="currentTab === 5 && withTab" class="general">
+        <div class="wrapper">
+          <div v-for="(itm, index) in formInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
+        </div>
+      </div>
       <div v-else class="card_list">
           <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
@@ -44,6 +48,9 @@ const props = defineProps({
   generalInfo: {
     type: Array,
   },
+  formInfo:{
+    type: Array,
+  },
   color:{
     type:String
   },
@@ -64,8 +71,12 @@ const {
   tabList,tabChange} = useTab({
   list:[
     {
-      label:'概况',
-      value:0,
+      label: '形式分析',
+      value: 5,
+    },
+    {
+      label: '录入情况',
+      value: 0,
     },
     {
       label:'警情',
@@ -105,7 +116,7 @@ export default {
   padding: 0 16px;
   background: #FFFFFF;
   .tab{
-      width: 220px;
+      // width: 220px;
       height: 30px;
       background: #F6F6F6;
       border-radius: 19px;
