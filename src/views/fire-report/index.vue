@@ -36,7 +36,7 @@
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">发送单位：</div>
+            <div style="color: #929398">派发单位：</div>
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
@@ -110,7 +110,7 @@
       </template>
   </ProModal> 
   <!-- 警情窗口 -->
-  <ProModal v-model:visible="show.lookVisible" :showHeader="false" title="警情详情">
+  <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
     <PoliceForm
       :current-row="currentRow"
       :show-preview="true"

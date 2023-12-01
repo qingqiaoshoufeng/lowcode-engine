@@ -6,7 +6,7 @@
         :getListFn="getMineCollect"
         :tabs="tabs"
         :onTabFn="onTabChangeFn"
-        title="火灾审核"
+        title="我的收藏"
       >
       <template #list="{ record,tabsActive }" >
         <!-- 警情列表展示 -->
@@ -73,18 +73,13 @@
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">行政区域：</div>
-            <div>{{ record.warningAreaValue }}</div>
+            <div style="color: #929398">警情地址：</div>
+            <div>{{ record.warningAddr }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">出动队伍：</div>
             <div>{{ record.dispatchGroupName }}</div>
-          </div>
-          <div class="item-field">
-            <img src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">投入力量：</div>
-            <div>{{ record.dispatchInput }}</div>
           </div>
           <div class="item-line" />
           <div class="item-operate" @click.stop>
@@ -112,13 +107,13 @@
               </div>
             </div>
             <div class="item-type">
-              <span>{{ record.firePlaceValue }}</span>
+              <span>{{ record.fireTypeValue }}</span>
             </div>
             <div class="item-field">
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
+              <div style="color: #929398">起火时间：</div>
               <div>{{ formatYmdHm(record.warningDate) }}</div>
             </div>
             <div class="item-field">
@@ -127,8 +122,17 @@
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">行政区域：</div>
-              <div>{{ record.warningAreaValue }}</div>
+              <div style="color: #929398">警情地址：</div>
+              <div>{{ record.warningAddr }}</div>
+            </div>
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">起火地点：</div>
+              <div>{{ record.firePlaceValue }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
