@@ -616,7 +616,7 @@ const getSubmitParams = () => {
       isUrbanVillages: basicInfo.isUrbanVillages?.value,
       otherArea: basicInfo.otherArea?.value,
       fireOrgname: basicInfo.fireOrgname?.value,
-      fireTel: basicInfo.fireTel?.value,
+      // fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
       fireType: basicInfo.fireType?.completeValue?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),

@@ -697,7 +697,7 @@ const onFireLevel = () => {
           </template>
         </van-field>
       </div>
-      <div class="fireTel">
+      <!-- <div class="fireTel">
         <van-field
           label="失火单位/户主联系电话："
           v-model="form.basicInfo.fireTel.value"
@@ -718,7 +718,7 @@ const onFireLevel = () => {
             />
           </template>
         </van-field>
-      </div>
+      </div> -->
       <div v-if="!showOtherMinor" class="socialCreditCode">
         <van-field
           label="单位统一社会信用代码："

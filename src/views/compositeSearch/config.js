@@ -1039,12 +1039,12 @@ export const useFormConfig = () => {
         options: 'isResearch',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      fireTel: { // 失火单位/户主联系电话
-        value: '',
-        type: 'input',
-        label: '失火单位/户主联系电话',
-        labelWidth: '160px',
-      },
+      // fireTel: { // 失火单位/户主联系电话
+      //   value: '',
+      //   type: 'input',
+      //   label: '失火单位/户主联系电话',
+      //   labelWidth: '160px',
+      // },
       socialCreditCode: { // 单位统一社会信用代码
         value: '',
         type: 'input',
@@ -1959,7 +1959,7 @@ export const useFormConfig = () => {
         isResearch: fireBase.isResearch.value?.map(val => val.value)?.join(','),
         isResearchText: fireBase.isResearch.value?.map(val => val.label)?.join(','),
         isResearchNon: fireBase.isResearch.back,
-        fireTel: fireBase.fireTel.value,
+        // fireTel: fireBase.fireTel.value,
         socialCreditCode: fireBase.socialCreditCode.value,
         industry: returnCascader(fireBase.industry.value),
         industryNon: fireBase.industry.back,
@@ -2513,7 +2513,7 @@ export const useFormConfig = () => {
       })
       : []
     form.value.fireBase.isResearch.back = comprehensiveFireQueryReq.isResearchNon === 'true'
-    form.value.fireBase.fireTel.value = comprehensiveFireQueryReq.fireTel
+    // form.value.fireBase.fireTel.value = comprehensiveFireQueryReq.fireTel
     form.value.fireBase.socialCreditCode.value = comprehensiveFireQueryReq.socialCreditCode
     form.value.fireBase.industry.value = returnCascaderValue(comprehensiveFireQueryReq.industry)
     form.value.fireBase.industry.back = comprehensiveFireQueryReq.industryNon === 'true'
