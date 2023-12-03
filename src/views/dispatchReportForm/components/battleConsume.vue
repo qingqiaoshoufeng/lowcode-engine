@@ -164,7 +164,7 @@ onMounted(() => {
             ? dispatchTruckListOptions
             : form.investForce.dispatchTruckList.value
         "
-        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.battleConsume.wastageTruck.rules"
         label="指挥车辆信息："
         label-width="118px"

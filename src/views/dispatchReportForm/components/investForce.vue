@@ -178,7 +178,7 @@ const OnCarNum = () => {
         required
         name="midwayCar"
         :options="form.investForce.dispatchTruckList.value"
-        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
         label="中途返回车辆信息："
