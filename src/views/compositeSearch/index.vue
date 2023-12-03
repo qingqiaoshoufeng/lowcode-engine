@@ -60,6 +60,10 @@ const onSearchCallback = () => {
 const onInitCallback = (res) => {
   initSearchParams(res)
 }
+
+defineOptions({
+  name: "CompositeSearch",
+});
 </script>
 
 <template>

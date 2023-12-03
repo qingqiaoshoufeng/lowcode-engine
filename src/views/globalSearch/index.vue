@@ -63,6 +63,10 @@ const handleSearch = () => {
     closeToast();
   });
 }
+
+defineOptions({
+  name: "GlobalSearch",
+});
 </script>
 
 <template>

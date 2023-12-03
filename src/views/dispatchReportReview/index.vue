@@ -52,7 +52,7 @@ const searchOptions = ref([
 
 const defaultFilterValue = {
   state: 'running',
-  time: getLastMonth(),
+  time: [],
 };
 
 const tabs = ref([

@@ -82,7 +82,7 @@ const searchOptions = ref([
 
 const defaultFilterValue = {
   confirmFlag: '1',
-  time: getLastMonth(),
+  time: [],
   warningType: undefined,
   warningStatus: [],
   boAreaId: [],
