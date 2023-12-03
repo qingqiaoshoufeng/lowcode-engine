@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide, computed } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
 // import Form from './form.vue'
@@ -24,20 +24,20 @@ const searchDimension = ref(2)
 
 const dataTimeSource = ref('')
 
-const keyComputed = computed(() => {
-  switch (searchType.value) {
-    case 1:
-      return 'policeMessage'
-    case 2:
-      return 'dispatchStationMessage'
-    case 3:
-      return 'dispatchMessage'
-    case 4:
-      return 'fireMessage'
-    default:
-      return ''
-  }
-})
+// const keyComputed = computed(() => {
+//   switch (searchType.value) {
+//     case 1:
+//     return 'policeMessage'
+//   case 2:
+//     return 'dispatchStationMessage'
+//   case 3:
+//     return 'dispatchMessage'
+//   case 4:
+//     return 'fireMessage'
+//   default:
+//     return ''
+//   }
+// })
 
 provide('form', form)
 
