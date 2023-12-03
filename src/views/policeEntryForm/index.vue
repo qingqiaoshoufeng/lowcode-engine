@@ -345,6 +345,7 @@ const warningTypeChange = (value, selectedOptions) => {
   } else {
     form.value.warningTypeText = [];
     form.value.areaDutyGroup = [];
+    form.value.warningSource = undefined
     labelWarningOrgname.value = "单位/户主/个体户名称";
     formRef.value.resetValidation(['warningOrgname'])
     // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
@@ -684,8 +685,6 @@ const validateLat = (value, rule) => {
 const validateWarningAddr = (value, rule) => {
   if (!value) {
     return "请补充详情地址";
-  } else if (value && value.length < 5) {
-    return "警情地址不能少于5个字，请重新输入";
   } else {
     return '';
   }
@@ -1039,6 +1038,7 @@ const validateHeadquarters = (value, rule) => {
         </template>
       </van-field>
       <SelectSingle
+        v-if="!showSecurityService"
         v-model:value="form.warningSource"
         :showPreview="showPreview"
         :readonly="true"

@@ -1015,10 +1015,10 @@ export const useFormConfig = (fromRef) => {
       fieldAnnotation: form.value.otherAttach.fieldAnnotation,
       fieldWarning: form.value.otherAttach.fieldWarning,
     }
-    const { basicInfo } = form.value
-    if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
-      form.value.fireBuilding.buildTag.value = ['2023020801767']
-    }
+    // const { basicInfo } = form.value
+    // if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
+    //   form.value.fireBuilding.buildTag.value = ['2023020801767']
+    // }
   }
 
   // 校验表单规则是否需要显示 warning 提示
