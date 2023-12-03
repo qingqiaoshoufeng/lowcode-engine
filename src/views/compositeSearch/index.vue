@@ -2,7 +2,7 @@
 import { ref, provide } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
-import Form from './form.vue'
+// import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
@@ -23,6 +23,21 @@ const searchType = ref(1)
 const searchDimension = ref(2)
 
 const dataTimeSource = ref('')
+
+const keyComputed = computed(() => {
+  switch (searchType.value) {
+    case 1:
+      return 'policeMessage'
+    case 2:
+      return 'dispatchStationMessage'
+    case 3:
+      return 'dispatchMessage'
+    case 4:
+      return 'fireMessage'
+    default:
+      return ''
+  }
+})
 
 provide('form', form)
 
@@ -57,6 +72,18 @@ const onSearchCallback = () => {
   show.value.resultVisible = true
 }
 
+const onSearchChange = () => {
+  initFormByType(searchType.value)
+  // if (keyComputed.value) {
+  //   nextTick(() => {
+  //     document?.querySelector('.composite-search-form')?.querySelector(`#${keyComputed.value}-title`)?.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //   })
+  // }
+}
+
 const onInitCallback = (res) => {
   initSearchParams(res)
 }
@@ -68,13 +95,13 @@ defineOptions({
 
 <template>
   <div class="composite-search">
-    <van-tabs v-model:active="searchType">
+    <van-tabs v-model:active="searchType" @change="onSearchChange">
       <van-tab title="警情" :name="1"></van-tab>
       <van-tab title="出动" :name="2"></van-tab>
       <van-tab title="指挥部出动" :name="3"></van-tab>
       <van-tab title="火灾" :name="4"></van-tab>
     </van-tabs>
-    <Form />
+    <!-- <Form /> -->
     <SearchBtn
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"

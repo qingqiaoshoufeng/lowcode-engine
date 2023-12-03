@@ -274,7 +274,7 @@ const onSideBarChange = (e, k) => {
 
 <template>
   <div class="composite-search-wrapper">
-    <!-- <div class="composite-search-anchor">
+    <div class="composite-search-anchor">
         <van-sidebar v-model="sideBarActive">
         <template v-for="(item, k) in sections" :key="k">
           <van-sidebar-item @click="onSideBarChange(item, k)" class="anchor-item">
@@ -290,8 +290,8 @@ const onSideBarChange = (e, k) => {
           </van-sidebar-item>
         </template>
       </van-sidebar>
-    </div> -->
-    <!-- <div class="composite-search-form">
+    </div>
+    <div class="composite-search-form">
       <van-form ref="formRef">
         <div v-for="(item, k) in sections" :key="k" :id="item.link">
           <div v-for="(temp) in item.children" :key="temp.title">
@@ -307,7 +307,7 @@ const onSideBarChange = (e, k) => {
           </div>
         </div>
       </van-form>
-    </div> -->
+    </div>
   </div>
 </template>
 
