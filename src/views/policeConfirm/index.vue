@@ -5,6 +5,7 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import PoliceForm from '@/views/policeEntryForm/index.vue';
+import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import {
   generateColorByState,
   getLastMonth,
