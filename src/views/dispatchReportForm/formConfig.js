@@ -1359,8 +1359,8 @@ export const useFormConfig = () => {
     } = detail
     // 草稿信息
     form.value.draftInfo.draftName.value = fireDispatch?.draftName
-    if (fireDispatch?.warningType) {
-      form.value.draftInfo.warningType.value = fireDispatch?.warningType?.split(',')
+    if (fireDispatch?.warningType || warningDetail?.warningType) {
+      form.value.draftInfo.warningType.value = fireDispatch?.warningType?.split(',') || warningDetail?.warningType?.split(',')
       if (form.value.draftInfo.warningType.value) {
         form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
       }

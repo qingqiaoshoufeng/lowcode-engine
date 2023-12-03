@@ -42,7 +42,6 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
-import { value } from 'lodash-es';
 import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
