@@ -691,7 +691,7 @@ export const useFormConfig = () => {
         value: '',
       },
       duty: { // 职务
-        value: '',
+        value: undefined,
         back: false,
         type: 'cascader-multiple',
         label: '职务',

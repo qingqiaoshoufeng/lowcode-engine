@@ -19,7 +19,7 @@
 </template>
     
 <script setup>
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import Tabbar from "@/component/tabbar/index.vue";
 import GlobalSearch from "@/views/globalSearch/index.vue";
 import CompositeSearch from "@/views/compositeSearch/index.vue";
@@ -35,7 +35,7 @@ const dropValue = ref("GlobalSearch");
 
 const currentab = ref(2);
 
-const currentValue = ref(GlobalSearch)
+const currentValue = shallowRef(GlobalSearch)
 
 const onDropdown = (value) => {
   if (value === 'GlobalSearch') {

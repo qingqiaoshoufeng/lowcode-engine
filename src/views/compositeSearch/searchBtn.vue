@@ -181,7 +181,7 @@ onMounted(() => {
 .search-btn {
   width: 100%;
   position: absolute;
-  z-index: 88;
+  z-index: 8;
   bottom: 56px;
   &-collect {
     height: calc(100vh - 56px - 56px);
