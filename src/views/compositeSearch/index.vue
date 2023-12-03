@@ -2,6 +2,7 @@
 import { ref, provide, computed } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
+import ProModal from "@/component/ProModal/index";
 // import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
@@ -102,14 +103,14 @@ defineOptions({
       <van-tab title="火灾" :name="4"></van-tab>
     </van-tabs>
     <!-- <Form /> -->
-    <SearchBtn
+    <!-- <SearchBtn
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"
-    />
+    /> -->
 
     <!-- 查询结果 -->
     <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
-      <SearchResult :params="queryParams" />
+      <!-- <SearchResult :params="queryParams" /> -->
     </ProModal>
   </div>
 </template>
