@@ -96,12 +96,13 @@ defineOptions({
 
 <template>
   <div class="composite-search">
-    <van-tabs v-model:active="searchType" @change="onSearchChange">
+    综合查询
+    <!-- <van-tabs v-model:active="searchType" @change="onSearchChange">
       <van-tab title="警情" :name="1"></van-tab>
       <van-tab title="出动" :name="2"></van-tab>
       <van-tab title="指挥部出动" :name="3"></van-tab>
       <van-tab title="火灾" :name="4"></van-tab>
-    </van-tabs>
+    </van-tabs> -->
     <!-- <Form /> -->
     <!-- <SearchBtn
       @searchCallback="onSearchCallback"
@@ -109,9 +110,9 @@ defineOptions({
     /> -->
 
     <!-- 查询结果 -->
-    <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
-      <!-- <SearchResult :params="queryParams" /> -->
-    </ProModal>
+    <!-- <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
+      <SearchResult :params="queryParams" />
+    </ProModal> -->
   </div>
 </template>
 
