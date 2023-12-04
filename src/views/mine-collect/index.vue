@@ -107,13 +107,13 @@
               </div>
             </div>
             <div class="item-type">
-              <span>{{ record.fireTypeValue }}</span>
+              <span>{{ record.firePlaceValue }}</span>
             </div>
             <div class="item-field">
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火时间：</div>
+              <div style="color: #929398">起火时间：</div> 
               <div>{{ formatYmdHm(record.warningDate) }}</div>
             </div>
             <div class="item-field">
@@ -122,7 +122,7 @@
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">警情地址：</div>
+              <div style="color: #929398">警情地址：</div> 
               <div>{{ record.warningAddr }}</div>
             </div>
             <div class="item-field">

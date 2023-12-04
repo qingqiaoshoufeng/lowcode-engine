@@ -524,7 +524,7 @@ const onFireLevel = () => {
         :options="options.isResearch"
         :field-names="{label:'label',value:'value'}"
         :rules="form.basicInfo.isResearch.rules"
-        :required="isRequired"
+        :required="true"
         placeholder="请选择是否正在调查"
         title="请选择是否正在调查" 
       >
@@ -551,6 +551,7 @@ const onFireLevel = () => {
         :required="true"
         placeholder="请选择严重程度"
         title="请选择严重程度"
+        key="severity"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -661,20 +662,20 @@ const onFireLevel = () => {
           :options="options.area"
           :required="isRequired"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
-          label="起火地点："
+          label="区域："
           placeholder="请选择区域"
           :rules="form.basicInfo.area.rules"
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="起火地点："
+              label="区域："
               remark-field="area"
               field-module="basicInfo"
               :exist-data="fieldExist?.area"
               @refresh-callback="refreshField"
             />
           </template>
-        </CascaderSingle>
+        </CascaderSingle> 
       </div>
       <div class="fireOrgname">
         <van-field

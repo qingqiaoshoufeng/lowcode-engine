@@ -56,12 +56,13 @@ export default {
 <style lang="scss" scoped>
 .tips-selected-multiple{
   overflow-x: scroll;
+  scrollbar-width: none;
   padding-bottom: 7px;
   .wrapper{
     // width: auto;
     display: inline-block;
     display: flex;
-    background-color: #fff;
+    // background-color: #fff;
     padding-bottom: 5px;
     .tip_item {
       flex-shrink: 0;

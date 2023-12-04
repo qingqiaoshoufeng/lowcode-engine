@@ -51,7 +51,7 @@
       <div style="color: #929398">申请类型：</div>
       <div>{{ record.applyTypeValue }}</div>
     </div>
-    <div class="item-field" v-if="['policeAmend','policeInvalid'].includes(type)">
+    <div class="item-field" v-if="['policeAmend'].includes(type)">
       <img
         src="../../../assets/images/icon-area@2x.png"
         style="width: 13px; height: 15px; margin-right: 8px"
@@ -59,6 +59,15 @@
       />
       <div style="color: #929398">申请原因：</div>
       <div>{{ record.recheckReason }}</div>
+    </div>
+    <div class="item-field" v-if="['policeInvalid'].includes(type)">
+      <img
+        src="../../../assets/images/icon-area@2x.png"
+        style="width: 13px; height: 15px; margin-right: 8px"
+        alt=""
+      />
+      <div style="color: #929398">申请原因：</div>
+      <div>{{ record.cancelReasonValue }}</div>
     </div>
     <div class="item-field" v-if="['policeConfirmed'].includes(type)">
       <img d

@@ -1,7 +1,7 @@
 <template>
   <div class="pro-list-item">
     <div class="item-header">
-      <div class="item-title">{{ record.warningAddr }}</div>
+      <div class="item-title">{{ record.warningName }}</div>
       <div class="item-state" v-if="['fireAmend','fireInvalid'].includes(type)" :class="generateColorByState(record.warningStatusValue)">
         {{ record.statusValue }}
       </div>
@@ -9,7 +9,10 @@
         {{ record.fireStatusValue }}
       </div>
     </div>
-    <div class="item-type">
+    <div class="item-type" v-if="['fireFilled','fireReject'].includes(type)">
+      <span>{{ record.firePlaceValue }}</span>
+    </div>
+    <div class="item-type" v-else>
       <span>{{ record.fireTypeValue }}</span>
     </div>
     <div class="item-field" v-if="['fireFilled','fireReviewed','fireReject'].includes(type)">
@@ -33,7 +36,7 @@
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
       <div style="color: #929398">申请单位：</div>
-      <div>{{ formatYmdHm(record.createOrg) }}</div>
+      <div>{{ record.createOrg }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
       <img
@@ -42,14 +45,14 @@
         alt=""
       />
       <div style="color: #929398">审批时间：</div>
-      <div>{{ record.reviewTime }}</div>
+      <div>{{ formatYmdHm(record.reviewTime) }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
       <div style="color: #929398">申请类型：</div>
-      <div>{{ formatYmdHm(record.applyTypeValue) }}</div>
+      <div>{{ record.applyTypeValue }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
       <img

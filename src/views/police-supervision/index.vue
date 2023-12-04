@@ -8,7 +8,6 @@
       >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="form">
-          <SelectTags class="select_tags" :menus="menus" :selects="proListRef?.query?.tags" :select-callback="selectTagsCallback" />
           <div class="list-tabs1">
             <SelectTime
               v-model:value="filterFormState.time"
@@ -21,6 +20,7 @@
               @confirmCallback="onSearchConfirm"
             />
           </div>
+          <SelectTags class="select_tags" :menus="menus" :selects="proListRef?.query?.tags" :select-callback="selectTagsCallback" />
         </div>
       </template>
         <template #list="{ record }">
@@ -388,10 +388,13 @@ const selectTagsCallback = (selects) => {
   //   }
   // }
   .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .select_tags{
-        border-top: 10px solid #fff;
-      }
+    font-size: 20px;
+    margin-right: auto;
+  }
+  .select_tags{
+    margin-top: 10px;
+    &::-webkit-scrollbar{
+      display: none;
+    }
+  }
   </style>
