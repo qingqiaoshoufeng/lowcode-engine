@@ -1,8 +1,8 @@
 <script setup>
 import { ref, provide, computed } from 'vue'
-// import SearchBtn from './searchBtn.vue'
-// import SearchResult from './searchResult.vue'
-// import ProModal from "@/component/ProModal/index";
+import SearchBtn from './searchBtn.vue'
+import SearchResult from './searchResult.vue'
+import ProModal from "@/component/ProModal/index";
 // import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
@@ -97,22 +97,22 @@ defineOptions({
 <template>
   <div class="composite-search">
     综合查询
-    <!-- <van-tabs v-model:active="searchType" @change="onSearchChange">
+    <van-tabs v-model:active="searchType" @change="onSearchChange">
       <van-tab title="警情" :name="1"></van-tab>
       <van-tab title="出动" :name="2"></van-tab>
       <van-tab title="指挥部出动" :name="3"></van-tab>
       <van-tab title="火灾" :name="4"></van-tab>
-    </van-tabs> -->
+    </van-tabs>
     <!-- <Form /> -->
-    <!-- <SearchBtn
+    <SearchBtn
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"
-    /> -->
+    />
 
     <!-- 查询结果 -->
-    <!-- <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
+    <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
       <SearchResult :params="queryParams" />
-    </ProModal> -->
+    </ProModal>
   </div>
 </template>
 
