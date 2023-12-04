@@ -128,7 +128,7 @@ export const useFormConfig = () => {
       warningDealStatus: { // 警情处置情况
         value: undefined,
         back: false,
-        type: 'select-multiple',
+        type: 'select-single',
         label: '警情处置情况',
         labelWidth: '104px',
         options: 'warningDealStatus',
