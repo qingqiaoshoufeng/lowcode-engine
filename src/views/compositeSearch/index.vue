@@ -104,6 +104,7 @@ defineOptions({
     </van-tabs>
     <Form />
     <SearchBtn
+      :search-scene="1"
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"
     />
