@@ -147,7 +147,9 @@ onMounted(() => {
   // 获取警情标签
   getFireWarningTag({ tagType: 1 }).then((res) => {
     if (res?.data) {
-      options.value.warningTag = res.data
+      options.value.warningTag = res.data?.map(item => {
+        return { ...item, label: item.tagName, value: item.boFireTagId }
+      })
     }
   })
 })

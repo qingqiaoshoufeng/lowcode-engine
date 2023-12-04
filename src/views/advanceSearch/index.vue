@@ -1,6 +1,6 @@
 <script setup>
 import { ref, provide, computed } from 'vue'
-import SearchBtn from '@/views/compositeSearch/searchBtn.vue'
+import SearchBtn from './searchBtn.vue'
 import SearchResult from '@/views/compositeSearch/searchResult.vue'
 import ProModal from "@/component/ProModal/index";
 import { showToast, showLoadingToast, closeToast } from "vant";

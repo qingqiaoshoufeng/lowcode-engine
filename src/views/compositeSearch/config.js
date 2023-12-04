@@ -48,7 +48,7 @@ export const useFormConfig = () => {
       warningAddr: { // 警情地址
         value: '',
         type: 'input',
-        label: '警情标题',
+        label: '警情地址',
       },
       warningType: { // 警情类型
         value: undefined,
@@ -102,10 +102,10 @@ export const useFormConfig = () => {
       warningTag: { // 警情标签
         value: undefined,
         back: false,
-        type: 'select-multiple',
+        type: 'select-nodes',
         label: '警情标签',
         options: 'warningTag',
-        fieldNames: { value: 'boFireTagId', label: 'tagName' },
+        fieldNames: { value: 'value', label: 'label' },
       },
       createOrgId: { // 录入单位
         value: [],
