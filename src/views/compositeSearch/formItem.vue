@@ -2,6 +2,7 @@
 import { inject } from 'vue'
 import InputNumberRange from "@/component/InputNumberRange/index.vue";
 import SelectMultiple from '@/component/SelectMultiple/index.vue';
+import SelectSingle from '@/component/SelectSingle/index.vue';
 import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 import SelectOrg from "@/component/SelectOrg/index";
 import SelectRangeTime from "@/component/SelectRangeTime/index";
@@ -23,6 +24,18 @@ const options = inject('options');
 
 <template>
   <div class="search-form-item">
+    <template v-if="fieldObj?.type === 'select-single'">
+      <SelectSingle
+        v-model:value="fieldObj.value"
+        :readonly="true"
+        :options="options[fieldObj.options]"
+        :field-names="fieldObj.fieldNames ? fieldObj.fieldNames : { value: 'value', label: 'label' }"
+        :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
+        :placeholder="`请选择${fieldObj.label}`"
+        :title="`请选择${fieldObj.label}`"
+      />
+    </template>
     <template v-if="fieldObj?.type === 'select-multiple'">
       <SelectMultiple
         v-model:value="fieldObj.value"
