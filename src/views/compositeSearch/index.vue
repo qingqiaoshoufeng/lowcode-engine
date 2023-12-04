@@ -1,19 +1,19 @@
 <script setup>
 import { ref, provide, computed } from 'vue'
-import SearchBtn from './searchBtn.vue'
-import SearchResult from './searchResult.vue'
-import ProModal from "@/component/ProModal/index";
+// import SearchBtn from './searchBtn.vue'
+// import SearchResult from './searchResult.vue'
+// import ProModal from "@/component/ProModal/index";
 // import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 
-const { form, getSearchParams, initSearchParams, initFormByType, resetForm } = useFormConfig(options)
-
-const { options } = useOptions();
+const { form, getSearchParams, initSearchParams, initFormByType, resetForm } = useFormConfig()
 
 const { show } = useModal();
+
+const { options } = useOptions();
 
 const searchInfo = ref({})
 
@@ -46,7 +46,7 @@ provide('searchType', searchType)
 
 provide('searchInfo', searchInfo)
 
-provide('options', options)
+// provide('options', options)
 
 provide('searchDimension', searchDimension)
 
