@@ -3,7 +3,7 @@ import { ref, provide, computed } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
 import ProModal from "@/component/ProModal/index";
-// import Form from './form.vue'
+import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
@@ -25,20 +25,20 @@ const searchDimension = ref(2)
 
 const dataTimeSource = ref('')
 
-// const keyComputed = computed(() => {
-//   switch (searchType.value) {
-//     case 1:
-//     return 'policeMessage'
-//   case 2:
-//     return 'dispatchStationMessage'
-//   case 3:
-//     return 'dispatchMessage'
-//   case 4:
-//     return 'fireMessage'
-//   default:
-//     return ''
-//   }
-// })
+const keyComputed = computed(() => {
+  switch (searchType.value) {
+    case 1:
+      return 'policeMessage'
+    case 2:
+      return 'dispatchStationMessage'
+    case 3:
+      return 'dispatchMessage'
+    case 4:
+      return 'fireMessage'
+    default:
+      return ''
+  }
+})
 
 provide('form', form)
 
@@ -46,7 +46,7 @@ provide('searchType', searchType)
 
 provide('searchInfo', searchInfo)
 
-// provide('options', options)
+provide('options', options)
 
 provide('searchDimension', searchDimension)
 
@@ -96,14 +96,13 @@ defineOptions({
 
 <template>
   <div class="composite-search">
-    综合查询
     <van-tabs v-model:active="searchType" @change="onSearchChange">
       <van-tab title="警情" :name="1"></van-tab>
       <van-tab title="出动" :name="2"></van-tab>
       <van-tab title="指挥部出动" :name="3"></van-tab>
       <van-tab title="火灾" :name="4"></van-tab>
     </van-tabs>
-    <!-- <Form /> -->
+    <Form />
     <SearchBtn
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"
