@@ -1,4 +1,5 @@
 import { request } from '@/plugins/axios/index.js'
+import axios from 'axios'
 
 // 登录接口
 export function loginIn(data) {
@@ -64,8 +65,9 @@ export function getAllRules() {
 // }
 
 export const getVerificationCode = async() =>{
-  const imgRes = await fetch('/acws/rest/captcha').then(r => r.blob()).then((blob) => {
-    return new Promise((resolve) => {
+  const imgRes = await fetch(`${ process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/captcha`).then(r => r.blob()).then((blob) => {
+    debugger;
+    return new Promise((resolve) => { 
       const reader = new FileReader()
       reader.readAsDataURL(blob)
       reader.onloadend = () => {
@@ -75,3 +77,29 @@ export const getVerificationCode = async() =>{
   })
   return Promise.resolve(imgRes)
 }
+
+// export const getVerificationCode = async() =>{
+//   return new Promise(async(resolve) => { 
+//     const imgRes = await axios(
+//       {
+//         url:'/acws/rest/captcha',
+//         method:'get',
+//         responseType:'blob'
+//       }
+//     ).then(response =>{
+//       debugger;
+//       // debugger
+//       // let blob = new Blob([response.data], { type: "image/jpeg" });
+//       // debugger;
+//       const reader = new FileReader()
+//       reader.readAsDataURL(new Blob([response.data])) 
+      
+//       reader.onloadend = () => {
+//         console.log(reader.result);
+//         resolve(reader.result)
+//       }
+//       // const url = "data:image/png;base64," + (Buffer.from(response.data, "binary").toString("base64"));
+//       // resolve(url)
+//     })
+//   })
+// }
