@@ -691,7 +691,7 @@ export const useFormConfig = () => {
         value: '',
       },
       duty: { // 职务
-        value: '',
+        value: undefined,
         back: false,
         type: 'cascader-multiple',
         label: '职务',
@@ -1039,12 +1039,12 @@ export const useFormConfig = () => {
         options: 'isResearch',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      fireTel: { // 失火单位/户主联系电话
-        value: '',
-        type: 'input',
-        label: '失火单位/户主联系电话',
-        labelWidth: '160px',
-      },
+      // fireTel: { // 失火单位/户主联系电话
+      //   value: '',
+      //   type: 'input',
+      //   label: '失火单位/户主联系电话',
+      //   labelWidth: '160px',
+      // },
       socialCreditCode: { // 单位统一社会信用代码
         value: '',
         type: 'input',
@@ -1820,7 +1820,7 @@ export const useFormConfig = () => {
         firemenNumMax: dispatchInvest.firemenNumMin.value?.[1],
         isDispatchTruck: dispatchInvest.isDispatchTruck.value,
         dispatchTruckInfo: dispatchInvest.dispatchTruckInfo.value?.map(val => val.boFireTruckId)?.join(','),
-        dispatchTruckInfoText: dispatchInvest.dispatchTruckInfo.value?.map(val => val.truckCode)?.join(','),
+        dispatchTruckInfoText: dispatchInvest.dispatchTruckInfo.value?.map(val => val.truckNumber)?.join(','),
         dispatchTruckInfoNon: dispatchInvest.dispatchTruckInfo.back,
         truckType: dispatchInvest.truckType.value?.join(','),
         truckTypeNon: dispatchInvest.truckType.back,
@@ -1905,7 +1905,7 @@ export const useFormConfig = () => {
         commanderNumMin: dispatchHeaderMessage.commanderNumMin.value?.[0],
         commanderNumMax: dispatchHeaderMessage.commanderNumMin.value?.[1],
         headCarName: dispatchHeaderMessage.headCarName.value?.map(val => val.boFireTruckId)?.join(','),
-        headCarNameText: dispatchHeaderMessage.headCarName.value?.map(val => val.truckCode)?.join(','),
+        headCarNameText: dispatchHeaderMessage.headCarName.value?.map(val => val.truckNumber)?.join(','),
         headCarNameNon: dispatchHeaderMessage.headCarName.back,
         headCarNumMin: dispatchHeaderMessage.headCarNumMin.value?.[0],
         headCarNumMax: dispatchHeaderMessage.headCarNumMin.value?.[1],
@@ -1959,7 +1959,7 @@ export const useFormConfig = () => {
         isResearch: fireBase.isResearch.value?.map(val => val.value)?.join(','),
         isResearchText: fireBase.isResearch.value?.map(val => val.label)?.join(','),
         isResearchNon: fireBase.isResearch.back,
-        fireTel: fireBase.fireTel.value,
+        // fireTel: fireBase.fireTel.value,
         socialCreditCode: fireBase.socialCreditCode.value,
         industry: returnCascader(fireBase.industry.value),
         industryNon: fireBase.industry.back,
@@ -2342,7 +2342,7 @@ export const useFormConfig = () => {
     form.value.dispatchInvest.isDispatchTruck.value = comprehensiveDispatchQueryReq.isDispatchTruck
     form.value.dispatchInvest.dispatchTruckInfo.value = comprehensiveDispatchQueryReq.dispatchTruckInfo
       ? generateByKeyValue(comprehensiveDispatchQueryReq.dispatchTruckInfoText, comprehensiveDispatchQueryReq.dispatchTruckInfo, {
-        key: 'truckCode',
+        key: 'truckNumber',
         value: 'boFireTruckId',
       })
       : []
@@ -2443,7 +2443,7 @@ export const useFormConfig = () => {
     form.value.dispatchHeaderMessage.commanderNumMin.value = returnNumValue(comprehensiveDispatchHeadQueryReq.commanderNumMin, comprehensiveDispatchHeadQueryReq.commanderNumMax)
     form.value.dispatchHeaderMessage.headCarName.value = comprehensiveDispatchHeadQueryReq.headCarName
       ? generateByKeyValue(comprehensiveDispatchHeadQueryReq.headCarNameText, comprehensiveDispatchHeadQueryReq.headCarName, {
-        key: 'truckCode',
+        key: 'truckNumber',
         value: 'boFireTruckId',
       })
       : []
@@ -2513,7 +2513,7 @@ export const useFormConfig = () => {
       })
       : []
     form.value.fireBase.isResearch.back = comprehensiveFireQueryReq.isResearchNon === 'true'
-    form.value.fireBase.fireTel.value = comprehensiveFireQueryReq.fireTel
+    // form.value.fireBase.fireTel.value = comprehensiveFireQueryReq.fireTel
     form.value.fireBase.socialCreditCode.value = comprehensiveFireQueryReq.socialCreditCode
     form.value.fireBase.industry.value = returnCascaderValue(comprehensiveFireQueryReq.industry)
     form.value.fireBase.industry.back = comprehensiveFireQueryReq.industryNon === 'true'

@@ -45,7 +45,7 @@ watch(() => props.value, (val) => {
   nextTick(() => {
     if (props.value) {
       selectValue.value = props.value;
-      selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+      selectText.value = selectValue.value?.map((item) => item.truckNumber)?.join(",");
     } else {
       selectValue.value = [];
       selectText.value = "";
@@ -64,14 +64,14 @@ const handleItem = (item) => {
   } else {
     selectValue.value = selectValue.value?.filter((it) => it.boFireTruckId !== item.boFireTruckId);
   }
-  selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+  selectText.value = selectValue.value?.map((item) => item.truckNumber)?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, item);
 };
 
 const handleDelete = (item) => {
   selectValue.value = selectValue.value?.filter((it) => it.boFireTruckId !== item.boFireTruckId);
-  selectText.value = selectValue.value?.map((item) => item.truckCode)?.join(",");
+  selectText.value = selectValue.value?.map((item) => item.truckNumber)?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, selectText.value);
 };
@@ -148,7 +148,7 @@ defineOptions({
           type="primary"
           @close="handleDelete(item)"
         >
-          {{ item.truckCode }}
+          {{ item.truckNumber }}
         </van-tag>
       </div>
       <div class="single-wrapper">
@@ -163,7 +163,7 @@ defineOptions({
           <template #list="{ record }">
             <div class="pro-list-item" @click="handleItem(record)">
               <div class="car-item">
-                <div class="code">{{ record.truckCode }}</div>
+                <div class="code">{{ record.truckNumber }}</div>
                 <div class="org">{{ record.organizationName }}</div>
                 <van-icon v-if="checkSelect(record)" name="success" class="icon" />
               </div>

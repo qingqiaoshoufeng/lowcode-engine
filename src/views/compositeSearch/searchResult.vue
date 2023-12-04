@@ -3,6 +3,7 @@ import { ref, onMounted, nextTick, inject, watch } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
 import { getSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";

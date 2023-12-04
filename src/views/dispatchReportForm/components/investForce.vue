@@ -151,9 +151,9 @@ const OnCarNum = () => {
             v-model:value="form.investForce.isReturnTruck.value"
             v-preview-text="showPreview"
             :disabled="form.investForce.isReturnTruck.disabled"
-            @change="onReturnTruck"
             icon-size="16px"
             direction="horizontal"
+            @change="onReturnTruck"
           >
             <van-radio name="1">是</van-radio>
             <van-radio name="2">否</van-radio>
@@ -162,9 +162,9 @@ const OnCarNum = () => {
         <template v-slot:label="">
           <FieldAnnotation
             label="是否有车辆中途返回："
-            remark-field="isInjured"
-            field-module="casualtyWar"
-            :exist-data="fieldExist?.isInjured"
+            remark-field="isReturnTruck"
+            field-module="investForce"
+            :exist-data="fieldExist?.isReturnTruck"
             @refresh-callback="refreshField"
           />
         </template>
@@ -178,7 +178,7 @@ const OnCarNum = () => {
         required
         name="midwayCar"
         :options="form.investForce.dispatchTruckList.value"
-        :field-names="{ value: 'boFireTruckId', label: 'truckCode' }"
+        :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.investForce.midwayCar.rules"
         :disabled="form.investForce.midwayCar.disabled"
         label="中途返回车辆信息："

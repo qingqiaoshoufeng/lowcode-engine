@@ -198,7 +198,7 @@ const defaultFilterValue = {
   fireStatus: [],
   fireCode: '',
   fireGroup: [],
-  time: getLastMonth(),
+  time: [],
 }
 const show = ref({})
 const isEdit = ref(false)

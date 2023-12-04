@@ -644,7 +644,7 @@ const initWatch = () => {
     }
     initDynamicDict()
     nextTick(() => {
-      showPreview.value = Boolean(props.isDetail && form.value.basicInformation.dealSituation.value)
+      showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.draftInfo.warningType.value))
     })
     resolve()
   })
@@ -1105,7 +1105,6 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
   (res) => {
     showToast('暂存成功')
     emits('finishCallback')
-    props.closeModal()
   },
   {
     submitFn: () => {

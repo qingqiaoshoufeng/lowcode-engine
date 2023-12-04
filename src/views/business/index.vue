@@ -38,7 +38,7 @@ const menuListMap = computed(() => {
   height: 44px;
   box-sizing: content-box;
   line-height: 44px;
-  border-top: 44px solid #0c207f;
+  border-top: 0px solid #0c207f;
   background-color: #0c207f;
   color: #fff;
   width: 100%;
@@ -49,8 +49,8 @@ const menuListMap = computed(() => {
   color: #ffffff;
 }
 .statistics {
-  height: calc(100% - 88px - 56px);
-  margin-top: 88px;
+  height: calc(100% - 44px - 56px);
+  margin-top: 44px;
   padding: 18px 16px 10px 16px;
   background-color: #fff;
   overflow-y: auto;

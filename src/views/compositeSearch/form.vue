@@ -16,10 +16,8 @@ import {
   seasonRange,
   statisticRange,
 } from '@/utils/constants.js';
-import { useStore } from "vuex";
+import store from '@/store/index.js'
 import { useIntersection } from './useIntersection.js';
-
-const store = useStore();
 
 const form = inject('form');
 

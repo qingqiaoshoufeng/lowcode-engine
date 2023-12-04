@@ -42,7 +42,6 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
-import { value } from 'lodash-es';
 import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
@@ -617,7 +616,7 @@ const getSubmitParams = () => {
       isUrbanVillages: basicInfo.isUrbanVillages?.value,
       otherArea: basicInfo.otherArea?.value,
       fireOrgname: basicInfo.fireOrgname?.value,
-      fireTel: basicInfo.fireTel?.value,
+      // fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
       fireType: basicInfo.fireType?.completeValue?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),

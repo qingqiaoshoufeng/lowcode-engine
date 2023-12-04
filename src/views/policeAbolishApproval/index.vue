@@ -43,7 +43,7 @@ const searchOptions = ref([
 const defaultFilterValue = {
   recheckType: 4,
   state: 'running',
-  time: getLastMonth(),
+  time: [],
   applyGroup: [],
 };
 

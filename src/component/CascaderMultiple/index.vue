@@ -5,11 +5,11 @@ import { findNodeFromTreeById, findParentNodes, traverseTree, treeToArray } from
 const props = defineProps({
   value: {
     type: Array,
-    default: "",
+    default: () => [],
   },
   text: {
     type: Array,
-    default: "",
+    default: () => [],
   },
   required: {
     type: Boolean,

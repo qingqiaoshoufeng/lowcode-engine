@@ -4,6 +4,13 @@ import { getMySearchList, getMySearchDetail, getSourceOption } from '@/apis/inde
 import { useModal } from '@/hooks/useModal.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 
+const props = defineProps({
+  searchScene: {
+    type: Number,
+    default: 1,
+  }
+})
+
 const emits = defineEmits('searchCallback', 'initCallback');
 
 const options = inject('options');
@@ -25,6 +32,7 @@ const handleSearch = () => {
 const handleCollect = () => {
   show.value.collectVisible = true
   nextTick(() => {
+    proListRef.value.query.searchScene = props.searchScene
     proListRef.value.query.shareFlag = 2
     proListRef.value.filter()
   })
@@ -181,7 +189,7 @@ onMounted(() => {
 .search-btn {
   width: 100%;
   position: absolute;
-  z-index: 88;
+  z-index: 8;
   bottom: 56px;
   &-collect {
     height: calc(100vh - 56px - 56px);

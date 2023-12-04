@@ -209,6 +209,9 @@ onMounted(() => {
               {{ record.statusValue }}
             </div>
           </div>
+          <div class="item-type">
+            <span>{{ record.warningTypeValue }}</span>
+          </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
             <div style="color: #929398">接警时间：</div>

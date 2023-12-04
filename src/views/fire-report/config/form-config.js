@@ -62,10 +62,10 @@ export const useFormConfig = (fromRef) => {
         value: '',
         rules: [{ required: true, message: '请输入单位/户主/个体户名称' }],
       },
-      fireTel: { // 失火单位/户主联系电话
-        value: '',
-        rules: [{ required: true, message: '' }],
-      },
+      // fireTel: { // 失火单位/户主联系电话
+      //   value: '',
+      //   rules: [{ required: true, message: '' }],
+      // },
       socialCreditCode: { // 单位统一社会信用代码
         value: '',
         // rules: [{ required: true, message: '请输入单位统一社会信用代码' }],
@@ -1015,10 +1015,10 @@ export const useFormConfig = (fromRef) => {
       fieldAnnotation: form.value.otherAttach.fieldAnnotation,
       fieldWarning: form.value.otherAttach.fieldWarning,
     }
-    const { basicInfo } = form.value
-    if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
-      form.value.fireBuilding.buildTag.value = ['2023020801767']
-    }
+    // const { basicInfo } = form.value
+    // if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
+    //   form.value.fireBuilding.buildTag.value = ['2023020801767']
+    // }
   }
 
   // 校验表单规则是否需要显示 warning 提示
@@ -1049,7 +1049,7 @@ export const useFormConfig = (fromRef) => {
     form.value.basicInfo.isUrbanVillages.value = fireInfo?.isUrbanVillages
     form.value.basicInfo.otherArea.value = fireInfo?.otherArea
     form.value.basicInfo.fireOrgname.value = fireInfo?.fireOrgname
-    form.value.basicInfo.fireTel.value = fireInfo?.fireTel
+    // form.value.basicInfo.fireTel.value = fireInfo?.fireTel
     form.value.basicInfo.socialCreditCode.value = fireInfo?.socialCreditCode
     form.value.basicInfo.fireType.value = fireInfo?.fireType?.split(',')?.pop()
     form.value.basicInfo.fireType.completeValue = fireInfo?.fireType?.split(',')
@@ -1239,7 +1239,7 @@ export const useFormConfig = (fromRef) => {
     // form.value.basicInfo.isUrbanVillages.rules[0].required = value
     // form.value.basicInfo.otherArea.rules[0].required = value
     form.value.basicInfo.fireOrgname.rules[0].required = value
-    form.value.basicInfo.fireTel.rules[0].required = value
+    // form.value.basicInfo.fireTel.rules[0].required = value
     // form.value.basicInfo.socialCreditCode.rules[0].required = value
     // form.value.basicInfo.fireType.rules[0].required = value
     form.value.basicInfo.fireCause.rules[0].required = value

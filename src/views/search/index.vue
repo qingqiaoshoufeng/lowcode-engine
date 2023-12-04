@@ -19,33 +19,33 @@
 </template>
     
 <script setup>
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import Tabbar from "@/component/tabbar/index.vue";
-import globalSearch from "@/views/globalSearch/index.vue";
-import compositeSearch from "@/views/compositeSearch/index.vue";
-import advanceSearch from "@/views/advanceSearch/index.vue";
+import GlobalSearch from "@/views/globalSearch/index.vue";
+import CompositeSearch from "@/views/compositeSearch/index.vue";
+import AdvanceSearch from "@/views/advanceSearch/index.vue";
 
 const option = [
-  { text: "全局搜索", value: "globalSearch" },
-  { text: "综合查询", value: "compositeSearch" },
-  { text: "高级查询", value: "advanceSearch" },
+  { text: "全局搜索", value: "GlobalSearch" },
+  { text: "综合查询", value: "CompositeSearch" },
+  { text: "高级查询", value: "AdvanceSearch" },
 ];
 
-const dropValue = ref("globalSearch");
+const dropValue = ref("GlobalSearch");
 
 const currentab = ref(2);
 
-const currentValue = ref(globalSearch)
+const currentValue = shallowRef(GlobalSearch)
 
 const onDropdown = (value) => {
-  if (value === 'globalSearch') {
-    currentValue.value = globalSearch
+  if (value === 'GlobalSearch') {
+    currentValue.value = GlobalSearch
   }
-  else if (value === 'compositeSearch') {
-    currentValue.value = compositeSearch
+  else if (value === 'CompositeSearch') {
+    currentValue.value = CompositeSearch
   }
-  else if (value === 'advanceSearch') {
-    currentValue.value = advanceSearch
+  else if (value === 'AdvanceSearch') {
+    currentValue.value = AdvanceSearch
   }
 };
 </script>

@@ -103,14 +103,14 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
   
 <style scoped lang="scss">
 .home{
-    background-image: url('~@/assets/images/mine-bg.png');
+    background-image: url('~@/assets/images/home-bg.png');
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 0% 0%;
     overflow: hidden;
     background-color: #F6F7F8;
     height: 100%;
-    padding-top: 94px;
+    padding-top: 44px;
     padding-bottom: 56px;
     overflow-y: scroll;
     .time{

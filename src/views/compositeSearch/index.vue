@@ -1,18 +1,19 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide, computed } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
+import ProModal from "@/component/ProModal/index";
 import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 
-const { form, getSearchParams, initSearchParams, initFormByType, resetForm } = useFormConfig(options)
-
-const { options } = useOptions();
+const { form, getSearchParams, initSearchParams, initFormByType, resetForm } = useFormConfig()
 
 const { show } = useModal();
+
+const { options } = useOptions();
 
 const searchInfo = ref({})
 
@@ -23,6 +24,21 @@ const searchType = ref(1)
 const searchDimension = ref(2)
 
 const dataTimeSource = ref('')
+
+const keyComputed = computed(() => {
+  switch (searchType.value) {
+    case 1:
+      return 'policeMessage'
+    case 2:
+      return 'dispatchStationMessage'
+    case 3:
+      return 'dispatchMessage'
+    case 4:
+      return 'fireMessage'
+    default:
+      return ''
+  }
+})
 
 provide('form', form)
 
@@ -38,12 +54,8 @@ provide('dataTimeSource', dataTimeSource)
 
 const onSearchCallback = () => {
   const { policeBase, fireBase } = form.value
-  if (searchType.value !== 4 && !policeBase.warningDate.value?.[0]) {
-    showToast('请选择接警时间！')
-    return
-  }
-  if (searchType.value === 4 && !fireBase.fireDate.value?.[0]) {
-    showToast('请选择起火时间！')
+  if (!policeBase.warningDate.value?.[0] && !fireBase.fireDate.value?.[0]) {
+    showToast('请先选择接警时间或起火时间！')
     return
   }
   queryParams.value = getSearchParams()
@@ -61,14 +73,30 @@ const onSearchCallback = () => {
   show.value.resultVisible = true
 }
 
+const onSearchChange = () => {
+  initFormByType(searchType.value)
+  // if (keyComputed.value) {
+  //   nextTick(() => {
+  //     document?.querySelector('.composite-search-form')?.querySelector(`#${keyComputed.value}-title`)?.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'start',
+  //     })
+  //   })
+  // }
+}
+
 const onInitCallback = (res) => {
   initSearchParams(res)
 }
+
+defineOptions({
+  name: "CompositeSearch",
+});
 </script>
 
 <template>
   <div class="composite-search">
-    <van-tabs v-model:active="searchType">
+    <van-tabs v-model:active="searchType" @change="onSearchChange">
       <van-tab title="警情" :name="1"></van-tab>
       <van-tab title="出动" :name="2"></van-tab>
       <van-tab title="指挥部出动" :name="3"></van-tab>
@@ -76,6 +104,7 @@ const onInitCallback = (res) => {
     </van-tabs>
     <Form />
     <SearchBtn
+      :search-scene="1"
       @searchCallback="onSearchCallback"
       @initCallback="onInitCallback"
     />

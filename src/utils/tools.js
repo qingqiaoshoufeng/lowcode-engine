@@ -367,7 +367,7 @@ export const fixCarInfo = (list) => {
       ...item,
       key: item.boFireTruckId,
       value: item.boFireTruckId,
-      label: item.truckCode,
+      label: item.truckNumber,
     }
   })
 }
