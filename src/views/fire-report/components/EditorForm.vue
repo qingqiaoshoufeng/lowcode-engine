@@ -753,6 +753,9 @@ const getSubmitParams = () => {
   if (props.isApproval) {
     params.isAudit = '1'
   }
+  if (props.isApproval && props.currentRow?.taskId) {
+    params.taskId = props.currentRow?.taskId
+  }
   if (casualtyWar.isInjured.value === '1') {
     if (casualtyWar.injuryNum.value > 0) {
       params.fireInfoInjuryList.push({

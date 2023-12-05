@@ -1049,6 +1049,9 @@ const getSubmitParams = () => {
   if (props.isApproval) {
     params.isAudit = '1'
   }
+  if (props.isApproval && props.currentRow?.taskId) {
+    params.taskId = props.currentRow?.taskId
+  }
   return params
 }
 
