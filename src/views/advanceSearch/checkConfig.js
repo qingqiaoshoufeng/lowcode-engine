@@ -79,6 +79,7 @@ export const checkBoxs = [
     label: '警情标签',
     type: '4',
     dict: 'warningTag',
+    field: { value: 'boDictId', label: 'dictName' }
   },
   {
     fieldKeyOne: 'createOrgId',
@@ -98,6 +99,8 @@ export const checkBoxs = [
     type: '4',
     mode: 'single',
     dict: 'warningDealStatus',
+    labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' }
   },
   // 警情类查询--投入力量
   {
@@ -303,6 +306,7 @@ export const checkBoxs = [
     label: '交通事故是否发生火灾',
     type: '9',
     dict: 'isNot',
+    labelWidth: '168px',
   },
   // 单位性质
   {

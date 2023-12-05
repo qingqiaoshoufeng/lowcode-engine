@@ -20,6 +20,10 @@ const options = inject('options');
 
 const activeKey = inject('activeKey');
 
+const search = inject('search');
+
+const list = inject('list')
+
 provide('addFormRef', addFormRef);
 
 onMounted(async () => {
@@ -177,6 +181,27 @@ onMounted(async () => {
       })
     }
   })
+})
+
+const getListParams = () => {
+  const params = []
+  list.value.forEach((val) => {
+    const { fireType, fieldFlag, fieldType, fieldValueOne, fieldValueTwo, fieldKeyOne, fieldKeyTwo, fieldValueThree, fieldValueFour, fieldKeyThree, fieldKeyFour } = val
+    params.push({ fireType, fieldFlag, fieldType, fieldValueOne, fieldValueTwo, fieldKeyOne, fieldKeyTwo, fieldValueThree, fieldValueFour, fieldKeyThree, fieldKeyFour, text: val.fieldText })
+  })
+  return params
+}
+
+const getFormParams = () => {
+  return {
+    fireType: search.value,
+    seniorQueryDetailReq: getListParams(),
+  }
+}
+
+defineExpose({
+  list,
+  getFormParams,
 })
 </script>
 

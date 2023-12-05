@@ -58,7 +58,7 @@ const isRequired = computed(()=>{
   if (props.required) {
     return true
   } else {
-    return props.rules?.some(item=>item.required)
+    return props.rules?.some(item => item.required)
   }
 })
 

@@ -18,6 +18,8 @@ const { show } = useModal();
 
 const { options } = useOptions();
 
+const search = ref(1)
+
 const searchFormRef = ref([])
 
 const searchInfo = ref({})
@@ -30,6 +32,8 @@ const dataTimeSource = ref('')
 
 const activeKey = ref('1')
 
+const list = ref([])
+
 const form = ref({
   valueOne: [],
   valueTwo: null,
@@ -40,6 +44,10 @@ const form = ref({
   fieldKeyOne: null,
   fieldKeyTwo: null,
 })
+
+provide('list', list)
+
+provide('search', search)
 
 provide('activeKey', activeKey)
 

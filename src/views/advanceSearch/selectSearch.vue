@@ -48,12 +48,26 @@ defineExpose({
       <div class="select-search-list">
         <Draggable :list="list" item-key="date" animation="300">
           <template #item="{ element }">
-            <van-tag v-if="element.fieldFlag === '1'" closable color="success" @close.prevent="handleClose(element)">
+            <van-tag
+              v-if="element.fieldFlag === '1'"
+              closeable
+              plain
+              color="#B7EB8F"
+              @close.prevent="handleClose(element)"
+              class="tag-item"
+            >
               <span @click="handleSearch(element)">
                 {{ element.fieldText }}
               </span>
             </van-tag>
-            <van-tag v-else color="error" closable @close.prevent="handleClose(element)">
+            <van-tag
+              v-else
+              color="#FFAEA8"
+              plain
+              closeable
+              @close.prevent="handleClose(element)"
+              class="tag-item"
+            >
               <span @click="handleCount(element)">
                 {{ element.fieldText }}
               </span>
@@ -82,7 +96,7 @@ defineExpose({
   }
 }
 .select-search {
-  height: calc(100vh - 578px);
+  height: 50vh;
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.2);
   padding: 10px;
   display: flex;
@@ -90,27 +104,18 @@ defineExpose({
   .select-search-list {
     width: 100%;
     height: 100%;
-    padding-right: 20px;
     overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    .ant-tag {
-      margin-top: 10px;
-      margin-right: 10px;
-      position: relative;
-      cursor: pointer;
+    .tag-item {
+      margin-right: 8px;
+      margin-bottom: 4px;
       padding: 4px 8px;
       white-space: break-spaces;
-      :deep(.ant-tag-close-icon) {
-        padding: 3px;
-      }
-      :deep(.ant-tag-close-icon:hover) {
-        color: #fff;
-        background: #ff4d4f;
-        border-radius: 100%;
-        padding: 3px;
+      :deep(.van-badge__wrapper) {
+        margin-top: 4px;
       }
     }
   }

@@ -97,23 +97,24 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .search-form {
-  // height: 50vh;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  padding-bottom: 6px;
+  background-color: white;
   .search-form-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
+    background-color: #F5F5F5;
   }
   .search-form-list {
     width: 100%;
     height: 100%;
     padding: 10px;
-    background-color: white;
     overflow-y: auto;
     overflow-x: hidden;
     .search-form-wrapper {
