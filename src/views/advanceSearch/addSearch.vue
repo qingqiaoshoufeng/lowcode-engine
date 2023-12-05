@@ -57,12 +57,17 @@ defineExpose({
 
 <template>
   <div class="add-search">
-    <double-right-outlined class="right" />
     <div class="add-search-form">
-      <a-divider type="vertical" class="title-divider">
-        <span>添加条件</span>
-      </a-divider>
-      <a-form ref="formRef" :model="form" label-align="left" layout="vertical" autocomplete="off">
+      <div class="add-search-header">
+        <h4>添加条件</h4>
+        <div v-if="form.fieldKeyOne" class="add-search-add">
+          <div @click="handleAdd">
+            <van-icon name="plus" />
+            添加
+          </div>
+        </div>
+      </div>
+      <van-form ref="formRef" :model="form" label-align="left" layout="vertical" autocomplete="off">
         <!-- <Input v-if="form.type === '1'" />
         <Number v-if="form.type === '2'" />
         <Time v-if="form.type === '3'" />
@@ -74,56 +79,54 @@ defineExpose({
         <Radio v-if="form.type === '9'" />
         <Person v-if="form.type === '10'" />
         <Car v-if="form.type === '11'" /> -->
-      </a-form>
-      <div v-if="form.fieldKeyOne" style="text-align: right;">
-        <a-button type="primary" @click="handleAdd">
-          添加
-        </a-button>
-      </div>
+      </van-form>
     </div>
-    <double-right-outlined />
-    <a-divider type="vertical" style="height: 100%;" />
-    <div>
-      <a-button v-for="item in options.fieldType" :key="item.boDictId" block @click="onChange(item)">
-        {{ item.dictName }}
-      </a-button>
+    <div class="add-search-operate">
+      <h4>添加运算符</h4>
+      <div class="operate">
+        <van-button
+          v-for="item in options.fieldType"
+          :key="item.boDictId"
+          block
+          size="small"
+          @click="onChange(item)"
+        >
+          {{ item.dictName }}
+        </van-button>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped>
-.title-divider {
-  height: 22px;
-  margin-bottom: 10px;
-  border-left: 4px solid @primary-color;
-  font-weight: bold;
-}
+<style lang="scss" scoped>
 .add-search {
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.2);
-  height: 260px;
-  position: relative;
   display: flex;
-  align-items: center;
-  padding: 10px;
+  flex-direction: column;
+  .add-search-header {
+    display: flex;
+    .add-search-add {
+      color: #0072FF;
+      margin-left: auto;
+    }
+  }
   .add-search-form {
-    height: 100%;
-    flex: 1;
-    min-width: 0;
-    padding-right: 20px;
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
   }
-  .anticon-double-right.right {
-    position: absolute;
-    left: -40px;
-    display: flex;
-    width: 40px;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-  .ant-btn.ant-btn-block{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
+  .add-search-operate {
+    background-color: white;
+    padding: 10px;
+    margin-top: 10px;
+    .operate {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      button {
+        width: 30%;
+        margin-top: 6px;
+      }
+    }
   }
 }
 </style>

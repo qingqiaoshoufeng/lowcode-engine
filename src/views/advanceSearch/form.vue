@@ -1,5 +1,7 @@
 <script setup>
 import { computed, inject, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
+import SearchForm from './searchForm.vue'
+import AddSearch from './addSearch.vue'
 import {
   dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus,
 } from './constants.js'
@@ -10,11 +12,15 @@ import {
 } from '@/apis/index.js'
 import store from '@/store/index.js'
 
+const addFormRef = ref(null);
+
 const form = inject('form');
 
 const options = inject('options');
 
-const activeKey = inject('activeKey')
+const activeKey = inject('activeKey');
+
+provide('addFormRef', addFormRef);
 
 onMounted(async () => {
   // 获取字典
@@ -175,9 +181,16 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div>,....</div>
+  <div class="advance-form">
+    <SearchForm />
+    <AddSearch ref="addFormRef" />
+  </div>
 </template>
 
 <style lang="scss" scoped>
-
+.advance-form {
+  height: calc(100vh - 210px);
+  display: flex;
+  flex-direction: column;
+}
 </style>

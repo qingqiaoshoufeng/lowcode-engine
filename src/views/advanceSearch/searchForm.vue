@@ -1,6 +1,7 @@
 <script setup>
 import { inject, nextTick, onMounted, ref } from 'vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
+import SelectSingle from '@/component/SelectSingle/index.vue';
 import { cloneDeep } from 'lodash-es'
 import { checkBoxs } from './checkConfig'
 import { addCollect, cancelCollect, getConfigList } from '@/apis/index.js'
@@ -19,7 +20,7 @@ const checked = ref(null)
 const onRadio = (item) => {
   if (item?.id) {
     checked.value = item.id
-    addFormRef.value.formRef.resetFields()
+    addFormRef.value.formRef.resetValidation()
     form.value = {}
     nextTick(() => {
       const obj = checkBoxs.find(val => val.fieldKeyOne === item.configEnName && (!val.fireType || val.fireType === item.configType))
@@ -41,23 +42,12 @@ const onRadio = (item) => {
 const options = inject('options')
 
 const configList = ref([])
+
 const handleSearchForm = () => {
   getConfigList(filterFormState.value).then((res) => {
     configList.value = res
     onRadio(res[0]?.mySearchConfigList[0])
   })
-}
-
-const handleAddCollect = async (id) => {
-  const res = await addCollect({ id })
-  showToast('收藏成功')
-  handleSearchForm()
-}
-
-const handleCancelCollect = async (id) => {
-  const res = await cancelCollect({ id, delFlag: 1 })
-  showToast('取消收藏成功')
-  handleSearchForm()
 }
 
 onMounted(() => {
@@ -67,98 +57,107 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="search-params">
-    <a-input-group compact>
-      <a-select
+  <div class="search-form">
+    <div class="search-form-header">
+      <SelectSingle
         v-model:value="filterFormState.configType"
         :options="options.searchParams"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
-        placeholder="请选择警情等级"
-        style="width: 150px"
+        placeholder="请选择查询类型"
+        style="width: 100px;"
         @change="handleSearchForm"
       />
-      <a-input
-        v-model:value="filterFormState.configName"
+      <van-field
+        v-model="filterFormState.configName"
+        maxlength="50"
+        name="configName"
         placeholder="请输入要用的条件"
-        allow-clear
-        style="width: calc(100% - 200px)"
+        style="width: calc(100% - 105px)"
+        @blur="handleSearchForm"
       />
-      <a-button style="width: 50px;height: 34px;" type="primary" @click="handleSearchForm">
-        <search-outlined />
-      </a-button>
-    </a-input-group>
-    <div class="advance-search-list">
-      <a-radio-group v-model:value="checked" button-style="solid">
+    </div>
+    <div class="search-form-list">
+      <van-radio-group v-model="checked">
         <div v-for="item in configList" :key="item.type">
-          <a-divider orientation="left" orientation-margin="0px">
-            <h4>
-              <strong>{{ item.name }}</strong>
-            </h4>
-          </a-divider>
-          <a-row :gutter="10">
-            <a-col v-for="val in item.mySearchConfigList" :key="val.id" class="btn-item" :span="8">
-              <a-radio-button :value="val.id" :title="val.configName" @click="onRadio(val)">
+          <h4 style="margin-bottom: 6px;">
+            <strong>{{ item.name }}</strong>
+          </h4>
+          <div class="search-form-wrapper">
+            <div v-for="val in item.mySearchConfigList" :key="val.id" class="btn-item">
+              <van-radio :value="val.id" :name="val.id" @click="onRadio(val)">
                 {{ val.configName }}
-              </a-radio-button>
-              <StarFilled v-if="val.collectFlag === '1'" title="取消收藏" style="color: #FED547;" @click="handleCancelCollect(val.id)" />
-              <StarOutlined v-else title="收藏" @click="handleAddCollect(val.id)" />
-            </a-col>
-          </a-row>
+              </van-radio>
+            </div>
+          </div>
         </div>
-      </a-radio-group>
+      </van-radio-group>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped>
-.search-params {
-  height: calc(100vh - 238px);
+<style lang="scss" scoped>
+.search-form {
+  // height: 50vh;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  :deep(.ant-input-group) {
-    box-shadow: 0px 1px 4px 0px rgba(14, 22, 45, 0.1);
-    .ant-select-selector,
-    .ant-input-affix-wrapper {
-      border-color: #9ac5f4;
-      height: 34px;
-    }
+  .search-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
   }
-  .advance-search-list {
+  .search-form-list {
     width: 100%;
     height: 100%;
-    padding-right: 20px;
+    padding: 10px;
+    background-color: white;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-top: 20px;
-    .ant-radio-group {
-      width: 100%;
-    }
-    :deep(.ant-radio-button-wrapper) {
-      border: none;
-      border-radius: 4px;
-      background: #f5f5f5;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-      text-align: center;
-      &.ant-radio-button-wrapper-checked {
-        z-index: 0;
-        background: @primary-color;
-      }
+    .search-form-wrapper {
+      display: flex;
+      flex-wrap: wrap;
     }
     .btn-item {
+      width: 50%;
       margin-bottom: 10px;
       display: flex;
       font-size: 14px;
       align-items: center;
-      .anticon-star {
-        padding-left: 5px;
+      :deep(.van-radio__icon) {
+        display: none;
+      }
+      [aria-checked="true"] {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 2px 4px;
+        margin-right: 4px;
+        border-radius: 2px;
+        background-color: #2F6BFF;
+        border: 1px solid #2F6BFF;
+        :deep(.van-radio__label) {
+          color: white;
+          margin-left: 0px;
+        }
+      }
+      [aria-checked="false"] {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 2px 4px;
+        margin-right: 4px;
+        border-radius: 2px;
+        background-color: #F5F5F5;
+        border: 1px solid #F5F5F5;
+        :deep(.van-radio__label) {
+          color: #333333;
+          margin-left: 0px;
+        }
       }
     }
   }
 }
-.scrollBarStyle(advance-search-list);
 </style>

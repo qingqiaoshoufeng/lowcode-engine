@@ -130,7 +130,7 @@ defineOptions({
       </slot>
     </template>
   </van-field>
-  <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
+  <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-single">
       <div class="header">
         <van-button type="default" size="small" @click="handleCancel">

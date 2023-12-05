@@ -6,6 +6,7 @@ import { checkBoxs } from './checkConfig.js'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from '@/views/compositeSearch/searchResult.vue'
 import ProModal from "@/component/ProModal/index";
+import SelectSearch from './selectSearch.vue'
 import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 // import { useFormConfig } from './config.js'
@@ -47,6 +48,8 @@ provide('form', form)
 provide('searchInfo', searchInfo)
 
 provide('options', options)
+
+provide('show', show)
 
 provide('searchDimension', searchDimension)
 
@@ -156,6 +159,8 @@ defineOptions({
       @initCallback="onInitCallback"
     />
 
+    <!-- 已选中条件 -->
+    <SelectSearch />
     <!-- 查询结果 -->
     <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
       <SearchResult :params="queryParams" />

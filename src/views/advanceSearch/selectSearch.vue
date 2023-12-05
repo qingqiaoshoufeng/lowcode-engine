@@ -1,15 +1,12 @@
 <script setup>
 import { inject, ref } from 'vue'
 import Draggable from 'vuedraggable'
-// import SearchParams from './searchParams.vue'
-// import CountParams from './countParams.vue'
-import { useModal } from '@/hooks/useModal.js'
 
 const formRef = ref(null)
 
-const { show } = useModal()
-
 const currentIndex = ref(null)
+
+const show = inject('show');
 
 const form = inject('form')
 
@@ -21,13 +18,19 @@ const handleSearch = (item) => {
   currentIndex.value = `${list.value.findIndex(val => val.date === item.date)}`
   show.value.searchVisible = true
 }
+
 const handleCount = (item) => {
   currentIndex.value = `${list.value.findIndex(val => val.date === item.date)}`
   show.value.countVisible = true
 }
+
 const handleClose = (removedTag) => {
   const tags = list.value.filter(tag => tag !== removedTag)
   list.value = tags
+}
+
+const handleClear = () => {
+  list.value = []
 }
 
 defineExpose({
@@ -36,53 +39,47 @@ defineExpose({
 </script>
 
 <template>
-  <div class="select-search">
-    <a-divider type="vertical" class="title-divider">
-      <span>已选条件</span>
-    </a-divider>
-    <div class="select-search-list">
-      <Draggable :list="list" item-key="date" animation="300">
-        <template #item="{ element }">
-          <van-tag v-if="element.fieldFlag === '1'" closable color="success" @close.prevent="handleClose(element)">
-            <span @click="handleSearch(element)">
-              {{ element.fieldText }}
-            </span>
-          </van-tag>
-          <van-tag v-else color="error" closable @close.prevent="handleClose(element)">
-            <span @click="handleCount(element)">
-              {{ element.fieldText }}
-            </span>
-          </van-tag>
-        </template>
-      </Draggable>
+  <van-popup v-model:show="show.selectsVisible" position="bottom">
+    <div class="select-search">
+      <div class="title-divider" @click="handleClear">
+        <span>已选条件</span>
+        <div class="title-clear">全部清除<van-icon name="delete-o" /></div>
+      </div>
+      <div class="select-search-list">
+        <Draggable :list="list" item-key="date" animation="300">
+          <template #item="{ element }">
+            <van-tag v-if="element.fieldFlag === '1'" closable color="success" @close.prevent="handleClose(element)">
+              <span @click="handleSearch(element)">
+                {{ element.fieldText }}
+              </span>
+            </van-tag>
+            <van-tag v-else color="error" closable @close.prevent="handleClose(element)">
+              <span @click="handleCount(element)">
+                {{ element.fieldText }}
+              </span>
+            </van-tag>
+          </template>
+        </Draggable>
+      </div>
     </div>
-  </div>
-  <!-- 修改查询条件 -->
-  <!-- <CommonModal v-model:visible="show.searchVisible" title="修改查询条件" width="800px">
-    <template #default="{ setHandleOk }">
-      <SearchParams
-        :current-index="currentIndex"
-        :set-handle-ok="setHandleOk"
-      />
-    </template>
-  </CommonModal> -->
-  <!-- 修改运算符 -->
-  <!-- <CommonModal v-model:visible="show.countVisible" title="修改运算符" width="800px">
-    <template #default="{ setHandleOk }">
-      <CountParams
-        :current-index="currentIndex"
-        :set-handle-ok="setHandleOk"
-      />
-    </template>
-  </CommonModal> -->
+  </van-popup>
 </template>
 
 <style lang="scss" scoped>
 .title-divider {
   height: 22px;
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
-  border-left: 4px solid #2F6BFF;
   font-weight: bold;
+  .title-clear {
+    color: #027AFF;
+    margin-left: auto;
+    i {
+      font-size: 14px;
+      margin-left: 4px;
+    }
+  }
 }
 .select-search {
   height: calc(100vh - 578px);

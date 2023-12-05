@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, nextTick, inject } from 'vue';
 import { getAdvanceSearchList, getConfigList, getSourceOption } from '@/apis/index.js';
-import { useModal } from '@/hooks/useModal.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
@@ -15,13 +14,11 @@ const emits = defineEmits('searchCallback', 'initCallback');
 
 const options = inject('options');
 
-const searchType = inject('searchType');
+const show = inject('show');
 
 const searchDimension = inject('searchDimension');
 
 const dataTimeSource = inject('dataTimeSource');
-
-const { show } = useModal();
 
 const proListRef = ref(null);
 
@@ -62,7 +59,7 @@ const handleSourceItem = (row) => {
 }
 
 const handleSelects = () => {
-  show.value.selectsVisible = false
+  show.value.selectsVisible = true
 }
 
 const getSourceOptionData = async () => {

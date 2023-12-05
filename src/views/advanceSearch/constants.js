@@ -426,10 +426,6 @@ export const searchParams = [{
 {
   dictName: '火灾信息',
   boDictId: '4',
-},
-{
-  dictName: '我的收藏',
-  boDictId: '5',
 }]
 
 export const searchRange = [{
