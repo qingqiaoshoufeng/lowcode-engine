@@ -1026,7 +1026,7 @@ export const useFormConfig = (fromRef) => {
     if (warningDetail?.warningStatusValue === '已归档') {
       return
     }
-    checkFireDisposalCost(form.value, false)
+    // checkFireDisposalCost(form.value, false)
 
     checkFireInjuryCost(form.value, false)
 

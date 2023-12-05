@@ -43,15 +43,7 @@ const handlePath = () => {
 }
 
 const handleByResult = (row) => {
-  showLoadingToast()
-  getConfigList(row.boSearchId).then((res) => {
-    if (res?.boSearchId) {
-      show.value.collectVisible = false
-      searchType.value = res?.searchType ? Number(res?.searchType) : 1
-      emits('initCallback', res);
-      closeToast()
-    }
-  })
+  emits('initCallback', row);
 }
 
 const handleTab = (value) => {

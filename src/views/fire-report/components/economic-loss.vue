@@ -144,7 +144,6 @@ const validateDirectDamage = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入火灾现场处置费用（元)"
-          @blur="checkFireDisposalCost(form)"
           type="number" 
         >
           <template v-slot:label="">
