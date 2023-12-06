@@ -2,7 +2,7 @@
 import { ref, provide, computed, nextTick } from 'vue'
 import dayjs from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
-import { checkBoxs } from './checkConfig.js'
+import { checkBoxs, validateList } from './checkConfig.js'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from '@/views/compositeSearch/searchResult.vue'
 import ProModal from "@/component/ProModal/index";
@@ -11,6 +11,7 @@ import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 // import { useFormConfig } from './config.js'
 import { deleteAdvanceSearch, getAdvanceSearchDetail, getAdvanceSearchList, getAdvanceSearchResult } from '@/apis/index.js'
+import { checkInputRejectState, checkRejectState, formatYmdHm, generateByKeyValue, generateColorByState } from '@/utils/tools.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 
@@ -19,8 +20,6 @@ const { show } = useModal();
 const { options } = useOptions();
 
 const search = ref(1)
-
-const searchFormRef = ref([])
 
 const searchInfo = ref({})
 
@@ -63,21 +62,17 @@ provide('searchDimension', searchDimension)
 
 provide('dataTimeSource', dataTimeSource)
 
-const getSearchParams = () => {
-  return searchFormRef.value[search.value - 1].getFormParams()
-}
-
 const onInitCallback = (row) => {
   getAdvanceSearchDetail(row.boSearchId).then((res) => {
     if (res?.boSearchId) {
       activeKey.value = res?.searchType
       nextTick(() => {
-        const list = []
+        const resList = []
         res.searchItems.forEach((ele) => {
           ele.date = uuidv4()
           if (ele.fieldFlag === '2') {
             ele.fieldText = ele.text
-            list.push(ele)
+            resList.push(ele)
           }
           else {
             const obj = checkBoxs.find(val => val.fieldKeyOne === ele.fieldKeyOne && (!val.fireType || val.fireType === ele.fireType))
@@ -125,18 +120,53 @@ const onInitCallback = (row) => {
                 }
               }
               data.fieldText = ele.text
-              list.push(data)
+              resList.push(data)
             }
           }
         })
-        searchFormRef.value[res?.searchType - 1].list = list
+        list.value = resList
       })
     }
   })
 }
 
-const onSearchCallback = () => {
+const getListParams = () => {
+  const params = []
+  list.value.forEach((val) => {
+    const { fireType, fieldFlag, fieldType, fieldValueOne, fieldValueTwo, fieldKeyOne, fieldKeyTwo, fieldValueThree, fieldValueFour, fieldKeyThree, fieldKeyFour } = val
+    params.push({ fireType, fieldFlag, fieldType, fieldValueOne, fieldValueTwo, fieldKeyOne, fieldKeyTwo, fieldValueThree, fieldValueFour, fieldKeyThree, fieldKeyFour, text: val.fieldText })
+  })
+  return params
+}
 
+const getFormParams = () => {
+  return {
+    fireType: search.value,
+    seniorQueryDetailReq: getListParams(),
+  }
+}
+
+const onSearchCallback = () => {
+  const flag = validateList(list.value, activeKey.value)
+  if (flag) {
+    queryParams.value = {
+      fireType: activeKey.value,
+      seniorQueryDetailReq: getListParams(),
+    }
+    nextTick(() => {
+      search.value = Number(queryParams.value.fireType)
+      const keyMap = ['areaGroup', 'dispatchOrg', 'fireHead']
+      const valueMap = ['', 'static', 'migration']
+      queryParams.value.seniorQueryDetailReq.forEach((item) => {
+        keyMap.includes(item.fieldKeyOne) && (item.fieldKeyTwo = valueMap[searchDimension.value])
+      })
+      // 设置查询的历史数据版本
+      queryParams.value.dataTimeSource = dataTimeSource.value
+      // 添加全局的双口径参数
+      queryParams.value.staticFlag = searchDimension.value
+      show.value.resultVisible = true
+    })
+  }
 }
 
 const onSearchChange = () => {
@@ -171,7 +201,7 @@ defineOptions({
     <SelectSearch />
     <!-- 查询结果 -->
     <ProModal v-model:visible="show.resultVisible" :showHeader="false" :showBack="true" title="查询结果">
-      <SearchResult :params="queryParams" />
+      <SearchResult :type="2" :params="queryParams" />
     </ProModal>
   </div>
 </template>

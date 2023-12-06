@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, inject, nextTick ,provide } from "vue";
 import dayjs from "dayjs";
+import { showDialog } from 'vant';
 import { showToast } from "vant";
 import { useSubmit } from '@castle/castle-use';
 import MapLatLng from "@/component/MapLatLng/index";
@@ -101,7 +102,7 @@ const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正
 
-const labelWarningOrgname = ref("单位/户主/个体户名称");
+const labelWarningOrgname = ref("单位/户主/个体户/建筑名称");
 
 let warningLevelOptions = []; // 警情等级
 
@@ -113,7 +114,7 @@ const form = ref({
   warningName: "", // 警情标题
   warningDate: undefined, // 接警时间
   warningCodeYyj: "", // 119警情编号
-  warningOrgname: "", // 单位/户主/个体户名称
+  warningOrgname: "", // 单位/户主/个体户/建筑名称
   warningArea: "", // 行政区域
   warningAreaText: "",
   warningAddr: "", // 警情地址
@@ -339,14 +340,14 @@ const warningTypeChange = (value, selectedOptions) => {
       labelWarningOrgname.value = "活动/任务名称";
       formRef.value.resetValidation(['warningOrgname'])
     } else {
-      labelWarningOrgname.value = "单位/户主/个体户名称";
+      labelWarningOrgname.value = "单位/户主/个体户/建筑名称";
       formRef.value.resetValidation(['warningOrgname'])
     }
   } else {
     form.value.warningTypeText = [];
     form.value.areaDutyGroup = [];
     form.value.warningSource = undefined
-    labelWarningOrgname.value = "单位/户主/个体户名称";
+    labelWarningOrgname.value = "单位/户主/个体户/建筑名称";
     formRef.value.resetValidation(['warningOrgname'])
     // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
   }
@@ -701,6 +702,10 @@ const validateOtherProvince = (value, rule) => {
 const validateHeadquarters = (value, rule) => {
   return "";
 };
+
+const onWarningOrgname = () => {
+  showDialog({ message: `如果该警情无主，请输入“无明确产权”` });
+}
 </script>
 
 <template>
@@ -1020,11 +1025,13 @@ const validateHeadquarters = (value, rule) => {
         maxlength="50"
         required
         name="warningOrgname"
-        label-width="178px"
+        label-width="198px"
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
         :disabled="isConfirm"
+        right-icon="question-o"
+        @click-right-icon.stop="onWarningOrgname"
       >
         <template v-slot:label="">
           <FieldAnnotation

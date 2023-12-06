@@ -1,5 +1,6 @@
 <script setup>
 import { inject, ref } from 'vue'
+import dayjs from 'dayjs'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { cloneDeep } from 'lodash-es'
 import { getSearchParams, validateForm } from './checkConfig.js'
@@ -80,6 +81,12 @@ const onPersonChange = (value) => {
 }
 
 const onTimeChange = (time) => {
+  if (time?.[0] && time?.[1]) {
+    form.value.valueOne = [dayjs(time?.[0]).format('YYYY-MM-DD HH:mm:ss'), dayjs(time?.[1]).format('YYYY-MM-DD HH:mm:ss')]
+    return
+  } else {
+    form.value.valueOne = []
+  }
   const timeString = []
   if (time?.[0]) {
     timeString.push(time?.[0])
