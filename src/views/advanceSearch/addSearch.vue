@@ -4,14 +4,14 @@ import { showToast, showLoadingToast, closeToast } from "vant";
 import { cloneDeep } from 'lodash-es'
 import { getSearchParams, validateForm } from './checkConfig.js'
 import { useDictName } from './checkConfig'
+import InputNumberRange from "@/component/InputNumberRange/index.vue";
 import SelectMultiple from '@/component/SelectMultiple/index.vue';
 import SelectSingle from '@/component/SelectSingle/index.vue';
-// import Time from './components/_time.vue'
+import SelectRangeTime from "@/component/SelectRangeTime/index";
+import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 // import PeriodTime from './components/_period-time.vue'
-// import Modal from './components/_modal.vue'
-// import Cascader from './components/_cascader.vue'
-// import Area from './components/_area.vue'
-// import Number from './components/_number.vue'
+import SelectOrg from "@/component/SelectOrg/index";
+import AreaCascader from "@/component/AreaCascader/index";
 import SelectCar from '@/component/SelectCar/index.vue';
 import SelectPerson from '@/component/SelectPerson/index.vue';
 
@@ -26,6 +26,8 @@ const form = inject('form')
 const list = inject('list')
 
 const options = inject('options')
+
+const searchDimension = inject('searchDimension')
 
 const handleAdd = () => {
   formRef.value.validate().then(async () => {
@@ -77,6 +79,34 @@ const onPersonChange = (value) => {
   form.value.fieldText = `${form.value.label}：${value?.map(item => item.userName)?.join(',')}`
 }
 
+const onTimeChange = (time) => {
+  const timeString = []
+  if (time?.[0]) {
+    timeString.push(time?.[0])
+  }
+  if (time?.[1]) {
+    timeString.push(time?.[1])
+  }
+  form.value.fieldText = `${form.value.label}：${timeString.join('至')}`
+}
+
+const onAreaChange = (value, selectedOptions)=> {
+  form.value.fieldValueOne = form.value.valueOne?.join(',')
+  const arr = selectedOptions?.map(val => val.areaName)
+  form.value.fieldText = `${form.value.label}：${arr?.join(',')}`
+}
+
+const onCascaderChange = (value, selectedOptions) => {
+  form.value.fieldValueOne = JSON.stringify(form.value.valueOne)
+  const arr = selectedOptions.map(val => val[val.length - 1]?.dictName)
+  form.value.fieldText = `${form.value.label}：${arr.join(',')}`
+}
+
+const onOrgChange = (value, option) => {
+  form.value.fieldValueOne = option?.map(val => val.organizationid)?.join(',')
+  form.value.fieldText = `${form.value.label}：${option?.map(val => val.name)?.join(',')}`
+}
+
 defineExpose({
   formRef,
 })
@@ -103,6 +133,26 @@ defineExpose({
             :maxlength="`${form.maxlength}`"
             :placeholder="`请输入${form?.label}`"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
+          />
+        </template>
+        <template v-if="form.type === '2'">
+          <InputNumberRange
+            v-model:value="form.valueOne"
+            :label="`${form?.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="form?.placeholder"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
+          />
+        </template>
+        <template v-if="form.type === '3'">
+          <SelectRangeTime
+            v-model:value="form.valueOne"
+            :readonly="true"
+            :label="`${form.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="`请选择${form.label}`"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
+            @change="onTimeChange"
           />
         </template>
         <template v-if="form.type === '4' && form.mode === 'single'">
@@ -134,6 +184,61 @@ defineExpose({
             @change="onMultipleChange"
           />
         </template>
+        <template v-if="form.type === '5'">
+          <AreaCascader
+            v-model:value="form.valueOne"
+            :readonly="true"
+            :label="`${form.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="`请选择${form.label}`"
+            :params="{ staticFlag: searchDimension }"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
+            @change="onAreaChange"
+          />
+        </template>
+        <template v-if="form.type === '6'">
+          <SelectOrg
+            v-model:value="form.valueOne"
+            :readonly="true"
+            :field-names="{ value: 'organizationid', label: 'name' }"
+            :label="`${form?.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="`请选择${form?.label}`"
+            :title="`请选择${form?.label}`"
+            :single="form.single"
+            :select-level="form.selectLevel"
+            :select-level-non="form.selectLevelNon || -1"
+            :select-leaf="form.selectLeaf"
+            :headers-disabled="form.headersDisabled ? false : true"
+            :params="{ ...form.params, staticFlag: searchDimension }"
+            @change="onOrgChange"
+          />
+        </template>
+        <template v-if="form.type === '7'">
+          <CascaderMultiple
+            v-model:value="form.valueOne"
+            :readonly="true"
+            :options="options[form.dict]"
+            :field-names="form.field ? form.field : { value: 'boDictId', label: 'dictName' }"
+            :label="`${form.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="`请选择${form.label}`"
+            :title="`请选择${form.label}`"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
+            @change="onCascaderChange"
+          />
+        </template>
+        <template v-if="form.type === '8'">
+          <SelectRangeTime
+            v-model:value="form.valueOne"
+            :readonly="true"
+            :label="`${form.label}：`"
+            :label-width="`${form?.labelWidth}`"
+            :placeholder="`请选择${form.label}`"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
+            @change="onTimeChange"
+          />
+        </template>
         <template v-if="form.type === '9'">
           <van-field
             :label="`${form.label}：`"
@@ -163,6 +268,7 @@ defineExpose({
             :label="`${form.label}：`"
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
             @change="onPersonChange"
           />
         </template>
@@ -173,14 +279,12 @@ defineExpose({
             :label="`${form.label}：`"
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
+            :rules="[{ required: true, message: `请输入${form.label}` }]"
             @change="onCarChange"
           />
         </template>
-        <!-- <Number v-if="form.type === '2'" />
-        <Time v-if="form.type === '3'" />
-        <Area v-if="form.type === '5'" />
+        <!-- 
         <Modal v-if="form.type === '6'" />
-        <Cascader v-if="form.type === '7'" />
         <PeriodTime v-if="form.type === '8'" /> -->
       </van-form>
     </div>

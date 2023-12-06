@@ -205,17 +205,21 @@ export const useFormConfig = (fromRef) => {
         value: undefined,
         // rules: [{ required: true, message: '请选择健康状况' }],
       },
+      isOperating: { // 是否涉及生产经营
+        value: '2',
+        rules: [{ required: true, message: '请选择是否涉及生产经营' }],
+      },
       industry: { // 所属行业
         value: undefined,
-        // rules: [{ required: true, message: '请选择所属行业' }],
+        rules: [{ required: true, message: '请选择所属行业' }],
       },
       industryDepartment: { // 行业主管部门
         value: undefined,
-        // rules: [{ required: true, message: '请选择行业主管部门' }],
+        rules: [{ required: true, message: '请选择行业主管部门' }],
       },
       economicType: { // 经济类型
         value: undefined,
-        // rules: [{ required: true, message: '请选择经济类型' }],
+        rules: [{ required: true, message: '请选择经济类型' }],
       },
       leadInspectionOrg: { // 事故牵头调查部门
         value: undefined,
@@ -727,6 +731,10 @@ export const useFormConfig = (fromRef) => {
       title: '火灾照片',
       fieldAnnotation: false, // 批注
       fieldWarning: '',
+      isAllBack: { // 队伍是否全部中返
+        value: '2',
+        rules: [{ required: true, message: '请选择队伍是否全部中返' }],
+      },
       photos: {
         value: [],
         rules: [{ required: true, message: '请上传火灾照片' }],
@@ -960,6 +968,7 @@ export const useFormConfig = (fromRef) => {
     form.value.basicInfo.firePersonAge.value = ''
     form.value.basicInfo.schooling.value = undefined
     form.value.basicInfo.health.value = undefined
+    form.value.basicInfo.isOperating.value = '2'
     form.value.basicInfo.industry.value = undefined
     form.value.basicInfo.industryDepartment.value = undefined
     form.value.basicInfo.economicType.value = undefined
@@ -1088,6 +1097,7 @@ export const useFormConfig = (fromRef) => {
     form.value.basicInfo.firePersonAge.value = fireInfo?.firePersonAge
     form.value.basicInfo.schooling.value = fireInfo?.schooling
     form.value.basicInfo.health.value = fireInfo?.health
+    form.value.basicInfo.isOperating.value = fireInfo?.isOperating
     form.value.basicInfo.industry.value = fireInfo?.industry?.split(',')
     form.value.basicInfo.economicType.value = fireInfo?.economicType
     form.value.basicInfo.leadInspectionOrg.value = fireInfo?.leadInspectionOrg
@@ -1212,6 +1222,8 @@ export const useFormConfig = (fromRef) => {
         })
       }
     }
+    // 起火照片
+    form.value.firePhoto.isAllBack.value = fireInfo?.isAllBack
     // 起火经过
     form.value.fireCourse.firePassage.value = fireInfo?.firePassage
     // 其他附件
@@ -1273,8 +1285,10 @@ export const useFormConfig = (fromRef) => {
     // form.value.basicInfo.firePersonAge.rules[0].required = value
     // form.value.basicInfo.schooling.rules[0].required = value
     // form.value.basicInfo.health.rules[0].required = value
-    // form.value.basicInfo.industry.rules[0].required = value
-    // form.value.basicInfo.economicType.rules[0].required = value
+    form.value.basicInfo.isOperating.rules[0].required = value
+    form.value.basicInfo.industry.rules[0].required = value
+    form.value.basicInfo.industryDepartment.rules[0].required = value
+    form.value.basicInfo.economicType.rules[0].required = value
     form.value.basicInfo.leadInspectionOrg.rules[0].required = value
     form.value.basicInfo.otherOrgRemark.rules[0].required = value
     // form.value.basicInfo.isInsurance.rules[0].required = value
@@ -1378,6 +1392,7 @@ export const useFormConfig = (fromRef) => {
     form.value.caseHandling.firePenalty.rules[0].required = value
     // 火灾照片
     form.value.firePhoto.photos.rules[0].required = value
+    form.value.firePhoto.isAllBack.rules[0].required = value
     // 起火经过
     form.value.fireCourse.firePassage.rules[0].required = value
     // 其他附件

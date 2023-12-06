@@ -14,6 +14,7 @@ export const checkBoxs = [
     label: '警情所属队伍',
     type: '6',
     selectLeaf: false,
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'boAreaId',
@@ -86,6 +87,7 @@ export const checkBoxs = [
     label: '录入单位',
     type: '6',
     selectLeaf: false,
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'warningStatus',
@@ -107,16 +109,19 @@ export const checkBoxs = [
     fieldKeyOne: 'dispatchGroup',
     label: '出动队伍',
     type: '6',
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'mainGroup',
     label: '主战队伍',
     type: '6',
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'firstGroup',
     label: '首到队伍',
     type: '6',
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'dispatchGroupCountMin',
@@ -177,11 +182,13 @@ export const checkBoxs = [
     type: '6',
     single: false,
     selectLeaf: false,
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'dutyGroup',
     label: '责任队站',
     type: '6',
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'isDuty',
@@ -817,6 +824,7 @@ export const checkBoxs = [
     type: '6',
     single: false,
     selectLeaf: false,
+    params: { permission: true },
   },
   {
     fieldKeyOne: 'fireDirection',
