@@ -59,9 +59,9 @@ const searchOptions = ref([
     value: 'warningLevel',
   },
   {
-    title: '主站队伍',
+    title: '主战队伍',
     type: 'select-org',
-    placeholder: '请选择主站队伍',
+    placeholder: '请选择主战队伍',
     params: { permission: true },
     single: true,
     selectLeaf: true,

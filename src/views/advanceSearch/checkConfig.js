@@ -15,6 +15,7 @@ export const checkBoxs = [
     type: '6',
     selectLeaf: false,
     params: { permission: true },
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'boAreaId',
@@ -56,18 +57,21 @@ export const checkBoxs = [
     label: '119警情编号',
     type: '1',
     maxlength: 50,
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'warningOrgname',
     label: '单位/户主/个体户名称',
     type: '1',
     maxlength: 50,
+    labelWidth: '156px',
   },
   {
     fieldKeyOne: 'warningTel',
     label: '报警人联系方式',
     type: '1',
     maxlength: 12,
+    labelWidth: '124px',
   },
   {
     fieldKeyOne: 'warningInfo',
@@ -147,6 +151,7 @@ export const checkBoxs = [
     label: '全勤指挥部出动',
     type: '9',
     dict: 'isNot',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'fireHeadLevel',
@@ -167,6 +172,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'dispatchHeadCountMax',
     label: '指挥部出动数',
     type: '2',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'dealMinStart',
@@ -175,6 +181,7 @@ export const checkBoxs = [
     fireType: '1',
     type: '2',
     precision: 2,
+    labelWidth: '156px',
   },
   {
     fieldKeyOne: 'areaDutyGroup',
@@ -207,6 +214,7 @@ export const checkBoxs = [
     label: '仅专职队出动',
     type: '9',
     dict: 'isNot',
+    labelWidth: '116px',
   },
   // 警情类查询条件--其他信息
   {
@@ -214,12 +222,14 @@ export const checkBoxs = [
     label: '自然灾害引发',
     type: '9',
     dict: 'isConnect',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'naturalDisasterType',
     label: '自然灾害类型',
     type: '7',
     dict: 'naturalDisasterType',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isOtherProvince',
@@ -265,6 +275,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'trappedPersonMax',
     label: '现场被困人数',
     type: '2',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isPublicFireHydrant',
@@ -301,6 +312,7 @@ export const checkBoxs = [
     label: '有其他救援力量',
     type: '9',
     dict: 'isNot',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'orgName',

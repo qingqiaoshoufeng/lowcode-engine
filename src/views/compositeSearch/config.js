@@ -218,17 +218,17 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '警情处置时长（分钟）',
       },
-      areaDutyGroup: { // 火灾调查单位
-        value: [],
-        back: false,
-        type: 'select-org',
-        label: '火灾调查单位',
-        labelWidth: '104px',
-        single: false,
-        selectLeaf: false,
-        headersDisabled: true,
-        params: { permission: true }
-      },
+      // areaDutyGroup: { // 火灾调查单位
+      //   value: [],
+      //   back: false,
+      //   type: 'select-org',
+      //   label: '火灾调查单位',
+      //   labelWidth: '104px',
+      //   single: false,
+      //   selectLeaf: false,
+      //   headersDisabled: true,
+      //   params: { permission: true }
+      // },
       dutyGroup: { // 责任队站
         value: [],
         back: false,
@@ -1710,9 +1710,9 @@ export const useFormConfig = () => {
         personNumMax: policeInvest.personNumMin.value?.[1],
         dealMinStart: policeInvest.dealMinStart.value?.[0],
         dealMinEnd: policeInvest.dealMinStart.value?.[1],
-        areaDutyGroup: policeInvest.areaDutyGroup.value?.map(item => item.organizationid)?.join(','),
-        areaDutyGroupText: policeInvest.areaDutyGroup.value?.map(item => item.name)?.join(','),
-        areaDutyGroupNon: policeInvest.areaDutyGroup.back,
+        // areaDutyGroup: policeInvest.areaDutyGroup.value?.map(item => item.organizationid)?.join(','),
+        // areaDutyGroupText: policeInvest.areaDutyGroup.value?.map(item => item.name)?.join(','),
+        // areaDutyGroupNon: policeInvest.areaDutyGroup.back,
         dutyGroup: policeInvest.dutyGroup.value?.map(item => item.organizationid)?.join(','),
         dutyGroupText: policeInvest.dutyGroup.value?.map(item => item.name)?.join(','),
         dutyGroupNon: policeInvest.dutyGroup.back,
@@ -2240,13 +2240,13 @@ export const useFormConfig = () => {
     form.value.policeInvest.fireHead.back = comprehensiveWarningQueryReq.fireHeadNon === 'true'
     form.value.policeInvest.personNumMin.value = returnNumValue(comprehensiveWarningQueryReq.personNumMin, comprehensiveWarningQueryReq.personNumMax)
     form.value.policeInvest.dealMinStart.value = returnNumValue(comprehensiveWarningQueryReq.dealMinStart, comprehensiveWarningQueryReq.dealMinEnd)
-    form.value.policeInvest.areaDutyGroup.value = comprehensiveWarningQueryReq.areaDutyGroup
-      ? generateByKeyValue(comprehensiveWarningQueryReq.areaDutyGroupText, comprehensiveWarningQueryReq.areaDutyGroup, {
-        key: 'name',
-        value: 'organizationid',
-      }, 'Number')
-      : []
-    form.value.policeInvest.areaDutyGroup.back = comprehensiveWarningQueryReq.areaDutyGroupNon === 'true'
+    // form.value.policeInvest.areaDutyGroup.value = comprehensiveWarningQueryReq.areaDutyGroup
+    //   ? generateByKeyValue(comprehensiveWarningQueryReq.areaDutyGroupText, comprehensiveWarningQueryReq.areaDutyGroup, {
+    //     key: 'name',
+    //     value: 'organizationid',
+    //   }, 'Number')
+    //   : []
+    // form.value.policeInvest.areaDutyGroup.back = comprehensiveWarningQueryReq.areaDutyGroupNon === 'true'
     form.value.policeInvest.dutyGroup.value = comprehensiveWarningQueryReq.dutyGroup
       ? generateByKeyValue(comprehensiveWarningQueryReq.dutyGroupText, comprehensiveWarningQueryReq.dutyGroup, {
         key: 'name',
