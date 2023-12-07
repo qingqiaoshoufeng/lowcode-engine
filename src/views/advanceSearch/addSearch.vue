@@ -10,7 +10,6 @@ import SelectMultiple from '@/component/SelectMultiple/index.vue';
 import SelectSingle from '@/component/SelectSingle/index.vue';
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
-// import PeriodTime from './components/_period-time.vue'
 import SelectOrg from "@/component/SelectOrg/index";
 import AreaCascader from "@/component/AreaCascader/index";
 import SelectCar from '@/component/SelectCar/index.vue';

@@ -159,7 +159,7 @@ const OnCarNum = () => {
       >
         <template #input>
           <van-radio-group
-            v-model:value="form.investForce.isReturnTruck.value"
+            v-model="form.investForce.isReturnTruck.value"
             v-preview-text="showPreview"
             :disabled="form.investForce.isReturnTruck.disabled"
             icon-size="16px"
@@ -276,7 +276,7 @@ const OnCarNum = () => {
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="指挥员："
+          label="消防员："
           remark-field="firemen"
           field-module="investForce"
           :exist-data="fieldExist?.firemen"

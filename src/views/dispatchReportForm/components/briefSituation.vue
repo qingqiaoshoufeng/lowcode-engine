@@ -3,6 +3,7 @@ import { computed, inject } from "vue";
 import dayjs from "dayjs";
 import { checkAttendanceDate, checkReturnSpeed } from "../tool.js";
 import { useStore } from "vuex";
+import { showDialog } from 'vant';
 
 const store = useStore();
 
@@ -265,6 +266,10 @@ const validateDealEndDate = (value, rule) => {
     return "";
   }
 };
+
+const onDealEndDate = () => {
+  showDialog({ message: `警情处置结束时间指警情最终的处置时间，当需要人员留守时，警情处置结束时间不完全等于出动结束时间` });
+}
 </script>
 
 <template>
@@ -580,6 +585,8 @@ const validateDealEndDate = (value, rule) => {
       label-width="136px"
       placeholder="请选择警情处置结束时间"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
+      right-icon="question-o"
+      @click-right-icon.stop="onDealEndDate"
     >
       <template v-slot:label="">
         <FieldAnnotation

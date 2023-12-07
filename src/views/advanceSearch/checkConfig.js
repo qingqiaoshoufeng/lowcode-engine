@@ -39,6 +39,7 @@ export const checkBoxs = [
     label: '警情等级',
     type: '4',
     dict: 'warningLevel',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'warningCode',
@@ -98,6 +99,7 @@ export const checkBoxs = [
     label: '警情状态',
     type: '4',
     dict: 'warningStatus',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'warningDealStatus',
@@ -158,6 +160,7 @@ export const checkBoxs = [
     label: '指挥部层级',
     type: '4',
     dict: 'fireHeadLevel',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireHead',
@@ -257,18 +260,21 @@ export const checkBoxs = [
     label: '天气',
     type: '4',
     dict: 'weather',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'wind',
     label: '风力',
     type: '4',
     dict: 'wind',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'windDirection',
     label: '风向',
     type: '4',
     dict: 'windDirection',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'trappedPersonMin',
@@ -288,12 +294,14 @@ export const checkBoxs = [
     label: '公共消防栓供水情况',
     type: '4',
     dict: 'fireHydrantSituation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'notUseFireHydrantReason',
     label: '不使用公共消防栓原因',
     type: '4',
     dict: 'notUseFireHydrantReason',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isZf',
@@ -333,6 +341,7 @@ export const checkBoxs = [
     label: '志愿队类型',
     type: '4',
     dict: 'groupType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 出动信息（队站）--基本信息
   {
@@ -358,12 +367,14 @@ export const checkBoxs = [
     label: '参战形式',
     type: '4',
     dict: 'dispatchType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'dealSituation',
     label: '处置情况',
     type: '4',
     dict: 'dealSituation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireSituation',
@@ -371,6 +382,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'fireSituation',
     labelWidth: '116px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireDistanceStart',
@@ -403,6 +415,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'returnLateReason',
     labelWidth: '132px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'dealMinStart',
@@ -429,6 +442,7 @@ export const checkBoxs = [
     label: '报告状态',
     type: '4',
     dict: 'dispatchStatus',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 出动信息（队站）--时间信息
   {
@@ -503,6 +517,7 @@ export const checkBoxs = [
   //   label: '队伍性质',
   //   type: '4',
   //   dict: 'teamNature',
+  // field: { value: 'boDictId', label: 'dictName' },
   // },
   {
     fieldKeyOne: 'commanderNumMin',
@@ -565,6 +580,7 @@ export const checkBoxs = [
     label: '车辆类型',
     type: '4',
     dict: 'truckType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'dispatchTruckMin',
@@ -622,12 +638,14 @@ export const checkBoxs = [
     label: '民族',
     type: '4',
     dict: 'nation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'politicalOutlook',
     label: '政治面貌',
     type: '4',
     dict: 'politicalOutlook',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'idNumber',
@@ -647,6 +665,7 @@ export const checkBoxs = [
     label: '性别',
     type: '4',
     dict: 'gender',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'rescueRank',
@@ -677,6 +696,7 @@ export const checkBoxs = [
     label: '事发阶段',
     type: '4',
     dict: 'period',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'protectDevice',
@@ -684,6 +704,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'protectDevice',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 受伤原因
   {
@@ -691,12 +712,14 @@ export const checkBoxs = [
     label: '受伤原因',
     type: '4',
     dict: 'injuryReason',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'deathReason',
     label: '死亡原因',
     type: '4',
     dict: 'deathReason',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injuryPart',
@@ -705,6 +728,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'injuryPart',
     labelWidth: '116px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'deathPart',
@@ -713,6 +737,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'deathPart',
     labelWidth: '116px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isInstantDeath',
@@ -811,6 +836,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'dispatchFireHeadLvl',
     labelWidth: '132px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireHead',
@@ -910,6 +936,7 @@ export const checkBoxs = [
     label: '火灾等级',
     type: '4',
     dict: 'fireLevel',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireCode',
@@ -954,6 +981,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'liveType',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isPoorHouse',
@@ -975,6 +1003,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'useType',
     labelWidth: '124px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isSafetyAccident',
@@ -989,6 +1018,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'isResearch',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // {
   //   fieldKeyOne: 'fireTel',
@@ -1015,12 +1045,14 @@ export const checkBoxs = [
     type: '4',
     dict: 'industryDepartment',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'economicType',
     label: '经济类型',
     type: '4',
     dict: 'economicType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'leadInspectionOrg',
@@ -1028,6 +1060,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'leadInspectionOrg',
     labelWidth: '142px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isInsurance',
@@ -1040,6 +1073,7 @@ export const checkBoxs = [
     label: '保险类型',
     type: '4',
     dict: 'insuranceInfo',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isOnesided',
@@ -1054,6 +1088,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'fireInspection',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'firePersonAgeMin',
@@ -1067,18 +1102,21 @@ export const checkBoxs = [
     label: '受教育程度',
     type: '4',
     dict: 'schooling',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injuryCause',
     label: '伤亡原因',
     type: '4',
     dict: 'injuryCauseFire',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'health',
     label: '健康状况',
     type: '4',
     dict: 'health',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireBase',
@@ -1091,6 +1129,7 @@ export const checkBoxs = [
     label: '报告状态',
     type: '4',
     dict: 'fireStatus',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 火灾类查询条件--人员伤亡
   {
@@ -1105,6 +1144,7 @@ export const checkBoxs = [
     label: '伤亡情况',
     type: '4',
     dict: 'injuryType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'zsCountMin',
@@ -1123,6 +1163,7 @@ export const checkBoxs = [
     label: '证件类型',
     type: '4',
     dict: 'idType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'idNumber',
@@ -1136,30 +1177,35 @@ export const checkBoxs = [
     label: '人员来源',
     type: '4',
     dict: 'injurySource',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'job',
     label: '职业',
     type: '4',
     dict: 'job',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injurySchooling',
     label: '受教育程度',
     type: '4',
     dict: 'schooling',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injuryHealth',
     label: '健康状况',
     type: '4',
     dict: 'health',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'humanCause',
     label: '人为因素',
     type: '4',
     dict: 'humanCause',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injuryBehavior',
@@ -1167,6 +1213,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'injuryBehavior',
     labelWidth: '124px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'injuryPart',
@@ -1174,6 +1221,7 @@ export const checkBoxs = [
     fireType: '4',
     type: '4',
     dict: 'injuryPartFire',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'mainSymptoms',
@@ -1181,6 +1229,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'mainSymptoms',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'bodyLocation',
@@ -1188,6 +1237,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'bodyLocation',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'deathDate',
@@ -1201,12 +1251,14 @@ export const checkBoxs = [
     label: '调查方式',
     type: '4',
     dict: 'inspectMethod',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'costSource',
     label: '损失来源',
     type: '4',
     dict: 'costSource',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'directEconomicLossMin',
@@ -1259,12 +1311,14 @@ export const checkBoxs = [
     type: '4',
     dict: 'chargeState',
     labelWidth: '116px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'batteryType',
     label: '电池类型',
     type: '4',
     dict: 'batteryType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'isRepack',
@@ -1290,6 +1344,7 @@ export const checkBoxs = [
     label: '行驶状态',
     type: '4',
     dict: 'driveState',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 火灾类查询条件--建筑信息
   {
@@ -1297,24 +1352,28 @@ export const checkBoxs = [
     label: '建筑标签',
     type: '4',
     dict: 'buildTag',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'buildType',
     label: '建筑类别',
     type: '4',
     dict: 'buildType',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireResistanceRating',
     label: '耐火等级',
     type: '4',
     dict: 'fireResistanceRating',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'buildStructure',
     label: '建筑结构',
     type: '4',
     dict: 'buildStructure',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'buildFloorMin',
@@ -1409,18 +1468,21 @@ export const checkBoxs = [
     type: '4',
     dict: 'regulation',
     labelWidth: '104px',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'networking',
     label: '联网情况',
     type: '4',
     dict: 'networking',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'fireCompartment',
     label: '防火分区',
     type: '4',
     dict: 'regulation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'compartmentAreaMin',
@@ -1436,6 +1498,7 @@ export const checkBoxs = [
     type: '4',
     dict: 'regulation',
     precision: 2,
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'separationMeterMin',
@@ -1448,12 +1511,14 @@ export const checkBoxs = [
     label: '疏散通道',
     type: '4',
     dict: 'regulation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   {
     fieldKeyOne: 'emergencyExit',
     label: '紧急出口',
     type: '4',
     dict: 'regulation',
+    field: { value: 'boDictId', label: 'dictName' },
   },
   // 火灾类查询条件--其他信息
   {
