@@ -95,6 +95,9 @@ const options = inject('options');
         :label="`${fieldObj?.label}：`"
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="fieldObj?.placeholder"
+        :type="fieldObj.numType"
+        :min="fieldObj.min"
+        :max="fieldObj.max"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'select-org'">

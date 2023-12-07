@@ -171,16 +171,19 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '出动队伍数',
+        numType: 'digit',
       },
       dispatchNumMin: { // 作战人员数
         value: ['', ''],
         type: 'input-range',
         label: '作战人员数',
+        numType: 'digit',
       },
       dispatchTruckMin: { // 作战车辆数
         value: ['', ''],
         type: 'input-range',
         label: '作战车辆数',
+        numType: 'digit',
       },
       isHeadquarters: { // 全勤指挥部出动
         value: '',
@@ -212,6 +215,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '指挥部出动数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       dealMinStart: { // 警情处置时长（分钟）
         value: ['', ''],
@@ -312,6 +316,8 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '气温',
+        min: -100,
+        max: 100,
       },
       weather: { // 天气
         value: undefined,
@@ -342,6 +348,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '现场被困人数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       // isPublicFireHydrant: { // 是否采用公共消防栓供水
       //   value: '',
@@ -544,6 +551,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥员人数',
+        numType: 'digit',
       },
       headPersonType: { // 带队指挥员职务
         value: undefined,
@@ -572,6 +580,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '消防员人数',
+        numType: 'digit',
       },
       isDispatchTruck: { // 是否有车辆出动
         value: '',
@@ -599,27 +608,32 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '车辆数',
+        numType: 'digit',
       },
       fireBoatNumMin: { // 艇数
         value: ['', ''],
         type: 'input-range',
         label: '艇数',
+        numType: 'digit',
       },
       fireAirplaneNumMin: { // 消防直升机数
         value: ['', ''],
         type: 'input-range',
         label: '消防直升机数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       rescueDogNumMin: { // 搜救犬数
         value: ['', ''],
         type: 'input-range',
         label: '搜救犬数',
+        numType: 'digit',
       },
       uavMin: { // 无人机数
         value: ['', ''],
         type: 'input-range',
         label: '无人机数',
+        numType: 'digit',
       },
     },
     dispatchCasualty: {
@@ -635,11 +649,13 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '死亡人数',
+        numType: 'digit',
       },
       injuryCountMin: { // 受伤人数
         value: ['', ''],
         type: 'input-range',
         label: '受伤人数',
+        numType: 'digit',
       },
       name: { // 姓名
         value: '',
@@ -678,6 +694,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '年龄',
+        numType: 'digit',
       },
       rescueRank: { // 消防救援衔
         value: undefined,
@@ -768,26 +785,31 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '抢救（人）',
+        numType: 'digit',
       },
       surviveNumMin: { // 生还（人）
         value: ['', ''],
         type: 'input-range',
         label: '生还（人）',
+        numType: 'digit',
       },
       deathNumMin: { // 死亡（人）
         value: ['', ''],
         type: 'input-range',
         label: '死亡（人）',
+        numType: 'digit',
       },
       evacuateNumMin: { // 疏散（人）
         value: ['', ''],
         type: 'input-range',
         label: '疏散（人）',
+        numType: 'digit',
       },
       transferNumMin: { // 转移（人）
         value: ['', ''],
         type: 'input-range',
         label: '转移（人）',
+        numType: 'digit',
       },
       emergencyNumMin: { // 抢救财产价值（元）
         value: ['', ''],
@@ -868,6 +890,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥人数',
+        numType: 'digit',
       },
       headCarName: { // 指挥车辆名称
         value: undefined,
@@ -880,6 +903,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥车辆数',
+        numType: 'digit',
       },
       headTimeMin: { // 指挥时长（小时）
         value: ['', ''],
@@ -1137,6 +1161,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '引起火灾人员年龄',
         labelWidth: '130px',
+        numType: 'digit',
       },
       schooling: { // 受教育程度
         value: undefined,
@@ -1190,21 +1215,25 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '死亡人数',
+        numType: 'digit',
       },
       injuryCountMin: { // 受伤人数
         value: ['', ''],
         type: 'input-range',
         label: '受伤人数',
+        numType: 'digit',
       },
       zsCountMin: { // 重伤人数
         value: ['', ''],
         type: 'input-range',
         label: '重伤人数',
+        numType: 'digit',
       },
       qsCountMin: { // 轻伤人数
         value: ['', ''],
         type: 'input-range',
         label: '轻伤人数',
+        numType: 'digit',
       },
       name: { // 姓名
         value: '',
@@ -1243,6 +1272,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '年龄',
+        numType: 'digit',
       },
       injurySource: { // 人员来源
         value: undefined,
@@ -1382,6 +1412,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '受灾户数（户）',
         labelWidth: '124px',
+        numType: 'digit',
       },
     },
     fireVehicle: {
@@ -1476,16 +1507,19 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建筑总楼层',
+        numType: 'digit',
       },
       fireFloorMin: { // 失火楼层
         value: ['', ''],
         type: 'input-range',
         label: '失火楼层',
+        numType: 'digit',
       },
       housingLifeMin: { // 房龄（年）
         value: ['', ''],
         type: 'input-range',
         label: '房龄（年）',
+        numType: 'digit',
       },
       buildUse: { // 建筑使用用途
         value: undefined,
@@ -1579,7 +1613,7 @@ export const useFormConfig = () => {
       compartmentAreaMin: { // 分区面积（m2）
         value: ['', ''],
         type: 'input-range',
-        label: '建议处理人数（人）',
+        label: '分区面积（平方米）',
         labelWidth: '140px',
       },
       fireSeparation: { // 防火间距
@@ -1591,7 +1625,7 @@ export const useFormConfig = () => {
       separationMeterMin: { // 间距（m2）
         value: ['', ''],
         type: 'input-range',
-        label: '建议处理人数（人）',
+        label: '间距（米）',
         labelWidth: '140px',
       },
       escapeRoute: { // 疏散通道
@@ -1626,12 +1660,14 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '追究人数（人）',
         labelWidth: '124px',
+        numType: 'digit',
       },
       suggestDealNumMin: { // 建议处理人数（人）
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
         labelWidth: '140px',
+        numType: 'digit',
       },
       firePenalty: { // 火灾处罚情况-是否立案
         value: undefined,

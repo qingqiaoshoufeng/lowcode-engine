@@ -39,7 +39,7 @@ const handleAdd = () => {
     showToast('添加成功！')
   })
     .catch(() => {
-      showToast('信息填写不完整，请检查填写内容！')
+      // showToast('信息填写不完整，请检查填写内容！')
     })
 }
 
@@ -169,6 +169,7 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '3'">
+          <!-- 校验 -->
           <SelectRangeTime
             v-model:value="form.valueOne"
             :readonly="true"
@@ -221,6 +222,7 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '6'">
+          <!-- 校验 -->
           <SelectOrg
             v-model:value="form.valueOne"
             :readonly="true"
@@ -253,6 +255,7 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '8'">
+          <!-- 校验 -->
           <SelectRangeTime
             v-model:value="form.valueOne"
             :readonly="true"
@@ -307,9 +310,6 @@ defineExpose({
             @change="onCarChange"
           />
         </template>
-        <!-- 
-        <Modal v-if="form.type === '6'" />
-        <PeriodTime v-if="form.type === '8'" /> -->
       </van-form>
     </div>
     <div class="add-search-operate">
