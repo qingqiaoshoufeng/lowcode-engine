@@ -720,21 +720,38 @@ export const useFormConfig = () => {
         options: 'protectDevice',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      injuryReason: { // 伤亡原因
+      injuryReason: { // 受伤原因
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '伤亡原因',
+        label: '受伤原因',
         options: 'injuryReason',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      injuryPart: { // 受伤/致命部位
+      deathReason: { // 死亡原因
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '受伤/致命部位',
+        label: '死亡原因',
+        options: 'deathReason',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryPart: { // 受伤部位
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '受伤部位',
         labelWidth: '112px',
         options: 'injuryPart',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      deathPart: { // 致命部位
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '致命部位',
+        labelWidth: '112px',
+        options: 'deathPart',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isInstantDeath: { // 是否当场死亡
@@ -1866,8 +1883,12 @@ export const useFormConfig = () => {
         protectDeviceNon: dispatchCasualty.protectDevice.back,
         injuryReason: dispatchCasualty.injuryReason.value?.join(','),
         injuryReasonNon: dispatchCasualty.injuryReason.back,
+        deathReason: dispatchCasualty.deathReason.value?.join(','),
+        deathReasonNon: dispatchCasualty.deathReason.back,
         injuryPart: dispatchCasualty.injuryPart.value?.join(','),
         injuryPartNon: dispatchCasualty.injuryPart.back,
+        deathPart: dispatchCasualty.deathPart.value?.join(','),
+        deathPartNon: dispatchCasualty.deathPart.back,
         isInstantDeath: dispatchCasualty.isInstantDeath.value,
         // 出动填报-战斗信息
         rescueNumMin: dispatchBattle.rescueNumMin.value?.[0],
@@ -2120,10 +2141,7 @@ export const useFormConfig = () => {
   }
 
   const returnNumValue = (min, max) => {
-    if (!min || !max) {
-      return []
-    }
-    return [Number(min), Number(max)]
+    return [min === '' ? '' : Number(min), max === '' ? '' : Number(max)]
   }
 
   const returnHourValue = (start, end) => {
@@ -2406,8 +2424,12 @@ export const useFormConfig = () => {
     form.value.dispatchCasualty.protectDevice.back = comprehensiveDispatchQueryReq.protectDeviceNon === 'true'
     form.value.dispatchCasualty.injuryReason.value = comprehensiveDispatchQueryReq.injuryReason?.split(',')
     form.value.dispatchCasualty.injuryReason.back = comprehensiveDispatchQueryReq.injuryReasonNon === 'true'
+    form.value.dispatchCasualty.deathReason.value = comprehensiveDispatchQueryReq.deathReason?.split(',')
+    form.value.dispatchCasualty.deathReason.back = comprehensiveDispatchQueryReq.deathReasonNon === 'true'
     form.value.dispatchCasualty.injuryPart.value = comprehensiveDispatchQueryReq.injuryPart?.split(',')
     form.value.dispatchCasualty.injuryPart.back = comprehensiveDispatchQueryReq.injuryPartNon === 'true'
+    form.value.dispatchCasualty.deathPart.value = comprehensiveDispatchQueryReq.deathPart?.split(',')
+    form.value.dispatchCasualty.deathPart.back = comprehensiveDispatchQueryReq.deathPartNon === 'true'
     form.value.dispatchCasualty.isInstantDeath.value = comprehensiveDispatchQueryReq.isInstantDeath
     // 出动填报-战斗信息
     form.value.dispatchBattle.rescueNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.rescueNumMin, comprehensiveDispatchQueryReq.rescueNumMax)

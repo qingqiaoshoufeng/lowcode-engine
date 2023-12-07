@@ -60,7 +60,7 @@ onMounted(async () => {
     'HZ_INFO_ZY', 'HZ_INFO_LY', 'HZ_SW_ZJLX', 'HZ_SW_MZ', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM', 'HZ_INFO_BXLX', 'HZ_INFO_JCQK', 'HZ_INFO_SJY', 'JQ_TYPE', 'NATURAL_DISASTER_TYPE',
     'JQ_LEVEL', 'CD_JYQK_CZ', 'CD_DC_HZQK', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ', 'USER_JOB', 'CD_JBXX_GG', 'CD_JBXX_BSY', 'CD_OTHER_ZY',
     'DEAD_TIME', 'HZ_INFO_JZXS', 'JQ_STATUS', 'CD_STATUS', 'HZ_STATUS', 'CD_RANK', 'CD_CZRY_FHZB', 'CD_CZRY_SSBW', 'CD_CZRY_SFSD', 'CD_HYZG', 'STA_TIME', 'RANK_TYPE', 'CD_QQHEAD_TYPE',
-    'CAR_TYPE', 'CD_LOOK', 'HZ_QHW_TYPE', 'HZ_YHY', 'HZ_INFO_RWYS', 'HZ_INFO_YY', 'DEPT_NATURE', 'HZ_INFO_SSBW', 'USER_JOB'], null, false)
+    'CAR_TYPE', 'CD_LOOK', 'HZ_QHW_TYPE', 'HZ_YHY', 'HZ_INFO_RWYS', 'HZ_INFO_YY', 'DEPT_NATURE', 'HZ_INFO_SSBW', 'USER_JOB', 'CD_CZRY_ZMBW', 'CD_CZRY_SWYY'], null, false)
   options.value.warningType = res.JQ_TYPE
   // 火灾信息
   options.value.area = res.HZ_INFO_QY // 区域
@@ -85,11 +85,13 @@ onMounted(async () => {
   options.value.bodyLocation = res.HZ_SW_STWZ// 发现尸体位置
   options.value.mainSymptoms = res.HZ_INFO_STZY // 身体主要症状
   options.value.injuryPart = res.CD_CZRY_SSBW // 受伤部位
+  options.value.deathPart = res.CD_CZRY_ZMBW // 致命部位
   options.value.injuryPartFire = res.HZ_INFO_SSBW // 受伤部位
   options.value.injuryBehavior = res.HZ_INFO_SZ // 受伤时行为
   options.value.injuryCause = res.CD_CZRY_SSYY // 受伤/致伤原因
   options.value.injuryCauseFire = res.HZ_INFO_YY // 受伤/致伤原因
   options.value.injuryReason = res.CD_CZRY_SSYY
+  options.value.deathReason = res.CD_CZRY_SWYY // 死亡原因
   options.value.schooling = res.HZ_INFO_SJY // 受教育程度
   options.value.health = res.HZ_INFO_JKZK // 健康状况
   options.value.job = res.HZ_INFO_ZY // 职业

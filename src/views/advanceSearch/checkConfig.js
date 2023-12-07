@@ -688,16 +688,30 @@ export const checkBoxs = [
   // 受伤原因
   {
     fieldKeyOne: 'injuryReason',
-    label: '伤亡原因',
+    label: '受伤原因',
     type: '4',
     dict: 'injuryReason',
   },
   {
+    fieldKeyOne: 'deathReason',
+    label: '死亡原因',
+    type: '4',
+    dict: 'deathReason',
+  },
+  {
     fieldKeyOne: 'injuryPart',
-    label: '受伤/致命部位',
+    label: '受伤部位',
     fireType: '2',
     type: '4',
     dict: 'injuryPart',
+    labelWidth: '116px',
+  },
+  {
+    fieldKeyOne: 'deathPart',
+    label: '致命部位',
+    fireType: '2',
+    type: '4',
+    dict: 'deathPart',
     labelWidth: '116px',
   },
   {

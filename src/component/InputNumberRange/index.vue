@@ -44,14 +44,25 @@ watch(() => props.value, (newValue) => {
   if (newValue?.length > 0 && Array.isArray(newValue)) {
     rangeValue.value = newValue;
   }
-}, { immediate: true });
+}, { deep: true, immediate: true });
+
+const formatValue = () => {
+  if (rangeValue.value[0] === null || rangeValue.value[0] === undefined) {
+    rangeValue.value[0] = ''
+  }
+  if (rangeValue.value[1] === null || rangeValue.value[1] === undefined) {
+    rangeValue.value[1] = ''
+  }
+}
 
 const onMinChange = () => {
+  formatValue()
   emit("update:value", rangeValue.value);
   emit("change", rangeValue.value);
 };
 
 const onMaxChange = () => {
+  formatValue()
   emit("update:value", rangeValue.value);
   emit("change", rangeValue.value);
 };
