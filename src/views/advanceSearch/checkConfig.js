@@ -134,12 +134,14 @@ export const checkBoxs = [
     fieldKeyTwo: 'dispatchGroupCountMax',
     label: '出动队伍数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'dispatchNumMin',
     fieldKeyTwo: 'dispatchNumMax',
     label: '作战人员数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'dispatchTruckMin',
@@ -147,6 +149,7 @@ export const checkBoxs = [
     label: '作战车辆数',
     fireType: '1',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'isHeadquarters',
@@ -175,6 +178,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'dispatchHeadCountMax',
     label: '指挥部出动数',
     type: '2',
+    numType: 'digit',
     labelWidth: '104px',
   },
   {
@@ -183,7 +187,6 @@ export const checkBoxs = [
     label: '警情处置时长（分钟）',
     fireType: '1',
     type: '2',
-    precision: 2,
     labelWidth: '156px',
   },
   {
@@ -253,7 +256,6 @@ export const checkBoxs = [
     type: '2',
     min: -100,
     max: 100,
-    precision: 2,
   },
   {
     fieldKeyOne: 'weather',
@@ -281,6 +283,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'trappedPersonMax',
     label: '现场被困人数',
     type: '2',
+    numType: 'digit',
     labelWidth: '104px',
   },
   {
@@ -389,7 +392,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'fireDistanceEnd',
     label: '行驶路程（公里）',
     type: '2',
-    precision: 2,
     labelWidth: '132px',
   },
   {
@@ -397,7 +399,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'attendanceTimeEnd',
     label: '到场时长（分钟）',
     type: '2',
-    precision: 2,
     labelWidth: '132px',
   },
   {
@@ -405,7 +406,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'speedEnd',
     label: '到场时速（km/h）',
     type: '2',
-    precision: 2,
     labelWidth: '138px',
   },
   // 归队时速过慢原因
@@ -423,7 +423,6 @@ export const checkBoxs = [
     label: '处置（执勤）时长（分钟）',
     fireType: '2',
     type: '2',
-    precision: 2,
   },
   // {
   //   fieldKeyOne: 'isProvice',
@@ -525,12 +524,14 @@ export const checkBoxs = [
     label: '指挥员人数',
     fireType: '2',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'firemenNumMin',
     fieldKeyTwo: 'firemenNumMax',
     label: '消防员人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'headPersonType',
@@ -588,18 +589,21 @@ export const checkBoxs = [
     label: '车辆数',
     fireType: '2',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'fireBoatNumMin',
     fieldKeyTwo: 'fireBoatNumMax',
     label: '艇数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'fireAirplaneNumMin',
     fieldKeyTwo: 'fireAirplaneNumMax',
     label: '消防直升机数',
     type: '2',
+    numType: 'digit',
     labelWidth: '104px',
   },
   {
@@ -607,12 +611,14 @@ export const checkBoxs = [
     fieldKeyTwo: 'rescueDogNumMax',
     label: '搜救犬数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'uavMin',
     fieldKeyTwo: 'uavMax',
     label: '无人机数',
     type: '2',
+    numType: 'digit',
   },
   // 出动信息（队站）--参战伤亡
   {
@@ -620,12 +626,14 @@ export const checkBoxs = [
     fieldKeyTwo: 'deathCountMax',
     label: '亡人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'injuryCountMin',
     fieldKeyTwo: 'injuryCountMax',
     label: '伤人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'name',
@@ -659,6 +667,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'ageMax',
     label: '年龄',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'gender',
@@ -752,37 +761,41 @@ export const checkBoxs = [
     fieldKeyTwo: 'rescueNumMax',
     label: '抢救人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'surviveNumMin',
     fieldKeyTwo: 'surviveNumMax',
     label: '生还人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'deathNumMin',
     fieldKeyTwo: 'deathNumMax',
     label: '死亡人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'evacuateNumMin',
     fieldKeyTwo: 'evacuateNumMax',
     label: '疏散人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'transferNumMin',
     fieldKeyTwo: 'transferNumMax',
     label: '转移人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'emergencyNumMin',
     fieldKeyTwo: 'emergencyNumMax',
     label: '抢救财产价值（元）',
     type: '2',
-    precision: 2,
     labelWidth: '148px',
   },
   {
@@ -790,7 +803,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'protectNumMax',
     label: '保护财产价值（元）',
     type: '2',
-    precision: 2,
     labelWidth: '148px',
   },
   // 出动信息（队站）--其他信息
@@ -806,7 +818,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'blockingTimeEnd',
     label: '疏通耗时（分钟）',
     type: '2',
-    precision: 2,
     labelWidth: '132px',
   },
   // 是否有损耗车辆
@@ -862,6 +873,7 @@ export const checkBoxs = [
     label: '指挥人数',
     fireType: '3',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'headCarName',
@@ -875,13 +887,13 @@ export const checkBoxs = [
     fieldKeyTwo: 'headCarNumMax',
     label: '指挥车辆数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'headTimeMin',
     fieldKeyTwo: 'headTimeMax',
     label: '指挥时长（小时）',
     type: '2',
-    precision: 2,
     labelWidth: '132px',
   },
   // 火灾类查询条件--基本信息
@@ -929,7 +941,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'burnedAreaMax',
     label: '过火面积（平方米）',
     type: '2',
-    precision: 2,
   },
   {
     fieldKeyOne: 'fireLevel',
@@ -1095,6 +1106,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'firePersonAgeMax',
     label: '引起火灾人员年龄',
     type: '2',
+    numType: 'digit',
     labelWidth: '132px',
   },
   {
@@ -1151,12 +1163,14 @@ export const checkBoxs = [
     fieldKeyTwo: 'zsCountMax',
     label: '重伤人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'qsCountMin',
     fieldKeyTwo: 'qsCountMax',
     label: '轻伤人数',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'idType',
@@ -1265,7 +1279,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'directEconomicLossMax',
     label: '直接经济损失（元）',
     type: '2',
-    precision: 2,
     labelWidth: '142px',
   },
   {
@@ -1273,7 +1286,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'directDamageMax',
     label: '直接财产损失（元）',
     type: '2',
-    precision: 2,
     labelWidth: '142px',
   },
   {
@@ -1281,20 +1293,19 @@ export const checkBoxs = [
     fieldKeyTwo: 'fireDisposalCostMax',
     label: '火灾现场处置费用（元）',
     type: '2',
-    precision: 2,
   },
   {
     fieldKeyOne: 'fireInjuryCostMin',
     fieldKeyTwo: 'fireInjuryCostMax',
     label: '人员伤亡医疗支出（元）',
     type: '2',
-    precision: 2,
   },
   {
     fieldKeyOne: 'affectedHouseMin',
     fieldKeyTwo: 'affectedHouseMax',
     label: '受灾户数（户）',
     type: '2',
+    numType: 'digit',
     labelWidth: '116px',
   },
   // 火灾类查询条件--交通工具
@@ -1380,18 +1391,21 @@ export const checkBoxs = [
     fieldKeyTwo: 'buildFloorMax',
     label: '建筑总楼层',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'fireFloorMin',
     fieldKeyTwo: 'fireFloorMax',
     label: '失火楼层',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'housingLifeMin',
     fieldKeyTwo: 'housingLifeMax',
     label: '房龄（年）',
     type: '2',
+    numType: 'digit',
   },
   {
     fieldKeyOne: 'buildUse',
@@ -1489,7 +1503,6 @@ export const checkBoxs = [
     fieldKeyTwo: 'compartmentAreaMax',
     label: '分区面积（平方米）',
     type: '2',
-    precision: 2,
     labelWidth: '142px',
   },
   {
@@ -1497,7 +1510,6 @@ export const checkBoxs = [
     label: '防火间距',
     type: '4',
     dict: 'regulation',
-    precision: 2,
     field: { value: 'boDictId', label: 'dictName' },
   },
   {
@@ -1539,6 +1551,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'penaltyNumMax',
     label: '追究人数（人）',
     type: '2',
+    numType: 'digit',
     labelWidth: '116px',
   },
   {
@@ -1546,6 +1559,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'suggestDealNumMax',
     label: '建议处理人数（人）',
     type: '2',
+    numType: 'digit',
     labelWidth: '142px',
   },
   {

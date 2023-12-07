@@ -6,9 +6,9 @@ const props = defineProps({
     type: [Array],
     default: () => [],
   },
-  precision: {
-    type: Number,
-    default: 0,
+  type: {
+    type: String,
+    default: "number",
   },
   label: {
     type: String,
@@ -53,6 +53,21 @@ const formatValue = () => {
   if (rangeValue.value[1] === null || rangeValue.value[1] === undefined) {
     rangeValue.value[1] = ''
   }
+  if (rangeValue.value[0]) {
+    rangeValue.value[0] = Number(rangeValue.value[0])
+  }
+  if (rangeValue.value[1]) {
+    rangeValue.value[1] = Number(rangeValue.value[1])
+  }
+  if (rangeValue.value[0] < props.min) {
+    rangeValue.value[0] = props.min
+  }
+  if (rangeValue.value[1] > props.max) {
+    rangeValue.value[1] = props.max
+  }
+  if (rangeValue.value[0] && rangeValue.value[1] && rangeValue.value[0] > rangeValue.value[1]) {
+    rangeValue.value[0] = rangeValue.value[1]
+  }
 }
 
 const onMinChange = () => {
@@ -80,14 +95,16 @@ defineOptions({
           <van-field
             v-model="rangeValue[0]"
             :placeholder="placeholder[0]"
-            type="number"
+            :type="type"
+            maxlength="13"
             @change="onMinChange"
           />
-          <span>~</span>
+          <span style="margin: 0 2px;">~</span>
           <van-field
             v-model="rangeValue[1]"
             :placeholder="placeholder[1]"
-            type="number"
+            :type="type"
+            maxlength="13"
             @change="onMaxChange"
           />
         </div>

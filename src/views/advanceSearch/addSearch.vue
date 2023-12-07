@@ -113,6 +113,20 @@ const onOrgChange = (value, option) => {
   form.value.fieldText = `${form.value.label}：${option?.map(val => val.name)?.join(',')}`
 }
 
+const onNumberChange = (value) => {
+  form.value.fieldText = `${form.value.label}：${value.join('至')}`
+}
+
+const validateRangeInput = (value, rule) => {
+  if (!form.value.valueOne || form.value.valueOne?.length <= 0) {
+    return `请输入${form.value.label}`
+  }
+  else if (!form.value.valueOne[0] && form.value.valueOne[0] !== 0 && !form.value.valueOne[1] && form.value.valueOne[1] !== 0) {
+    return `请输入${form.value.label}`
+  }
+  return ''
+}
+
 defineExpose({
   formRef,
 })
@@ -147,7 +161,11 @@ defineExpose({
             :label="`${form?.label}：`"
             :label-width="`${form?.labelWidth}`"
             :placeholder="form?.placeholder"
-            :rules="[{ required: true, message: `请输入${form.label}` }]"
+            :type="form.numType"
+            :min="form.min"
+            :max="form.max"
+            :rules="[{ validator: validateRangeInput }]"
+            @change="onNumberChange"
           />
         </template>
         <template v-if="form.type === '3'">
