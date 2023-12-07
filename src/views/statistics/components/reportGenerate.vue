@@ -168,7 +168,7 @@ const handleSearch = () => {
               m: `${totalData[i][j]}`,
               ht: 0,
               vt: 0,
-              ct: { fa: 'General', t: 's' },
+              ct: { fa: '@', t: 's' },
             },
           })
         }
@@ -289,7 +289,7 @@ const handleDefineSearch = () => {
               m: `${totalData[i][j]}`,
               ht: 0,
               vt: 0,
-              ct: { fa: 'General', t: 's' },
+              ct: { fa: '@', t: 's' },
             },
           })
         }

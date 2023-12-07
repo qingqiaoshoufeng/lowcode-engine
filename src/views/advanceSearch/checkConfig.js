@@ -370,6 +370,7 @@ export const checkBoxs = [
     label: '到场时火灾情况',
     type: '4',
     dict: 'fireSituation',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'fireDistanceStart',
@@ -377,6 +378,7 @@ export const checkBoxs = [
     label: '行驶路程（公里）',
     type: '2',
     precision: 2,
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'attendanceTimeStart',
@@ -384,6 +386,7 @@ export const checkBoxs = [
     label: '到场时长（分钟）',
     type: '2',
     precision: 2,
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'speedStart',
@@ -391,6 +394,7 @@ export const checkBoxs = [
     label: '到场时速（km/h）',
     type: '2',
     precision: 2,
+    labelWidth: '138px',
   },
   // 归队时速过慢原因
   {
@@ -398,6 +402,7 @@ export const checkBoxs = [
     label: '到场时速异常原因',
     type: '4',
     dict: 'returnLateReason',
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'dealMinStart',
@@ -518,6 +523,7 @@ export const checkBoxs = [
     type: '7',
     dict: 'fireHeadLvl',
     field: { value: 'boDictId', label: 'dictName' },
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'groupLeader',
@@ -543,6 +549,7 @@ export const checkBoxs = [
     label: '是否有车辆出动',
     type: '9',
     dict: 'isNot',
+    labelWidth: '116px',
   },
   // 出动车辆信息
   {
@@ -551,6 +558,7 @@ export const checkBoxs = [
     type: '11',
     dict: 'dispatchTruckInfo',
     field: { value: 'boFireTruckId', label: 'truckNumber' },
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'truckType',
@@ -576,6 +584,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'fireAirplaneNumMax',
     label: '消防直升机数',
     type: '2',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'rescueDogNumMin',
@@ -674,6 +683,7 @@ export const checkBoxs = [
     label: '防护装备情况',
     type: '4',
     dict: 'protectDevice',
+    labelWidth: '104px',
   },
   // 受伤原因
   {
@@ -688,12 +698,14 @@ export const checkBoxs = [
     fireType: '2',
     type: '4',
     dict: 'injuryPart',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'isInstantDeath',
     label: '是否当场死亡',
     type: '9',
     dict: 'isNot',
+    labelWidth: '104px',
   },
   // 出动信息（队站）--战斗成果
   {
@@ -732,6 +744,7 @@ export const checkBoxs = [
     label: '抢救财产价值（元）',
     type: '2',
     precision: 2,
+    labelWidth: '148px',
   },
   {
     fieldKeyOne: 'protectNumMin',
@@ -739,6 +752,7 @@ export const checkBoxs = [
     label: '保护财产价值（元）',
     type: '2',
     precision: 2,
+    labelWidth: '148px',
   },
   // 出动信息（队站）--其他信息
   {
@@ -746,6 +760,7 @@ export const checkBoxs = [
     label: '消防通道堵塞',
     type: '9',
     dict: 'isNot',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'blockingTimeStart',
@@ -753,6 +768,7 @@ export const checkBoxs = [
     label: '疏通耗时（分钟）',
     type: '2',
     precision: 2,
+    labelWidth: '132px',
   },
   // 是否有损耗车辆
   {
@@ -760,6 +776,7 @@ export const checkBoxs = [
     label: '是否有车辆损耗',
     type: '9',
     dict: 'isNot',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'fireProcess',
@@ -779,6 +796,7 @@ export const checkBoxs = [
     label: '全勤指挥部级别',
     type: '4',
     dict: 'dispatchFireHeadLvl',
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'fireHead',
@@ -796,6 +814,7 @@ export const checkBoxs = [
     dict: 'deptMembers',
     field: { value: 'userId', label: 'userNameJob' },
     modalTitle: '请选择指挥人员姓名',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'commanderNumMin',
@@ -809,6 +828,7 @@ export const checkBoxs = [
     label: '指挥车辆名称',
     type: '11',
     dict: 'dispatchTruckInfo',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'headCarNumMin',
@@ -822,6 +842,7 @@ export const checkBoxs = [
     label: '指挥时长（小时）',
     type: '2',
     precision: 2,
+    labelWidth: '132px',
   },
   // 火灾类查询条件--基本信息
   {
@@ -837,6 +858,7 @@ export const checkBoxs = [
     single: false,
     selectLeaf: false,
     params: { permission: true },
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'fireDirection',
@@ -886,6 +908,7 @@ export const checkBoxs = [
     label: '是否轻微火灾',
     type: '9',
     dict: 'isNot',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'fireSite',
@@ -916,36 +939,42 @@ export const checkBoxs = [
     label: '居住场所形式',
     type: '4',
     dict: 'liveType',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isPoorHouse',
     label: '是否属于扶贫安置房',
     type: '9',
     dict: 'isNot',
+    labelWidth: '148px',
   },
   {
     fieldKeyOne: 'isChangeUseType',
     label: '是否变更使用性质',
     type: '9',
     dict: 'isNot',
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'useType',
     label: '变更后使用性质',
     type: '4',
     dict: 'useType',
+    labelWidth: '124px',
   },
   {
     fieldKeyOne: 'isSafetyAccident',
     label: '生产安全事故',
     type: '9',
     dict: 'isNot',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isResearch',
     label: '是否正在调查',
     type: '4',
     dict: 'isResearch',
+    labelWidth: '104px',
   },
   // {
   //   fieldKeyOne: 'fireTel',
@@ -958,6 +987,7 @@ export const checkBoxs = [
     label: '单位统一社会信用代码',
     type: '1',
     maxlength: 50,
+    labelWidth: '156px',
   },
   {
     fieldKeyOne: 'industry',
@@ -970,6 +1000,7 @@ export const checkBoxs = [
     label: '行业主管部门',
     type: '4',
     dict: 'industryDepartment',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'economicType',
@@ -982,6 +1013,7 @@ export const checkBoxs = [
     label: '事故牵头调查部门',
     type: '4',
     dict: 'leadInspectionOrg',
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'isInsurance',
@@ -1000,18 +1032,21 @@ export const checkBoxs = [
     label: '是否单方面火灾',
     type: '9',
     dict: 'isNot',
+    labelWidth: '124px',
   },
   {
     fieldKeyOne: 'fireInspection',
     label: '监督检查情况',
     type: '4',
     dict: 'fireInspection',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'firePersonAgeMin',
     fieldKeyTwo: 'firePersonAgeMax',
     label: '引起火灾人员年龄',
     type: '2',
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'schooling',
@@ -1049,6 +1084,7 @@ export const checkBoxs = [
     label: '是否有人员伤亡',
     type: '9',
     dict: 'isNot',
+    labelWidth: '124px',
   },
   {
     fieldKeyOne: 'injuryType',
@@ -1116,6 +1152,7 @@ export const checkBoxs = [
     label: '受伤/害时行为',
     type: '4',
     dict: 'injuryBehavior',
+    labelWidth: '124px',
   },
   {
     fieldKeyOne: 'injuryPart',
@@ -1129,12 +1166,14 @@ export const checkBoxs = [
     label: '身体主要症状',
     type: '4',
     dict: 'mainSymptoms',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'bodyLocation',
     label: '发现尸体位置',
     type: '4',
     dict: 'bodyLocation',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'deathDate',
@@ -1161,6 +1200,7 @@ export const checkBoxs = [
     label: '直接经济损失（元）',
     type: '2',
     precision: 2,
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'directDamageMin',
@@ -1168,6 +1208,7 @@ export const checkBoxs = [
     label: '直接财产损失（元）',
     type: '2',
     precision: 2,
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'fireDisposalCostMin',
@@ -1188,6 +1229,7 @@ export const checkBoxs = [
     fieldKeyTwo: 'affectedHouseMax',
     label: '受灾户数（户）',
     type: '2',
+    labelWidth: '116px',
   },
   // 火灾类查询条件--交通工具
   {
@@ -1195,12 +1237,14 @@ export const checkBoxs = [
     label: '交通工具类型',
     type: '7',
     dict: 'vehicleType',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'chargeState',
     label: '起火时充电状态',
     type: '4',
     dict: 'chargeState',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'batteryType',
@@ -1213,6 +1257,7 @@ export const checkBoxs = [
     label: '电力助动车-是否改装',
     type: '9',
     dict: 'isNot',
+    labelWidth: '152px',
   },
   {
     fieldKeyOne: 'carNumber',
@@ -1280,6 +1325,7 @@ export const checkBoxs = [
     label: '建筑使用用途',
     type: '7',
     dict: 'buildUse',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isSpread',
@@ -1292,6 +1338,7 @@ export const checkBoxs = [
     label: '是否发生轰燃',
     type: '9',
     dict: 'isNot',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'isWindowOpened',
@@ -1305,42 +1352,49 @@ export const checkBoxs = [
     label: '是否安装消防设施',
     type: '9',
     dict: 'isNot',
+    labelWidth: '132px',
   },
   {
     fieldKeyOne: 'autoAlarm',
     label: '是否安装自动报警系统',
     type: '9',
     dict: 'install',
+    labelWidth: '158px',
   },
   {
     fieldKeyOne: 'autoFireFight',
     label: '是否安装自动灭火系统',
     type: '9',
     dict: 'install',
+    labelWidth: '158px',
   },
   {
     fieldKeyOne: 'indoorHydrant',
     label: '是否安装室内消防栓系统',
     type: '9',
     dict: 'install',
+    labelWidth: '166px',
   },
   {
     fieldKeyOne: 'smokeControl',
     label: '是否安装防排烟系统',
     type: '9',
     dict: 'install',
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'fireShutter',
     label: '是否安装防火卷帘',
     type: '9',
     dict: 'install',
+    labelWidth: '136px',
   },
   {
     fieldKeyOne: 'emergencyLight',
     label: '应急疏散照明',
     type: '4',
     dict: 'regulation',
+    labelWidth: '104px',
   },
   {
     fieldKeyOne: 'networking',
@@ -1360,6 +1414,7 @@ export const checkBoxs = [
     label: '分区面积（平方米）',
     type: '2',
     precision: 2,
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'fireSeparation',
@@ -1398,24 +1453,28 @@ export const checkBoxs = [
     label: '两案处理-是否立案',
     type: '9',
     dict: 'isCase',
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'penaltyNumMin',
     fieldKeyTwo: 'penaltyNumMax',
     label: '追究人数（人）',
     type: '2',
+    labelWidth: '116px',
   },
   {
     fieldKeyOne: 'suggestDealNumMin',
     fieldKeyTwo: 'suggestDealNumMax',
     label: '建议处理人数（人）',
     type: '2',
+    labelWidth: '142px',
   },
   {
     fieldKeyOne: 'firePenalty',
     label: '火灾处罚-是否立案',
     type: '9',
     dict: 'isCase',
+    labelWidth: '142px',
   },
 ]
 
