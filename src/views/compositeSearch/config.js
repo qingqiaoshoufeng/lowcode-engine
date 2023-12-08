@@ -2208,16 +2208,16 @@ export const useFormConfig = () => {
     if (form.value.policeBase.statisticRangeHoliday.value) {
       form.value.policeBase.statisticRangeHoliday.show = '1'
     }
-    else if (form.value.policeBase.statisticRangeSeasonMin.value) {
+    else if (form.value.policeBase.statisticRangeSeasonMin.value?.[0] || form.value.policeBase.statisticRangeSeasonMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '2'
     }
-    else if (form.value.policeBase.statisticRangeMonthMin.value) {
+    else if (form.value.policeBase.statisticRangeMonthMin.value?.[0] || form.value.policeBase.statisticRangeMonthMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '3'
     }
-    else if (form.value.policeBase.statisticRangeDayMin.value) {
+    else if (form.value.policeBase.statisticRangeDayMin.value?.[0] || form.value.policeBase.statisticRangeDayMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '4'
     }
-    else if (form.value.policeBase.statisticRangeHourMin.value) {
+    else if (form.value.policeBase.statisticRangeHourMin.value?.[0] || form.value.policeBase.statisticRangeHourMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '5'
     }
     form.value.policeBase.areaGroup.value = comprehensiveWarningQueryReq.areaGroup
@@ -2510,25 +2510,25 @@ export const useFormConfig = () => {
     form.value.dispatchHeaderMessage.headTimeMin.value = returnNumValue(comprehensiveDispatchHeadQueryReq.headTimeMin, comprehensiveDispatchHeadQueryReq.headTimeMax)
     // 火灾信息-基本信息
     form.value.fireBase.fireDate.value = returnDateValue(comprehensiveFireQueryReq.fireDateStart, comprehensiveFireQueryReq.fireDateEnd)
-    form.value.policeBase.statisticRangeSeasonMin.value = [comprehensiveFireQueryReq.statisticRangeSeasonMin, comprehensiveFireQueryReq.statisticRangeSeasonMax]
-    form.value.policeBase.statisticRangeMonthMin.value = [comprehensiveFireQueryReq.statisticRangeMonthMin, comprehensiveFireQueryReq.statisticRangeMonthMax]
-    form.value.policeBase.statisticRangeDayMin.value = [comprehensiveFireQueryReq.statisticRangeDayMin, comprehensiveFireQueryReq.statisticRangeDayMax]
-    form.value.policeBase.statisticRangeHourMin.value = returnHourValue(comprehensiveFireQueryReq.statisticRangeHourMin, comprehensiveFireQueryReq.statisticRangeHourMax)
-    form.value.policeBase.statisticRangeHoliday.value = comprehensiveFireQueryReq.statisticRangeHoliday
-    if (form.value.policeBase.statisticRangeHoliday.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '1'
+    form.value.fireBase.statisticRangeSeasonMin.value = [comprehensiveFireQueryReq.statisticRangeSeasonMin, comprehensiveFireQueryReq.statisticRangeSeasonMax]
+    form.value.fireBase.statisticRangeMonthMin.value = [comprehensiveFireQueryReq.statisticRangeMonthMin, comprehensiveFireQueryReq.statisticRangeMonthMax]
+    form.value.fireBase.statisticRangeDayMin.value = [comprehensiveFireQueryReq.statisticRangeDayMin, comprehensiveFireQueryReq.statisticRangeDayMax]
+    form.value.fireBase.statisticRangeHourMin.value = returnHourValue(comprehensiveFireQueryReq.statisticRangeHourMin, comprehensiveFireQueryReq.statisticRangeHourMax)
+    form.value.fireBase.statisticRangeHoliday.value = comprehensiveFireQueryReq.statisticRangeHoliday
+    if (form.value.fireBase.statisticRangeHoliday.value) {
+      form.value.fireBase.statisticRangeHoliday.show = '1'
     }
-    else if (form.value.policeBase.statisticRangeSeasonMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '2'
+    else if (form.value.fireBase.statisticRangeSeasonMin.value?.[0] || form.value.fireBase.statisticRangeSeasonMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '2'
     }
-    else if (form.value.policeBase.statisticRangeMonthMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '3'
+    else if (form.value.fireBase.statisticRangeMonthMin.value?.[0] || form.value.fireBase.statisticRangeMonthMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '3'
     }
-    else if (form.value.policeBase.statisticRangeDayMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '4'
+    else if (form.value.fireBase.statisticRangeDayMin.value?.[0] || form.value.fireBase.statisticRangeDayMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '4'
     }
-    else if (form.value.policeBase.statisticRangeHourMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '5'
+    else if (form.value.fireBase.statisticRangeHourMin.value?.[0] || form.value.fireBase.statisticRangeHourMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '5'
     }
     form.value.fireBase.fireDirection.value = comprehensiveFireQueryReq.fireDirection
     form.value.fireBase.areaDutyGroupFire.value = comprehensiveFireQueryReq.areaDutyGroupFire

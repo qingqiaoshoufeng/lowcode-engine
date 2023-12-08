@@ -32,6 +32,8 @@ const activeKey = ref('1')
 
 const list = ref([])
 
+const formRef = ref(null)
+
 const searchType = computed(() => {
   return Number(activeKey.value)
 })
@@ -187,6 +189,7 @@ const onSearchChange = () => {
   searchDimension.value = 2
   dataTimeSource.value = ''
   list.value = []
+  formRef.value.searchFormRef.handleSearchForm()
 }
 
 defineOptions({
@@ -204,7 +207,7 @@ defineOptions({
     </van-tabs>
 
     <div class="advance-form">
-      <Form />
+      <Form ref="formRef" />
     </div>
     
     <SearchBtn

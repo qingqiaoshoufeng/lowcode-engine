@@ -54,6 +54,10 @@ onMounted(() => {
   filterFormState.value.configType = cloneDeep(inject('activeKey')) || '1'
   handleSearchForm()
 })
+
+defineExpose({
+  handleSearchForm,
+})
 </script>
 
 <template>

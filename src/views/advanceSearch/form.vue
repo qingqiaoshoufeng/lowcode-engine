@@ -24,6 +24,8 @@ const search = inject('search');
 
 const list = inject('list')
 
+const searchFormRef = ref(null)
+
 provide('addFormRef', addFormRef);
 
 onMounted(async () => {
@@ -186,13 +188,14 @@ onMounted(async () => {
 })
 
 defineExpose({
+  searchFormRef,
   list,
 })
 </script>
 
 <template>
   <div class="advance-form">
-    <SearchForm />
+    <SearchForm ref="searchFormRef" />
     <AddSearch ref="addFormRef" />
   </div>
 </template>
