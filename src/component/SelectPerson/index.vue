@@ -206,6 +206,7 @@ defineOptions({
     height: 12vh;
     padding: 10px 10px;
     border-bottom: 1px solid #dcdee0;
+    overflow-x: hidden;
     overflow-y: auto;
     span {
       margin-bottom: 5px;

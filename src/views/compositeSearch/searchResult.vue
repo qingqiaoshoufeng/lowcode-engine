@@ -60,7 +60,7 @@ onMounted(() => {
       ref="proListRef"
       title="查询结果"
       :getListFn="type === 1 ? getSearchResult : getAdvanceSearchResult"
-      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : boFireDispatchId)"
+      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : 'boFireDispatchId')"
       :showLoad="false"
       :showBack="false"
     >

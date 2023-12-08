@@ -9,7 +9,6 @@ import ProModal from "@/component/ProModal/index";
 import SelectSearch from './selectSearch.vue'
 import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
-// import { useFormConfig } from './config.js'
 import { deleteAdvanceSearch, getAdvanceSearchDetail, getAdvanceSearchList, getAdvanceSearchResult } from '@/apis/index.js'
 import { checkInputRejectState, checkRejectState, formatYmdHm, generateByKeyValue, generateColorByState } from '@/utils/tools.js'
 import { useOptions } from '@/hooks/useOptions.js'
@@ -33,6 +32,15 @@ const activeKey = ref('1')
 
 const list = ref([])
 
+const searchType = computed(() => {
+  return Number(activeKey.value)
+})
+
+const filterFormState = ref({
+  configType: '1',
+  configName: null,
+})
+
 const form = ref({
   valueOne: [],
   valueTwo: null,
@@ -49,6 +57,10 @@ provide('list', list)
 provide('search', search)
 
 provide('activeKey', activeKey)
+
+provide('searchType', searchType)
+
+provide('filterFormState', filterFormState)
 
 provide('form', form)
 
@@ -170,7 +182,11 @@ const onSearchCallback = () => {
 }
 
 const onSearchChange = () => {
-  
+  filterFormState.value.configType = '1'
+  filterFormState.value.configName = ''
+  searchDimension.value = 2
+  dataTimeSource.value = ''
+  list.value = []
 }
 
 defineOptions({

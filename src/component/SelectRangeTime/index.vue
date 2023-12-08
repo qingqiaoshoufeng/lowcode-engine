@@ -6,7 +6,7 @@ import { dateTimeRange } from '@/utils/constants.js';
 
 const props = defineProps({
   value: {
-    type: String,
+    type: [String, Array],
     default: "",
   },
   title: {
@@ -49,15 +49,16 @@ const endTime = ref(['23', '59']);
 
 const selectText = ref("");
 
-watch(
-  () => props.value,
+watch(() => props.value,
   (val) => {
-    if (props.value) {
+    if (props.value?.length > 0) {
       startDate.value = props.value?.[0] ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-") : [];
       startTime.value = props.value?.[0] ? dayjs(props.value?.[0]).format("HH:mm:ss").split(":").slice(0, 2) : [];
       endDate.value = props.value?.[1] ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-") : [];
       endTime.value = props.value?.[1] ? dayjs(props.value?.[1]).format("HH:mm:ss").split(":").slice(0, 2) : [];
-      selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
+      if (startDate.value?.length > 0 && startTime.value?.length > 0 || endDate.value?.length > 0 && endTime.value?.length > 0) {
+        selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
+      }
     } else {
       startDate.value = dayjs().subtract(1, 'month').format("YYYY-MM-DD").split("-");
       startTime.value = ['00', '00'];

@@ -41,9 +41,9 @@ defineExpose({
 <template>
   <van-popup v-model:show="show.selectsVisible" position="bottom">
     <div class="select-search">
-      <div class="title-divider" @click="handleClear">
+      <div class="title-divider">
         <span>已选条件</span>
-        <div class="title-clear">全部清除<van-icon name="delete-o" /></div>
+        <div class="title-clear" @click="handleClear">全部清除<van-icon name="delete-o" /></div>
       </div>
       <div class="select-search-list">
         <Draggable :list="list" item-key="date" animation="300">
@@ -52,7 +52,7 @@ defineExpose({
               v-if="element.fieldFlag === '1'"
               closeable
               plain
-              color="#B7EB8F"
+              color="#52c41a"
               @close.prevent="handleClose(element)"
               class="tag-item"
             >
@@ -62,7 +62,7 @@ defineExpose({
             </van-tag>
             <van-tag
               v-else
-              color="#FFAEA8"
+              color="#ff4d4f"
               plain
               closeable
               @close.prevent="handleClose(element)"

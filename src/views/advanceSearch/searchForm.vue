@@ -3,13 +3,11 @@ import { inject, nextTick, onMounted, ref } from 'vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import SelectSingle from '@/component/SelectSingle/index.vue';
 import { cloneDeep } from 'lodash-es'
+import { debounce } from 'throttle-debounce'
 import { checkBoxs } from './checkConfig'
 import { addCollect, cancelCollect, getConfigList } from '@/apis/index.js'
 
-const filterFormState = ref({
-  configType: '1',
-  configName: null,
-})
+const filterFormState = inject('filterFormState')
 
 const form = inject('form')
 
@@ -50,6 +48,8 @@ const handleSearchForm = () => {
   })
 }
 
+const startSearchFn = debounce(1000, handleSearchForm)
+
 onMounted(() => {
   filterFormState.value.configType = cloneDeep(inject('activeKey')) || '1'
   handleSearchForm()
@@ -73,7 +73,7 @@ onMounted(() => {
         name="configName"
         placeholder="请输入要用的条件"
         style="width: calc(100% - 105px)"
-        @blur="handleSearchForm"
+        @input="startSearchFn"
       />
     </div>
     <div class="search-form-list">
