@@ -59,7 +59,7 @@ const clickNumber = ref(0)
 console.log(store);
 const loginForm = ref({
   loginid: '',
-  password: 'Xf119@119',
+  password: '',
   jcaptchaCode: '',
   ssoTag: 'abcdefg', // 跳过验证码验证
 })
