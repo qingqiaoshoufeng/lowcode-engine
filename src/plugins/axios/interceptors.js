@@ -1,5 +1,6 @@
 import { showFailToast } from 'vant'
-import {getCodeMessages } from '@/utils/http-code-messages.js'
+import { getCodeMessages } from '@/utils/http-code-messages.js'
+import { loginError } from '@/apis/index.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
