@@ -3,13 +3,14 @@
         <img class="logo" src="@/assets/images/login-logo.png" alt="">
         <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
         <div class="form">
-            <van-form @failed="onFailed">
+            <van-form @submit="handleUserLogin">
                 <van-field
                     v-model="loginForm.loginid"
                     left-icon="manager"
                     name="validatorMessage"
-                    placeholder="请输入账号"
+                    placeholder="请输入用户名"
                     :required="true"
+                    :rules="[{ required: true, message: '请输入用户名' }]"
                 />
                 <van-field
                     v-model="loginForm.password"
@@ -18,6 +19,7 @@
                     placeholder="请输入密码"
                     type="password"
                     :required="true"
+                    :rules="[{ required: true, message: '请输入密码' }]"
                 />
                 <div class="validator">
                   <van-field
@@ -26,6 +28,7 @@
                     :left-icon="verification"
                     name="validatorMessage"
                     placeholder="请输入验证码"
+                    :required="true"
                     :rules="[{ required: true, message: '请输入验证码' }]"
                     type="number"
                   />
@@ -37,7 +40,6 @@
                     block
                     type="primary"
                     native-type="submit"
-                    @click="handleUserLogin"
                 >登录</van-button>
             </van-form>
         </div>
@@ -59,9 +61,9 @@ const clickNumber = ref(0)
 console.log(store);
 const loginForm = ref({
   loginid: '',
-  password: 'Xf119@119',
+  password: '',
   jcaptchaCode: '',
-  ssoTag: 'abcdefg', // 跳过验证码验证
+  // ssoTag: 'abcdefg', // 跳过验证码验证
 })
 
 const initStore = async () => {
@@ -80,12 +82,18 @@ const handleUserLogin = async () => {
     password: encrypt(password),
     jcaptchaCode
   }
-  const res = await loginIn(params)
-  localStorage.token = res.token
-  await initStore()
-  router.replace({
-    name:'Home'
+  const res = await loginIn(params).catch(error => {
+    if (error) {
+      getCode()
+    }
   })
+  if (res?.token) {
+    localStorage.token = res.token
+    await initStore()
+    router.replace({
+      name:'Home'
+    })
+  }
 };
 
 const getCode = async ()=>{
