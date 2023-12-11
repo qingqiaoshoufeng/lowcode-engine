@@ -65,6 +65,7 @@ defineExpose({
     <div class="search-form-header">
       <SelectSingle
         v-model:value="filterFormState.configType"
+        :readonly="true"
         :options="options.searchParams"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
         placeholder="请选择查询类型"

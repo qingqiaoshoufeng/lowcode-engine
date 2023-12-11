@@ -35,8 +35,8 @@ const handleAdd = () => {
     const flag = validateForm(list.value, form.value)
     if (flag) {
       list.value.push(cloneDeep(form.value))
+      showToast('添加成功！')
     }
-    showToast('添加成功！')
   })
     .catch(() => {
       // showToast('信息填写不完整，请检查填写内容！')
@@ -50,6 +50,7 @@ const onChange = (item) => {
   const flag = validateForm(list.value, countForm.value)
   if (flag) {
     list.value.push(cloneDeep(countForm.value))
+    showToast('添加成功！')
   }
 }
 
@@ -127,6 +128,13 @@ const validateRangeInput = (value, rule) => {
   return ''
 }
 
+const validateOrg = (value, rule) => {
+  if (!form.value.valueOne || form.value.valueOne?.length <= 0) {
+    return `请输入${form.value.label}`
+  }
+  return ''
+}
+
 defineExpose({
   formRef,
 })
@@ -169,7 +177,6 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '3'">
-          <!-- 校验 -->
           <SelectRangeTime
             v-model:value="form.valueOne"
             :readonly="true"
@@ -222,7 +229,6 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '6'">
-          <!-- 校验 -->
           <SelectOrg
             v-model:value="form.valueOne"
             :readonly="true"
@@ -237,6 +243,7 @@ defineExpose({
             :select-leaf="form.selectLeaf"
             :headers-disabled="form.headersDisabled ? false : true"
             :params="{ ...form.params, staticFlag: searchDimension }"
+            :rules="[{ validator: validateOrg }]"
             @change="onOrgChange"
           />
         </template>
@@ -255,7 +262,6 @@ defineExpose({
           />
         </template>
         <template v-if="form.type === '8'">
-          <!-- 校验 -->
           <SelectRangeTime
             v-model:value="form.valueOne"
             :readonly="true"

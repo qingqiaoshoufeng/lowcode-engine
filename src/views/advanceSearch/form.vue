@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
+import { computed, inject, watch, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
 import SearchForm from './searchForm.vue'
 import AddSearch from './addSearch.vue'
 import {
@@ -28,8 +28,7 @@ const searchFormRef = ref(null)
 
 provide('addFormRef', addFormRef);
 
-onMounted(async () => {
-  // 获取字典
+watch(() => activeKey.value, () => {
   options.value.searchParams = searchParams
   if (activeKey.value === '2') {
     options.value.searchParams = searchParams.filter(val => val.boDictId !== '3')
@@ -37,6 +36,11 @@ onMounted(async () => {
   if (activeKey.value === '3') {
     options.value.searchParams = searchParams.filter(val => val.boDictId !== '2')
   }
+})
+
+onMounted(async () => {
+  // 获取字典
+  options.value.searchParams = searchParams
   options.value.fieldType = fieldType
   options.value.isConnect = isConnect
   options.value.dispatchType = dispatchType
