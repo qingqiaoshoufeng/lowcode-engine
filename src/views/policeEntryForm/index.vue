@@ -423,9 +423,12 @@ const { loading, submit } = useSubmit((res) => {
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',
       naturalDisasterType: values.naturalDisasterType ? values.naturalDisasterType.pop() : '',
       headquarters: values.headquarters ? values.headquarters.map(item => item.organizationid).join(',') : '',
-      otherProvince: values.otherProvince ? values.otherProvince.join(',') : '',
-      otherCity: values.otherCity ? values.otherCity.join(',') : '',
-      warningTag: values.warningTag ? values.warningTag.join(',') : '',
+      otherProvince: values.otherProvince ? values.otherProvince.map(item => (item.organizationid || item.value)).join(',') : '',
+      otherProvinceName: values.otherProvince ? values.otherProvince.map(item => (item.name || item.label)).join(',') : '',
+      otherCity: values.otherCity ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
+      otherCityName: values.otherCity ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
+      warningTag: values.warningTag ? values.warningTag.map(item => (item.boFireTagId || item.value)).join(',') : '',
+      warningTagName: values.warningTag ? values.warningTag.map(item => (item.tagName || item.label)).join(',') : '',
       warningExt1: values.warningTypeOther, // 警情类型其他
       warningExt2: values.naturalDisasterOther, // 自然灾害类型其他
       warningStatus: form.value.warningStatus ? form.value.warningStatus : undefined,
@@ -535,10 +538,25 @@ const initDetail = () => {
           }, 'Number')
           : []
         form.value.isOtherProvince = res.isOtherProvince
-        form.value.otherProvince = res.otherProvince ? res.otherProvince.split(',')?.map(item => Number(item)) : []
+        form.value.otherProvince = res.otherProvince
+          ? generateByKeyValue(res.otherProvinceName, res.otherProvince, {
+            key: 'name',
+            value: 'organizationid',
+          }, 'Number')
+          : []
         form.value.isOtherCity = res.isOtherCity
-        form.value.otherCity = res.otherCity ? res.otherCity.split(',')?.map(item => Number(item)) : []
-        form.value.warningTag = res.warningTag ? res.warningTag.split(',') : []
+        form.value.otherCity = res.otherCity
+          ? generateByKeyValue(res.otherCityName, res.otherCity, {
+            key: 'name',
+            value: 'organizationid',
+          }, 'Number')
+          : []
+        form.value.warningTag = res.warningTag
+          ? generateByKeyValue(res.warningTagValue, res.warningTag, {
+            key: 'tagName',
+            value: 'boFireTagId',
+          })
+          : []
         form.value.warningInfo = res.warningInfo
         form.value.warningStatus = res.warningStatus
         form.value.transferList = res.transferList
@@ -1229,7 +1247,8 @@ const onWarningOrgname = () => {
         </template>
       </van-field>
       <SelectMultiple
-        v-model:value="form.warningTag"
+        :value="form.warningTag?.map(item => item.boFireTagId) || []"
+        v-model:nodes="form.warningTag"
         :showPreview="showPreview"
         :readonly="true"
         name="warningTag"
@@ -1414,7 +1433,8 @@ const onWarningOrgname = () => {
         </template>
       </SelectMultiple>
       <SelectMultiple
-        v-model:value="form.otherCity"
+        :value="form.otherCity?.map(item => item.organizationid) || []"
+        v-model:nodes="form.otherCity"
         :showPreview="showPreview"
         :readonly="true"
         name="otherCity"
@@ -1423,6 +1443,7 @@ const onWarningOrgname = () => {
         :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队（本省）'}]"
         :required="true"
         label="增援支队（本省）："
+        label-width="136px"
         placeholder="无"
         title="请选择增援支队（本省）"
         class="special-place"
@@ -1440,7 +1461,8 @@ const onWarningOrgname = () => {
         </template>
       </SelectMultiple>
       <SelectMultiple
-        v-model:value="form.otherProvince"
+        :value="form.otherProvince?.map(item => item.organizationid) || []"
+        v-model:nodes="form.otherProvince"
         :showPreview="showPreview"
         :readonly="true"
         name="otherProvince"
