@@ -40,8 +40,10 @@ const loading = ref(false);
 
 const showModal = ref(false);
 
-watch(() => [route, route.path], () => {
-  if (!route.query?.temporary) {
+const currentTime = dayjs().valueOf()
+
+watch(() => [route.path], () => {
+  if (!route.query?.temporary || Number(route.query?.temporary) < currentTime) {
     showModal.value = false
     emit('update:visible', showModal.value)
   }
@@ -52,7 +54,7 @@ watch(() => props.visible, (newValue) => {
     router.push({
       path: route.path,
       query: {
-        temporary: dayjs().valueOf(),
+        temporary: currentTime,
       }
     })
   }
