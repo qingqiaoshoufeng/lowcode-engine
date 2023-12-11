@@ -9,6 +9,7 @@
                 v-for="item in list" 
                 :key="item.menuName"
                 @click="handleClick(item)"
+                v-p="permission[item.iconId] || []"
             >
                <div class="item_wrapper">
                     <!-- <img :src="item.activeImage" alt=""> -->
@@ -26,7 +27,7 @@
 import { computed, ref, getCurrentInstance,defineProps, onMounted } from "vue";
 import { useStore } from "vuex";
 import router from '@/router/index.js'
-import {pathMap} from './pathMap.js'
+import {pathMap,permission} from './pathMap.js'
 
 const props = defineProps({
   title:{

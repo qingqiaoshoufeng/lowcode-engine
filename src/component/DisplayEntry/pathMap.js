@@ -15,13 +15,13 @@ export const pathMap = {
   "chudonggengzhengshenpi": "/dispatchRecheckApproval",
   "huozaigengzhengshenpi": "/fireRecheckApproval",
   "shenqingjilu": "/applyRecord",
-  // "shenqingjilu": "/globalSearch",
   "jingqingzhiliangjiandu":"/police-supervision",
   "huozaizhiliangjiandu":"/fire-supervision",
   "chudongzhiliangjiandu":'/dispatch-supervision',
   "jingqingchaoshitongji":"/police-timeout",
   "huozaichaoshitongji":"/fire-timeout",
   "chudongchaoshitongji":"/dispatch-timeout",
+  // 已办
   "weitianbaoduizhantongji":"station-timeout",
   "policeDispatched":'have-done-info/policeDispatched',
   "policeRejected":'have-done-info/policeRejected',
@@ -45,4 +45,30 @@ export const pathMap = {
 
 // policeDispatched,policeRejected,policeAmend,policeInvalid,policeConfirmed,policeDispatchArea,dispatchFilled
 // ,dispatchReviewed,dispatchIdRejected,dispatchAmend,fireFilled,fireReviewed,fireReject,fireAmend
+
+export const permission={
+  "jingqingluru":["admin", "police-entry"],
+  "jingqingxiugai": ["admin", "police-manage"],
+  "jingqingguanli": ["admin", "police-manage"],
+  "chudongtianbao": ["admin", "dispatch-report"],
+  "chudongxiugai": ["admin", "dispatch-manage"],
+  "chudongguanli": ["admin", "dispatch-manage"],
+  "chudongshenhe": ["admin", "dispatch-review"],
+  'huozaitianbao': ["admin", "fire-report"],
+  'huozaiguanli': ["admin", "fire-manage"],
+  'huozaixiugai': ["admin", "fire-manage"],
+  'huozaishenhe':["admin", "fire-review"],
+  "jingqinggengzhengshenpi": ["admin", "police-recheck-approval"],
+  "jingqingzuofeishenpi": ["admin", "police-abolish-approval"],
+  "chudonggengzhengshenpi": ["admin", "dispatch-recheck-approval"],
+  "huozaigengzhengshenpi": ["admin", "fire-recheck-approval"],
+  "shenqingjilu": ["admin", "apply-record"],
+  "jingqingzhiliangjiandu": ["admin", "police-supervision"],
+  "huozaizhiliangjiandu":["admin", "fire-supervision"],
+  "chudongzhiliangjiandu":["admin", "dispatch-supervision"],
+  "jingqingchaoshitongji":["admin", "police-timeout"],
+  "huozaichaoshitongji":["admin", "fire-timeout"],
+  "chudongchaoshitongji":["admin", "dispatch-timeout"],
+  "jingqingzuofei":["admin", "police-delete"]
+}
   

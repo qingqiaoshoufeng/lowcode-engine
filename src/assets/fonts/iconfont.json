@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "38476406",
+      "name": "作废警情",
+      "font_class": "jingqingzuofei",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
       "icon_id": "38279819",
       "name": "jingqingqueren",
       "font_class": "jingqingqueren",

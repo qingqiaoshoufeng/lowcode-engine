@@ -5,6 +5,14 @@ const state = {
 }
 const getters = {
   userInfo: (state) => state.userInfo,
+  permission: (state)=>{
+    const permissionList = state?.userInfo?.PERMISSIONLIST || []
+    const result = permissionList.reduce((current,item)=>{
+      current[item.perms] = true
+      return current
+    },{})
+    return result
+  }
 }
 const mutations = {
   setUserInfo(state, val) {
