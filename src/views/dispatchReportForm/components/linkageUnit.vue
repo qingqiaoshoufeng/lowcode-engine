@@ -59,7 +59,7 @@ const onHaveLinkageUnit = (e) => {
     >
       <template #input>
         <van-radio-group
-          v-model:value="form.investForce.haveLinkageUnit.value"
+          v-model="form.investForce.haveLinkageUnit.value"
           v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"

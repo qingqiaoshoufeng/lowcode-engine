@@ -2,7 +2,7 @@
   <div class="notice_detail">
     <HeaderTitle title="通知公告"/>
     <div class="info">
-      <div class="title">{{ 
+      <div class="title">{{
         form.noticeTitle
          }}</div>
       <div class="header">
@@ -11,7 +11,7 @@
       </div>
       <div v-html="form.noticeBody"></div>
       <div class="bottom">
-        <van-button icon="plus" plain  type="primary">下载</van-button>
+        <van-button icon="down" plain  type="primary">下载</van-button>
       </div>
     </div>
   </div>

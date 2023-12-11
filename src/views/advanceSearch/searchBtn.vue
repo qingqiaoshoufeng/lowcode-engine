@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, nextTick, inject } from 'vue';
-import { getMySearchList, getMySearchDetail, getSourceOption } from '@/apis/index.js';
-import { useModal } from '@/hooks/useModal.js';
+import { getAdvanceSearchList, getConfigList, getSourceOption } from '@/apis/index.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 
 const props = defineProps({
@@ -15,13 +14,11 @@ const emits = defineEmits('searchCallback', 'initCallback');
 
 const options = inject('options');
 
-const searchType = inject('searchType');
+const show = inject('show');
 
 const searchDimension = inject('searchDimension');
 
 const dataTimeSource = inject('dataTimeSource');
-
-const { show } = useModal();
 
 const proListRef = ref(null);
 
@@ -43,15 +40,8 @@ const handlePath = () => {
 }
 
 const handleByResult = (row) => {
-  showLoadingToast()
-  getMySearchDetail(row.boSearchId).then((res) => {
-    if (res?.boSearchId) {
-      show.value.collectVisible = false
-      searchType.value = res?.searchType ? Number(res?.searchType) : 1
-      emits('initCallback', res);
-      closeToast()
-    }
-  })
+  show.value.collectVisible = false
+  emits('initCallback', row);
 }
 
 const handleTab = (value) => {
@@ -67,6 +57,10 @@ const handlePathItem = (row) => {
 const handleSourceItem = (row) => {
   dataTimeSource.value = row.value
   show.value.pathVisible = false
+}
+
+const handleSelects = () => {
+  show.value = { selectsVisible: true }
 }
 
 const getSourceOptionData = async () => {
@@ -122,7 +116,7 @@ onMounted(() => {
         <ProList
           ref="proListRef"
           title="查询结果"
-          :getListFn="getMySearchList"
+          :getListFn="getAdvanceSearchList"
           rowKey="id"
           :showLoad="false"
           :showBack="false"
@@ -167,6 +161,9 @@ onMounted(() => {
     </div>
     <div class="search-btn-wrapper">
       <div class="round-wrapper">
+        <div class="search-path" @click="handleSelects">
+          已选条件<van-icon name="arrow-down" />
+        </div>
         <div class="search-path" @click="handlePath">
           查询口径<van-icon name="arrow-down" />
         </div>

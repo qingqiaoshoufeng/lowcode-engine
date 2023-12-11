@@ -36,6 +36,19 @@ const options = inject('options');
         :title="`请选择${fieldObj.label}`"
       />
     </template>
+    <template v-if="fieldObj?.type === 'select-nodes'">
+      <SelectMultiple
+        v-model:value="fieldObj.arr"
+        v-model:nodes="fieldObj.value"
+        :readonly="true"
+        :options="options[fieldObj.options]"
+        :field-names="fieldObj.fieldNames ? fieldObj.fieldNames : { value: 'value', label: 'label' }"
+        :label="`${fieldObj.label}：`"
+        :label-width="`${fieldObj?.labelWidth}`"
+        :placeholder="`请选择${fieldObj.label}`"
+        :title="`请选择${fieldObj.label}`"
+      />
+    </template>
     <template v-if="fieldObj?.type === 'select-multiple'">
       <SelectMultiple
         v-model:value="fieldObj.value"
@@ -82,6 +95,9 @@ const options = inject('options');
         :label="`${fieldObj?.label}：`"
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="fieldObj?.placeholder"
+        :type="fieldObj.numType"
+        :min="fieldObj.min"
+        :max="fieldObj.max"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'select-org'">

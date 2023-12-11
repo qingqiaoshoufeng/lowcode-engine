@@ -603,7 +603,7 @@ const initDict = () => {
 }
 
 const getSubmitParams = () => {
-  const { basicInfo, economicLoss, fireBuilding, fireFacilities, caseHandling, casualtyWar, fireCourse, otherAttach } = form.value
+  const { basicInfo, economicLoss, fireBuilding, fireFacilities, caseHandling, casualtyWar, fireCourse, firePhoto, otherAttach } = form.value
   const params = {
     fireInfo: {
       boFireInfoId: props.currentRow?.boFireInfoId || localFireInfoId.value,
@@ -646,7 +646,9 @@ const getSubmitParams = () => {
       firePersonAge: basicInfo.firePersonAge?.value,
       schooling: basicInfo.schooling?.value,
       health: basicInfo.health?.value,
+      isOperating: basicInfo.isOperating?.value,
       industry: basicInfo.industry?.value?.join(','),
+      industryDepartment: basicInfo.industryDepartment?.value,
       economicType: basicInfo.economicType?.value,
       leadInspectionOrg: basicInfo.leadInspectionOrg?.value,
       otherOrgRemark: basicInfo.otherOrgRemark?.value,
@@ -679,6 +681,7 @@ const getSubmitParams = () => {
       isRepack: basicInfo.isRepack?.value,
       draftName: basicInfo.draftName?.value,
       severity: basicInfo.severity?.value,
+      isAllBack: firePhoto.isAllBack?.value,
       isDraft: props.showDraft,
     },
     fireInfoBuild: {
@@ -752,6 +755,9 @@ const getSubmitParams = () => {
   }
   if (props.isApproval) {
     params.isAudit = '1'
+  }
+  if (props.isApproval && props.currentRow?.taskId) {
+    params.taskId = props.currentRow?.taskId
   }
   if (casualtyWar.isInjured.value === '1') {
     if (casualtyWar.injuryNum.value > 0) {

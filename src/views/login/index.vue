@@ -3,47 +3,49 @@
         <img class="logo" src="@/assets/images/login-logo.png" alt="">
         <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
         <div class="form">
-            <van-form @failed="onFailed">
-                <van-field 
-                    v-model="loginForm.loginid" 
+            <van-form @submit="handleUserLogin">
+                <van-field
+                    v-model="loginForm.loginid"
                     left-icon="manager"
-                    name="validatorMessage" 
-                    placeholder="请输入账号"
+                    name="validatorMessage"
+                    placeholder="请输入用户名"
                     :required="true"
+                    :rules="[{ required: true, message: '请输入用户名' }]"
                 />
-                <van-field 
-                    v-model="loginForm.password" 
+                <van-field
+                    v-model="loginForm.password"
                     left-icon="lock"
-                    name="validatorMessage" 
+                    name="validatorMessage"
                     placeholder="请输入密码"
                     type="password"
                     :required="true"
+                    :rules="[{ required: true, message: '请输入密码' }]"
                 />
                 <div class="validator">
-                  <van-field 
+                  <van-field
                     class="verification"
-                    v-model="loginForm.jcaptchaCode" 
+                    v-model="loginForm.jcaptchaCode"
                     :left-icon="verification"
-                    name="validatorMessage" 
+                    name="validatorMessage"
                     placeholder="请输入验证码"
+                    :required="true"
                     :rules="[{ required: true, message: '请输入验证码' }]"
                     type="number"
                   />
                   <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
                 </div>
-                <van-button 
-                    class="submit" 
-                    round 
-                    block 
-                    type="primary" 
+                <van-button
+                    class="submit"
+                    round
+                    block
+                    type="primary"
                     native-type="submit"
-                    @click="handleUserLogin"
                 >登录</van-button>
             </van-form>
         </div>
     </div>
 </template>
-  
+
 <script setup>
 import { reactive, getCurrentInstance, ref ,onMounted} from "vue";
 import verification from '@/assets/images/verification.png'
@@ -59,9 +61,9 @@ const clickNumber = ref(0)
 console.log(store);
 const loginForm = ref({
   loginid: '',
-  password: 'Xf119@119',
+  password: '',
   jcaptchaCode: '',
-  ssoTag: 'abcdefg', // 跳过验证码验证
+  // ssoTag: 'abcdefg', // 跳过验证码验证
 })
 
 const initStore = async () => {
@@ -80,12 +82,18 @@ const handleUserLogin = async () => {
     password: encrypt(password),
     jcaptchaCode
   }
-  const res = await loginIn(params)
-  localStorage.token = res.token
-  await initStore()
-  router.replace({
-    name:'Home'
+  const res = await loginIn(params).catch(error => {
+    if (error) {
+      getCode()
+    }
   })
+  if (res?.token) {
+    localStorage.token = res.token
+    await initStore()
+    router.replace({
+      name:'Home'
+    })
+  }
 };
 
 const getCode = async ()=>{
@@ -102,10 +110,11 @@ const handleSwitch = () => {
     window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
     getCode()
     showToast('已切换为测试环境')
+    window.checkAppVersion(false)
   }
 }
 </script>
-  
+
 <style scoped lang="scss">
 .login {
     background: url('~@/assets/images/login-bg.png');
@@ -163,7 +172,7 @@ const handleSwitch = () => {
       align-items:center;
       .verification{
         margin-right:12px;
-        
+
       }
     }
     .verification{
@@ -173,4 +182,4 @@ const handleSwitch = () => {
     }
 }
 </style>
-  
+

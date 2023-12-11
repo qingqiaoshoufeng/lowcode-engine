@@ -60,7 +60,7 @@ const onHaveVolunteer = (e) => {
     >
       <template #input>
         <van-radio-group
-          v-model:value="form.investForce.haveVolunteer.value"
+          v-model="form.investForce.haveVolunteer.value"
           v-preview-text="showPreview"
           icon-size="16px"
           direction="horizontal"

@@ -592,39 +592,11 @@ const initPerson = (dispatchGroup) => {
   })
 }
 
-const initDynamicDict = () => {
-  if (props.isDetail) {
-    const { battleConsume, deployEquipment, investForce, personInfo } = form.value
-    let cars = ''
-    // const persons = ''
-    // if (investForce.groupLeader.value) { // 带队指挥员
-    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
-    //   investForce.groupLeader.value?.forEach((item) => {
-    //     if (!persons.includes(item.userId)) {
-    //       deptMembersOptions.value.push({
-    //         userId: item.userId,
-    //         userName: item.userName,
-    //         label: item.userName,
-    //         value: item.userId,
-    //       })
-    //     }
-    //   })
-    // }
-    // if (personInfo.commandLeader) { // 指挥员姓名
-    //   persons = deptMembersOptions.value?.map(item => item.userId).join(',')
-    //   personInfo.commandLeader?.forEach((item) => {
-    //     if (!persons.includes(item.headerName)) {
-    //       deptMembersOptions.value.push({
-    //         userId: item.headerName,
-    //         userName: item.userName,
-    //         label: item.userName,
-    //         value: item.headerName,
-    //       })
-    //     }
-    //   })
-    // }
-  }
+const initFireProcess = () => {
+  generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
 }
+
+provide('refreshProcess', initFireProcess)
 
 const initWatch = () => {
   closeToast()
@@ -639,10 +611,9 @@ const initWatch = () => {
     // 只有当填报状态下才自动生成处置过程
     if (props.closeModal && props.isInput) {
       watch(() => [form.value.basicInformation, form.value.basicInfoHead, form.value.investForce, form.value.casualtyWar, form.value.battleResult, form.value.battleConsume], () => {
-        generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
+        initFireProcess()
       }, { deep: true })
     }
-    initDynamicDict()
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.draftInfo.warningType.value))
     })
@@ -1048,6 +1019,9 @@ const getSubmitParams = () => {
   }
   if (props.isApproval) {
     params.isAudit = '1'
+  }
+  if (props.isApproval && props.currentRow?.taskId) {
+    params.taskId = props.currentRow?.taskId
   }
   return params
 }

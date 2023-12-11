@@ -5,11 +5,15 @@ import { generateColorByState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
-import { getSearchResult } from "@/apis/index.js";
+import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js';
 
 const props = defineProps({
+  type: {
+    type: Number,
+    default: 1,
+  },
   params: {
     type: Object,
     default: () => {},
@@ -55,8 +59,8 @@ onMounted(() => {
     <ProList
       ref="proListRef"
       title="查询结果"
-      :getListFn="getSearchResult"
-      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : boFireDispatchId)"
+      :getListFn="type === 1 ? getSearchResult : getAdvanceSearchResult"
+      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : 'boFireDispatchId')"
       :showLoad="false"
       :showBack="false"
     >

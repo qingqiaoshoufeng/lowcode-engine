@@ -502,6 +502,14 @@ const showFireInspectionScope = computed(() => {
 //   return fireType?.text?.includes('露天场所火灾') && firePlace?.text?.indexOf('桥梁') > -1
 // })
 
+const onIsOperating = () => {
+  if (form.value.basicInfo.isOperating.value === '1') {
+    form.value.basicInfo.industry.value = undefined
+    form.value.basicInfo.industryDepartment.value = undefined
+    form.value.basicInfo.economicType.value = undefined
+  }
+}
+
 const onFireLevel = () => {
   showDialog({ message: `
     根据生产安全事故(以下简称事故)造成的人员伤亡或者直接经济损失，事故一般分为以下等级：
@@ -1457,7 +1465,39 @@ const onFireLevel = () => {
           </template>
         </SelectSingle>
       </div>
-      <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
+      <div :gutter="gutter">
+        <div :span="8">
+          <van-field
+            name="basicInfo.isOperating.value"
+            label="是否涉及生产经营："
+            :required="isRequired"
+            :rules="form.basicInfo.isOperating.rules"
+          >
+            <template #input>
+              <van-radio-group 
+                id="isOperating"
+                v-model="form.basicInfo.isOperating.value"
+                v-preview-text="showPreview"
+                direction="horizontal"
+                @change="onIsOperating"
+              >
+                <van-radio name="1">是</van-radio>
+                <van-radio name="2">否</van-radio>
+              </van-radio-group>
+            </template>
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="是否涉及生产经营："
+                remark-field="isOperating"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.isOperating"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
+        </div>
+      </div>
+      <div v-if="form.basicInfo.isOperating.value === '1'" :span="8">
         <CascaderSingle
           label="所属行业："
           :rules="form.basicInfo.industry.rules"
@@ -1482,7 +1522,7 @@ const onFireLevel = () => {
           </template>
         </CascaderSingle>
       </div>
-      <div v-if="!showBuildingMinor && !showOtherMinor">
+      <div v-if="form.basicInfo.isOperating.value === '1'">
         <SelectSingle
           label="行业主管部门："
           :rules="form.basicInfo.industryDepartment.rules"
@@ -1506,7 +1546,7 @@ const onFireLevel = () => {
           </template>
         </SelectSingle>
       </div>
-      <div v-if="!showBuildingMinor && !showOtherMinor && isShowIndustryAndEconomicType" :span="8">
+      <div v-if="form.basicInfo.isOperating.value === '1'" :span="8">
         <SelectSingle
           label="经济类型："
           :rules="form.basicInfo.economicType.rules"

@@ -48,7 +48,7 @@ export const useFormConfig = () => {
       warningAddr: { // 警情地址
         value: '',
         type: 'input',
-        label: '警情标题',
+        label: '警情地址',
       },
       warningType: { // 警情类型
         value: undefined,
@@ -102,10 +102,10 @@ export const useFormConfig = () => {
       warningTag: { // 警情标签
         value: undefined,
         back: false,
-        type: 'select-multiple',
+        type: 'select-nodes',
         label: '警情标签',
         options: 'warningTag',
-        fieldNames: { value: 'boFireTagId', label: 'tagName' },
+        fieldNames: { value: 'value', label: 'label' },
       },
       createOrgId: { // 录入单位
         value: [],
@@ -171,16 +171,19 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '出动队伍数',
+        numType: 'digit',
       },
       dispatchNumMin: { // 作战人员数
         value: ['', ''],
         type: 'input-range',
         label: '作战人员数',
+        numType: 'digit',
       },
       dispatchTruckMin: { // 作战车辆数
         value: ['', ''],
         type: 'input-range',
         label: '作战车辆数',
+        numType: 'digit',
       },
       isHeadquarters: { // 全勤指挥部出动
         value: '',
@@ -212,23 +215,24 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '指挥部出动数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       dealMinStart: { // 警情处置时长（分钟）
         value: ['', ''],
         type: 'input-range',
         label: '警情处置时长（分钟）',
       },
-      areaDutyGroup: { // 火灾调查单位
-        value: [],
-        back: false,
-        type: 'select-org',
-        label: '火灾调查单位',
-        labelWidth: '104px',
-        single: false,
-        selectLeaf: false,
-        headersDisabled: true,
-        params: { permission: true }
-      },
+      // areaDutyGroup: { // 火灾调查单位
+      //   value: [],
+      //   back: false,
+      //   type: 'select-org',
+      //   label: '火灾调查单位',
+      //   labelWidth: '104px',
+      //   single: false,
+      //   selectLeaf: false,
+      //   headersDisabled: true,
+      //   params: { permission: true }
+      // },
       dutyGroup: { // 责任队站
         value: [],
         back: false,
@@ -312,6 +316,8 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '气温',
+        min: -100,
+        max: 100,
       },
       weather: { // 天气
         value: undefined,
@@ -342,6 +348,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '现场被困人数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       // isPublicFireHydrant: { // 是否采用公共消防栓供水
       //   value: '',
@@ -544,6 +551,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥员人数',
+        numType: 'digit',
       },
       headPersonType: { // 带队指挥员职务
         value: undefined,
@@ -572,6 +580,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '消防员人数',
+        numType: 'digit',
       },
       isDispatchTruck: { // 是否有车辆出动
         value: '',
@@ -599,27 +608,32 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '车辆数',
+        numType: 'digit',
       },
       fireBoatNumMin: { // 艇数
         value: ['', ''],
         type: 'input-range',
         label: '艇数',
+        numType: 'digit',
       },
       fireAirplaneNumMin: { // 消防直升机数
         value: ['', ''],
         type: 'input-range',
         label: '消防直升机数',
         labelWidth: '104px',
+        numType: 'digit',
       },
       rescueDogNumMin: { // 搜救犬数
         value: ['', ''],
         type: 'input-range',
         label: '搜救犬数',
+        numType: 'digit',
       },
       uavMin: { // 无人机数
         value: ['', ''],
         type: 'input-range',
         label: '无人机数',
+        numType: 'digit',
       },
     },
     dispatchCasualty: {
@@ -635,11 +649,13 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '死亡人数',
+        numType: 'digit',
       },
       injuryCountMin: { // 受伤人数
         value: ['', ''],
         type: 'input-range',
         label: '受伤人数',
+        numType: 'digit',
       },
       name: { // 姓名
         value: '',
@@ -678,6 +694,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '年龄',
+        numType: 'digit',
       },
       rescueRank: { // 消防救援衔
         value: undefined,
@@ -720,21 +737,38 @@ export const useFormConfig = () => {
         options: 'protectDevice',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      injuryReason: { // 伤亡原因
+      injuryReason: { // 受伤原因
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '伤亡原因',
+        label: '受伤原因',
         options: 'injuryReason',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      injuryPart: { // 受伤/致命部位
+      deathReason: { // 死亡原因
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '受伤/致命部位',
+        label: '死亡原因',
+        options: 'deathReason',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      injuryPart: { // 受伤部位
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '受伤部位',
         labelWidth: '112px',
         options: 'injuryPart',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      deathPart: { // 致命部位
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '致命部位',
+        labelWidth: '112px',
+        options: 'deathPart',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       isInstantDeath: { // 是否当场死亡
@@ -751,26 +785,31 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '抢救（人）',
+        numType: 'digit',
       },
       surviveNumMin: { // 生还（人）
         value: ['', ''],
         type: 'input-range',
         label: '生还（人）',
+        numType: 'digit',
       },
       deathNumMin: { // 死亡（人）
         value: ['', ''],
         type: 'input-range',
         label: '死亡（人）',
+        numType: 'digit',
       },
       evacuateNumMin: { // 疏散（人）
         value: ['', ''],
         type: 'input-range',
         label: '疏散（人）',
+        numType: 'digit',
       },
       transferNumMin: { // 转移（人）
         value: ['', ''],
         type: 'input-range',
         label: '转移（人）',
+        numType: 'digit',
       },
       emergencyNumMin: { // 抢救财产价值（元）
         value: ['', ''],
@@ -851,6 +890,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥人数',
+        numType: 'digit',
       },
       headCarName: { // 指挥车辆名称
         value: undefined,
@@ -863,6 +903,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '指挥车辆数',
+        numType: 'digit',
       },
       headTimeMin: { // 指挥时长（小时）
         value: ['', ''],
@@ -1120,6 +1161,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '引起火灾人员年龄',
         labelWidth: '130px',
+        numType: 'digit',
       },
       schooling: { // 受教育程度
         value: undefined,
@@ -1173,21 +1215,25 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '死亡人数',
+        numType: 'digit',
       },
       injuryCountMin: { // 受伤人数
         value: ['', ''],
         type: 'input-range',
         label: '受伤人数',
+        numType: 'digit',
       },
       zsCountMin: { // 重伤人数
         value: ['', ''],
         type: 'input-range',
         label: '重伤人数',
+        numType: 'digit',
       },
       qsCountMin: { // 轻伤人数
         value: ['', ''],
         type: 'input-range',
         label: '轻伤人数',
+        numType: 'digit',
       },
       name: { // 姓名
         value: '',
@@ -1226,6 +1272,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '年龄',
+        numType: 'digit',
       },
       injurySource: { // 人员来源
         value: undefined,
@@ -1365,6 +1412,7 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '受灾户数（户）',
         labelWidth: '124px',
+        numType: 'digit',
       },
     },
     fireVehicle: {
@@ -1459,16 +1507,19 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '建筑总楼层',
+        numType: 'digit',
       },
       fireFloorMin: { // 失火楼层
         value: ['', ''],
         type: 'input-range',
         label: '失火楼层',
+        numType: 'digit',
       },
       housingLifeMin: { // 房龄（年）
         value: ['', ''],
         type: 'input-range',
         label: '房龄（年）',
+        numType: 'digit',
       },
       buildUse: { // 建筑使用用途
         value: undefined,
@@ -1562,7 +1613,7 @@ export const useFormConfig = () => {
       compartmentAreaMin: { // 分区面积（m2）
         value: ['', ''],
         type: 'input-range',
-        label: '建议处理人数（人）',
+        label: '分区面积（平方米）',
         labelWidth: '140px',
       },
       fireSeparation: { // 防火间距
@@ -1574,7 +1625,7 @@ export const useFormConfig = () => {
       separationMeterMin: { // 间距（m2）
         value: ['', ''],
         type: 'input-range',
-        label: '建议处理人数（人）',
+        label: '间距（米）',
         labelWidth: '140px',
       },
       escapeRoute: { // 疏散通道
@@ -1609,12 +1660,14 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '追究人数（人）',
         labelWidth: '124px',
+        numType: 'digit',
       },
       suggestDealNumMin: { // 建议处理人数（人）
         value: ['', ''],
         type: 'input-range',
         label: '建议处理人数（人）',
         labelWidth: '140px',
+        numType: 'digit',
       },
       firePenalty: { // 火灾处罚情况-是否立案
         value: undefined,
@@ -1710,9 +1763,9 @@ export const useFormConfig = () => {
         personNumMax: policeInvest.personNumMin.value?.[1],
         dealMinStart: policeInvest.dealMinStart.value?.[0],
         dealMinEnd: policeInvest.dealMinStart.value?.[1],
-        areaDutyGroup: policeInvest.areaDutyGroup.value?.map(item => item.organizationid)?.join(','),
-        areaDutyGroupText: policeInvest.areaDutyGroup.value?.map(item => item.name)?.join(','),
-        areaDutyGroupNon: policeInvest.areaDutyGroup.back,
+        // areaDutyGroup: policeInvest.areaDutyGroup.value?.map(item => item.organizationid)?.join(','),
+        // areaDutyGroupText: policeInvest.areaDutyGroup.value?.map(item => item.name)?.join(','),
+        // areaDutyGroupNon: policeInvest.areaDutyGroup.back,
         dutyGroup: policeInvest.dutyGroup.value?.map(item => item.organizationid)?.join(','),
         dutyGroupText: policeInvest.dutyGroup.value?.map(item => item.name)?.join(','),
         dutyGroupNon: policeInvest.dutyGroup.back,
@@ -1866,8 +1919,12 @@ export const useFormConfig = () => {
         protectDeviceNon: dispatchCasualty.protectDevice.back,
         injuryReason: dispatchCasualty.injuryReason.value?.join(','),
         injuryReasonNon: dispatchCasualty.injuryReason.back,
+        deathReason: dispatchCasualty.deathReason.value?.join(','),
+        deathReasonNon: dispatchCasualty.deathReason.back,
         injuryPart: dispatchCasualty.injuryPart.value?.join(','),
         injuryPartNon: dispatchCasualty.injuryPart.back,
+        deathPart: dispatchCasualty.deathPart.value?.join(','),
+        deathPartNon: dispatchCasualty.deathPart.back,
         isInstantDeath: dispatchCasualty.isInstantDeath.value,
         // 出动填报-战斗信息
         rescueNumMin: dispatchBattle.rescueNumMin.value?.[0],
@@ -2120,10 +2177,7 @@ export const useFormConfig = () => {
   }
 
   const returnNumValue = (min, max) => {
-    if (!min || !max) {
-      return []
-    }
-    return [Number(min), Number(max)]
+    return [min === '' ? '' : Number(min), max === '' ? '' : Number(max)]
   }
 
   const returnHourValue = (start, end) => {
@@ -2154,16 +2208,16 @@ export const useFormConfig = () => {
     if (form.value.policeBase.statisticRangeHoliday.value) {
       form.value.policeBase.statisticRangeHoliday.show = '1'
     }
-    else if (form.value.policeBase.statisticRangeSeasonMin.value) {
+    else if (form.value.policeBase.statisticRangeSeasonMin.value?.[0] || form.value.policeBase.statisticRangeSeasonMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '2'
     }
-    else if (form.value.policeBase.statisticRangeMonthMin.value) {
+    else if (form.value.policeBase.statisticRangeMonthMin.value?.[0] || form.value.policeBase.statisticRangeMonthMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '3'
     }
-    else if (form.value.policeBase.statisticRangeDayMin.value) {
+    else if (form.value.policeBase.statisticRangeDayMin.value?.[0] || form.value.policeBase.statisticRangeDayMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '4'
     }
-    else if (form.value.policeBase.statisticRangeHourMin.value) {
+    else if (form.value.policeBase.statisticRangeHourMin.value?.[0] || form.value.policeBase.statisticRangeHourMin.value?.[1]) {
       form.value.policeBase.statisticRangeHoliday.show = '5'
     }
     form.value.policeBase.areaGroup.value = comprehensiveWarningQueryReq.areaGroup
@@ -2240,13 +2294,13 @@ export const useFormConfig = () => {
     form.value.policeInvest.fireHead.back = comprehensiveWarningQueryReq.fireHeadNon === 'true'
     form.value.policeInvest.personNumMin.value = returnNumValue(comprehensiveWarningQueryReq.personNumMin, comprehensiveWarningQueryReq.personNumMax)
     form.value.policeInvest.dealMinStart.value = returnNumValue(comprehensiveWarningQueryReq.dealMinStart, comprehensiveWarningQueryReq.dealMinEnd)
-    form.value.policeInvest.areaDutyGroup.value = comprehensiveWarningQueryReq.areaDutyGroup
-      ? generateByKeyValue(comprehensiveWarningQueryReq.areaDutyGroupText, comprehensiveWarningQueryReq.areaDutyGroup, {
-        key: 'name',
-        value: 'organizationid',
-      }, 'Number')
-      : []
-    form.value.policeInvest.areaDutyGroup.back = comprehensiveWarningQueryReq.areaDutyGroupNon === 'true'
+    // form.value.policeInvest.areaDutyGroup.value = comprehensiveWarningQueryReq.areaDutyGroup
+    //   ? generateByKeyValue(comprehensiveWarningQueryReq.areaDutyGroupText, comprehensiveWarningQueryReq.areaDutyGroup, {
+    //     key: 'name',
+    //     value: 'organizationid',
+    //   }, 'Number')
+    //   : []
+    // form.value.policeInvest.areaDutyGroup.back = comprehensiveWarningQueryReq.areaDutyGroupNon === 'true'
     form.value.policeInvest.dutyGroup.value = comprehensiveWarningQueryReq.dutyGroup
       ? generateByKeyValue(comprehensiveWarningQueryReq.dutyGroupText, comprehensiveWarningQueryReq.dutyGroup, {
         key: 'name',
@@ -2406,8 +2460,12 @@ export const useFormConfig = () => {
     form.value.dispatchCasualty.protectDevice.back = comprehensiveDispatchQueryReq.protectDeviceNon === 'true'
     form.value.dispatchCasualty.injuryReason.value = comprehensiveDispatchQueryReq.injuryReason?.split(',')
     form.value.dispatchCasualty.injuryReason.back = comprehensiveDispatchQueryReq.injuryReasonNon === 'true'
+    form.value.dispatchCasualty.deathReason.value = comprehensiveDispatchQueryReq.deathReason?.split(',')
+    form.value.dispatchCasualty.deathReason.back = comprehensiveDispatchQueryReq.deathReasonNon === 'true'
     form.value.dispatchCasualty.injuryPart.value = comprehensiveDispatchQueryReq.injuryPart?.split(',')
     form.value.dispatchCasualty.injuryPart.back = comprehensiveDispatchQueryReq.injuryPartNon === 'true'
+    form.value.dispatchCasualty.deathPart.value = comprehensiveDispatchQueryReq.deathPart?.split(',')
+    form.value.dispatchCasualty.deathPart.back = comprehensiveDispatchQueryReq.deathPartNon === 'true'
     form.value.dispatchCasualty.isInstantDeath.value = comprehensiveDispatchQueryReq.isInstantDeath
     // 出动填报-战斗信息
     form.value.dispatchBattle.rescueNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.rescueNumMin, comprehensiveDispatchQueryReq.rescueNumMax)
@@ -2452,25 +2510,25 @@ export const useFormConfig = () => {
     form.value.dispatchHeaderMessage.headTimeMin.value = returnNumValue(comprehensiveDispatchHeadQueryReq.headTimeMin, comprehensiveDispatchHeadQueryReq.headTimeMax)
     // 火灾信息-基本信息
     form.value.fireBase.fireDate.value = returnDateValue(comprehensiveFireQueryReq.fireDateStart, comprehensiveFireQueryReq.fireDateEnd)
-    form.value.policeBase.statisticRangeSeasonMin.value = [comprehensiveFireQueryReq.statisticRangeSeasonMin, comprehensiveFireQueryReq.statisticRangeSeasonMax]
-    form.value.policeBase.statisticRangeMonthMin.value = [comprehensiveFireQueryReq.statisticRangeMonthMin, comprehensiveFireQueryReq.statisticRangeMonthMax]
-    form.value.policeBase.statisticRangeDayMin.value = [comprehensiveFireQueryReq.statisticRangeDayMin, comprehensiveFireQueryReq.statisticRangeDayMax]
-    form.value.policeBase.statisticRangeHourMin.value = returnHourValue(comprehensiveFireQueryReq.statisticRangeHourMin, comprehensiveFireQueryReq.statisticRangeHourMax)
-    form.value.policeBase.statisticRangeHoliday.value = comprehensiveFireQueryReq.statisticRangeHoliday
-    if (form.value.policeBase.statisticRangeHoliday.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '1'
+    form.value.fireBase.statisticRangeSeasonMin.value = [comprehensiveFireQueryReq.statisticRangeSeasonMin, comprehensiveFireQueryReq.statisticRangeSeasonMax]
+    form.value.fireBase.statisticRangeMonthMin.value = [comprehensiveFireQueryReq.statisticRangeMonthMin, comprehensiveFireQueryReq.statisticRangeMonthMax]
+    form.value.fireBase.statisticRangeDayMin.value = [comprehensiveFireQueryReq.statisticRangeDayMin, comprehensiveFireQueryReq.statisticRangeDayMax]
+    form.value.fireBase.statisticRangeHourMin.value = returnHourValue(comprehensiveFireQueryReq.statisticRangeHourMin, comprehensiveFireQueryReq.statisticRangeHourMax)
+    form.value.fireBase.statisticRangeHoliday.value = comprehensiveFireQueryReq.statisticRangeHoliday
+    if (form.value.fireBase.statisticRangeHoliday.value) {
+      form.value.fireBase.statisticRangeHoliday.show = '1'
     }
-    else if (form.value.policeBase.statisticRangeSeasonMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '2'
+    else if (form.value.fireBase.statisticRangeSeasonMin.value?.[0] || form.value.fireBase.statisticRangeSeasonMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '2'
     }
-    else if (form.value.policeBase.statisticRangeMonthMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '3'
+    else if (form.value.fireBase.statisticRangeMonthMin.value?.[0] || form.value.fireBase.statisticRangeMonthMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '3'
     }
-    else if (form.value.policeBase.statisticRangeDayMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '4'
+    else if (form.value.fireBase.statisticRangeDayMin.value?.[0] || form.value.fireBase.statisticRangeDayMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '4'
     }
-    else if (form.value.policeBase.statisticRangeHourMin.value) {
-      form.value.policeBase.statisticRangeHoliday.show = '5'
+    else if (form.value.fireBase.statisticRangeHourMin.value?.[0] || form.value.fireBase.statisticRangeHourMin.value?.[1]) {
+      form.value.fireBase.statisticRangeHoliday.show = '5'
     }
     form.value.fireBase.fireDirection.value = comprehensiveFireQueryReq.fireDirection
     form.value.fireBase.areaDutyGroupFire.value = comprehensiveFireQueryReq.areaDutyGroupFire

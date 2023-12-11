@@ -36,7 +36,7 @@ install&build-job:
     - DATE=`date "+%Y%m%d%H%M%S"`
     - TIMESTAMP=`date "+%s"`
     - sed -i 's|window.__appInfo = {}|window.__appInfo = {pipeLineId:'$CI_PIPELINE_ID',timestamp:'$TIMESTAMP',date:'$DATE'}|g' ./public/index.html
-    - npm run build
+    - npm run build:test
     - if [[ -n "$CI_COMMIT_TAG" ]]; then
       FIREALARMAPKNAME="fire-alarm.apk";
       FIREALARMAPK="../fire-alarm.apk";

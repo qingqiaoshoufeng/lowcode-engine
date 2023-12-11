@@ -62,9 +62,18 @@ const onDispatchTruck = (value, items) => {
   checkDispatchTruckList(form.value);
 
   if (form.value.investForce.isResponseTruck.value === "1" && showMidwayReturn.value) {
-    form.value.investForce.midwayCar.value = form.value.investForce.dispatchTruckList.value;
+    form.value.investForce.isReturnTruck.value = '1'
+    form.value.investForce.midwayCar.value = form.value.investForce.dispatchTruckList.value?.map((item) => {
+      return {
+        ...item,
+        key: item.boFireTruckId,
+        value: item.boFireTruckId,
+        label: item.truckNumber,
+      }
+    });
   } else {
     form.value.investForce.midwayCar.value = undefined;
+    form.value.investForce.isReturnTruck.value = '2'
   }
 
   OnCarNum()
@@ -139,6 +148,8 @@ const OnCarNum = () => {
           />
         </template>
       </SelectCar>
+    </template>
+    <template v-if="form.investForce.isResponseTruck.value === '1' && !showMidwayReturn">
       <van-field
         name="investForce.isReturnTruck.value"
         label="是否有车辆中途返回："
@@ -148,7 +159,7 @@ const OnCarNum = () => {
       >
         <template #input>
           <van-radio-group
-            v-model:value="form.investForce.isReturnTruck.value"
+            v-model="form.investForce.isReturnTruck.value"
             v-preview-text="showPreview"
             :disabled="form.investForce.isReturnTruck.disabled"
             icon-size="16px"
@@ -170,7 +181,7 @@ const OnCarNum = () => {
         </template>
       </van-field>
     </template>
-    <template v-if="form.investForce.isResponseTruck.value === '1' && form.investForce.isReturnTruck.value === '1'">
+    <template v-if="form.investForce.isReturnTruck.value === '1' && !showMidwayReturn">
       <SelectMultiple
         v-model:value="form.investForce.midwayCar.value"
         :showPreview="showPreview"
@@ -265,7 +276,7 @@ const OnCarNum = () => {
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="指挥员："
+          label="消防员："
           remark-field="firemen"
           field-module="investForce"
           :exist-data="fieldExist?.firemen"

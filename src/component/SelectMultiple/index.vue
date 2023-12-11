@@ -6,6 +6,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  nodes: {
+    type: Array,
+    default: () => [],
+  },
   title: {
     type: String,
     default: "",
@@ -40,7 +44,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:value", "change"]);
+const emit = defineEmits(["update:value", "update:nodes", "change"]);
 
 const attrs = useAttrs();
 
@@ -54,10 +58,14 @@ const selectText = ref("");
 
 const checkboxRefs = ref([]);
 
-watch(() => props.value, (val) => {
+watch(() => [props.value, props.nodes], (val) => {
   if (props.value?.length > 0) {
     selectItem.value = props.options?.filter((item) => props.value.includes(item[props.fieldNames.value]));
     selectValue.value = props.value;
+    selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])?.join(",");
+  } else if (props.nodes?.length > 0) {
+    selectItem.value = props.nodes
+    selectValue.value = props.nodes?.map(item => item[props.fieldNames.value])?.join(",");
     selectText.value = selectItem.value?.map(item => item[props.fieldNames.label])?.join(",");
   } else {
     selectItem.value = []
@@ -79,6 +87,7 @@ const handleOk = () => {
     ?.map((item) => item[props.fieldNames.label])
     ?.join(",");
   emit("update:value", selectValue.value);
+  emit("update:nodes", selectItem.value);
   emit("change", selectValue.value, selectItem.value);
   selectVisible.value = false;
 };

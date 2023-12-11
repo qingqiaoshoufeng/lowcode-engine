@@ -21,6 +21,8 @@ const localFireInfoId = inject('localFireInfoId')
 
 const relevanceDraft = inject('relevanceDraft')
 
+const showPreview = inject('showPreview')
+
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
@@ -111,12 +113,43 @@ onMounted(() => {
 <template>
   <van-cell-group class="rootform1">
     <div :gutter="gutter">
+      <div :span="8">
+        <van-field
+          name="firePhoto.isAllBack.value"
+          label="队伍是否全部中返："
+          :required="isRequired"
+          :rules="form.firePhoto.isAllBack.rules"
+        >
+          <template #input>
+            <van-radio-group 
+              id="isAllBack"
+              v-model="form.firePhoto.isAllBack.value"
+              v-preview-text="showPreview"
+              direction="horizontal"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="队伍是否全部中返："
+              remark-field="isAllBack"
+              field-module="firePhoto"
+              :exist-data="fieldExist?.isAllBack"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+      </div>
+    </div>
+    <div :gutter="gutter">
       <div :span="24">
         <van-cell title="火灾照片：" :required="isRequired" class="item-cell">
             <van-field
               name="firePhoto.photos.value"
-              :rules="form.firePhoto.photos.rules"
-              :required="isRequired"
+              :rules="form.firePhoto.isAllBack.value === '1' ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
+              :required="form.firePhoto.isAllBack.value === '1' ? false : isRequired"
               label="火灾照片"
             >
               <template #input>
