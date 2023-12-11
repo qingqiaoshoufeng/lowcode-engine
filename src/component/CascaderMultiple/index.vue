@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
-import { findNodeFromTreeById, findParentNodes, traverseTree, treeToArray } from '@/utils/tools.js';
+import { findNodeFromTreeById, findParentNodes, treeToArray } from '@/utils/tools.js';
 
 const props = defineProps({
   value: {
@@ -113,28 +113,16 @@ watch(() => props.value, (newVal, oldVal) => {
 const getItem = (item) => {
   let isIn = false;
   if (selectValue.value?.length > 0) {
-    // const nodes = findParentNodes({ boDictId: -1, children: props.options }, item?.boDictId)?.filter(i => i.boDictId !== -1)
     selectValue.value.forEach(temp => {
       if (temp?.join(',')?.endsWith(item.boDictId)) {
         isIn = true;
       }
-      // nodes?.forEach(node => {
-      //   if (temp?.join(',')?.endsWith(node.boDictId)) {
-      //     isIn = true;
-      //   }
-      // })
     })
   } else if (props.value?.length > 0) {
-    // const nodes = findParentNodes({ boDictId: -1, children: props.options }, item?.boDictId)?.filter(i => i.boDictId !== -1)
     props.value.forEach(temp => {
       if (temp?.join(',')?.endsWith(item.boDictId)) {
         isIn = true;
       }
-      // nodes?.forEach(node => {
-      //   if (temp?.join(',')?.endsWith(node.boDictId)) {
-      //     isIn = true;
-      //   }
-      // })
     })
   }
   return {
@@ -196,10 +184,7 @@ const getAllChildren = (treeData, nodeId) => {
 
 const handleCheck = (item) => {
   // 单选
-  // if (props.single && item.checked) {
-  // }
-  // 多选
-  if (item.checked) {
+  if (props.single && item.checked) {
     const nodes = findParentNodes({ boDictId: -1, children: props.options }, item.boDictId)?.filter(i => i.boDictId !== -1)
     let total = [];
     if (nodes?.length > 0) {
@@ -207,45 +192,28 @@ const handleCheck = (item) => {
     } else {
       total = [item];
     }
-    selectItem.value.push(total);
-    selectValue.value.push(total?.map(i => i.boDictId));
-    selectText.value.push(total?.map(i => i.dictName));
-  } else {
-    selectValue.value = selectValue.value.filter((temp) => {
-      if (temp?.join(',')?.endsWith(item.boDictId)) {
-        return false;
-      }
-      return true;
-    });
-    selectText.value = selectText.value.filter((temp) => {
-      if (temp?.join(',')?.endsWith(item.dictName)) {
-        return false;
-      }
-      return true
-    });
-    selectItem.value = selectItem.value.filter((temp) => {
-      if (temp?.map(i => i.boDictId)?.join(',')?.endsWith(item.boDictId)) {
-        return false;
-      }
-      return true;
-    });
-  }
-  if (item.checked && item.hasChildren) {
-    const child = getAllChildren(props.options, item.boDictId)
-    child?.forEach(temp => {
-      const nodes = findParentNodes({ boDictId: -1, children: props.options }, temp.boDictId)?.filter(i => i.boDictId !== -1)
-      let total = [];
-      if (nodes?.length > 0) {
-        total = [...nodes, temp];
-      } else {
-        total = [temp];
-      }
-      if (!selectValue.value?.map(i => i.boDictId)?.includes(total?.map(i => i.boDictId))) {
-        selectItem.value.push(total);
-        selectValue.value.push(total?.map(i => i.boDictId));
-        selectText.value.push(total?.map(i => i.dictName));
-      }
+    selectItem.value = [total];
+    selectValue.value = [total?.map(i => i.boDictId)];
+    selectText.value = [total?.map(i => i.dictName)];
+    treeData.value.forEach(i => {
+      i.forEach(node => {
+        if (node.boDictId !== item.boDictId) {
+          node.checked = false
+        }
+      })
     })
+    return
+  } else if (props.single && !item.checked) {
+    selectValue.value = selectValue.value.filter((temp) => !temp?.join(',')?.endsWith(item.boDictId));
+    selectText.value = selectText.value.filter((temp) => !temp?.join(',')?.endsWith(item.boDictId));
+    selectItem.value = selectItem.value.filter((temp) => {
+      if (!temp?.join(',')?.endsWith(item.boDictId)) {
+        return true
+      }
+      return false
+    });
+    item.checked = false
+    return
   }
 };
 
@@ -346,7 +314,6 @@ defineOptions({
                 >
                   <div class="item-title">{{ item.title }}</div>
                   <van-checkbox
-                    v-if="showCheck(item)"
                     v-model="item.checked"
                     @change="handleCheck(item)"
                     @click.stop

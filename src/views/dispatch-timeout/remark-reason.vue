@@ -71,7 +71,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .remark-reason {
   margin-right: 20px;
 }

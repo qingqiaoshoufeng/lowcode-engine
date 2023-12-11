@@ -251,6 +251,7 @@ defineExpose({
           <CascaderMultiple
             v-model:value="form.valueOne"
             :readonly="true"
+            :single="true"
             :options="options[form.dict]"
             :field-names="form.field ? form.field : { value: 'boDictId', label: 'dictName' }"
             :label="`${form.label}：`"

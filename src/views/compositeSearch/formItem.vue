@@ -119,6 +119,7 @@ const options = inject('options');
       <CascaderMultiple
         v-model:value="fieldObj.value"
         :readonly="true"
+        :single="true"
         :options="options[fieldObj.options]"
         :field-names="fieldObj.fieldNames ? fieldObj.fieldNames : { value: 'boDictId', label: 'dictName' }"
         :label="`${fieldObj.label}：`"
