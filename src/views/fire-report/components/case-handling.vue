@@ -66,6 +66,7 @@ const handleDeletePerson = (index) => {
           name="caseHandling.handleTwoCase.value"
           label="两案处理情况-是否立案："
           :required="isRequired"
+          class="field-radio"
           :rules="form.caseHandling.handleTwoCase.rules"
         >
           <template #input>
@@ -151,6 +152,7 @@ const handleDeletePerson = (index) => {
           label="火灾处罚情况-是否立案："
           :rules="form.caseHandling.firePenalty.rules"
           :required="isRequired"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 

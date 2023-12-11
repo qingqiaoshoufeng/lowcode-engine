@@ -251,6 +251,10 @@ export default {
   // top: -28px;
   // right: -8px;
   pointer-events: all;
+  display: inline-block;
+  .label{
+    display: inline-block;
+  }
   img{
     position: absolute;
     right: 0;

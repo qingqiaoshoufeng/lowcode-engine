@@ -856,6 +856,7 @@ const onFireLevel = () => {
           label="是否属于劳动密集型：" 
           :rules="form.basicInfo.isLaborIntensive.rules"
           :required="isRequired"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group class="field-radio" v-preview-text="showPreview" v-model="form.basicInfo.isLaborIntensive.value" direction="horizontal">
@@ -1002,6 +1003,7 @@ const onFireLevel = () => {
           label="是否改装：" 
           :rules="form.basicInfo.isRepack.rules"
           :required="isRequired"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 
@@ -1155,6 +1157,7 @@ const onFireLevel = () => {
           label="是否属于扶贫安置房："
           :rules="form.basicInfo.isPoorHouse.rules"
           :required="isRequired"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 
@@ -1182,7 +1185,9 @@ const onFireLevel = () => {
           name="basicInfo.isChangeUseType.value"  
           label="是否变更使用性质："
           :required="isRequired"
-          :rules="form.basicInfo.isChangeUseType.rules" >
+          :rules="form.basicInfo.isChangeUseType.rules" 
+          class="field-radio"
+        >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -1472,6 +1477,7 @@ const onFireLevel = () => {
             label="是否涉及生产经营："
             :required="isRequired"
             :rules="form.basicInfo.isOperating.rules"
+            class="field-radio"
           >
             <template #input>
               <van-radio-group 
@@ -1626,7 +1632,9 @@ const onFireLevel = () => {
         <van-field 
           name="basicInfo.isInsurance.value" 
           label="是否保险：" 
-          :rules="form.basicInfo.isInsurance.rules">
+          :rules="form.basicInfo.isInsurance.rules"
+          class="field-radio"
+        >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -1681,7 +1689,7 @@ const onFireLevel = () => {
     
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
-        <van-field name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
+        <van-field class="field-radio" name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -1795,6 +1803,7 @@ const onFireLevel = () => {
         <van-field 
           name="basicInfo.isSafetyAccident.value"   
           label="是否属于安全生产事故："
+          class="field-radio"
           :required="isRequired"
           :rules="form.basicInfo.isSafetyAccident.rules">
           <template #input>

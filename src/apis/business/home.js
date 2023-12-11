@@ -46,9 +46,9 @@ export function getNoticeDetail(params) {
 }
 
 // 下载附件
-export function downloadAttachmentFile({ attachmentId }) {
-  return axios.get(`/acws/rest/attachments/${attachmentId}`)
-}
+// export function downloadAttachmentFile({ attachmentId }) {
+//   return axios.get(`/acws/rest/attachments/${attachmentId}`)
+// }
 // 参展形式
 
 // export function downloadAttachmentFile({ attachmentId }) {

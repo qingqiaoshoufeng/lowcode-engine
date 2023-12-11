@@ -214,7 +214,9 @@ const bigInjured = computed(() => {
       <div :span="8">
         <van-field name="casualtyWar.isInjured.value" label="是否有人员受伤："
           :required="isRequired"
-          :rules="form.casualtyWar.isInjured.rules" >
+          :rules="form.casualtyWar.isInjured.rules" 
+          class="field-radio"
+        >
           <template #input>
             <van-radio-group 
               class="field-radio"
@@ -801,6 +803,7 @@ const bigInjured = computed(() => {
           label="是否有人员死亡："
           :rules="form.casualtyWar.isDead.rules"
           :required="isRequired"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 
