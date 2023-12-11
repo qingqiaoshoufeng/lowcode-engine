@@ -188,6 +188,7 @@ const onFireShutterStart = () => {
           label="是否安装消防设施："
           :required="isRequired"
           :rules="form.fireFacilities.isFirefightFacility.rules"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 

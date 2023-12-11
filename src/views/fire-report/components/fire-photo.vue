@@ -119,6 +119,7 @@ onMounted(() => {
           label="队伍是否全部中返："
           :required="isRequired"
           :rules="form.firePhoto.isAllBack.rules"
+          class="field-radio"
         >
           <template #input>
             <van-radio-group 
