@@ -32,23 +32,21 @@ const handleOut = () => {
     })
   })
 }
-  
 </script>
     
 <style scoped lang="scss">
-.mine{
-    background-image: url('~@/assets/images/mine-bg.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: 0% 0%;
-    overflow: hidden;
-    background-color: #F6F7F8;
-    padding: 82px 16px 0px;
-    height: 100%;
-    .mt9{
-        margin-top: 9px;
-    }
-
+.mine {
+  background-image: url('~@/assets/images/home-bg.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  overflow: hidden;
+  background-color: #F6F7F8;
+  padding: 82px 16px 0px;
+  height: 100%;
+  .mt9 {
+      margin-top: 9px;
+  }
 }
 </style>
     

@@ -1,6 +1,6 @@
 <template>
     <div class="info_card" @click="handleEnter">
-        <img class="avatar" v-if="info?.img" :src="info?.img">
+        <img class="avatar" v-if="avatarUrl" :src="avatarUrl">
         <img class="avatar" v-else src="@/assets/images/avatar.png">
         <div class="info">
             <div class="top">
@@ -16,8 +16,10 @@
   </template>
     
 <script setup>
-import {ref,computed} from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import store from '@/store/index.js'
+import dayjs from 'dayjs'
+import { getAttachmentFile } from '@/apis/index.js';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -25,6 +27,8 @@ const router = useRouter();
 const info = computed(()=>{
   return store.state.userInfo.userInfo.USERMESSAGE
 })
+
+const avatarUrl = ref('')
  
 const handleEnter = () => {
   router.push({
@@ -37,6 +41,32 @@ const handleEdit = () => {
     path: '/personInfoEdit',
   })
 }
+
+const getAvatar = () => {
+  getAttachmentFile({
+    businessObjId: info.value.userId,
+    businessType: 'userImage',
+  }).then((res) => {
+    if (res.data.length > 0) {
+      const imgs = res.data.map(item => {
+        return {
+          ...item,
+          createDate: dayjs(item.createDate)?.valueOf(),
+        }
+      }).sort((a, b) => {
+        return b.createDate - a.createDate
+      })
+      avatarUrl.value = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`
+    }
+    else {
+      avatarUrl.value = ''
+    }
+  })
+}
+
+onMounted(() => {
+  getAvatar()
+})
 </script>
     
 <style scoped lang="scss">
