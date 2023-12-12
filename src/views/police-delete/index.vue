@@ -128,7 +128,7 @@ onMounted(() => {
   <div class="police-delete-list">
     <ProList
       ref="proListRef"
-      title="警情管理"
+      title="作废警情"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getDeleteFireWarningLists"
       rowKey="boFireWarningId"
@@ -191,7 +191,6 @@ onMounted(() => {
             <div style="color: #929398">备注：</div>
             <div>{{ record.cancelRemark }}</div>
           </div>
-          <div class="item-line" />
         </div>
       </template>
     </ProList>

@@ -201,14 +201,13 @@ export const useFormConfig = () => {
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireHead: { // 指挥部名称
-        value: [],
+        value: undefined,
         back: false,
-        type: 'select-org',
+        type: 'select-nodes',
         label: '指挥部名称',
-        single: false,
-        selectLeaf: false,
-        headersDisabled: false,
-        params: {}
+        labelWidth: '112px',
+        options: 'headquarters',
+        fieldNames: { value: 'organizationid', label: 'name' },
       },
       personNumMin: { // 指挥部出动数
         value: ['', ''],
@@ -869,15 +868,13 @@ export const useFormConfig = () => {
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireHead: { // 全勤指挥部名称
-        value: [],
+        value: undefined,
         back: false,
-        type: 'select-org',
+        type: 'select-nodes',
         label: '全勤指挥部名称',
         labelWidth: '112px',
-        single: false,
-        selectLeaf: false,
-        headersDisabled: false,
-        params: {}
+        options: 'headquarters',
+        fieldNames: { value: 'organizationid', label: 'name' },
       },
       groupLeader: { // 指挥人员姓名
         value: undefined,

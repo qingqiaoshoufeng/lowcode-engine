@@ -1,5 +1,8 @@
 <script setup>
 import { watch, ref } from "vue";
+import { useRoute } from 'vue-router';
+import { useRouter } from "vue-router";
+import dayjs from "dayjs";
 
 const props = defineProps({
   title: {
@@ -29,11 +32,32 @@ const props = defineProps({
 
 const emit = defineEmits(['update:visible'])
 
+const route = useRoute();
+
+const router = useRouter();
+
 const loading = ref(false);
 
 const showModal = ref(false);
 
+const currentTime = dayjs().valueOf()
+
+watch(() => [route.path], () => {
+  if (!route.query?.temporary || Number(route.query?.temporary) < currentTime) {
+    showModal.value = false
+    emit('update:visible', showModal.value)
+  }
+}, { immediate: true, deep: true })
+
 watch(() => props.visible, (newValue) => {
+  if (newValue) {
+    router.push({
+      path: route.path,
+      query: {
+        temporary: currentTime,
+      }
+    })
+  }
   showModal.value = newValue;
 });
 
@@ -63,6 +87,7 @@ const onLeftBack = () => {
     props.leftBackFn()
     return
   }
+  router.go(-1)
   showModal.value = false;
   emit('update:visible', showModal.value)
 }
