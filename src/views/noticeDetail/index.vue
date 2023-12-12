@@ -108,7 +108,7 @@ getDetail()
  .bottom{
   position: absolute;
   bottom: 49px;
-  display: flex;
+  // display: flex;
   justify-content: flex-end;
   >div{
     display: flex;
