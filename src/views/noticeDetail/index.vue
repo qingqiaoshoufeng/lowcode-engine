@@ -10,21 +10,56 @@
         <div class="time">{{ dayjs(form.createDate).format('YYYY-MM-DD')}}</div>
       </div>
       <div v-html="form.noticeBody"></div>
-      <div class="bottom">
-        <van-button icon="down" plain  type="primary">下载</van-button>
+      <div class="bottom" >
+        <div v-for="item in form?.attach || []" :key="item.url">
+          <div class="left">
+            <img src="~@/assets/images/filetip.png" alt="">
+            <span>{{ item.name }}</span>
+          </div>
+          <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { getNoticeDetail,updateMessage} from '@/apis/index.js'
+import { getNoticeDetail,updateMessage,getAttachmentFile} from '@/apis/index.js'
 import {ref} from 'vue'
 import dayjs from 'dayjs';
 import {useRoute} from 'vue-router'
+import { Item } from '@castle/ant-design-vue/lib/menu';
 const form = ref({})
 const route = useRoute()
 defineProps()
+
+const downLoad = ({url,name})=>{
+  const link = document.createElement('a')
+  link.style.display = 'none'
+  link.setAttribute('download', `${name}`)
+  link.setAttribute('href', `${url}`)
+  link.click()
+}
+
+const getFIleList = (res)=>{
+  if (res.boUserNoticeId) {
+    getAttachmentFile({
+      businessObjId: res.boUserNoticeId,
+      businessType: 'file',
+    }).then((res) => {
+      debugger;
+      form.value.attach = res.data.map((item) => {
+        return {
+          ...item,
+          uid: item.attachmentId,
+          name: item.attachmentName,
+          status: 'done',
+          url: `${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/attachments/${item.attachmentId}`,
+        }
+      })
+    })
+  }
+}
 const getDetail = ()=>{
   getNoticeDetail({id:route.query.id}).then((res) => {
     if (res) {
@@ -34,6 +69,7 @@ const getDetail = ()=>{
       form.value.noticeBody = res.noticeBody
       updateMessage({id:route.query.id})
     }
+    getFIleList(res)
     return res
   })
 }
@@ -70,9 +106,33 @@ getDetail()
   }
  }
  .bottom{
+  position: absolute;
+  bottom: 49px;
   display: flex;
   justify-content: flex-end;
-  margin-top: 30px;
+  >div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 343px;
+    height: 36px;
+    background: #F6F7F8;
+    border-radius: 4px;
+    margin-top: 6px;
+    padding: 0 13px 0 9px;
+    >div{
+      display:flex;
+      align-items: center;
+      img{
+        margin-right: 5px;
+      }
+    }
+    img{
+      width: 14px;
+      height: 14px;
+    }
+  }
+  // margin-top:
   .van-button{
     width: 92px;
     height: 28px;
