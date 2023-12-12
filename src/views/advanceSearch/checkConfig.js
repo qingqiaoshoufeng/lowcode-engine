@@ -168,10 +168,9 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'fireHead',
     label: '指挥部名称',
-    type: '6',
-    selectLeaf: false,
-    checkStrictly: true,
-    headersDisabled: true,
+    type: '4',
+    dict: 'headquarters',
+    field: { value: 'organizationid', label: 'name' },
   },
   {
     fieldKeyOne: 'dispatchHeadCountMin',
@@ -853,9 +852,9 @@ export const checkBoxs = [
     fieldKeyOne: 'fireHead',
     label: '全勤指挥部名称',
     fireType: '3',
-    type: '1',
-    maxlength: 50,
-    headersDisabled: true,
+    type: '4',
+    dict: 'headquarters',
+    field: { value: 'organizationid', label: 'name' },
   },
   {
     fieldKeyOne: 'groupLeader',

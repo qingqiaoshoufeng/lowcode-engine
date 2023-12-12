@@ -9,6 +9,7 @@ import {
   getFireWarningTag,
   getInputPerson,
   getTruckMsg,
+  getHeaderOrg,
 } from '@/apis/index.js'
 import store from '@/store/index.js'
 
@@ -187,6 +188,12 @@ onMounted(async () => {
           dictName: val.tagName,
         }
       })
+    }
+  })
+  // 获取全勤指挥部
+  getHeaderOrg().then((res) => {
+    if (res) {
+      options.value.headquarters = res
     }
   })
 })

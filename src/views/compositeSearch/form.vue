@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
-import { getFireWarningTag } from '@/apis/index.js';
+import { getFireWarningTag, getHeaderOrg } from '@/apis/index.js';
 import FormItem from './formItem.vue'
 import {
   dispatchInjuryType,
@@ -152,6 +152,12 @@ onMounted(() => {
       options.value.warningTag = res.data?.map(item => {
         return { ...item, label: item.tagName, value: item.boFireTagId }
       })
+    }
+  })
+  // 获取全勤指挥部
+  getHeaderOrg().then((res) => {
+    if (res) {
+      options.value.headquarters = res
     }
   })
 })
