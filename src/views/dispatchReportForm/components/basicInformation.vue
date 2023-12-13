@@ -194,6 +194,7 @@ const onDealSituation = (value, option) => {
       v-if="showFireFighting"
       name="basicInformation.isBlocking.value"
       label="消防通道是否堵塞："
+      label-width="142px"
       :rules="form.basicInformation.isBlocking.rules"
       required
       class="field-radio"
