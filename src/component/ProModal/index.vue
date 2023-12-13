@@ -62,11 +62,13 @@ watch(() => props.visible, (newValue) => {
 });
 
 let handleOkFn = () => {
+  router.go(-1)
   showModal.value = false
   emit('update:visible', showModal.value)
 }
 
 const closeModal = () => {
+  router.go(-1)
   showModal.value = false;
   emit("update:visible", showModal.value);
 };

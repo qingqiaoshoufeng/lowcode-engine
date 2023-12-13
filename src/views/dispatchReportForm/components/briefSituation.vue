@@ -277,7 +277,6 @@ const onDealEndDate = () => {
     <SelectDateTime
       v-model:value="form.basicInformation.dispatchDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="dispatchDate"
@@ -301,7 +300,6 @@ const onDealEndDate = () => {
       v-if="showMidwayReturn"
       v-model:value="form.basicInformation.midwayReturnDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="midwayReturnDate"
@@ -325,7 +323,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.attendanceDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="attendanceDate"
@@ -349,7 +346,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.carryoutDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="carryoutDate"
       title="请选择展开时间"
@@ -371,7 +367,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.waterflowDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="waterflowDate"
       title="请选择出水时间"
@@ -393,7 +388,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice && showMainGroup"
       v-model:value="form.basicInformation.controllingDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="controllingDate"
       title="请选择控制时间"
@@ -415,7 +409,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.washDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="washDate"
       title="请选择洗消时间"
@@ -437,7 +430,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="extinctDate"
@@ -460,7 +452,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="endDate"
@@ -483,7 +474,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.evacuateDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="evacuateDate"
@@ -505,7 +495,6 @@ const onDealEndDate = () => {
     <SelectDateTime
       v-model:value="form.basicInformation.returnDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="returnDate"
@@ -576,7 +565,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && showMainGroup"
       v-model:value="form.basicInformation.dealEndDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="dealEndDate"

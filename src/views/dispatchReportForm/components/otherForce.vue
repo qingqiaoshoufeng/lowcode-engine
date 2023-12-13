@@ -196,6 +196,7 @@ const onHaveVolunteer = (e) => {
         >
           <template v-slot:label="">
             <FieldAnnotation
+              label="艇(艘)："
               remark-field="volunteerList"
               remark-field2="boatNum"
               :remark-field2-id="index"

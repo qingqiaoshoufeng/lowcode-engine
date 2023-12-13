@@ -313,13 +313,12 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="teamEntryTime"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
-            label-width="130px"
+            label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
           >
@@ -468,6 +467,7 @@ watch(
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             label="消防救援衔："
+            label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
           >
@@ -780,13 +780,12 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="teamEntryTime"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
-            label-width="130px"
+            label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
           >
@@ -935,6 +934,7 @@ watch(
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             label="消防救援衔："
+            label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
           >
@@ -1075,7 +1075,6 @@ watch(
           <SelectDateTime
             v-model:value="item.deathDate"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="deathDate"
@@ -1126,6 +1125,7 @@ watch(
           <van-field
             name="casualtyWar.isInstantDeath.value"
             label="是否当场死亡："
+            label-width="108px"
             :rules="form.casualtyWar.isInstantDeath.rules"
             required
             class="field-radio"

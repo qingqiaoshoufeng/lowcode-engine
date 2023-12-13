@@ -68,6 +68,7 @@ defineExpose({
         :readonly="true"
         :options="options.searchParams"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
+        title="请选择查询类型"
         placeholder="请选择查询类型"
         style="width: 100px;"
         @change="handleSearchForm"

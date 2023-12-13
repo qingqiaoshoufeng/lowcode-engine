@@ -173,11 +173,10 @@ watch(() => form.value.deployEquipment, () => {
               @refresh-callback="refreshField"
             />
           </template>
-      </van-field>  
+      </van-field>
       <SelectDateTime
         v-model:value="form.basicInfoHead.dispatchDate.value"
         :show-preview="showPreview"
-        :readonly="showPreview"
         is-link
         required
         name="dispatchDate"
@@ -199,7 +198,6 @@ watch(() => form.value.deployEquipment, () => {
       <SelectDateTime
         v-model:value="form.basicInfoHead.attendanceDate.value"
         :show-preview="showPreview"
-        :readonly="showPreview"
         is-link
         required
         name="attendanceDate"
@@ -221,7 +219,6 @@ watch(() => form.value.deployEquipment, () => {
       <SelectDateTime
         v-model:value="form.basicInfoHead.evacuateDate.value"
         :show-preview="showPreview"
-        :readonly="showPreview"
         is-link
         required
         name="evacuateDate"

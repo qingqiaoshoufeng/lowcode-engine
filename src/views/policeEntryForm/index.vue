@@ -769,7 +769,6 @@ const onWarningOrgname = () => {
       <SelectDateTime
         v-model:value="form.warningDate"
         :showPreview="showPreview"
-        :readonly="showPreview"
         is-link
         required
         name="warningDate"
