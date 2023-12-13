@@ -140,7 +140,6 @@ const onIsCommand = (e) => {
         <SelectSingle
           v-model:value="item.level"
           :showPreview="showPreview"
-          :readonly="true"
           name="level"
           required
           :options="options.level"

@@ -541,7 +541,6 @@ const onDealEndDate = () => {
       v-if="showReturnSlow"
       v-model:value="form.basicInformation.returnLateReason.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="returnLateReason"
       required
       :options="options.returnLateReason"

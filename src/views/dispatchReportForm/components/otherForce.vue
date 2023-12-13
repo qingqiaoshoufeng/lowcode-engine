@@ -87,7 +87,6 @@ const onHaveVolunteer = (e) => {
         <SelectSingle
           v-model:value="item.groupType"
           :showPreview="showPreview"
-          :readonly="true"
           name="groupType"
           required
           :options="options.groupType"
