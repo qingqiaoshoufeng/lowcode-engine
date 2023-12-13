@@ -769,7 +769,6 @@ const onWarningOrgname = () => {
       <SelectDateTime
         v-model:value="form.warningDate"
         :showPreview="showPreview"
-        :readonly="showPreview"
         is-link
         required
         name="warningDate"
@@ -1014,7 +1013,6 @@ const onWarningOrgname = () => {
         v-if="showWarningLevel || form.warningLevel"
         v-model:value="form.warningLevel"
         :showPreview="showPreview"
-        :readonly="true"
         name="warningLevel"
         required
         :options="options.warningLevelOptions"
@@ -1066,7 +1064,6 @@ const onWarningOrgname = () => {
         v-if="!showSecurityService"
         v-model:value="form.warningSource"
         :showPreview="showPreview"
-        :readonly="true"
         name="warningSource"
         required
         :options="options.warningSource"
@@ -1200,7 +1197,6 @@ const onWarningOrgname = () => {
         v-if="showTyphoonType"
         v-model:value="form.typhoonType"
         :showPreview="showPreview"
-        :readonly="true"
         name="typhoonType"
         :options="options.typhoonType"
         :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -1250,7 +1246,6 @@ const onWarningOrgname = () => {
         :value="form.warningTag?.map(item => item.boFireTagId) || []"
         v-model:nodes="form.warningTag"
         :showPreview="showPreview"
-        :readonly="true"
         name="warningTag"
         :options="options.warningTagOptions"
         :field-names="{ value: 'boFireTagId', label: 'tagName' }"
@@ -1327,7 +1322,6 @@ const onWarningOrgname = () => {
       <SelectSingle
         v-model:value="form.firstGroup"
         :showPreview="showPreview"
-        :readonly="true"
         name="firstGroup"
         :options="form.dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1353,7 +1347,6 @@ const onWarningOrgname = () => {
       <SelectSingle
         v-model:value="form.mainGroup"
         :showPreview="showPreview"
-        :readonly="true"
         name="mainGroup"
         :options="form.dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1407,11 +1400,9 @@ const onWarningOrgname = () => {
       <SelectMultiple
         v-model:value="form.headquarters"
         :showPreview="showPreview"
-        :readonly="showPreview"
         name="headquarters"
         :options="options.headquarters"
         :field-names="{ value: 'organizationid', label: 'name' }"
-        :required="true"
         label="全勤指挥部："
         label-width="102px"
         placeholder="未出动"
@@ -1436,7 +1427,6 @@ const onWarningOrgname = () => {
         :value="form.otherCity?.map(item => item.organizationid) || []"
         v-model:nodes="form.otherCity"
         :showPreview="showPreview"
-        :readonly="true"
         name="otherCity"
         :options="options.otherCityOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"
@@ -1464,7 +1454,6 @@ const onWarningOrgname = () => {
         :value="form.otherProvince?.map(item => item.organizationid) || []"
         v-model:nodes="form.otherProvince"
         :showPreview="showPreview"
-        :readonly="true"
         name="otherProvince"
         :options="options.otherProvinceOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"

@@ -13,6 +13,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isUrlChange: {
+    type: Boolean,
+    default: true,
+  },
   okText: {
     type: String,
     default: "确定",
@@ -50,7 +54,7 @@ watch(() => [route.path], () => {
 }, { immediate: true, deep: true })
 
 watch(() => props.visible, (newValue) => {
-  if (newValue) {
+  if (newValue && props.isUrlChange) {
     router.push({
       path: route.path,
       query: {
@@ -62,11 +66,13 @@ watch(() => props.visible, (newValue) => {
 });
 
 let handleOkFn = () => {
+  router.go(-1)
   showModal.value = false
   emit('update:visible', showModal.value)
 }
 
 const closeModal = () => {
+  router.go(-1)
   showModal.value = false;
   emit("update:visible", showModal.value);
 };

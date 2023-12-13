@@ -55,7 +55,6 @@ const onDealSituation = (value, option) => {
     <SelectSingle
       v-model:value="form.basicInformation.dealSituation.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="dealSituation"
       required
       :options="options.dealSituation"
@@ -128,7 +127,6 @@ const onDealSituation = (value, option) => {
       v-if="showFireFighting && !showMidwayReturn"
       v-model:value="form.basicInformation.fireSituation.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="fireSituation"
       required
       :options="options.fireSituation"
@@ -179,7 +177,6 @@ const onDealSituation = (value, option) => {
       v-if="showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.industryDepartment.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="industryDepartment"
       required
       :options="options.industryDepartment"

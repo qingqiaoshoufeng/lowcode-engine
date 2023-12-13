@@ -87,7 +87,6 @@ const onHaveVolunteer = (e) => {
         <SelectSingle
           v-model:value="item.groupType"
           :showPreview="showPreview"
-          :readonly="true"
           name="groupType"
           required
           :options="options.groupType"
@@ -196,6 +195,7 @@ const onHaveVolunteer = (e) => {
         >
           <template v-slot:label="">
             <FieldAnnotation
+              label="艇(艘)："
               remark-field="volunteerList"
               remark-field2="boatNum"
               :remark-field2-id="index"

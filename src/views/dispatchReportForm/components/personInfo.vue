@@ -71,7 +71,6 @@ onMounted(() => {
           <SelectSingle
             v-model:value="item.headerName"
             :showPreview="showPreview"
-            :readonly="true"
             name="headerName"
             required
             :options="deptMembersOptions"
@@ -97,7 +96,6 @@ onMounted(() => {
           <SelectSingle
             v-model:value="item.position"
             :showPreview="showPreview"
-            :readonly="true"
             name="position"
             required
             :options="options.position"

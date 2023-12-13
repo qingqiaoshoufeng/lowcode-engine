@@ -236,7 +236,6 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
             :showPreview="showPreview"
-            :readonly="true"
             name="nation"
             required
             :options="options.nation"
@@ -261,7 +260,6 @@ watch(
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
-            :readonly="true"
             name="identity"
             required
             :options="options.identity"
@@ -287,7 +285,6 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
             :showPreview="showPreview"
-            :readonly="true"
             name="politicalOutlook"
             required
             :options="options.politicalOutlook"
@@ -313,13 +310,12 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="teamEntryTime"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
-            label-width="130px"
+            label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
           >
@@ -386,7 +382,6 @@ watch(
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
-            :readonly="true"
             name="gender"
             required
             :options="options.gender"
@@ -468,6 +463,7 @@ watch(
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             label="消防救援衔："
+            label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
           >
@@ -532,7 +528,6 @@ watch(
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
-            :readonly="true"
             name="injuryPart"
             required
             :options="options.injuryPart"
@@ -557,7 +552,6 @@ watch(
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
-            :readonly="true"
             name="period"
             required
             :options="options.period"
@@ -582,7 +576,6 @@ watch(
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
-            :readonly="true"
             name="injuryReason"
             required
             :options="options.injuryReason"
@@ -607,7 +600,6 @@ watch(
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
-            :readonly="true"
             name="protectDevice"
             required
             :options="options.protectDevice"
@@ -703,7 +695,6 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
             :showPreview="showPreview"
-            :readonly="true"
             name="nation"
             required
             :options="options.nation"
@@ -728,7 +719,6 @@ watch(
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
-            :readonly="true"
             name="identity"
             required
             :options="options.identity"
@@ -754,7 +744,6 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
             :showPreview="showPreview"
-            :readonly="true"
             name="politicalOutlook"
             required
             :options="options.politicalOutlook"
@@ -780,13 +769,12 @@ watch(
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="teamEntryTime"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
-            label-width="130px"
+            label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
           >
@@ -853,7 +841,6 @@ watch(
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
-            :readonly="true"
             name="gender"
             required
             :options="options.gender"
@@ -935,6 +922,7 @@ watch(
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             label="消防救援衔："
+            label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
           >
@@ -999,7 +987,6 @@ watch(
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
-            :readonly="true"
             name="injuryPart"
             required
             :options="options.injuryPart"
@@ -1025,7 +1012,6 @@ watch(
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
-            :readonly="true"
             name="period"
             required
             :options="options.period"
@@ -1050,7 +1036,6 @@ watch(
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
-            :readonly="true"
             name="injuryReason"
             required
             :options="options.injuryReason"
@@ -1075,7 +1060,6 @@ watch(
           <SelectDateTime
             v-model:value="item.deathDate"
             :show-preview="showPreview"
-            :readonly="showPreview"
             is-link
             required
             name="deathDate"
@@ -1100,7 +1084,6 @@ watch(
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
-            :readonly="true"
             name="protectDevice"
             required
             :options="options.protectDevice"
@@ -1126,6 +1109,7 @@ watch(
           <van-field
             name="casualtyWar.isInstantDeath.value"
             label="是否当场死亡："
+            label-width="108px"
             :rules="form.casualtyWar.isInstantDeath.rules"
             required
             class="field-radio"

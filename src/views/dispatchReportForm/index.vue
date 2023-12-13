@@ -497,6 +497,11 @@ const initWeather = () => {
 }
 
 const initDetail = () => {
+  // 根据详情信息设置警情类型
+  if (detail && detail.value && detail.value?.warningType) {
+    form.value.draftInfo.warningType.value = detail.value?.warningType.split(',')
+    form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.value.warningType)
+  }
   return new Promise((resolve) => {
     const { currentRow, isEdit, isDetail } = props
     if (currentRow?.boFireDispatchId && ['指挥'].includes(currentRow?.partakeType || currentRow?.dispatchTypeValue)) {

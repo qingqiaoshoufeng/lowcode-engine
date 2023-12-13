@@ -108,7 +108,6 @@ const onHaveLinkageUnit = (e) => {
         <SelectSingle
           v-model:value="item.departmentName"
           :showPreview="showPreview"
-          :readonly="true"
           name="departmentName"
           required
           :options="options.departmentName"
@@ -134,7 +133,6 @@ const onHaveLinkageUnit = (e) => {
         <SelectSingle
           v-model:value="item.orgLevel"
           :showPreview="showPreview"
-          :readonly="true"
           name="orgLevel"
           required
           :options="options.orgLevel"

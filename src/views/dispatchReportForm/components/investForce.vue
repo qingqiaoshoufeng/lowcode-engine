@@ -186,7 +186,6 @@ const OnCarNum = () => {
       <SelectMultiple
         v-model:value="form.investForce.midwayCar.value"
         :showPreview="showPreview"
-        :readonly="showPreview"
         required
         name="midwayCar"
         :options="form.investForce.dispatchTruckList.value"
@@ -213,7 +212,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.groupLeader.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="groupLeader"
       :options="deptMembersOptions"
@@ -238,7 +236,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.commander.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="commander"
       :options="options.commander"
@@ -263,7 +260,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.firemen.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="firemen"
       :options="options.firemen"
