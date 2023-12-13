@@ -18,9 +18,11 @@ const handlePreview = (el, binding, vnode) => {
     textValue = vnode.el.querySelector('.van-field__body')?.querySelector('textarea')?.value
   } else if (radioGroup) {
     textValue = vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText || el.querySelector('[aria-checked="true"]')?.querySelector('.van-radio__label')?.innerText
+    if (!vnode.el.querySelector('.van-radio-group')?.querySelector('[aria-checked="true"]') && !el.querySelector('[aria-checked="true"]')) {
+      textValue = ' '
+    }
   }
   if(el.className.includes('muti-check')){
-    // debugger;
     const context = Array.from(el.querySelectorAll('[aria-checked="true"]')).map(item=>{
       return item.children[1].innerText
     }).join()
