@@ -4,7 +4,6 @@ import ProList from "@/component/ProList/index";
 import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
-import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import SelectSingle from "@/component/SelectSingle/index";
 import ApplyDetail from './components/applyDetail.vue';
 import {
@@ -14,7 +13,7 @@ import {
   generateColorByType,
 } from "@/utils/tools.js";
 import { applyRecordType, applyStatus } from '@/utils/constants.js';
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 import { getApplyRecordList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
@@ -76,10 +75,6 @@ const onSearchConfirm = () => {
   proListRef.value.filter().then((res) => {
     closeToast();
   });
-}
-
-const finishCallback = () => {
-  proListRef.value.filter()
 }
 
 onMounted(() => {

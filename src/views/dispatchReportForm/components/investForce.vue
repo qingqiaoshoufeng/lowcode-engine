@@ -153,6 +153,7 @@ const OnCarNum = () => {
       <van-field
         name="investForce.isReturnTruck.value"
         label="是否有车辆中途返回："
+        label-width="154px"
         required
         :rules="form.investForce.isReturnTruck.rules"
         class="field-radio"

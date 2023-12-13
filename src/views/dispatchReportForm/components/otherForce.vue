@@ -53,7 +53,8 @@ const onHaveVolunteer = (e) => {
   <van-cell-group>
     <van-field 
       name="investForce.haveVolunteer.value" 
-      label="是否有志愿队力量：" 
+      label="是否有志愿队力量："
+      label-width="142px"
       :rules="form.investForce.haveVolunteer.rules"
       required
       class="field-radio"

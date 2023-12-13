@@ -540,7 +540,7 @@ const onDealEndDate = () => {
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="归队到场时速(公里/小时)："
+          label="到场时速(公里/小时)："
           remark-field="presentSpeed"
           field-module="basicInformation"
           :exist-data="fieldExist?.presentSpeed"
@@ -559,7 +559,7 @@ const onDealEndDate = () => {
       :field-names="{ value: 'boDictId', label: 'dictName' }"
       title="请选择到场时速异常原因"
       label="到场时速异常原因："
-      label-width="116px"
+      label-width="142px"
       placeholder="请选择到场时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
     >
