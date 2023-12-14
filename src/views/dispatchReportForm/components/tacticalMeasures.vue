@@ -40,7 +40,7 @@ const showDisaster = computed(() => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
-        type="number"
+        type="basicInformation.deliverWater.value"
         maxlength="10"
         name="deliverWater"
         label="送水量(吨)："
@@ -66,7 +66,7 @@ const showDisaster = computed(() => {
         required
         type="number"
         maxlength="10"
-        name="drainWater"
+        name="basicInformation.drainWater.value"
         label="排涝量(吨)："
         placeholder="请输入排涝量"
         :rules="form.basicInformation.drainWater.rules"
@@ -90,7 +90,7 @@ const showDisaster = computed(() => {
         required
         type="number"
         maxlength="10"
-        name="killArea"
+        name="basicInformation.killArea.value"
         label="消杀面积(平方)："
         placeholder="请输入消杀面积"
         :rules="form.basicInformation.killArea.rules"

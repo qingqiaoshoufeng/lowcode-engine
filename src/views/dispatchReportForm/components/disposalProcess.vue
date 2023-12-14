@@ -23,7 +23,7 @@ const showDraft = inject('showDraft')
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
-        name="fireProcess"
+        name="disposalProcess.fireProcess.value"
         rows="4"
         autosize
         label="处置经过："

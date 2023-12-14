@@ -18,7 +18,7 @@ const options = inject("options");
     v-model:value="form.basicInformation.weather.value"
     :showPreview="showPreview"
     :readonly="true"
-    name="weather"
+    name="basicInformation.weather.value"
     required
     :options="options.weather"
     :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -44,7 +44,7 @@ const options = inject("options");
     type="number"
     maxlength="5"
     required
-    name="temperature"
+    name="basicInformation.temperature.value"
     label="气温："
     placeholder="请输入气温"
     :rules="form.basicInformation.temperature.rules"
@@ -64,7 +64,7 @@ const options = inject("options");
     v-model:value="form.basicInformation.windDirection.value"
     :showPreview="showPreview"
     :readonly="true"
-    name="windDirection"
+    name="basicInformation.windDirection.value"
     required
     :options="options.windDirection"
     :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -87,7 +87,7 @@ const options = inject("options");
     v-model:value="form.basicInformation.wind.value"
     :showPreview="showPreview"
     :readonly="true"
-    name="wind"
+    name="basicInformation.wind.value"
     required
     :options="options.wind"
     :field-names="{ value: 'boDictId', label: 'dictName' }"

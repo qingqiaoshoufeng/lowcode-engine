@@ -215,7 +215,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="20"
-            name="name"
+            :name="`casualtyWar.injuredList.${index}.name`"
             label="人员姓名："
             placeholder="请输入人员姓名"
             :rules="form.casualtyWar.name.rules"
@@ -237,7 +237,7 @@ watch(
             v-model:value="item.nation"
             :showPreview="showPreview"
             :readonly="true"
-            name="nation"
+            :name="`casualtyWar.injuredList.${index}.nation`"
             required
             :options="options.nation"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -262,7 +262,7 @@ watch(
             v-model:value="item.identity"
             :showPreview="showPreview"
             :readonly="true"
-            name="identity"
+            :name="`casualtyWar.injuredList.${index}.identity`"
             required
             :options="options.identity"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -288,7 +288,7 @@ watch(
             v-model:value="item.politicalOutlook"
             :showPreview="showPreview"
             :readonly="true"
-            name="politicalOutlook"
+            :name="`casualtyWar.injuredList.${index}.politicalOutlook`"
             required
             :options="options.politicalOutlook"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -316,7 +316,7 @@ watch(
             :readonly="showPreview"
             is-link
             required
-            name="teamEntryTime"
+            :name="`casualtyWar.injuredList.${index}.teamEntryTime`"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
             label-width="130px"
@@ -341,7 +341,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="20"
-            name="personCode"
+            :name="`casualtyWar.injuredList.${index}.personCode`"
             label="消防证件号："
             label-width="112px"
             placeholder="请输入消防证件号"
@@ -365,7 +365,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="18"
-            name="idNumber"
+            :name="`casualtyWar.injuredList.${index}.idNumber`"
             label="身份证号码："
             label-width="110px"
             placeholder="请输入身份证号码"
@@ -387,7 +387,7 @@ watch(
             v-model:value="item.gender"
             :showPreview="showPreview"
             :readonly="true"
-            name="gender"
+            :name="`casualtyWar.injuredList.${index}.gender`"
             required
             :options="options.gender"
             :field-names="{ value: 'value', label: 'label' }"
@@ -416,7 +416,7 @@ watch(
             required
             type="number"
             maxlength="3"
-            :name="`casualtyWar,injuredList,${index},age`"
+            :name="`casualtyWar.injuredList.${index}.age`"
             label="年龄："
             placeholder="请输入年龄"
             :rules="form.casualtyWar.age.rules"
@@ -435,7 +435,7 @@ watch(
             </template>
           </van-field> 
           <AreaCascader
-            :name="`casualtyWar,injuredList,${index},nativePlace`"
+            :name="`casualtyWar.injuredList.${index}.nativePlace`"
             v-model:value="item.nativePlace"
             :showPreview="showPreview"
             :preview-text="item.nativePlaceValue ? item.nativePlaceValue : ''"
@@ -463,7 +463,7 @@ watch(
             v-model:value="item.rescueRank"
             :showPreview="showPreview"
             :readonly="showPreview"
-            name="rescueRank"
+            :name="`casualtyWar.injuredList.${index}.showReinforce`"
             :options="options.rescueRank"
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
@@ -489,7 +489,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="50"
-            name="bridgingRank"
+            :name="`casualtyWar.injuredList.${index}.bridgingRank`"
             label="职级："
             placeholder="请输入职级"
             :rules="form.casualtyWar.bridgingRank.rules"
@@ -512,7 +512,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="50"
-            name="duty"
+            :name="`casualtyWar.injuredList.${index}.duty`"
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
@@ -533,7 +533,7 @@ watch(
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
             :readonly="true"
-            name="injuryPart"
+            :name="`casualtyWar.injuredList.${index}.injuryPart`"
             required
             :options="options.injuryPart"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -558,7 +558,7 @@ watch(
             v-model:value="item.period"
             :showPreview="showPreview"
             :readonly="true"
-            name="period"
+            :name="`casualtyWar.injuredList.${index}.period`"
             required
             :options="options.period"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -583,7 +583,7 @@ watch(
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
             :readonly="true"
-            name="injuryReason"
+            :name="`casualtyWar.injuredList.${index}.injuryReason`"
             required
             :options="options.injuryReason"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -608,7 +608,7 @@ watch(
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
             :readonly="true"
-            name="protectDevice"
+            :name="`casualtyWar.injuredList.${index}.protectDevice`"
             required
             :options="options.protectDevice"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -682,7 +682,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="20"
-            name="name"
+            :name="`casualtyWar.deadList.${index}.name`"
             label="姓名："
             placeholder="请输入姓名"
             :rules="form.investForce.name.rules"
@@ -704,7 +704,7 @@ watch(
             v-model:value="item.nation"
             :showPreview="showPreview"
             :readonly="true"
-            name="nation"
+            :name="`casualtyWar.deadList.${index}.nation`"
             required
             :options="options.nation"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -729,7 +729,7 @@ watch(
             v-model:value="item.identity"
             :showPreview="showPreview"
             :readonly="true"
-            name="identity"
+            :name="`casualtyWar.deadList.${index}.identity`"
             required
             :options="options.identity"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -755,7 +755,7 @@ watch(
             v-model:value="item.politicalOutlook"
             :showPreview="showPreview"
             :readonly="true"
-            name="politicalOutlook"
+            :name="`casualtyWar.deadList.${index}.politicalOutlook`"
             required
             :options="options.politicalOutlook"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -783,7 +783,7 @@ watch(
             :readonly="showPreview"
             is-link
             required
-            name="teamEntryTime"
+            :name="`casualtyWar.deadList.${index}.teamEntryTime`"
             title="请选择入队时间"
             label="入队时间(进入消防系统)："
             label-width="130px"
@@ -808,7 +808,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="20"
-            name="personCode"
+            :name="`casualtyWar.deadList.${index}.personCode`"
             label="消防证件号："
             label-width="112px"
             placeholder="请输入消防证件号"
@@ -832,7 +832,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="18"
-            name="idNumber"
+            :name="`casualtyWar.deadList.${index}.idNumber`"
             label="身份证号码："
             label-width="110px"
             placeholder="请输入身份证号码"
@@ -854,7 +854,7 @@ watch(
             v-model:value="item.gender"
             :showPreview="showPreview"
             :readonly="true"
-            name="gender"
+            :name="`casualtyWar.deadList.${index}.gender`"
             required
             :options="options.gender"
             :field-names="{ value: 'value', label: 'label' }"
@@ -883,7 +883,7 @@ watch(
             required
             type="number"
             maxlength="3"
-            name="age"
+            :name="`casualtyWar.deadList.${index}.age`"
             label="年龄："
             placeholder="请输入年龄"
             :rules="form.casualtyWar.age.rules"
@@ -902,7 +902,7 @@ watch(
             </template>
           </van-field>
           <AreaCascader
-            name="nativePlace"
+            :name="`casualtyWar.deadList.${index}.nativePlace`"
             v-model:value="item.nativePlace"
             :showPreview="showPreview"
             :preview-text="item.nativePlaceValue ? item.nativePlaceValue : ''"
@@ -930,7 +930,7 @@ watch(
             v-model:value="item.rescueRank"
             :showPreview="showPreview"
             :readonly="showPreview"
-            name="rescueRank"
+            :name="`casualtyWar.deadList.${index}.rescueRank`"
             :options="options.rescueRank"
             :required="true"
             :field-names="{ value: 'boDictId', text: 'dictName' }"
@@ -956,7 +956,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="50"
-            name="bridgingRank"
+            :name="`casualtyWar.deadList.${index}.bridgingRank`"
             label="职级："
             placeholder="请输入职级"
             :rules="form.casualtyWar.bridgingRank.rules"
@@ -979,7 +979,7 @@ watch(
             :readonly="showPreview"
             required
             maxlength="50"
-            name="duty"
+            :name="`casualtyWar.deadList.${index}.duty`"
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
@@ -1000,7 +1000,7 @@ watch(
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
             :readonly="true"
-            name="injuryPart"
+            :name="`casualtyWar.deadList.${index}.injuryPart`"
             required
             :options="options.injuryPart"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -1026,7 +1026,7 @@ watch(
             v-model:value="item.period"
             :showPreview="showPreview"
             :readonly="true"
-            name="period"
+            :name="`casualtyWar.deadList.${index}.period`"
             required
             :options="options.period"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -1051,7 +1051,7 @@ watch(
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
             :readonly="true"
-            name="injuryReason"
+            :name="`casualtyWar.deadList.${index}.injuryReason`"
             required
             :options="options.injuryReason"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -1078,7 +1078,7 @@ watch(
             :readonly="showPreview"
             is-link
             required
-            name="deathDate"
+            :name="`casualtyWar.deadList.${index}.deathDate`"
             title="请选择死亡日期"
             label="死亡日期："
             label-width="130px"
@@ -1101,7 +1101,7 @@ watch(
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
             :readonly="true"
-            name="protectDevice"
+            :name="`casualtyWar.deadList.${index}.protectDevice`"
             required
             :options="options.protectDevice"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -1124,7 +1124,7 @@ watch(
             </template>
           </SelectSingle>
           <van-field
-            name="casualtyWar.isInstantDeath.value"
+          :name="`casualtyWar.deadList.${index}.isInstantDeath`"
             label="是否当场死亡："
             :rules="form.casualtyWar.isInstantDeath.rules"
             required
@@ -1132,7 +1132,7 @@ watch(
           >
             <template #input>
               <van-radio-group
-                v-model="form.casualtyWar.isInstantDeath.value"
+                v-model="item.isInstantDeath"
                 v-preview-text="showPreview"
                 icon-size="16px"
                 direction="horizontal"

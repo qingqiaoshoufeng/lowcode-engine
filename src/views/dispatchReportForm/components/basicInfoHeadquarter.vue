@@ -157,7 +157,7 @@ watch(() => form.value.deployEquipment, () => {
         :readonly="showPreview"
         maxlength="100"
         required
-        name="headquarterName"
+        name="basicInfoHead.headquarterName.value"
         label="全勤指挥部名称："
         label-width="134px"
         placeholder="请输入全勤指挥部名称"
@@ -180,7 +180,7 @@ watch(() => form.value.deployEquipment, () => {
         :readonly="showPreview"
         is-link
         required
-        name="dispatchDate"
+        name="basicInfoHead.dispatchDate.value"
         title="请选择出动时间"
         label="出动时间："
         placeholder="请选择出动时间"
@@ -202,7 +202,7 @@ watch(() => form.value.deployEquipment, () => {
         :readonly="showPreview"
         is-link
         required
-        name="attendanceDate"
+        name="basicInfoHead.attendanceDate.value"
         title="请选择到场时间"
         label="到场时间："
         placeholder="请选择到场时间"
@@ -224,7 +224,7 @@ watch(() => form.value.deployEquipment, () => {
         :readonly="showPreview"
         is-link
         required
-        name="evacuateDate"
+        name="basicInfoHead.evacuateDate.value"
         title="请选择撤离时间"
         label="撤离时间："
         placeholder="请选择撤离时间"
@@ -247,7 +247,7 @@ watch(() => form.value.deployEquipment, () => {
         type="number"
         maxlength="10"
         required
-        name="personNum"
+        name="basicInfoHead.personNum.value"
         label="人员数量(人)："
         label-width="122px"
         placeholder="请输入人员数量"
@@ -271,7 +271,7 @@ watch(() => form.value.deployEquipment, () => {
         type="number"
         maxlength="10"
         required
-        name="truckNum"
+        name="basicInfoHead.truckNum.value"
         label="出动车辆(辆)："
         label-width="122px"
         placeholder="请输入出动车辆"
@@ -294,7 +294,7 @@ watch(() => form.value.deployEquipment, () => {
         :readonly="showPreview"
         maxlength="20"
         required
-        name="commandTime"
+        name="basicInfoHead.commandTime"
         label="指挥时长："
         placeholder="请输入指挥时长"
         :disabled="!showPreview"

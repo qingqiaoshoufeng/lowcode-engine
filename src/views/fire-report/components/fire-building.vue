@@ -277,6 +277,7 @@ const onBuildTag = (val) => {
               label="耐火等级："
               remark-field="fireResistanceRating"
               field-module="fireBuilding"
+              :isWarning="form.fireBuilding.fireResistanceRating.warning"
               :exist-data="fieldExist?.fireResistanceRating"
               @refresh-callback="refreshField"
             />

@@ -179,6 +179,7 @@ const validateDirectDamage = (val) => {
           >
             <template v-slot:label="">
               <FieldAnnotation
+                :isWarning="form.economicLoss.fireInjuryCost.warning"
                 label="人身伤亡医疗支出（元)："
                 remark-field="fireInjuryCost"
                 field-module="economicLoss"
@@ -259,6 +260,7 @@ const validateDirectDamage = (val) => {
             <template v-slot:label="">
                 <FieldAnnotation
                   label="受灾户数（户）："
+                  :isWarning="form.economicLoss.affectedHouse.warning"
                   remark-field="affectedHouse"
                   field-module="economicLoss"
                   :exist-data="fieldExist?.affectedHouse"

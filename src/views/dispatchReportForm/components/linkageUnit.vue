@@ -88,7 +88,7 @@ const onHaveLinkageUnit = (e) => {
           :readonly="showPreview"
           required
           maxlength="50"
-          name="orgName"
+          :name="`investForce.fireDispatchZfList.${index}.orgName`"
           label="单位名称："
           placeholder="请输入单位名称"
           :rules="form.investForce.orgName.rules"
@@ -109,7 +109,7 @@ const onHaveLinkageUnit = (e) => {
           v-model:value="item.departmentName"
           :showPreview="showPreview"
           :readonly="true"
-          name="departmentName"
+          :name="`investForce.fireDispatchZfList.${index}.departmentName`"
           required
           :options="options.departmentName"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -135,7 +135,7 @@ const onHaveLinkageUnit = (e) => {
           v-model:value="item.orgLevel"
           :showPreview="showPreview"
           :readonly="true"
-          name="orgLevel"
+          :name="`investForce.fireDispatchZfList.${index}.orgLevel`"
           required
           :options="options.orgLevel"
           :field-names="{ value: 'boDictId', label: 'dictName' }"

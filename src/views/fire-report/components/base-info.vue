@@ -527,6 +527,7 @@ const onFireLevel = () => {
     <div class="isSearch">
       <SelectSingle
         v-model:value="form.basicInfo.isResearch.value"
+        name="basicInfo.isResearch.value"
         :showPreview="showPreview"
         label="是否调查："
         :options="options.isResearch"
@@ -575,6 +576,7 @@ const onFireLevel = () => {
     <div class="fireType">
       <SelectSingle
         v-model:value="form.basicInfo.fireType.value"
+        name="basicInfo.fireType.value"
         label="火灾类型："
         :options="fireTypeOptions"
         :rules="form.basicInfo.fireType.rules"
@@ -603,7 +605,7 @@ const onFireLevel = () => {
           :readonly="showPreview"
           is-link
           required
-          name="warningDate"
+          name="basicInfo.fireDate.value"
           title="请选择起火时间"
           label="起火时间："
           placeholder="请选择起火时间"
@@ -666,6 +668,7 @@ const onFireLevel = () => {
       <div class="area">
         <CascaderSingle
           v-model:value="form.basicInfo.area.value"
+          name="basicInfo.area.value"
           :showPreview="showPreview"
           :options="options.area"
           :required="isRequired"
@@ -751,6 +754,7 @@ const onFireLevel = () => {
       <div class="fireCause">
         <CascaderSingle 
           v-model:value="form.basicInfo.fireCause.value"
+          name="basicInfo.fireCause.value"
           :showPreview="showPreview"
           :options="options.fireCause"
           label="起火原因："
@@ -794,6 +798,7 @@ const onFireLevel = () => {
               remark-field="fireCause"
               field-module="basicInfo"
               :exist-data="fieldExist?.fireCause"
+              :isWarning="form.basicInfo.burnedArea.warning"
               @refresh-callback="refreshField"
             />
           </template>
@@ -802,6 +807,7 @@ const onFireLevel = () => {
       <div class="fireLevel">
         <SelectSingle
           v-model:value="form.basicInfo.fireLevel.value"
+          name="basicInfo.fireLevel.value"
           :showPreview="showPreview"
           :is-link="false"
           label="火灾等级："
@@ -830,6 +836,7 @@ const onFireLevel = () => {
         <CascaderSingle
           id="firePlace"
           v-model:value="form.basicInfo.firePlace.value"
+          name="basicInfo.firePlace.value"
           :showPreview="showPreview"
           :options="options.firePlace"
           :field-names="{ value: 'boDictId', text: 'dictName' }"
@@ -877,6 +884,7 @@ const onFireLevel = () => {
       </div>
       <div v-if="showplantRiskClassification"  class="plantRiskClassification">
         <SelectSingle
+          name="basicInfo.plantRiskClassification.value"
           v-model:value="form.basicInfo.plantRiskClassification.value"
           label="厂房火灾危险性分类："
           :options="options.plantRiskClassification"
@@ -921,6 +929,7 @@ const onFireLevel = () => {
       <div v-if="showResidence" class="fireDate">
         <SelectSingle
           id="liveType"
+          name="basicInfo.liveType.value"
           v-model:value="form.basicInfo.liveType.value"
           :showPreview="showPreview"
           :options="options.liveType"
@@ -975,6 +984,7 @@ const onFireLevel = () => {
       <div v-if="showBatteryType" class="chargeState" >
         <SelectSingle
           label="起火时充电状态："
+          name="basicInfo.chargeState.value"
           :rules="form.basicInfo.chargeState.rules"
           :required="isRequired"
           id="chargeState"
@@ -1266,6 +1276,7 @@ const onFireLevel = () => {
         <CascaderSingle
           label="起火位置："
           :rules="form.basicInfo.fireSite.rules"
+          name="basicInfo.fireSite.value"
           id="fireSite"
           v-model:value="form.basicInfo.fireSite.value"
           :showPreview="showPreview"
@@ -1316,6 +1327,7 @@ const onFireLevel = () => {
       <div :span="8">
         <CascaderSingle
           label="起火物类型："
+          name="basicInfo.initialFuelsType.value"
           :rules="form.basicInfo.initialFuelsType.rules"
           id="initialFuelsType"
           :required="isRequired"
@@ -1370,6 +1382,7 @@ const onFireLevel = () => {
       <div :span="8">
         <CascaderSingle
           label="引火源类型："
+          name="basicInfo.igniteSourceType.value"
           :rules="form.basicInfo.igniteSourceType.rules"
           id="igniteSourceType"
           v-model:value="form.basicInfo.igniteSourceType.value"
@@ -1581,6 +1594,7 @@ const onFireLevel = () => {
         <SelectSingle
           label="事故牵头调查部门："
           :rules="form.basicInfo.leadInspectionOrg.rules"
+          name="basicInfo.leadInspectionOrg.value"
           :required="isRequired"
           id="leadInspectionOrg"
           v-model:value="form.basicInfo.leadInspectionOrg.value"
@@ -1717,6 +1731,7 @@ const onFireLevel = () => {
       <div v-if="!showOtherMinor" :span="8">
         <SelectSingle
           label="监督检查情况："
+          name="basicInfo.fireInspection.value"
           :rules="form.basicInfo.fireInspection.rules"
           id="fireInspection"
           v-model:value="form.basicInfo.fireInspection.value"

@@ -87,7 +87,7 @@ const onHaveVolunteer = (e) => {
           v-model:value="item.groupType"
           :showPreview="showPreview"
           :readonly="true"
-          name="groupType"
+          :name="`investForce.volunteerList.${index}.groupType`"
           required
           :options="options.groupType"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -115,7 +115,7 @@ const onHaveVolunteer = (e) => {
           :readonly="showPreview"
           required
           maxlength="50"
-          name="orgName1"
+          :name="`investForce.volunteerList.${index}.orgName1`"
           label="志愿队名称："
           label-width="104px"
           placeholder="请输入志愿队名称"
@@ -140,7 +140,7 @@ const onHaveVolunteer = (e) => {
           required
           type="number"
           maxlength="10"
-          name="peopleNum"
+          :name="`investForce.volunteerList.${index}.peopleNum`"
           label="人数(人)："
           placeholder="请输入人数"
           :rules="form.investForce.peopleNum.rules"
@@ -164,7 +164,7 @@ const onHaveVolunteer = (e) => {
           required
           type="number"
           maxlength="10"
-          name="trunkNum"
+          :name="`investForce.volunteerList.${index}.trunkNum`"
           label="车数(辆)："
           placeholder="请输入车数"
           :rules="form.investForce.trunkNum.rules"
@@ -188,7 +188,7 @@ const onHaveVolunteer = (e) => {
           required
           type="number"
           maxlength="10"
-          name="boatNum"
+          :name="`investForce.volunteerList.${index}.boatNum`"
           label="艇(艘)："
           placeholder="请输入艇数"
           :rules="form.investForce.boatNum.rules"

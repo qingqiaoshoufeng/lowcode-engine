@@ -8,7 +8,7 @@ import { getTypeText } from '@/utils/tools.js'
 
 const useForm = Form.useForm
 
-export const useFormConfig = (fromRef) => {
+export const useFormConfig = (validateProgress) => {
   const formOrigin = {
     fireInfo: {
       title: '警情信息',
@@ -901,17 +901,7 @@ export const useFormConfig = (fromRef) => {
     form.value.briefSituation.content.value = content
   }
 
-  watch(
-    () => form.value,
-    () => {
-      nextTick(() => {
-        // Object.keys(form.value).forEach((key) => {
-        //   handleUseForm(key, form.value[key])
-        // })
-      })
-    },
-    { deep: true },
-  )
+
 
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端

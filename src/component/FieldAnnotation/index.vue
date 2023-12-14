@@ -34,6 +34,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isWarning:{
+    type: Boolean,
+    default: false,
+  }
 })
 
 const emits = defineEmits(['refreshCallback'])
@@ -238,7 +242,10 @@ export default {
         </div>
       </template>
     </DialogInfo>
-      <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="showVisible = true">
+      <div class="tip-wrapper">
+        <img v-if="isWarning" title="1111" class="field-wraning" src="@/assets/images/wraning-tip.png" >
+        <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="showVisible = true">
+      </div>
       <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->
       <div v-if="label" class="label" @click.stop="showVisible = true" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
   </div>
@@ -256,11 +263,25 @@ export default {
     display: inline-block;
   }
   img{
+    display: block;
+    margin-left: 5px;
+  }
+  .tip-wrapper{
     position: absolute;
     right: 0;
     scale: 0.8;
     top: -10px;
+    display: flex;
+    align-items: center;
+    height: 20px;
   }
+  // .field-wraning{
+  //   position: absolute;
+  //   right: 0;
+  //   scale: 0.8;
+  //   top: -10px;
+  // }
+
   .field-content {
     // width: 320px;
     width: 100%;
@@ -333,9 +354,9 @@ export default {
   .field-icon-show {
     visibility: visible !important;
   }
-  .field-exist, .field-icon {
-    width: 20px;
-    height: 18px;
+  .field-exist,.field-wraning{
+    width: 14px;
+    height: 14px;
     // visibility: hidden;
   }
 }

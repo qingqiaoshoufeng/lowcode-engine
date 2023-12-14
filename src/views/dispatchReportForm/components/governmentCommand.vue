@@ -96,7 +96,7 @@ const onIsCommand = (e) => {
           :readonly="showPreview"
           required
           maxlength="50"
-          name="name"
+          :name="`investForce.fireDispatchZfList.${index}.name`" 
           label="姓名："
           placeholder="请输入姓名"
           :rules="form.investForce.name.rules"
@@ -119,7 +119,7 @@ const onIsCommand = (e) => {
           :readonly="showPreview"
           required
           maxlength="50"
-          name="duty"
+          :name="`investForce.fireDispatchZfList.${index}.duty`" 
           label="职务："
           placeholder="请输入职务"
           :rules="form.investForce.duty.rules"
@@ -140,7 +140,7 @@ const onIsCommand = (e) => {
           v-model:value="item.level"
           :showPreview="showPreview"
           :readonly="true"
-          name="level"
+          :name="`investForce.fireDispatchZfList.${index}.level`" 
           required
           :options="options.level"
           :field-names="{ value: 'boDictId', label: 'dictName' }"

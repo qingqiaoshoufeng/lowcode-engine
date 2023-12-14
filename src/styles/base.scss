@@ -93,3 +93,7 @@ body.dialog-open {
 .field-annotation1{
     display: inline-block !important;
 }
+
+.hidevalidate .van-field__error-message{
+    display: none !important;
+}

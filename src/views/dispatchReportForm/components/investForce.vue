@@ -119,6 +119,7 @@ const OnCarNum = () => {
         <FieldAnnotation
           label="是否有车辆出动："
           remark-field="isInjured"
+          :isWarning="form.battleResult.rescueNum.warning"
           field-module="casualtyWar"
           :exist-data="fieldExist?.isInjured"
           @refresh-callback="refreshField"
@@ -130,7 +131,7 @@ const OnCarNum = () => {
         v-model:value="form.investForce.dispatchTruckList.value"
         :showPreview="showPreview"
         required
-        name="dispatchTruckList"
+        name="investForce.dispatchTruckList.value" 
         :rules="form.investForce.dispatchTruckList.rules"
         :readonly="true"
         label="消防车辆信息："
@@ -187,7 +188,7 @@ const OnCarNum = () => {
         :showPreview="showPreview"
         :readonly="showPreview"
         required
-        name="midwayCar"
+        name="investForce.midwayCar.value"
         :options="form.investForce.dispatchTruckList.value"
         :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.investForce.midwayCar.rules"
@@ -214,7 +215,7 @@ const OnCarNum = () => {
       :showPreview="showPreview"
       :readonly="showPreview"
       required
-      name="groupLeader"
+      name="investForce.groupLeader.value"
       :options="deptMembersOptions"
       :field-names="{ value: 'userId', label: 'userNameJob' }"
       :rules="form.investForce.groupLeader.rules"
@@ -227,6 +228,7 @@ const OnCarNum = () => {
       <template v-slot:label="">
         <FieldAnnotation
           label="带队指挥员："
+          :isWarning="form.investForce.commander.warning"
           remark-field="groupLeader"
           field-module="investForce"
           :exist-data="fieldExist?.groupLeader"
@@ -239,7 +241,7 @@ const OnCarNum = () => {
       :showPreview="showPreview"
       :readonly="showPreview"
       required
-      name="commander"
+      name="investForce.commander.value"
       :options="options.commander"
       :field-names="{ value: 'userId', label: 'userNameJob' }"
       :rules="form.investForce.commander.rules"
@@ -264,7 +266,7 @@ const OnCarNum = () => {
       :showPreview="showPreview"
       :readonly="showPreview"
       required
-      name="firemen"
+      name="investForce.firemen.value"
       :options="options.firemen"
       :field-names="{ value: 'userId', label: 'userNameJob' }"
       :rules="form.investForce.firemen.rules"
@@ -277,6 +279,7 @@ const OnCarNum = () => {
       <template v-slot:label="">
         <FieldAnnotation
           label="消防员："
+          :isWarning="form.investForce.firemen.warning"
           remark-field="firemen"
           field-module="investForce"
           :exist-data="fieldExist?.firemen"
@@ -291,7 +294,7 @@ const OnCarNum = () => {
       :readonly="showPreview"
       type="digit"
       maxlength="20"
-      name="fireBoatNum"
+      name="investForce.fireBoatNum.value"
       label="艇(艘)："
       placeholder="请输入艇数量"
       :rules="form.investForce.fireBoatNum.rules"
@@ -313,7 +316,7 @@ const OnCarNum = () => {
       :readonly="showPreview"
       type="digit"
       maxlength="20"
-      name="fireAirplaneNum"
+      name="investForce.fireAirplaneNum.value"
       label="消防直升机(架)："
       label-width="120px"
       placeholder="请输入消防直升机数量"
@@ -336,7 +339,7 @@ const OnCarNum = () => {
       :readonly="showPreview"
       type="digit"
       maxlength="20"
-      name="rescueDogNum"
+      name="investForce.rescueDogNum.value"
       label="搜救犬(只)："
       label-width="104px"
       placeholder="请输入搜救犬数量"
@@ -359,7 +362,7 @@ const OnCarNum = () => {
       :readonly="showPreview"
       type="digit"
       maxlength="20"
-      name="uavNum"
+      name="investForce.uavNum.value"
       label="无人机(架)："
       label-width="104px"
       placeholder="请输入无人机数量"

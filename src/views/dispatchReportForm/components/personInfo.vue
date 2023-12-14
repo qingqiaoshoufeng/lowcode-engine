@@ -72,7 +72,7 @@ onMounted(() => {
             v-model:value="item.headerName"
             :showPreview="showPreview"
             :readonly="true"
-            name="headerName"
+            :name="`personInfo.commandLeader.${index}.headerName`"
             required
             :options="deptMembersOptions"
             :field-names="{ value: 'userId', label: 'userNameJob' }"
@@ -98,7 +98,7 @@ onMounted(() => {
             v-model:value="item.position"
             :showPreview="showPreview"
             :readonly="true"
-            name="position"
+            :name="`personInfo.commandLeader.${index}.position`"
             required
             :options="options.position"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -165,7 +165,7 @@ onMounted(() => {
             :readonly="showPreview"
             required
             maxlength="50"
-            name="name"
+            :name="`personInfo.technician.${index}.name`"
             label="技术专家(社会)："
             label-width="128px"
             placeholder="请输入技术专家"

@@ -64,7 +64,7 @@ const validateSurvive = (value, rule) => {
         type="digit"
         maxlength="10"
         required
-        name="rescueNum"
+        name="battleResult.rescueNum.value"
         label="抢救(人)："
         placeholder="请输入抢救人数"
         :rules="[
@@ -75,6 +75,7 @@ const validateSurvive = (value, rule) => {
       >
         <template v-slot:label="">
           <FieldAnnotation
+            :isWarning="form.battleResult.rescueNum.warning"
             label="抢救(人)："
             remark-field="rescueNum"
             field-module="battleResult"
@@ -90,7 +91,7 @@ const validateSurvive = (value, rule) => {
         type="digit"
         maxlength="10"
         required
-        name="surviveNum"
+        name="battleResult.surviveNum.value"
         label="生还(人)："
         placeholder="请输入生还人数"
         :rules="[
@@ -116,7 +117,7 @@ const validateSurvive = (value, rule) => {
         :disabled="!showPreview"
         type="number"
         maxlength="10"
-        name="deathNum"
+        name="battleResult.deathNum.value"
         label="死亡(人)："
         placeholder="请输入死亡人数"
       >
@@ -136,7 +137,7 @@ const validateSurvive = (value, rule) => {
         :readonly="showPreview"
         type="digit"
         maxlength="10"
-        name="evacuateNum"
+        name="battleResult.evacuateNum.value"
         label="疏散(人)："
         placeholder="请输入疏散人数"
         :rules="form.battleResult.evacuateNum.rules"
@@ -157,7 +158,7 @@ const validateSurvive = (value, rule) => {
         :readonly="showPreview"
         type="digit"
         maxlength="10"
-        name="transferNum"
+        name="battleResult.transferNum.value"
         label="转移(人)："
         placeholder="请输入转移人数"
         :rules="form.battleResult.transferNum.rules"
@@ -179,7 +180,7 @@ const validateSurvive = (value, rule) => {
         required
         type="number"
         maxlength="15"
-        name="emergencyNum"
+        name="battleResult.emergencyNum.value"
         label="抢救财产价值(元)："
         label-width="148px"
         placeholder="请输入抢救财产价值"
@@ -202,7 +203,7 @@ const validateSurvive = (value, rule) => {
         required
         type="number"
         maxlength="15"
-        name="protectNum"
+        name="battleResult.protectNum.value"
         label="保护财产价值(元)："
         label-width="148px"
         placeholder="请输入保护财产价值"

@@ -85,7 +85,7 @@ const onDelete = (file) => {
         v-model="form.commandProcess.rescueMethod.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        name="rescueMethod"
+        name="commandProcess.rescueMethod.value"
         rows="4"
         autosize
         label="处置对策："
@@ -110,7 +110,7 @@ const onDelete = (file) => {
         v-model="form.commandProcess.actionPlan.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        name="actionPlan"
+        name="commandProcess.actionPlan.value"
         rows="4"
         autosize
         label="行动方案："
@@ -135,7 +135,7 @@ const onDelete = (file) => {
         v-model="form.commandProcess.commandProcess.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
-        name="commandProcess"
+        name="commandProcess.commandProcess.value"
         rows="4"
         autosize
         label="过程描述："
@@ -159,12 +159,12 @@ const onDelete = (file) => {
     </van-cell-group>
     <van-cell-group>
       <div class="other-attach">
-        <van-cell title="相关附件上传：" class="item-cell">
+        <van-cell title="相关附件上传：" name="commandProcess.attach.value" class="item-cell">
           <van-uploader
             v-model="form.commandProcess.attach.value"
             accept="*"
             preview-full-image
-            name="attach"
+            name="commandProcess.attach.value"
             :max-count="9"
             :max-size="10 * 1000 * 1000000"
             :readonly="isDetail"

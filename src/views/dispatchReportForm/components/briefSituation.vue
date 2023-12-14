@@ -280,7 +280,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="dispatchDate"
+      name="basicInformation.dispatchDate.value"
       title="请选择出动时间"
       label="出动时间："
       placeholder="请选择出动时间"
@@ -304,7 +304,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="midwayReturnDate"
+      name="basicInformation.midwayReturnDate.value"
       title="请选择中途返回时间"
       label="中途返回时间："
       label-width="118px"
@@ -328,7 +328,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="attendanceDate"
+      name="basicInformation.attendanceDate.value"
       title="请选择到场时间"
       label="到场时间："
       placeholder="请选择到场时间"
@@ -351,7 +351,7 @@ const onDealEndDate = () => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      name="carryoutDate"
+      name="basicInformation.carryoutDate.value"
       title="请选择展开时间"
       label="展开时间："
       placeholder="请选择展开时间"
@@ -373,7 +373,7 @@ const onDealEndDate = () => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      name="waterflowDate"
+      name="basicInformation.waterflowDate.value"
       title="请选择出水时间"
       label="出水时间："
       placeholder="请选择出水时间"
@@ -395,7 +395,7 @@ const onDealEndDate = () => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      name="controllingDate"
+      name="basicInformation.controllingDate.value"
       title="请选择控制时间"
       label="控制时间："
       placeholder="请选择控制时间"
@@ -417,7 +417,7 @@ const onDealEndDate = () => {
       :show-preview="showPreview"
       :readonly="showPreview"
       is-link
-      name="washDate"
+      name="basicInformation.washDate.value"
       title="请选择洗消时间"
       label="洗消时间："
       placeholder="请选择洗消时间"
@@ -440,7 +440,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="extinctDate"
+      name="basicInformation.extinctDate.value"
       title="请选择扑灭时间"
       label="扑灭时间："
       placeholder="请选择扑灭时间"
@@ -463,7 +463,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="endDate"
+      name="basicInformation.endDate.value"
       title="请选择结束时间"
       label="结束时间："
       placeholder="请选择结束时间"
@@ -486,7 +486,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="evacuateDate"
+      name="basicInformation.evacuateDate.value"
       title="请选择撤离时间"
       label="撤离时间："
       placeholder="请选择撤离时间"
@@ -508,7 +508,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="returnDate"
+      name="basicInformation.returnDate.value"
       title="请选择归队时间"
       label="归队时间："
       placeholder="请选择归队时间"
@@ -531,7 +531,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       type="number"
       maxlength="10"
-      name="presentSpeed"
+      name="basicInformation.presentSpeed.value"
       label="到场时速(公里/小时)："
       label-width="158px"
       placeholder="请输入到场时速"
@@ -553,7 +553,7 @@ const onDealEndDate = () => {
       v-model:value="form.basicInformation.returnLateReason.value"
       :showPreview="showPreview"
       :readonly="true"
-      name="returnLateReason"
+      name="basicInformation.returnLateReason.value"
       required
       :options="options.returnLateReason"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -579,7 +579,7 @@ const onDealEndDate = () => {
       :readonly="showPreview"
       is-link
       required
-      name="dealEndDate"
+      name="basicInformation.dealEndDate.value"
       title="请选择警情处置结束时间"
       label="警情处置结束时间："
       label-width="136px"

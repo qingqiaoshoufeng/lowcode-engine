@@ -56,7 +56,7 @@ const onDealSituation = (value, option) => {
       v-model:value="form.basicInformation.dealSituation.value"
       :showPreview="showPreview"
       :readonly="true"
-      name="dealSituation"
+      name="basicInformation.dealSituation.value"
       required
       :options="options.dealSituation"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -83,7 +83,7 @@ const onDealSituation = (value, option) => {
       :readonly="showPreview"
       maxlength="100"
       required
-      name="notDealReason"
+      name="basicInformation.notDealReason.value"
       label="未处置原因："
       label-width="132px"
       placeholder="请输入未处置原因"
@@ -107,7 +107,7 @@ const onDealSituation = (value, option) => {
       type="number"
       maxlength="10"
       required
-      name="fireDistance"
+      name="basicInformation.fireDistance.value"
       label="行驶距离(公里)："
       label-width="132px"
       placeholder="请输入行驶距离"
@@ -117,6 +117,7 @@ const onDealSituation = (value, option) => {
       <template v-slot:label="">
         <FieldAnnotation
           label="行驶距离(公里)："
+          :isWarning="form.basicInformation.fireDistance.warning"
           remark-field="fireDistance"
           field-module="basicInformation"
           :exist-data="fieldExist?.fireDistance"
@@ -129,7 +130,7 @@ const onDealSituation = (value, option) => {
       v-model:value="form.basicInformation.fireSituation.value"
       :showPreview="showPreview"
       :readonly="true"
-      name="fireSituation"
+      name="basicInformation.fireSituation.value"
       required
       :options="options.fireSituation"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -158,7 +159,7 @@ const onDealSituation = (value, option) => {
       type="number"
       maxlength="10"
       required
-      name="trappedPerson"
+      name="basicInformation.trappedPerson.value"
       label="现场被困人数(人)："
       label-width="144px"
       placeholder="请输入现场被困人数"
@@ -168,6 +169,7 @@ const onDealSituation = (value, option) => {
       <template v-slot:label="">
         <FieldAnnotation
           label="现场被困人数(人)："
+          :isWarning="form.basicInformation.trappedPerson.warning"
           remark-field="fireDistance"
           field-module="basicInformation"
           :exist-data="fieldExist?.fireDistance"
@@ -228,7 +230,7 @@ const onDealSituation = (value, option) => {
       type="number"
       maxlength="10"
       required
-      name="blockingTime"
+      name="basicInformation.blockingTime.value"
       label="疏通耗时(分钟)："
       label-width="128px"
       placeholder="请输入疏通耗时"

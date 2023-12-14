@@ -1,4 +1,4 @@
-<script setup>-close
+<script setup>
 import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
@@ -50,7 +50,7 @@ import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue } from '@vueuse/core';
 import { useStore } from "vuex";
 import { useIntersection } from '@/hooks/useIntersection.js';
-
+const hidevalidate = ref(false)
 const props = defineProps({
   showDraft: {
     type: Boolean,
@@ -120,14 +120,58 @@ const emits = defineEmits(['finishCallback'])
 const { options } = useOptions();
 
 const { show } = useModal();
+const formRef = ref(null);
+
 
 const { form, initFormWhenChange, initFormByDetail, checkFieldWarning, generateRemarkField } = useFormConfig();
 
+const validateProgress = async()=>{
+  if(formRef.value){
+    hidevalidate.value = true
+    try {
+      const res = await formRef.value.validate()
+    } catch (error) {
+      console.log(error);
+      console.log(error,'resres');
+    }
+    const statusMap = formRef.value.getValidationStatus()
+    console.log(statusMap,'statusMap');
+    const statusList = Object.entries(statusMap).reduce((current,item)=>{
+      const [type,status] = item
+      if(status === 'failed'){
+        const typename = type.split('.')[0]
+        current = [...new Set([...current,typename])]
+      }
+      return current
+    },[])
+    Object.keys(form.value).forEach(item=>{
+      form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
+    })
+    formRef.value.resetValidation()
+    hidevalidate.value = false
+    console.log(statusList,'result');
+  }
+  // formRef.value.validate()
+
+}
+watch(
+  () => form.value,
+  () => {
+    debugger
+    validateProgress()
+    // nextTick(() => {
+    //   Object.keys(form.value).forEach((key) => {
+    //     handleUseForm(key, form.value[key])
+    //   })
+    // })
+  },
+  { deep: true },
+)
 const store = useStore();
 
 const isNew = ref(true);
 
-const formRef = ref(null);
+
 
 const showPreview = ref(null);
 
@@ -1145,7 +1189,8 @@ const onSubmit = async () => {
   }
   else {
     if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
-      notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+      // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+      showToast('请对异常指标进行批注说明！')
     }
     else {
       await submit()
@@ -1183,12 +1228,21 @@ const onSideBarChange = (e, k) => {
       <van-sidebar v-model="sideBarActive">
         <template v-for="(item, k) in sections" :key="k">
           <van-sidebar-item @click="onSideBarChange(item, k)">
-            <template #title>{{ item?.title }}</template>
+            <template #title>
+              <div class="label_title">
+                {{ item.title }}
+                <div class="tip-wrapper">
+                  <img :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
+                  <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
+                  <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
+                </div>
+              </div>
+            </template>
           </van-sidebar-item>
         </template>
       </van-sidebar>
     </div>
-    <div class="form-right">
+    <div class="form-right" :class="{'hidevalidate':hidevalidate}">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" required="auto">
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
@@ -1369,6 +1423,21 @@ const onSideBarChange = (e, k) => {
       button:first-child {
         margin-right: 20px;
       }
+    }
+  }
+}
+.label_title{
+  position: relative;
+  .tip-wrapper{
+    position: absolute;
+    right: 0;
+    top: -16px;
+    display: flex;
+    align-items: center;
+    img{
+      width: 14px;
+      height: 14px;
+      margin-left: 5px;
     }
   }
 }

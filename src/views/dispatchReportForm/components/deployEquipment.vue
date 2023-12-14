@@ -20,7 +20,7 @@ const showPreview = inject("showPreview");
         v-model:value="form.deployEquipment.headTruckList.value"
         :showPreview="showPreview"
         required
-        name="headTruckList"
+        name="deployEquipment.headTruckList.value"
         :rules="form.deployEquipment.headTruckList.rules"
         :readonly="true"
         label="指挥车辆信息："

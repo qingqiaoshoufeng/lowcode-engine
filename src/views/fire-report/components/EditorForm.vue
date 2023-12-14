@@ -111,6 +111,10 @@ const props = defineProps({
 })
 
 const formRef = ref(null)
+
+const hidevalidate = ref(false)
+
+// provide('validateProgress',validateProgress)
 const emits = defineEmits(['finishCallback'])
 const isShowTemporary = inject('isShowTemporary')
 // const bus = inject('bus')
@@ -125,8 +129,45 @@ const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
-const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(formRef)
+const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(validateProgress)
 
+const validateProgress = async()=>{
+  if(formRef.value){
+    hidevalidate.value = true
+    try {
+      const res = await formRef.value.validate()
+    } catch (error) {
+      console.log(error);
+      console.log(error,'resres');
+    }
+    const statusMap = formRef.value.getValidationStatus()
+    console.log(statusMap,'statusMap');
+    const statusList = Object.entries(statusMap).reduce((current,item)=>{
+      const [type,status] = item
+      if(status === 'failed'){
+        const typename = type.split('.')[0]
+        current = [...new Set([...current,typename])]
+      }
+      return current
+    },[])
+    Object.keys(form.value).forEach(item=>{
+      form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
+    })
+    formRef.value.resetValidation()
+    hidevalidate.value = false
+    console.log(statusList,'result');
+  }
+  // formRef.value.validate()
+
+}
+
+watch(
+  () => form.value,
+  () => {
+    validateProgress()
+  },
+  { deep: true },
+)
 
 provide('isRequired',isRequired)
 const showPreview = ref(null)
@@ -989,7 +1030,7 @@ const onSideBarChange = (e, k) => {
 </script>
 
 <template>
-  <div class="editor-form" >
+  <div class="editor-form" :class="{'hidevalidate':hidevalidate}">
     <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
@@ -1001,7 +1042,18 @@ const onSideBarChange = (e, k) => {
             :key="k" :title="item.title" 
             
             @click="onSideBarChange(item, k)" 
-          />
+          >
+            <template #title>
+              <div class="label_title">
+                {{ item.title }}
+                <div class="tip-wrapper">
+                  <img :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
+                  <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
+                  <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
+                </div>
+              </div>
+            </template>
+          </van-sidebar-item>
           <!-- :badge="!isDetail && item.validateProgress >= 100 ? '√' : '×'" -->
         </van-sidebar>
       </div>
@@ -1170,5 +1222,21 @@ const onSideBarChange = (e, k) => {
     background-color: #f0f0f0;
   }
 }
+.label_title{
+  position: relative;
+  .tip-wrapper{
+    position: absolute;
+    right: 0;
+    top: -16px;
+    display: flex;
+    align-items: center;
+    img{
+      width: 14px;
+      height: 14px;
+      margin-left: 5px;
+    }
+  }
+}
+
 </style>
 

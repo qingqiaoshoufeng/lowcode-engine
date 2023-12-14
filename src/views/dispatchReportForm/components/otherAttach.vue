@@ -82,12 +82,12 @@ const onDelete = (file) => {
   <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="scene-photo">
-        <van-cell title="相关附件上传：" class="item-cell">
+        <van-cell title="相关附件上传：" name="otherAttach.attach.value" class="item-cell">
           <van-uploader
             v-model="form.otherAttach.attach.value"
             accept="*"
             preview-full-image
-            name="attach"
+            name="otherAttach.attach.value"
             :max-count="9"
             :max-size="10 * 1000 * 1000000"
             :readonly="isDetail"
