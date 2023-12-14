@@ -864,7 +864,7 @@ export const useFormConfig = () => {
         type: 'select-multiple',
         label: '全勤指挥部级别',
         labelWidth: '112px',
-        options: 'FireHeadLvl',
+        options: 'dispatchFireHeadLvl',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
       fireHead: { // 全勤指挥部名称
