@@ -32,7 +32,7 @@ import {pathMap,permission} from './pathMap.js'
 const props = defineProps({
   title:{
     default:'标题',
-    type:Number
+    type: String,
   },
   list:{
     default:()=>([]),

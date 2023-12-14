@@ -157,7 +157,6 @@ onMounted(() => {
       <SelectMultiple
         v-model:value="form.battleConsume.wastageTruck.value"
         :showPreview="showPreview"
-        :readonly="showPreview"
         name="battleConsume.wastageTruck.value"
         :options="
           showHeadquarter

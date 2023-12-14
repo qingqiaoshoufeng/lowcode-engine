@@ -211,7 +211,7 @@ const validateSurvive = (value, rule) => {
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="抢救财产价值(元)："
+            label="保护财产价值(元)："
             remark-field="protectNum"
             field-module="battleResult"
             :exist-data="fieldExist?.protectNum"

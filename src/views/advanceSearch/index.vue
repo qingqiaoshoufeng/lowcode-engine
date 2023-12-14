@@ -160,6 +160,8 @@ const getFormParams = () => {
   }
 }
 
+provide('getSearchParams', getFormParams)
+
 const onSearchCallback = () => {
   const flag = validateList(list.value, activeKey.value)
   if (flag) {

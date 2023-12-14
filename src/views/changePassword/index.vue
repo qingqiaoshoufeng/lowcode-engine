@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useSubmit } from "@castle/castle-use";
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showToast } from "vant";
 import { useRouter } from "vue-router";
 import { updatePwd, getUserDetail } from "@/apis/index.js";
 import { validatePwd } from "@/utils/validate.js";

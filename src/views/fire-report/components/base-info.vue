@@ -602,7 +602,6 @@ const onFireLevel = () => {
         <SelectDateTime
           v-model:value="form.basicInfo.fireDate.value"
           :showPreview="showPreview"
-          :readonly="showPreview"
           is-link
           required
           name="basicInfo.fireDate.value"

@@ -154,6 +154,7 @@ const OnCarNum = () => {
       <van-field
         name="investForce.isReturnTruck.value"
         label="是否有车辆中途返回："
+        label-width="154px"
         required
         :rules="form.investForce.isReturnTruck.rules"
         class="field-radio"
@@ -186,7 +187,6 @@ const OnCarNum = () => {
       <SelectMultiple
         v-model:value="form.investForce.midwayCar.value"
         :showPreview="showPreview"
-        :readonly="showPreview"
         required
         name="investForce.midwayCar.value"
         :options="form.investForce.dispatchTruckList.value"
@@ -213,7 +213,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.groupLeader.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="investForce.groupLeader.value"
       :options="deptMembersOptions"
@@ -239,7 +238,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.commander.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="investForce.commander.value"
       :options="options.commander"
@@ -264,7 +262,6 @@ const OnCarNum = () => {
     <SelectMultiple
       v-model:value="form.investForce.firemen.value"
       :showPreview="showPreview"
-      :readonly="showPreview"
       required
       name="investForce.firemen.value"
       :options="options.firemen"

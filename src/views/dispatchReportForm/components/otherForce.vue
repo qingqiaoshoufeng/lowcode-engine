@@ -53,7 +53,8 @@ const onHaveVolunteer = (e) => {
   <van-cell-group>
     <van-field 
       name="investForce.haveVolunteer.value" 
-      label="是否有志愿队力量：" 
+      label="是否有志愿队力量："
+      label-width="142px"
       :rules="form.investForce.haveVolunteer.rules"
       required
       class="field-radio"
@@ -86,7 +87,6 @@ const onHaveVolunteer = (e) => {
         <SelectSingle
           v-model:value="item.groupType"
           :showPreview="showPreview"
-          :readonly="true"
           :name="`investForce.volunteerList.${index}.groupType`"
           required
           :options="options.groupType"
@@ -195,6 +195,7 @@ const onHaveVolunteer = (e) => {
         >
           <template v-slot:label="">
             <FieldAnnotation
+              label="艇(艘)："
               remark-field="volunteerList"
               remark-field2="boatNum"
               :remark-field2-id="index"

@@ -55,7 +55,6 @@ const onDealSituation = (value, option) => {
     <SelectSingle
       v-model:value="form.basicInformation.dealSituation.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="basicInformation.dealSituation.value"
       required
       :options="options.dealSituation"
@@ -129,7 +128,6 @@ const onDealSituation = (value, option) => {
       v-if="showFireFighting && !showMidwayReturn"
       v-model:value="form.basicInformation.fireSituation.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="basicInformation.fireSituation.value"
       required
       :options="options.fireSituation"
@@ -181,7 +179,6 @@ const onDealSituation = (value, option) => {
       v-if="showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.industryDepartment.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="industryDepartment"
       required
       :options="options.industryDepartment"
@@ -196,6 +193,7 @@ const onDealSituation = (value, option) => {
       v-if="showFireFighting"
       name="basicInformation.isBlocking.value"
       label="消防通道是否堵塞："
+      label-width="142px"
       :rules="form.basicInformation.isBlocking.rules"
       required
       class="field-radio"

@@ -71,7 +71,6 @@ onMounted(() => {
         name="returnReason"
         :options="options"
         :field-names="{ value: 'value', label: 'label' }"
-        :required="true"
         title="退回原因"
         label="退回原因："
         placeholder="请选择退回原因"

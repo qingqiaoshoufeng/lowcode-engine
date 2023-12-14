@@ -3,7 +3,6 @@ import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
 import { showToast } from "vant";
 import { cloneDeep } from 'lodash-es'
-import { useModal } from "@/hooks/useModal.js";
 import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
 import { getRangeByCode } from "@/utils/_xlsxspread.min.js";
@@ -38,8 +37,6 @@ const props = defineProps({
     type: Function,
   },
 })
-
-const { show } = useModal();
 
 const { options } = useOptions({
   perTypes: [
@@ -125,7 +122,7 @@ const handleSearch = () => {
   }
   else if (props.searchType === 2 || props.searchType === 3) {
     if (options.value.queryType?.length > 0) {
-      if (!queryType || !queryType.option?.reportType) {
+      if (!queryType) {
         showToast('请先选择维度')
         return
       }
@@ -546,7 +543,7 @@ onMounted(() => {
         :rules="[{ required: true, message: '请选择报表维度' }]"
         :disabled="form.reportStyle === '1' ? options.queryType?.length <= 0 : true"
       />
-      <template v-if="form.reportStyle === '1'">
+      <template v-if="form.reportStyle === '1' && searchType === 1">
         <SelectOrg
           v-model:value="form.createUserOrg"
           :readonly="true"
@@ -563,7 +560,7 @@ onMounted(() => {
           :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
-      <template v-else>
+      <template v-else-if="form.reportStyle === '2' && searchType === 1">
         <SelectOrg
           v-model:value="form.createUserOrg"
           :readonly="true"
@@ -580,7 +577,7 @@ onMounted(() => {
           :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
         />
       </template>
-      <template v-if="form.reportStyle === '1'">
+      <template v-if="form.reportStyle === '1' && searchType === 1">
         <AreaCascader
           v-model:value="form.areaId"
           :required="false"
@@ -591,7 +588,7 @@ onMounted(() => {
           :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
         />
       </template>
-      <template v-else>
+      <template v-else-if="form.reportStyle === '2' && searchType === 1">
         <AreaCascader
           v-model:value="form.areaId"
           :required="false"
@@ -601,13 +598,15 @@ onMounted(() => {
           :params="{ staticFlag: form.searchDimension }"
         />
       </template>
-      <SelectRangeTime
-        v-model:value="form.time"
-        :required="true"
-        :readonly="true"
-        label="统计时间："
-        placeholder="请选择统计时间"
-      />
+      <template v-if="searchType === 1">
+        <SelectRangeTime
+          v-model:value="form.time"
+          :required="true"
+          :readonly="true"
+          label="统计时间："
+          placeholder="请选择统计时间"
+        />
+      </template>
       <SelectSingle
         v-model:value="form.dataTimeSource"
         :readonly="true"

@@ -17,7 +17,6 @@ const options = inject("options");
   <SelectSingle
     v-model:value="form.basicInformation.weather.value"
     :showPreview="showPreview"
-    :readonly="true"
     name="basicInformation.weather.value"
     required
     :options="options.weather"
@@ -63,7 +62,6 @@ const options = inject("options");
   <SelectSingle
     v-model:value="form.basicInformation.windDirection.value"
     :showPreview="showPreview"
-    :readonly="true"
     name="basicInformation.windDirection.value"
     required
     :options="options.windDirection"
@@ -86,7 +84,6 @@ const options = inject("options");
   <SelectSingle
     v-model:value="form.basicInformation.wind.value"
     :showPreview="showPreview"
-    :readonly="true"
     name="basicInformation.wind.value"
     required
     :options="options.wind"

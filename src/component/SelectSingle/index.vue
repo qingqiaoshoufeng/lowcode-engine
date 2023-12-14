@@ -34,6 +34,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  readonly: {
+    type: Boolean,
+    default: true,
+  },
   showPreview: {
     type: Boolean,
     default: false,
@@ -118,6 +122,7 @@ defineOptions({
     v-preview-text="showPreview"
     is-link
     v-bind="$attrs"
+    :readonly="readonly"
     :required="isRequired"
     :label="label"
     :placeholder="placeholder"

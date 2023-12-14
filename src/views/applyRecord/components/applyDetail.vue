@@ -47,10 +47,10 @@ const getCurrentStatus = (item) => {
   if (!item.commentDate) {
     return 'process'
   }
-  else if (['同意', '审核通过'].includes(item.comment) || !item.comment) {
+  else if (['通过', '同意', '审核通过'].includes(item.comment) || !item.comment) {
     return 'finish'
   }
-  else if (['不同意', '退回起草人', '退回上一级'].includes(item.comment)) {
+  else if (['不通过', '不同意', '退回起草人', '退回上一级'].includes(item.comment)) {
     return 'error'
   }
 }
@@ -84,7 +84,7 @@ const getCurrentStatus = (item) => {
       <template v-if="applyType === '1' || applyType === '4'">
         <van-field
           label="关联警情编号："
-          label-width="112px"
+          label-width="104px"
           :model-value="detail?.warningCode"
           readonly
           class="link-code"
@@ -95,7 +95,7 @@ const getCurrentStatus = (item) => {
       <template v-else-if="applyType === '2'">
         <van-field
           label="关联出动编号："
-          label-width="112px"
+          label-width="104px"
           :model-value="detail?.dispatchCode"
           readonly
           class="link-code"
@@ -106,7 +106,7 @@ const getCurrentStatus = (item) => {
       <template v-else-if="applyType === '3'">
         <van-field
           label="关联火灾编号："
-          label-width="112px"
+          label-width="104px"
           :model-value="detail?.fireCode"
           readonly
           class="link-code"

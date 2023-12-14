@@ -277,7 +277,6 @@ const onDealEndDate = () => {
     <SelectDateTime
       v-model:value="form.basicInformation.dispatchDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.dispatchDate.value"
@@ -301,13 +300,12 @@ const onDealEndDate = () => {
       v-if="showMidwayReturn"
       v-model:value="form.basicInformation.midwayReturnDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.midwayReturnDate.value"
       title="请选择中途返回时间"
       label="中途返回时间："
-      label-width="118px"
+      label-width="108px"
       placeholder="请选择中途返回时间"
       :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInformation.midwayReturnDate.rules]"
     >
@@ -325,7 +323,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.attendanceDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.attendanceDate.value"
@@ -349,7 +346,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.carryoutDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="basicInformation.carryoutDate.value"
       title="请选择展开时间"
@@ -371,7 +367,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.waterflowDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="basicInformation.waterflowDate.value"
       title="请选择出水时间"
@@ -393,7 +388,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice && showMainGroup"
       v-model:value="form.basicInformation.controllingDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="basicInformation.controllingDate.value"
       title="请选择控制时间"
@@ -415,7 +409,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.washDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       name="basicInformation.washDate.value"
       title="请选择洗消时间"
@@ -437,7 +430,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.extinctDate.value"
@@ -460,7 +452,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.endDate.value"
@@ -483,7 +474,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.evacuateDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.evacuateDate.value"
@@ -505,7 +495,6 @@ const onDealEndDate = () => {
     <SelectDateTime
       v-model:value="form.basicInformation.returnDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.returnDate.value"
@@ -540,7 +529,7 @@ const onDealEndDate = () => {
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="归队到场时速(公里/小时)："
+          label="到场时速(公里/小时)："
           remark-field="presentSpeed"
           field-module="basicInformation"
           :exist-data="fieldExist?.presentSpeed"
@@ -552,14 +541,13 @@ const onDealEndDate = () => {
       v-if="showReturnSlow"
       v-model:value="form.basicInformation.returnLateReason.value"
       :showPreview="showPreview"
-      :readonly="true"
       name="basicInformation.returnLateReason.value"
       required
       :options="options.returnLateReason"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
       title="请选择到场时速异常原因"
       label="到场时速异常原因："
-      label-width="116px"
+      label-width="142px"
       placeholder="请选择到场时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
     >
@@ -576,7 +564,6 @@ const onDealEndDate = () => {
       v-if="showDealSituation && showMainGroup"
       v-model:value="form.basicInformation.dealEndDate.value"
       :show-preview="showPreview"
-      :readonly="showPreview"
       is-link
       required
       name="basicInformation.dealEndDate.value"

@@ -28,7 +28,14 @@ const leftBackFn = () => {
 <template>
   <div class="police-entry-list">
     <!-- 新建警情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="新建警情" :leftBackFn="leftBackFn">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      :isUrlChange="false"
+      title="新建警情"
+      :leftBackFn="leftBackFn"
+    >
       <template #default="{ setHandleOk, closeModal }">
         <PoliceForm
           :current-row="{}"
