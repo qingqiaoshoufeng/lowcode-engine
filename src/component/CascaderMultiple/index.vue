@@ -205,9 +205,9 @@ const handleCheck = (item) => {
     return
   } else if (props.single && !item.checked) {
     selectValue.value = selectValue.value.filter((temp) => !temp?.join(',')?.endsWith(item.boDictId));
-    selectText.value = selectText.value.filter((temp) => !temp?.join(',')?.endsWith(item.boDictId));
+    selectText.value = selectText.value.filter((temp) => !temp?.join(',')?.endsWith(item.dictName));
     selectItem.value = selectItem.value.filter((temp) => {
-      if (!temp?.join(',')?.endsWith(item.boDictId)) {
+      if (!temp?.map(i => i.boDictId)?.join(',')?.endsWith(item.boDictId)) {
         return true
       }
       return false
@@ -350,7 +350,7 @@ defineOptions({
   }
   .content-wrapper {
     .content-selects {
-      height: 12vh;
+      height: 7vh;
       padding: 10px 10px;
       border-bottom: 1px solid #dcdee0;
       overflow-y: auto;

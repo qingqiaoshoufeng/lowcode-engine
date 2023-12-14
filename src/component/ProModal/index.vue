@@ -47,7 +47,7 @@ const showModal = ref(false);
 const currentTime = dayjs().valueOf()
 
 watch(() => [route.path], () => {
-  if (!route.query?.temporary || Number(route.query?.temporary) < currentTime) {
+  if ((!route.query?.temporary || Number(route.query?.temporary) < currentTime) && props.isUrlChange) {
     showModal.value = false
     emit('update:visible', showModal.value)
   }

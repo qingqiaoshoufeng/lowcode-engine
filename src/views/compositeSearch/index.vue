@@ -52,6 +52,8 @@ provide('searchDimension', searchDimension)
 
 provide('dataTimeSource', dataTimeSource)
 
+provide('getSearchParams', getSearchParams)
+
 const onSearchCallback = () => {
   const { policeBase, fireBase } = form.value
   if (!policeBase.warningDate.value?.[0] && !fireBase.fireDate.value?.[0]) {
