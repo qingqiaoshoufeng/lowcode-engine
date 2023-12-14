@@ -60,6 +60,16 @@ export default {
         <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
         <div v-if="item.advice">审核结果：{{ item.advice }}</div>
         <div v-if="item.remark">审核意见：{{ item.remark }}</div>
+        <div v-if="item.editContents?.length > 0" class="steps-history">
+          <div class="sub-title">
+            修改内容：
+          </div>
+          <div class="sub">
+            <div v-for="temp in item.editContents" :key="temp">
+              {{ temp }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="steps-next">
@@ -168,6 +178,13 @@ export default {
         font-size: 11px;
         font-weight: 400;
         color: #7989a1;
+      }
+    }
+    .steps-history {
+      display: flex;
+      .sub-title {
+        color: #48556a;
+        white-space: nowrap;
       }
     }
   }
