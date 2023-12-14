@@ -5,8 +5,11 @@ import { generateColorByState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
+import ReportGenerate from "@/views/statistics/components/reportGenerate.vue";
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
+import { MSG_EXPORT_NO_DATA } from '@/utils/constants.js';
 import { useModal } from '@/hooks/useModal.js';
 
 const props = defineProps({
@@ -23,6 +26,8 @@ const props = defineProps({
 const searchType = inject('searchType');
 
 const searchInfo = inject('searchInfo');
+
+const getSearchParams = inject('getSearchParams')
 
 const { show } = useModal();
 
@@ -46,6 +51,14 @@ const handleItem = (row) => {
   show.value.lookVisible = true
 };
 
+const handleGenerate = () => {
+  if (proListRef.value.list?.length <= 0) {
+    showToast(MSG_EXPORT_NO_DATA)
+    return
+  }
+  show.value.reportUseVisible = true
+}
+
 onMounted(() => {
   nextTick(() => {
     proListRef.value.query = props.params
@@ -56,49 +69,79 @@ onMounted(() => {
 
 <template>
   <div class="search-result">
-    <ProList
-      ref="proListRef"
-      title="查询结果"
-      :getListFn="type === 1 ? getSearchResult : getAdvanceSearchResult"
-      :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : 'boFireDispatchId')"
-      :showLoad="false"
-      :showBack="false"
-    >
-      <template #search>
-        <SearchInfo :search-type="searchType" :search-info="searchInfo" />
-      </template>
-      <template #list="{ record }">
-        <div class="pro-list-item" @click="handleItem(record)">
-          <div class="item-header">
-            <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-              {{ record.warningStatusValue }}
+    <div class="result-list">
+      <ProList
+        ref="proListRef"
+        title="查询结果"
+        :getListFn="type === 1 ? getSearchResult : getAdvanceSearchResult"
+        :rowKey="searchType === 4 ? 'boFireInfoId' : (searchType === 1 ? 'boFireWarningId' : 'boFireDispatchId')"
+        :showLoad="false"
+        :showBack="false"
+      >
+        <template #search>
+          <SearchInfo :search-type="searchType" :search-info="searchInfo" />
+        </template>
+        <template #list="{ record }">
+          <div class="pro-list-item" @click="handleItem(record)">
+            <div class="item-header">
+              <div class="item-title">{{ record.warningName }}</div>
+              <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+                {{ record.warningStatusValue }}
+              </div>
+            </div>
+            <div class="item-type">
+              <span>{{ record.warningTypeValue }}</span>
+            </div>
+            <div class="item-field">
+              <img src="../../assets/images/icon-time@2x.png" alt="" />
+              <div style="color: #929398">接警时间：</div>
+              <div>{{ formatYmdHm(record.warningDate) }}</div>
+            </div>
+            <div class="item-field">
+              <img
+                src="../../assets/images/icon-area@2x.png"
+                style="width: 13px; height: 15px; margin-right: 8px"
+                alt=""
+              />
+              <div style="color: #929398">行政区域：</div>
+              <div>{{ record.warningAreaValue }}</div>
             </div>
           </div>
-          <div class="item-type">
-            <span>{{ record.warningTypeValue }}</span>
-          </div>
-          <div class="item-field">
-            <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">接警时间：</div>
-            <div>{{ formatYmdHm(record.warningDate) }}</div>
-          </div>
-          <div class="item-field">
-            <img
-              src="../../assets/images/icon-area@2x.png"
-              style="width: 13px; height: 15px; margin-right: 8px"
-              alt=""
-            />
-            <div style="color: #929398">行政区域：</div>
-            <div>{{ record.warningAreaValue }}</div>
-          </div>
-        </div>
-      </template>
-    </ProList>
+        </template>
+      </ProList>
+    </div>
+
+    <div class="result-generate">
+      <van-button type="primary" round block @click="handleGenerate">
+        生成报表
+      </van-button>
+    </div>
 
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
+    </ProModal>
+    <!-- 报表统计 -->
+    <ProModal
+      v-model:visible="show.reportUseVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="报表统计"
+    >
+      <template v-if="type === 1">
+        <ReportGenerate
+          :current-row="{ sceneType: searchType === 1 ? '警情' : (searchType === 4 ? '火灾' : '出动') }"
+          :search-type="2"
+          :query-params="() => ({ fireType: searchType, ...getSearchParams() })"
+        />
+      </template>
+      <template v-else-if="type === 2">
+        <ReportGenerate
+          :current-row="{ sceneType: searchType === 1 ? '警情' : (searchType === 4 ? '火灾' : '出动') }"
+          :search-type="3"
+          :query-params="() => getSearchParams()"
+        />
+      </template>
     </ProModal>
   </div>
 </template>
@@ -110,6 +153,20 @@ onMounted(() => {
   .list-tabs {
     display: flex;
     padding: 10px 12px 0 12px;
+  }
+  .result-list {
+    height: calc(100% - 60px);
+  }
+  .result-generate {
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
   }
 }
 </style>
