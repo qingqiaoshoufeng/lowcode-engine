@@ -34,6 +34,9 @@
                   />
                   <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
                 </div>
+                <div class="isRemember">
+                  <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
+                </div>
                 <van-button
                     class="submit"
                     round
@@ -58,6 +61,7 @@ import { showToast } from "vant";
 const store = useStore()
 const imgUrl = ref(null)
 const clickNumber = ref(0)
+const isRemember = ref(false)
 console.log(store);
 const loginForm = ref({
   loginid: '',
@@ -89,6 +93,7 @@ const handleUserLogin = async () => {
   })
   if (res?.token) {
     localStorage.token = res.token
+    isRemember.value && localStorage.setItem('loginForm',JSON.stringify(loginForm.value))
     await initStore()
     router.replace({
       name:'Home'
@@ -100,7 +105,15 @@ const getCode = async ()=>{
   imgUrl.value = await getVerificationCode()
 }
 
+const autoLoginInfo = ()=>{
+  const info = localStorage.getItem('loginForm')
+  if(info){
+    loginForm.value = JSON.parse(info)
+  }
+}
+
 onMounted(()=>{
+  autoLoginInfo()
   getCode()
 })
 
@@ -147,6 +160,16 @@ const handleSwitch = () => {
         background: #fff;
         padding:46px 16px 0 16px;
         margin-top: 26px;
+    }
+    .isRemember{
+      margin-top: 21px;
+      font-size: 16px;
+      ::v-deep(.van-checkbox__label){
+        font-size: 14px;
+        font-family: PingFangSC, PingFang SC;
+        font-weight: 400;
+        color: #545A66;
+      }
     }
     ::v-deep .van-field{
         background-color: #F0F5F8 !important;
