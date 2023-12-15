@@ -186,7 +186,7 @@ const onSearchCallback = () => {
 }
 
 const onSearchChange = () => {
-  filterFormState.value.configType = '1'
+  filterFormState.value.configType = activeKey.value
   filterFormState.value.configName = ''
   searchDimension.value = 2
   dataTimeSource.value = ''
