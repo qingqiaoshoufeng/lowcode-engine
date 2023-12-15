@@ -47,7 +47,6 @@ const getFIleList = (res)=>{
       businessObjId: res.boUserNoticeId,
       businessType: 'file',
     }).then((res) => {
-      debugger;
       form.value.attach = res.data.map((item) => {
         return {
           ...item,

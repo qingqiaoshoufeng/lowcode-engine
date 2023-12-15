@@ -157,7 +157,6 @@ const validateProgress = async()=>{
 watch(
   () => form.value,
   () => {
-    debugger
     validateProgress()
     // nextTick(() => {
     //   Object.keys(form.value).forEach((key) => {

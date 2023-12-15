@@ -58,7 +58,6 @@ const { loading, submit } = useSubmit(() => {
   emits('finishCallback')
 }, {
   submitFn: () => {
-    debugger
     const { currentRow, type, selectedKeys } = props
     const { rejectCause, rejectRemark } = form.value
     let ids = []
@@ -85,7 +84,6 @@ const { loading, submit } = useSubmit(() => {
 
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
-    debugger
     formRef.value.validate().then(async (values) => {
       await submit()
       props.finishCallback()

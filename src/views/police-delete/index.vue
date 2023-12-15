@@ -103,7 +103,6 @@ const onTimeChange = (value) => {
 };
 
 const onSearchConfirm = () => {
-  debugger;
   showLoadingToast();
   proListRef.value.filter().then((res) => {
     closeToast();
@@ -115,7 +114,6 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  debugger;
   const res = store.getters?.["dict/filterDicts"](['JQ_TYPE'], null, false);
   searchOptions.value[2].options = res.JQ_TYPE
 
