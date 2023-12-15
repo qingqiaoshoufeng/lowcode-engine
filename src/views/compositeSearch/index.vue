@@ -25,21 +25,6 @@ const searchDimension = ref(2)
 
 const dataTimeSource = ref('')
 
-const keyComputed = computed(() => {
-  switch (searchType.value) {
-    case 1:
-      return 'policeMessage'
-    case 2:
-      return 'dispatchStationMessage'
-    case 3:
-      return 'dispatchMessage'
-    case 4:
-      return 'fireMessage'
-    default:
-      return ''
-  }
-})
-
 provide('form', form)
 
 provide('searchType', searchType)
@@ -77,14 +62,6 @@ const onSearchCallback = () => {
 
 const onSearchChange = () => {
   initFormByType(searchType.value)
-  // if (keyComputed.value) {
-  //   nextTick(() => {
-  //     document?.querySelector('.composite-search-form')?.querySelector(`#${keyComputed.value}-title`)?.scrollIntoView({
-  //       behavior: 'smooth',
-  //       block: 'start',
-  //     })
-  //   })
-  // }
 }
 
 const onInitCallback = (res) => {
