@@ -77,7 +77,6 @@ const defaultFilterValue = {
   onlyMy: false,
   time: getLastMonth(),
   applyGroup: [],
-  warningType: [],
   warningTag: [],
   cancelReason: null,
 };
@@ -104,6 +103,7 @@ const onTimeChange = (value) => {
 };
 
 const onSearchConfirm = () => {
+  debugger;
   showLoadingToast();
   proListRef.value.filter().then((res) => {
     closeToast();
@@ -115,6 +115,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
+  debugger;
   const res = store.getters?.["dict/filterDicts"](['JQ_TYPE'], null, false);
   searchOptions.value[2].options = res.JQ_TYPE
 
@@ -134,7 +135,7 @@ onMounted(() => {
       rowKey="boFireWarningId"
       :showLoad="false"
     >
-      <template #search="{ tabsActive, filterFormState, resetForm }">
+      <template #search="{ tabsActive, filterFormState,resetForm }">
         <div class="list-tabs" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
             v-model:value="filterFormState.time"
@@ -143,7 +144,7 @@ onMounted(() => {
           />
           <SelectMore
             :options="searchOptions"
-            :reset-fn="resetForm"
+            :resetFn="resetForm"
             @confirmCallback="onSearchConfirm"
           />
         </div>
