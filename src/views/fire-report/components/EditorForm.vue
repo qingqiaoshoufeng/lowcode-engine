@@ -26,7 +26,7 @@ import { useOptions } from '@/hooks/useOptions.js'
 // import { useSystemDict } from '@/store/index.js'
 import { useModal } from '@/hooks/useModal.js'
 import { useSuccess } from '@/hooks/useSuccess.js'
-import { useRerender } from '@/hooks/useRerender.js'
+// import { useRerender } from '@/hooks/useRerender.js'
 import { getTypeText, scrollFormFailed } from '@/utils/tools.js'
 import {
   effect, exitNonConformance, gender, injuryType, install, isNot, isResearch,
@@ -125,7 +125,7 @@ const { options } = useOptions()
 
 const { show } = useModal()
 
-const { showCurrentDom } = useRerender(props.renderDom)
+// const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
@@ -137,11 +137,10 @@ const validateProgress = async()=>{
     try {
       const res = await formRef.value.validate()
     } catch (error) {
-      console.log(error);
-      console.log(error,'resres');
+      // console.log(error,'resres');
     }
     const statusMap = formRef.value.getValidationStatus()
-    console.log(statusMap,'statusMap');
+    // console.log(statusMap,'statusMap');
     const statusList = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){
@@ -155,7 +154,7 @@ const validateProgress = async()=>{
     })
     formRef.value.resetValidation()
     hidevalidate.value = false
-    console.log(statusList,'result');
+    // console.log(statusList,'result');
   }
   // formRef.value.validate()
 
@@ -1035,7 +1034,7 @@ const onSideBarChange = (e, k) => {
       <div class="form-left">
         <van-sidebar 
           v-model="active" 
-          v-if="showPreview !== null && showCurrentDom"
+          v-if="showPreview !== null"
         >
           <van-sidebar-item 
             v-for="(item, k) in sections" 

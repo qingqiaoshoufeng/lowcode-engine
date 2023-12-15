@@ -131,11 +131,10 @@ const validateProgress = async()=>{
     try {
       const res = await formRef.value.validate()
     } catch (error) {
-      console.log(error);
-      console.log(error,'resres');
+      // console.log(error,'resres');
     }
     const statusMap = formRef.value.getValidationStatus()
-    console.log(statusMap,'statusMap');
+    // console.log(statusMap,'statusMap');
     const statusList = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){
@@ -149,7 +148,7 @@ const validateProgress = async()=>{
     })
     formRef.value.resetValidation()
     hidevalidate.value = false
-    console.log(statusList,'result');
+    // console.log(statusList,'result');
   }
   // formRef.value.validate()
 

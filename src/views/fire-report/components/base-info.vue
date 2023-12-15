@@ -1258,7 +1258,6 @@ const onFireLevel = () => {
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           :field-name="['basicInfo', 'firePattern', 'value']"
           placeholder="请选择事故形态"
-          v-preview-text="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1284,7 +1283,6 @@ const onFireLevel = () => {
           :field-name="['basicInfo', 'fireSite', 'value']"
           placeholder="请选择起火位置"
           :required="isRequired"
-          v-preview-text="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1339,7 +1337,6 @@ const onFireLevel = () => {
           title="请选择起火物类型"
           placeholder="请选择起火物类型或者指标说明"
           @change="initialFuelsTypeChange"
-          v-preview-text="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1394,7 +1391,6 @@ const onFireLevel = () => {
           title="请选择引火源类型"
           placeholder="请选择引火源类型或者指标说明"
           @change="initialFuelsTypeChange"
-          v-preview-text="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
