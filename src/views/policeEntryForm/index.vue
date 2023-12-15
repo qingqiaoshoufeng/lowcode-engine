@@ -422,11 +422,11 @@ const { loading, submit } = useSubmit((res) => {
       areaDutyGroup: values.areaDutyGroup.map(item => item.organizationid).join(','), // 取最后一级
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',
       naturalDisasterType: values.naturalDisasterType ? values.naturalDisasterType.pop() : '',
-      headquarters: values.headquarters ? values.headquarters.map(item => item.organizationid).join(',') : '',
-      otherProvince: values.otherProvince ? values.otherProvince.map(item => (item.organizationid || item.value)).join(',') : '',
-      otherProvinceName: values.otherProvince ? values.otherProvince.map(item => (item.name || item.label)).join(',') : '',
-      otherCity: values.otherCity ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
-      otherCityName: values.otherCity ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
+      headquarters: values.headquarters?.length > 0 ? values.headquarters.map(item => item.organizationid).join(',') : '',
+      otherProvince: values.otherProvince?.length > 0 ? values.otherProvince.map(item => (item.organizationid || item.value)).join(',') : '',
+      otherProvinceName: values.otherProvince?.length > 0 ? values.otherProvince.map(item => (item.name || item.label)).join(',') : '',
+      otherCity: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
+      otherCityName: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
       warningTag: values.warningTag ? values.warningTag.map(item => (item.boFireTagId || item.value)).join(',') : '',
       warningTagName: values.warningTag ? values.warningTag.map(item => (item.tagName || item.label)).join(',') : '',
       warningExt1: values.warningTypeOther, // 警情类型其他
@@ -436,9 +436,9 @@ const { loading, submit } = useSubmit((res) => {
     if (boWarningYyjId) {
       params.boWarningYyjId = boWarningYyjId
     }
-    params.isOtherCity = params.otherCity ? '1' : '2'
-    params.isOtherProvince = params.otherProvince ? '1' : '2'
-    params.isHeadquarters = params.headquarters ? '1' : '2'
+    params.isOtherCity = params.otherCity?.length > 0 ? '1' : '2'
+    params.isOtherProvince = params.otherProvince?.length > 0 ? '1' : '2'
+    params.isHeadquarters = params.headquarters?.length > 0 ? '1' : '2'
     params.confirmFlag = props.isConfirm ? '1' : '2'
     return saveFireWarning(params)
   },

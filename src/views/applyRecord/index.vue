@@ -5,48 +5,48 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
-import ApplyDetail from './components/applyDetail.vue';
+import ApplyDetail from "./components/applyDetail.vue";
 import {
   generateColorByState,
   generateTextByStatus,
   getLastMonth,
   generateColorByType,
 } from "@/utils/tools.js";
-import { applyRecordType, applyStatus } from '@/utils/constants.js';
+import { applyRecordType, applyStatus } from "@/utils/constants.js";
 import { showLoadingToast, closeToast } from "vant";
 import { getApplyRecordList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { useModal } from '@/hooks/useModal.js'
+import { useModal } from "@/hooks/useModal.js";
 
 const searchOptions = ref([
   {
-    title: '选择时间',
-    type: 'select-range',
-    placeholder: '请选择时间',
-    value: 'time',
+    title: "选择时间",
+    type: "select-range",
+    placeholder: "请选择时间",
+    value: "time",
   },
   {
-    title: '申请单位',
-    type: 'select-org',
-    placeholder: '请选择申请单位',
+    title: "申请单位",
+    type: "select-org",
+    placeholder: "请选择申请单位",
     params: { permission: true },
     single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'applyUnit',
+    value: "applyUnit",
   },
   {
-    title: '状态',
-    type: 'select-single',
-    placeholder: '请选择状态',
+    title: "状态",
+    type: "select-single",
+    placeholder: "请选择状态",
     options: [],
-    fieldNames: { value: 'value', label: 'label' },
-    value: 'applyStatus',
+    fieldNames: { value: "value", label: "label" },
+    value: "applyStatus",
   },
-])
+]);
 
 const defaultFilterValue = {
-  applyType: '1',
+  applyType: "1",
   time: getLastMonth(),
   applyUnit: [],
   applyStatus: undefined,
@@ -59,8 +59,8 @@ const currentRow = ref(null);
 const proListRef = ref(null);
 
 const handleItem = (row) => {
-  currentRow.value = row
-  show.value.lookVisible = true
+  currentRow.value = row;
+  show.value.lookVisible = true;
 };
 
 const onTimeChange = (value) => {
@@ -75,10 +75,10 @@ const onSearchConfirm = () => {
   proListRef.value.filter().then((res) => {
     closeToast();
   });
-}
+};
 
 onMounted(() => {
-  searchOptions.value[2].options = applyStatus
+  searchOptions.value[2].options = applyStatus;
   nextTick(() => {
     proListRef.value?.filter();
   });
@@ -106,7 +106,7 @@ onMounted(() => {
             placeholder="请选择申请类型"
             title="请选择申请类型"
             label-width="0px"
-            style="margin-right: 10px;"
+            style="margin-right: 10px"
             :rules="[{ required: true, message: '请选择申请类型' }]"
             @change="onTimeChange"
           />
@@ -148,11 +148,7 @@ onMounted(() => {
             </span>
           </div>
           <div class="item-field">
-            <img
-              src="../../assets/images/icon-area@2x.png"
-              style="width: 13px; height: 15px; margin-right: 8px"
-              alt=""
-            />
+            <img src="../../assets/images/icon-area@2x.png" style="width: 13px; height: 15px;" alt="" />
             <div style="color: #929398">申请原因：</div>
             <div>{{ record.recheckReason || record.cancelReasonValue }}</div>
           </div>
@@ -161,7 +157,12 @@ onMounted(() => {
     </ProList>
 
     <!-- 申请单详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="申请单详情">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="申请单详情"
+    >
       <ApplyDetail
         :apply-type="proListRef?.query?.applyType"
         :current-row="currentRow"

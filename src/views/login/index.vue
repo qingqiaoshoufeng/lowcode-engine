@@ -1,52 +1,52 @@
 <template>
-    <div class="login">
-        <img class="logo" src="@/assets/images/login-logo.png" alt="">
-        <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
-        <div class="form">
-            <van-form @submit="handleUserLogin">
+  <div class="login">
+      <img class="logo" src="@/assets/images/login-logo.png" alt="">
+      <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
+      <div class="form">
+          <van-form @submit="handleUserLogin">
+              <van-field
+                  v-model="loginForm.loginid"
+                  left-icon="manager"
+                  name="validatorMessage"
+                  placeholder="请输入用户名"
+                  :required="true"
+                  :rules="[{ required: true, message: '请输入用户名' }]"
+              />
+              <van-field
+                  v-model="loginForm.password"
+                  left-icon="lock"
+                  name="validatorMessage"
+                  placeholder="请输入密码"
+                  type="password"
+                  :required="true"
+                  :rules="[{ required: true, message: '请输入密码' }]"
+              />
+              <div class="validator">
                 <van-field
-                    v-model="loginForm.loginid"
-                    left-icon="manager"
-                    name="validatorMessage"
-                    placeholder="请输入用户名"
-                    :required="true"
-                    :rules="[{ required: true, message: '请输入用户名' }]"
+                  class="verification"
+                  v-model="loginForm.jcaptchaCode"
+                  :left-icon="verification"
+                  name="validatorMessage"
+                  placeholder="请输入验证码"
+                  :required="true"
+                  :rules="[{ required: true, message: '请输入验证码' }]"
+                  type="number"
                 />
-                <van-field
-                    v-model="loginForm.password"
-                    left-icon="lock"
-                    name="validatorMessage"
-                    placeholder="请输入密码"
-                    type="password"
-                    :required="true"
-                    :rules="[{ required: true, message: '请输入密码' }]"
-                />
-                <div class="validator">
-                  <van-field
-                    class="verification"
-                    v-model="loginForm.jcaptchaCode"
-                    :left-icon="verification"
-                    name="validatorMessage"
-                    placeholder="请输入验证码"
-                    :required="true"
-                    :rules="[{ required: true, message: '请输入验证码' }]"
-                    type="number"
-                  />
-                  <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
-                </div>
-                <div class="isRemember">
-                  <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
-                </div>
-                <van-button
-                    class="submit"
-                    round
-                    block
-                    type="primary"
-                    native-type="submit"
-                >登录</van-button>
-            </van-form>
-        </div>
-    </div>
+                <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
+              </div>
+              <div class="isRemember">
+                <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
+              </div>
+              <van-button
+                  class="submit"
+                  round
+                  block
+                  type="primary"
+                  native-type="submit"
+              >登录</van-button>
+          </van-form>
+      </div>
+  </div>
 </template>
 
 <script setup>
@@ -64,152 +64,152 @@ const clickNumber = ref(0)
 const isRemember = ref(false)
 console.log(store);
 const loginForm = ref({
-  loginid: '',
-  password: '',
-  jcaptchaCode: '',
-  // ssoTag: 'abcdefg', // 跳过验证码验证
+loginid: '',
+password: '',
+jcaptchaCode: '',
+// ssoTag: 'abcdefg', // 跳过验证码验证
 })
 
 const initStore = async () => {
-  const storeList = ['rules', 'userInfo', 'dict','menuInfo']
-  const isInited = await Promise.all(
-    storeList.map(item => {
-      return store.dispatch(item + '/init')
-    })
-  )
-  return isInited
+const storeList = ['rules', 'userInfo', 'dict','menuInfo']
+const isInited = await Promise.all(
+  storeList.map(item => {
+    return store.dispatch(item + '/init')
+  })
+)
+return isInited
 }
 const handleUserLogin = async () => {
-  showToast({
-    message:'登录中...',
-    duration:0,
-    forbidClick:true
-  })
-  const { loginid, password, jcaptchaCode } = loginForm.value
-  const params = {
-    loginid: encrypt(loginid),
-    password: encrypt(password),
-    jcaptchaCode
+showToast({
+  message:'登录中...',
+  duration:0,
+  forbidClick:true
+})
+const { loginid, password, jcaptchaCode } = loginForm.value
+const params = {
+  loginid: encrypt(loginid),
+  password: encrypt(password),
+  jcaptchaCode
+}
+const res = await loginIn(params).catch(error => {
+  if (error) {
+    getCode()
   }
-  const res = await loginIn(params).catch(error => {
-    if (error) {
-      getCode()
-    }
+})
+if (res?.token) {
+  localStorage.token = res.token
+  const {jcaptchaCode,...rest} = loginForm.value
+  isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
+  await initStore()
+  closeToast()
+  router.replace({
+    name:'Home'
   })
-  if (res?.token) {
-    localStorage.token = res.token
-    const {jcaptchaCode,...rest} = loginForm.value
-    isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
-    await initStore()
-    closeToast()
-    router.replace({
-      name:'Home'
-    })
-  }
+}
 };
 
 const getCode = async ()=>{
-  imgUrl.value = await getVerificationCode()
+imgUrl.value = await getVerificationCode()
 }
 
 const autoLoginInfo = ()=>{
-  const info = localStorage.getItem('loginForm')
-  if(info){
-    loginForm.value = JSON.parse(info)
-  }
+const info = localStorage.getItem('loginForm')
+if(info){
+  loginForm.value = JSON.parse(info)
+}
 }
 
 onMounted(()=>{
-  autoLoginInfo()
-  getCode()
+autoLoginInfo()
+getCode()
 })
 
 const handleSwitch = () => {
-  clickNumber.value += 1
-  if (clickNumber.value > 7) {
-    window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
-    getCode()
-    showToast('已切换为测试环境')
-    window.checkAppVersion(false)
-  }
+clickNumber.value += 1
+if (clickNumber.value > 7) {
+  window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
+  getCode()
+  showToast('已切换为测试环境')
+  window.checkAppVersion(false)
+}
 }
 </script>
 
 <style scoped lang="scss">
 .login {
-    background: url('~@/assets/images/login-bg.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: 0% 0%;
-    overflow: hidden;
-    background-color: #fff;
+  background: url('~@/assets/images/login-bg.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  overflow: hidden;
+  background-color: #fff;
 
-    .logo {
-        height: 66px;
-        width: 68px;
-        margin: 50px auto 11px;
-        display: block;
-    }
+  .logo {
+      height: 66px;
+      width: 68px;
+      margin: 50px auto 11px;
+      display: block;
+  }
 
-    .title {
-        width: 264px;
-        height: 33px;
-        font-size: 24px;
-        font-family: STKaitiSC-Bold, STKaitiSC;
-        font-weight: bold;
-        color: #FFFFFF;
-        line-height: 33px;
-        text-align: center;
-        width: 100%;
+  .title {
+      width: 264px;
+      height: 33px;
+      font-size: 24px;
+      font-family: STKaitiSC-Bold, STKaitiSC;
+      font-weight: bold;
+      color: #FFFFFF;
+      line-height: 33px;
+      text-align: center;
+      width: 100%;
+  }
+  .form {
+      border-radius: 32px  32px  0px  0px;
+      background: #fff;
+      padding:46px 16px 0 16px;
+      margin-top: 26px;
+  }
+  .isRemember{
+    margin-top: 21px;
+    font-size: 16px;
+    ::v-deep(.van-checkbox__label){
+      font-size: 14px;
+      font-family: PingFangSC, PingFang SC;
+      font-weight: 400;
+      color: #545A66;
     }
-    .form {
-        border-radius: 32px  32px  0px  0px;
-        background: #fff;
-        padding:46px 16px 0 16px;
-        margin-top: 26px;
+  }
+  ::v-deep .van-field{
+      background-color: #F0F5F8 !important;
+      margin-top: 16px;
+  }
+  .submit{
+      margin-top: 65px;
+      background-color: #7485CB !important;
+      height: 36px;
+  }
+  .img{
+    width: 105px;
+    height: 40px;
+    margin-top: 17px;
+    img{
+      width: 100%;
+      height: 100%;
     }
-    .isRemember{
-      margin-top: 21px;
-      font-size: 16px;
-      ::v-deep(.van-checkbox__label){
-        font-size: 14px;
-        font-family: PingFangSC, PingFang SC;
-        font-weight: 400;
-        color: #545A66;
-      }
-    }
-    ::v-deep .van-field{
-        background-color: #F0F5F8 !important;
-        margin-top: 16px;
-    }
-    .submit{
-        margin-top: 65px;
-        background-color: #7485CB !important;
-        height: 36px;
-    }
-    .img{
-      width: 105px;
-      height: 40px;
-      margin-top: 17px;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .validator{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      .verification{
-        margin-right:12px;
-
-      }
-    }
+  }
+  .validator{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     .verification{
-      ::v-deep(.van-field__left-icon){
-        margin-top: 3px;
-      }
+      margin-right:12px;
+
     }
+  }
+  .verification{
+    ::v-deep(.van-field__left-icon){
+      margin-top: 3px;
+    }
+  }
 }
 </style>
 
