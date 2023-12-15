@@ -54,7 +54,7 @@ const options = {
     {
       name: '火灾起数',
       type: 'bar',
-      data: [5, 20, 36, 10, 10],
+      data: [],
       barWidth:14,
       color:'#5088EC',
     },
@@ -64,7 +64,7 @@ const options = {
 export default {
   name:'WayTime',
   getOptions(val = mockData){
-    if(!isType(val,'Array')) return []
+    if(!isType(val,'Array')) return options
     Array.from(Array(1).keys()).map(index=>{
       options.series[index].data = val[index]
     })

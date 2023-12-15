@@ -826,7 +826,6 @@ export const useFormConfig = (validateProgress) => {
       }
       else {
         const passFormItemNum = allFormItem.filter(i => i.validateStatus === 'success' && i.required).length
-
         form.value[key].validateStatus = allFormItemNum === passFormItemNum
         form.value[key].validateProgress = Math.round(passFormItemNum / allFormItemNum * 100)
       }

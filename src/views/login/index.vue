@@ -57,7 +57,7 @@ import { loginIn,getVerificationCode} from '@/apis/index.js'
 import router from '@/router/index.js'
 import { encrypt } from '@/utils/tools.js'
 import { useStore } from "vuex";
-import { showToast } from "vant";
+import { showToast,closeToast  } from "vant";
 const store = useStore()
 const imgUrl = ref(null)
 const clickNumber = ref(0)
@@ -80,6 +80,11 @@ const initStore = async () => {
   return isInited
 }
 const handleUserLogin = async () => {
+  showToast({
+    message:'登录中...',
+    duration:0,
+    forbidClick:true
+  })
   const { loginid, password, jcaptchaCode } = loginForm.value
   const params = {
     loginid: encrypt(loginid),
@@ -93,8 +98,10 @@ const handleUserLogin = async () => {
   })
   if (res?.token) {
     localStorage.token = res.token
-    isRemember.value && localStorage.setItem('loginForm',JSON.stringify(loginForm.value))
+    const {jcaptchaCode,...rest} = loginForm.value
+    isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
     await initStore()
+    closeToast()
     router.replace({
       name:'Home'
     })

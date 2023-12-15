@@ -129,7 +129,7 @@ const { showCurrentDom } = useRerender(props.renderDom)
 
 const { showSuccessModal } = useSuccess()
 
-const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig(validateProgress)
+const { form,isRequired, initFormByDetail, initFormWhenChange, initDraftRules, checkFieldWarning, generateRemarkField } = useFormConfig()
 
 const validateProgress = async()=>{
   if(formRef.value){

@@ -55,7 +55,7 @@ const options = {
           color: '#4DBBFF ',
         },
       },
-      data: mockData,
+      data: [],
       emphasis: {
         itemStyle: {
           shadowBlur: 10,
@@ -72,7 +72,7 @@ export default {
   name: 'FireArea',
   getOptions(val) {
     if (!isType(val, 'Array')) {
-      return {}
+      return options
     }
     Array.from(Array(1).keys()).forEach((index) => {
       options.series[index].data = val.map((item) => {

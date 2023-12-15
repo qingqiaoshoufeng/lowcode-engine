@@ -11,7 +11,7 @@ const options = {
     top: 10,
   },
   yAxis: {
-    data: ['居住场所', '交通工具', '厂房', '工地', '办公场所'],
+    data: [],
     axisLine: {
       show: false,
     },
@@ -50,7 +50,7 @@ const options = {
     {
       name: '火灾起数',
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20],
+      data: [],
       barWidth: 10,
       color: '#5088EC',
       // barGap: 0,
@@ -70,7 +70,7 @@ export default {
   name: 'FireSite',
   getOptions(val = mockData) {
     if (!isType(val, 'Array')) {
-      return {}
+      return options
     }
     const data = val.reduce((current, item) => {
       const { hzCount, firePlace } = item

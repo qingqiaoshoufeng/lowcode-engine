@@ -30,7 +30,7 @@ const options = {
     // }
   },
   xAxis: {
-    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+    data: [],
     axisLine:{
       show:false,
     },
@@ -75,7 +75,7 @@ const options = {
     {
       name: '火灾起数',
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20],
+      data: [],
       barWidth:10,
       color:'#FF8A42',
       barGap: 0,
@@ -84,7 +84,7 @@ const options = {
       name: '亡人数',
       yAxisIndex:1,
       type: 'bar',
-      data: [5, 20, 36, 10, 10, 20],
+      data: [],
       barWidth:10,
       color:'#4C81D3',
     }
@@ -94,7 +94,7 @@ const options = {
 export default {
   name:'FireInfo',
   getOptions(val){
-    if(!isType(val,'Array')) return {}
+    if(!isType(val,'Array')) return options
     const data = val.reduce((current,item)=>{
       const {hzCount,deCount,county} = item
       current[0].push(hzCount)

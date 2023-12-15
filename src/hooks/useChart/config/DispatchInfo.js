@@ -1,7 +1,7 @@
 import {isType} from '@/utils/types.js'
 
 const mockData = [
-  [320, 332, 301, 334, 390,10],
+  [],
 ]
 
 
@@ -18,7 +18,7 @@ const options = {
     zoomLock:true,
   },
   xAxis: {
-    data: ['下级单位简称1', '下级单位简称2', '下级单位简称3', '下级单位简称4', '下级单位简称5', '下级单位简称6'],
+    data: [],
     axisLine:{
       show:false,
     },
@@ -65,7 +65,7 @@ const options = {
 export default {
   name:'DispatchInfo',
   getOptions(val ){
-    if(!isType(val,'Array')) return {}
+    if(!isType(val,'Array')) return options
     const data = val.reduce((current,item)=>{
       const {avgTime,orgName} = item
       current[0].push(Number(avgTime))

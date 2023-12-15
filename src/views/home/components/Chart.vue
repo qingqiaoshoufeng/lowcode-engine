@@ -11,7 +11,7 @@ import useChat from '@/hooks/useChart/index.js'
 const chartRef = ref(null)
 const props = defineProps({
   chartData:{
-    type:[Array,Object]
+    type:[Array,Object,String]
   },
   type:{
     type:String,

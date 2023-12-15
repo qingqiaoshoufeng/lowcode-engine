@@ -56,7 +56,7 @@ const options = {
 export default {
   name:'FightingTime',
   getOptions(val = mockData){
-    if(!isType(val,'Array')) return mockData
+    if(!isType(val,'Array')) return options
     Array.from(Array(1).keys()).map(index=>{
       options.series[index].data = val[index].map((itm,idx)=>{
         return {

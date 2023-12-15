@@ -60,7 +60,10 @@ const props = defineProps({
   title:{
     type:String
   },
-  list:[],
+  list:{
+    type: Array,
+    default:()=>([])
+  },
   handleChange:{
     type:Function,
   }
@@ -107,7 +110,7 @@ const getStatusColor = (val) => {
 </script>
 <script>
 export default {
-  name:'DisplayCard'
+  name:'StatisticsInfo'
 }
 </script>
   
