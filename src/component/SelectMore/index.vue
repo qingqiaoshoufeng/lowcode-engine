@@ -164,6 +164,7 @@ defineOptions({
               v-model:value="query[item.value]"
               :required="false"
               :readonly="true"
+              :selectLeaf="false"
               label=""
             />
           </template>

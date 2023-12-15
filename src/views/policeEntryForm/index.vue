@@ -793,6 +793,7 @@ const onWarningOrgname = () => {
         v-if="!loadDetail"
         name="warningArea"
         v-model:value="form.warningArea"
+        label="行政区域："
         :showPreview="showPreview"
         :preview-text="form.warningAreaText?.length > 0 ? form.warningAreaText?.join('/') : form.warningAreaText"
         :readonly="showPreview"
