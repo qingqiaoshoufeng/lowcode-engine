@@ -16,6 +16,8 @@ const showPreview = inject('showPreview')
 
 const showDraft = inject('showDraft')
 
+const diyValidateMap = inject("diyValidateMap");
+
 const options = inject('options')
 
 const isRequired = inject('isRequired')
@@ -70,6 +72,9 @@ const validateDirectDamage = (val) => {
     // callback()
   }
 }
+const directDamageChange =()=>{
+  diyValidateMap.defaultKey = 'economicLoss.directDamage.value'
+}
 </script>
 
 <template>
@@ -118,6 +123,7 @@ const validateDirectDamage = (val) => {
           placeholder="请输入直接财产损失"
           aria-autocomplete="none"
           type="number" 
+          @change="directDamageChange"
         >
           <template v-slot:label="">
             <FieldAnnotation

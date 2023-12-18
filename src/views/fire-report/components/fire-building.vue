@@ -27,6 +27,8 @@ const editDiabled = ref(false)
 
 const ratingOptions = ref(options.value.fireResistanceRating)
 
+const diyValidateMap = inject("diyValidateMap");
+
 const showHousingLife = computed(() => {
   return form.value.basicInfo.firePlace?.text?.indexOf('居住场所') > -1
 })
@@ -83,6 +85,11 @@ const validateBuildFloor = (value) => {
   }
 }
 
+const buildFloorChange = ()=>{
+  checkFireResistanceRating(form, options)
+  diyValidateMap.defaultKey = 'fireBuilding.buildFloor.value'
+}
+
 const onBuildUse = (value, selectedOptions) => {
   const { buildType, buildFloor } = form.value.fireBuilding
   const filter = options.value.buildType?.filter(item => item.boDictId === buildType.value)
@@ -129,6 +136,10 @@ const validateFireFloor = (value) => {
     // callback()
     return true
   }
+}
+
+const fireFloorChange = ()=>{
+  diyValidateMap.defaultKey  = 'fireBuilding.fireFloor.value'
 }
 
 const onBuildTag = (val) => {
@@ -302,7 +313,7 @@ const onBuildTag = (val) => {
           aria-autocomplete="none"
           :disabled="editDiabled"
           placeholder="请输入建筑总楼层"
-          @change="checkFireResistanceRating(form, options)"
+          @change="buildFloorChange"
           type="digit" 
         >
           <template v-slot:label="">
@@ -330,7 +341,8 @@ const onBuildTag = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入失火楼层"
-          type="digit" 
+          type="digit"
+          @change="fireFloorChange"
         >
           <template v-slot:label="">
             <FieldAnnotation

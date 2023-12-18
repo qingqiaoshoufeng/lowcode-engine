@@ -45,6 +45,10 @@ import {
 import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
+const diyValidateMap = ref({
+  defaultKey:''
+})
+
 const props = defineProps({
   currentRow: {
     type: Object,
@@ -154,6 +158,9 @@ const validateProgress = async()=>{
     })
     formRef.value.resetValidation()
     hidevalidate.value = false
+    if(diyValidateMap.value.defaultKey){
+      formRef.value.validate(diyValidateMap.value.defaultKey)
+    }
     // console.log(statusList,'result');
   }
   // formRef.value.validate()

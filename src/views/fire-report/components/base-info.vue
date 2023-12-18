@@ -4,7 +4,7 @@ import AreaCascader from '@/component/AreaCascader/index.vue'
 import SelectDateTime from "@/component/SelectDateTime/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
-import { showDialog } from 'vant';
+import { showDialog, showToast } from 'vant';
 import store from '@/store/index.js'
 import dayjs from 'dayjs'
 // import { message, notification } from '@castle/ant-design-vue'
@@ -78,6 +78,7 @@ const show = ref({})
 const showOtherOrgRemark = ref(false)
 
 const ratingOptions = ref(options.value.fireResistanceRating)
+const diyValidateMap = inject("diyValidateMap");
 
 const fireTypeOptions = computed(() => {
   const types = options.value.fireType ? options.value.fireType[0].children?.slice(0, 6) : []
@@ -213,7 +214,9 @@ const validateFireDate = (value) => {
     return true
   }
 }
-
+const fireDateChange = ()=>{
+  diyValidateMap.defaultKey = 'basicInfo.fireDate.value'
+}
 const onArea = () => {
   form.value.basicInfo.isUrbanVillages.value = undefined
   form.value.basicInfo.otherArea.value = undefined
@@ -255,6 +258,10 @@ const validateBurnedArea = (val) => {
   }
 }
 
+const penaltyNumChange = ()=>{
+  diyValidateMap.defaultKey = 'caseHandling.penaltyNum.value'
+}
+
 const onIsInsurance = (e) => {
   if (e === '2') {
     form.value.basicInfo.insuranceInfo.value = undefined
@@ -263,7 +270,7 @@ const onIsInsurance = (e) => {
 
 const onFirePlace = () => {
   if (!options.value?.firePlace || !form.value.basicInfo.fireType?.value) {
-    // message.warning('请先选择火灾类型')
+    showToast('请先选择火灾类型')
   }
 }
 
@@ -280,6 +287,8 @@ const firePlaceChange = (value, selectedOptions) => {
   form.value.basicInfo.otherFirePlace.value = ''
 
   checkFireResistanceRating(form.value, options.value)
+
+  diyValidateMap.defaultKey = 'basicInfo.firePlace.value'
 }
 
 const fireTypeChange = (value, selectedOptions) => {
@@ -561,6 +570,7 @@ const onFireLevel = () => {
         placeholder="请选择严重程度"
         title="请选择严重程度"
         key="severity"
+        @change="onSeverity()"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -609,6 +619,7 @@ const onFireLevel = () => {
           label="起火时间："
           placeholder="请选择起火时间"
           :rules="[{ validator: validateFireDate, trigger: 'onBlur' }, ...form.basicInfo.fireDate.rules]"
+          @change="fireDateChange"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -790,6 +801,7 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入过火面积"
           type="number" 
+          @change="penaltyNumChange"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -844,6 +856,7 @@ const onFireLevel = () => {
           placeholder="请选择起火场所"
           :rules="form.basicInfo.firePlace.rules"
           @change="firePlaceChange"
+          @click="onFirePlace"
         >
          <template v-slot:label="">
             <FieldAnnotation

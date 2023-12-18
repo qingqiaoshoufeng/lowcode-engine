@@ -28,6 +28,8 @@ const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
 
+const diyValidateMap = inject("diyValidateMap");
+
 const disabledDate = (current) => {
   return current && current > Date.now()
 }
@@ -142,7 +144,9 @@ const validateCard = (value, rule) => {
     // callback()
   }
 }
-
+const idNumberChange = ()=>{
+  diyValidateMap.defaultKey = `casualtyWar.injuredList.${index}.idNumber`
+}
 watch(() => form.value.casualtyWar.injuredList, () => {
   const { injuredList } = form.value.casualtyWar
   injuredList.forEach((item) => {
@@ -449,6 +453,7 @@ const bigInjured = computed(() => {
             aria-autocomplete="none"
             placeholder="请输入证件号码"
             :name="`casualtyWar.injuredList.${index}.idNumber`"
+            @change="idNumberChange(index)"
           >
             <template v-slot:label="">
               <FieldAnnotation
