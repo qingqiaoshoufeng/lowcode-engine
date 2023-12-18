@@ -64,7 +64,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: "",
+    default: "请选择行政区域",
   },
   params: {
     type: Object,
@@ -200,9 +200,9 @@ const handleCheck = (item) => {
     emit("change", selectValue.value, selectItem.value, selectText.value);
     return
   } else if (props.single && !item.checked) {
-    selectValue.value = selectValue.value.filter((temp) => temp !== item.boAreaId);
-    selectItem.value = selectItem.value.filter((temp) => temp.boAreaId !== item.boAreaId);
-    selectText.value = selectItem.value?.map(item => item.areaName)?.join('/');
+    selectValue.value = [];
+    selectItem.value = [];
+    selectText.value = [];
     return
   }
 };
