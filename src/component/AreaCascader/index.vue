@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, useAttrs } from "vue";
+import { onMounted, ref, watch, useAttrs, nextTick } from "vue";
 import { getSystemArea } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
 import { cloneDeep } from 'lodash-es'
@@ -179,25 +179,27 @@ const handleCheck = (item) => {
         }
       })
     })
-    cloneDeep(treeData.value).reverse().forEach(arr => {
-      arr.forEach(i => {
-        if (i.boAreaId === item.boAreaId && i.checked) {
-          selectValue.value.push(i.boAreaId)
-          selectItem.value.push(i)
-        }
-        const parentIds = selectItem.value?.map(item => item.parentAreaId)?.join(',')
-        if (parentIds.indexOf(i.boAreaId) > -1) {
-          selectValue.value.push(i.boAreaId)
-          selectItem.value.push(i)
-        }
+    nextTick(() => {
+      cloneDeep(treeData.value).reverse().forEach(arr => {
+        arr.forEach(i => {
+          if (i.boAreaId === item.boAreaId && i.checked) {
+            selectValue.value.push(i.boAreaId)
+            selectItem.value.push(i)
+          }
+          const parentIds = selectItem.value?.map(item => item.parentAreaId)?.join(',')
+          if (parentIds.indexOf(i.boAreaId) > -1) {
+            selectValue.value.push(i.boAreaId)
+            selectItem.value.push(i)
+          }
+        })
       })
+      selectValue.value = selectValue.value.reverse();
+      selectItem.value = selectItem.value.reverse();
+      selectText.value = selectItem.value?.map(item => item.areaName)?.join('/');
+      emit("update:value", selectItem.value);
+      emit("update:text", selectText.value);
+      emit("change", selectValue.value, selectItem.value, selectText.value);
     })
-    selectValue.value = selectValue.value.reverse();
-    selectItem.value = selectItem.value.reverse();
-    selectText.value = selectItem.value?.map(item => item.areaName)?.join('/');
-    emit("update:value", selectItem.value);
-    emit("update:text", selectText.value);
-    emit("change", selectValue.value, selectItem.value, selectText.value);
     return
   } else if (props.single && !item.checked) {
     selectValue.value = [];
