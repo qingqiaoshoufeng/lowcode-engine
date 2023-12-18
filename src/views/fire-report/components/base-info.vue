@@ -639,7 +639,6 @@ const onFireLevel = () => {
             :rules="form.basicInfo.noDispatchArea.rules"
             v-model:value="form.basicInfo.noDispatchArea.value"
             :showPreview="showPreview"
-            :readonly="showPreview"
             :show-all-area="!!showPreview"
             :required="!showPreview"
           >
