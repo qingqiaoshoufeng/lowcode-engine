@@ -115,7 +115,7 @@ const props = defineProps({
   },
 })
 const diyValidateMap = ref({
-  defaultKey:''
+  defaultKey:[]
 })
 provide('diyValidateMap',diyValidateMap)
 
@@ -152,8 +152,10 @@ const validateProgress = async()=>{
     })
     formRef.value.resetValidation()
     hidevalidate.value = false
-    if(diyValidateMap.value.defaultKey){
-      formRef.value.validate(diyValidateMap.value.defaultKey)
+    if(diyValidateMap.value.defaultKey.length){
+      diyValidateMap.value.defaultKey.forEach((item)=>{
+        formRef.value.validate(item)
+      })
     }
     // console.log(statusList,'result');
   }

@@ -270,39 +270,39 @@ const validateDealEndDate = (value, rule) => {
 };
 
 const dispatchDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.dispatchDate.value'
-  checkAttendanceDate(form)
-  checkReturnSpeed(form)
+  diyValidateMap.value.defaultKey.push('basicInformation.dispatchDate.value')
+  checkAttendanceDate(form.value)
+  checkReturnSpeed(form.value)
 }
 const midwayReturnDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.midwayReturnDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.midwayReturnDate.value')
 }
 const attendanceDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.attendanceDate.value'
-  checkAttendanceDate(form)
-  checkReturnSpeed(form)
+  diyValidateMap.value.defaultKey.push('basicInformation.attendanceDate.value')
+  checkAttendanceDate(form.value)
+  checkReturnSpeed(form.value)
 }
 const carryoutDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.carryoutDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.carryoutDate.value')
 }
 const waterflowDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.waterflowDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.waterflowDate.value')
 }
 const extinctDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.extinctDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.extinctDate.value')
 }
 const endDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.endDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.endDate.value')
 }
 const evacuateDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.evacuateDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.evacuateDate.value')
 }
 const returnDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.midwayReturnDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.midwayReturnDate.value')
 }
 
 const dealEndDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInformation.dealEndDate.value'
+  diyValidateMap.value.defaultKey.push('basicInformation.dealEndDate.value')
 }
 
 const onDealEndDate = () => {

@@ -215,7 +215,7 @@ const validateFireDate = (value) => {
   }
 }
 const fireDateChange = ()=>{
-  diyValidateMap.defaultKey = 'basicInfo.fireDate.value'
+  diyValidateMap.value.defaultKey.push('basicInfo.fireDate.value')
 }
 const onArea = () => {
   form.value.basicInfo.isUrbanVillages.value = undefined
@@ -259,7 +259,7 @@ const validateBurnedArea = (val) => {
 }
 
 const penaltyNumChange = ()=>{
-  diyValidateMap.defaultKey = 'caseHandling.penaltyNum.value'
+  diyValidateMap.value.defaultKey.push('caseHandling.penaltyNum.value')
 }
 
 const onIsInsurance = (e) => {
@@ -288,7 +288,7 @@ const firePlaceChange = (value, selectedOptions) => {
 
   checkFireResistanceRating(form.value, options.value)
 
-  diyValidateMap.defaultKey = 'basicInfo.firePlace.value'
+  diyValidateMap.value.defaultKey.push('basicInfo.firePlace.value')
 }
 
 const fireTypeChange = (value, selectedOptions) => {

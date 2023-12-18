@@ -145,7 +145,7 @@ const validateCard = (value, rule) => {
   }
 }
 const idNumberChange = ()=>{
-  diyValidateMap.defaultKey = `casualtyWar.injuredList.${index}.idNumber`
+  diyValidateMap.value.defaultKey.push(`casualtyWar.injuredList.${index}.idNumber`)
 }
 watch(() => form.value.casualtyWar.injuredList, () => {
   const { injuredList } = form.value.casualtyWar

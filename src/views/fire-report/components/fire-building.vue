@@ -87,7 +87,7 @@ const validateBuildFloor = (value) => {
 
 const buildFloorChange = ()=>{
   checkFireResistanceRating(form, options)
-  diyValidateMap.defaultKey = 'fireBuilding.buildFloor.value'
+  diyValidateMap.value.defaultKey.push('fireBuilding.buildFloor.value')
 }
 
 const onBuildUse = (value, selectedOptions) => {
@@ -139,7 +139,7 @@ const validateFireFloor = (value) => {
 }
 
 const fireFloorChange = ()=>{
-  diyValidateMap.defaultKey  = 'fireBuilding.fireFloor.value'
+  diyValidateMap.value.defaultKey.push('fireBuilding.fireFloor.value')
 }
 
 const onBuildTag = (val) => {

@@ -73,7 +73,7 @@ const validateDirectDamage = (val) => {
   }
 }
 const directDamageChange =()=>{
-  diyValidateMap.defaultKey = 'economicLoss.directDamage.value'
+  diyValidateMap.value.defaultKey.push('economicLoss.directDamage.value')
 }
 </script>
 

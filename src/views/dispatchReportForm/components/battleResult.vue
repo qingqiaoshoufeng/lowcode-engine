@@ -56,10 +56,10 @@ const validateSurvive = (value, rule) => {
 };
 
 const rescueNumChange = ()=>{
-  diyValidateMap.value.defaultKey = 'battleResult.rescueNum.value'
+  diyValidateMap.value.defaultKey.push('battleResult.rescueNum.value')
 }
 const surviveNumChange = ()=>{
-  diyValidateMap.value.defaultKey = 'battleResult.surviveNum.value'
+  diyValidateMap.value.defaultKey.push('battleResult.surviveNum.value')
 }
 
 </script>

@@ -64,14 +64,14 @@ const validateEvacuate = (value, rule) => {
 };
 
 const dispatchDateChange = (val)=>{
-  diyValidateMap.value.defaultKey = 'basicInfoHead.dispatchDate.value'
+  diyValidateMap.value.defaultKey.push('basicInfoHead.dispatchDate.value')
 }
 const attendanceDateChange = ()=>{
-  diyValidateMap.value.defaultKey = 'basicInfoHead.attendanceDate.value'
+  diyValidateMap.value.defaultKey.push('basicInfoHead.attendanceDate.value')
 }
 
 const evacuateDateChange = ()=>{
-  diyValidateMap.value.defaultKey = 'basicInfoHead.evacuateDate.value'
+  diyValidateMap.value.defaultKey.push('basicInfoHead.evacuateDate.value')
 }
 
 // 计算指挥时长
