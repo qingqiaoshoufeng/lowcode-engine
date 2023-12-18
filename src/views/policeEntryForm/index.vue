@@ -179,7 +179,7 @@ form.value.warningName = computed(() => {
       result += `${userOrgName.value}接报一起虚假警`;
     }
   } else {
-    result += warningAreaText
+    result += warningAreaText?.length > 0
       ? `${warningAreaText?.[1]}${warningAreaText?.[2]}`
       : "";
   }
@@ -204,7 +204,7 @@ form.value.warningName = computed(() => {
       : "";
   }
   if (warningTypeText?.[0] === "社会救助") {
-    result += warningAreaText ? `${`${warningAreaText?.[3]}`}` : "";
+    result += warningAreaText?.length > 0 ? `${`${warningAreaText?.[3]}`}` : "";
     result += warningTypeText
       ? `${textFilter(warningTypeText, warningTypeText.length - 1)}`
       : "";
@@ -793,9 +793,9 @@ const onWarningOrgname = () => {
         v-if="!loadDetail"
         name="warningArea"
         v-model:value="form.warningArea"
+        label="行政区域："
         :showPreview="showPreview"
         :preview-text="form.warningAreaText?.length > 0 ? form.warningAreaText?.join('/') : form.warningAreaText"
-        :readonly="showPreview"
         :show-all-area="showPreview"
         :required="true"
         :rules="[{ required: true, message: '请选择行政区域' }]"

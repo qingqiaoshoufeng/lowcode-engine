@@ -11,7 +11,7 @@ import SelectSingle from '@/component/SelectSingle/index.vue';
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 import SelectOrg from "@/component/SelectOrg/index";
-import AreaCascader from "@/component/AreaCascader/index";
+import AreaCascader from "@/component/AreaCascader/index.vue";
 import SelectCar from '@/component/SelectCar/index.vue';
 import SelectPerson from '@/component/SelectPerson/index.vue';
 
@@ -225,6 +225,7 @@ defineExpose({
             :placeholder="`请选择${form.label}`"
             :params="{ staticFlag: searchDimension }"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
+            :selectLeaf="false"
             @change="onAreaChange"
           />
         </template>

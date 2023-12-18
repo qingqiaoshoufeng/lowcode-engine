@@ -1,21 +1,24 @@
 <script setup>
-import { onMounted, ref, watch, computed, useAttrs } from "vue";
-import { cloneDeep } from "lodash-es";
+import { onMounted, ref, watch, useAttrs, nextTick } from "vue";
 import { getSystemArea } from "@/apis/index.js";
-import { showLoadingToast, closeToast } from 'vant';
-import { findNodeFromTreeById } from '@/utils/tools.js';
+import { showLoadingToast, closeToast } from "vant";
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps({
-  width: {
-    type: String,
-    default: "200px",
-  },
   label: {
     type: String,
-    default: "行政区域：",
+    default: "",
   },
   value: {
-    type: [String, Array],
+    type: Array,
+    default: () => [],
+  },
+  text: {
+    type: Array,
+    default: () => [],
+  },
+  title: {
+    type: String,
     default: "",
   },
   reportName: {
@@ -42,6 +45,15 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  single: {
+    type: Boolean,
+    default: true,
+  },
+  selectLeaf: {
+    // 是否只选择叶子节点
+    type: Boolean,
+    default: true,
+  },
   showAllArea: {
     type: Boolean,
     default: false,
@@ -60,59 +72,186 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:value", "change"]);
-
-const areaOptions = ref([]);
-
-const areaCascaderValue = ref('');
-
-const areaValue = ref([]);
-
-const areaText = ref("");
-
-const selectVisible = ref(false);
+const emit = defineEmits(["update:value", "update:text", "change"]);
 
 const attrs = useAttrs();
 
-watch(() => props.value, (newValue) => {
-  if (newValue?.length > 0) {
-    areaValue.value = cloneDeep(newValue);
-    areaCascaderValue.value = cloneDeep(newValue)?.pop()
-  } else {
-    areaValue.value = []
-    areaText.value = ''
-  }
-}, { immediate: true });
+const selectVisible = ref(false);
 
-const returnLeaf = (item) => {
-  let isLeaf = !item.hasChild;
-  if (props.selectLevel > 0 && props.selectLevel === item.areaLvl) {
-    isLeaf = true;
+const tabs = ref([{ areaName: "请选择", boAreaId: 0 }]);
+
+const tabsActive = ref(0);
+
+const treeData = ref([]);
+
+const selectValue = ref([]);
+
+const selectItem = ref([]);
+
+const selectText = ref('');
+
+watch(() => props.value, (newVal, oldVal) => {
+  if (props.value?.length <= 0) {
+    selectItem.value = [];
+    selectValue.value = [];
+    selectText.value = '';
   }
-  return isLeaf;
+}, { immediate: true })
+
+const getItem = (item) => {
+  if (props.selectLevel > 0 && props.selectLevel === item.areaLvl) {
+    item.isLeaf = true;
+  } else {
+    item.isLeaf = !item.hasChild;
+  }
+  return {
+    ...item,
+    checked: false,
+    title: item.areaName,
+    key: item.boAreaId,
+  };
 };
 
-const returnChild = (item) => {
-  return item.hasChild ? [] : undefined
+const showCheck = (item) => {
+  if (props.selectLeaf) {
+    return item.isLeaf;
+  }
+  return true;
+};
+
+const handleShow = () => {
+  if (attrs?.disabled || props.showPreview) {
+    return
+  }
+  selectVisible.value = true;
+};
+
+const handleCancel = () => {
+  selectVisible.value = false;
+};
+
+const handleOk = () => {
+  emit("update:value", selectValue.value);
+  emit("update:text", selectText.value);
+  emit("change", selectValue.value, selectItem.value, selectText.value);
+  selectVisible.value = false;
+};
+
+const initValue = () => {
+  // 已经选中的要重置
+  const boAreaId = props.value?.pop()
+  treeData.value.forEach(arr => {
+    arr.forEach(i => {
+      if (i.boAreaId === boAreaId) {
+        i.checked = true
+      }
+    })
+  })
+  cloneDeep(treeData.value).reverse().forEach(arr => {
+    arr.forEach(i => {
+      if (i.boAreaId === boAreaId && i.checked) {
+        selectValue.value.push(i.boAreaId)
+        selectItem.value.push(i)
+      }
+      const parentIds = selectItem.value?.map(i => i.parentAreaId)?.join(',')
+      if (parentIds.indexOf(i.boAreaId) > -1) {
+        selectValue.value.push(i.boAreaId)
+        selectItem.value.push(i)
+      }
+    })
+  })
+  selectValue.value = selectValue.value.reverse();
+  selectItem.value = selectItem.value.reverse();
+  selectText.value = selectItem.value?.map(item => item.areaName)?.join('/');
 }
 
-watch(() => props.reportName, () => {
-  getSystemArea({
-    reportName: props.reportName,
-    showAllArea: props.showAllArea,
-    ...props.params,
-  }).then((res) => {
-    if (res) {
-      areaOptions.value = res.map((item) => {
-        return {
-          ...item,
-          isLeaf: returnLeaf(item),
-        };
-      });
-    }
-  });
+const handleCheck = (item) => {
+  // 单选
+  if (props.single && item.checked) {
+    selectValue.value = []
+    selectText.value = ''
+    selectItem.value = []
+    // 已经选中的要重置
+    treeData.value.forEach(arr => {
+      arr.forEach(i => {
+        if (i.boAreaId !== item.boAreaId && i.checked) {
+          i.checked = false
+        }
+      })
+    })
+    nextTick(() => {
+      cloneDeep(treeData.value).reverse().forEach(arr => {
+        arr.forEach(i => {
+          if (i.boAreaId === item.boAreaId && i.checked) {
+            selectValue.value.push(i.boAreaId)
+            selectItem.value.push(i)
+          }
+          const parentIds = selectItem.value?.map(item => item.parentAreaId)?.join(',')
+          if (parentIds.indexOf(i.boAreaId) > -1) {
+            selectValue.value.push(i.boAreaId)
+            selectItem.value.push(i)
+          }
+        })
+      })
+      selectValue.value = selectValue.value.reverse();
+      selectItem.value = selectItem.value.reverse();
+      selectText.value = selectItem.value?.map(item => item.areaName)?.join('/');
+      emit("update:value", selectItem.value);
+      emit("update:text", selectText.value);
+      emit("change", selectValue.value, selectItem.value, selectText.value);
+    })
+    return
+  } else if (props.single && !item.checked) {
+    selectValue.value = [];
+    selectItem.value = [];
+    selectText.value = [];
+    return
+  }
+};
+
+const handleEnter = (item) => {
+  if (item.hasChild) {
+    showLoadingToast();
+    getSystemArea({
+      parentAreaId: item.boAreaId,
+      reportName: props.reportName,
+      showAllArea: props.showAllArea,
+      ...props.params,
+    }).then((res) => {
+      closeToast();
+      const currentIndex = tabs.value.findIndex(
+        (node) => node.areaLvl === item.areaLvl
+      );
+      if (currentIndex > -1) {
+        treeData.value = treeData.value.slice(0, currentIndex + 1);
+        tabs.value = tabs.value.slice(0, currentIndex);
+        tabs.value.push(item);
+        tabs.value.push({ areaName: "请选择", boAreaId: 0 });
+        tabsActive.value = 0;
+      } else {
+        tabs.value = tabs.value.filter((tab) => tab.boAreaId !== 0);
+        tabs.value.push(item);
+        tabs.value.push({ areaName: "请选择", boAreaId: 0 });
+        tabsActive.value = 0;
+      }
+      treeData.value.push(res?.map(getItem));
+    });
+  }
+};
+
+const handleDelete = () => {
+  // 已经选中的要重置
+  treeData.value.forEach(arr => {
+    arr.forEach(i => {
+      if (i.boAreaId === selectItem.value?.[selectItem.value?.length - 1]?.boAreaId && i.checked) {
+        i.checked = false
+      }
+    })
+  })
+  selectValue.value = [];
+  selectText.value = '';
+  selectItem.value = [];
 }
-);
 
 onMounted(() => {
   if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
@@ -142,42 +281,19 @@ onMounted(() => {
       }),
     ]).then((res) => {
       if (res[3] && res[3].length > 0) {
-        res[2].forEach((item) => {
-          if (item.boAreaId === props.value[2]) {
-            item.children = res[3];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
+        treeData.value.unshift(res[3].map(getItem))
       }
       if (res[2] && res[2].length > 0) {
-        res[1].forEach((item) => {
-          if (item.boAreaId === props.value[1]) {
-            item.children = res[2];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
+        treeData.value.unshift(res[2].map(getItem))
       }
       if (res[1]) {
-        res[0].forEach((item) => {
-          if (item.boAreaId === props.value[0]) {
-            item.children = res[1];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
+        treeData.value.unshift(res[1].map(getItem))
       }
-      areaOptions.value = res[0].map((item) => {
-        return {
-          ...item,
-          isLeaf: returnLeaf(item),
-        };
-      });
-      areaText.value = areaValue.value?.map(item => {
-        const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: areaOptions.value }, item, 'boAreaId')
-        return temp?.areaName
-      })?.join('/')
+      treeData.value.unshift(res[0].map(getItem))
+      initValue()
     });
   } else if (props.showPreview && props.previewText) {
-    areaText.value = props.previewText
+    selectText.value = props.previewText
   } else {
     getSystemArea({
       reportName: props.reportName,
@@ -185,122 +301,147 @@ onMounted(() => {
       ...props.params,
     }).then((res) => {
       if (res) {
-        areaOptions.value = res.map((item) => {
-          return {
-            ...item,
-            children: returnChild(item),
-            isLeaf: returnLeaf(item),
-          };
-        });
+        treeData.value = [res.map(getItem)];
       }
     });
   }
 });
 
-const onChange = ({value, selectedOptions, tabIndex}) => {
-  if (selectedOptions?.length > 1 && !selectedOptions[selectedOptions.length - 1].hasChild) {
-    return
-  }
-  const targetOption = selectedOptions[tabIndex];
-  showLoadingToast()
-  getSystemArea({
-    parentAreaId: targetOption.boAreaId,
-    reportName: props.reportName,
-    showAllArea: props.showAllArea,
-    ...props.params,
-  }).then((res) => {
-    if (res) {
-      closeToast()
-      targetOption.children = res.map((item) => {
-        return {
-          ...item,
-          children: returnChild(item),
-          isLeaf: returnLeaf(item),
-        };
-      });
-    }
-  });
-};
-
-const onFinish = ({ selectedOptions }) => {
-  selectVisible.value = false;
-  areaValue.value = selectedOptions.map((option) => option.boAreaId);
-  areaText.value = selectedOptions.map((option) => option.areaName).join('/');
-  emit("update:value", areaValue.value);
-  emit("change", areaValue.value, selectedOptions);
-};
-
-const handleShow = () => {
-  if (attrs?.disabled || props.showPreview) {
-    return
-  }
-  selectVisible.value = true;
-};
-
 defineOptions({
   name: "AreaCascader",
 });
 </script>
-<script>
-export default {
-  name: 'AreaCascader',
-}
-</script>
 
 <template>
-  <template v-if="showPreview && previewText">
-    <van-field
-      v-model="areaText"
-      v-preview-text="showPreview"
-      is-link
-      v-bind="$attrs"
-      :required="required"
-      :readonly="readonly"
-      :label="label"
-      :placeholder="placeholder"
-      :rules="rules"
-    >
-    </van-field>
-  </template>
-  <template v-else>
-    <van-field
-      v-model="areaText"
-      v-preview-text="showPreview"
-      is-link
-      v-bind="$attrs"
-      :required="required"
-      :readonly="readonly"
-      :label="label"
-      :placeholder="placeholder"
-      :rules="rules"
-      @click="handleShow"
-    >
-      <template v-slot:label="" v-if="label">
-        <slot name="label">
-          <div class="field-annotation1">{{ label }}</div>
-        </slot>
-      </template>
-    </van-field>
-  </template>
-  <!-- 弹窗 -->
+  <van-field
+    v-model="selectText"
+    is-link
+    v-preview-text="showPreview"
+    v-bind="$attrs"
+    :readonly="readonly"
+    :required="required"
+    :label="label"
+    :placeholder="placeholder"
+    :rules="rules"
+    @click="handleShow"
+  >
+    <template v-slot:label="" v-if="label">
+      <slot name="label">
+        <div class="field-annotation">{{ label }}</div>
+      </slot>
+    </template>
+  </van-field>
   <van-popup v-model:show="selectVisible" position="bottom">
-    <div class="select-wrapper">
-      <van-cascader
-        v-model="areaCascaderValue"
-        :title="placeholder"
-        :options="areaOptions"
-        :field-names="{ value: 'boAreaId', text: 'areaName' }"
-        :placeholder="placeholder"
-        active-color="#1989fa"
-        @close="selectVisible = false"
-        @change="onChange"
-        @finish="onFinish"
-      />
+    <div class="area-cascader">
+      <div class="header">
+        <van-button type="default" size="small" @click="handleCancel">
+          取消
+        </van-button>
+        <div class="modal-title">{{ title }}</div>
+        <van-button type="primary" size="small" @click="handleOk">
+          确定
+        </van-button>
+      </div>
+      <div class="content-wrapper">
+        <div class="content-selects">
+          <van-tag
+            v-if="selectItem?.length > 0"
+            closeable
+            plain
+            size="medium"
+            type="primary"
+            @close="handleDelete()"
+          >
+            {{ selectItem?.map(temp => (temp.title || temp.areaName))?.join('/') }}
+          </van-tag>
+        </div>
+        <div class="content-tabs">
+          {{ tabs.value }}
+          <van-tabs v-model:active="tabsActive" swipe-threshold="1" shrink>
+            <van-tab
+              v-for="(temp, index) in tabs"
+              :title="temp.areaName"
+              :key="temp.boAreaId"
+              :name="temp.boAreaId"
+            >
+              <div class="content-list">
+                <div
+                  v-for="item in treeData[index]"
+                  :key="item.boAreaId"
+                  class="item"
+                  @click="handleEnter(item)"
+                >
+                  <div class="item-title">{{ item.areaName }}</div>
+                  <van-checkbox
+                    v-if="showCheck(item)"
+                    v-model="item.checked"
+                    @change="handleCheck(item)"
+                    @click.stop
+                  />
+                  <van-icon v-if="item.hasChild" name="arrow" class="icon-arrow" />
+                  <van-icon v-else name="arrow" class="icon-arrow" style="color: white;" />
+                </div>
+              </div>
+            </van-tab>
+          </van-tabs>
+        </div>
+      </div>
     </div>
   </van-popup>
 </template>
 
-<style lang="scss">
-.select-wrapper {
+<style lang="scss" scoped>
+.area-cascader {
+  display: flex;
+  flex-direction: column;
+  .header {
+    width: 100%;
+    height: 44px;
+    padding: 0 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    .modal-title {
+      color: #242424;
+      font-size: 16px;
+      flex: 1;
+      text-align: center;
+    }
+  }
+  .content-wrapper {
+    .content-selects {
+      height: 7vh;
+      padding: 10px 10px;
+      border-bottom: 1px solid #dcdee0;
+      overflow-y: auto;
+      span {
+        margin-bottom: 5px;
+        margin-right: 5px;
+      }
+    }
+    .content-tabs {
+    }
+    .content-list {
+      height: 50vh;
+      overflow-y: auto;
+      .item {
+        height: 42px;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        .item-title {
+          flex: 1;
+        }
+        .icon-arrow {
+          margin-left: 6px;
+        }
+        .item-success {
+          background-color: white;
+          border: white;
+          color: #1989fa;
+        }
+      }
+    }
+  }
 }
 </style>
