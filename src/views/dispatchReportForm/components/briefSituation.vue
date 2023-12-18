@@ -33,6 +33,8 @@ const showFireFighting = inject("showFireFighting");
 
 const showMainGroup = inject("showMainGroup");
 
+const diyValidateMap = inject("diyValidateMap");
+
 const { speedConfig } = store.state?.rules?.ruleConfig
 
 // 时速在 20 ~ 120，显示到场时速异常原因
@@ -267,6 +269,42 @@ const validateDealEndDate = (value, rule) => {
   }
 };
 
+const dispatchDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.dispatchDate.value'
+  checkAttendanceDate(form)
+  checkReturnSpeed(form)
+}
+const midwayReturnDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.midwayReturnDate.value'
+}
+const attendanceDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.attendanceDate.value'
+  checkAttendanceDate(form)
+  checkReturnSpeed(form)
+}
+const carryoutDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.carryoutDate.value'
+}
+const waterflowDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.waterflowDate.value'
+}
+const extinctDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.extinctDate.value'
+}
+const endDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.endDate.value'
+}
+const evacuateDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.evacuateDate.value'
+}
+const returnDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.midwayReturnDate.value'
+}
+
+const dealEndDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInformation.dealEndDate.value'
+}
+
 const onDealEndDate = () => {
   showDialog({ message: `警情处置结束时间指警情最终的处置时间，当需要人员留守时，警情处置结束时间不完全等于出动结束时间` });
 }
@@ -284,7 +322,7 @@ const onDealEndDate = () => {
       label="出动时间："
       placeholder="请选择出动时间"
       :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInformation.dispatchDate.rules]"
-      @change="checkAttendanceDate(form), checkReturnSpeed(form)"
+      @change="dispatchDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -308,6 +346,7 @@ const onDealEndDate = () => {
       label-width="108px"
       placeholder="请选择中途返回时间"
       :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInformation.midwayReturnDate.rules]"
+      @change="midwayReturnDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -330,7 +369,7 @@ const onDealEndDate = () => {
       label="到场时间："
       placeholder="请选择到场时间"
       :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInformation.attendanceDate.rules]"
-      @change="checkAttendanceDate(form), checkReturnSpeed(form)"
+      @change="attendanceDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -352,6 +391,7 @@ const onDealEndDate = () => {
       label="展开时间："
       placeholder="请选择展开时间"
       :rules="[{ validator: validateCarryout, trigger: 'onBlur' }, ...form.basicInformation.carryoutDate.rules]"
+      @change="carryoutDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -373,6 +413,7 @@ const onDealEndDate = () => {
       label="出水时间："
       placeholder="请选择出水时间"
       :rules="[{ validator: validateWaterflow, trigger: 'onBlur' }, ...form.basicInformation.waterflowDate.rules]"
+      @change="waterflowDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -437,6 +478,7 @@ const onDealEndDate = () => {
       label="扑灭时间："
       placeholder="请选择扑灭时间"
       :rules="[{ validator: validateExtinguish, trigger: 'onBlur' }, ...form.basicInformation.extinctDate.rules]"
+      @change="extinctDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -459,6 +501,7 @@ const onDealEndDate = () => {
       label="结束时间："
       placeholder="请选择结束时间"
       :rules="[{ validator: validateEnd, trigger: 'onBlur' }, ...form.basicInformation.endDate.rules]"
+      @change="endDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -481,6 +524,7 @@ const onDealEndDate = () => {
       label="撤离时间："
       placeholder="请选择撤离时间"
       :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInformation.evacuateDate.rules]"
+      @change="evacuateDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -502,6 +546,7 @@ const onDealEndDate = () => {
       label="归队时间："
       placeholder="请选择归队时间"
       :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInformation.returnDate.rules]"
+      @change="returnDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -574,6 +619,7 @@ const onDealEndDate = () => {
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
       right-icon="question-o"
       @click-right-icon.stop="onDealEndDate"
+      @change="dealEndDateChange"
     >
       <template v-slot:label="">
         <FieldAnnotation

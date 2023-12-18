@@ -23,6 +23,8 @@ const showHeadquarter = inject("showHeadquarter");
 
 const options = inject("options");
 
+const diyValidateMap = inject("diyValidateMap");
+
 const handleAddInjury = () => {
   form.value.casualtyWar.injuredList.push({
     // injuryType: '1',
@@ -101,6 +103,10 @@ const validateCard = (value, rule) => {
     return '';
   }
 };
+
+const idNumberChange = (index)=>{
+  diyValidateMap.value.defaultKey = `casualtyWar.injuredList.${index}.idNumber`
+}
 
 watch(
   () => form.value.casualtyWar.injuredList,
@@ -366,6 +372,7 @@ watch(
             label-width="110px"
             placeholder="请输入身份证号码"
             :rules="[{ validator: validateCard, trigger: 'blur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }]"
+            @change="idNumberChange(index)"
           >
             <template v-slot:label="">
               <FieldAnnotation

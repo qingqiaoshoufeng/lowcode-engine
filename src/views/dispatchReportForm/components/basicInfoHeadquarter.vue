@@ -16,6 +16,8 @@ const currentRow = inject("currentRow");
 
 const diffTime = ref("");
 
+const diyValidateMap = inject("currentRow");
+
 const validateDispatch = (value, rule) => {
   const { dispatchDate } = form.value.basicInfoHead;
   if (!value) {
@@ -60,6 +62,17 @@ const validateEvacuate = (value, rule) => {
     return "";
   }
 };
+
+const dispatchDateChange = (val)=>{
+  diyValidateMap.value.defaultKey = 'basicInfoHead.dispatchDate.value'
+}
+const attendanceDateChange = ()=>{
+  diyValidateMap.value.defaultKey = 'basicInfoHead.attendanceDate.value'
+}
+
+const evacuateDateChange = ()=>{
+  diyValidateMap.value.defaultKey = 'basicInfoHead.evacuateDate.value'
+}
 
 // 计算指挥时长
 watch(() => form.value.basicInfoHead, () => {
@@ -184,6 +197,7 @@ watch(() => form.value.deployEquipment, () => {
         label="出动时间："
         placeholder="请选择出动时间"
         :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
+        :change="dispatchDateChange"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -192,6 +206,7 @@ watch(() => form.value.deployEquipment, () => {
             field-module="basicInfoHead"
             :exist-data="fieldExist?.dispatchDate"
             @refresh-callback="refreshField"
+            
           />
         </template>
       </SelectDateTime>  
@@ -205,6 +220,7 @@ watch(() => form.value.deployEquipment, () => {
         label="到场时间："
         placeholder="请选择到场时间"
         :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
+        @change="attendanceDateChange"
       >
           <template v-slot:label="">
             <FieldAnnotation
@@ -226,6 +242,7 @@ watch(() => form.value.deployEquipment, () => {
         label="撤离时间："
         placeholder="请选择撤离时间"
         :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
+        @change="evacuateDateChange"
       >
         <template v-slot:label="">
           <FieldAnnotation

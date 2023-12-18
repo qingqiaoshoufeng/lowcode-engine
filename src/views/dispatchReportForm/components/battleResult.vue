@@ -13,6 +13,8 @@ const showPreview = inject("showPreview");
 
 const showMainGroup = inject("showMainGroup");
 
+const diyValidateMap = inject("diyValidateMap");
+
 const onSurviveNum = () => {
   const { rescueNum, surviveNum } = form.value.battleResult;
   if (rescueNum.value >= surviveNum.value) {
@@ -52,6 +54,14 @@ const validateSurvive = (value, rule) => {
     return "";
   }
 };
+
+const rescueNumChange = ()=>{
+  diyValidateMap.value.defaultKey = 'battleResult.rescueNum.value'
+}
+const surviveNumChange = ()=>{
+  diyValidateMap.value.defaultKey = 'battleResult.surviveNum.value'
+}
+
 </script>
 
 <template>
@@ -72,6 +82,7 @@ const validateSurvive = (value, rule) => {
           ...form.battleResult.rescueNum.rules,
         ]"
         @blur="onSurviveNum()"
+        @change="rescueNumChange"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -99,6 +110,7 @@ const validateSurvive = (value, rule) => {
           ...form.battleResult.surviveNum.rules,
         ]"
         @blur="onSurviveNum()"
+        @change="surviveNumChange"
       >
         <template v-slot:label="">
           <FieldAnnotation

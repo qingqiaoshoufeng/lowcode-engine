@@ -114,6 +114,10 @@ const props = defineProps({
     type: Function,
   },
 })
+const diyValidateMap = ref({
+  defaultKey:''
+})
+provide('diyValidateMap',diyValidateMap)
 
 const emits = defineEmits(['finishCallback'])
 
@@ -148,6 +152,9 @@ const validateProgress = async()=>{
     })
     formRef.value.resetValidation()
     hidevalidate.value = false
+    if(diyValidateMap.value.defaultKey){
+      formRef.value.validate(diyValidateMap.value.defaultKey)
+    }
     // console.log(statusList,'result');
   }
   // formRef.value.validate()
@@ -155,7 +162,7 @@ const validateProgress = async()=>{
 }
 watch(
   () => form.value,
-  () => {
+  (val1,val2) => {
     validateProgress()
     // nextTick(() => {
     //   Object.keys(form.value).forEach((key) => {
