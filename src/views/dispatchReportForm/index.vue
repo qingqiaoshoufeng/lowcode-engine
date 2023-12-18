@@ -141,7 +141,7 @@ const validateProgress = async()=>{
     // console.log(statusMap,'statusMap');
     const statusList = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
-      if(status === 'failed'){
+      if(status !== 'passed'){
         const typename = type.split('.')[0]
         current = [...new Set([...current,typename])]
       }
@@ -162,6 +162,8 @@ const validateProgress = async()=>{
   // formRef.value.validate()
 
 }
+
+provide('validateProgress',validateProgress)
 watch(
   () => form.value,
   (val1,val2) => {
@@ -1241,7 +1243,7 @@ const onSideBarChange = (e, k) => {
         <template v-for="(item, k) in sections" :key="k">
           <van-sidebar-item @click="onSideBarChange(item, k)">
             <template #title>
-              <div class="label_title">
+              <div class="label_title"> 
                 {{ item.title }}
                 <div class="tip-wrapper">
                   <img :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >

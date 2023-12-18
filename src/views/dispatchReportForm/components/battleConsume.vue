@@ -25,6 +25,8 @@ const showReinforce = inject("showReinforce");
 
 const dispatchTruckListOptions = ref([]);
 
+// const validateProgress = inject('validateProgress')
+
 const filterCar = (list) => {
   if (!list || list.length <= 0) {
     return [];
@@ -122,6 +124,7 @@ const handleAddAgent = () => {
     otherName: "",
     otherAmount: "",
   });
+  // validateProgress()
 };
 
 const handleDeleteAgent = (index) => {
@@ -136,6 +139,7 @@ const handleAddEquipments = () => {
     otherName: "",
     otherAmount: "",
   });
+  // validateProgress()
 };
 
 const handleDeleteEquipments = (index) => {
