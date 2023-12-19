@@ -58,8 +58,14 @@ export default {
           {{ item.createOrg }}
         </div>
         <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
-        <div v-if="item.advice">审核结果：{{ item.advice }}</div>
-        <div v-if="item.remark">审核意见：{{ item.remark }}</div>
+        <template v-if="item.transferType?.indexOf('驳回') > -1">
+          <div v-if="item.advice">驳回原因：{{ item.advice }}</div>
+          <div v-if="item.remark">驳回描述：{{ item.remark }}</div>
+        </template>
+        <template v-else>
+          <div v-if="item.advice">审核结果：{{ item.advice }}</div>
+          <div v-if="item.remark">审核意见：{{ item.remark }}</div>
+        </template>
         <div v-if="item.editContents?.length > 0" class="steps-history">
           <div class="sub-title">
             修改内容：
