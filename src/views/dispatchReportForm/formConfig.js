@@ -1195,6 +1195,9 @@ export const useFormConfig = () => {
     if (battleResult.rescueNum.value >= 0 || battleResult.evacuateNum.value >= 0) {
       content = content.replace('【抢救人数+疏散人数】', battleResult.rescueNum.value + battleResult.evacuateNum.value)
     }
+    else {
+      content = content.replace('【抢救人数+疏散人数】', 0)
+    }
     if (battleResult.emergencyNum.value || battleResult.emergencyNum.value === 0) {
       content = content.replace('【抢救财产价值】', battleResult.emergencyNum.value)
     }
