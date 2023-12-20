@@ -16,7 +16,7 @@ const currentRow = inject("currentRow");
 
 const diffTime = ref("");
 
-const diyValidateMap = inject("currentRow");
+const diyValidateMap = inject("diyValidateMap");
 
 const validateDispatch = (value, rule) => {
   const { dispatchDate } = form.value.basicInfoHead;
@@ -63,6 +63,42 @@ const validateEvacuate = (value, rule) => {
   }
 };
 
+const validateMidway = (value, rule) => {
+  const { dispatchDate, midwayReturnDate } = form.value.basicInfoHead
+  if (!value) {
+    if (!midwayReturnDate.rules[0].required) {
+      return ""
+    }
+    else {
+      return '请选择中途返回时间'
+    }
+  }
+  else if (midwayReturnDate.value?.valueOf() < dispatchDate.value?.valueOf()) {
+    return '中途返回时间不能早于出动时间'
+  }
+  else {
+    return ""
+  }
+}
+
+const validateReturn = (value, rule) => {
+  const { returnDate, midwayReturnDate } = form.value.basicInfoHead
+  if (!value) {
+    if (!returnDate.rules[0].required) {
+      return ""
+    }
+    else {
+      return '请选择归队时间'
+    }
+  }
+  else if (returnDate.value?.valueOf() < midwayReturnDate.value?.valueOf()) {
+    return '归队时间不能早于中途返回时间'
+  }
+  else {
+    return ""
+  }
+}
+
 const dispatchDateChange = (val)=>{
   diyValidateMap.value.defaultKey.push('basicInfoHead.dispatchDate.value')
 }
@@ -74,13 +110,22 @@ const evacuateDateChange = ()=>{
   diyValidateMap.value.defaultKey.push('basicInfoHead.evacuateDate.value')
 }
 
+const midwayReturnDateChange = () => {
+  diyValidateMap.value.defaultKey.push('basicInfoHead.midwayReturnDate.value')
+}
+
+const returnDateChange = () => {
+  diyValidateMap.value.defaultKey.push('basicInfoHead.returnDate.value')
+}
+
 // 计算指挥时长
 watch(() => form.value.basicInfoHead, () => {
   const { attendanceDate, evacuateDate } = form.value.basicInfoHead;
   if (attendanceDate.value && evacuateDate.value) {
     form.value.basicInfoHead.commandTime.value = evacuateDate.value?.valueOf() - attendanceDate.value?.valueOf();
     diffTime.value = formatDiff(attendanceDate.value?.valueOf(), evacuateDate.value?.valueOf());
-    console.log(diffTime.value)
+  } else {
+    diffTime.value = ''
   }
 }, { deep: true, immediate: true });
 
@@ -159,12 +204,26 @@ watch(() => form.value.deployEquipment, () => {
       (totalNum += quietCommunicateTruckList.value?.length);
   form.value.basicInfoHead.truckNum.value = totalNum > 0 ? totalNum : "";
 }, { deep: true, immediate: true });
+
+const onPresentFlag = () => {
+  if (form.value.basicInfoHead.presentFlag.value === '1') {
+    form.value.basicInfoHead.midwayReturnDate.value = undefined
+    form.value.basicInfoHead.returnDate.value = undefined
+  }
+  else if (form.value.basicInfoHead.presentFlag.value === '2') {
+    form.value.basicInfoHead.attendanceDate.value = undefined
+    form.value.basicInfoHead.evacuateDate.value = undefined
+    form.value.commandProcess.rescueMethod.value = ''
+    form.value.commandProcess.actionPlan.value = ''
+    form.value.basicInfoHead.commandTime.value = ''
+  }
+}
 </script>
 
 <template>
   <ProCard title="基本信息" id="basicInfoHead" :showOpenClose="!showPreview">
     <van-cell-group>
-      <van-field
+      <!-- <van-field
         v-model="form.basicInfoHead.headquarterName.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -186,6 +245,36 @@ watch(() => form.value.deployEquipment, () => {
               @refresh-callback="refreshField"
             />
           </template>
+      </van-field> -->
+      <van-field 
+        name="basicInfoHead.presentFlag.value" 
+        label="指挥部是否到场："
+        label-width="104px"
+        :rules="form.basicInfoHead.presentFlag.rules"
+        required
+        class="field-radio"
+      >
+        <template #input>
+          <van-radio-group
+            v-model="form.basicInfoHead.presentFlag.value"
+            v-preview-text="showPreview"
+            icon-size="16px"
+            direction="horizontal"
+            @change="onPresentFlag"
+          >
+            <van-radio name="1">到场</van-radio>
+            <van-radio name="2">未到场</van-radio>
+          </van-radio-group>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="指挥部是否到场："
+            remark-field="presentFlag"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.presentFlag"
+            @refresh-callback="refreshField"
+          />
+        </template>
       </van-field>
       <SelectDateTime
         v-model:value="form.basicInfoHead.dispatchDate.value"
@@ -211,6 +300,7 @@ watch(() => form.value.deployEquipment, () => {
         </template>
       </SelectDateTime>  
       <SelectDateTime
+        v-if="form.basicInfoHead.presentFlag.value === '1'"
         v-model:value="form.basicInfoHead.attendanceDate.value"
         :show-preview="showPreview"
         is-link
@@ -233,6 +323,7 @@ watch(() => form.value.deployEquipment, () => {
           </template>
       </SelectDateTime> 
       <SelectDateTime
+        v-if="form.basicInfoHead.presentFlag.value === '1'"
         v-model:value="form.basicInfoHead.evacuateDate.value"
         :show-preview="showPreview"
         is-link
@@ -253,7 +344,54 @@ watch(() => form.value.deployEquipment, () => {
             @refresh-callback="refreshField"
           />
         </template>
-      </SelectDateTime> 
+      </SelectDateTime>
+      <SelectDateTime
+        v-if="form.basicInfoHead.presentFlag.value === '2'"
+        v-model:value="form.basicInfoHead.midwayReturnDate.value"
+        :show-preview="showPreview"
+        is-link
+        required
+        name="basicInfoHead.midwayReturnDate.value"
+        title="请选择中途返回时间"
+        label="中途返回时间："
+        label-width="124px"
+        placeholder="请选择中途返回时间"
+        :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInfoHead.midwayReturnDate.rules]"
+        @change="midwayReturnDateChange"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="中途返回时间："
+            remark-field="midwayReturnDate"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.midwayReturnDate"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectDateTime>
+      <SelectDateTime
+        v-if="form.basicInfoHead.presentFlag.value === '2'"
+        v-model:value="form.basicInfoHead.returnDate.value"
+        :show-preview="showPreview"
+        is-link
+        required
+        name="basicInfoHead.returnDate.value"
+        title="请选择归队时间"
+        label="归队时间："
+        placeholder="请选择归队时间"
+        :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInfoHead.returnDate.rules]"
+        @change="returnDateChange"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="归队时间："
+            remark-field="returnDate"
+            field-module="basicInfoHead"
+            :exist-data="fieldExist?.returnDate"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectDateTime>
       <van-field
         v-model="form.basicInfoHead.personNum.value"
         v-preview-text="showPreview"
@@ -303,6 +441,7 @@ watch(() => form.value.deployEquipment, () => {
         </template>
       </van-field>
       <van-field
+        v-if="form.basicInfoHead.presentFlag.value === '1'"
         v-model="diffTime"
         v-preview-text="showPreview"
         :readonly="showPreview"

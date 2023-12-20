@@ -147,6 +147,7 @@ const directDamageChange =()=>{
           v-preview-text="showPreview"
           style="width: 100%"
           :maxlength="15"
+          :disabled="!importantEdit"
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入火灾现场处置费用（元)"
@@ -179,6 +180,7 @@ const directDamageChange =()=>{
             allow-clear
             aria-autocomplete="none"
             :maxlength="10"
+            :disabled="!importantEdit"
             placeholder="请输入人身伤亡医疗支出"
             @blur="checkFireInjuryCost(form)"
             type="number" 
@@ -208,6 +210,7 @@ const directDamageChange =()=>{
             allow-clear
             aria-autocomplete="none"
             :maxlength="10"
+            :disabled="!importantEdit"
             placeholder="请输入其他费用"
             type="number" 
           >

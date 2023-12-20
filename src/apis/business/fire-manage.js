@@ -26,6 +26,7 @@ export function getFireManageList(data) {
       limit: data.limit,
       onlyMy: data.onlyMy,
       fireCode: data.fireCode,
+      warningCode: data.warningCode,
       fireStatus: data.fireStatus?.join(','),
       fireDateStart: data.time && data.time[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
       fireDateEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',

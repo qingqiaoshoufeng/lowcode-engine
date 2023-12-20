@@ -887,8 +887,14 @@ export const useFormConfig = (validateProgress) => {
     if (casualtyWar.isDead.value === '1') {
       content = content.replace('【亡人数】', casualtyWar.deadList?.length || 0)
     }
+    else {
+      content = content.replace('【亡人数】', 0)
+    }
     if (casualtyWar.isInjured.value === '1') {
       content = content.replace('【伤人数】', (casualtyWar.injuredList?.length || 0) + (casualtyWar.injuryNum.value || 0))
+    }
+    else {
+      content = content.replace('【伤人数】', 0)
     }
     if (casualtyWar.isDead.value !== '1' && casualtyWar.isInjured.value !== '1') {
       content = content.replace('造成【亡人数】死【伤人数】伤', '无人员伤亡')
