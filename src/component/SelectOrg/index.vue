@@ -100,7 +100,7 @@ watch(() => props.value, (newVal, oldVal) => {
       selectText.value = [];
     }
   })
-}, { immediate: true })
+}, { immediate: true, deep: true })
 
 const renderChecked = (item) => {
   return selectValue.value?.indexOf(item.organizationid) > -1;
