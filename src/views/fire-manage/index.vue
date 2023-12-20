@@ -151,7 +151,7 @@ import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
-import { showToast,showLoadingToast } from 'vant';
+import { showToast, showLoadingToast, closeToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
@@ -205,6 +205,12 @@ const searchOptions = computed(()=>([
     type: 'input',
     placeholder: '请输入火灾编号',
     value: "fireCode",
+  },
+  {
+    title: '警情编号',
+    type: 'input',
+    placeholder: '请输入警情编号',
+    value: "warningCode",
   },
   {
     title: '是否轻微火灾',
@@ -287,6 +293,7 @@ const defaultFilterValue = {
   onlyMy: false,
   fireStatus: [],
   fireInfoTag: [],
+  warningCode: '',
   warningArea: [],
   orgId: [],
   time: getLastMonth(),

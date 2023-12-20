@@ -164,7 +164,7 @@ watch(() => form.value.deployEquipment, () => {
 <template>
   <ProCard title="基本信息" id="basicInfoHead" :showOpenClose="!showPreview">
     <van-cell-group>
-      <van-field
+      <!-- <van-field
         v-model="form.basicInfoHead.headquarterName.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -186,7 +186,7 @@ watch(() => form.value.deployEquipment, () => {
               @refresh-callback="refreshField"
             />
           </template>
-      </van-field>
+      </van-field> -->
       <SelectDateTime
         v-model:value="form.basicInfoHead.dispatchDate.value"
         :show-preview="showPreview"
