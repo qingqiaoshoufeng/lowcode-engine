@@ -199,6 +199,10 @@ export const useFormConfig = () => {
       title: '基本信息',
       fieldAnnotation: false, // 批注
       fieldWarning: '',
+      presentFlag: { // 指挥部是否到场
+        value: '1',
+        rules: [{ required: true, message: '请选择指挥部是否到场' }],
+      },
       headquarterName: { // 全勤指挥部名称
         value: undefined,
         // rules: [{ required: true, message: '请选择全勤指挥部' }],
@@ -212,6 +216,14 @@ export const useFormConfig = () => {
         rules: [{ required: true, message: '' }],
       },
       evacuateDate: { // 撤离时间
+        value: '',
+        rules: [{ required: true, message: '' }],
+      },
+      midwayReturnDate: { // 中途返回时间
+        value: '',
+        rules: [{ required: true, message: '' }],
+      },
+      returnDate: { // 归队时间
         value: '',
         rules: [{ required: true, message: '' }],
       },
@@ -1409,9 +1421,12 @@ export const useFormConfig = () => {
     form.value.basicInfoHead.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
     form.value.basicInfoHead.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(fireDispatch?.attendanceDate)
     form.value.basicInfoHead.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(fireDispatch?.evacuateDate)
-    form.value.basicInfoHead.personNum.value = fireDispatch?.personNum
-    form.value.basicInfoHead.truckNum.value = fireDispatch?.truckNum
-    form.value.basicInfoHead.commandTime.value = fireDispatch?.commandTime
+    form.value.basicInfoHead.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(fireDispatch?.midwayReturnDate)
+    form.value.basicInfoHead.returnDate.value = fireDispatch?.returnDate && dayjs(fireDispatch?.returnDate)
+    form.value.basicInfoHead.personNum.value = fireDispatchHead?.personNum
+    form.value.basicInfoHead.truckNum.value = fireDispatchHead?.truckNum
+    form.value.basicInfoHead.commandTime.value = fireDispatchHead?.commandTime
+    form.value.basicInfoHead.presentFlag.value = fireDispatchHead?.presentFlag
     // 人员信息
     form.value.personInfo.headLeader.value = fireDispatchHeadPerson?.headLeader?.split(',')
     form.value.personInfo.commandCenter.value = fireDispatchHeadPerson?.commandCenter?.split(',')

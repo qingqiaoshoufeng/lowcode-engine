@@ -92,11 +92,20 @@ onMounted(() => {
             <div class="item-type">
               <span>{{ record.warningTypeValue }}</span>
             </div>
-            <div class="item-field">
-              <img src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
-            </div>
+            <template v-if="searchType === 4">
+              <div class="item-field">
+                <img src="../../assets/images/icon-time@2x.png" alt="" />
+                <div style="color: #929398">起火时间：</div>
+                <div>{{ formatYmdHm(record.fireDate) }}</div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="item-field">
+                <img src="../../assets/images/icon-time@2x.png" alt="" />
+                <div style="color: #929398">接警时间：</div>
+                <div>{{ formatYmdHm(record.warningDate) }}</div>
+              </div>
+            </template>
             <div class="item-field">
               <img
                 src="../../assets/images/icon-area@2x.png"
