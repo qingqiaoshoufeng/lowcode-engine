@@ -280,8 +280,8 @@ onMounted(() => {
     <!-- 警情确认 -->
     <ProModal
       v-model:visible="show.confirmVisible"
-      :showBack="false"
-      :showHeader="true"
+      :showBack="true"
+      :showHeader="false"
       ok-text="跨省警情确认"
       title="警情确认"
     >

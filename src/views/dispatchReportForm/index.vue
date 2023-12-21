@@ -426,7 +426,7 @@ provide('dataType', 2)
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
-    loadDetail().then(res => {
+    loadDetail().finally(() => {
       resolve()
     })
   })
