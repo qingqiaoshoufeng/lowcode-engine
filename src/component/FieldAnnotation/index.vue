@@ -166,8 +166,6 @@ showConfirmDialog({
 
 }
 const openInfo = ()=>{
-  debugger
-  console.log(23333);
   showVisible.value = true
 }
 </script>
