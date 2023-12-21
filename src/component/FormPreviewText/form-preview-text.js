@@ -87,8 +87,9 @@ const handlePreview = (el, binding, vnode) => {
   
   // 屏蔽点击事件
   vnode.el.addEventListener('click', (event) => {
-    event.stopPropagation();
-    event.preventDefault();
+    vnode.el.style.pointEvent='none'
+    // event.stopPropagation();
+    // event.preventDefault();
   }, true)
   if(textValue && el.children[0] && el.children[0].ariaChecked){
     el.innerText = textValue

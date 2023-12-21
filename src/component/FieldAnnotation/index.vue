@@ -56,6 +56,8 @@ const showPreview = inject('showPreview', false)
 
 const fieldByState = inject('fieldByState', '')
 
+const isDetail = inject('isDetail')
+
 const localFireWarningId = inject('localFireWarningId', '')
 
 const localFireInfoId = inject('localFireInfoId', '')
@@ -165,7 +167,10 @@ showConfirmDialog({
   }); 
 
 }
-const openInfo = ()=>{
+const openInfo = (val)=>{
+  if(val === 'label' && isDetail === true){
+    return
+  }
   showVisible.value = true
 }
 </script>
@@ -254,7 +259,7 @@ export default {
         <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="openInfo">
       </div>
       <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->
-      <div v-if="label" class="label" @click.stop="showVisible = true" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
+      <div v-if="label" class="label" @click.stop="openInfo('label')" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
   </div>
 </template>
 
