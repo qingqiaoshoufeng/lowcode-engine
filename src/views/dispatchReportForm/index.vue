@@ -35,7 +35,6 @@ import {
   getFieldAnnotationDetail,
   getFireWarningDetail,
   getInputPerson,
-  getTruckMsg,
   getWeatherMsg,
   initDispatchReport,
   saveDispatchHeadquarter,
@@ -518,14 +517,6 @@ const initDict = () => {
       userInfo.value = store.getters?.["userInfo/userInfo"]
     }
     resolve()
-  })
-}
-
-const initTruckMsg = () => {
-  return new Promise((resolve) => {
-    getTruckMsg().then(res => {
-      // dispatchTruckListOptions.value = res.items || []
-    }).finally(() => resolve())
   })
 }
 
