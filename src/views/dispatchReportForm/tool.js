@@ -28,7 +28,7 @@ export const checkRescueNum = (form, prompt = true) => {
     form.battleResult.rescueNum.warning = true
     form.battleResult.fieldWarning = form.battleResult.fieldWarning.replace('rescueNum:false;', 'rescueNum:true;')
     prompt && notification.open({ message: '填报异常提醒', description: '抢救人数不能大于现场被困人数！', style: { backgroundColor: 'orange' } })
-    showToast('抢救人数不能大于现场被困人数！')
+    prompt && showToast('抢救人数不能大于现场被困人数！')
   }
   else {
     form.battleResult.rescueNum.warning = false
@@ -44,8 +44,7 @@ export const checkIsResponseTruck = (form, prompt = true) => {
     form.investForce.isResponseTruck.warning = true
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('isResponseTruck:false;', 'isResponseTruck:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: '人车配比不合理，请修改或备注！', style: { backgroundColor: 'orange' } })
-    showToast('人车配比不合理，请修改或备注！')
-      
+    prompt && showToast('人车配比不合理，请修改或备注！')
   }
   else {
     form.investForce.isResponseTruck.warning = false
@@ -61,7 +60,7 @@ export const checkTrappedPerson = (detail, form, prompt = true) => {
     form.basicInformation.trappedPerson.warning = true
     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('trappedPerson:false;', 'trappedPerson:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `一级警情或轻微火灾，被困人数合理范围为${trappedConfig?.value?.[0]}-${trappedConfig?.value?.[1]}人，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`一级警情或轻微火灾，被困人数合理范围为${trappedConfig?.value?.[0]}-${trappedConfig?.value?.[1]}人，请修改或备注！`)
+    prompt && showToast(`一级警情或轻微火灾，被困人数合理范围为${trappedConfig?.value?.[0]}-${trappedConfig?.value?.[1]}人，请修改或备注！`)
   }
   else {
     form.basicInformation.trappedPerson.warning = false
@@ -82,14 +81,14 @@ export const checkFireDistance = (form, prompt = true) => {
     form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
+    prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
   }
   if (Number(fireDistance.value) > distanceConfig?.[1]?.value) {
     form.basicInformation.fireDistance.warning = true
     form.basicInformation.fireDistance.warningText = `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`
     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`)
+    prompt && showToast(`行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`)
   }
 }
 
@@ -103,7 +102,7 @@ export const checkDispatchTruckList = (form, prompt = true) => {
     form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
+    prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
   }
   else {
     form.basicInformation.fireDistance.warning = false
@@ -124,7 +123,7 @@ export const checkDispatchNum = (form, prompt = true) => {
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('commander:false;', 'commander:true;')
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('firemen:false;', 'firemen:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `人车比低于${carRateConfig?.value?.[0]}:1，不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`人车比低于${carRateConfig?.value?.[0]}:1，不合理，请修改或备注！`)
+    prompt && showToast(`人车比低于${carRateConfig?.value?.[0]}:1，不合理，请修改或备注！`)
   }
   else if (dispatchTruckList.value?.length > 0 && commander.value && firemen.value
     && dispatchTruckList.value?.length * carRateConfig?.value?.[1] < commander.value?.length + firemen.value?.length) {
@@ -133,7 +132,7 @@ export const checkDispatchNum = (form, prompt = true) => {
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('commander:false;', 'commander:true;')
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('firemen:false;', 'firemen:true;')
     // prompt && notification.open({ message: '填报异常提醒', description: `人车比高于${carRateConfig?.value?.[1]}：1，不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    showToast(`人车比高于${carRateConfig?.value?.[1]}：1，不合理，请修改或备注！`)
+    prompt && showToast(`人车比高于${carRateConfig?.value?.[1]}：1，不合理，请修改或备注！`)
   }
   else {
     form.investForce.commander.warning = false

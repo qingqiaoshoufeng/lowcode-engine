@@ -151,15 +151,15 @@ const menus = [
     key: 'injuryFlag',
   },
   {
-    label: '人车比异常',
+    label: '人车比小于1或大于7',
     key: 'personCarRatioFlag',
   },
   {
-    label: '时速异常',
+    label: '时速小于5或大于120km/h',
     key: 'carSpeedFlag',
   },
   {
-    label: '现场距离异常',
+    label: '距离大于100公里或等于0',
     key: 'distanceFlag',
   },
   {

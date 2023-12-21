@@ -82,6 +82,7 @@ const onDelete = (file) => {
   <ProCard title="指挥过程" id="commandProcess" :showOpenClose="!showPreview">
     <van-cell-group>
       <van-field
+        v-if="form.basicInfoHead.presentFlag.value === '1'"
         v-model="form.commandProcess.rescueMethod.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -107,6 +108,7 @@ const onDelete = (file) => {
         </template>
       </van-field>
       <van-field
+        v-if="form.basicInfoHead.presentFlag.value === '1'"
         v-model="form.commandProcess.actionPlan.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
