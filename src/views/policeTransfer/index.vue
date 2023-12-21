@@ -146,7 +146,7 @@ const onSearchConfirm = () => {
 }
 
 const finishCallback = () => {
-  show.value.backVisible = true
+  show.value.backVisible = false
   show.value.transferVisible = false
   proListRef.value.filter()
 }

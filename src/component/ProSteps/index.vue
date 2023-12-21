@@ -62,6 +62,10 @@ export default {
           <div v-if="item.advice">驳回原因：{{ item.advice }}</div>
           <div v-if="item.remark">驳回描述：{{ item.remark }}</div>
         </template>
+        <template v-if="item.transferType?.indexOf('退回') > -1">
+          <div v-if="item.advice">退回原因：{{ item.advice }}</div>
+          <div v-if="item.remark">备注：{{ item.remark }}</div>
+        </template>
         <template v-else>
           <div v-if="item.advice">审核结果：{{ item.advice }}</div>
           <div v-if="item.remark">审核意见：{{ item.remark }}</div>
