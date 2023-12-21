@@ -37,6 +37,10 @@ const props = defineProps({
   isWarning:{
     type: Boolean,
     default: false,
+  },
+  width:{
+    type:String,
+    default:'calc(100% - 16px)'
   }
 })
 
@@ -169,7 +173,7 @@ export default {
 </script>
 
 <template>
-  <div class="field-annotation">
+  <div class="field-annotation" :style="{width:width}">
     <DialogInfo
       v-model:visible="showVisible"
       title="添加备注"

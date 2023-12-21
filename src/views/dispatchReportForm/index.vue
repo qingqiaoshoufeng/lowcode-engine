@@ -138,10 +138,10 @@ const validateProgress = async()=>{
       // console.log(error,'resres');
     }
     const statusMap = formRef.value.getValidationStatus()
-    // console.log(statusMap,'statusMap');
+    console.log(statusMap,'statusMap');
     const statusList = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
-      if(status !== 'passed'){
+      if(status === 'failed'){
         const typename = type.split('.')[0]
         current = [...new Set([...current,typename])]
       }
