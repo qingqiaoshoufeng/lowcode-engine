@@ -14,6 +14,7 @@ import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProSteps from "@/component/ProSteps/index.vue";
+import PoliceConfirm from "@/views/policeConfirm/police-confirm.vue";
 import { v4 as uuidv4 } from 'uuid'
 import {
   confirmPolice,
@@ -400,9 +401,6 @@ const { loading, submit } = useSubmit((res) => {
     emits('finishCallback')
   }
   else {
-    // showSuccessModal({ title: '发送成功！', okText: '查看已发送', pathName: 'police-manage' }, () => {
-    //   props.refreshCallback()
-    // })
     showToast('发送成功！')
     emits('finishCallback')
   }
@@ -590,11 +588,21 @@ const handleSubmit = () => {
 }
 
 const onSubmit = () => {
-  submit()
+  if ((props.isEdit || props.isConfirm) && (detail.value?.isOtherProvince === '1' && form.value.otherProvince?.length <= 0)) { // 修改跨省警情
+    showToast('跨省警情必须录入【增援总队】，有误可申请作废后重新创建警情！')
+  }
+  else if ((props.isEdit || props.isConfirm) && (detail.value?.isOtherProvince !== '1' && form.value.otherProvince?.length > 0)) { // 修改跨市警情、普通警情
+    showToast('跨市警情、普通警情不允许修改【增援总队】，有误可申请作废后重新创建警情！')
+  }
+  else if (props.isConfirm) { // 警情确认
+    show.value.confirmVisible = true
+  }
+  else {
+    submit()
+  }
 }
 
 const onFailed = (errorInfo) => {
-  console.log(errorInfo)
   if (errorInfo?.errors?.length > 0) {
     showToast('信息填写不完整，请检查填写内容！')
     scrollFormFailed()
@@ -637,6 +645,13 @@ onMounted(() => {
     userOrgName.value = store.getters?.["userInfo/userInfo"]?.USERMESSAGE?.orgName
   }
 });
+
+const confirmCallback = async (params) => {
+  show.value.confirmVisible = false
+  confirmPolice(params).then(async (res) => {
+    submit()
+  })
+}
 
 const handleLngLat = () => {
   if (props.isConfirm) {
@@ -1129,6 +1144,7 @@ const onWarningOrgname = () => {
               size="20"
               active-value="1"
               inactive-value="2"
+              :disabled="isConfirm"
             />
           </template>
         </template>
@@ -1433,7 +1449,7 @@ const onWarningOrgname = () => {
         :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队（本省）'}]"
         :required="true"
         label="增援支队（本省）："
-        label-width="136px"
+        label-width="142px"
         placeholder="无"
         title="请选择增援支队（本省）"
         class="special-place"
@@ -1519,6 +1535,11 @@ const onWarningOrgname = () => {
         派发
       </van-button>
     </div>
+    <div class="form-footer" v-if="!showPreview && isConfirm">
+      <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
+        跨省警情确认
+      </van-button>
+    </div>
 
     <ProModal v-model:visible="show.lngLatVisible" title="选择地图">
       <template #default="{ setHandleOk }">
@@ -1529,6 +1550,16 @@ const onWarningOrgname = () => {
           :select-lng="form.warningLng"
           :set-handle-ok="setHandleOk"
           @finish-callback="lngLatCallback"
+        />
+      </template>
+    </ProModal>
+    <!-- 警情确认说明 -->
+    <ProModal v-model:visible="show.confirmVisible" title="警情确认说明">
+      <template #default="{ setHandleOk }">
+        <PoliceConfirm
+          :current-row="currentRow"
+          :set-handle-ok="setHandleOk"
+          @finish-callback="confirmCallback"
         />
       </template>
     </ProModal>
