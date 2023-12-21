@@ -8,9 +8,9 @@
         :onTabFn="onTabChangeFn"
         title="我的收藏"
       >
-      <template #list="{ record,tabsActive }" >
+      <template #list="{ record,tabsActive }">
         <!-- 警情列表展示 -->
-        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===1">
+        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===1" :key="record.boFireWarningId">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -52,7 +52,7 @@
           </div>
         </div>
         <!-- 出动列表展示 -->
-        <div class="pro-list-item" @click="handleItem(record)" v-if="tabsActive ===2">
+        <div class="pro-list-item" @click="handleItem(record)" v-if="tabsActive ===2" :key="record.boFireDispatchId">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.dispatchStatusValue)">
@@ -99,7 +99,7 @@
           </div>
         </div>
         <!-- 火灾列表展示 -->
-        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===3">
+        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===3" :key="record.boFireInfoId">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
               <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
@@ -317,6 +317,7 @@ const onTabChangeFn = (val,val1)=>{
     '/acws/rest/biz/fireinfo/query'
   ]
   // tabType.value = paramsMap[val]
+  proListRef.value.list = []
   proListRef.value.query.url = paramsMap[val]
   title.value = titleMap[val]
   proListRef.value.filter()

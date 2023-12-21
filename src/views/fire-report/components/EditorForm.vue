@@ -46,8 +46,10 @@ import { showToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const diyValidateMap = ref({
-  defaultKey:''
+  defaultKey:[]
 })
+
+provide('diyValidateMap',diyValidateMap)
 
 const props = defineProps({
   currentRow: {

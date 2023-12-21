@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 // 获取收藏列表
 export const getMineCollect = (params)=>{
-  const {url,...rest} = params
+  const {url,page,...rest} = params
   const isPolice = url === '/acws/rest/biz/firewarning/query'
   return axios.get(url, { params:rest }).then((res) => {
     return {

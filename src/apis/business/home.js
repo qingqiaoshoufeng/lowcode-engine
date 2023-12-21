@@ -58,7 +58,8 @@ export function getNoticeDetail(params) {
 
 //  我的统计--我的消息--已读
 export function updateMessage(params) {
-  return axios.get('/acws/rest/biz/firestatistics/usermessage/update', { params })
+  const {id}= params
+  return axios.get(`/acws/rest/biz/firestatistics/usermessage/update/${id}`)
 }
 
 // 获取用户信息

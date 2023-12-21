@@ -23,7 +23,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item">
             <div class="item-header">
               <div class="item-title">{{ record.name }}</div>
               <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
