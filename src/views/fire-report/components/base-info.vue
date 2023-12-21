@@ -706,6 +706,7 @@ const onFireLevel = () => {
           placeholder="单位/户主/个体户名称"
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
+          label-width="105"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -747,6 +748,7 @@ const onFireLevel = () => {
           v-preview-text="showPreview"
           name="basicInfo.socialCreditCode.value"
           placeholder="单位统一社会信用代码"
+          label-width="105"
           :rules="form.basicInfo.socialCreditCode.rules"
         >
           <template v-slot:label="">
@@ -1321,6 +1323,7 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入起火物名称"
           name="basicInfo.initialFuels.value"
+          label-width="105"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1349,6 +1352,7 @@ const onFireLevel = () => {
           title="请选择起火物类型"
           placeholder="请选择起火物类型或者指标说明"
           @change="initialFuelsTypeChange"
+          label-width="105"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1375,6 +1379,7 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入引火源名称"
           name="basicInfo.igniteSource.value"
+          label-width="105"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1403,6 +1408,7 @@ const onFireLevel = () => {
           title="请选择引火源类型"
           placeholder="请选择引火源类型或者指标说明"
           @change="initialFuelsTypeChange"
+          label-width="105"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1454,6 +1460,7 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择受教育程度"
           title="请选择受教育程度"
+          label-width="105"
         >
         <template v-slot:label="">
           <FieldAnnotation
@@ -1749,6 +1756,7 @@ const onFireLevel = () => {
           placeholder="请选择监督检查情况"
           @change="onFireInspection"
           title="请选择事故牵头调查部门"
+          label-width="120"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1827,6 +1835,7 @@ const onFireLevel = () => {
           label="是否属于安全生产事故："
           class="field-radio"
           :required="isRequired"
+          label-width="105"
           :rules="form.basicInfo.isSafetyAccident.rules">
           <template #input>
             <van-radio-group

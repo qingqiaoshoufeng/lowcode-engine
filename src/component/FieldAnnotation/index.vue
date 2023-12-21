@@ -165,6 +165,11 @@ showConfirmDialog({
   }); 
 
 }
+const openInfo = ()=>{
+  debugger
+  console.log(23333);
+  showVisible.value = true
+}
 </script>
 <script>
 export default {
@@ -248,7 +253,7 @@ export default {
     </DialogInfo>
       <div class="tip-wrapper">
         <img v-if="isWarning" title="1111" class="field-wraning" src="@/assets/images/wraning-tip.png" >
-        <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="showVisible = true">
+        <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="openInfo">
       </div>
       <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->
       <div v-if="label" class="label" @click.stop="showVisible = true" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
@@ -278,6 +283,7 @@ export default {
     display: flex;
     align-items: center;
     height: 20px;
+    pointer-events: all;
   }
   // .field-wraning{
   //   position: absolute;
@@ -361,6 +367,8 @@ export default {
   .field-exist,.field-wraning{
     width: 14px;
     height: 14px;
+    pointer-events: all !important;
+    cursor: pointer;
     // visibility: hidden;
   }
 }

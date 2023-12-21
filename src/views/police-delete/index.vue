@@ -183,7 +183,7 @@ onMounted(() => {
           </div>
           <div class="item-field">
             <img
-              src="../../assets/images/icon-area@2x.png"
+              src="../../assets/images/icon_power@2x.png"
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />

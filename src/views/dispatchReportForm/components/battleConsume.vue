@@ -192,7 +192,7 @@ onMounted(() => {
         maxlength="100"
         name="battleConsume.wastageTruckExplain.value"
         label="车辆损耗说明："
-        label-width="110px"
+        label-width="120px"
         placeholder="请输入车辆损耗说明"
         :rules="form.battleConsume.wastageTruckExplain.rules"
       >
@@ -282,7 +282,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireGun.value"
           label="移动式消防炮(个)："
-          label-width="138px"
+          label-width="145px"
           placeholder="请输入移动式消防炮数量"
           :rules="form.battleConsume.fireGun.rules"
         >
@@ -304,7 +304,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.airForm.value"
           label="空气泡沫枪(个)："
-          label-width="120px"
+          label-width="130px"
           placeholder="请输入空气泡沫枪数量"
           :rules="form.battleConsume.airForm.rules"
         >
@@ -326,7 +326,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.formTank.value"
           label="泡沫液桶(个)："
-          label-width="110px"
+          label-width="115px"
           placeholder="请输入泡沫液桶数量"
           :rules="form.battleConsume.formTank.rules"
         >
@@ -390,7 +390,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireHydrantHandle.value"
           label="消防栓扳手(把)："
-          label-width="120px"
+          label-width="130px"
           placeholder="请输入消防栓扳手数量"
           :rules="form.battleConsume.fireHydrantHandle.rules"
         >
@@ -434,6 +434,7 @@ onMounted(() => {
           name="battleConsume.waterMainfold.value"
           label="分水器(只)："
           placeholder="请输入分水器数量"
+          label-width="100px"
           :rules="form.battleConsume.waterMainfold.rules"
         >
           <template v-slot:label="">
@@ -455,7 +456,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.entryTool.value"
           label="破拆工具(个)："
-          label-width="110px"
+          label-width="115px"
           placeholder="请输入破拆工具数量"
           :rules="form.battleConsume.entryTool.rules"
         >
@@ -477,6 +478,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireExtinguisher.value"
           label="灭火机(只)："
+          label-width="100px"
           placeholder="请输入灭火机数量"
           :rules="form.battleConsume.fireExtinguisher.rules"
         >
@@ -498,6 +500,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.firePump.value"
           label="手抬泵(个)："
+          label-width="100px"
           placeholder="请输入手抬泵量"
           :rules="form.battleConsume.firePump.rules"
         >

@@ -8,7 +8,7 @@
       title="火灾填报"
     >
       <template #list="{ record }">
-        <div class="list-item" @click="handleItem(record)">
+        <div class="list-item" @click.stop="handleclick({type:'look' ,record})">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
@@ -35,7 +35,7 @@
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
-            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
             <div style="color: #929398">派发单位：</div>
             <div>{{ record.createOrg }}</div>
           </div>
@@ -51,7 +51,7 @@
           </div>
           <div class="item-line" />
           <div class="item-operate">
-            <van-button
+            <!-- <van-button
               v-p="['admin', 'fire-report:look']"
               type="success"
               size="mini"
@@ -60,7 +60,7 @@
               @click.stop="handleclick({type:'look' ,record})"
             >
               查看
-            </van-button>
+            </van-button> -->
             <van-button
               v-p="['admin', 'fire-report:input']"
               type="success"

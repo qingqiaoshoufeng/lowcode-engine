@@ -54,7 +54,7 @@ const onHaveVolunteer = (e) => {
     <van-field 
       name="investForce.haveVolunteer.value" 
       label="是否有志愿队力量："
-      label-width="142px"
+      label-width="150px"
       :rules="form.investForce.haveVolunteer.rules"
       required
       class="field-radio"

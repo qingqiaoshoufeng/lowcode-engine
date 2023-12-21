@@ -1404,13 +1404,14 @@ const onWarningOrgname = () => {
         :options="options.headquarters"
         :field-names="{ value: 'organizationid', label: 'name' }"
         label="全勤指挥部："
-        label-width="102px"
         placeholder="未出动"
         title="请选择全勤指挥部"
         :rules="[{ required: false, validator: validateHeadquarters, message: '请选择全勤指挥部'}]"
         class="special-place"
         :class="{'special-header-data': showPreview && form.headquarters?.length <= 0}"
         :disabled="isConfirm"
+        :required="true"
+        label-width="105"
       >
         <template v-slot:label="">
           <FieldAnnotation

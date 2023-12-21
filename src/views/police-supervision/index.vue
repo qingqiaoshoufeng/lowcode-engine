@@ -24,7 +24,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click="handleLook(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningAddr }}</div>
               <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -51,8 +51,8 @@
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">稽查标签：</div>
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
+              <div style="color: #929398">稽查标签：</div> 
               <div>{{ record.auditLabel }}</div>
             </div>
             <!-- <div class="item-field">
@@ -62,7 +62,7 @@
             </div> -->
             <div class="item-line" />
             <div class="item-operate" @click.stop>
-              <van-button
+              <!-- <van-button
                 v-p="['admin', 'police-supervision:look']"
                 type="link"
                 size="mini"
@@ -71,13 +71,13 @@
                 @click="handleLook(record)"
               >
                 查看
-              </van-button>
+              </van-button> -->
               <van-button
                 v-p="['admin', 'police-supervision:back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                v-if="checkRejectState(record.warningStatusValue)"
+                :disabled="!checkRejectState(record.warningStatusValue)"
                 type="link"
                 @click="handleReject(record)"
               >
@@ -125,10 +125,10 @@ import { showToast,showLoadingToast,closeToast } from 'vant';
 onMounted(() => {
 })
 const menus = [
-  {
-    label: '作废警情',
-    key: 'cancelFlag',
-  },
+  // {
+  //   label: '作废警情',
+  //   key: 'cancelFlag',
+  // },
   {
     label: '跨省警情',
     key: 'crossProvinceFlag',

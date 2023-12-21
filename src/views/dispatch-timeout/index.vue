@@ -25,7 +25,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click="handleLook(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningAddr }}</div>
               <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -52,7 +52,7 @@
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
               <div style="color: #929398">超期类型：</div>
               <div>{{ record.overTimeType }}</div>
             </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="item-line" />
             <div class="item-operate" @click.stop>
-              <van-button
+              <!-- <van-button
                 v-p="['admin', 'dispatch-timeout:look']"
                 type="link"
                 size="mini"
@@ -75,7 +75,7 @@
                 @click="handleLook(record)"
               >
                 查看
-              </van-button>
+              </van-button> -->
               <van-button
                 v-p="['admin', 'dispatch-timeout:back']"
                 size="mini"

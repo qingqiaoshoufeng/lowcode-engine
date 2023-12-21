@@ -61,7 +61,7 @@ const onIsCommand = (e) => {
     <van-field 
       name="investForce.isCommand.value" 
       label="政府到场指挥情况："
-      label-width="142px"
+      label-width="150px"
       :rules="form.investForce.isCommand.rules"
       required
       class="field-radio"

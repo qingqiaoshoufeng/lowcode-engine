@@ -24,7 +24,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click="handleLook(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningAddr }}</div>
               <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -51,12 +51,12 @@
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
               <div style="color: #929398">稽查标签：</div>
               <div>{{ record.auditLabel }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
@@ -67,7 +67,7 @@
             </div> -->
             <div class="item-line" />
             <div class="item-operate" @click.stop>
-              <van-button
+              <!-- <van-button
                 v-p="['admin', 'fire-supervision:look']"
                 type="link"
                 size="mini"
@@ -76,13 +76,13 @@
                 @click="handleLook(record)"
               >
                 查看
-              </van-button>
+              </van-button> -->
               <van-button
                 v-p="['admin', 'fire-supervision:back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                v-if="checkInputRejectState(record.fireStatusValue)"
+                :disabled="!checkInputRejectState(record.fireStatusValue)"
                 type="link"
                 @click="handleReject(record)"
               >

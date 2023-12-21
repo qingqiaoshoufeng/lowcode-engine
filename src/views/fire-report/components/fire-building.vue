@@ -71,7 +71,7 @@ const validateBuildFloor = (value) => {
   }
   else if (!value && value !== 0) {
     if (!buildFloor.rules[0].required) {
-      callback()
+      // callback()
     }
     else {
       return '请输入建筑总楼层'

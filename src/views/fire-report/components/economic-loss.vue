@@ -152,6 +152,7 @@ const directDamageChange =()=>{
           aria-autocomplete="none"
           placeholder="请输入火灾现场处置费用（元)"
           type="number" 
+          label-width="115"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -184,6 +185,7 @@ const directDamageChange =()=>{
             placeholder="请输入人身伤亡医疗支出"
             @blur="checkFireInjuryCost(form)"
             type="number" 
+            label-width="115"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -213,6 +215,7 @@ const directDamageChange =()=>{
             :disabled="!importantEdit"
             placeholder="请输入其他费用"
             type="number" 
+            label-width="130"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -265,6 +268,7 @@ const directDamageChange =()=>{
             placeholder="请输入受灾户数"
             @blur="checkAffectedHouse(form)"
             type="number" 
+            label-width="140"
           >
             <template v-slot:label="">
                 <FieldAnnotation

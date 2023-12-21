@@ -24,7 +24,7 @@
         </div>
       </template>
       <template #list="{ record }">
-        <div class="list-item" @click="handleItem(record)">
+        <div class="list-item"  @click.stop="handleLook(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningAddr }}</div>
             <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
@@ -62,7 +62,7 @@
           </div> -->
           <div class="item-line" />
           <div class="item-operate" @click.stop>
-            <van-button
+            <!-- <van-button
               v-p="['admin', 'fire-report:look']"
               type="success"
               size="mini"
@@ -71,13 +71,13 @@
               @click.stop="handleLook(record)"
             >
               查看
-            </van-button>
+            </van-button> -->
             <van-button
               type="success"
               size="mini"
               color="#1989fa"
               class="item-btn"
-              v-if="tabType === 'running' && checkFireApproval(record.fireStatusValue)" 
+              :disabled="!(tabType === 'running' && checkFireApproval(record.fireStatusValue))"
               @click="handleReview(record)"
             >
               审核

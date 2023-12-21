@@ -7,7 +7,7 @@
         title="火灾修改"
       >
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)" v-if="checkChange(record)">
+          <div class="list-item" @click.stop="handleLook(record)" v-if="checkChange(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
               <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
@@ -34,7 +34,7 @@
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
@@ -71,6 +71,16 @@
             @finish-callback="refreshCallback"
           />
         </template>
+    </ProModal>
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true" :showHeader="false" 
+      title="火灾详情"
+      :ok-display="false"
+      :footer="null"
+      pro-card-id="card-wrap"
+    >
+      <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
   </div>
 </template>
@@ -132,6 +142,10 @@ const handleInput = (row) => {
 }
 const checkChange = (record) => {
   return record.updatePermission && (['待更正', '更正中', '被退回', '被驳回', '待完善'].includes(record.fireStatusValue) || record.taskId)
+}
+const handleLook = (row) => {
+  currentRow.value = row
+  show.value.lookVisible = true
 }
 
 // 查询辖区火灾

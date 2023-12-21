@@ -24,7 +24,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleItem(record)">
+          <div class="list-item" @click.stop="handleLook(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningName }}</div>
               <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
@@ -51,7 +51,7 @@
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
               <div style="color: #929398">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
@@ -75,7 +75,7 @@
                 class="item-collect"
                 @click="handleCollect(record, true)"
               />
-              <van-button
+              <!-- <van-button
                 v-p="['admin', 'fire-report:look']"
                 type="success"
                 size="mini"
@@ -84,7 +84,7 @@
                 @click.stop="handleLook(record)"
               >
                 查看
-              </van-button>
+              </van-button> -->
               <van-button
                 v-p="['admin', 'fire-report:look']"
                 type="success"
@@ -92,7 +92,8 @@
                 color="#1989fa"
                 class="item-btn"
                 @click.stop="handleRecheck(record)"
-                v-if="checkFireChangeState(record.fireStatusValue, record.updatePermission)"
+                :disabled="!checkFireChangeState(record.fireStatusValue, record.updatePermission)"
+
               >
                申请更正
               </van-button>
