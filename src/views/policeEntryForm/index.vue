@@ -1056,7 +1056,7 @@ const onWarningOrgname = () => {
         maxlength="50"
         required
         name="warningOrgname"
-        label-width="198px"
+        label-width="204px"
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
@@ -1238,7 +1238,7 @@ const onWarningOrgname = () => {
         :readonly="showPreview"
         name="warningCodeYyj"
         label="119警情编号："
-        label-width="108px"
+        label-width="112px"
         placeholder="请输入119警情编号"
         maxlength="50"
         :required="false"
