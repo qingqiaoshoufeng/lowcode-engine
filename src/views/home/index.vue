@@ -10,10 +10,10 @@
           <DisplayCard :info="policeCardInfo" color="blue"/>
         </div>
         <div>
-          <DisplayCard :info="fireCardInfo" color="red"/>
+          <DisplayCard :info="fireCardInfo" color="green"/>
         </div>
         <div>
-          <DisplayCard :info="dispatchCardInfo" color="green"/>
+          <DisplayCard :info="dispatchCardInfo" color="red"/>
         </div>
       </div>
       <NoticeList class="notice_list" :list="noticeList" @click="goNotice"/>
@@ -153,7 +153,7 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
           justify-content: center;
           
         }
-        .red{
+        .green{
           margin: 0 9px;
         }
       }
