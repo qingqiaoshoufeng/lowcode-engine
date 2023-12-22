@@ -122,7 +122,7 @@ const hidevalidate = ref(false)
 
 // provide('validateProgress',validateProgress)
 const emits = defineEmits(['finishCallback'])
-const isShowTemporary = inject('isShowTemporary')
+const isShowTemporary = inject('isShowTemporary',false)
 // const bus = inject('bus')
 
 const getSystemDictSync = store.getters['dict/getSystemDictSync']

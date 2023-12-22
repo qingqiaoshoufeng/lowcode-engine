@@ -56,7 +56,7 @@ const showPreview = inject('showPreview', false)
 
 const fieldByState = inject('fieldByState', '')
 
-const isDetail = inject('isDetail')
+const isDetail = inject('isDetail',true)
 
 const localFireWarningId = inject('localFireWarningId', '')
 
@@ -204,7 +204,7 @@ export default {
             </div>
             <div class="remark-item-content">
               <span class="content">{{ item.remarkContent }}</span>
-              <span class="cha" @click.stop="handleDelete(item)">×</span>
+              <span class="cha" @click.stop="handleDelete(item)" v-if="showAdd">×</span>
               <!-- <template v-if="item.flag === '1'">
                 <a-popconfirm
                   title="确定删除该备注？"

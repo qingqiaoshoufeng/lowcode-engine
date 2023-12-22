@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { getNoticeDetail,updateMessage,getAttachmentFile} from '@/apis/index.js'
+import { getNoticeDetail,updateNotice,getAttachmentFile} from '@/apis/index.js'
 import {ref} from 'vue'
 import dayjs from 'dayjs';
 import {useRoute} from 'vue-router'
@@ -66,7 +66,7 @@ const getDetail = ()=>{
       form.value.noticeType = res.noticeType
       form.value.noticeStatus = res.noticeStatus
       form.value.noticeBody = res.noticeBody
-      updateMessage({id:route.query.id})
+      updateNotice({id:route.query.id})
     }
     getFIleList(res)
     return res

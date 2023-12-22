@@ -98,6 +98,8 @@ provide('dataType', 1)
 
 provide('showPreview', ref(props.showPreview))
 
+provide('isDetail',props.showPreview)
+
 const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正

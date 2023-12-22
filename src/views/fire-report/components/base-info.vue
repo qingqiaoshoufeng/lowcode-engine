@@ -31,7 +31,7 @@ const severityConfig = store.state?.rules?.ruleConfig?.severityConfig|| []
 
 const form = inject('form')
 
-const isShowTemporary = inject('isShowTemporary')
+const isShowTemporary = inject('isShowTemporary',false)
 
 const formRef = inject('formRef')
 

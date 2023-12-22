@@ -128,6 +128,7 @@ import { generateColorByState ,checkInputRejectState} from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
 import { getFireSupervisionList } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import { showToast,showLoadingToast,closeToast } from 'vant';
 // import store from '@/store/index.js'
 

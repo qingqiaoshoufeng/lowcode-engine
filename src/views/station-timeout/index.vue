@@ -63,7 +63,7 @@
         </template>
     </ProList>
     <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+    <!-- <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
       <template v-slot="{setHandleOk}">
         <ApplyReject
           type="1"
@@ -73,11 +73,11 @@
           :finish-callback="finishCallback"
         />
       </template>
-    </DialogInfo>
+    </DialogInfo> -->
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+    <!-- <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
-    </ProModal>
+    </ProModal> -->
   </div>
 </template>
   

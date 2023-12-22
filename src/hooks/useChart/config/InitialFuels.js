@@ -1,7 +1,7 @@
 import { isType } from '@/utils/types.js'
 
 
-const colorList = ['#DFEEFF', '#FFC44B', '#3773FF', '#FB6716', '#16B9F3', '#62ECFE', '#CF2226', '#FF8F00', '#0A85FC']
+const colorList = ['#FFC44B', '#3773FF', '#FB6716', '#16B9F3', '#CF2226', '#FF8F00', '#0A85FC']
 const options = {
   tooltip: {
     show: true,
