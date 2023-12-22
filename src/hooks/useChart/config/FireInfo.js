@@ -111,6 +111,7 @@ export default {
     })
     options.xAxis.data = data[2]
     options.dataZoom.end = Math.floor(100*(3/data[2].length))
+    options.grid.left = `${Math.max(...data[0].map(item=>`${item}`.length))}` * 11 + 10
     return options
   }
 }

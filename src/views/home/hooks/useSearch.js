@@ -17,7 +17,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     cardList,
     FireInfoList:'', // 百万人口火灾
     DispatchInfoList: '', // 出动平均时长列表
-    InitialFuelsList:'',// 高频起火场所
+    InitialFuelsList:[],// 高频起火场所
     WayTimeList:"", // 到场时间列表
     FightingTimeList:'',
     rankList:[], // 排行榜
@@ -117,7 +117,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   // 获取火灾相关信息
   const getFireInfo = async (res) => {
     // state.FireInfoList = res?.dateAnalysisFourResult?.dateAnalysisFourResultListFire
-    state.InitialFuelsList = res?.dateAnalysisSevenResult?.dateAnalysisSevenResultList || ''
+    // state.InitialFuelsList = res?.dateAnalysisSevenResult?.dateAnalysisSevenResultList || []
     state.FireSiteList = res?.dateAnalysisFirePlaceResult?.firePlaceResultList?.reverse() || ''
   }
 
@@ -138,7 +138,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   }
 
   const getInitialFuelsList = (res) => {
-    const data = res?.dateAnalysisFirePlaceResult
+    const data = res?.dateAnalysisFirePlaceResult || []
     if (data) {
       state.InitialFuelsList = data.qhwResult
     }
