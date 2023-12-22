@@ -39,9 +39,26 @@ const proListRef = ref(null);
 
 const currentRow = ref(null);
 
+const initResultInfo = () => {
+  if (proListRef.value.query.type === 1) {
+    resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireWarning?.warningCount || 0 }</span>起警情记录`
+  } else if (proListRef.value.query.type === 2 || proListRef.value.query.type === 3) {
+    const num = proListRef.value.result?.fireDispatch?.dispatchCount || proListRef.value.result?.fireDispatchHead?.dispatchCount || 0 || 0
+    resultValue.value = `查询结果：共查询到<span style="color: red;">${ num }</span>起出动记录`
+  } else if (proListRef.value.query.type === 4) {
+    resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireInfo?.fireCount || 0 }</span>起火灾记录`
+  }
+}
+
 const onTabFn = (name, title) => {
+  if (proListRef.value.list?.length > 0) {
+    showLoadingToast();
+  }
   proListRef.value.query.type = name
-  proListRef.value.filter()
+  proListRef.value.filter().then(res => {
+    closeToast();
+    initResultInfo()
+  })
 }
 
 const handleItem = (row) => {
@@ -50,17 +67,8 @@ const handleItem = (row) => {
 };
 
 const handleSearch = () => {
-  showLoadingToast();
   proListRef.value.filter().then((res) => {
-    if (proListRef.value.query.type === 1) {
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireWarning?.warningCount || 0 }</span>起警情记录`
-    } else if (proListRef.value.query.type === 2 || proListRef.value.query.type === 3) {
-      const num = proListRef.value.result?.fireDispatch?.dispatchCount || proListRef.value.result?.fireDispatchHead?.dispatchCount || 0 || 0
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ num }</span>起出动记录`
-    } else if (proListRef.value.query.type === 4) {
-      resultValue.value = `查询结果：共查询到<span style="color: red;">${ proListRef.value.result?.fireInfo?.fireCount || 0 }</span>起火灾记录`
-    }
-    closeToast();
+    initResultInfo()
   });
 }
 
