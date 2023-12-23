@@ -100,20 +100,27 @@ const onDelete = (file) => {
     <van-cell-group>
       <div class="scene-photo">
         <van-cell title="现场照片：" name="scenePhoto.photos.value" required class="item-cell">
-          <van-uploader
-            v-model="form.scenePhoto.photos.value"
-            accept="image/png, image/jpeg, image/jpg"
-            preview-full-image
-            name="scenePhoto.photos.value"
-            preview-image
-            :max-count="9"
-            :max-size="10 * 1000 * 1000000"
-            :readonly="isDetail"
-            :deletable="!isDetail"
-            :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
-            :after-read="onAfterRead"
-            :before-delete="onDelete"
-          />
+          <van-field
+              name="scenePhoto.photos.value"
+              :rules="form.scenePhoto.photos.rules"
+              :required="true"
+            >
+            <template #input>
+              <van-uploader
+                v-model="form.scenePhoto.photos.value"
+                accept="image/png, image/jpeg, image/jpg"
+                preview-full-image
+                name="scenePhoto.photos.value"
+                preview-image
+                :max-count="9"
+                :max-size="10 * 1000 * 1000000"
+                :readonly="isDetail"
+                :deletable="!isDetail"
+                :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
+                :after-read="onAfterRead"
+                :before-delete="onDelete"
+              />
+            </template>
           <template v-slot:title="">
             <FieldAnnotation
               label="相关附件上传："
@@ -123,6 +130,7 @@ const onDelete = (file) => {
               @refresh-callback="refreshField"
             />
           </template>
+        </van-field>
         </van-cell>
 
       </div>
