@@ -10,7 +10,7 @@ function getCompositeSearchParams(data) {
   }
 }
 
-export function getAdvanceSearchInfo(data) {
+export function getSearchInfo(data) {
   const params = getCompositeSearchParams(data)
   return request.post('/acws/rest/biz/analysis/senior/queryresult', params)
 }
