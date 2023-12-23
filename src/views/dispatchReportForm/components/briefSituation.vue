@@ -275,7 +275,7 @@ const dispatchDateChange = (val)=>{
   checkReturnSpeed(form.value)
 }
 const midwayReturnDateChange = (val)=>{
-  diyValidateMap.value.defaultKey.push('basicInformation.midwayReturnDate.value')
+  diyValidateMap.value.defaultKey.push('basicInformation.returnDate.value')
 }
 const attendanceDateChange = (val)=>{
   diyValidateMap.value.defaultKey.push('basicInformation.attendanceDate.value')

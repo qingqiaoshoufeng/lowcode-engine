@@ -66,7 +66,9 @@ const getDetail = ()=>{
       form.value.noticeType = res.noticeType
       form.value.noticeStatus = res.noticeStatus
       form.value.noticeBody = res.noticeBody
-      updateNotice({id:route.query.id})
+      if(res.noticeStatus !== '1'){
+        updateNotice({id:route.query.id})
+      }
     }
     getFIleList(res)
     return res
