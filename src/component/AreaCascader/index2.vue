@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, computed, useAttrs } from "vue";
+import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
 import { cloneDeep } from "lodash-es";
 import { getSystemArea } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from 'vant';
@@ -115,86 +115,88 @@ watch(() => props.reportName, () => {
 );
 
 onMounted(() => {
-  if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
-    Promise.all([
-      getSystemArea({
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[0],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[1],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[2],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-    ]).then((res) => {
-      if (res[3] && res[3].length > 0) {
-        res[2].forEach((item) => {
-          if (item.boAreaId === props.value[2]) {
-            item.children = res[3];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
-      }
-      if (res[2] && res[2].length > 0) {
-        res[1].forEach((item) => {
-          if (item.boAreaId === props.value[1]) {
-            item.children = res[2];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
-      }
-      if (res[1]) {
-        res[0].forEach((item) => {
-          if (item.boAreaId === props.value[0]) {
-            item.children = res[1];
-          }
-          item.isLeaf = returnLeaf(item);
-        });
-      }
-      areaOptions.value = res[0].map((item) => {
-        return {
-          ...item,
-          isLeaf: returnLeaf(item),
-        };
-      });
-      areaText.value = areaValue.value?.map(item => {
-        const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: areaOptions.value }, item, 'boAreaId')
-        return temp?.areaName
-      })?.join('/')
-    });
-  } else if (props.showPreview && props.previewText) {
-    areaText.value = props.previewText
-  } else {
-    getSystemArea({
-      reportName: props.reportName,
-      showAllArea: props.showAllArea,
-      ...props.params,
-    }).then((res) => {
-      if (res) {
-        areaOptions.value = res.map((item) => {
+  nextTick(() => {
+    if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
+      Promise.all([
+        getSystemArea({
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[0],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[1],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[2],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+      ]).then((res) => {
+        if (res[3] && res[3].length > 0) {
+          res[2].forEach((item) => {
+            if (item.boAreaId === props.value[2]) {
+              item.children = res[3];
+            }
+            item.isLeaf = returnLeaf(item);
+          });
+        }
+        if (res[2] && res[2].length > 0) {
+          res[1].forEach((item) => {
+            if (item.boAreaId === props.value[1]) {
+              item.children = res[2];
+            }
+            item.isLeaf = returnLeaf(item);
+          });
+        }
+        if (res[1]) {
+          res[0].forEach((item) => {
+            if (item.boAreaId === props.value[0]) {
+              item.children = res[1];
+            }
+            item.isLeaf = returnLeaf(item);
+          });
+        }
+        areaOptions.value = res[0].map((item) => {
           return {
             ...item,
-            children: returnChild(item),
             isLeaf: returnLeaf(item),
           };
         });
-      }
-    });
-  }
+        areaText.value = areaValue.value?.map(item => {
+          const temp = findNodeFromTreeById({ boAreaId: '-1', areaName: '-1', children: areaOptions.value }, item, 'boAreaId')
+          return temp?.areaName
+        })?.join('/')
+      });
+    } else if (props.showPreview && props.previewText) {
+      areaText.value = props.previewText
+    } else {
+      getSystemArea({
+        reportName: props.reportName,
+        showAllArea: props.showAllArea,
+        ...props.params,
+      }).then((res) => {
+        if (res) {
+          areaOptions.value = res.map((item) => {
+            return {
+              ...item,
+              children: returnChild(item),
+              isLeaf: returnLeaf(item),
+            };
+          });
+        }
+      });
+    }
+  })
 });
 
 const onChange = ({value, selectedOptions, tabIndex}) => {

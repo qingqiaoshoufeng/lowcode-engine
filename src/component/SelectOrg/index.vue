@@ -150,13 +150,15 @@ const showCheck = (item) => {
 };
 
 onMounted(() => {
-  getDispatchGroup({
-    ...props.params,
-    disabledKey: props.disabledKey,
-    disabledValue: props.disabledValue,
-  }).then((res) => {
-    treeData.value = [res?.items?.map(getItem)];
-  });
+  nextTick(() => {
+    getDispatchGroup({
+      ...props.params,
+      disabledKey: props.disabledKey,
+      disabledValue: props.disabledValue,
+    }).then((res) => {
+      treeData.value = [res?.items?.map(getItem)];
+    });
+  })
 });
 
 const handleShow = () => {

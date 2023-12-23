@@ -362,6 +362,7 @@ const onSideBarChange = (e, k) => {
     overflow-x: hidden;
     overflow-y: auto;
     .search-form-header {
+      font-size: 16px;
       display: flex;
       align-items: center;
       font-weight: bold;

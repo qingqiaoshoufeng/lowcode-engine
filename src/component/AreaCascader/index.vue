@@ -254,57 +254,59 @@ const handleDelete = () => {
 }
 
 onMounted(() => {
-  if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
-    Promise.all([
+  nextTick(() => {
+    if (props.value?.length > 1 && (!props.showPreview || !props.previewText)) {
+      Promise.all([
+        getSystemArea({
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[0],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[1],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+        getSystemArea({
+          parentAreaId: props.value[2],
+          reportName: props.reportName,
+          showAllArea: props.showAllArea,
+          ...props.params,
+        }),
+      ]).then((res) => {
+        if (res[3] && res[3].length > 0) {
+          treeData.value.unshift(res[3].map(getItem))
+        }
+        if (res[2] && res[2].length > 0) {
+          treeData.value.unshift(res[2].map(getItem))
+        }
+        if (res[1]) {
+          treeData.value.unshift(res[1].map(getItem))
+        }
+        treeData.value.unshift(res[0].map(getItem))
+        initValue()
+      });
+    } else if (props.showPreview && props.previewText) {
+      selectText.value = props.previewText
+    } else {
       getSystemArea({
         reportName: props.reportName,
         showAllArea: props.showAllArea,
         ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[0],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[1],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-      getSystemArea({
-        parentAreaId: props.value[2],
-        reportName: props.reportName,
-        showAllArea: props.showAllArea,
-        ...props.params,
-      }),
-    ]).then((res) => {
-      if (res[3] && res[3].length > 0) {
-        treeData.value.unshift(res[3].map(getItem))
-      }
-      if (res[2] && res[2].length > 0) {
-        treeData.value.unshift(res[2].map(getItem))
-      }
-      if (res[1]) {
-        treeData.value.unshift(res[1].map(getItem))
-      }
-      treeData.value.unshift(res[0].map(getItem))
-      initValue()
-    });
-  } else if (props.showPreview && props.previewText) {
-    selectText.value = props.previewText
-  } else {
-    getSystemArea({
-      reportName: props.reportName,
-      showAllArea: props.showAllArea,
-      ...props.params,
-    }).then((res) => {
-      if (res) {
-        treeData.value = [res.map(getItem)];
-      }
-    });
-  }
+      }).then((res) => {
+        if (res) {
+          treeData.value = [res.map(getItem)];
+        }
+      });
+    }
+  })
 });
 
 defineOptions({

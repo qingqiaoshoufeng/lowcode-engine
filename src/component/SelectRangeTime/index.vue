@@ -41,11 +41,11 @@ const selectVisible = ref(false);
 
 const startDate = ref([]);
 
-const startTime = ref(['00', '00']);
+const startTime = ref(['00', '00', '00']);
 
 const endDate = ref([]);
 
-const endTime = ref(['23', '59']);
+const endTime = ref(['23', '59', '59']);
 
 const selectText = ref("");
 
@@ -53,17 +53,17 @@ watch(() => props.value,
   (val) => {
     if (props.value?.length > 0) {
       startDate.value = props.value?.[0] ? dayjs(props.value?.[0]).format("YYYY-MM-DD").split("-") : [];
-      startTime.value = props.value?.[0] ? dayjs(props.value?.[0]).format("HH:mm:ss").split(":").slice(0, 2) : [];
+      startTime.value = props.value?.[0] ? dayjs(props.value?.[0]).format("HH:mm:ss").split(":").slice(0, 3) : [];
       endDate.value = props.value?.[1] ? dayjs(props.value?.[1]).format("YYYY-MM-DD").split("-") : [];
-      endTime.value = props.value?.[1] ? dayjs(props.value?.[1]).format("HH:mm:ss").split(":").slice(0, 2) : [];
+      endTime.value = props.value?.[1] ? dayjs(props.value?.[1]).format("HH:mm:ss").split(":").slice(0, 3) : [];
       if (startDate.value?.length > 0 && startTime.value?.length > 0 || endDate.value?.length > 0 && endTime.value?.length > 0) {
         selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
       }
     } else {
       startDate.value = dayjs().subtract(1, 'month').format("YYYY-MM-DD").split("-");
-      startTime.value = ['00', '00'];
+      startTime.value = ['00', '00', '00'];
       endDate.value = dayjs().format("YYYY-MM-DD").split("-");
-      endTime.value = ['23', '59'];
+      endTime.value = ['23', '59', '59'];
       selectText.value = "";
     }
   },
@@ -90,7 +90,7 @@ const handleFast = (item, key) => {
     showToast('开始时间不能晚于结束时间')
     return
   }
-  selectText.value = `${dayjs(start).format("YYYY-MM-DD HH:mm")} ~ ${dayjs(end).format("YYYY-MM-DD HH:mm")}`;
+  selectText.value = `${dayjs(start).format("YYYY-MM-DD HH:mm:ss")} ~ ${dayjs(end).format("YYYY-MM-DD HH:mm:ss")}`;
   emit("update:value", [start, end, ""]);
   emit("change", [start, end, ""]);
   selectVisible.value = false;
@@ -162,6 +162,7 @@ defineOptions({
             />
             <van-time-picker
               v-model="startTime"
+              :columns-type="['hour', 'minute', 'second']"
             />
           </div>
           <div class="wrapper-card">
@@ -171,6 +172,7 @@ defineOptions({
             />
             <van-time-picker
               v-model="endTime"
+              :columns-type="['hour', 'minute', 'second']"
             />
           </div>
         </van-picker-group>

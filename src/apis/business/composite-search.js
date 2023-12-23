@@ -1,17 +1,24 @@
 import { request } from '@/plugins/axios/index.js'
 
-// 获取查询结果
-export function getSearchResult(data) {
-  // const formData = setSearchTypeFormData(data)
-  const params = {
+function getCompositeSearchParams(data) {
+  return {
     ...data,
-    // ...formData,
     offset: (data.page - 1) * data.limit + 1,
     limit: data.limit,
     fireType: data.fireType,
     queryOrgId: data.queryOrgId,
   }
-  return request.post('/acws/rest/biz/analysis/comprehensive/query', params).then((res) => {
+}
+
+export function getAdvanceSearchInfo(data) {
+  const params = getCompositeSearchParams(data)
+  return request.post('/acws/rest/biz/analysis/senior/queryresult', params)
+}
+
+// 获取查询结果
+export function getSearchResult(data) {
+  const params = getCompositeSearchParams(data)
+  return request.post('/acws/rest/biz/analysis/comprehensive/query', params).then(async (res) => {
     if (res.data?.fireWarningList) {
       res.data.fireWarningList = res.data.fireWarningList.map((item) => {
         const dispatchList = []
@@ -27,10 +34,15 @@ export function getSearchResult(data) {
         }
       })
     }
+    const infoRef = await getSearchInfo(data)
     const list = res.data?.fireWarningList || res.data?.fireDispatchList || res.data?.fireDispatchHeadList || res.data?.fireInfoList
-    const total = res.data?.fireWarning?.warningCount || res.data?.fireDispatch?.dispatchCount || res.data?.fireDispatchHead?.dispatchCount || res.data?.fireInfo?.fireCount
+    const total = infoRef.data?.fireWarning?.warningCount || infoRef.data?.fireDispatch?.dispatchCount || infoRef.data?.fireDispatchHead?.dispatchCount || infoRef.data?.fireInfo?.fireCount
     return {
       ...res.data,
+      fireWarning: infoRef.data?.fireWarning,
+      fireDispatch: infoRef.data?.fireDispatch,
+      fireDispatchHead: infoRef.data?.fireDispatchHead,
+      fireInfo: infoRef.data?.fireInfo,
       total: Number(total),
       list,
     }
