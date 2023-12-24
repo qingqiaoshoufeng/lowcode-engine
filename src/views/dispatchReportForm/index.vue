@@ -1247,6 +1247,10 @@ const onSubmit = async () => {
 
 onMounted(() => {
   console.log('init', result)
+  props.setHandleOk && props.setHandleOk(async (finishFn) => {
+    formRef.value.submit()
+    formRef.value.finishFn = finishFn
+  }, loading)
 })
 
 const onFailed = (errorInfo) => {
@@ -1434,14 +1438,14 @@ const onSideBarChange = (e, k) => {
     </div>
 
     <!-- 出动审核 -->
-    <ProModal v-model:visible="show.approvalVisible" title="出动审核">
+    <ProModal v-model:visible="show.approvalVisible" :title="`出动${labelText}`">
       <template #default="{ setHandleOk }">
         <ProcessReview
-        :process-key="props.processKey"
-        :current-row="props.currentRow"
-        :set-handle-ok="setHandleOk"
-        :label-text="labelText"
-        @finish-callback="approvalCallback"
+          :process-key="props.processKey"
+          :current-row="props.currentRow"
+          :set-handle-ok="setHandleOk"
+          :label-text="labelText"
+          @finish-callback="approvalCallback"
         />
       </template>
     </ProModal>

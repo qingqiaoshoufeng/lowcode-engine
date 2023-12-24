@@ -216,9 +216,9 @@ onMounted(() => {
       </template>
     </ProList>
 
-    <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
-      <PoliceEntryDetail :current-row="currentRow" />
+    <!-- 火灾填报详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="火灾填报详情">
+      <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
     <!-- 火灾更正审批 -->
     <ProModal
