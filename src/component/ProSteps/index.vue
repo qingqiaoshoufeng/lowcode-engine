@@ -28,6 +28,54 @@ const renderState = (item) => {
   return false
 }
 
+const renderAdvice = (transferType) => {
+  if (transferType?.indexOf('驳回') > -1) {
+    return '驳回原因：'
+  }
+  else if (transferType?.indexOf('退回') > -1) {
+    return '退回原因：'
+  }
+  else if (transferType?.indexOf('确认') > -1) {
+    return '审核结果：'
+  }
+  else if (transferType?.indexOf('更正申请') > -1) {
+    return '申请类型：'
+  }
+  else if (transferType?.indexOf('更正') > -1) {
+    return '审批结果：'
+  }
+  else if (transferType?.indexOf('作废申请') > -1) {
+    return '作废原因：'
+  }
+  else {
+    return '审核结果：'
+  }
+}
+
+const renderRemark = (transferType) => {
+  if (transferType?.indexOf('驳回') > -1) {
+    return '驳回描述：'
+  }
+  else if (transferType?.indexOf('退回') > -1) {
+    return '备注：'
+  }
+  else if (transferType?.indexOf('确认') > -1) {
+    return '确认意见：'
+  }
+  else if (transferType?.indexOf('更正申请') > -1) {
+    return '申请原因：'
+  }
+  else if (transferType?.indexOf('更正') > -1) {
+    return '审批意见：'
+  }
+  else if (transferType?.indexOf('作废申请') > -1) {
+    return '备注：'
+  }
+  else {
+    return '审核意见：'
+  }
+}
+
 defineOptions({
   name: "ProSteps",
 });
@@ -58,25 +106,9 @@ export default {
           {{ item.createOrg }}
         </div>
         <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
-        <template v-if="item.transferType?.indexOf('驳回') > -1">
-          <div v-if="item.advice">驳回原因：{{ item.advice }}</div>
-          <div v-if="item.remark">驳回描述：{{ item.remark }}</div>
-        </template>
-        <template v-else-if="item.transferType?.indexOf('退回') > -1">
-          <div v-if="item.advice">退回原因：{{ item.advice }}</div>
-          <div v-if="item.remark">备注：{{ item.remark }}</div>
-        </template>
-        <template v-else-if="item.transferType?.indexOf('确认') > -1">
-          <div v-if="item.advice">审核结果：{{ item.advice }}</div>
-          <div v-if="item.remark">确认意见：{{ item.remark }}</div>
-        </template>
-        <template v-else-if="item.transferType?.indexOf('更正') > -1">
-          <div v-if="item.advice">审批结果：{{ item.advice }}</div>
-          <div v-if="item.remark">审批意见：{{ item.remark }}</div>
-        </template>
-        <template v-else>
-          <div v-if="item.advice">审核结果：{{ item.advice }}</div>
-          <div v-if="item.remark">审核意见：{{ item.remark }}</div>
+        <template>
+          <div v-if="item.advice">{{ renderAdvice(item.transferType) }}{{ item.advice }}</div>
+          <div v-if="item.remark">{{ renderRemark(item.transferType) }}{{ item.remark }}</div>
         </template>
         <div v-if="item.editContents?.length > 0" class="steps-history">
           <div class="sub-title">

@@ -2,7 +2,7 @@
 import { ref, onMounted, computed, inject, nextTick ,provide } from "vue";
 import dayjs from "dayjs";
 import { showDialog } from 'vant';
-import { showToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { useSubmit } from '@castle/castle-use';
 import MapLatLng from "@/component/MapLatLng/index";
 import AreaCascader from "@/component/AreaCascader/index";
@@ -461,6 +461,7 @@ const initDetail = () => {
       loadDetail.value = false
       initLevelOptions()
     })
+    closeToast()
   }
   else if (boFireWarningId) {
     getFireWarningDetail(boFireWarningId).then((res) => {
@@ -579,9 +580,12 @@ const initDetail = () => {
       }
 
       // refreshField()
+    }).finally(() => {
+      closeToast()
     })
   } else {
     loadDetail.value = false
+    closeToast()
   }
 }
 
@@ -612,6 +616,7 @@ const onFailed = (errorInfo) => {
 };
 
 onMounted(() => {
+  showLoadingToast()
   const res = store.getters?.["dict/filterDicts"](["JQ_TYPE", "NATURAL_DISASTER_TYPE", "JQ_LEVEL", "JQ_LY", "TP_TYPE"], null, props.showPreview);
   options.value.warningTypeOptions = res.JQ_TYPE;
   options.value.naturalDisasterOptions = res.NATURAL_DISASTER_TYPE;

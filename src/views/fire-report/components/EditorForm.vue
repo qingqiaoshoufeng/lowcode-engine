@@ -43,7 +43,7 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
-import { showToast } from 'vant';
+import { showToast, showLoadingToast, closeToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const diyValidateMap = ref({
@@ -441,6 +441,7 @@ const initFireSite = () => {
 }
 
 const initWatch = () => {
+  closeToast()
   const { fireType, severity } = form.value.basicInfo
   // 如果警情类型是建构筑物火灾，则火灾类型不能修改
   const { currentRow } = props
@@ -987,6 +988,7 @@ const setTemporary = async()=>{
 
 
 onMounted(() => {
+  showLoadingToast()
   props.setHandleOk && props.setHandleOk((finishFn) => {
     formRef.value.validate().then(async (values) => {   
       if (props.isApproval) {
