@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, watch } from "vue";
+import { inject, onMounted, watch, computed } from "vue";
 import dayjs from "dayjs";
 import ProCard from "@/component/ProCard/index.vue";
 import { validIdCode } from "@/utils/validate.js";
@@ -24,6 +24,36 @@ const showHeadquarter = inject("showHeadquarter");
 const options = inject("options");
 
 const diyValidateMap = inject("diyValidateMap");
+
+const nameOptions = computed(() => {
+  if (showHeadquarter.value) {
+    const result = []
+    let ids = ''
+    form.value.personInfo.commandLeader?.forEach((item) => {
+      if (item.headerName?.[0] && !ids.includes(item.headerName?.[0]?.boFireUserId)) {
+        ids += `${item.headerName?.[0]?.boFireUserId},`
+        result.push({
+          ...item.headerName?.[0],
+          label: item.headerName?.[0]?.userName,
+          value: item.headerName?.[0]?.boFireUserId,
+        })
+      }
+    })
+    return result
+  }
+  if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
+    const ids = form.value.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+    const result = cloneDeep(form.value.investForce.commander?.value) || []
+    form.value.investForce.firemen.value?.forEach((item) => {
+      if (!ids.includes(item.boFireUserId)) {
+        result.push(item)
+      }
+    })
+    return result
+  }
+  return []
+})
+
 
 const handleAddInjury = () => {
   form.value.casualtyWar.injuredList.push({

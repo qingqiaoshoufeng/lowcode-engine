@@ -3,6 +3,7 @@ import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash-es'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import FireInfo from './components/fireInfo.vue';
 import BattleResult from './components/battleResult.vue';
@@ -630,18 +631,6 @@ const initReport = () => {
   })
 }
 
-const initPerson = (dispatchGroup) => {
-  return new Promise((resolve) => {
-    getInputPerson({ dispatchGroup }).then((res) => {
-      if (res) {
-        deptMembersOptions.value = res
-        options.value.commander = res.filter(item => item.userType === '1')
-        options.value.firemen = res.filter(item => item.userType === '2')
-      }
-    }).finally(() => resolve())
-  })
-}
-
 const initFireProcess = () => {
   generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
 }
@@ -671,11 +660,18 @@ const initWatch = () => {
   })
 }
 
-const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initReport, initPerson, initDetail])
+const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initReport, initDetail])
 
 const getPersonNum = () => {
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
-    return form.value.investForce.commander?.value?.length + form.value.investForce.firemen?.value?.length
+    const ids = form.value.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+    const result = cloneDeep(form.value.investForce.commander?.value) || []
+    form.value.investForce.firemen.value?.forEach((item) => {
+      if (!ids.includes(item.boFireUserId)) {
+        result.push(item)
+      }
+    })
+    return result?.length
   }
   return 0
 }
@@ -735,8 +731,8 @@ const getSubmitParams = () => {
         fireDistance: basicInformation.fireDistance.value,
         trappedPerson: basicInformation.trappedPerson.value,
         groupLeader: investForce.groupLeader.value?.join(','),
-        commander: investForce.commander.value?.join(','),
-        firemen: investForce.firemen.value?.join(','),
+        commander: investForce.commander.value?.map(item => item.boFireUserId)?.join(','),
+        firemen: investForce.firemen.value?.map(item => item.boFireUserId)?.join(','),
         inputPersonNum: getPersonNum(),
         inputCarNum: form.investForce?.dispatchTruckList.value?.length || 0,
         isResponseTruck: investForce.isResponseTruck.value,

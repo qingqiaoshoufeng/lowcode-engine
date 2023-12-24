@@ -38,18 +38,18 @@ export const checkRescueNum = (form, prompt = true) => {
 
 // 校验车辆出动
 export const checkIsResponseTruck = (form, prompt = true) => {
-  const { commander, firemen, isResponseTruck } = form.investForce
-  if (((commander.value?.length > 0 && firemen.value?.length === 0) || (commander.value?.length === 0 && firemen.value?.length > 0) || (commander.value?.length > 0 && firemen.value?.length > 0))
-    && isResponseTruck.value === '2') {
-    form.investForce.isResponseTruck.warning = true
-    form.investForce.fieldWarning = form.investForce.fieldWarning.replace('isResponseTruck:false;', 'isResponseTruck:true;')
-    // prompt && notification.open({ message: '填报异常提醒', description: '人车配比不合理，请修改或备注！', style: { backgroundColor: 'orange' } })
-    prompt && showToast('人车配比不合理，请修改或备注！')
-  }
-  else {
-    form.investForce.isResponseTruck.warning = false
-    form.investForce.fieldWarning = form.investForce.fieldWarning.replace('isResponseTruck:true;', 'isResponseTruck:false;')
-  }
+  // const { commander, firemen, isResponseTruck } = form.investForce
+  // if (((commander.value?.length > 0 && firemen.value?.length === 0) || (commander.value?.length === 0 && firemen.value?.length > 0) || (commander.value?.length > 0 && firemen.value?.length > 0))
+  //   && isResponseTruck.value === '2') {
+  //   form.investForce.isResponseTruck.warning = true
+  //   form.investForce.fieldWarning = form.investForce.fieldWarning.replace('isResponseTruck:false;', 'isResponseTruck:true;')
+  //   // prompt && notification.open({ message: '填报异常提醒', description: '人车配比不合理，请修改或备注！', style: { backgroundColor: 'orange' } })
+  //   prompt && showToast('人车配比不合理，请修改或备注！')
+  // }
+  // else {
+  //   form.investForce.isResponseTruck.warning = false
+  //   form.investForce.fieldWarning = form.investForce.fieldWarning.replace('isResponseTruck:true;', 'isResponseTruck:false;')
+  // }
 }
 
 // 校验现场被困人数（人）

@@ -102,22 +102,24 @@ defineOptions({
       required
       :options="options.approval"
       :field-names="{ value: 'value', label: 'label' }"
-      :title="`请选择${labelText}意见`"
-      :label="`${labelText}意见：`"
-      :placeholder="`请选择${labelText}意见`"
-      :rules="[{ required: true, message: `请选择${labelText}意见` }]"
+      :title="`请选择${labelText}结果`"
+      :label="`${labelText}结果：`"
+      :placeholder="`请选择${labelText}结果`"
+      :rules="[{ required: true, message: `请选择${labelText}结果` }]"
       @change="onApproveType"
       teleport="body"
     />
     <van-field
       v-model="form.remark"
+      required
       name="remark"
       rows="4"
       autosize
-      label="批注："
+      :label="`${labelText}意见：`"
       type="textarea"
       maxlength="500"
-      placeholder="请输入批注"
+      :placeholder="`请选择${labelText}意见`"
+      :rules="[{ required: true, message: `请选择${labelText}意见` }]"
       show-word-limit
       class="form-textarea"
     />

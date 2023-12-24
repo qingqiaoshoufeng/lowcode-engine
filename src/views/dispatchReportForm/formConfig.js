@@ -2,7 +2,7 @@ import { nextTick, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import { checkAttendanceDate, checkDispatchNum, checkFireDistance, checkIsResponseTruck, checkReturnSpeed, checkTrappedPerson } from './tool.js'
-import { fixCarInfo, getTypeText } from '@/utils/tools.js'
+import { fixCarInfo, getTypeText, generateByKeyValue  } from '@/utils/tools.js'
 import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from '@/utils/validate.js'
 
 export const useFormConfig = () => {
@@ -1491,8 +1491,18 @@ export const useFormConfig = () => {
     form.value.basicInformation.windDirection.value = fireDispatch?.windDirection
     // 投入力量
     form.value.investForce.groupLeader.value = fireDispatchItem?.groupLeader?.split(',')
-    form.value.investForce.commander.value = fireDispatchItem?.commander?.split(',')
-    form.value.investForce.firemen.value = fireDispatchItem?.firemen?.split(',')
+    if (fireDispatchItem?.commander) {
+      form.value.investForce.commander.value = generateByKeyValue(fireDispatchItem?.commanderName, fireDispatchItem?.commander, {
+        key: 'userName',
+        value: 'boFireUserId',
+      })
+    }
+    if (fireDispatchItem?.firemen) {
+      form.value.investForce.firemen.value = generateByKeyValue(fireDispatchItem?.firemenName, fireDispatchItem?.firemen, {
+        key: 'userName',
+        value: 'boFireUserId',
+      })
+    }
     form.value.investForce.isResponseTruck.value = fireDispatchItem?.isResponseTruck
     if (fireDispatchTruckList && fireDispatchTruckList.length > 0) {
       form.value.investForce.dispatchTruckList.value = fixCarInfo(fireDispatchTruckList)
