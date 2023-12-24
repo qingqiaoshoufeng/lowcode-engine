@@ -111,6 +111,7 @@ const directDamageChange =()=>{
         <van-field 
           name="economicLoss.directDamage.value"
           label="直接财产损失（元)："
+          label-width="152"
           :required="isRequired"
           :rules="[{ validator: validateDirectDamage, trigger: 'onBlur' }, ...form.economicLoss.directDamage.rules]"
           id="directDamage"
@@ -140,6 +141,7 @@ const directDamageChange =()=>{
         <van-field 
          name="economicLoss.fireDisposalCost.value"
           label="火灾现场处置费用（元)："
+          label-width="135"
           :rules="form.economicLoss.fireDisposalCost.rules"
           :required="isRequired"
           id="fireDisposalCost"
@@ -152,7 +154,6 @@ const directDamageChange =()=>{
           aria-autocomplete="none"
           placeholder="请输入火灾现场处置费用（元)"
           type="number" 
-          label-width="115"
         >
           <template v-slot:label="">
             <FieldAnnotation

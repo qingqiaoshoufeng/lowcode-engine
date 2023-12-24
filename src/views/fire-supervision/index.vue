@@ -108,6 +108,7 @@
     <ProModal
       v-model:visible="show.lookVisible"
       title="火灾填报详情"
+      :showBack="true" :showHeader="false" 
       :ok-display="false"
       :footer="null"
       pro-card-id="card-wrap"

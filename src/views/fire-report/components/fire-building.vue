@@ -309,6 +309,7 @@ const onBuildTag = (val) => {
           label="建筑总楼层："
           :rules="[{ validator: validateBuildFloor, trigger: 'onBlur' }, ...form.fireBuilding.buildFloor.rules]"
           :required="isRequired"
+          label-width="105"
           id="buildFloor"
           v-model="form.fireBuilding.buildFloor.value"
           v-preview-text="showPreview"
@@ -364,6 +365,7 @@ const onBuildTag = (val) => {
         <van-field 
           name="fireBuilding.buildAllArea.value"
           label="总建筑面积（平方米）"
+          label-width="115px"
           :rules="form.fireBuilding.buildAllArea.rules"
           id="buildAllArea"
           v-model="form.fireBuilding.buildAllArea.value"
@@ -393,6 +395,7 @@ const onBuildTag = (val) => {
           label="单层建筑面积（平方米）："
           :rules="form.fireBuilding.buildFloorArea.rules"
           :required="isRequired"
+          label-width="115px"
           id="buildFloorArea"
           v-model="form.fireBuilding.buildFloorArea.value"
           v-preview-text="showPreview"
@@ -405,7 +408,7 @@ const onBuildTag = (val) => {
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="总建筑面积（平方米）："
+              label="单层建筑面积（平方米）："
               remark-field="buildFloorArea"
             field-module="fireBuilding"
             :exist-data="fieldExist?.buildFloorArea"
@@ -448,10 +451,9 @@ const onBuildTag = (val) => {
           name="fireBuilding.buildUse.value"
           label="建筑使用用途："
           :rules="form.fireBuilding.buildUse.rules"
-          id="buildUse"
           v-model:value="form.fireBuilding.buildUse.value"
-          v-preview-text="showPreview"
-          showPreview
+          :showPreview="showPreview"
+          label-width="120"
           :options="options.buildUse"
           placeholder="请选择建筑使用用途"
           allow-clear
@@ -498,6 +500,7 @@ const onBuildTag = (val) => {
           name="fireBuilding.isLoud.value"
           label="是否发生轰燃："
           :rules="form.fireBuilding.isLoud.rules"
+          label-width="120"
           :fieldNames="{label:'label',value:'value'}"
           id="isLoud"
           v-model:value="form.fireBuilding.isLoud.value"
@@ -525,6 +528,7 @@ const onBuildTag = (val) => {
           :fieldNames="{label:'label',value:'value'}"
           name="fireBuilding.isWindowOpened.value"
           label="失火建筑门窗在过程中是否开启："
+          label-width="135px"
           :rules="form.fireBuilding.isWindowOpened.rules"
           id="isWindowOpened"
           v-model:value="form.fireBuilding.isWindowOpened.value"

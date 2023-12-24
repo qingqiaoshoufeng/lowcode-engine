@@ -111,6 +111,7 @@
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
+      :showBack="true" :showHeader="false" 
       title="火灾填报详情"
       :ok-display="false"
       :footer="null"

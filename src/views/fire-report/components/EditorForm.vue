@@ -28,6 +28,7 @@ import { useModal } from '@/hooks/useModal.js'
 import { useSuccess } from '@/hooks/useSuccess.js'
 // import { useRerender } from '@/hooks/useRerender.js'
 import { getTypeText, scrollFormFailed } from '@/utils/tools.js'
+import { useIntersection } from '@/hooks/useIntersection.js';
 import {
   effect, exitNonConformance, gender, injuryType, install, isNot, isResearch,
   lightNonConformance, networkAlarm, networking, notStart, regulation, routeNonConformance, severity, start, uninstall,
@@ -48,6 +49,8 @@ import { showToast } from 'vant';
 const diyValidateMap = ref({
   defaultKey:[]
 })
+
+
 
 provide('diyValidateMap',diyValidateMap)
 
@@ -198,7 +201,7 @@ const unDispatch = ref(props.isUnDispatch)
 
 const fieldExist = ref({})
 
-const active = ref(null)
+// const active = ref(null)
 const currenState = computed(() => {
   return props.currentRow?.fireStatusValue
 })
@@ -349,6 +352,9 @@ const sections = computed(() => {
   }
   return result
 })
+
+
+const { sideBarActive } = useIntersection(sections, '.box', props.offset);
 
 const container = () => {
   return document.querySelector('.tab-pane-content') || document.querySelector('#record-wrap') || document.querySelector('.ant-modal-body')
@@ -1044,7 +1050,7 @@ const onSideBarChange = (e, k) => {
     <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
-          v-model="active" 
+          v-model="sideBarActive" 
           v-if="showPreview !== null"
         >
           <van-sidebar-item 

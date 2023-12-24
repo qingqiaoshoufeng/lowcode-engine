@@ -1717,7 +1717,7 @@ const onFireLevel = () => {
     
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
-        <van-field class="field-radio" name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
+        <van-field label-width="130" class="field-radio" name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
           <template #input>
             <van-radio-group 
               class="field-radio"

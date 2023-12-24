@@ -810,7 +810,7 @@ const bigInjured = computed(() => {
           :rules="form.casualtyWar.isDead.rules"
           :required="isRequired"
           class="field-radio"
-          label-width="150px"
+          label-width="130px"
         >
           <template #input>
             <van-radio-group 
