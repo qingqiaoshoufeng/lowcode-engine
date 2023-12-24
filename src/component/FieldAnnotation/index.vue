@@ -127,10 +127,10 @@ const handleConfirm = () => {
   })
 }
 
-const touchstart = ()=>{
-  console.log(1111);
-  showVisible1.value = true
-}
+// const touchstart = ()=>{
+//   console.log(1111);
+//   showVisible1.value = true
+// }
 
 watch(() => showVisible.value, () => {
   if (showVisible.value) {
@@ -259,7 +259,7 @@ export default {
         <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="openInfo">
       </div>
       <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->
-      <div v-if="label" class="label" @click.stop="openInfo('label')" @touchstart.stop="touchstart" @mouseenter.stop="touchstart">{{ label }}</div>
+      <div v-if="label" class="label" @click.stop="openInfo('label')">{{ label }}</div>
   </div>
 </template>
 

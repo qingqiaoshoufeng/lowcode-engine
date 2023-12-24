@@ -167,12 +167,12 @@ provide('validateProgress',validateProgress)
 watch(
   () => form.value,
   (val1,val2) => {
-    validateProgress()
-    // nextTick(() => {
+    nextTick(() => {
+      validateProgress()
     //   Object.keys(form.value).forEach((key) => {
     //     handleUseForm(key, form.value[key])
     //   })
-    // })
+    })
   },
   { deep: true },
 )

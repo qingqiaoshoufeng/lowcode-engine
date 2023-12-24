@@ -1,7 +1,7 @@
 <template>
  <div class="marquee-container">
     <div class="marquee-box">
-      <van-cell v-for="item in list" :key="item.label" title="单元格" is-link>
+      <van-cell v-for="item in list" :key="item.label" title="单元格">
           <template #title>
               <div class="title">
                   <div class="img">
