@@ -28,6 +28,7 @@ import ProSteps from "@/component/ProSteps/index.vue";
 import ProcessReview from "@/component/ProcessReview/index.vue";
 import ProModal from "@/component/ProModal/index";
 import {
+  approveDispatchActions,
   approveProcessActions,
   deleteFormFieldAnnotation,
   getDispatchDetail,
@@ -1072,7 +1073,7 @@ const getSubmitParams = () => {
   if (props.isApproval) {
     params.isAudit = '1'
   }
-  if (props.isApproval && props.currentRow?.taskId) {
+  if (props.currentRow?.taskId) {
     params.taskId = props.currentRow?.taskId
   }
   return params
@@ -1114,6 +1115,36 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   },
   {
     submitFn: () => {
+      let type = false
+      if (showHeadquarter.value) {
+        type = true
+      }
+      const params = getSubmitParams()
+      return approveDispatchActions({
+        ...params,
+        taskReq: {
+          businessData: {},
+          approveType: approvalForm.value.approveType,
+          taskData: {
+            suggest: approvalForm.value.suggest,
+            variables: {},
+          },
+          remark: approvalForm.value.remark,
+        }
+      }, type)
+    },
+  },
+)
+
+const { loading: backLoading, submit: backSubmit } = useSubmit(
+  (res) => {
+    if (!props.isApproval) {
+      showToast(`${props.labelText}成功！`)
+      emits('finishCallback')
+    }
+  },
+  {
+    submitFn: () => {
       return approveProcessActions(props.currentRow?.taskId, {
         businessData: {},
         approveType: approvalForm.value.approveType,
@@ -1148,15 +1179,23 @@ const { loading: againLoading, submit: againSubmit } = useSubmit(
   },
   {
     submitFn: () => {
-      return approveProcessActions(props.currentRow?.taskId, {
-        businessData: {},
-        approveType: 1,
-        taskData: {
-          suggest: '',
-          variables: {},
-        },
-        remark: '',
-      })
+      let type = false
+      if (showHeadquarter.value) {
+        type = true
+      }
+      const params = getSubmitParams()
+      return approveDispatchActions({
+        ...params,
+        taskReq: {
+          businessData: {},
+          approveType: 1,
+          taskData: {
+            suggest: '',
+            variables: {},
+          },
+          remark: '',
+        }
+      }, type)
     },
   },
 )
@@ -1164,14 +1203,14 @@ const { loading: againLoading, submit: againSubmit } = useSubmit(
 const approvalCallback = async (form) => {
   approvalForm.value = form
   if (form.approveType === '1' && props.isEdit) { // 审核通过
-    await submit()
+    loading.value = approvalLoading.value
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
   else { // 审核不通过
-    loading.value = approvalLoading.value
-    await approvalSubmit()
+    loading.value = backLoading.value
+    await backSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
@@ -1190,7 +1229,6 @@ const onSubmit = async () => {
     show.value.approvalVisible = true
   }
   else if (props.isAgain) {
-    await submit()
     loading.value = againLoading.value
     await againSubmit()
     props.closeModal()
@@ -1209,6 +1247,10 @@ const onSubmit = async () => {
 
 onMounted(() => {
   console.log('init', result)
+  props.setHandleOk && props.setHandleOk(async (finishFn) => {
+    formRef.value.submit()
+    formRef.value.finishFn = finishFn
+  }, loading)
 })
 
 const onFailed = (errorInfo) => {
@@ -1396,14 +1438,14 @@ const onSideBarChange = (e, k) => {
     </div>
 
     <!-- 出动审核 -->
-    <ProModal v-model:visible="show.approvalVisible" title="出动审核">
+    <ProModal v-model:visible="show.approvalVisible" :title="`出动${labelText}`">
       <template #default="{ setHandleOk }">
         <ProcessReview
-        :process-key="props.processKey"
-        :current-row="props.currentRow"
-        :set-handle-ok="setHandleOk"
-        :label-text="labelText"
-        @finish-callback="approvalCallback"
+          :process-key="props.processKey"
+          :current-row="props.currentRow"
+          :set-handle-ok="setHandleOk"
+          :label-text="labelText"
+          @finish-callback="approvalCallback"
         />
       </template>
     </ProModal>

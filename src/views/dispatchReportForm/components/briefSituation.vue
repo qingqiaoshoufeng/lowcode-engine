@@ -417,7 +417,7 @@ const onDealEndDate = () => {
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="展开时间："
+          label="出水时间："
           remark-field="waterflowDate"
           field-module="basicInformation"
           :exist-data="fieldExist?.waterflowDate"

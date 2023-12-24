@@ -34,6 +34,7 @@ import {
   lightNonConformance, networkAlarm, networking, notStart, regulation, routeNonConformance, severity, start, uninstall,
 } from '@/utils/constants.js'
 import {
+  approveFireActions,
   approveProcessActions,
   deleteFormFieldAnnotation,
   getFieldAnnotationDetail,
@@ -43,7 +44,7 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
-import { showToast } from 'vant';
+import { showToast, showLoadingToast, closeToast } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const diyValidateMap = ref({
@@ -446,6 +447,7 @@ const initFireSite = () => {
 }
 
 const initWatch = () => {
+  closeToast()
   const { fireType, severity } = form.value.basicInfo
   // 如果警情类型是建构筑物火灾，则火灾类型不能修改
   const { currentRow } = props
@@ -813,7 +815,7 @@ const getSubmitParams = () => {
   if (props.isApproval) {
     params.isAudit = '1'
   }
-  if (props.isApproval && props.currentRow?.taskId) {
+  if (props.currentRow?.taskId) {
     params.taskId = props.currentRow?.taskId
   }
   if (casualtyWar.isInjured.value === '1') {
@@ -899,7 +901,57 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
 const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   (res) => {
     if (!props.isApproval) {
-      // message.success('审核成功')
+      showToast(`${props.labelText}成功！`)
+      emits('finishCallback')
+    }
+  },
+  {
+    submitFn: () => {
+      const params = getSubmitParams()
+      return approveFireActions({
+        ...params,
+        taskReq: {
+          businessData: {},
+          approveType: approvalForm.value.approveType,
+          taskData: {
+            suggest: approvalForm.value.suggest,
+            variables: {},
+          },
+          remark: approvalForm.value.remark,
+        }
+      })
+    },
+  },
+)
+
+const { loading: againLoading, submit: againSubmit } = useSubmit(
+  (res) => {
+    showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+    emits('finishCallback')
+  },
+  {
+    submitFn: () => {
+      const params = getSubmitParams()
+      return approveFireActions({
+        ...params,
+        taskReq: {
+          businessData: {},
+          approveType: 1,
+          taskData: {
+            suggest: '',
+            variables: {},
+          },
+          remark: '',
+        }
+      })
+    },
+  },
+)
+
+const { loading: backLoading, submit: backSubmit } = useSubmit(
+  (res) => {
+    if (!props.isApproval) {
+      showToast(`${props.labelText}成功！`)
       emits('finishCallback')
     }
   },
@@ -918,37 +970,17 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   },
 )
 
-const { loading: againLoading, submit: againSubmit } = useSubmit(
-  (res) => {
-    showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
-    emits('finishCallback')
-  },
-  {
-    submitFn: () => {
-      return approveProcessActions(props.currentRow?.taskId, {
-        businessData: {},
-        approveType: 1,
-        taskData: {
-          suggest: '',
-          variables: {},
-        },
-        remark: '',
-      })
-    },
-  },
-)
-
 const approvalCallback = async (form) => {
   approvalForm.value = form
   if (form.approveType === '1' && props.isEdit) { // 审核通过
-    await submit()
+    loading.value = approvalLoading.value
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
   else { // 审核不通过
-    loading.value = approvalLoading.value
-    await approvalSubmit()
+    loading.value = backLoading.value
+    await backSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
@@ -962,13 +994,13 @@ const setTemporary = async()=>{
 
 
 onMounted(() => {
+  showLoadingToast()
   props.setHandleOk && props.setHandleOk((finishFn) => {
     formRef.value.validate().then(async (values) => {   
       if (props.isApproval) {
         show.value.approvalVisible = true
       }
       else if (props.isAgain) {
-        await submit()
         loading.value = againLoading.value
         await againSubmit()
         await finishFn()
@@ -988,7 +1020,7 @@ onMounted(() => {
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
-        // message.warning('信息填写不完整，请检查填写内容！')
+        showToast('信息填写不完整，请检查填写内容！')
         scrollFormFailed()
       })
   }, loading)

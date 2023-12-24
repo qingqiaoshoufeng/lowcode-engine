@@ -55,7 +55,6 @@ onMounted(() => {
     <van-form ref="formRef" @submit="onSubmit">
       <van-field
         name="approveType"
-        label="是否有联动单位："
         label-width="124px"
         required
         class="field-radio"

@@ -163,6 +163,19 @@ export function approveProcessActions(taskId, data) {
   return request.post(`/acws/rest/flowtask/${taskId}/actions/audit`, data)
 }
 
+// 审批火灾接口
+export function approveFireActions(data) {
+  return axios.post(`${platformUrl}/biz/fireinfo/saveAndAudit`, data)
+}
+
+// 审批出动接口
+export function approveDispatchActions(data, type) {
+  if (type) {
+    return axios.post(`${platformUrl}/biz/firedispatch/saveheadquarterAndAudit`, data)
+  }
+  return axios.post(`${platformUrl}/biz/firedispatch/saveAndAudit`, data)
+}
+
 // 我的待办已办接口
 export function getTodoTasks(params) {
   return request.get('/acws/rest/tasks/query', { params, noErrorHandler: true })
