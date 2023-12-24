@@ -2,8 +2,11 @@
 import { inject, onMounted, watch, computed } from "vue";
 import dayjs from "dayjs";
 import ProCard from "@/component/ProCard/index.vue";
+import { cloneDeep } from 'lodash-es'
+import { showToast, showLoadingToast, closeToast } from "vant";
 import { validIdCode } from "@/utils/validate.js";
 import { getInfoByCard } from "@/utils/tools.js";
+import { getPersonDetail } from '@/apis/index.js'
 
 const form = inject("form");
 
@@ -58,7 +61,8 @@ const nameOptions = computed(() => {
 const handleAddInjury = () => {
   form.value.casualtyWar.injuredList.push({
     // injuryType: '1',
-    name: "", // 人员姓名
+    nameIds: undefined,
+    name: undefined, // 人员姓名
     identity: undefined, // 人员身份
     nation: undefined, // 民族
     personCode: "", // 消防证件号
@@ -82,7 +86,8 @@ const handleAddInjury = () => {
 const handleAddDead = () => {
   form.value.casualtyWar.deadList.push({
     // injuryType: '2',
-    name: "", // 人员姓名
+    nameIds: undefined,
+    name: undefined, // 人员姓名
     identity: undefined, // 人员身份
     personCode: "", // 消防证件号
     nation: undefined, // 民族
@@ -201,6 +206,33 @@ watch(
     }
   }
 );
+
+const onChangeName = (item, index) => {
+  if (form.value.casualtyWar.injuredList || form.value.casualtyWar.deadList) {
+    const ids = []
+    form.value.casualtyWar.injuredList?.forEach((i, idx) => {
+      ids.push(i.nameIds)
+    })
+    form.value.casualtyWar.deadList?.forEach((i, idx) => {
+      ids.push(i.nameIds)
+    })
+    if (ids.length !== Array.from(new Set(ids)).length) {
+      item.name = undefined
+      showToast('该人员已选择，请重新选择！')
+      return
+    } else {
+      item.name = nameOptions.value.filter(i => (i.value === item.nameIds || i.boFireUserId === item.nameIds))?.[0]
+    }
+  }
+  getPersonDetail(item.name?.boFireUserId || item.name?.value).then((res) => {
+    if (res) {
+      item.teamEntryTime = res.teamEntryTime ? dayjs(res.teamEntryTime) : undefined
+      item.identity = res.userNature
+      item.rescueRank = res.userLevel?.split(',')
+      item.duty = res.userJob?.split(',')
+    }
+  })
+}
 </script>
 
 <template>
@@ -245,16 +277,18 @@ watch(
           <div class="title">
             受伤人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteInjury(index)" />
           </div>
-          <van-field
-            v-model="item.name"
-            v-preview-text="showPreview"
-            :readonly="showPreview"
-            required
-            maxlength="20"
+          <SelectSingle
+            v-model:value="item.nameIds"
+            :showPreview="showPreview"
             :name="`casualtyWar.injuredList.${index}.name`"
+            required
+            :options="nameOptions"
+            :field-names="{ value: 'boFireUserId', label: 'userName' }"
+            title="请选择人员姓名"
             label="人员姓名："
-            placeholder="请输入人员姓名"
+            placeholder="请选择人员姓名"
             :rules="form.casualtyWar.name.rules"
+            @change="onChangeName(item, index)"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -267,7 +301,7 @@ watch(
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </SelectSingle>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -303,6 +337,7 @@ watch(
             title="请选择人员性质"
             label="人员性质："
             placeholder="请选择人员性质"
+            :disabled="true"
             :rules="form.casualtyWar.identity.rules"
           >
             <template v-slot:label="">
@@ -354,6 +389,7 @@ watch(
             label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -502,6 +538,7 @@ watch(
             label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -548,6 +585,7 @@ watch(
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -704,16 +742,18 @@ watch(
       <div v-if="form.casualtyWar.isDead.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="block-dynamic-item">
           <div class="title">死亡人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteDead(index)" /></div>
-          <van-field
-            v-model="item.name"
-            v-preview-text="showPreview"
-            :readonly="showPreview"
-            required
-            maxlength="20"
+          <SelectSingle
+            v-model:value="item.nameIds"
+            :showPreview="showPreview"
             :name="`casualtyWar.deadList.${index}.name`"
-            label="姓名："
-            placeholder="请输入姓名"
-            :rules="form.investForce.name.rules"
+            required
+            :options="nameOptions"
+            :field-names="{ value: 'boFireUserId', label: 'userName' }"
+            title="请选择人员姓名"
+            label="人员姓名："
+            placeholder="请选择人员姓名"
+            :rules="form.casualtyWar.name.rules"
+            @change="onChangeName(item, index)"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -726,7 +766,7 @@ watch(
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field>
+          </SelectSingle>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -758,14 +798,15 @@ watch(
             required
             :options="options.identity"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            title="请选择人员身份"
-            label="人员身份："
-            placeholder="请选择人员身份"
+            title="请选择人员性质"
+            label="人员性质："
+            placeholder="请选择人员性质"
             :rules="form.casualtyWar.identity.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
-                label="人员身份："
+                label="人员性质："
                 remark-field="deadList"
                 remark-field2="identity"
                 :remark-field2-id="index"
@@ -812,6 +853,7 @@ watch(
             label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -959,6 +1001,7 @@ watch(
             label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1005,6 +1048,7 @@ watch(
             label="职务："
             placeholder="请输入职务"
             :rules="form.casualtyWar.duty.rules"
+            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation

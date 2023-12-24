@@ -1551,8 +1551,11 @@ export const useFormConfig = () => {
       form.value.casualtyWar.injuredList = injureds.map((item) => {
         return {
           ...item,
+          nameIds: item.boFireUserId,
+          name: { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name },
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
+          duty: item.duty?.split(','),
           nativePlace: item.nativePlace?.split(','),
         }
       })
@@ -1560,8 +1563,11 @@ export const useFormConfig = () => {
       form.value.casualtyWar.deadList = deads.map((item) => {
         return {
           ...item,
+          nameIds: item.boFireUserId,
+          name: { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name },
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
+          duty: item.duty?.split(','),
           nativePlace: item.nativePlace?.split(','),
           deathDate: item.deathDate ? dayjs(item.deathDate) : undefined,
         }
