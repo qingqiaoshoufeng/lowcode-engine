@@ -581,7 +581,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireHat.value"
           label="消防头盔(个)："
-          label-width="110px"
+          label-width="115px"
           placeholder="请输入消防头盔数量"
           :rules="form.battleConsume.fireHat.rules"
         >
@@ -625,7 +625,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireGlove.value"
           label="消防手套(副)："
-          label-width="110px"
+          label-width="115px"
           placeholder="请输入消防手套数量"
           :rules="form.battleConsume.fireGlove.rules"
         >
@@ -735,7 +735,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireRescuer.value"
           label="消防员呼救器(个)："
-          label-width="136px"
+          label-width="105px"
           placeholder="请输入消防员呼救器数量"
           :rules="form.battleConsume.fireRescuer.rules"
         >
@@ -755,6 +755,7 @@ onMounted(() => {
           :readonly="showPreview"
           type="digit"
           maxlength="20"
+          label-width="100"
           name="battleConsume.positionLamp.value"
           label="方位灯(个)："
           placeholder="请输入方位灯数量"
@@ -778,7 +779,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.safetyRope.value"
           label="消防安全绳(根)："
-          label-width="120px"
+          label-width="130px"
           placeholder="请输入消防安全绳数量"
           :rules="form.battleConsume.safetyRope.rules"
         >
@@ -800,7 +801,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireAxe.value"
           label="消防腰斧(个)："
-          label-width="110px"
+          label-width="120px"
           placeholder="请输入消防腰斧数量"
           :rules="form.battleConsume.fireAxe.rules"
         >
@@ -817,6 +818,7 @@ onMounted(() => {
         <van-field
           v-model="form.battleConsume.interphone.value"
           v-preview-text="showPreview"
+          label-width="115px"
           :readonly="showPreview"
           type="digit"
           maxlength="20"
@@ -864,6 +866,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.uav.value"
           label="无人机(架)："
+          label-width="115px"
           placeholder="请输入无人机数量"
           :rules="form.battleConsume.uav.rules"
         >
@@ -944,7 +947,7 @@ onMounted(() => {
           maxlength="10"
           name="battleConsume.foamLiquid.value"
           label="泡沫液(千克)："
-          label-width="110px"
+          label-width="115px"
           placeholder="请输入泡沫液量"
           :rules="form.battleConsume.foamLiquid.rules"
         >
@@ -966,6 +969,7 @@ onMounted(() => {
           maxlength="10"
           name="battleConsume.dryPowder.value"
           label="干粉(千克)："
+          label-width="115px"
           placeholder="请输入干粉量"
           :rules="form.battleConsume.dryPowder.rules"
         >
@@ -987,7 +991,7 @@ onMounted(() => {
           maxlength="10"
           name="battleConsume.carbonDioxide.value"
           label="二氧化碳(千克)："
-          label-width="120px"
+          label-width="130px"
           placeholder="请输入二氧化碳量"
           :rules="form.battleConsume.carbonDioxide.rules"
         >
@@ -1135,7 +1139,7 @@ onMounted(() => {
           type="number"
           maxlength="10"
           label="用水总量(吨)："
-          label-width="104px"
+          label-width="115px"
           placeholder="请输入用水总量"
           :rules="form.battleConsume.totalWater.rules"
         >
