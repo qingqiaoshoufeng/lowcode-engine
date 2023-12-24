@@ -2,8 +2,10 @@
 import { computed, inject } from "vue";
 import { checkDispatchNum, checkDispatchTruckList, checkIsResponseTruck } from "../tool.js";
 import { positiveIntegerReg } from "@/utils/validate.js";
+import { cloneDeep } from 'lodash-es'
 import SelectMultiple from "@/component/SelectMultiple/index";
 import SelectCar from "@/component/SelectCar/index";
+import SelectPerson from '@/component/SelectPerson/index.vue';
 
 const form = inject("form");
 
@@ -25,12 +27,16 @@ const deptMembersOptions = inject("deptMembersOptions");
 
 const personNum = computed(() => {
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
-    return (
-      form.value.investForce.commander?.value?.length +
-      form.value.investForce.firemen?.value?.length
-    );
+    const ids = form.value.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+    const result = cloneDeep(form.value.investForce.commander?.value) || []
+    form.value.investForce.firemen.value?.forEach((item) => {
+      if (!ids.includes(item.boFireUserId)) {
+        result.push(item)
+      }
+    })
+    return result?.length
   }
-  return "";
+  return ''
 });
 
 const onResponseTruck = (e) => {
@@ -88,6 +94,10 @@ const OnCarNum = () => {
 
   checkIsResponseTruck(form.value);
 };
+
+const onCommander = () => {
+  form.value.investForce.groupLeader.value = undefined
+}
 </script>
 
 <template>
@@ -210,13 +220,38 @@ const OnCarNum = () => {
         </template>
       </SelectMultiple>
     </template>
+    <SelectPerson
+      v-model:value="form.investForce.commander.value"
+      :showPreview="showPreview"
+      required
+      :readonly="true"
+      name="investForce.commander.value"
+      :rules="form.investForce.commander.rules"
+      :disabled="form.investForce.commander.disabled"
+      label="指挥员："
+      placeholder="请选择指挥员"
+      title="请选择指挥员"
+      @blur="OnCarNum"
+      @change="onCommander"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="指挥员："
+          :isWarning="form.investForce.commander.warning"
+          remark-field="commander"
+          field-module="investForce"
+          :exist-data="fieldExist?.commander"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectPerson>
     <SelectMultiple
       v-model:value="form.investForce.groupLeader.value"
       :showPreview="showPreview"
       required
       name="investForce.groupLeader.value"
-      :options="deptMembersOptions"
-      :field-names="{ value: 'userId', label: 'userNameJob' }"
+      :options="form.investForce.commander.value || []"
+      :field-names="{ value: 'boFireUserId', label: 'userName' }"
       :rules="form.investForce.groupLeader.rules"
       :disabled="form.investForce.groupLeader.disabled"
       label="带队指挥员："
@@ -227,7 +262,6 @@ const OnCarNum = () => {
       <template v-slot:label="">
         <FieldAnnotation
           label="带队指挥员："
-          :isWarning="form.investForce.commander.warning"
           remark-field="groupLeader"
           field-module="investForce"
           :exist-data="fieldExist?.groupLeader"
@@ -235,37 +269,12 @@ const OnCarNum = () => {
         />
       </template>
     </SelectMultiple>
-    <SelectMultiple
-      v-model:value="form.investForce.commander.value"
-      :showPreview="showPreview"
-      required
-      name="investForce.commander.value"
-      :options="options.commander"
-      :field-names="{ value: 'userId', label: 'userNameJob' }"
-      :rules="form.investForce.commander.rules"
-      :disabled="form.investForce.commander.disabled"
-      label="指挥员："
-      placeholder="请选择指挥员"
-      title="请选择指挥员"
-      @blur="OnCarNum"
-    >
-      <template v-slot:label="">
-        <FieldAnnotation
-          label="指挥员："
-          remark-field="commander"
-          field-module="investForce"
-          :exist-data="fieldExist?.commander"
-          @refresh-callback="refreshField"
-        />
-      </template>
-    </SelectMultiple>
-    <SelectMultiple
+    <SelectPerson
       v-model:value="form.investForce.firemen.value"
       :showPreview="showPreview"
       required
+      :readonly="true"
       name="investForce.firemen.value"
-      :options="options.firemen"
-      :field-names="{ value: 'userId', label: 'userNameJob' }"
       :rules="form.investForce.firemen.rules"
       :disabled="form.investForce.firemen.disabled"
       label="消防员："
@@ -283,7 +292,7 @@ const OnCarNum = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectMultiple>
+    </SelectPerson>
     <van-field
       v-if="showDealSituation"
       v-model="form.investForce.fireBoatNum.value"

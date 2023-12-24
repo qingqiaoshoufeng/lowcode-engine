@@ -114,6 +114,7 @@ defineOptions({
     v-model="selectText"
     v-preview-text="showPreview"
     is-link
+    :required="required"
     v-bind="$attrs"
     :label="label"
     :placeholder="placeholder"
