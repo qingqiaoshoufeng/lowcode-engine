@@ -118,6 +118,7 @@ const props = defineProps({
 const diyValidateMap = ref({
   defaultKey:[]
 })
+const statusList = ref([])
 provide('diyValidateMap',diyValidateMap)
 
 const emits = defineEmits(['finishCallback'])
@@ -139,8 +140,8 @@ const validateProgress = async()=>{
       // console.log(error,'resres');
     }
     const statusMap = formRef.value.getValidationStatus()
-    // console.log(statusMap,'statusMap');
-    const statusList = Object.entries(statusMap).reduce((current,item)=>{
+    console.log(statusMap,'statusMap');
+    statusList.value = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){
         const typename = type.split('.')[0]
@@ -148,9 +149,10 @@ const validateProgress = async()=>{
       }
       return current
     },[])
-    Object.keys(form.value).forEach(item=>{
-      form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
-    })
+    console.log(statusList.value,'statusList.value');
+    // Object.keys(form.value).forEach(item=>{
+    //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
+    // })
     formRef.value.resetValidation()
     hidevalidate.value = false
     if(diyValidateMap.value.defaultKey.length){
@@ -1278,7 +1280,7 @@ const onSideBarChange = (e, k) => {
               <div class="label_title"> 
                 {{ item.title }}
                 <div class="tip-wrapper">
-                  <img :style="{ visibility: !isDetail && item.validateProgress >= 100 ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
+                  <img :style="{ visibility: !statusList.includes(k) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
                   <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
                   <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
                 </div>
