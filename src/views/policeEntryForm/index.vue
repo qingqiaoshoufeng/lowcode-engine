@@ -562,7 +562,7 @@ const initDetail = () => {
         form.value.warningStatus = res.warningStatus
         form.value.transferList = res.transferList
         form.value.dispatchGroup?.forEach((item) => {
-          if (item.organizationid === form.value.dutyGroup[0].organizationid) {
+          if (item.organizationid === form.value.dutyGroup?.[0]?.organizationid) {
             item.duty = true
           }
           else {
