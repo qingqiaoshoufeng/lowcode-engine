@@ -1090,7 +1090,6 @@ const onSideBarChange = (e, k) => {
           <van-sidebar-item 
             v-for="(item, k) in sections" 
             :key="k" :title="item.title" 
-            
             @click="onSideBarChange(item, k)" 
           >
             <template #title>
