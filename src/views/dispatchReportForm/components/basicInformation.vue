@@ -170,7 +170,7 @@ const onDealSituation = (value, option) => {
           :isWarning="form.basicInformation.trappedPerson.warning"
           remark-field="fireDistance"
           field-module="basicInformation"
-          :exist-data="fieldExist?.fireDistance"
+          :exist-data="fieldExist?.trappedPerson"
           @refresh-callback="refreshField"
         />
       </template>
