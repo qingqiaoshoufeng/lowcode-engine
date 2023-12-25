@@ -850,8 +850,11 @@ const getSubmitParams = () => {
       const list = casualtyWar.injuredList.map((item) => {
         return {
           ...item,
+          name: item.name?.userName || item.name?.label,
+          boFireUserId: item.name?.boFireUserId || item.name?.value,
           injuryType: '1',
           rescueRank: item.rescueRank?.join(','),
+          duty: item.duty?.join(','),
           nativePlace: item.nativePlace?.join(','),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
         }
@@ -862,8 +865,11 @@ const getSubmitParams = () => {
       const list = casualtyWar.deadList.map((item) => {
         return {
           ...item,
+          name: item.name?.userName || item.name?.label,
+          boFireUserId: item.name?.boFireUserId || item.name?.value,
           injuryType: '2',
           rescueRank: item.rescueRank?.join(','),
+          duty: item.duty?.join(','),
           nativePlace: item.nativePlace?.join(','),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           deathDate: item.deathDate?.valueOf(),
@@ -1080,7 +1086,8 @@ const getSubmitParams = () => {
 const { loading, submit } = useSubmit(
   (res) => {
     if (!props.isApproval && !props.isAgain && !props.showDraft) {
-      showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'dispatch-manage' })
+      // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'dispatch-manage' })
+      showToast('提交送审成功！')
       emits('finishCallback', res, props.showDraft)
     }
     else if (!props.isApproval && !props.isAgain && props.showDraft) {
