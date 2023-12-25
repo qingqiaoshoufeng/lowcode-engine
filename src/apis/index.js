@@ -165,15 +165,15 @@ export function approveProcessActions(taskId, data) {
 
 // 审批火灾接口
 export function approveFireActions(data) {
-  return axios.post(`${platformUrl}/biz/fireinfo/saveAndAudit`, data)
+  return axios.post(`${'/acws/rest'}/biz/fireinfo/saveAndAudit`, data)
 }
 
 // 审批出动接口
 export function approveDispatchActions(data, type) {
   if (type) {
-    return axios.post(`${platformUrl}/biz/firedispatch/saveheadquarterAndAudit`, data)
+    return axios.post(`${'/acws/rest'}/biz/firedispatch/saveheadquarterAndAudit`, data)
   }
-  return axios.post(`${platformUrl}/biz/firedispatch/saveAndAudit`, data)
+  return axios.post(`${'/acws/rest'}/biz/firedispatch/saveAndAudit`, data)
 }
 
 // 我的待办已办接口
