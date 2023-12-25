@@ -9,7 +9,10 @@
           @click="tabChange(item.value)"
         >{{ item.label }}</div>
       </div>
-      <div class="info_list">
+      <div v-show="checkEmpty" class="empty_wrapper info_list" id="chart">
+        <img src="~@/assets/images/empty.png" alt="">
+      </div>
+      <div v-show="!checkEmpty" class="info_list">
         <div class="info_item" :class="{no_line:index===9}" v-for="(item,index) in list" :key="item.name + currentTab">
           <div class="index">
             <img v-if="iconList[index] && currentTab === 1" :src="iconList[index]" alt="">
@@ -37,6 +40,7 @@ import useTab from '../hooks/useTab.js'
 import first from '@/assets/images/first.png'
 import second from '@/assets/images/second.png'
 import third from '@/assets/images/third.png'
+import {computed } from 'vue' 
 const iconList = [first,second,third]
 const props = defineProps({
   list:{
@@ -72,6 +76,14 @@ const {
 
 defineExpose({
   currentTab
+})
+
+const checkEmpty = computed(()=>{
+  if(!props.list || props.list.length === 0){
+    return true
+  }else{
+    false
+  }
 })
 
 </script>
@@ -173,6 +185,14 @@ export default {
         border-bottom:none;
       }
     }
+ }
+ .empty_wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img{
+    width: 50%;
+  }
  }
  </style>
    
