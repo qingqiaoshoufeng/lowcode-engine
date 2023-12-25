@@ -83,7 +83,7 @@ onMounted(() => {
       >
       </SelectOrg>
       <SelectSingle
-        v-if="currentRow?.firstGroup"
+        v-if="currentRow?.isFirst"
         v-model:value="form.firstGroup"
         name="firstGroup"
         :options="form.dispatchGroup"
@@ -96,7 +96,7 @@ onMounted(() => {
       >
       </SelectSingle>
       <SelectSingle
-        v-if="currentRow?.mainGroup"
+        v-if="currentRow?.isMain"
         v-model:value="form.mainGroup"
         name="mainGroup"
         :options="form.dispatchGroup"

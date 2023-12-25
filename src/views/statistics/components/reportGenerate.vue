@@ -203,7 +203,7 @@ const handleSearch = () => {
           passNumber = 4
         }
         for (let i = 0; i < totalData[0].length; i++) {
-          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          const columnData = totalData.map(row => String(row[i]).length)
           for (let i = 0; i < passNumber; i++) {
             columnData.shift()
           }
@@ -294,8 +294,6 @@ const handleDefineSearch = () => {
 
       luckyOption.value.container = 'my-table-define'
 
-      console.log('window.luckysheet：', window.luckysheet)
-
       nextTick(() => {
         window.luckysheet.create({
           ...luckyOption.value,
@@ -322,7 +320,7 @@ const handleDefineSearch = () => {
         })
         const widthObj = {}
         for (let i = 0; i < totalData[0].length; i++) {
-          const columnData = totalData.map(row => row[i]).map(item => String(item).length)
+          const columnData = totalData.map(row => String(row[i]).length)
           columnData.shift()
           columnData.shift()
           columnData.shift()
