@@ -171,7 +171,7 @@ defineOptions({
 </template>
 
 <style lang="scss" scoped>
-.van-field--disabled{
+.van-field--disabled {
   pointer-events: none;
 }
 .select-single {
@@ -199,6 +199,7 @@ defineOptions({
   }
   .single-wrapper {
     height: 50vh;
+    overflow-x: hidden;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

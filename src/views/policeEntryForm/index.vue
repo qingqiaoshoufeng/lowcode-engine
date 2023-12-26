@@ -113,7 +113,7 @@ const labelWarningOrgname = ref("单位/户主/个体户/建筑名称");
 
 let warningLevelOptions = []; // 警情等级
 
-const userOrgName = ref()
+const userMessage = ref(null)
 
 const detail = ref(null)
 
@@ -175,15 +175,15 @@ form.value.warningName = computed(() => {
     : "";
   if (warningTypeText?.[0] === "虚假警") {
     if (warningTypeText?.[1] === "虚警（误报）") {
-      result += `${userOrgName.value}接报一起虚警`;
+      result += `${userMessage.value?.USERMESSAGE?.orgName}接报一起虚警`;
       result += warningTypeText ? `（${textFilter(warningTypeText, 2)}）` : "";
     } else if (warningTypeText?.[1] === "假警（谎报、恶意报警）") {
-      result += `${userOrgName.value}接报一起假警`;
+      result += `${userMessage.value?.USERMESSAGE?.orgName}接报一起假警`;
       result += warningTypeText
         ? `（${textFilter(warningTypeText, warningTypeText.length - 1)}）`
         : "";
     } else {
-      result += `${userOrgName.value}接报一起虚假警`;
+      result += `${userMessage.value?.USERMESSAGE?.orgName}接报一起虚假警`;
     }
   } else {
     result += warningAreaText?.length > 0
@@ -280,6 +280,11 @@ const showIsHappenFire = computed(() => {
   const types = form.value.warningTypeText || [];
   return types && types[0] === "抢险救援" && types[1] === "交通事故";
 });
+
+// 是否显示增援支队、增援总队
+const showCityProvince = computed(() => {
+  return props.isCrossRegion || form.value.isOtherCity === '1' || form.value.isOtherProvince === '1'
+})
 
 const showNaturalDisasterOther = computed(() => {
   const types = form.value.naturalDisasterTypeText || [];
@@ -653,7 +658,7 @@ onMounted(() => {
   });
   // 获取用户单位
   if (store.getters?.["userInfo/userInfo"]) {
-    userOrgName.value = store.getters?.["userInfo/userInfo"]?.USERMESSAGE?.orgName
+    userMessage.value = store.getters?.["userInfo/userInfo"]
   }
 });
 
@@ -1453,6 +1458,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectMultiple>
       <SelectMultiple
+        v-if="showCityProvince && !userMessage?.ISMUNICIPALORG"
         :value="form.otherCity?.map(item => item.organizationid) || []"
         v-model:nodes="form.otherCity"
         :showPreview="showPreview"
@@ -1480,6 +1486,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectMultiple>
       <SelectMultiple
+        v-if="showCityProvince"
         :value="form.otherProvince?.map(item => item.organizationid) || []"
         v-model:nodes="form.otherProvince"
         :showPreview="showPreview"
