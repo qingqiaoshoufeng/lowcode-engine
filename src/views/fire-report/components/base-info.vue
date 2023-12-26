@@ -18,7 +18,7 @@ import { useUpload } from '@/hooks/useUpload.js'
 import { getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { nonnegativeNumberReg, validateTelePhone } from '@/utils/validate.js'
 
-
+ 
 
 // import { 
 //   useRuleConfig,
@@ -30,6 +30,8 @@ const severityConfig = store.state?.rules?.ruleConfig?.severityConfig|| []
 // const systemDict = useSystemDict()
 
 const form = inject('form')
+
+const minInputTime = store.state.setting.minInputTime
 
 const isShowTemporary = inject('isShowTemporary',false)
 
@@ -618,6 +620,7 @@ const onFireLevel = () => {
           title="请选择起火时间"
           label="起火时间："
           placeholder="请选择起火时间"
+          :minDate="minInputTime"
           :rules="[{ validator: validateFireDate, trigger: 'onBlur' }, ...form.basicInfo.fireDate.rules]"
           @change="fireDateChange"
         >

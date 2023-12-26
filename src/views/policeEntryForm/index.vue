@@ -83,6 +83,10 @@ const { show } = useModal();
 
 const store = useStore();
 
+const minInputTime = store.state.setting.minInputTime
+
+console.log(store,'store');
+
 const { options } = useOptions({
   otherCityOptions: [],
   otherProvinceOptions: [],
@@ -797,6 +801,7 @@ const onWarningOrgname = () => {
         title="请选择接警时间"
         label="接警时间："
         placeholder="请选择接警时间"
+        :minDate="minInputTime"
         :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择接警时间' }]"
       > 

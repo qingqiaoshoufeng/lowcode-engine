@@ -10,6 +10,8 @@ const mockData = [
   ],
 ]
 const legendData = ['<10分钟', '10-20分钟', '30-60分钟', '60-90分钟', '90-120分钟','>=120分钟']
+
+let realDataMap = {}
 const options = {
   tooltip: {
     formatter: '<span style="font-size: 14px;font-weight: 400;">{b}：</span>{c}分钟',
@@ -27,6 +29,10 @@ const options = {
     icon:'circle',
     itemWidth:10,
     itemHeight:10,
+    formatter: (val) => {
+      const item = realDataMap.find(item => item.name === val) 
+      return `${val}  ${item.value}(队次)`
+    },
   },
   series: [
     {
@@ -58,7 +64,7 @@ export default {
   getOptions(val = mockData){
     if(!isType(val,'Array')) return options
     Array.from(Array(1).keys()).map(index=>{
-      options.series[index].data = val[index].map((itm,idx)=>{
+      options.series[index].data = realDataMap = val[index].map((itm,idx)=>{
         return {
           name:legendData[idx],
           value:itm

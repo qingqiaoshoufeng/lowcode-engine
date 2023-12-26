@@ -1,13 +1,6 @@
 const state = {
-  ruleConfig: {
-    speedConfig: null,
-    distanceConfig: null,
-    carRateConfig: null,
-    trappedConfig: null,
-    severityConfig: null,
-  },
+  minInputTime: new Date('2023-06-01 00:00:00'),
 }
-
 
 export default {
   namespaced: true,

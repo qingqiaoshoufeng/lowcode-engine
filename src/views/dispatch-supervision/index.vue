@@ -107,6 +107,7 @@
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
+      :showBack="true" :showHeader="false"
       title="出动填报详情"
       :ok-display="false"
       :footer="null"

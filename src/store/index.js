@@ -7,6 +7,7 @@ import dict from './module/dict'
 import rules from './module/rules'
 import userInfo from './module/userInfo'
 import menuInfo from './module/menuInfo'
+import setting from './module/setting'
 
 export default createStore({
   modules: {
@@ -15,7 +16,8 @@ export default createStore({
     dict,
     rules,
     userInfo,
-    menuInfo
+    menuInfo,
+    setting
   },
   strict: process.env.NODE_ENV !== 'production',
   plugins: [

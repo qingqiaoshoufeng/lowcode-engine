@@ -44,6 +44,9 @@ const props = defineProps({
     type: Object,
     default: new Date(),
   },
+  minDate:{
+    type: Object,
+  }
 });
 
 const emit = defineEmits(["update:value", "change"]);
@@ -144,6 +147,7 @@ defineOptions({
           title="选择日期"
           :show-toolbar="false"
           :max-date="maxDate"
+          :min-date="minDate"
           class="left"
         />
         <van-time-picker
