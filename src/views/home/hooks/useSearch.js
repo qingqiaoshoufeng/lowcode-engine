@@ -34,6 +34,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     // DispatchInfoList:[] // 出动平均时长列表
     generalInfo:[],
     formInfo: [],
+    dataUpdatedTime:'',
   })
 
   const openTimePop = ()=>{
@@ -282,6 +283,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
       getGeneralInfo(res)
       getFormInfo(res)
     }
+    state.dataUpdatedTime = res.dataUpdatedTime
   }
 
   // 获取通知列表
@@ -289,7 +291,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     const res = await getFireNotice({status:1}) || []
     state.noticeList = res.filter((item,index)=>(index<3))
     console.log(res,'getStyle');
-  }
+  } 
 
   const goNotice=()=>{
     router.push({

@@ -1,8 +1,13 @@
 <template> 
   <div class="home">
     <div class="time" @click="openTimePop">
-        <span>{{ currentTime[0] }}</span>年<span>{{ currentTime[1]}}</span><span v-show="currentTime[1] !== '全年'">月</span>
-        <div class="triangle "></div>
+        <div class="tip">
+          <span>数据更新至：</span><span style="color: red;">{{ dataUpdatedTime }}</span>
+        </div>
+        <div>
+          <span>{{ currentTime[0] }}</span>年<span>{{ currentTime[1]}}</span><span v-show="currentTime[1] !== '全年'">月</span>
+          <div class="triangle "></div>
+        </div>
     </div>
     <div class="wrapper">
       <div class="card_list" v-if="!isStanding">
@@ -82,6 +87,7 @@ const {
   FireSiteList,
   generalInfo,
   formInfo,
+  dataUpdatedTime,
   getRank,
   goNotice
 } = useSearch({dataPickerRef,statisticsInfoRef})
@@ -120,9 +126,10 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
         font-weight: 400;
         color: #FFFFFF;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
         padding-right: 20px;
+        padding-left: 10px;
         .triangle{
           margin-left: 4px;
           margin-top: 2px;
@@ -131,6 +138,14 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
           border-top: 6px solid #fff;
           border-right: 6px solid transparent;
           border-left: 6px solid transparent;
+        }
+        >div{
+          display: flex;
+          align-items: center;
+          
+        }
+        .tip{
+          font-size: 12px !important;
         }
     }
     .wrapper{
@@ -151,7 +166,6 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
           display: flex;
           align-items: center;
           justify-content: center;
-          
         }
         .green{
           margin: 0 9px;
