@@ -29,7 +29,7 @@ const props = defineProps({
   },
   maxDate: {
     type: Object,
-    default: new Date(),
+    default: () => new Date(),
   },
 });
 
