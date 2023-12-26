@@ -11,8 +11,8 @@
         <div class="list-item" @click.stop="handleclick({type:'look' ,record})">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.dispatchStatusValue || '待填报')">
-              {{ record.dispatchStatusValue || '待填报'}}
+            <div class="item-state" :class="generateColorByState(record.fireStatusValue || '待填报')">
+              {{ record.fireStatusValue || '待填报'}}
             </div>
           </div>
           <div class="item-type">

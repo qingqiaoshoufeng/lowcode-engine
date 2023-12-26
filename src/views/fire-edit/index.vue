@@ -62,6 +62,7 @@
     <ProModal  v-model:visible="show.editVisible" title="火灾填报">
       <template #default="{ setHandleOk, setHandleExtend }">
           <EditorForm
+            isAgain
             :is-edit="isEdit"
             :current-row="currentRow"
             :relevance-draft="relevanceDraft"
