@@ -80,6 +80,22 @@ const onPersonChange = (value) => {
   form.value.fieldText = `${form.value.label}：${value?.map(item => item.userName)?.join(',')}`
 }
 
+const onTimeChange3 = (time) => {
+  if (time?.[0] && time?.[1]) {
+    form.value.valueOne = [dayjs(time?.[0]).format('YYYY-MM-DD HH:mm:ss'), dayjs(time?.[1]).format('YYYY-MM-DD HH:mm:ss')]
+  } else {
+    form.value.valueOne = []
+  }
+  const timeString = []
+  if (time?.[0]) {
+    timeString.push(dayjs(time?.[0]).format('YYYY-MM-DD HH:mm:ss'))
+  }
+  if (time?.[1]) {
+    timeString.push(dayjs(time?.[1]).format('YYYY-MM-DD HH:mm:ss'))
+  }
+  form.value.fieldText = `${form.value.label}：${timeString.join('至')}`
+}
+
 const onTimeChange = (time) => {
   if (time?.[0] && time?.[1]) {
     form.value.valueOne = [dayjs(time?.[0]).format('YYYY-MM-DD HH:mm:ss'), dayjs(time?.[1]).format('YYYY-MM-DD HH:mm:ss')]
@@ -184,7 +200,7 @@ defineExpose({
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
-            @change="onTimeChange"
+            @change="onTimeChange3"
           />
         </template>
         <template v-if="form.type === '4' && form.mode === 'single'">
