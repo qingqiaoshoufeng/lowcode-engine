@@ -12,7 +12,7 @@ function getCompositeSearchParams(data) {
 
 export function getSearchInfo(data) {
   const params = getCompositeSearchParams(data)
-  return request.post('/acws/rest/biz/analysis/senior/queryresult', params)
+  return request.post('/acws/rest/biz/analysis/comprehensive/queryresult', params)
 }
 
 // 获取查询结果
