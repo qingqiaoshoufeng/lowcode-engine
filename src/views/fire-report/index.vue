@@ -87,7 +87,7 @@
               class="item-btn"
               v-if="record.isDistribute !== '1'" 
               v-p="['admin', 'fire-report:transfer']" 
-              @click="handleTransfer({type:'transfer' ,record})"
+              @click.stop="handleTransfer(record)"
             >
               转派
             </van-button>
@@ -176,6 +176,7 @@ const handleLook = (row) => {
   show.value.lookVisible = true
 }
 const handleTransfer = (row) => {
+  debugger;
   currentRow.value = row
   show.value.transferVisible = true
 }

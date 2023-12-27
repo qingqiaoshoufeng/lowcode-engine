@@ -148,11 +148,15 @@ const validateProgress = async()=>{
     hidevalidate.value = true
     try {
       const res = await formRef.value.validate()
+     
     } catch (error) {
-      // console.log(error,'resres');
+      console.log(error,'resres');
+      error.map(item=>{
+
+      })
     }
     const statusMap = formRef.value.getValidationStatus()
-    // console.log(statusMap,'statusMap');
+    console.log(statusMap,'statusMap');
     statusList.value = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){
@@ -161,16 +165,20 @@ const validateProgress = async()=>{
       }
       return current
     },[])
+    
+    console.log(statusList.value);
     // Object.keys(form.value).forEach(item=>{
     //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
     // })
-    formRef.value.resetValidation()
-    hidevalidate.value = false
-    if(diyValidateMap.value.defaultKey.length){
-      diyValidateMap.value.defaultKey.forEach((item)=>{
-        formRef.value.validate(item)
-      })
-    }
+    setTimeout(()=>{
+      formRef.value.resetValidation()
+      hidevalidate.value = false
+      if(diyValidateMap.value.defaultKey.length){
+        diyValidateMap.value.defaultKey.forEach((item)=>{
+          formRef.value.validate(item)
+        })
+      }
+    },0)
     // console.log(statusList,'result');
   }
   // formRef.value.validate()
@@ -180,7 +188,9 @@ const validateProgress = async()=>{
 watch(
   () => form.value,
   () => {
+    // nextTick(()=>{
     validateProgress()
+    // })
   },
   { deep: true },
 )

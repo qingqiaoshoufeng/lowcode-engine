@@ -153,13 +153,15 @@ const validateProgress = async()=>{
     // Object.keys(form.value).forEach(item=>{
     //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
     // })
-    formRef.value.resetValidation()
-    hidevalidate.value = false
-    if(diyValidateMap.value.defaultKey.length){
-      diyValidateMap.value.defaultKey.forEach((item)=>{
-        formRef.value.validate(item)
-      })
-    }
+    setTimeout(()=>{
+      formRef.value.resetValidation()
+      hidevalidate.value = false
+      if(diyValidateMap.value.defaultKey.length){
+        diyValidateMap.value.defaultKey.forEach((item)=>{
+          formRef.value.validate(item)
+        })
+      }
+    },0)
     // console.log(statusList,'result');
   }
   // formRef.value.validate()
@@ -170,12 +172,12 @@ provide('validateProgress',validateProgress)
 watch(
   () => form.value,
   (val1,val2) => {
-    nextTick(() => {
-      validateProgress()
+    // nextTick(() => {
+    validateProgress()
     //   Object.keys(form.value).forEach((key) => {
     //     handleUseForm(key, form.value[key])
     //   })
-    })
+    // })
   },
   { deep: true },
 )
