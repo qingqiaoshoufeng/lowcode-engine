@@ -984,11 +984,11 @@ export const useFormConfig = (validateProgress) => {
       fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
       fieldWarning: form.value.casualtyWar.fieldWarning,
     }
-    form.value.economicLoss = {
-      ...cloneDeep(formOrigin.economicLoss),
-      fieldAnnotation: form.value.economicLoss.fieldAnnotation,
-      fieldWarning: form.value.economicLoss.fieldWarning,
-    }
+    // form.value.economicLoss = {
+    //   ...cloneDeep(formOrigin.economicLoss),
+    //   fieldAnnotation: form.value.economicLoss.fieldAnnotation,
+    //   fieldWarning: form.value.economicLoss.fieldWarning,
+    // }
     form.value.fireBuilding = {
       ...cloneDeep(formOrigin.fireBuilding),
       fieldAnnotation: form.value.fireBuilding.fieldAnnotation,

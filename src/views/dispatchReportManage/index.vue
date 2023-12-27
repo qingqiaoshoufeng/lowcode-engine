@@ -13,7 +13,7 @@ import {
 } from "@/utils/tools.js";
 import { MSG_LOCKING_TEXT, dispatchType, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getDispatchManageList, collectFireWarning } from "@/apis/index.js";
+import { getDispatchManageList, collectFireWarning, getHeaderOrg } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js'
@@ -119,13 +119,11 @@ const searchOptions = ref([
   },
   {
     title: '全勤指挥部名称',
-    type: 'select-org',
+    type: 'select',
     placeholder: '请选择全勤指挥部名称',
+    fieldNames: { value: 'organizationid', label: 'name' },
     value: 'headNameList',
-    params: { deptType: 2 },
-    single: false,
-    selectLeaf: false,
-    headersDisabled: false
+    options: [],
   },
 ])
 
@@ -237,6 +235,11 @@ onMounted(() => {
   searchOptions.value[1].options = res.CD_STATUS
   searchOptions.value[4].options = res.JQ_TYPE
   searchOptions.value[12].options = res.CD_JYQK_CZ
+  getHeaderOrg().then((res) => {
+    if (res) {
+      searchOptions.value[13].options = res
+    }
+  })
   nextTick(() => {
     proListRef.value?.filter();
   });
