@@ -121,7 +121,7 @@ export const checkDispatchTruckList = (form, prompt = true) => {
       form.basicInformation.fireDistance.warning = true
       form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于等于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
       form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
-      prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于等于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
+      prompt && showToast(`有车辆出动，行驶距离小于等于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
     }
     else {
       form.basicInformation.fireDistance.warning = false
