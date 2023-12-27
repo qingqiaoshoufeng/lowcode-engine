@@ -401,7 +401,7 @@ const firelistMap = [
     YOYkey: 'ssCountYOY',
   },
   {
-    label: '直接经济损失',
+    label: '直接经济损失(万元)',
     numberKey: 'disCount',
     YOYkey: 'disCountYOY',
   },

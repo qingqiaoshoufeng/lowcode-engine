@@ -2,6 +2,8 @@ import dayjs from 'dayjs'
 // import { notification } from '@castle/ant-design-vue'
 import store from '@/store/index.js'
 import { showToast } from "vant";
+const ruleConfig = store.state?.rules?.ruleConfig
+// import { useRuleConfig } from '@/store/index.js'
 
 // 校验到场时间
 export const checkAttendanceDate = (form, prompt = true) => {
@@ -93,21 +95,38 @@ export const checkFireDistance = (form, prompt = true) => {
 }
 
 // 校验车辆
-export const checkDispatchTruckList = (form, prompt = true) => {
-  const { distanceConfig } = store.getters['rules/getAllRules']
+// export const checkDispatchTruckList = (form, prompt = true) => {
+//   const { distanceConfig } = store.getters['rules/getAllRules']
 
+//   const { fireDistance } = form.basicInformation
+//   if (Number(fireDistance.value) <= distanceConfig?.[0]?.value && form.investForce.dispatchTruckList.value?.length > 0) {
+//     form.basicInformation.fireDistance.warning = true
+//     form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
+//     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
+//     // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
+//     prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
+//   }
+//   else {
+//     form.basicInformation.fireDistance.warning = false
+//     form.basicInformation.fireDistance.warningText = ''
+//     form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:true;', 'fireDistance:false;')
+//   }
+// }
+export const checkDispatchTruckList = (form, prompt = true) => {
+  const distanceConfig= ruleConfig.distanceConfig
   const { fireDistance } = form.basicInformation
-  if (Number(fireDistance.value) <= distanceConfig?.[0]?.value && form.investForce.dispatchTruckList.value?.length > 0) {
-    form.basicInformation.fireDistance.warning = true
-    form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
-    form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
-    // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
-  }
-  else {
-    form.basicInformation.fireDistance.warning = false
-    form.basicInformation.fireDistance.warningText = ''
-    form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:true;', 'fireDistance:false;')
+  if (form.basicInformation.dealSituation?.text !== '中途返回') {
+    if (Number(fireDistance.value) <= distanceConfig?.[0]?.value && form.investForce.dispatchTruckList.value?.length > 0) {
+      form.basicInformation.fireDistance.warning = true
+      form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于等于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
+      form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
+      prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于等于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
+    }
+    else {
+      form.basicInformation.fireDistance.warning = false
+      form.basicInformation.fireDistance.warningText = ''
+      form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:true;', 'fireDistance:false;')
+    }
   }
 }
 

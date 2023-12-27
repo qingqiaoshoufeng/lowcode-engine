@@ -15,12 +15,14 @@
 <script setup>
 import { ref, computed } from "vue";
 import store from "@/store/index.js";
-console.log(store);
+console.log();
+const menuInfoList = store.getters['menuInfo/menuInfoList']
+
 const currentab = ref(3);
 const titleList = ["", "信息采集", "审核/审批", "统计监督"];
 const menuListMap = computed(() => {
-  const menuList = store.state?.menuInfo.menuInfo?.appMenuList || [];
-  const result = menuList.reduce((current, item, index) => {
+  // const menuList = store.state?.menuInfo.menuInfo?.appMenuList || [];
+  const result = menuInfoList.reduce((current, item, index) => {
     const { menuType } = item;
     const list = current[menuType] || [];
     list.push(item);

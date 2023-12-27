@@ -18,6 +18,7 @@
                     </svg>
                     <span>{{ item.menuName }}</span>
                </div>
+               <div class="dot" v-if="item.number">{{ item.number }}</div>
             </div>
         </div>
     </div>
@@ -57,6 +58,25 @@ export default {
     width: 100%;
     background-color: #fff;
     justify-content: space-between;
+    .list{
+      >div{
+        position: relative;
+        .dot{
+          position: absolute;
+          left:55px;
+          top:0;
+          height: 10px;
+          line-height: 10px;
+          background: #EE0D24;
+          border-radius: 5px;
+          font-size: 8px;
+          font-family: PingFangSC, PingFang SC;
+          font-weight: 400;
+          color: #FFFFFF;
+          padding: 0 3px;
+        }
+      }
+    }
     .title{
         font-size: 16px;
         font-family: PingFangSC-Medium, PingFang SC;
