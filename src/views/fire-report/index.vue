@@ -176,7 +176,6 @@ const handleLook = (row) => {
   show.value.lookVisible = true
 }
 const handleTransfer = (row) => {
-  debugger;
   currentRow.value = row
   show.value.transferVisible = true
 }
