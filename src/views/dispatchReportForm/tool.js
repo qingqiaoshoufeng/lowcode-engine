@@ -111,13 +111,27 @@ export const checkDispatchTruckList = (form, prompt = true) => {
   }
 }
 
+function getPersonNum(form) {
+  if (form.investForce.commander?.value || form.investForce.firemen?.value) {
+    const ids = form.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+    const result = cloneDeep(form.investForce.commander?.value) || []
+    form.investForce.firemen.value?.forEach((item) => {
+      if (!ids.includes(item.boFireUserId)) {
+        result.push(item)
+      }
+    })
+    return result?.length
+  }
+  return 0
+}
+
 // 校验出动人数
 export const checkDispatchNum = (form, prompt = true) => {
   const { carRateConfig } = store.getters['rules/getAllRules']
 
   const { commander, firemen, dispatchTruckList } = form.investForce
   if (dispatchTruckList.value?.length > 0 && commander.value && firemen.value
-    && dispatchTruckList.value?.length * carRateConfig?.value?.[0] > commander.value?.length + firemen.value?.length) {
+    && dispatchTruckList.value?.length * carRateConfig?.value?.[0] > getPersonNum(form)) {
     form.investForce.commander.warning = true
     form.investForce.firemen.warning = true
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('commander:false;', 'commander:true;')
@@ -126,7 +140,7 @@ export const checkDispatchNum = (form, prompt = true) => {
     prompt && showToast(`人车比低于${carRateConfig?.value?.[0]}:1，不合理，请修改或备注！`)
   }
   else if (dispatchTruckList.value?.length > 0 && commander.value && firemen.value
-    && dispatchTruckList.value?.length * carRateConfig?.value?.[1] < commander.value?.length + firemen.value?.length) {
+    && dispatchTruckList.value?.length * carRateConfig?.value?.[1] < getPersonNum(form)) {
     form.investForce.commander.warning = true
     form.investForce.firemen.warning = true
     form.investForce.fieldWarning = form.investForce.fieldWarning.replace('commander:false;', 'commander:true;')
