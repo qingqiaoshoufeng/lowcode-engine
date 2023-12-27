@@ -521,9 +521,8 @@ const initWatch = () => {
     initFormWhenChange()
     initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
-  // 只有当填报状态下才自动生成处置过程
-  // debugger;
-  if ((isShowTemporary?.value) || props.isDetail) {
+  // 只有当填报、详情、修改状态下才自动生成处置过程
+  if ((isShowTemporary?.value) || props.isDetail || props.isEdit) {
     watch(() => [form.value, detail.value], () => {
       generateRemarkField(detail.value)
     }, { deep: true })
