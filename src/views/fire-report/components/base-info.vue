@@ -968,6 +968,92 @@ const onFireLevel = () => {
           </template>
         </SelectSingle>
       </div>
+      <div v-if="showResidence" :gutter="gutter">
+        <div class="isPoorHouse">
+          <van-field 
+            name="basicInfo.isPoorHouse.value" 
+            label="是否属于扶贫安置房："
+            :rules="form.basicInfo.isPoorHouse.rules"
+            :required="isRequired"
+            class="field-radio"
+          >
+            <template #input>
+              <van-radio-group 
+                class="field-radio"
+                v-preview-text="showPreview" 
+                v-model="form.basicInfo.isPoorHouse.value"
+                direction="horizontal">
+                <van-radio name="1">是</van-radio>
+                <van-radio name="2">否</van-radio>
+              </van-radio-group>
+            </template>
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="是否属于扶贫安置房："
+                remark-field="isPoorHouse"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.isPoorHouse"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
+        </div>
+        <div class="isChangeUseType">
+          <van-field 
+            name="basicInfo.isChangeUseType.value"  
+            label="是否变更使用性质："
+            :required="isRequired"
+            :rules="form.basicInfo.isChangeUseType.rules" 
+            class="field-radio"
+          >
+            <template #input>
+              <van-radio-group 
+                class="field-radio"
+                v-model="form.basicInfo.isChangeUseType.value"
+                v-preview-text="showPreview"
+                @change="onIsChangeUseType"
+                direction="horizontal">
+                <van-radio name="1">是</van-radio>
+                <van-radio name="2">否</van-radio>
+              </van-radio-group>
+            </template>
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="是否变更使用性质："
+                remark-field="isChangeUseType"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.isChangeUseType"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
+        </div>
+        <div v-if="form.basicInfo.isChangeUseType.value === '1'">
+          <SelectSingle
+            label="变更后使用性质："
+            :rules="form.basicInfo.useType.rules"
+            :required="isRequired"
+            id="useType"
+            v-model:value="form.basicInfo.useType.value"
+            :showPreview="showPreview"
+            :options="options.useType"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            allow-clear
+            placeholder="请选择变更后使用性质"
+            title="请选择变更后使用性质"
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="变更后使用性质："
+                remark-field="useType"
+                field-module="basicInfo"
+                :exist-data="fieldExist?.useType"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </SelectSingle>
+        </div>
+      </div>
       <div v-if="showVehicleFire" class="vehicleType">
         <CascaderSingle
           label="交通工具类型："
@@ -1176,92 +1262,6 @@ const onFireLevel = () => {
           </SelectSingle>
         </div>
     </template>
-    <div v-if="showResidence" :gutter="gutter">
-      <div class="isPoorHouse">
-        <van-field 
-          name="basicInfo.isPoorHouse.value" 
-          label="是否属于扶贫安置房："
-          :rules="form.basicInfo.isPoorHouse.rules"
-          :required="isRequired"
-          class="field-radio"
-        >
-          <template #input>
-            <van-radio-group 
-              class="field-radio"
-              v-preview-text="showPreview" 
-              v-model="form.basicInfo.isPoorHouse.value"
-              direction="horizontal">
-              <van-radio name="1">是</van-radio>
-              <van-radio name="2">否</van-radio>
-            </van-radio-group>
-          </template>
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="是否属于扶贫安置房："
-              remark-field="isPoorHouse"
-              field-module="basicInfo"
-              :exist-data="fieldExist?.isPoorHouse"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
-      </div>
-      <div class="isChangeUseType">
-        <van-field 
-          name="basicInfo.isChangeUseType.value"  
-          label="是否变更使用性质："
-          :required="isRequired"
-          :rules="form.basicInfo.isChangeUseType.rules" 
-          class="field-radio"
-        >
-          <template #input>
-            <van-radio-group 
-              class="field-radio"
-              v-model="form.basicInfo.isChangeUseType.value"
-              v-preview-text="showPreview"
-              @change="onIsChangeUseType"
-              direction="horizontal">
-              <van-radio name="1">是</van-radio>
-              <van-radio name="2">否</van-radio>
-            </van-radio-group>
-          </template>
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="是否变更使用性质："
-              remark-field="isChangeUseType"
-              field-module="basicInfo"
-              :exist-data="fieldExist?.isChangeUseType"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
-      </div>
-      <div v-if="form.basicInfo.isChangeUseType.value === '1'">
-        <SelectSingle
-          label="变更后使用性质："
-          :rules="form.basicInfo.useType.rules"
-          :required="isRequired"
-          id="useType"
-          v-model:value="form.basicInfo.useType.value"
-          :showPreview="showPreview"
-          :options="options.useType"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          allow-clear
-          placeholder="请选择变更后使用性质"
-          title="请选择变更后使用性质"
-        >
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="变更后使用性质："
-              remark-field="useType"
-              field-module="basicInfo"
-              :exist-data="fieldExist?.useType"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </SelectSingle>
-      </div>
-    </div>
     <div :gutter="gutter">
       <div :span="8">
         <CascaderSingle
