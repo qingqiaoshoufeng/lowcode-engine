@@ -106,10 +106,9 @@ export default {
           {{ item.createOrg }}
         </div>
         <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
-        <template>
-          <div v-if="item.advice">{{ renderAdvice(item.transferType) }}{{ item.advice }}</div>
-          <div v-if="item.remark">{{ renderRemark(item.transferType) }}{{ item.remark }}</div>
-        </template>
+        <div v-if="item.applyType">{{ renderAdvice(item.transferType) }}{{ item.applyType }}</div>
+        <div v-if="item.advice">{{ renderAdvice(item.transferType) }}{{ item.advice }}</div>
+        <div v-if="item.remark">{{ renderRemark(item.transferType) }}{{ item.remark }}</div>
         <div v-if="item.editContents?.length > 0" class="steps-history">
           <div class="sub-title">
             修改内容：
