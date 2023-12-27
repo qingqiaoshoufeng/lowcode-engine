@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, inject, nextTick ,provide } from "vue";
 import dayjs from "dayjs";
+import { cloneDeep } from 'lodash-es'
 import { showDialog } from 'vant';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { useSubmit } from '@castle/castle-use';
@@ -423,14 +424,14 @@ const { loading, submit } = useSubmit((res) => {
       ...values,
       new: !values.boFireWarningId,
       warningDate: `${values.warningDate?.unix()}000`,
-      warningArea: values.warningArea.pop(), // 取最后一级
+      warningArea: cloneDeep(values.warningArea)?.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
-      warningType: values.warningType?.pop(),
+      warningType: cloneDeep(values.warningType)?.pop(),
       dispatchGroup: values.dispatchGroup.map(item => item.organizationid).join(','),
       areaDutyGroup: values.areaDutyGroup.map(item => item.organizationid).join(','), // 取最后一级
       dutyGroup: values.dutyGroup ? values.dutyGroup.map(item => item.organizationid).join(',') : '',
-      naturalDisasterType: values.naturalDisasterType ? values.naturalDisasterType.pop() : '',
+      naturalDisasterType: values.naturalDisasterType ? cloneDeep(values.naturalDisasterType).pop() : '',
       headquarters: values.headquarters?.length > 0 ? values.headquarters.map(item => item.organizationid).join(',') : '',
       otherProvince: values.otherProvince?.length > 0 ? values.otherProvince.map(item => (item.organizationid || item.value)).join(',') : '',
       otherProvinceName: values.otherProvince?.length > 0 ? values.otherProvince.map(item => (item.name || item.label)).join(',') : '',

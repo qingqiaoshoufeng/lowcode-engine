@@ -718,7 +718,7 @@ const getSubmitParams = () => {
         dealEndDate: basicInformation.dealEndDate.value?.valueOf(),
         returnLateReason: basicInformation.returnLateReason.value,
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.pop(),
+        warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
         partakeType: draftInfo.partakeType.value,
         temperature: basicInformation.temperature.value,
         weather: basicInformation.weather.value,
@@ -916,7 +916,7 @@ const getSubmitParams = () => {
         midwayReturnDate: basicInfoHead.midwayReturnDate.value?.valueOf(),
         returnDate: basicInfoHead.returnDate.value?.valueOf(),
         draftName: draftInfo.draftName.value,
-        warningType: draftInfo.warningType.value?.pop(),
+        warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
         partakeType: draftInfo.partakeType.value,
       },
       fireDispatchHead: {
