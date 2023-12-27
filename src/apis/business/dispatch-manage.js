@@ -39,7 +39,7 @@ export function getDispatchManageList(data) {
       isOtherProvince: data?.isOtherProvince,
       isOtherCity: data?.isOtherCity,
       dealSituation: data?.dealSituation?.join(','),
-      headNameList: data?.headNameList?.map(val => val.organizationid)?.join(','),
+      headNameList: data?.headNameList?.join(','),
       finishQueryFlag: data?.finishQueryFlag,
     }
   }

@@ -231,8 +231,7 @@ const onCommander = () => {
       label="指挥员："
       placeholder="请选择指挥员"
       title="请选择指挥员"
-      @blur="OnCarNum"
-      @change="onCommander"
+      @change="onCommander(), OnCarNum()"
     >
       <template v-slot:label="">
         <FieldAnnotation
@@ -280,7 +279,7 @@ const onCommander = () => {
       label="消防员："
       placeholder="请选择消防员"
       title="请选择消防员"
-      @blur="OnCarNum"
+      @change="OnCarNum"
     >
       <template v-slot:label="">
         <FieldAnnotation

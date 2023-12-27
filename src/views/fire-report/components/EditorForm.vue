@@ -3,7 +3,7 @@ import { computed, inject, nextTick, onMounted, provide, ref, watch } from 'vue'
 import store from '@/store/index.js'
 import ProCard from "@/component/ProCard/index.vue";
 console.log(store,'store'); 
-// import { message, notification } from '@castle/ant-design-vue'
+import { cloneDeep } from 'lodash-es'
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import { useAsyncQueue } from '@vueuse/core'
@@ -531,9 +531,8 @@ const initWatch = () => {
     initFormWhenChange()
     initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
-  // 只有当填报状态下才自动生成处置过程
-  // debugger;
-  if ((isShowTemporary?.value) || props.isDetail) {
+  // 只有当填报、详情、修改状态下才自动生成处置过程
+  if ((isShowTemporary?.value) || props.isDetail || props.isEdit) {
     watch(() => [form.value, detail.value], () => {
       generateRemarkField(detail.value)
     }, { deep: true })
@@ -689,11 +688,11 @@ const getSubmitParams = () => {
       fireOrgname: basicInfo.fireOrgname?.value,
       // fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
-      fireType: basicInfo.fireType?.completeValue?.pop(),
+      fireType: cloneDeep(basicInfo.fireType?.completeValue)?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),
       burnedArea: basicInfo.burnedArea?.value,
       fireLevel: basicInfo.fireLevel?.value,
-      firePlace: basicInfo.firePlace?.value?.pop(),
+      firePlace: cloneDeep(basicInfo.firePlace?.value)?.pop(),
       isLaborIntensive: basicInfo.isLaborIntensive?.value,
       plantRiskClassification: basicInfo.plantRiskClassification?.value,
       otherFirePlace: basicInfo.otherFirePlace?.value,
