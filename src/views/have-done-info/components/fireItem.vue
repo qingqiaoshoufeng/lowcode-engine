@@ -2,10 +2,10 @@
   <div class="pro-list-item">
     <div class="item-header">
       <div class="item-title">{{ record.warningName }}</div>
-      <div class="item-state" v-if="['fireAmend','fireInvalid'].includes(type)" :class="generateColorByState(record.warningStatusValue)">
+      <div class="item-state" v-if="['fireAmend','fireInvalid'].includes(type)" :class="generateColorByState(record.statusValue)">
         {{ record.statusValue }}
       </div>
-      <div class="item-state" v-else :class="generateColorByState(record.warningStatusValue)">
+      <div class="item-state" v-else :class="generateColorByState(record.fireStatusValue)">
         {{ record.fireStatusValue }}
       </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="pro-list-item">
     <div class="item-header">
       <div class="item-title">{{ record.warningName }}</div>
-      <div class="item-state" v-if="['policeAmend','policeInvalid'].includes(type)" :class="generateColorByState(record.warningStatusValue)">
+      <div class="item-state" v-if="['policeAmend','policeInvalid'].includes(type)" :class="generateColorByState(record.statusValue)">
         {{ record.statusValue }}
       </div>
       <div class="item-state" v-else :class="generateColorByState(record.warningStatusValue)">
@@ -90,7 +90,7 @@
 <script setup>
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
-
+console.log(generateColorByState,'generateColorByState');
 const props = defineProps({
   record:{
     type:Object

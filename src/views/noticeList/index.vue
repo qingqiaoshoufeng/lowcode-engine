@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="noticeList">
     <HeaderTitle title="通知列表"/>
     <van-tabs v-model:active="currentTab" ref="tabRef">
       <van-tab :title="item.label" v-for="item in tabList" :key="item.label" :before-change="getNotice" @click-tab="getNotice">
@@ -88,6 +88,13 @@ const goDetail = (item)=>{
 
 
 <style scoped lang="scss">
+.van-tabs{
+  height: 100%;
+  ::v-deep(.van-tabs__content){
+    height: calc(100% - 45px);
+    overflow-y: scroll;
+  }
+}
 .list{
   overflow-y: scroll;
   height: 100%;
@@ -97,7 +104,7 @@ const goDetail = (item)=>{
   }
   .item{
     width: 343px;
-    height: 68px;
+    height: 98px;
     background: #FFFFFF;
     padding: 10px;
     box-sizing: border-box;
