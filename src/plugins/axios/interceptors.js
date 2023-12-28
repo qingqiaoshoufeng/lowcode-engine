@@ -72,10 +72,8 @@ export const responseError = (error) => {
     const { message } = data
 
     if (status === 401 || status === 302) {
-      showFailToast({
-        message: '操作未授权',
-        description: message || '授权验证失败',
-      })
+      localStorage.clear()
+      setTimeout(() => location.reload(), 500)
     }
     else {
       showFailToast({
