@@ -359,6 +359,7 @@ defineExpose({
   flex-direction: column;
   .add-search-header {
     display: flex;
+    padding: 0 10px;
     .add-search-add {
       color: #0072FF;
       margin-left: auto;
@@ -366,12 +367,9 @@ defineExpose({
   }
   .add-search-form {
     background-color: white;
-    padding: 10px;
+    padding: 10px 0px;
     margin-top: 10px;
     .add-search-field {
-      :deep(.van-cell) {
-        padding: 10px 0px;
-      }
       :deep(.van-field__label--required::before) {
         content: '';
       }

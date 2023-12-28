@@ -194,6 +194,7 @@ defineOptions({
   }
   .multiple-wrapper {
     height: 50vh;
+    overflow-x: hidden;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

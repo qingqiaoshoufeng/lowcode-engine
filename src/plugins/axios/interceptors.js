@@ -62,6 +62,10 @@ export const responseError = (error) => {
     localStorage.clear()
     setTimeout(() => location.reload(), 500)
   }
+  else if (error.response?.status === 302) {
+    localStorage.clear()
+    setTimeout(() => location.reload(), 500)
+  }
   else if (error.response?.status === 404) {
     showFailToast({
       message: error.response?.data?.error || '非法请求，请重试！',
@@ -70,17 +74,10 @@ export const responseError = (error) => {
   else if (error.response) {
     const { status, statusText, data } = error.response
     const { message } = data
-
-    if (status === 401 || status === 302) {
-      localStorage.clear()
-      setTimeout(() => location.reload(), 500)
-    }
-    else {
-      showFailToast({
-        message: `${status} ${statusText}` || '请求失败',
-        description: message || getCodeMessages(status) || `未知错误 ${statusText}`,
-      })
-    }
+    showFailToast({
+      message: `${status} ${statusText}` || '请求失败',
+      description: message || getCodeMessages(status) || `未知错误 ${statusText}`,
+    })
   }
 
   return Promise.reject(error)
