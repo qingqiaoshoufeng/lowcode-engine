@@ -275,13 +275,9 @@ defineOptions({
   <van-popup v-model:show="selectVisible" position="bottom" v-bind="$attrs">
     <div class="cascader-multiple">
       <div class="header">
-        <van-button type="default" size="small" @click="handleCancel">
-          取消
-        </van-button>
+        <div class="cancel" @click="handleCancel">取消</div>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" @click="handleOk">
-          确定
-        </van-button>
+        <div class="confirm" @click="handleOk">确定</div>
       </div>
       <div class="content-wrapper">
         <div class="content-selects">
@@ -341,6 +337,12 @@ defineOptions({
     background-color: white;
     display: flex;
     align-items: center;
+    .cancel {
+      color: #969799;
+    }
+    .confirm {
+      color: #1989fa;
+    }
     .modal-title {
       color: #242424;
       font-size: 16px;

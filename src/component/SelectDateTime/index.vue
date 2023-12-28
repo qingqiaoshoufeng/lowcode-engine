@@ -76,6 +76,9 @@ watch(() => props.value, (newVal) => {
 }, { immediate: true });
 
 const handleOk = () => {
+  if (canConfirm.value) {
+    return
+  }
   const value = dayjs(currentDate.value.join("-") + " " + currentTime.value.join(":"));
   selectText.value = value.format("YYYY-MM-DD HH:mm:ss");
   emit("update:value", value);
@@ -133,13 +136,9 @@ defineOptions({
   <van-popup v-model:show="selectVisible" position="bottom" @closed="onClose">
     <div class="select-date-time">
       <div class="header">
-        <van-button type="default" size="small" @click="handleCancel">
-          取消
-        </van-button>
+        <div class="cancel" @click="handleCancel">取消</div>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" style="margin-left: auto;" :disabled="canConfirm" @click="handleOk">
-          确定
-        </van-button>
+        <div :class="{ 'cancel': canConfirm, 'confirm': !canConfirm }" @click="handleOk">确定</div>
       </div>
       <div class="select-date-wrapper">
         <van-date-picker
@@ -169,11 +168,18 @@ defineOptions({
   .header {
     width: 100%;
     height: 44px;
-    padding: 0 10px;
     background-color: white;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     position: relative;
+    padding: 0 16px;
+    .cancel {
+      color: #969799;
+    }
+    .confirm {
+      color: #1989fa;
+    }
     .modal-title {
       color: #242424;
       font-size: 16px;
