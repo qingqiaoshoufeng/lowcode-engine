@@ -67,9 +67,14 @@ export const responseError = (error) => {
     setTimeout(() => location.reload(), 500)
   }
   else if (error.response?.status === 404) {
-    showFailToast({
-      message: error.response?.data?.error || '非法请求，请重试！',
-    })
+    if (error.response?.path === '/acws/login.jsp') {
+      localStorage.clear()
+      setTimeout(() => location.reload(), 500)
+    } else {
+      showFailToast({
+        message: error.response?.data?.error || '非法请求，请重试！',
+      })
+    }
   }
   else if (error.response) {
     const { status, statusText, data } = error.response

@@ -108,7 +108,6 @@ export const generateByKeyValue = (keys, values, fields, keyType) => {
 
 // 不同状态颜色
 export const generateColorByState = (state) => {
-  debugger
   switch (state) {
   case '已发送':
   case '编辑中':

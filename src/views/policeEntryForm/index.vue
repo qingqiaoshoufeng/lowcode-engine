@@ -475,7 +475,6 @@ const initDetail = () => {
   }
   else if (boFireWarningId) {
     getFireWarningDetail(boFireWarningId).then((res) => {
-      loadDetail.value = false
       if (res) {
         detail.value = res
         form.value.warningSurvey = res.warningSurvey
@@ -591,6 +590,7 @@ const initDetail = () => {
 
       // refreshField()
     }).finally(() => {
+      loadDetail.value = false
       closeToast()
     })
   } else {
