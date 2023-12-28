@@ -134,18 +134,9 @@ defineOptions({
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-multiple">
       <div class="header">
-        <van-button
-          type="default"
-          size="small"
-          style="margin-right: 10px"
-          @click="handleCancel"
-        >
-          取消
-        </van-button>
+        <div class="cancel" @click="handleCancel">取消</div>
         <div class="modal-title">{{ title }}</div>
-        <van-button type="primary" size="small" @click="handleOk"
-          >确定</van-button
-        >
+        <div class="confirm" @click="handleOk">确定</div>
       </div>
       <div class="multiple-wrapper">
         <van-checkbox-group v-model="selectValue">
@@ -185,6 +176,12 @@ defineOptions({
     background-color: white;
     display: flex;
     align-items: center;
+    .cancel {
+      color: #969799;
+    }
+    .confirm {
+      color: #1989fa;
+    }
     .modal-title {
       color: #242424;
       font-size: 16px;
@@ -194,6 +191,7 @@ defineOptions({
   }
   .multiple-wrapper {
     height: 50vh;
+    overflow-x: hidden;
     overflow-y: auto;
     .selected-icon {
       background-color: white;

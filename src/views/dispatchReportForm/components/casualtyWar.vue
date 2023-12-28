@@ -1187,7 +1187,7 @@ const onChangeName = (item, index) => {
           <van-field
           :name="`casualtyWar.deadList.${index}.isInstantDeath`"
             label="是否当场死亡："
-            label-width="108px"
+            label-width="124px"
             :rules="form.casualtyWar.isInstantDeath.rules"
             required
             class="field-radio"

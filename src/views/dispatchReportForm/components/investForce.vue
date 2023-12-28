@@ -108,7 +108,7 @@ const onCommander = () => {
     <van-field
       name="investForce.isResponseTruck.value" 
       label="是否有车辆出动："
-      label-width="122px"
+      label-width="128px"
       required
       :rules="form.investForce.isResponseTruck.rules"
       class="field-radio"
@@ -145,7 +145,7 @@ const onCommander = () => {
         :rules="form.investForce.dispatchTruckList.rules"
         :readonly="true"
         label="消防车辆信息："
-        label-width="112px"
+        label-width="118px"
         placeholder="请选择消防车辆信息"
         @change="onDispatchTruck"
       >
@@ -164,7 +164,7 @@ const onCommander = () => {
       <van-field
         name="investForce.isReturnTruck.value"
         label="是否有车辆中途返回："
-        label-width="154px"
+        label-width="144px"
         required
         :rules="form.investForce.isReturnTruck.rules"
         class="field-radio"
@@ -323,7 +323,7 @@ const onCommander = () => {
       maxlength="20"
       name="investForce.fireAirplaneNum.value"
       label="消防直升机(架)："
-      label-width="120px"
+      label-width="128px"
       placeholder="请输入消防直升机数量"
       :rules="form.investForce.fireAirplaneNum.rules"
     >

@@ -152,9 +152,7 @@ defineOptions({
   <van-popup v-model:show="selectVisible" position="bottom">
     <div class="select-single">
       <div class="header">
-        <van-button type="default" size="small" @click="handleCancel">
-          取消
-        </van-button>
+        <div class="cancel" @click="handleCancel">取消</div>
         <div class="modal-title">{{ title }}</div>
       </div>
       <div class="single-wrapper">
@@ -198,6 +196,12 @@ defineOptions({
     display: flex;
     align-items: center;
     position: relative;
+    .cancel {
+      color: #969799;
+    }
+    .confirm {
+      color: #1989fa;
+    }
     .modal-title {
       color: #242424;
       font-size: 16px;

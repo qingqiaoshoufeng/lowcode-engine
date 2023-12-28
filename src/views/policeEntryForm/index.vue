@@ -527,8 +527,8 @@ const initDetail = () => {
             value: 'organizationid',
           }, 'Number')
           : []
-        form.value.firstGroup = Number(res.firstGroup) // TODO ?
-        form.value.mainGroup = Number(res.mainGroup) // TODO ?
+        form.value.firstGroup = res.firstGroup ? Number(res.firstGroup) : undefined // TODO ?
+        form.value.mainGroup = res.mainGroup ? Number(res.mainGroup) : undefined // TODO ?
         form.value.dutyGroup = res.dutyGroup
           ? generateByKeyValue(res.dutyGroupName, res.dutyGroup, {
             key: 'name',
