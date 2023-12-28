@@ -614,7 +614,7 @@ const onDealEndDate = () => {
       name="basicInformation.dealEndDate.value"
       title="请选择警情处置结束时间"
       label="警情处置结束时间："
-      label-width="136px"
+      label-width="142px"
       placeholder="请选择警情处置结束时间"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
       right-icon="question-o"

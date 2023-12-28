@@ -603,7 +603,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.protectiveSuit.value"
           label="消防员灭火防护服(套)："
-          label-width="130px"
+          label-width="168px"
           placeholder="请输入消防员灭火防护服数量"
           :rules="form.battleConsume.protectiveSuit.rules"
         >
@@ -735,7 +735,7 @@ onMounted(() => {
           maxlength="20"
           name="battleConsume.fireRescuer.value"
           label="消防员呼救器(个)："
-          label-width="105px"
+          label-width="138px"
           placeholder="请输入消防员呼救器数量"
           :rules="form.battleConsume.fireRescuer.rules"
         >
@@ -1013,6 +1013,7 @@ onMounted(() => {
           maxlength="10"
           name="battleConsume.haloalkane.value"
           label="卤代烷(升)："
+          label-width="120px"
           placeholder="请输入卤代烷量"
           :rules="form.battleConsume.haloalkane.rules"
         >
@@ -1161,7 +1162,7 @@ onMounted(() => {
           maxlength="10"
           name="battleConsume.waterInterrupt.value"
           label="无故供水中断(次)："
-          label-width="136px"
+          label-width="144px"
           placeholder="请输入无故供水中断次数"
           :rules="form.battleConsume.waterInterrupt.rules"
         >
