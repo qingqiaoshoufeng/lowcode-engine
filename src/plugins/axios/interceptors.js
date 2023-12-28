@@ -67,7 +67,7 @@ export const responseError = (error) => {
     setTimeout(() => location.reload(), 500)
   }
   else if (error.response?.status === 404) {
-    if (error.response?.path === '/acws/login.jsp') {
+    if (error.response?.data?.path === '/acws/login.jsp') {
       localStorage.clear()
       setTimeout(() => location.reload(), 500)
     } else {
