@@ -5,12 +5,9 @@ import SelectTime from "@/component/SelectTime/index";
 import SelectMore from "@/component/SelectMore/index";
 import ProModal from "@/component/ProModal/index";
 import DispatchReportForm from '@/views/dispatchReportForm/index.vue';
-import {
-  generateColorByState,
-  getLastMonth,
-} from "@/utils/tools.js";
+import { generateColorByState } from "@/utils/tools.js";
 import { applyType } from '@/utils/constants.js';
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 import { getFireWarningEditApproval } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
