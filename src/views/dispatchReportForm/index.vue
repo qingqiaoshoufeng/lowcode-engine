@@ -1121,6 +1121,8 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   },
   {
     submitFn: () => {
+      showLoadingToast()
+
       let type = false
       if (showHeadquarter.value) {
         type = true
@@ -1151,6 +1153,7 @@ const { loading: backLoading, submit: backSubmit } = useSubmit(
   },
   {
     submitFn: () => {
+      showLoadingToast()
       return approveProcessActions(props.currentRow?.taskId, {
         businessData: {},
         approveType: approvalForm.value.approveType,
@@ -1171,6 +1174,8 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
   },
   {
     submitFn: () => {
+      showLoadingToast()
+
       const params = getSubmitParams()
       return saveTemporaryDispatchReport(params)
     },
@@ -1179,12 +1184,13 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
 
 const { loading: againLoading, submit: againSubmit } = useSubmit(
   (res) => {
-    // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
     showToast('提交送审成功！')
     emits('finishCallback')
   },
   {
     submitFn: () => {
+      showLoadingToast()
+      
       let type = false
       if (showHeadquarter.value) {
         type = true
@@ -1288,9 +1294,9 @@ const onSideBarChange = (e, k) => {
               <div class="label_title"> 
                 {{ item.title }}
                 <div class="tip-wrapper">
-                  <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
                   <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
                   <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
+                  <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
                 </div>
               </div>
             </template>
