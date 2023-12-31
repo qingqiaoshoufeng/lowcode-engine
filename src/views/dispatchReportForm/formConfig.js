@@ -425,13 +425,13 @@ export const useFormConfig = () => {
           { pattern: positiveIntegerReg, message: '请输入正确单兵数量' },
         ],
       },
-      uav: { // 无人机（架）
-        value: 0,
-        rules: [
-          { required: true, message: '请输入无人机数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
-        ],
-      },
+      // uav: { // 无人机（架）
+      //   value: 0,
+      //   rules: [
+      //     { required: true, message: '请输入无人机数量' },
+      //     { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+      //   ],
+      // },
       clothControl: { // 布控球（个）
         value: 0,
         rules: [
@@ -1479,7 +1479,7 @@ export const useFormConfig = () => {
     form.value.deployEquipment.satellitePhone.value = fireDispatchHead?.satellitePhone || 0
     form.value.deployEquipment.satellitePortableStation.value = fireDispatchHead?.satellitePortableStation || 0
     form.value.deployEquipment.singleSoldier.value = fireDispatchHead?.singleSoldier || 0
-    form.value.deployEquipment.uav.value = fireDispatchHead?.uav || 0
+    // form.value.deployEquipment.uav.value = fireDispatchHead?.uav || 0
     form.value.deployEquipment.clothControl.value = fireDispatchHead?.clothControl || 0
     form.value.deployEquipment.meshStation.value = fireDispatchHead?.meshStation || 0
     form.value.deployEquipment.microwaveGraph.value = fireDispatchHead?.microwaveGraph || 0
