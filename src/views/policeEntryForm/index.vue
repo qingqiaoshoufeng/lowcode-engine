@@ -309,6 +309,20 @@ const warningAddrBefore = computed(() => {
   return result;
 });
 
+const minDate = computed(() => {
+  if (props.currentRow?.boFireWarningId) { // 编辑不能修改年份
+    return new Date(dayjs(detail.value?.warningDate).startOf('year').valueOf())
+  }
+  return minInputTime
+})
+
+const maxDate = computed(() => {
+  if (props.currentRow?.boFireWarningId) { // 编辑不能修改年份
+    return new Date(dayjs(detail.value?.warningDate).endOf('year').valueOf())
+  }
+  return new Date()
+})
+
 const initLevelOptions = () => {
   const filter = options.value?.warningTypeOptions?.map(
     (item) => item.boDictId === form.value.warningType[0]
@@ -807,7 +821,8 @@ const onWarningOrgname = () => {
         title="请选择接警时间"
         label="接警时间："
         placeholder="请选择接警时间"
-        :minDate="minInputTime"
+        :minDate="minDate"
+        :maxDate="maxDate"
         :disabled="isConfirm"
         :rules="[{ required: true, message: '请选择接警时间' }]"
       > 
