@@ -8,7 +8,6 @@ import { statType } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getReportTemplateList, collectFireWarning } from "@/apis/index.js";
 import { useModal } from '@/hooks/useModal.js'
-import { showImagePreview } from 'vant';
 import { debounce } from 'throttle-debounce'
 
 const defaultFilterValue = {

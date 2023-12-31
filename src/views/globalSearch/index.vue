@@ -5,7 +5,7 @@ import PoliceEntryDetail from "@/views/policeEntryDetail/index.vue";
 import ProModal from "@/component/ProModal/index";
 import { getGlobalSearchList } from "@/apis/index.js";
 import { useModal } from "@/hooks/useModal.js";
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showLoadingToast, closeToast } from "vant";
 
 const { show } = useModal();
 
@@ -57,7 +57,7 @@ const onTabFn = (name, title) => {
   proListRef.value.query.type = name
   proListRef.value.filter().then(res => {
     closeToast();
-    initResultInfo()
+    initResultInfo();
   })
 }
 
@@ -68,7 +68,7 @@ const handleItem = (row) => {
 
 const handleSearch = () => {
   proListRef.value.filter().then((res) => {
-    initResultInfo()
+    initResultInfo();
   });
 }
 

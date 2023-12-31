@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted } from "vue";
-import dayjs from "dayjs";
 import { useDetail } from "@castle/castle-use";
 import { useModal } from "@/hooks/useModal.js";
 import { getApplyDetail } from "@/apis/index.js";
@@ -128,14 +127,14 @@ const getCurrentStatus = (item) => {
             <van-icon v-if="getCurrentStatus(item) === 'process'" name="circle" color="blue" />
           </template>
           <template v-if="index !== (detail?.commentsInfo?.length - 1)">
-            <p style="font-weight: bold;">{{ item.commentDate ? dayjs(item.commentDate).format('YYYY-MM-DD HH:mm') : '' }}</p>
+            <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>
             <p>审批单位：{{ item.commentOrgName }}</p>
             <p v-if="item.commentUserName">审批人员：{{ item.commentUserName }}</p>
             <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.comment }}</p>
             <p v-if="getCurrentStatus(item) !== 'process'">备注：{{ item.remark }}</p>
           </template>
           <template v-else>
-            <p style="font-weight: bold;">{{ item.commentDate ? dayjs(item.commentDate).format('YYYY-MM-DD HH:mm') : '' }}</p>
+            <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>
             <p>申请单位：{{ item.commentOrgName }}</p>
             <p>申请人员：{{ item.commentUserName }}</p>
           </template>

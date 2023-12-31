@@ -3,55 +3,58 @@
     <img class="logo" src="@/assets/images/login-logo.png" alt="">
     <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
     <div class="form">
-        <van-form @submit="handleUserLogin">
-            <van-field
-              v-model="loginForm.loginid"
-              left-icon="manager"
-              name="validatorMessage"
-              placeholder="请输入用户名"
-              :required="true"
-              :rules="[{ required: true, message: '请输入用户名' }]"
-            />
-            <van-field
-              v-model="loginForm.password"
-              left-icon="lock"
-              name="validatorMessage"
-              placeholder="请输入密码"
-              :type="pswType ? '' : 'password'"
-              :required="true"
-              :rules="[{ required: true, message: '请输入密码' }]"
-            >
-              <template #button>
-                <span @click="() => (pswType = !pswType)">
-                  <van-icon name="closed-eye" v-if="!pswType" />
-                  <van-icon name="eye-o" v-else />
-                </span>
-              </template>
-            </van-field>
-            <div class="validator">
-              <van-field
-                class="verification"
-                v-model="loginForm.jcaptchaCode"
-                :left-icon="verification"
-                name="validatorMessage"
-                placeholder="请输入验证码"
-                :required="true"
-                :rules="[{ required: true, message: '请输入验证码' }]"
-                type="number"
-              />
-              <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
-            </div>
-            <div class="isRemember">
-              <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
-            </div>
-            <van-button
-              class="submit"
-              round
-              block
-              type="primary"
-              native-type="submit"
-            >登录</van-button>
-        </van-form>
+      <van-form @submit="handleUserLogin">
+        <van-field
+          v-model="loginForm.loginid"
+          left-icon="manager"
+          name="loginid"
+          placeholder="请输入用户名"
+          maxlength="20"
+          :required="true"
+          :rules="[{ required: true, message: '请输入用户名' }]"
+        />
+        <van-field
+          v-model="loginForm.password"
+          left-icon="lock"
+          name="password"
+          placeholder="请输入密码"
+          maxlength="20"
+          :type="pswType ? '' : 'password'"
+          :required="true"
+          :rules="[{ required: true, message: '请输入密码' }]"
+        >
+          <template #button>
+            <span @click="() => (pswType = !pswType)">
+              <van-icon name="closed-eye" v-if="!pswType" />
+              <van-icon name="eye-o" v-else />
+            </span>
+          </template>
+        </van-field>
+        <div class="validator">
+          <van-field
+            class="verification"
+            v-model="loginForm.jcaptchaCode"
+            :left-icon="verification"
+            name="jcaptchaCode"
+            placeholder="请输入验证码"
+            maxlength="6"
+            :required="true"
+            :rules="[{ required: true, message: '请输入验证码' }]"
+            type="number"
+          />
+          <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
+        </div>
+        <div class="isRemember">
+          <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
+        </div>
+        <van-button
+          class="submit"
+          round
+          block
+          type="primary"
+          native-type="submit"
+        >登录</van-button>
+      </van-form>
     </div>
   </div>
 </template>

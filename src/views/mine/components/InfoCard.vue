@@ -1,19 +1,19 @@
 <template>
-    <div class="info_card" @click="handleEnter">
-        <img class="avatar" v-if="avatarUrl" :src="avatarUrl">
-        <img class="avatar" v-else src="@/assets/images/avatar.png">
-        <div class="info">
-            <div class="top">
-                <div class="name">{{info.userName}}</div> 
-                <div class="editor" @click.stop="handleEdit">
-                    <span>编辑资料</span>
-                    <van-icon name="edit" color="#1E86FE" />
-                </div>
-            </div>
-            <div class="organization">{{info.orgName}}</div>
+  <div class="info_card" @click="handleEnter">
+    <img class="avatar" v-if="avatarUrl" :src="avatarUrl">
+    <img class="avatar" v-else src="@/assets/images/avatar.png">
+    <div class="info">
+      <div class="top">
+        <div class="name">{{info.userName}}</div> 
+        <div class="editor" @click.stop="handleEdit">
+          <span>编辑资料</span>
+          <van-icon name="edit" color="#1E86FE" />
         </div>
+      </div>
+      <div class="organization">{{info.orgName}}</div>
     </div>
-  </template>
+  </div>
+</template>
     
 <script setup>
 import { ref, computed, onMounted } from 'vue'
