@@ -620,7 +620,6 @@ const onFireLevel = () => {
           title="请选择起火时间"
           label="起火时间："
           placeholder="请选择起火时间"
-          :minDate="minInputTime"
           :rules="[{ validator: validateFireDate, trigger: 'onBlur' }, ...form.basicInfo.fireDate.rules]"
           @change="fireDateChange"
         >

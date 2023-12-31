@@ -7,6 +7,8 @@ import { showDialog } from 'vant';
 
 const store = useStore();
 
+const minInputTime = store.state.setting.minInputTime
+
 const form = inject("form");
 
 const fieldExist = inject('fieldExist')
@@ -321,6 +323,7 @@ const onDealEndDate = () => {
       title="请选择出动时间"
       label="出动时间："
       placeholder="请选择出动时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInformation.dispatchDate.rules]"
       @change="dispatchDateChange"
     >
@@ -345,6 +348,7 @@ const onDealEndDate = () => {
       label="中途返回时间："
       label-width="108px"
       placeholder="请选择中途返回时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInformation.midwayReturnDate.rules]"
       @change="midwayReturnDateChange"
     >
@@ -368,6 +372,7 @@ const onDealEndDate = () => {
       title="请选择到场时间"
       label="到场时间："
       placeholder="请选择到场时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInformation.attendanceDate.rules]"
       @change="attendanceDateChange"
     >
@@ -390,6 +395,7 @@ const onDealEndDate = () => {
       title="请选择展开时间"
       label="展开时间："
       placeholder="请选择展开时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateCarryout, trigger: 'onBlur' }, ...form.basicInformation.carryoutDate.rules]"
       @change="carryoutDateChange"
     >
@@ -412,6 +418,7 @@ const onDealEndDate = () => {
       title="请选择出水时间"
       label="出水时间："
       placeholder="请选择出水时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateWaterflow, trigger: 'onBlur' }, ...form.basicInformation.waterflowDate.rules]"
       @change="waterflowDateChange"
     >
@@ -434,6 +441,7 @@ const onDealEndDate = () => {
       title="请选择控制时间"
       label="控制时间："
       placeholder="请选择控制时间"
+      :minDate="minInputTime"
       :rules="form.basicInformation.controllingDate.rules"
     >
       <template v-slot:label="">
@@ -455,6 +463,7 @@ const onDealEndDate = () => {
       title="请选择洗消时间"
       label="洗消时间："
       placeholder="请选择洗消时间"
+      :minDate="minInputTime"
       :rules="form.basicInformation.washDate.rules"
     >
       <template v-slot:label="">
@@ -477,6 +486,7 @@ const onDealEndDate = () => {
       title="请选择扑灭时间"
       label="扑灭时间："
       placeholder="请选择扑灭时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateExtinguish, trigger: 'onBlur' }, ...form.basicInformation.extinctDate.rules]"
       @change="extinctDateChange"
     >
@@ -500,6 +510,7 @@ const onDealEndDate = () => {
       title="请选择结束时间"
       label="结束时间："
       placeholder="请选择结束时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateEnd, trigger: 'onBlur' }, ...form.basicInformation.endDate.rules]"
       @change="endDateChange"
     >
@@ -523,6 +534,7 @@ const onDealEndDate = () => {
       title="请选择撤离时间"
       label="撤离时间："
       placeholder="请选择撤离时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInformation.evacuateDate.rules]"
       @change="evacuateDateChange"
     >
@@ -545,6 +557,7 @@ const onDealEndDate = () => {
       title="请选择归队时间"
       label="归队时间："
       placeholder="请选择归队时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInformation.returnDate.rules]"
       @change="returnDateChange"
     >
@@ -616,6 +629,7 @@ const onDealEndDate = () => {
       label="警情处置结束时间："
       label-width="142px"
       placeholder="请选择警情处置结束时间"
+      :minDate="minInputTime"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
       right-icon="question-o"
       @click-right-icon.stop="onDealEndDate"

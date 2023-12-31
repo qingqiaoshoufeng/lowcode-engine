@@ -63,7 +63,7 @@ const currentTime = ref([]);
 
 const canConfirm = computed(() => {
   const value = dayjs(currentDate.value.join("-") + " " + currentTime.value.join(":"));
-  return value.valueOf() >= dayjs(props.maxDate).valueOf()
+  return value.valueOf() >= dayjs(props.maxDate).valueOf() || (props.minDate && value.valueOf() <= dayjs(props.minDate).valueOf())
 })
 
 watch(() => props.value, (newVal) => {

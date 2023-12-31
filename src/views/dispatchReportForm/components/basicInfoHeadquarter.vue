@@ -3,6 +3,11 @@ import { inject, ref, watch } from "vue";
 import { formatDiff } from "@/utils/tools.js";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProCard from "@/component/ProCard/index.vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+
+const minInputTime = store.state.setting.minInputTime
 
 const form = inject("form");
 
@@ -285,6 +290,7 @@ const onPresentFlag = () => {
         title="请选择出动时间"
         label="出动时间："
         placeholder="请选择出动时间"
+        :minDate="minInputTime"
         :rules="[{ validator: validateDispatch, trigger: 'onBlur' }, ...form.basicInfoHead.dispatchDate.rules]"
         :change="dispatchDateChange"
       >
@@ -309,6 +315,7 @@ const onPresentFlag = () => {
         title="请选择到场时间"
         label="到场时间："
         placeholder="请选择到场时间"
+        :minDate="minInputTime"
         :rules="[{ validator: validateAttendance, trigger: 'onBlur' }, ...form.basicInfoHead.attendanceDate.rules]"
         @change="attendanceDateChange"
       >
@@ -332,6 +339,7 @@ const onPresentFlag = () => {
         title="请选择撤离时间"
         label="撤离时间："
         placeholder="请选择撤离时间"
+        :minDate="minInputTime"
         :rules="[{ validator: validateEvacuate, trigger: 'onBlur' }, ...form.basicInfoHead.evacuateDate.rules]"
         @change="evacuateDateChange"
       >
@@ -356,6 +364,7 @@ const onPresentFlag = () => {
         label="中途返回时间："
         label-width="124px"
         placeholder="请选择中途返回时间"
+        :minDate="minInputTime"
         :rules="[{ validator: validateMidway, trigger: 'onBlur' }, ...form.basicInfoHead.midwayReturnDate.rules]"
         @change="midwayReturnDateChange"
       >
@@ -379,6 +388,7 @@ const onPresentFlag = () => {
         title="请选择归队时间"
         label="归队时间："
         placeholder="请选择归队时间"
+        :minDate="minInputTime"
         :rules="[{ validator: validateReturn, trigger: 'onBlur' }, ...form.basicInfoHead.returnDate.rules]"
         @change="returnDateChange"
       >
