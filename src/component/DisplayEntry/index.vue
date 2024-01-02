@@ -63,7 +63,7 @@ export default {
         position: relative;
         .dot{
           position: absolute;
-          left:55px;
+          left:50px;
           top:0;
           height: 10px;
           line-height: 10px;

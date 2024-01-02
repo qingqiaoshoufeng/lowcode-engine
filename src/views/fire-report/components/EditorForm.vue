@@ -1030,7 +1030,7 @@ onMounted(() => {
     })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        console.log(error,'error')
         showToast('信息填写不完整，请检查填写内容！')
         scrollFormFailed()
       })
