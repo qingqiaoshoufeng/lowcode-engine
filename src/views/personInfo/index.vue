@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import dayjs from 'dayjs'
 import { getUserDetail, getAttachmentFile, uploadFile } from '@/apis/index.js';
-import { useDetail, useSubmit } from '@castle/castle-use';
+import { useDetail } from '@castle/castle-use';
 import HeaderTitle from "@/component/HeaderTitle/index.vue";
 
 const form = ref({

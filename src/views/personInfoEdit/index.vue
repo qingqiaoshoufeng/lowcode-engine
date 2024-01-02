@@ -4,7 +4,7 @@ import { useSubmit } from '@castle/castle-use';
 import { showToast } from "vant";
 import { useRouter } from "vue-router";
 import { addUser, getUserDetail } from '@/apis/index.js';
-import { validateEmails, validateTelePhone } from '@/utils/validate.js'
+import { validateEmails, validateTelePhone } from '@/utils/validate.js';
 import HeaderTitle from "@/component/HeaderTitle/index.vue";
 
 const form = ref({

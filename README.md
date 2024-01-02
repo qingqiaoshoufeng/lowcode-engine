@@ -1,9 +1,5 @@
 # fire_alarm_statistics_app_ui （全国火灾与警情统计系统）
 
-## 配置及使用教程
-
-[Castle](http://10.13.4.128:1080/docs/latest/).
-
 ## 项目初始化
 
 ```sh
@@ -64,9 +60,9 @@ swagger 地址：http://10.13.4.128:1086/acws/rest/swagger-ui.html
 
 ## 环境信息
 
-测试环境：
+测试版：http://223.4.79.9:31201/foodreserver-apps/dev-fire-alarm.apk
 
-http://10.13.4.153:1086/login
+正式版：http://223.4.79.9:31201/foodreserver-apps/fire-alarm.apk
 
 admin@ln 辽宁省消防救援总队
 
@@ -85,5 +81,3 @@ szqwjhzzd.d@ha
 [云图](https://lanhuapp.com/link/#/invite?sid=lxC2OM0a)
 
 [应用模块](https://lanhuapp.com/link/#/invite?sid=lx058k10)
-
-## [前端相关技术问题汇总](http://castle.cp.hxdi.cn/front-standard-guide/fire-alarm-statistics-questions.html)

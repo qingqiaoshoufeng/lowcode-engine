@@ -1105,9 +1105,9 @@ const onSideBarChange = (e, k) => {
               <div class="label_title">
                 {{ item.title }}
                 <div class="tip-wrapper">
-                  <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
                   <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
                   <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
+                  <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
                 </div>
               </div>
             </template>

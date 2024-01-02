@@ -86,11 +86,12 @@
       <div>{{ record.otherCityName }}</div>
     </div>
   </div>
-  </template>
+</template>
+
 <script setup>
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
-console.log(generateColorByState,'generateColorByState');
+
 const props = defineProps({
   record:{
     type:Object

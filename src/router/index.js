@@ -43,6 +43,7 @@ router.beforeEach((to,from,next)=>{
     }else {
       next({
         path:'/login',
+        replace: true,
       });
     }
   }

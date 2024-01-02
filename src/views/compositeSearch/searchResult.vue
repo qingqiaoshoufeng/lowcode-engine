@@ -9,7 +9,7 @@ import ReportGenerate from "@/views/statistics/components/reportGenerate.vue";
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { MSG_EXPORT_NO_DATA } from '@/utils/constants.js';
+import { MSG_EXPORT_NO_DATA, MSG_NO_HEAD_REPORT } from '@/utils/constants.js';
 import { useModal } from '@/hooks/useModal.js';
 
 const props = defineProps({
@@ -54,6 +54,10 @@ const handleItem = (row) => {
 const handleGenerate = () => {
   if (proListRef.value.list?.length <= 0) {
     showToast(MSG_EXPORT_NO_DATA)
+    return
+  }
+  if (searchType.value === 3) {
+    showToast(MSG_NO_HEAD_REPORT)
     return
   }
   show.value.reportUseVisible = true
