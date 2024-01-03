@@ -182,7 +182,7 @@ const onBuildTag = (val) => {
 <template>
   <van-cell-group class="rootform1">
     <div>
-      <div v-if="showSevereFire" :span="24">
+      <div :span="24">
         <van-field 
           name="fireBuilding.buildTag.value"
           label="建筑标签："
