@@ -14,7 +14,6 @@ import EconomicLoss from './economic-loss.vue'
 import FireFacilities from './fire-facilities.vue'
 import CaseHandling from './case-handling.vue'
 import FireBuilding from './fire-building.vue'
-
 import FireCourse from './fire-course.vue'
 import FirePhoto from './fire-photo.vue'
 import OtherAttach from './other-attach.vue'
@@ -27,7 +26,7 @@ import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 import { useSuccess } from '@/hooks/useSuccess.js'
 // import { useRerender } from '@/hooks/useRerender.js'
-import { getTypeText, scrollFormFailed } from '@/utils/tools.js'
+import { getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
 import { useIntersection } from '@/hooks/useIntersection.js';
 import {
   effect, exitNonConformance, gender, injuryType, install, isNot, isResearch,
@@ -680,7 +679,7 @@ const getSubmitParams = () => {
       boFireWarningId: props.currentRow?.boFireWarningId,
       // fireCode: '',
       noDispatchArea: basicInfo.noDispatchArea?.value?.join(','),
-      fireDate: basicInfo.fireDate?.value?.valueOf(),
+      fireDate: interceptUnix(basicInfo.fireDate?.value),
       fireDirection: basicInfo.fireDirection?.value,
       area: basicInfo.area.value?.join(','),
       isUrbanVillages: basicInfo.isUrbanVillages?.value,

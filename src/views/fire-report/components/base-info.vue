@@ -1802,7 +1802,7 @@ const onFireLevel = () => {
         </SelectMultiple>
       </div>
       <div v-if="showFireInspection && showFireInspectionScope" :span="8">
-        <SelectMultiple
+        <SelectSingle
           label="消防安全重点单位："
           :rules="form.basicInfo.fireSafetyUnits.rules"
           :required="isRequired"
@@ -1811,11 +1811,7 @@ const onFireLevel = () => {
           :showPreview="showPreview"
           :options="options.fireSafetyUnits"
           :field-names="{ value: 'boDictId', label: 'dictName' }"
-          allow-clear
           placeholder="请选择消防安全重点单位"
-          mode="multiple"
-          show-arrow
-          max-tag-count="responsive"
           @change="onFireInspectionScope"
           title="请选择消防安全重点单位"
         >
@@ -1828,7 +1824,7 @@ const onFireLevel = () => {
               @refresh-callback="refreshField"
             />
           </template>
-        </SelectMultiple>
+        </SelectSingle>
       </div>
     
     

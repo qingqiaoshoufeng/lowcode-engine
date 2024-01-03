@@ -43,7 +43,7 @@ import {
   saveDispatchReport,
   saveTemporaryDispatchReport,
 } from '@/apis/index.js'
-import { fixCarParams, getTypeText, scrollFormFailed } from '@/utils/tools.js'
+import { fixCarParams, getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
 import { gender } from '@/utils/constants.js';
 import { useFormConfig } from "./formConfig.js";
 import { useModal } from '@/hooks/useModal.js';
@@ -706,18 +706,18 @@ const getSubmitParams = () => {
         fireDraftDispatchID: props.relevanceDraft?.boFireDispatchId,
         dealSituation: basicInformation.dealSituation.value,
         notDealReason: basicInformation.notDealReason.value,
-        dispatchDate: basicInformation.dispatchDate.value?.valueOf(),
-        midwayReturnDate: basicInformation.midwayReturnDate.value?.valueOf(),
-        attendanceDate: basicInformation.attendanceDate.value?.valueOf(),
-        carryoutDate: basicInformation.carryoutDate.value?.valueOf(),
-        waterflowDate: basicInformation.waterflowDate.value?.valueOf(),
-        controllingDate: basicInformation.controllingDate.value?.valueOf(),
-        washDate: basicInformation.washDate.value?.valueOf(),
-        extinctDate: basicInformation.extinctDate.value?.valueOf(),
-        endDate: basicInformation.endDate.value?.valueOf(),
-        evacuateDate: basicInformation.evacuateDate.value?.valueOf(),
-        returnDate: basicInformation.returnDate.value?.valueOf(),
-        dealEndDate: basicInformation.dealEndDate.value?.valueOf(),
+        dispatchDate: interceptUnix(basicInformation.dispatchDate.value),
+        midwayReturnDate: interceptUnix(basicInformation.midwayReturnDate.value),
+        attendanceDate: interceptUnix(basicInformation.attendanceDate.value),
+        carryoutDate: interceptUnix(basicInformation.carryoutDate.value),
+        waterflowDate: interceptUnix(basicInformation.waterflowDate.value),
+        controllingDate: interceptUnix(basicInformation.controllingDate.value),
+        washDate: interceptUnix(basicInformation.washDate.value),
+        extinctDate: interceptUnix(basicInformation.extinctDate.value),
+        endDate: interceptUnix(basicInformation.endDate.value),
+        evacuateDate: interceptUnix(basicInformation.evacuateDate.value),
+        returnDate: interceptUnix(basicInformation.returnDate.value),
+        dealEndDate: interceptUnix(basicInformation.dealEndDate.value),
         returnLateReason: basicInformation.returnLateReason.value,
         draftName: draftInfo.draftName.value,
         warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
@@ -873,7 +873,7 @@ const getSubmitParams = () => {
           duty: item.duty?.join(','),
           nativePlace: item.nativePlace?.join(','),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
-          deathDate: item.deathDate?.valueOf(),
+          deathDate: interceptUnix(item.deathDate),
         }
       })
       params.fireDispatchInjuryList.push(...list)
@@ -912,11 +912,11 @@ const getSubmitParams = () => {
         boFireDispatchId: props.currentRow?.boFireDispatchId || localFireDispatchId.value,
         boFireWarningId: props.currentRow?.boFireWarningId,
         fireDraftDispatchID: props.relevanceDraft?.boFireDispatchId,
-        dispatchDate: basicInfoHead?.dispatchDate.value?.valueOf(),
-        attendanceDate: basicInfoHead?.attendanceDate.value?.valueOf(),
-        evacuateDate: basicInfoHead?.evacuateDate.value?.valueOf(),
-        midwayReturnDate: basicInfoHead.midwayReturnDate.value?.valueOf(),
-        returnDate: basicInfoHead.returnDate.value?.valueOf(),
+        dispatchDate: interceptUnix(basicInfoHead?.dispatchDate.value),
+        attendanceDate: interceptUnix(basicInfoHead?.attendanceDate.value),
+        evacuateDate: interceptUnix(basicInfoHead?.evacuateDate.value),
+        midwayReturnDate: interceptUnix(basicInfoHead.midwayReturnDate.value),
+        returnDate: interceptUnix(basicInfoHead.returnDate.value),
         draftName: draftInfo.draftName.value,
         warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
         partakeType: draftInfo.partakeType.value,
@@ -933,7 +933,7 @@ const getSubmitParams = () => {
         satellitePhone: deployEquipment.satellitePhone.value,
         satellitePortableStation: deployEquipment.satellitePortableStation.value,
         singleSoldier: deployEquipment.singleSoldier.value,
-        uav: deployEquipment.uav.value,
+        // uav: deployEquipment.uav.value,
         clothControl: deployEquipment.clothControl.value,
         meshStation: deployEquipment.meshStation.value,
         microwaveGraph: deployEquipment.microwaveGraph.value,
@@ -1038,7 +1038,7 @@ const getSubmitParams = () => {
           ...item,
           injuryType: '2',
           nativePlace: item.nativePlace?.join(','),
-          deathDate: item.deathDate?.valueOf(),
+          deathDate: interceptUnix(item.deathDate),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
         }
       })

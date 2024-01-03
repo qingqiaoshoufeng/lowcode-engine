@@ -289,6 +289,14 @@ export const formatNumber = (n) => {
   return n[1] ? n : `0${n}`
 }
 
+// 将时间毫秒截取为000，避免时间差计算多一秒、少一秒
+export const interceptUnix = (time) => {
+  if (!time) {
+    return ''
+  }
+  return `${time.unix()}000`
+}
+
 // 格式化时间：YYYY-MM-DD HH:mm
 export const formatYmdHm = (date, type = 'YYYY-MM-DD HH:mm') => {
   if (!date) {
