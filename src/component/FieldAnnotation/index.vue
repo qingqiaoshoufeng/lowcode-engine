@@ -41,6 +41,9 @@ const props = defineProps({
   width:{
     type:String,
     default:'calc(100% - 16px)'
+  },
+  warningTip:{
+    type:String,
   }
 })
 
@@ -125,6 +128,10 @@ const handleConfirm = () => {
         }
       })
   })
+}
+
+const showTip = ()=>{
+  showToast(props.warningTip)
 }
 
 // const touchstart = ()=>{
@@ -255,7 +262,7 @@ export default {
       </template>
     </DialogInfo>
       <div class="tip-wrapper">
-        <img v-if="isWarning" title="1111" class="field-wraning" src="@/assets/images/wraning-tip.png" >
+        <img v-if="isWarning" @click="showTip" title="1111" class="field-wraning" src="@/assets/images/wraning-tip.png" >
         <img v-if="existData" class="field-exist" src="@/assets/images/icon-edit.png" @click.stop="openInfo">
       </div>
       <!-- <img v-else-if="showAdd" class="field-icon" :class="{ 'field-icon-show': showVisible1 }" src="@/assets/images/icon-add.png" @click.stop="showVisible = true"> -->

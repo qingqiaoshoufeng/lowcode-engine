@@ -139,7 +139,7 @@ const directDamageChange =()=>{
       </div>
       <div :span="8">
         <van-field 
-         name="economicLoss.fireDisposalCost.value"
+          name="economicLoss.fireDisposalCost.value"
           label="火灾现场处置费用（元)："
           label-width="135"
           :rules="form.economicLoss.fireDisposalCost.rules"
@@ -162,6 +162,7 @@ const directDamageChange =()=>{
               field-module="economicLoss"
               :exist-data="fieldExist?.fireDisposalCost"
               @refresh-callback="refreshField"
+              warningTip="非轻微火灾，现场处置费用为0，不合理，请修改或备注！"
             />
           </template>
         </van-field >
@@ -196,6 +197,7 @@ const directDamageChange =()=>{
                 field-module="economicLoss"
                 :exist-data="fieldExist?.fireInjuryCost"
                 @refresh-callback="refreshField"
+                warningTip="无人员伤亡，人身伤亡支出费用应该为0，请修改或备注！"
               />
             </template>
           </van-field >
@@ -279,6 +281,7 @@ const directDamageChange =()=>{
                   field-module="economicLoss"
                   :exist-data="fieldExist?.affectedHouse"
                   @refresh-callback="refreshField"
+                  warningTip="非轻微火灾，居住场所受灾户数为0不合理，请修改或备注！"
                 />
               </template>
           </van-field >

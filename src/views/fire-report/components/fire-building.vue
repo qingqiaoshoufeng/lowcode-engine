@@ -245,6 +245,7 @@ const onBuildTag = (val) => {
               field-module="fireBuilding"
               :exist-data="fieldExist?.buildType"
               @refresh-callback="refreshField"
+              :warningTip="form.fireBuilding.fireResistanceRating.warningText"
             />
           </template>
         </SelectSingle>

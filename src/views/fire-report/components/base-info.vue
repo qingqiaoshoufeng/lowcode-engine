@@ -814,6 +814,7 @@ const onFireLevel = () => {
               :exist-data="fieldExist?.fireCause"
               :isWarning="form.basicInfo.burnedArea.warning"
               @refresh-callback="refreshField"
+              :warningTip="form.basicInfo.burnedArea.warningText"
             />
           </template>
         </van-field >
