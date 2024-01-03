@@ -426,7 +426,7 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [
           { required: true, message: '请输入受灾户数' },
-          { pattern: positiveIntegerReg, message: '请输入正确受灾户数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确受灾户数' },
         ],
       },
     },

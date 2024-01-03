@@ -264,11 +264,11 @@ const directDamageChange =()=>{
             v-preview-text="showPreview"
             style="width: 100%"
             allow-clear
+            type="digit"
             aria-autocomplete="none"
             :maxlength="10"
             placeholder="请输入受灾户数"
             @blur="checkAffectedHouse(form)"
-            type="number" 
             label-width="140"
           >
             <template v-slot:label="">
