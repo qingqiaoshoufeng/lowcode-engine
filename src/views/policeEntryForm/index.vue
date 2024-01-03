@@ -28,7 +28,7 @@ import {
   getHeaderOrg,
   // updateFormFieldAnnotationIds,
 } from "@/apis/index.js";
-import { generateByKeyValue, getTypeText, scrollFormFailed } from '@/utils/tools.js'
+import { generateByKeyValue, getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
 import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/validate.js'
 import { useOptions } from "@/hooks/useOptions";
 import { useModal } from "@/hooks/useModal";
@@ -437,7 +437,7 @@ const { loading, submit } = useSubmit((res) => {
     const params = {
       ...values,
       new: !values.boFireWarningId,
-      warningDate: `${values.warningDate?.unix()}000`,
+      warningDate: interceptUnix(values.warningDate),
       warningArea: cloneDeep(values.warningArea)?.pop(), // 取最后一级
       warningAddr: warningAddrBefore.value + values.warningAddr,
       warningLnglat: `${values.warningLng},${values.warningLat}`,
