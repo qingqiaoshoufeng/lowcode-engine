@@ -100,6 +100,10 @@ export default {
     background: #FFFFFF;
     padding: 0 16px;
     padding-bottom: 5px;
+    overflow: hidden;
+    .min-title{
+      padding: 10px;
+    }
     .tab{
       width: 220px;
       height: 30px;

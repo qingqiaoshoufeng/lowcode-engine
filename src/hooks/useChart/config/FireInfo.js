@@ -34,6 +34,12 @@ const options = {
     axisLine:{
       show:false,
     },
+    axisLabel:{
+      align: "center",
+      rotate: 30,
+      margin: 28,
+      fontSize:10,
+    },
     axisTick:{
       show:false
     },
@@ -41,7 +47,8 @@ const options = {
       lineStyle:{
         type:'dashed'
       }
-    }
+    },
+    rotate:30
   },
   yAxis: [
     {
@@ -110,8 +117,8 @@ export default {
       options.series[index].data = data[index]
     })
     options.xAxis.data = data[2]
-    options.dataZoom.end = Math.floor(100*(3/data[2].length))
-    options.grid.left = `${Math.max(...data[0].map(item=>`${item}`.length))}` * 11 + 10
+    options.dataZoom.end = Math.floor(100*(6/data[2].length))
+    options.grid.left = `${Math.max(...data[0].map(item=>`${item}`.length))}` * 12+ 30
     return options
   }
 }

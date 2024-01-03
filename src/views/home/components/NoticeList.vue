@@ -1,18 +1,19 @@
 <template>
  <div class="marquee-container">
+    <div class="img">
+      <div class="dot"></div>
+      <img src="@/assets/images/home-notice.png" alt="">
+    </div>
     <div class="marquee-box">
       <van-cell v-for="item in list" :key="item.label" title="单元格">
           <template #title>
               <div class="title">
-                  <div class="img">
-                    <div class="dot"></div>
-                    <img src="@/assets/images/home-notice.png" alt="">
-                  </div>
                   <div class="label">{{ item.noticeTitle }}</div>
               </div>
           </template> 
       </van-cell>
     </div>
+    <img class="arrow" src="@/assets/images/arrow.png" alt="">
 </div>
 </template>
   
@@ -37,9 +38,12 @@ export default {
   width: 100%;
   height: 32px;
   overflow: hidden;
-  padding: 0 16px;
-  background: #FFFFFF;
+  padding: 0 9px;
+  border-left: 16px #fff solid;
+  border-right: 16px #fff solid;
   background: #fff;
+  display: flex;
+  align-items: center;
 }
 .marquee-box {
   /* position: absolute; */
@@ -49,8 +53,10 @@ export default {
   animation: marquee 3s linear infinite; /* 跑马灯动画 */
 .title{
     display: flex;
-    align-items: center;
-    .img{
+    align-items: center
+  }
+}
+.img{
         height: 14px;
         width: 14px;
         display: block;
@@ -72,8 +78,6 @@ export default {
           display: block;
         }
     }
-  }
-}
 .marquee-container {
     // position: relative;
 }
@@ -81,6 +85,9 @@ export default {
     // position: absolute;
     width: 100%;
     overflow: hidden;
+}
+.arrow{
+  height: 12px;
 }
 
 ::v-deep .van-cell{
