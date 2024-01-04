@@ -155,6 +155,8 @@ const getListParams = () => {
 
 const getFormParams = () => {
   return {
+    dataTimeSource: dataTimeSource.value,
+    staticFlag: searchDimension.value,
     fireType: search.value,
     seniorQueryDetailReq: getListParams(),
   }

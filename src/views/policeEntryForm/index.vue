@@ -1089,7 +1089,7 @@ const onWarningOrgname = () => {
         maxlength="50"
         required
         name="warningOrgname"
-        label-width="204px"
+        label-width="150px"
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"
@@ -1319,7 +1319,7 @@ const onWarningOrgname = () => {
       <SelectOrg
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
-        :readonly="showPreview"
+        :readonly="true"
         name="dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
