@@ -383,6 +383,7 @@ const onDealEndDate = () => {
           field-module="basicInformation"
           :exist-data="fieldExist?.attendanceDate"
           @refresh-callback="refreshField"
+          :warningTip="`根据时速${speedConfig?.value?.[0]}-${speedConfig?.value?.[1]}km/h计算，到场时间不合理，请修改或备注！`"
         />
       </template>
     </SelectDateTime> 

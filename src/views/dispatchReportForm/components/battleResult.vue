@@ -92,6 +92,7 @@ const surviveNumChange = ()=>{
             field-module="battleResult"
             :exist-data="fieldExist?.rescueNum"
             @refresh-callback="refreshField"
+            warningTip="抢救人数不能大于现场被困人数！"
           />
         </template>
       </van-field>

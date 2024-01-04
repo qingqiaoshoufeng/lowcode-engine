@@ -345,6 +345,9 @@ const onSideBarChange = (e, k) => {
         .van-sidebar-item__text {
           color: #333333;
           white-space: nowrap;
+          font-family: PingFang-SC, PingFang-SC;
+          font-weight: bold;
+          color: #353A45;
         }
       }
       .anchor-children {
@@ -352,6 +355,8 @@ const onSideBarChange = (e, k) => {
         padding: 8px 10px;
         .van-sidebar-item__text {
           color: #565D6F;
+          font-size: 12px;
+          font-family: PingFangSC, PingFang SC;
         }
       }
     }

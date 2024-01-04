@@ -133,6 +133,7 @@ const onCommander = () => {
           field-module="casualtyWar"
           :exist-data="fieldExist?.isInjured"
           @refresh-callback="refreshField"
+          warningTip="人车配比不合理，请修改或备注！"
         />
       </template>
     </van-field>
@@ -241,6 +242,7 @@ const onCommander = () => {
           field-module="investForce"
           :exist-data="fieldExist?.commander"
           @refresh-callback="refreshField"
+          warningTip="人车配比不合理，请修改或备注！"
         />
       </template>
     </SelectPerson>
@@ -289,6 +291,7 @@ const onCommander = () => {
           field-module="investForce"
           :exist-data="fieldExist?.firemen"
           @refresh-callback="refreshField"
+          warningTip="人车配比不合理，请修改或备注！"
         />
       </template>
     </SelectPerson>

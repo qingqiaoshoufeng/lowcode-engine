@@ -121,6 +121,7 @@ const onDealSituation = (value, option) => {
           field-module="basicInformation"
           :exist-data="fieldExist?.fireDistance"
           @refresh-callback="refreshField"
+          :warningTip="form.basicInformation.fireDistance.warningText"
         />
       </template>
     </van-field>
@@ -172,6 +173,7 @@ const onDealSituation = (value, option) => {
           field-module="basicInformation"
           :exist-data="fieldExist?.trappedPerson"
           @refresh-callback="refreshField"
+          :warningTip="`一级警情或轻微火灾，被困人数合理范围为${trappedConfig?.value?.[0]}-${trappedConfig?.value?.[1]}人，请修改或备注！`"
         />
       </template>
     </van-field>
