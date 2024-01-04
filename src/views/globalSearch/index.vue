@@ -54,12 +54,12 @@ const onTabFn = (name, title) => {
   if (proListRef.value.list?.length > 0) {
     showLoadingToast();
   }
-  proListRef.value.query.type = name
-  proListRef.value.filter().then(res => {
+  proListRef.value.query.type = name;
+  proListRef.value.filter().then((res) => {
     closeToast();
     initResultInfo();
-  })
-}
+  });
+};
 
 const handleItem = (row) => {
   currentRow.value = row;
@@ -70,7 +70,7 @@ const handleSearch = () => {
   proListRef.value.filter().then((res) => {
     initResultInfo();
   });
-}
+};
 
 defineOptions({
   name: "GlobalSearch",
@@ -108,7 +108,9 @@ defineOptions({
       <template #list="{ record }">
         <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
-            <div class="item-title" style="width: 100%;">{{ record.warningName }}</div>
+            <div class="item-title" style="width: 100%">
+              {{ record.warningName }}
+            </div>
           </div>
           <div class="item-type">
             <span>{{ record.warningTypeValue }}</span>

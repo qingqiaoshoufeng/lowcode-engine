@@ -33,14 +33,14 @@ const { loading, submit } = useSubmit(
   },
   {
     submitFn: () => {
-      const { boFireWarningId } = props.currentRow
-      const { dispatchGroup, firstGroup, mainGroup } = form.value
+      const { boFireWarningId } = props.currentRow;
+      const { dispatchGroup, firstGroup, mainGroup } = form.value;
       return transferWarning({
         boFireWarningId: boFireWarningId,
         dispatchGroup: dispatchGroup?.map((item) => item.organizationid)?.join(","),
         firstGroup,
         mainGroup,
-      })
+      });
     },
   }
 );
@@ -52,10 +52,10 @@ const onSubmit = async () => {
 
 const onChange = () => {
   if (form.value.dispatchGroup?.length <= 0) {
-    form.value.firstGroup = undefined
-    form.value.mainGroup = undefined
+    form.value.firstGroup = undefined;
+    form.value.mainGroup = undefined;
   }
-}
+};
 
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
