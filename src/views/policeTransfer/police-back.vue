@@ -1,9 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
-import { showToast } from "vant"
-import { useSubmit } from '@castle/castle-use'
-import SelectSingle from "@/component/SelectSingle/index"
-import { reinforcereturn } from '@/apis/index.js'
+import { computed, onMounted, ref } from "vue";
+import { showToast } from "vant";
+import { useSubmit } from "@castle/castle-use";
+import SelectSingle from "@/component/SelectSingle/index";
+import { reinforcereturn } from "@/apis/index.js";
 
 const props = defineProps({
   currentRow: {
@@ -13,54 +13,58 @@ const props = defineProps({
   setHandleOk: {
     type: Function,
   },
-})
+});
 
-const emits = defineEmits(['finishCallback'])
+const emits = defineEmits(["finishCallback"]);
 
 const options = [
   {
-    label: '警情信息错误',
-    value: '警情信息错误',
+    label: "警情信息错误",
+    value: "警情信息错误",
   },
   {
-    label: '任务派发错误',
-    value: '任务派发错误',
+    label: "任务派发错误",
+    value: "任务派发错误",
   },
   {
-    label: '其他',
-    value: '其他',
+    label: "其他",
+    value: "其他",
   },
-]
+];
 
-const formRef = ref(null)
+const formRef = ref(null);
 
 const form = ref({
-  returnRemark: '',
+  returnRemark: "",
   returnReason: undefined,
-})
+});
 
-const { loading, submit } = useSubmit(() => {
-  showToast('退回成功')
-  emits('finishCallback')
-}, {
-  submitFn: () => reinforcereturn({
-    boFireWarningId: props.currentRow?.boFireWarningId,
-    returnReason: form.value.returnReason,
-    returnRemark: form.value.returnRemark,
-  }),
-})
+const { loading, submit } = useSubmit(
+  () => {
+    showToast("退回成功");
+    emits("finishCallback");
+  },
+  {
+    submitFn: () =>
+      reinforcereturn({
+        boFireWarningId: props.currentRow?.boFireWarningId,
+        returnReason: form.value.returnReason,
+        returnRemark: form.value.returnRemark,
+      }),
+  }
+);
 
 const onSubmit = async () => {
-  await submit()
-  await formRef.value.finishFn()
-}
+  await submit();
+  await formRef.value.finishFn();
+};
 
 onMounted(() => {
   props.setHandleOk(async (finishFn) => {
-    formRef.value.submit()
-    formRef.value.finishFn = finishFn
-  }, loading)
-})
+    formRef.value.submit();
+    formRef.value.finishFn = finishFn;
+  }, loading);
+});
 </script>
 
 <template>

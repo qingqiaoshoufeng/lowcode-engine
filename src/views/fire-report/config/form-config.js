@@ -796,7 +796,7 @@ export const useFormConfig = (validateProgress) => {
             if (i instanceof Object) {
               Object.keys(i).forEach((subKey) => {
                 if (!['disabled', 'boFireInfoInjuryId', 'boFireInfoId', 'new', 'genderHolder', 'ageHolder'].includes(subKey)) {
-                  data[subKey].rules && (rules[`${k}[${index}].${subKey}`] = data[subKey].rules)
+                  data[subKey]?.rules && (rules[`${k}[${index}].${subKey}`] = data[subKey]?.rules)
                 }
                 else {
                   rules[`${k}[${index}].${subKey}`] = [{ required: false }]

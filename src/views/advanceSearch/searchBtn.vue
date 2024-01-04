@@ -27,7 +27,7 @@ const handleSearch = () => {
 }
 
 const handleCollect = () => {
-  show.value = { collectVisible: true }
+  show.value.collectVisible = true
   nextTick(() => {
     proListRef.value.query.searchScene = props.searchScene
     proListRef.value.query.shareFlag = 2
@@ -36,7 +36,7 @@ const handleCollect = () => {
 }
 
 const handlePath = () => {
-  show.value = { pathVisible: true }
+  show.value.pathVisible = true
 }
 
 const handleByResult = (row) => {
