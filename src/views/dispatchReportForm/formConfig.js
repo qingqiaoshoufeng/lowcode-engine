@@ -1193,7 +1193,14 @@ export const useFormConfig = () => {
       content = content.replace('【车辆数】', investForce.dispatchTruckList.value?.length)
     }
     if (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0) {
-      content = content.replace('【指战员数】', investForce.commander.value?.length + investForce.firemen.value?.length)
+      const ids = investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+      const result = cloneDeep(investForce.commander?.value) || []
+      investForce.firemen.value?.forEach((item) => {
+        if (!ids.includes(item.boFireUserId)) {
+          result.push(item)
+        }
+      })
+      content = content.replace('【指战员数】', result?.length)
     }
     if (basicInformation.attendanceDate.value) {
       content = content.replace('【到场时间】', dayjs(basicInformation.attendanceDate.value).format('MM月DD日HH时mm分'))

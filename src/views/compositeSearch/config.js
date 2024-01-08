@@ -1510,7 +1510,9 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '失火楼层',
-        numType: 'digit',
+        numType: 'number',
+        min: -99,
+        max: 999,
       },
       housingLifeMin: { // 房龄（年）
         value: ['', ''],

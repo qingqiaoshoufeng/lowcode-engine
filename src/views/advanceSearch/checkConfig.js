@@ -1397,7 +1397,9 @@ export const checkBoxs = [
     fieldKeyTwo: 'fireFloorMax',
     label: '失火楼层',
     type: '2',
-    numType: 'digit',
+    numType: 'number',
+    min: -99,
+    max: 999,
   },
   {
     fieldKeyOne: 'housingLifeMin',
