@@ -193,7 +193,7 @@ const fieldExist = ref({})
 
 const userInfo = ref({})
 
-const detachment = ref('');
+const initDispatchDetail = ref({});
 
 const deptMembersOptions = ref([]);
 
@@ -625,7 +625,8 @@ const initReport = () => {
         if (res) {
           isNew.value = res.isNew
           form.value.basicInfoHead.headquarterName.value = res.dispatchGroupName
-          detachment.value = res.detachment
+          initDispatchDetail.value.detachment = res.detachment
+          initDispatchDetail.value.warningOrgname = res.warningOrgname
         }
       }).finally(() => resolve())
     } else {
@@ -635,7 +636,11 @@ const initReport = () => {
 }
 
 const initFireProcess = () => {
-  generateRemarkField({ ...detail.value, detachment: detachment.value }, userInfo.value?.USERMESSAGE?.orgName)
+  generateRemarkField({
+    ...detail.value,
+    detachment: initDispatchDetail.value.detachment,
+    warningOrgname: initDispatchDetail.value.warningOrgname,
+  }, userInfo.value?.USERMESSAGE?.orgName)
 }
 
 provide('refreshProcess', initFireProcess)

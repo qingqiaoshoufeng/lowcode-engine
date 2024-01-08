@@ -42,6 +42,7 @@ const personNum = computed(() => {
 const onResponseTruck = (e) => {
   if (e === "2") {
     form.value.investForce.dispatchTruckList.value = undefined;
+    form.value.battleConsume.wastageTruck.value = undefined;
     form.value.investForce.midwayCar.value = undefined;
     form.value.investForce.isReturnTruck.value = "2";
   }
