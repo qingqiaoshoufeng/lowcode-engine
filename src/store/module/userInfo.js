@@ -6,13 +6,15 @@ const state = {
 const getters = {
   userInfo: (state) => state.userInfo,
   permission: (state)=>{
+    console.log(state.userInfo);
+    const initData = state.userInfo?.USERMESSAGE?.loginName === "admin" ? {
+      admin:true
+    } : {}
     const permissionList = state?.userInfo?.PERMISSIONLIST || []
     const result = permissionList.reduce((current,item)=>{
       current[item.perms] = true
       return current
-    },{
-      admin:true
-    })
+    },initData)
     return result
   }
 }
