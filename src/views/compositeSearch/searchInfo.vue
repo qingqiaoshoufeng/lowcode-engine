@@ -42,7 +42,7 @@ const props = defineProps({
       疏散被困人员<span>{{ searchInfo.evacuateNumSum }}</span>人，
       抢救财产价值<span>{{ searchInfo.emergencyNumSum }}</span>元，
       保护财产价值<span>{{ searchInfo.protectNumSum }}</span>元，
-      参战人员死亡<span>{{ searchInfo.firedeathNumSum }}</span>人，
+      参战人员死亡<span>{{ searchInfo.firedeathNumSum || searchInfo.fireDeathNumSum }}</span>人，
       受伤<span>{{ searchInfo.fireInjuryNumSum }}</span>人。
     </div>
     <div v-if="searchType === 3">
@@ -52,8 +52,8 @@ const props = defineProps({
       同比<span>{{ searchInfo.warningCountTb }}</span>；
       出动指挥车辆<span>{{ searchInfo.dispatchTruckCounts }}</span>辆，
       出动指挥人员<span>{{ searchInfo.commanderNums }}</span>人，
-      指挥人员死亡<span>{{ searchInfo.headDeathNumSum }}</span>人，
-      受伤<span>{{ searchInfo.headInjuryNumSum }}</span>人。
+      指挥人员死亡<span>{{ searchInfo.headDeathNumSum || searchInfo.fireDeathNumSum }}</span>人，
+      受伤<span>{{ searchInfo.headInjuryNumSum || searchInfo.fireInjuryNumSum }}</span>人。
     </div>
     <div v-if="searchType === 4">
       查询结果：共查询到<span>{{ searchInfo.fireCount }}</span>起火灾调查报告，
