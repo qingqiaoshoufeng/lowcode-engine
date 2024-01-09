@@ -24,7 +24,7 @@ const showPreview = inject("showPreview");
         :rules="form.deployEquipment.headTruckList.rules"
         :readonly="true"
         label="指挥车辆信息："
-        label-width="112px"
+        label-width="118px"
         placeholder="请选择指挥车辆信息"
         @change="onDispatchTruck"
       >

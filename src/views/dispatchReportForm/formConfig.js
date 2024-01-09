@@ -1101,7 +1101,7 @@ export const useFormConfig = () => {
   // 根据模版生成处置经过
   const generateRemarkField = (detail, orgName) => {
     const { draftInfo, basicInformation, battleResult, casualtyWar, investForce } = form.value
-    const { warningDate, warningTypeValue, warningAddr, distributeOrgName } = detail
+    const { warningDate, warningTypeValue, warningAddr, distributeOrgName, warningOrgname } = detail
     let content = ''
     const warningTypeText = cloneDeep(warningTypeValue?.split('/') || draftInfo.warningType?.text)
     if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场实施处置') {
@@ -1455,6 +1455,12 @@ export const useFormConfig = () => {
       form.value.personInfo.commandLeader = fireDispatchHeadPerson.headerPersonList?.map((item) => {
         return {
           ...item,
+          headerName: item.header
+            ? generateByKeyValue(item.headerName, item.header, {
+              key: 'userName',
+              value: 'boFireUserId',
+            })
+            : [],
         }
       })
     }

@@ -11,6 +11,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  single: {
+    type: Boolean,
+    default: false,
+  },
   label: {
     type: String,
     default: "",
@@ -58,13 +62,23 @@ const checkSelect = (item) => {
 }
 
 const handleItem = (item) => {
-  const filter = selectValue.value?.filter((it) => it.boFireUserId === item.boFireUserId);
-  if (filter?.length <= 0) {
-    selectValue.value.push(item);
+  if (props.single) {
+    const filter = selectValue.value?.filter((it) => it.boFireUserId === item.boFireUserId);
+    if (filter?.length <= 0) {
+      selectValue.value = [item];
+    } else {
+      selectValue.value = selectValue.value?.filter((it) => it.boFireUserId !== item.boFireUserId);
+    }
+    selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
   } else {
-    selectValue.value = selectValue.value?.filter((it) => it.boFireUserId !== item.boFireUserId);
+    const filter = selectValue.value?.filter((it) => it.boFireUserId === item.boFireUserId);
+    if (filter?.length <= 0) {
+      selectValue.value.push(item);
+    } else {
+      selectValue.value = selectValue.value?.filter((it) => it.boFireUserId !== item.boFireUserId);
+    }
+    selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
   }
-  selectText.value = selectValue.value?.map((item) => item.userName)?.join(",");
   emit("update:value", selectValue.value);
   emit("change", selectValue.value, item);
 };
