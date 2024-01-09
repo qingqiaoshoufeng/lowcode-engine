@@ -115,7 +115,9 @@ const onBuildUse = (value, selectedOptions) => {
 const validateFireFloor = (value) => {
   const { fireBuilding } = form.value
   const filter = options.value.buildType?.filter(item => item.boDictId === fireBuilding.buildType.value)
-  if (fireBuilding.buildFloor.value < fireBuilding.fireFloor.value) {
+  // debugger;
+  // console.log(fireBuilding.buildFloor.value,fireBuilding.fireFloor.value);
+  if (Number(fireBuilding.buildFloor.value) < Number(fireBuilding.fireFloor.value)) {
     return '失火楼层不能大于建筑总楼层'
     // callback(new Error('失火楼层不能大于建筑总楼层'))
   }

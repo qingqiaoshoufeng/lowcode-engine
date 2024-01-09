@@ -27,7 +27,7 @@ const onSurviveNum = () => {
 const validateRescueNum = (value, rule) => {
   const { rescueNum } = form.value.battleResult;
   const { trappedPerson } = form.value.basicInformation;
-  if (showMainGroup.value && rescueNum.value > trappedPerson.value) {
+  if (Number(showMainGroup.value) && Number(rescueNum.value) > Number(trappedPerson.value)) {
     return "抢救人数不能大于现场被困人数！";
   } else if (!value && value !== 0) {
     if (!rescueNum.rules[0].required) {
@@ -42,7 +42,7 @@ const validateRescueNum = (value, rule) => {
 
 const validateSurvive = (value, rule) => {
   const { rescueNum, surviveNum } = form.value.battleResult;
-  if (rescueNum.value < surviveNum.value) {
+  if (Number(rescueNum.value) < Number(surviveNum.value)) {
     return "生还人数不能大于抢救人数！";
   } else if (!value && value !== 0) {
     if (!surviveNum.rules[0].required) {

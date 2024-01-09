@@ -2,7 +2,7 @@
 import { ref, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
-
+import { useStore } from "vuex";
 const form = inject("form");
 
 const options = inject("options");
@@ -24,6 +24,10 @@ const showFalsePolice = inject('showFalsePolice')
 const showMidwayReturn = inject('showMidwayReturn')
 
 const detail = inject('detail')
+
+const store =useStore()
+
+const trappedConfig = store.state.ruleConfig.trappedConfig
 
 const onIsBlocking = (value) => {
   if (value === '2') {
