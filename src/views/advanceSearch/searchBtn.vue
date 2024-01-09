@@ -144,7 +144,7 @@ onMounted(() => {
           <van-icon v-if="dataTimeSource === item.value" name="success" />
         </div>
       </div>
-      <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
+      <!-- <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
       <div class="path-wrapper">
         <div class="path-wrapper-title">数据口径</div>
         <div
@@ -156,7 +156,7 @@ onMounted(() => {
           <span>{{ item.label }}</span>
           <van-icon v-if="searchDimension === item.value" name="success" />
         </div>
-      </div>
+      </div> -->
       <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
     </div>
     <div class="search-btn-wrapper">

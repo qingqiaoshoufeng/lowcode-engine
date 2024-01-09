@@ -165,7 +165,7 @@ const getFormParams = () => {
 const checkConfigType = () => {
   let flag = true
   list.value.forEach((i) => {
-    if (i.fireType !== '4') {
+    if (i.fireType !== '4' && i.fieldFlag === '1') {
       flag = false
     }
   })

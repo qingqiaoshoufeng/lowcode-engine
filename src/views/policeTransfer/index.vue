@@ -247,6 +247,7 @@ onMounted(() => {
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
+              v-p="['admin', 'police-redeploy:look']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -256,6 +257,7 @@ onMounted(() => {
               查看
             </van-button>
             <van-button
+              v-p="['admin', 'police-redeploy:transform']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -266,6 +268,7 @@ onMounted(() => {
               转派
             </van-button>
             <van-button
+              v-p="['admin', 'police-redeploy:back']"
               type="success"
               size="mini"
               color="#1989fa"

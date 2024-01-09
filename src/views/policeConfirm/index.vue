@@ -250,6 +250,7 @@ onMounted(() => {
           <div class="item-line" />
           <div class="item-operate" @click.stop>
             <van-button
+              v-p="['admin', 'police-confirm:look']"
               type="success"
               size="mini"
               color="#1989fa"
@@ -259,6 +260,7 @@ onMounted(() => {
               查看
             </van-button>
             <van-button
+              v-p="['admin', 'police-confirm:confirm']"
               type="success"
               size="mini"
               color="#1989fa"
