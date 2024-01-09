@@ -187,9 +187,7 @@ form.value.warningName = computed(() => {
       result += `${userMessage.value?.USERMESSAGE?.orgName}接报一起虚假警`;
     }
   } else {
-    result += warningAreaText?.length > 0
-      ? `${warningAreaText?.[1]}${warningAreaText?.[2]}`
-      : "";
+    result += warningAreaText?.length > 0 ? `${warningAreaText?.[1]}${warningAreaText?.[2] || ""}` : "";
   }
   if (warningTypeText?.[0] === "火灾扑救") {
     result += warningTypeText?.[1] === "室外设备设施火灾" ? "一" : "";
@@ -618,7 +616,10 @@ const handleSubmit = () => {
 }
 
 const onSubmit = () => {
-  if ((props.isEdit || props.isConfirm) && (detail.value?.isOtherProvince === '1' && form.value.otherProvince?.length <= 0)) { // 修改跨省警情
+  if (!form.value.warningArea[2]) {
+    showToast('请选择正确的行政区域！')
+  }
+  else if ((props.isEdit || props.isConfirm) && (detail.value?.isOtherProvince === '1' && form.value.otherProvince?.length <= 0)) { // 修改跨省警情
     showToast('跨省警情必须录入【增援总队】，有误可申请作废后重新创建警情！')
   }
   else if ((props.isEdit || props.isConfirm) && (detail.value?.isOtherProvince !== '1' && form.value.otherProvince?.length > 0)) { // 修改跨市警情、普通警情

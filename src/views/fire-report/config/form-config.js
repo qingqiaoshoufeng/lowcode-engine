@@ -306,7 +306,7 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [
           { required: true, message: '请输入人员年龄' },
-          { pattern: nonZeroPositiveInteger, message: '请输入正确人员年龄' },
+          { pattern: positiveIntegerReg, message: '请输入正确人员年龄' },
         ],
       },
       injuryCause: { // 致伤/致死原因

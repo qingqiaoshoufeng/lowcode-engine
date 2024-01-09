@@ -1123,7 +1123,7 @@ export const useFormConfig = () => {
       content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】发生一起事故（【抢险救援末级指标】）。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('公共服务时') && basicInformation.dealSituation?.text === '到场未实施处置') {
       content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
@@ -1132,7 +1132,7 @@ export const useFormConfig = () => {
       content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】【需要公共服务【（公共服务末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【中返时间】中途返回，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场实施处置') {
-      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人员人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
+      content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，【结束时间】处置结束，共营救、疏散被困人员【抢救人数+疏散人数】人，抢救财产价值【抢救财产价值】元，保护财产价值【保护财产价值】元。造成参战人员【亡人数】死【伤人数】伤。'
     }
     else if (warningTypeText?.includes('社会救助') && basicInformation.dealSituation?.text === '到场未实施处置') {
       content = '【接警时间年月日时分】，【警情录入单位】接到出警指令：【警情地址】需要救助【（社会救助末级指标）】。【出动时间】，【出动队伍】出动【车辆数】车【指战员数】人赶赴现场处置；【出动队伍】【到场时间】到场，因【未处置原因】未实施处置，【归队时间】归队。造成参战人员【亡人数】死【伤人数】伤。'
@@ -1174,11 +1174,15 @@ export const useFormConfig = () => {
     if (warningAddr) {
       content = content.replace('【警情地址】', warningAddr)
     }
+    if (warningOrgname) {
+      content = content.replace('【活动/任务名】', warningOrgname)
+    }
     if (warningTypeText?.length > 0) {
       content = content.replace('【（社会救助末级指标）】', cloneDeep(warningTypeText).pop())
       content = content.replace('【（公共服务末级指标）】', cloneDeep(warningTypeText).pop())
       content = content.replace('【虚假警末级指标】', cloneDeep(warningTypeText).pop())
       content = content.replace('【抢险救援末级指标】', cloneDeep(warningTypeText).pop())
+      content = content.replace('【安保勤务末级指标类型】', cloneDeep(warningTypeText).pop())
     }
     if (basicInformation.dispatchDate.value) {
       content = content.replace('【出动时间】', dayjs(basicInformation.dispatchDate.value).format('MM月DD日HH时mm分'))
@@ -1193,7 +1197,14 @@ export const useFormConfig = () => {
       content = content.replace('【车辆数】', investForce.dispatchTruckList.value?.length)
     }
     if (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0) {
-      content = content.replace('【指战员数】', investForce.commander.value?.length + investForce.firemen.value?.length)
+      const ids = investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
+      const result = cloneDeep(investForce.commander?.value) || []
+      investForce.firemen.value?.forEach((item) => {
+        if (!ids.includes(item.boFireUserId)) {
+          result.push(item)
+        }
+      })
+      content = content.replace('【指战员数】', result?.length)
     }
     if (basicInformation.attendanceDate.value) {
       content = content.replace('【到场时间】', dayjs(basicInformation.attendanceDate.value).format('MM月DD日HH时mm分'))
