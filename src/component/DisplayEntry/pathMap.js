@@ -63,6 +63,8 @@ export const permission={
   "chudonggengzhengshenpi": ["admin", "dispatch-recheck-approval"],
   "huozaigengzhengshenpi": ["admin", "fire-recheck-approval"],
   "shenqingjilu": ["admin", "apply-record"],
+  "jingqingqueren":["admin", "police-confirm"],
+  "jingqingzhuanpai":["admin", "police-redeploy"],
   "jingqingzhiliangjiandu": ["admin", "police-supervision"],
   "huozaizhiliangjiandu":["admin", "fire-supervision"],
   "chudongzhiliangjiandu":["admin", "dispatch-supervision"],

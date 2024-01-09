@@ -1,6 +1,6 @@
 <template>
     <div class="entry_list">
-      <div class="title">{{ title }}</div>
+      <div class="title" v-if="isShowTitle">{{ title }}</div>
         <div class="list">
             <div 
                 :class="{
@@ -29,6 +29,8 @@ import { computed, ref, getCurrentInstance,defineProps, onMounted } from "vue";
 import { useStore } from "vuex";
 import router from '@/router/index.js'
 import {pathMap,permission} from './pathMap.js'
+const store = useStore()
+const permissionMap = store?.getters?.['userInfo/permission'] || {}
 
 const props = defineProps({
   title:{
@@ -47,6 +49,16 @@ const handleClick = (val)=>{
     path
   })
 }
+
+const isShowTitle = computed(()=>{
+  debugger
+  const list = props.list.filter((item)=>{
+    console.log(permission[item.iconId],'permission[item.iconId]');
+    return (permission[item.iconId] && !!permission[item.iconId].find((itm)=> permissionMap[itm])) || !permission[item.iconId]
+  })
+  console.log(list,'length',permissionMap);
+  return !!list.length
+})
 </script>
 <script>
 export default {

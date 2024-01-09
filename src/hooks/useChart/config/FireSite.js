@@ -19,7 +19,7 @@ const options = {
       align: 'right',
       // rotate: 30,
       // margin: 28,
-      fontSize: 11,
+      fontSize: 10,
     },
     axisTick: {
       show: false,

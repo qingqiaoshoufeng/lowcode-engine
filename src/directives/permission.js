@@ -8,7 +8,7 @@ export default {
       // const mergeList = [...new Set([...permissionList, ...binding.value])]
       // const flag = mergeList.length === (binding.value.length + permissionList.length)
       const list = binding.value || []
-      if(list && list){
+      if(!list || !list.length){
         return
       }
       const permissionMap = store?.getters?.['userInfo/permission'] || {}
