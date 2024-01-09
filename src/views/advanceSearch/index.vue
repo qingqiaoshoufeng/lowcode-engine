@@ -162,6 +162,16 @@ const getFormParams = () => {
   }
 }
 
+const checkConfigType = () => {
+  let flag = true
+  list.value.forEach((i) => {
+    if (i.fireType !== '4') {
+      flag = false
+    }
+  })
+  return activeKey.value === '4' && flag ? '1' : '0'
+}
+
 provide('getSearchParams', getFormParams)
 
 const onSearchCallback = () => {
@@ -170,6 +180,7 @@ const onSearchCallback = () => {
     queryParams.value = {
       fireType: activeKey.value,
       seniorQueryDetailReq: getListParams(),
+      noFireFlag: checkConfigType(),
     }
     nextTick(() => {
       search.value = Number(queryParams.value.fireType)

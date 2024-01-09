@@ -941,9 +941,9 @@ const onWarningOrgname = () => {
           <FieldAnnotation
             label="纬度坐标："
             :id="currentRow?.boFireWarningId"
-            remark-field="warningType"
+            remark-field="warningLat"
             field-module="policeWarning"
-            :exist-data="fieldExist?.warningType"
+            :exist-data="fieldExist?.warningLat"
             @refresh-callback="refreshField"
           />
         </template>
@@ -1310,9 +1310,9 @@ const onWarningOrgname = () => {
           <FieldAnnotation
             label="警情标签："
             :id="currentRow?.boFireWarningId"
-            remark-field="warningCodeYyj"
+            remark-field="warningTag"
             field-module="policeWarning"
-            :exist-data="fieldExist?.warningCodeYyj"
+            :exist-data="fieldExist?.warningTag"
             @refresh-callback="refreshField"
           />
         </template>
@@ -1467,9 +1467,9 @@ const onWarningOrgname = () => {
           <FieldAnnotation
             label="全勤指挥部："
             :id="currentRow?.boFireWarningId"
-            remark-field="areaDutyGroup"
+            remark-field="headquarters"
             field-module="policeWarning"
-            :exist-data="fieldExist?.areaDutyGroup"
+            :exist-data="fieldExist?.headquarters"
             @refresh-callback="refreshField"
           />
         </template>
