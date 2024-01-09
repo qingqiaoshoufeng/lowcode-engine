@@ -41,8 +41,11 @@ provide('getSearchParams', getSearchParams)
 
 const onSearchCallback = () => {
   const { policeBase, fireBase } = form.value
-  if (!policeBase.warningDate.value?.[0] && !fireBase.fireDate.value?.[0]) {
-    showToast('请先选择接警时间或起火时间！')
+  if (searchType.value < 4 && !policeBase.warningDate.value?.[0]) {
+    showToast('请先选择接警时间！')
+    return
+  } else if (searchType.value === 4 && !fireBase.fireDate.value?.[0]) {
+    showToast('请先选择起火时间！')
     return
   }
   queryParams.value = getSearchParams()

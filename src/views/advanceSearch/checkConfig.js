@@ -1657,8 +1657,11 @@ export const validateList = (arr, fireType) => {
   }
   const warningDateObj = arr.find(val => val.fieldKeyOne === 'warningDateStart')
   const fireDateObj = arr.find(val => val.fieldKeyOne === 'fireDateStart')
-  if (!warningDateObj && !fireDateObj) {
-    showToast('请先选择接警时间或起火时间！')
+  if (['1', '2', '3'].includes(fireType) && !warningDateObj) {
+    showToast('请先选择接警时间！')
+    return false
+  } else if (fireType === '4' && !fireDateObj) {
+    showToast('请先选择起火时间！')
     return false
   }
   const arr4 = arr.filter(val => val.fieldType === '4')

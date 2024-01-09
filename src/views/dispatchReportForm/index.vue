@@ -1050,7 +1050,12 @@ const getSubmitParams = () => {
       params.fireDispatchInjuryList.push(...list)
     }
     if (personInfo.commandLeader?.length > 0) {
-      params.fireDispatchHeadPerson.headerPersonList.push(...personInfo.commandLeader)
+      personInfo.commandLeader.forEach((item) => {
+        params.fireDispatchHeadPerson.headerPersonList.push({
+          headerName: item.headerName?.[0]?.boFireUserId,
+          position: item.position,
+        })
+      })
     }
     if (battleConsume.lossOtherEquipments?.length > 0) {
       const list = battleConsume.lossOtherEquipments.map((item) => {

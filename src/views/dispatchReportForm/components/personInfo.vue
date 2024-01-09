@@ -2,6 +2,7 @@
 import { inject, onMounted } from 'vue'
 import SelectSingle from "@/component/SelectSingle/index";
 import ProCard from "@/component/ProCard/index.vue";
+import SelectPerson from '@/component/SelectPerson/index.vue';
 
 const form = inject('form')
 
@@ -68,13 +69,12 @@ onMounted(() => {
       <div class="block-dynamic">
         <div v-for="(item, index) in form.personInfo.commandLeader" :key="index" class="block-dynamic-item">
           <div class="title">指挥员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteHeader(index)" /></div>
-          <SelectSingle
+          <SelectPerson
             v-model:value="item.headerName"
             :showPreview="showPreview"
             :name="`personInfo.commandLeader.${index}.headerName`"
             required
-            :options="deptMembersOptions"
-            :field-names="{ value: 'userId', label: 'userNameJob' }"
+            :single="true"
             title="请选择指挥员姓名"
             label="指挥员姓名："
             label-width="108px"
@@ -92,7 +92,7 @@ onMounted(() => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle>
+          </SelectPerson>
           <SelectSingle
             v-model:value="item.position"
             :showPreview="showPreview"
@@ -133,7 +133,7 @@ onMounted(() => {
         >
           <template #input>
             <van-radio-group
-              v-model:value="form.personInfo.haveProfessor.value"
+              v-model="form.personInfo.haveProfessor.value"
               v-preview-text="showPreview"
               icon-size="16px"
               direction="horizontal"
