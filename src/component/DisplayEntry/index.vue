@@ -51,12 +51,9 @@ const handleClick = (val)=>{
 }
 
 const isShowTitle = computed(()=>{
-  debugger
   const list = props.list.filter((item)=>{
-    console.log(permission[item.iconId],'permission[item.iconId]');
     return (permission[item.iconId] && !!permission[item.iconId].find((itm)=> permissionMap[itm])) || !permission[item.iconId]
   })
-  console.log(list,'length',permissionMap);
   return !!list.length
 })
 </script>
