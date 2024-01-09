@@ -103,6 +103,7 @@ onMounted(() => {
           <van-uploader
             name="basicInfo.attach.value"
             :rules="form.otherAttach.attach.rules"
+            :disabled="isDetail"
             id="attach"
             v-model="form.otherAttach.attach.value" 
             :after-read="OnAfterRead"

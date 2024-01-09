@@ -152,6 +152,7 @@ onMounted(() => {
               :rules="form.firePhoto.isAllBack.value === '1' ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
               :required="form.firePhoto.isAllBack.value === '1' ? false : isRequired"
               label="火灾照片"
+              label-width="0"
             >
               <template #input>
                 <van-uploader
@@ -164,6 +165,7 @@ onMounted(() => {
                   :max-size="10 * 1000 * 1000000"
                   :readonly="isDetail"
                   :deletable="!isDetail"
+                  :disabled="isDetail"
                   :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
                   :after-read="OnAfterRead"
                   @delete="onDelete"
