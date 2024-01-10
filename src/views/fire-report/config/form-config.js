@@ -881,7 +881,7 @@ export const useFormConfig = (validateProgress) => {
     if (basicInfo.isSafetyAccident.value !== '1') {
       content = content.replace('（安全生产事故）', '')
     }
-    if (basicInfo.burnedArea.value > 0) {
+    if (basicInfo.burnedArea.value > 0 || basicInfo.burnedArea.value === 0) {
       content = content.replace('【过火面积】', basicInfo.burnedArea.value)
     }
     if (casualtyWar.isDead.value === '1') {
