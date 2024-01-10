@@ -11,6 +11,7 @@ import ProModal from "@/component/ProModal/index";
 import DialogInfo from '@/component/DialogInfo/index.vue'
 import { approveProcessActions, getFireWarningDetail, getFireWarningTabs } from '@/apis/index.js'
 import { useModal } from '@/hooks/useModal.js'
+import {showToast}from 'vant'
 
 const props = defineProps({
   currentRow: {
@@ -61,7 +62,7 @@ provide('fieldByState', currenState)
 const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   (res) => {
     if (!props.isApproval) {
-      message.success('审批成功')
+      showToast('审批成功')
       emits('finishCallback')
     }
   },
