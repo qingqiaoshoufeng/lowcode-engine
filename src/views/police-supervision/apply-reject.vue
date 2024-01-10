@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { message } from '@castle/ant-design-vue'
 import { useSubmit } from '@castle/castle-use'
 import { rejectBatch } from '@/apis/index.js'
-
+import {showToast} from 'vant'
 const props = defineProps({
   type: {
     type: String,
@@ -54,7 +54,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  message.success('驳回成功')
+  showToast('驳回成功')
   emits('finishCallback')
 }, {
   submitFn: () => {

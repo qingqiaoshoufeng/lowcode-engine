@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { message } from '@castle/ant-design-vue'
 import { useSubmit } from '@castle/castle-use'
 import { remarkReason } from '@/apis/index.js'
-
+import {showToast} from 'vant'
 const props = defineProps({
   dataType: {
     type: Number,
@@ -27,7 +27,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  message.success('备注成功')
+  showToast('备注成功')
   emits('finishCallback')
 }, {
   submitFn: () => {
