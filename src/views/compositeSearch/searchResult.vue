@@ -1,15 +1,16 @@
 <script setup>
-import { ref, onMounted, nextTick, inject, watch } from "vue";
+import { ref, onMounted, nextTick, inject, watch, computed } from "vue";
 import ProList from "@/component/ProList/index";
-import { generateColorByState } from "@/utils/tools.js";
+import { generateColorByState, checkRejectState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
+import ApplyReject from "@/views/police-supervision/apply-reject.vue";
 import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
 import ReportGenerate from "@/views/statistics/components/reportGenerate.vue";
 import { showToast, showLoadingToast, closeToast } from "vant";
 import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
-import { MSG_EXPORT_NO_DATA, MSG_NO_HEAD_REPORT } from '@/utils/constants.js';
+import { MSG_EXPORT_NO_DATA, MSG_NO_HEAD_REPORT, MSG_LOCKING_ADMIN } from '@/utils/constants.js';
 import { useModal } from '@/hooks/useModal.js';
 
 const props = defineProps({
@@ -39,6 +40,20 @@ const currentRow = ref(null);
 
 const proListRef = ref(null);
 
+const rejectType = computed(() => {
+  switch (searchType.value) {
+    case 1:
+      return '1'
+    case 2:
+    case 3:
+      return '2'
+    case 4:
+      return '3'
+    default:
+      return '1'
+  }
+})
+
 watch(() => proListRef.value?.result, () => {
   if (proListRef.value?.result) {
     searchInfo.value = {
@@ -54,6 +69,15 @@ const handleItem = (row) => {
   currentRow.value = row
   show.value.lookVisible = true
 };
+
+const handleReject = (row) => {
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_ADMIN)
+    return
+  }
+  currentRow.value = row
+  show.value.rejectVisible = true
+}
 
 const handleGenerate = () => {
   if (proListRef.value.list?.length <= 0) {
@@ -123,6 +147,20 @@ onMounted(() => {
               <div style="color: #929398">行政区域：</div>
               <div>{{ record.warningAreaValue }}</div>
             </div>
+            <div class="item-line" />
+            <div class="item-operate" @click.stop>
+              <van-button
+                v-p="['admin', 'composite-search:back', 'advance-search:back']"
+                size="mini"
+                color="#1989fa"
+                class="item-btn"
+                :disabled="!checkRejectState(record.warningStatusValue)"
+                type="link"
+                @click="handleReject(record)"
+              >
+                驳回
+              </van-button>
+            </div>
           </div>
         </template>
       </ProList>
@@ -137,6 +175,18 @@ onMounted(() => {
     <!-- 警情详情 -->
     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
+    </ProModal>
+    <!-- 发起驳回说明 -->
+    <ProModal v-model:visible="show.rejectVisible" :showBack="false" :showHeader="true" title="发起驳回说明">
+      <template #default="{ setHandleOk }">
+        <ApplyReject
+          :type="rejectType"
+          :current-row="currentRow"
+          :selected-keys="selectedRowKeys"
+          :set-handle-ok="setHandleOk"
+          :finish-callback="finishCallback"
+        />
+      </template>
     </ProModal>
     <!-- 报表统计 -->
     <ProModal
