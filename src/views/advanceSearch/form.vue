@@ -8,7 +8,6 @@ import {
 import {
   getFireWarningTag,
   getInputPerson,
-  getTruckMsg,
   getHeaderOrg,
 } from '@/apis/index.js'
 import store from '@/store/index.js'

@@ -25,8 +25,8 @@ const showMidwayReturn = inject('showMidwayReturn')
 
 const detail = inject('detail')
 
-const store =useStore()
-console.log(store.state,'store.state');
+const store = useStore()
+
 const trappedConfig = store.state.rules.ruleConfig.trappedConfig
 
 const onIsBlocking = (value) => {

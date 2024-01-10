@@ -91,6 +91,11 @@ const handleGenerate = () => {
   show.value.reportUseVisible = true
 }
 
+const finishCallback = () => {
+  currentRow.value = null
+  proListRef.value.filter()
+}
+
 onMounted(() => {
   nextTick(() => {
     proListRef.value.query = props.params
@@ -182,9 +187,9 @@ onMounted(() => {
         <ApplyReject
           :type="rejectType"
           :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
+          :selected-keys="[]"
           :set-handle-ok="setHandleOk"
-          :finish-callback="finishCallback"
+          @finish-callback="finishCallback"
         />
       </template>
     </ProModal>

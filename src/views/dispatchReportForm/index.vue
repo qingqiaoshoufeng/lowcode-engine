@@ -1268,7 +1268,6 @@ const onSubmit = async () => {
 };
 
 onMounted(() => {
-  console.log('init', result)
   props.setHandleOk && props.setHandleOk(async (finishFn) => {
     formRef.value.submit()
     formRef.value.finishFn = finishFn
