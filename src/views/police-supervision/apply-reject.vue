@@ -95,18 +95,12 @@ onMounted(() => {
 
 <template>
   <van-form ref="formRef" :model="form" label-align="right" autocomplete="off">
-    <a-form-item
-      name="rejectCause"
-      label="驳回原因"
-      :rules="[{ required: true, message: `请选择驳回原因` }]"
-    >
-      <a-select v-model:value="form.rejectCause" :options="options" placeholder="请选择驳回原因" />
-    </a-form-item>
     <SelectSingle
       name="rejectCause"
       label="驳回原因"
       :rules="[{ required: true, message: `请选择驳回原因` }]"
       v-model:value="form.rejectCause" 
+      label-width="62px"
       :options="options" 
       placeholder="请选择驳回原因"
       :field-names="{label:'label',value:'value'}"
@@ -117,6 +111,7 @@ onMounted(() => {
     <van-field
       name="rejectRemark"
       label="驳回描述"
+      label-width="62px"
       :rules="[{ required: true, message: '请输入驳回描述' }]"
       id="fileRemark"
       v-model="form.rejectRemark"
@@ -124,6 +119,7 @@ onMounted(() => {
       :rows="4"
       :maxlength="500"
       show-count
+      required
       allow-clear
       placeholder="请输入驳回描述"
       autosize
