@@ -6,11 +6,20 @@
     "dev": "vue-cli-service serve",
     "build:production": "vue-cli-service build --mode production",
     "build:test": "vue-cli-service build --mode test",
-    "lint": "eslint --fix --ext .js,.vue src"
+    "lint": "eslint --fix --ext .js,.vue src",
+    "lint-staged": "npx lint-staged",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{vue,js,jsx,cjs,mjs}": [
+      "eslint --ignore-path .gitignore"
+    ]
   },
   "dependencies": {
     "@castle/ant-design-vue": "3.2.15-castle.2",
     "@castle/castle-use": "^0.0.4",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "@vant/compat": "^1.0.0",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "@vueuse/core": "^10.5.0",
@@ -23,10 +32,12 @@
     "echarts-wordcloud": "^2.1.0",
     "element-resize-event": "^3.0.6",
     "html2canvas": "^1.4.1",
+    "husky": "^8.0.2",
     "jsencrypt": "^3.3.2",
     "jspdf": "^2.5.1",
     "leaflet": "^1.9.4",
     "lib-flexible": "^0.3.2",
+    "lint-staged": "^15.2.0",
     "lodash-es": "^4.17.21",
     "mitt": "^2.1.0",
     "throttle-debounce": "^5.0.0",
