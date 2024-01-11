@@ -130,8 +130,8 @@ const getCurrentStatus = (item) => {
             <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>
             <p>审批单位：{{ item.commentOrgName }}</p>
             <p v-if="item.commentUserName">审批人员：{{ item.commentUserName }}</p>
-            <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.comment }}</p>
-            <p v-if="getCurrentStatus(item) !== 'process'">备注：{{ item.remark }}</p>
+            <p v-if="getCurrentStatus(item) !== 'process'">审批结果：{{ item.comment }}</p>
+            <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.remark }}</p>
           </template>
           <template v-else>
             <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>

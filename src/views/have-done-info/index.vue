@@ -35,7 +35,7 @@ import LookFireWarning from '@/views/policeEntryDetail/index.vue'
 import DispatchForm from '@/views/dispatchReportForm/index.vue'
 import { computed } from 'vue'
 const orgLevel = store.state.userInfo?.userInfo?.ORGLEVEL
-console.log(store);
+
 const props = defineProps({
   type:{
     type:String

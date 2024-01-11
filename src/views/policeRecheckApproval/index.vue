@@ -193,7 +193,7 @@ onMounted(() => {
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">审批意见：</div>
+              <div style="color: #929398">审批结果：</div>
               <div>{{ record.suggest }}</div>
             </div>
           </template>
