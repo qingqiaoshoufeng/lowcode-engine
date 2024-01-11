@@ -29,19 +29,19 @@ const hotData = {
 const homeData = {
   status: 0,
   images: [{
-    imgUrl: require('@/assets/image/home/banner5.jpg'),
+    // imgUrl: require('@/assets/image/home/banner5.jpg'),
     categoryId: 100018
   },
   {
-    imgUrl: require('@/assets/image/home/banner6.jpg'),
+    // imgUrl: require('@/assets/image/home/banner6.jpg'),
     categoryId: 100008
   },
   {
-    imgUrl: require('@/assets/image/home/banner7.jpg'),
+    // imgUrl: require('@/assets/image/home/banner7.jpg'),
     categoryId: 100016
   },
   {
-    imgUrl: require('@/assets/image/home/banner8.jpg'),
+    // imgUrl: require('@/assets/image/home/banner8.jpg'),
     categoryId: 100035
   }
   ],
@@ -51,11 +51,11 @@ const homeData = {
   },
 
   {
-    imgUrl: require('@/assets/image/home/test11.png'),
+    // imgUrl: require('@/assets/image/home/test11.png'),
     categoryId: 100020
   },
   {
-    imgUrl: require('@/assets/image/home/test10.png'),
+    // imgUrl: require('@/assets/image/home/test10.png'),
     categoryId: 100019
   }
   ],
@@ -64,42 +64,42 @@ const homeData = {
     name: '猜你喜欢',
     list: [{
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-1.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-1.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$525'
     },
     {
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-2.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-2.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$525'
     },
     {
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-3.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-3.png'),
       title: '限量套装 新品上市',
       forceValue: 1.9,
       price: '$525'
     },
     {
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-4.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-4.png'),
       title: '限量套装 新品上市',
       forceValue: 1.6,
       price: '$525'
     },
     {
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-5.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-5.png'),
       title: '限量套装 新品上市',
       forceValue: 2.3,
       price: '$525'
     },
     {
       name: '美妆护肤品',
-      img: require('@/assets/image/classifyNursing/美妆-6.png'),
+      // img: require('@/assets/image/classifyNursing/美妆-6.png'),
       title: '限量套装 新品上市',
       forceValue: 2.7,
       price: '$525'
@@ -107,42 +107,42 @@ const homeData = {
 
     {
       name: '多功能料理机',
-      img: require('@/assets/image/home/test1.png'),
+      // img: require('@/assets/image/home/test1.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$125'
     },
     {
       name: '遥控制空调扇',
-      img: require('@/assets/image/home/test2.png'),
+      // img: require('@/assets/image/home/test2.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$245'
     },
     {
       name: '时尚双肩包',
-      img: require('@/assets/image/home/test3.png'),
+      // img: require('@/assets/image/home/test3.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$21'
     },
     {
       name: '商务行李箱',
-      img: require('@/assets/image/home/test4.png'),
+      // img: require('@/assets/image/home/test4.png'),
       title: '限量套装 新品上市',
       forceValue: 2.7,
       price: '$218'
     },
     {
       name: '无线消噪耳机',
-      img: require('@/assets/image/home/test5.png'),
+      // img: require('@/assets/image/home/test5.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$218'
     },
     {
       name: '无线蓝牙耳机',
-      img: require('@/assets/image/home/test6.png'),
+      // img: require('@/assets/image/home/test6.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$218'
@@ -154,56 +154,56 @@ const homeData = {
     name: '潮流百搭',
     list: [{
       name: '活力运动装',
-      img: require('@/assets/image/classifyNursing/运动装备-1.png'),
+      // img: require('@/assets/image/classifyNursing/运动装备-1.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$125'
     },
     {
       name: '瑞士手表',
-      img: require('@/assets/image/classifyNursing/钟表-1.png'),
+      // img: require('@/assets/image/classifyNursing/钟表-1.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$245'
     },
     {
       name: '男鞋',
-      img: require('@/assets/image/classifyNursing/男鞋1.png'),
+      // img: require('@/assets/image/classifyNursing/男鞋1.png'),
       title: '限量套装 新品上市',
       forceValue: 2.7,
       price: '$21'
     },
     {
       name: '商务行李箱',
-      img: require('@/assets/image/home/test4.png'),
+      // img: require('@/assets/image/home/test4.png'),
       title: '限量套装 新品上市',
       forceValue: 0.5,
       price: '$218'
     },
     {
       name: '无线消噪耳机',
-      img: require('@/assets/image/home/test5.png'),
+      // img: require('@/assets/image/home/test5.png'),
       title: '限量套装 新品上市',
       forceValue: 2.3,
       price: '$218'
     },
     {
       name: '箱包',
-      img: require('@/assets/image/classifyNursing/箱包1.png'),
+      // img: require('@/assets/image/classifyNursing/箱包1.png'),
       title: '限量套装 新品上市',
       forceValue: 2.3,
       price: '$218'
     },
     {
       name: '水杯',
-      img: require('@/assets/image/classifyNursing/水杯0.png'),
+      // img: require('@/assets/image/classifyNursing/水杯0.png'),
       title: '限量套装 新品上市',
       forceValue: 2.7,
       price: '$218'
     },
     {
       name: '无线蓝牙耳机',
-      img: require('@/assets/image/home/test6.png'),
+      // img: require('@/assets/image/home/test6.png'),
       title: '限量套装 新品上市',
       forceValue: 1.6,
       price: '$218'
@@ -292,7 +292,7 @@ const homeData = {
     },
     {
       name: '时尚双肩包',
-      img: require('@/assets/image/home/test3.png'),
+      // img: require('@/assets/image/home/test3.png'),
       title: '限量套装 新品上市',
       forceValue: 2.7,
       price: '$21'
@@ -306,21 +306,21 @@ const homeData = {
     },
     {
       name: '商务行李箱',
-      img: require('@/assets/image/home/test4.png'),
+      // img: require('@/assets/image/home/test4.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$218'
     },
     {
       name: '无线消噪耳机',
-      img: require('@/assets/image/home/test5.png'),
+      // img: require('@/assets/image/home/test5.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$218'
     },
     {
       name: '无线蓝牙耳机',
-      img: require('@/assets/image/home/test6.png'),
+      // img: require('@/assets/image/home/test6.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$218'
@@ -348,28 +348,28 @@ const homeData = {
     },
     {
       name: '杯子',
-      img: require('@/assets/image/classifyNursing/水杯3.png'),
+      // img: require('@/assets/image/classifyNursing/水杯3.png'),
       title: '限量套装 新品上市',
       forceValue: 2.3,
       price: '$21'
     },
     {
       name: '商务行李箱',
-      img: require('@/assets/image/home/test4.png'),
+      // img: require('@/assets/image/home/test4.png'),
       title: '限量套装 新品上市',
       forceValue: 1.9,
       price: '$218'
     },
     {
       name: '无线消噪耳机',
-      img: require('@/assets/image/home/test5.png'),
+      // img: require('@/assets/image/home/test5.png'),
       title: '限量套装 新品上市',
       forceValue: 1.3,
       price: '$218'
     },
     {
       name: '杯子',
-      img: require('@/assets/image/classifyNursing/水杯0.png'),
+      // img: require('@/assets/image/classifyNursing/水杯0.png'),
       title: '限量套装 新品上市',
       forceValue: 1.6,
       price: '$218'
@@ -592,7 +592,7 @@ const categoryData = {
   },
   {
     name: '家用电器',
-    mainImgUrl: require('@/assets/image/home/test10.png'),
+    // mainImgUrl: require('@/assets/image/home/test10.png'),
     list: [{
       title: '家用电器',
       productList: [{
@@ -633,26 +633,26 @@ const categoryData = {
       },
       {
         title: '音箱',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情1-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情1-1.png')
       },
       {
         title: '音箱',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情1-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情1-2.png')
       },
       {
         title: '音箱',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情1-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情1-3.png')
       },
       {
         title: '音箱',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情1-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情1-4.png')
       }
       ]
     }]
   },
   {
     name: '美妆护肤',
-    mainImgUrl: require('@/assets/image/home/test11.png'),
+    // mainImgUrl: require('@/assets/image/home/test11.png'),
     list: [{
       title: '美妆护肤',
       productList: [{
@@ -665,47 +665,47 @@ const categoryData = {
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-1.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-2.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-3.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-4.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-5.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-5.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-6.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-6.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-7.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-7.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-8.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-8.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-9.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-9.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-10.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-10.png')
       },
       {
         title: '美妆',
-        imgUrl: require('@/assets/image/classifyNursing/美妆-11.png')
+        // imgUrl: require('@/assets/image/classifyNursing/美妆-11.png')
       },
       {
         title: '控油',
@@ -713,63 +713,63 @@ const categoryData = {
       },
       {
         title: '去黑头',
-        imgUrl: require('@/assets/image/classifyNursing/护理-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-1.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-2.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-3.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-4.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-5.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-5.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-6.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-6.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-7.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-7.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-9.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-9.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-10.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-10.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-11.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-11.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/护理-12.png')
+        // imgUrl: require('@/assets/image/classifyNursing/护理-12.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情-1.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情-2.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情-3.png')
       },
       {
         title: '护肤',
-        imgUrl: require('@/assets/image/classifyNursing/商品详情-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/商品详情-4.png')
       }
       ]
     }]
@@ -785,71 +785,71 @@ const categoryData = {
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-1.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-2.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-3.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-4.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-5.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-5.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-1.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-2.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-3.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-4.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-5.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-5.png')
       },
       {
         title: '手表',
-        imgUrl: require('@/assets/image/classifyNursing/手表-6.png')
+        // imgUrl: require('@/assets/image/classifyNursing/手表-6.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-6.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-6.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-7.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-7.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-8.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-8.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-9.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-9.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-10.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-10.png')
       },
       {
         title: '瑞士手表',
-        imgUrl: require('@/assets/image/classifyNursing/钟表-11.png')
+        // imgUrl: require('@/assets/image/classifyNursing/钟表-11.png')
       }
       ]
     }]
@@ -869,48 +869,48 @@ const categoryData = {
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-2.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-3.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-4.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-5.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-5.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-6.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-6.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-7.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-7.png')
       },
 
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-9.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-9.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-10.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-10.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-11.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-11.png')
       },
       {
         title: '运动鞋',
-        imgUrl: require('@/assets/image/classifyNursing/运动装备-12.png')
+        // imgUrl: require('@/assets/image/classifyNursing/运动装备-12.png')
       }
       ]
     }]
@@ -935,23 +935,23 @@ const categoryData = {
       },
       {
         title: '男鞋',
-        imgUrl: require('@/assets/image/classifyNursing/男鞋0.png')
+        // imgUrl: require('@/assets/image/classifyNursing/男鞋0.png')
       },
       {
         title: '男鞋',
-        imgUrl: require('@/assets/image/classifyNursing/男鞋1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/男鞋1.png')
       },
       {
         title: '男鞋',
-        imgUrl: require('@/assets/image/classifyNursing/男鞋2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/男鞋2.png')
       },
       {
         title: '男鞋',
-        imgUrl: require('@/assets/image/classifyNursing/男鞋3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/男鞋3.png')
       },
       {
         title: '男鞋',
-        imgUrl: require('@/assets/image/classifyNursing/男鞋4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/男鞋4.png')
       }
       ]
     }]
@@ -1047,23 +1047,23 @@ const categoryData = {
       },
       {
         title: '杯子',
-        imgUrl: require('@/assets/image/classifyNursing/水杯0.png')
+        // imgUrl: require('@/assets/image/classifyNursing/水杯0.png')
       },
       {
         title: '杯子',
-        imgUrl: require('@/assets/image/classifyNursing/水杯1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/水杯1.png')
       },
       {
         title: '杯子',
-        imgUrl: require('@/assets/image/classifyNursing/水杯2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/水杯2.png')
       },
       {
         title: '杯子',
-        imgUrl: require('@/assets/image/classifyNursing/水杯3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/水杯3.png')
       },
       {
         title: '杯子',
-        imgUrl: require('@/assets/image/classifyNursing/水杯4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/水杯4.png')
       }
       ]
     }]
@@ -1079,23 +1079,23 @@ const categoryData = {
       },
       {
         title: '箱包',
-        imgUrl: require('@/assets/image/classifyNursing/箱包0.png')
+        // imgUrl: require('@/assets/image/classifyNursing/箱包0.png')
       },
       {
         title: '箱包',
-        imgUrl: require('@/assets/image/classifyNursing/箱包1.png')
+        // imgUrl: require('@/assets/image/classifyNursing/箱包1.png')
       },
       {
         title: '箱包',
-        imgUrl: require('@/assets/image/classifyNursing/箱包2.png')
+        // imgUrl: require('@/assets/image/classifyNursing/箱包2.png')
       },
       {
         title: '箱包',
-        imgUrl: require('@/assets/image/classifyNursing/箱包3.png')
+        // imgUrl: require('@/assets/image/classifyNursing/箱包3.png')
       },
       {
         title: '箱包',
-        imgUrl: require('@/assets/image/classifyNursing/箱包4.png')
+        // imgUrl: require('@/assets/image/classifyNursing/箱包4.png')
       }
       ]
     }]
@@ -1119,7 +1119,7 @@ const recommend = {
   status: '1',
   data: [{
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png'),
     storeName: 'Nike旗舰店',
     itemTitle: '运动装备',
     itemPrice: '$248',
@@ -1127,7 +1127,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/美妆-1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/美妆-1.png'),
     storeName: '美妆旗舰店',
     itemTitle: '美妆',
     itemPrice: '$248',
@@ -1135,7 +1135,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/护理-1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/护理-1.png'),
     storeName: '护理旗舰店',
     itemTitle: '护理',
     itemPrice: '$248',
@@ -1143,7 +1143,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/商品详情1-1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/商品详情1-1.png'),
     storeName: '旗舰店',
     itemTitle: '运动装备',
     itemPrice: '$248',
@@ -1151,7 +1151,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/钟表-2.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/钟表-2.png'),
     storeName: '钟表旗舰店',
     itemTitle: '钟表',
     itemPrice: '$248',
@@ -1159,7 +1159,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/手表-3.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/手表-3.png'),
     storeName: '手表旗舰店',
     itemTitle: '手表',
     itemPrice: '$248',
@@ -1167,7 +1167,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/运动装备-10.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/运动装备-10.png'),
     storeName: '运动装备旗舰店',
     itemTitle: '运动装备',
     itemPrice: '$248',
@@ -1175,7 +1175,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/男鞋2.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/男鞋2.png'),
     storeName: '男鞋旗舰店',
     itemTitle: '男鞋',
     itemPrice: '$248',
@@ -1183,7 +1183,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/运动装备-1.png'),
     storeName: '运动装备旗舰店',
     itemTitle: '运动装备',
     itemPrice: '$248',
@@ -1191,7 +1191,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/男鞋4.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/男鞋4.png'),
     storeName: '男鞋旗舰店',
     itemTitle: '男鞋',
     itemPrice: '$248',
@@ -1199,7 +1199,7 @@ const recommend = {
   },
   {
     id: 0,
-    imgUrl: require('@/assets/image/classifyNursing/水杯1.png'),
+    // imgUrl: require('@/assets/image/classifyNursing/水杯1.png'),
     storeName: '水杯旗舰店',
     itemTitle: '水杯',
     itemPrice: '$248',
@@ -1234,103 +1234,103 @@ const remderImg = {
     }
     ],
     [{
-      imgUrl: require('@/assets/image/classifyNursing/水杯0.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/水杯0.png'),
       categoryId: 100008
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/水杯1.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/水杯1.png'),
       categoryId: 100008
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/水杯2.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/水杯2.png'),
       categoryId: 100014
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/水杯3.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/水杯3.png'),
       categoryId: 100017
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/水杯4.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/水杯4.png'),
       categoryId: 100047
     }
     ],
     [{
-      imgUrl: require('@/assets/image/classifyNursing/男鞋1.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/男鞋1.png'),
       categoryId: 100008
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/男鞋2.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/男鞋2.png'),
       categoryId: 100014
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/男鞋3.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/男鞋3.png'),
       categoryId: 100017
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/男鞋4.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/男鞋4.png'),
       categoryId: 100047
     }
     ],
     [{
-      imgUrl: require('@/assets/image/classifyNursing/美妆-1.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-1.png'),
       categoryId: 100008
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-2.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-2.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-3.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-3.png'),
       categoryId: 100035
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-4.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-4.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-5.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-5.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-6.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-6.png'),
       categoryId: 100016
     }
     ],
     [{
-      imgUrl: require('@/assets/image/classifyNursing/美妆-7.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-7.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-8.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-8.png'),
       categoryId: 100035
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-9.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-9.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-10.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-10.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/classifyNursing/美妆-11.png'),
+      // imgUrl: require('@/assets/image/classifyNursing/美妆-11.png'),
       categoryId: 100016
     }
     ],
     [{
-      imgUrl: require('@/assets/image/home/test1.png'),
+      // imgUrl: require('@/assets/image/home/test1.png'),
       categoryId: 100008
     },
     {
-      imgUrl: require('@/assets/image/home/test2.png'),
+      // imgUrl: require('@/assets/image/home/test2.png'),
       categoryId: 100016
     },
     {
-      imgUrl: require('@/assets/image/home/test3.png'),
+      // imgUrl: require('@/assets/image/home/test3.png'),
       categoryId: 100035
     },
     {
-      imgUrl: require('@/assets/image/home/test4.png'),
+      // imgUrl: require('@/assets/image/home/test4.png'),
       categoryId: 100016
     }
     ]
