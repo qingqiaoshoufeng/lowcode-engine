@@ -6,7 +6,6 @@ const state = {
 const getters = {
   userInfo: (state) => state.userInfo,
   permission: (state)=>{
-    console.log(state.userInfo);
     const initData = state.userInfo?.USERMESSAGE?.loginName === "admin" ? {
       admin:true
     } : {}

@@ -1,8 +1,8 @@
 // import { notification } from '@castle/ant-design-vue'
 // import { useRuleConfig } from '@/store/index.js'
 import store from '@/store/index.js'
-console.log(store,'store11');
 import { showToast } from 'vant';
+
 export const checkArray = (arr) => {
   let result = true;
   ['工地', '居住场所', '物资仓储场所', '厂房'].forEach((item) => {

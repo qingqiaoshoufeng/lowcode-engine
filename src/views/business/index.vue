@@ -19,7 +19,7 @@
 import { ref, computed } from "vue";
 import store from "@/store/index.js";
 import { onMounted } from "vue";
-console.log();
+
 const menuInfoList = store.getters['menuInfo/menuInfoList']
 const currentab = ref(3);
 const titleList = ["", "信息采集", "审核/审批", "统计监督"];
