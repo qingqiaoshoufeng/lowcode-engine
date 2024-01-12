@@ -2,7 +2,7 @@
   <div class="home">
     <div class="time" @click="openTimePop">
         <div class="tip">
-          <span>数据更新至：</span><span style="color: red;">{{ dataUpdatedTime }}</span>
+          <span>数据更新至：</span><span>{{ dataUpdatedTime }}</span>
         </div>
         <div>
           <span>{{ currentTime[0] }}</span>年<span>{{ currentTime[1]}}</span><span v-show="currentTime[1] !== '全年'">月</span>

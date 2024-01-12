@@ -42,6 +42,7 @@ const { detail, loadDetail } = useDetail({
   getDetailFn: () => getUserDetail().then((res) => {
     if (res) {
       form.value.userId = res.userId
+      res.userRoles = res.userRoles?.filter(val => val.roleName)
       getAvatar()
     }
     return res
@@ -94,7 +95,7 @@ onMounted(() => {
       <van-cell title="用户账号" :value="detail?.loginUserName" />
       <van-cell title="用户名称" :value="detail?.userName" />
       <van-cell title="所属部门" :value="detail?.ownerOrgName" />
-      <van-cell title="所属角色" :value="detail?.userRoles?.map(val => val.roleName)?.join(',')" />
+      <van-cell title="所属角色" value-class="role-class" :value="detail?.userRoles?.map(val => val.roleName)?.join(',')" />
       <van-cell title="手机号码" :value="detail?.mobile" />
       <van-cell title="邮箱" :value="detail?.email" />
       <van-cell title="创建日期" :value="detail?.createTime" />
@@ -116,5 +117,12 @@ onMounted(() => {
       border-radius: 50%;
     }
   }
+}
+</style>
+
+<style>
+.role-class {
+  width: 250px !important;
+  flex: none;
 }
 </style>
