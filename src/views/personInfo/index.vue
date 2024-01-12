@@ -94,7 +94,7 @@ onMounted(() => {
       <van-cell title="用户账号" :value="detail?.loginUserName" />
       <van-cell title="用户名称" :value="detail?.userName" />
       <van-cell title="所属部门" :value="detail?.ownerOrgName" />
-      <van-cell title="所属角色" :value="detail?.loginUserName" />
+      <van-cell title="所属角色" :value="detail?.userRoles?.map(val => val.roleName)?.join(',')" />
       <van-cell title="手机号码" :value="detail?.mobile" />
       <van-cell title="邮箱" :value="detail?.email" />
       <van-cell title="创建日期" :value="detail?.createTime" />

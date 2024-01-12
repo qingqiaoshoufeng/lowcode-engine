@@ -86,8 +86,6 @@ const store = useStore();
 
 const minInputTime = store.state.setting.minInputTime
 
-console.log(store,'store');
-
 const { options } = useOptions({
   otherCityOptions: [],
   otherProvinceOptions: [],

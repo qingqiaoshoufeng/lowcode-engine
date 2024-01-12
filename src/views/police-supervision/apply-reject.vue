@@ -98,9 +98,9 @@ onMounted(() => {
     <SelectSingle
       name="rejectCause"
       label="驳回原因"
+      label-width="80px"
       :rules="[{ required: true, message: `请选择驳回原因` }]"
       v-model:value="form.rejectCause" 
-      label-width="62px"
       :options="options" 
       placeholder="请选择驳回原因"
       :field-names="{label:'label',value:'value'}"
@@ -111,11 +111,10 @@ onMounted(() => {
     <van-field
       name="rejectRemark"
       label="驳回描述"
-      label-width="62px"
+      label-width="80px"
       :rules="[{ required: true, message: '请输入驳回描述' }]"
       id="fileRemark"
       v-model="form.rejectRemark"
-      v-preview-text="showPreview"
       :rows="4"
       :maxlength="500"
       show-count

@@ -2,7 +2,6 @@
 import { computed, inject, nextTick, onMounted, provide, ref, watch } from 'vue'
 import store from '@/store/index.js'
 import ProCard from "@/component/ProCard/index.vue";
-console.log(store,'store'); 
 import { cloneDeep } from 'lodash-es'
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
@@ -149,13 +148,13 @@ const validateProgress = async()=>{
       const res = await formRef.value.validate()
      
     } catch (error) {
-      console.log(error,'resres');
+      // console.log(error,'resres');
       error.map(item=>{
 
       })
     }
     const statusMap = formRef.value.getValidationStatus()
-    console.log(statusMap,'statusMap');
+    // console.log(statusMap,'statusMap');
     statusList.value = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){
@@ -164,8 +163,7 @@ const validateProgress = async()=>{
       }
       return current
     },[])
-    
-    console.log(statusList.value);
+    // console.log(statusList.value);
     // Object.keys(form.value).forEach(item=>{
     //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
     // })

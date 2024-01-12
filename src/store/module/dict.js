@@ -97,7 +97,7 @@ const getters = {
       })
       return
     }
-    console.log(state,this);
+
     filterDicts(state,dictType, transformRes, callback)
   },
 }

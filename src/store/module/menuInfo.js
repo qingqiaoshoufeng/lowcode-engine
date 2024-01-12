@@ -37,7 +37,7 @@ const getters = {
       "jingqingzuofeishenpi":warningCancelBacklogNum,
       "jingqingqueren":warningConfirmBacklogNum
     }
-    console.log(state.menuInfo.appMenuList,'state.menuInfo.appMenuList');
+    
     return state.menuInfo.appMenuList.map((item)=>{
       return {
         ...item,
