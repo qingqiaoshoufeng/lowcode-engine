@@ -34,6 +34,7 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
+  alert(url)
   const link = document.createElement('a')
   link.style.display = 'none'
   link.setAttribute('download', `${name}`)
