@@ -53,11 +53,11 @@ const downLoad = ({url,name})=>{
     url,
     fileURL,
     function(entry) {
-      console.log("Download complete: " + entry.toURL());
+      console.log("Download complete: ",entry);
       // 下载完成后的处理逻辑
     },
     function(error) {
-      console.log("Download error: " + error);
+      console.log("Download error: " ,error);
       // 下载出错后的处理逻辑
     },
     false,
