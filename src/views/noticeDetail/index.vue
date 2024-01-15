@@ -123,7 +123,7 @@ getDetail()
     border-radius: 4px;
     margin-top: 6px;
     padding: 0 13px 0 9px;
-    >div{
+    >a{
       display:flex;
       align-items: center;
       img{
