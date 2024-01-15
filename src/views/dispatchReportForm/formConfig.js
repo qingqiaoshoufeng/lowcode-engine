@@ -1391,7 +1391,7 @@ export const useFormConfig = () => {
         form.value.draftInfo.warningType.text = getTypeText(form.value.draftInfo.warningType.value, options.warningType)
       }
     }
-    form.value.draftInfo.partakeType.value = fireDispatch?.partakeType
+    form.value.draftInfo.partakeType.value = fireDispatch?.partakeType || fireDispatch?.dispatchTypeValue
     // 简要情况
     form.value.basicInformation.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
     form.value.basicInformation.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(fireDispatch?.midwayReturnDate)
