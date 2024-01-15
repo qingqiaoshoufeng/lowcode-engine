@@ -149,7 +149,7 @@ const getCurrentStatus = (item) => {
     <!-- 出动填报详情 -->
     <ProModal v-model:visible="show.dispatchVisible" :showBack="true" :showHeader="false" title="出动填报详情">
       <DispatchForm
-        :current-row="{ boFireDispatchId: currentRow.recheckAppid, boFireWarningId: currentRow.boFireWarningId }"
+        :current-row="{ ...currentRow, boFireDispatchId: currentRow.recheckAppid, boFireWarningId: currentRow.boFireWarningId }"
         :is-detail="true"
       />
     </ProModal>

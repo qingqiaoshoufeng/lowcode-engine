@@ -140,6 +140,7 @@ const validateProgress = async()=>{
       // console.log(error,'resres');
     }
     const statusMap = formRef.value.getValidationStatus()
+    // eslint-disable-next-line no-console
     console.log(statusMap,'statusMap');
     statusList.value = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
@@ -149,6 +150,7 @@ const validateProgress = async()=>{
       }
       return current
     },[])
+    // eslint-disable-next-line no-console
     console.log(statusList.value,'statusList.value');
     // Object.keys(form.value).forEach(item=>{
     //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
@@ -169,6 +171,7 @@ const validateProgress = async()=>{
 }
 
 provide('validateProgress',validateProgress)
+
 watch(
   () => form.value,
   (val1,val2) => {
@@ -181,11 +184,10 @@ watch(
   },
   { deep: true },
 )
+
 const store = useStore();
 
-const isNew = ref(true);
-
-
+const isNew = ref(!!props.showDraft);
 
 const showPreview = ref(null);
 
@@ -1225,13 +1227,11 @@ const { loading: againLoading, submit: againSubmit } = useSubmit(
 const approvalCallback = async (form) => {
   approvalForm.value = form
   if (form.approveType === '1' && props.isEdit) { // 审核通过
-    loading.value = approvalLoading.value
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
   else { // 审核不通过
-    loading.value = backLoading.value
     await backSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
@@ -1251,7 +1251,6 @@ const onSubmit = async () => {
     show.value.approvalVisible = true
   }
   else if (props.isAgain) {
-    loading.value = againLoading.value
     await againSubmit()
     props.closeModal()
   }
@@ -1267,14 +1266,19 @@ const onSubmit = async () => {
   }
 };
 
+const commonLoading = computed(() => {
+  return loading.value || againLoading.value || approvalLoading.value || backLoading.value || temporaryLoading.value
+})
+
 onMounted(() => {
   props.setHandleOk && props.setHandleOk(async (finishFn) => {
     formRef.value.submit()
     formRef.value.finishFn = finishFn
-  }, loading)
+  }, commonLoading)
 })
 
 const onFailed = (errorInfo) => {
+  // eslint-disable-next-line no-console
   console.log(errorInfo)
   if (errorInfo?.errors?.length > 0) {
     showToast('信息填写不完整，请检查填写内容！')
@@ -1443,15 +1447,15 @@ const onSideBarChange = (e, k) => {
 
       <div class="form-footer" v-if="!showPreview">
         <template v-if="isApproval && isEdit">
-          <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
+          <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
             审核
           </van-button>
         </template>
         <template v-else>
-          <van-button round block type="default" size="small" :loading="loading || temporaryLoading" @click="handleTemporary">
+          <van-button round block type="default" size="small" :loading="commonLoading" @click="handleTemporary">
             暂存
           </van-button>
-          <van-button round block type="primary" size="small" :loading="loading || temporaryLoading" @click="handleSubmit">
+          <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
             确定
           </van-button>
         </template>
