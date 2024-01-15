@@ -199,7 +199,7 @@ const importantEdit = ref(true) // 重要信息更正
 
 const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
-const isNew = ref(true)
+const isNew = ref(!!props.showDraft)
 
 const fireDetail = ref(null)
 
@@ -981,25 +981,24 @@ const { loading: backLoading, submit: backSubmit } = useSubmit(
 const approvalCallback = async (form) => {
   approvalForm.value = form
   if (form.approveType === '1' && props.isEdit) { // 审核通过
-    loading.value = approvalLoading.value
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
   else { // 审核不通过
-    loading.value = backLoading.value
     await backSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
   }
 }
 const setTemporary = async()=>{
-  temporaryLoading.value = true
   await temporarySubmit()
   showToast('暂存成功')
-  temporaryLoading.value = false
 }
 
+const commonLoading = computed(() => {
+  return loading.value || againLoading.value || backLoading.value || approvalLoading.value || temporaryLoading.value
+})
 
 onMounted(() => {
   showLoadingToast()
@@ -1009,7 +1008,6 @@ onMounted(() => {
         show.value.approvalVisible = true
       }
       else if (props.isAgain) {
-        loading.value = againLoading.value
         await againSubmit()
         await finishFn()
       }
@@ -1031,7 +1029,7 @@ onMounted(() => {
         showToast('信息填写不完整，请检查填写内容！')
         scrollFormFailed()
       })
-  }, loading)
+  }, commonLoading)
   // 暂存
   // props.setHandleExtend && props.setHandleExtend(async (finishFn) => {
   //   await temporarySubmit()
@@ -1169,10 +1167,10 @@ const onSideBarChange = (e, k) => {
                 </ProCard>
               </van-form>
               <div class="form-footer" v-if="!showPreview">
-                <van-button class="temporary" v-if="isShowTemporary" round block type="primary" @click.stop="setTemporary">
+                <van-button class="temporary" v-if="isShowTemporary" :loading="commonLoading" round block type="primary" @click.stop="setTemporary">
                   暂存
                 </van-button>
-                <van-button v-if="isReview" class="temporary" round block type="primary" @click.stop="showReviewDialog">
+                <van-button v-if="isReview" class="temporary" :loading="commonLoading" round block type="primary" @click.stop="showReviewDialog">
                   审核
                 </van-button>
               </div>

@@ -578,7 +578,7 @@ const initDetail = () => {
           })
           : []
         form.value.warningInfo = res.warningInfo
-        form.value.warningStatus = res.warningStatus
+        form.value.warningStatus = props.currentRow?.warningStatus || res.warningStatus
         form.value.transferList = res.transferList
         form.value.dispatchGroup?.forEach((item) => {
           if (item.organizationid === form.value.dutyGroup?.[0]?.organizationid) {
