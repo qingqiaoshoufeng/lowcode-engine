@@ -46,11 +46,11 @@ const downLoad = ({url,name})=>{
   // iframe.src = url
   // document.body.appendChild(iframe)
   var fileTransfer = new FileTransfer();
-  var uri = encodeURI(url);
+  var url = url;
   var fileURL = cordova.file.dataDirectory + name;
 
   fileTransfer.download(
-    uri,
+    url,
     fileURL,
     function(entry) {
       console.log("Download complete: " + entry.toURL());
