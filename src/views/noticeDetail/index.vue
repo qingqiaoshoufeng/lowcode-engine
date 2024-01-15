@@ -12,13 +12,13 @@
       <div v-html="form.noticeBody"></div>
       <div class="bottom" >
         <div v-for="item in form?.attach || []" :key="item.url">
-          <!-- <a :href="item.url" :download="item.name"> -->
+          <a :href="item.url" :download="item.name">
             <div class="left">
               <img src="~@/assets/images/filetip.png" alt="">
               <span>{{ item.name }}</span>
             </div>
             <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
-          <!-- </a> -->
+          </a>
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@ const getFIleList = (res)=>{
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/attachments/${item.attachmentId}`,
+          url: `${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
     })
