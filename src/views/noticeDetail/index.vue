@@ -36,14 +36,15 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
+  window.open(url, "_system");
   // var url = 'https://example.com'; // 替换为您要打开的网址
-  var target = '_blank'; // 打开方式，'_blank' 为新窗口打开
-  var options = {
-    location: 'yes', // 是否显示地址栏
-    toolbar: 'yes' // 是否显示工具栏
-  };
+  // var target = '_blank'; // 打开方式，'_blank' 为新窗口打开
+  // var options = {
+  //   location: 'yes', // 是否显示地址栏
+  //   toolbar: 'yes' // 是否显示工具栏
+  // };
 
-  var browser = cordova.InAppBrowser.open(url, target, options);
+  // var browser = cordova.InAppBrowser.open(url, target, options);
   // const link = document.createElement('a')
   // link.style.display = 'none'
   // link.setAttribute('download', `${name}`)
