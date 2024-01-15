@@ -12,13 +12,13 @@
       <div v-html="form.noticeBody"></div>
       <div class="bottom" >
         <div v-for="item in form?.attach || []" :key="item.url">
-          <a :href="item.url" :download="item.name">
+          <!-- <a :href="item.url" :download="item.name"> -->
             <div class="left">
               <img src="~@/assets/images/filetip.png" alt="">
               <span>{{ item.name }}</span>
             </div>
             <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
-          </a>
+          <!-- </a> -->
         </div>
       </div>
     </div>
@@ -36,11 +36,15 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
-  const link = document.createElement('a')
-  link.style.display = 'none'
-  link.setAttribute('download', `${name}`)
-  link.setAttribute('href', `${url}`)
-  link.click()
+  // const link = document.createElement('a')
+  // link.style.display = 'none'
+  // link.setAttribute('download', `${name}`)
+  // link.setAttribute('href', `${url}`)
+  // link.click()
+  const iframe = document.createElement("iframe")
+  iframe.style.display = "none"
+  iframe.src = url
+  document.body.appendChild(iframe)
 }
 
 const getFIleList = (res)=>{
