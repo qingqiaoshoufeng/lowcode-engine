@@ -36,33 +36,33 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
-  // const link = document.createElement('a')
-  // link.style.display = 'none'
-  // link.setAttribute('download', `${name}`)
-  // link.setAttribute('href', `${url}`)
-  // link.click()
+  const link = document.createElement('a')
+  link.style.display = 'none'
+  link.setAttribute('download', `${name}`)
+  link.setAttribute('href', `${url}`)
+  link.click()
   // const iframe = document.createElement("iframe")
   // iframe.style.display = "none"
   // iframe.src = url
   // document.body.appendChild(iframe)
-  var fileTransfer = new FileTransfer();
-  var url = url;
-  var fileURL = cordova.file.dataDirectory + name;
+  // var fileTransfer = new FileTransfer();
+  // var url = url;
+  // var fileURL = cordova.file.dataDirectory + name;
 
-  fileTransfer.download(
-    url,
-    fileURL,
-    function(entry) {
-      console.log("Download complete: ",entry);
-      // 下载完成后的处理逻辑
-    },
-    function(error) {
-      console.log("Download error: " ,error);
-      // 下载出错后的处理逻辑
-    },
-    false,
-    {}
-  );
+  // fileTransfer.download(
+  //   url,
+  //   fileURL,
+  //   function(entry) {
+  //     console.log("Download complete: ",entry);
+  //     // 下载完成后的处理逻辑
+  //   },
+  //   function(error) {
+  //     console.log("Download error: " ,error);
+  //     // 下载出错后的处理逻辑
+  //   },
+  //   false,
+  //   {}
+  // );
 }
 
 const getFIleList = (res)=>{
