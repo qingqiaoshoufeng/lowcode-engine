@@ -36,7 +36,7 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
-  window.open(url, "_system");
+  // window.open(url, "_system");
   // var url = 'https://example.com'; // 替换为您要打开的网址
   // var target = '_blank'; // 打开方式，'_blank' 为新窗口打开
   // var options = {
@@ -55,7 +55,7 @@ const downLoad = ({url,name})=>{
   // iframe.src = url
   // document.body.appendChild(iframe)
   let fileTransfer = new FileTransfer();
-  let url = url;
+  // let url = url;
   let fileURL = cordova.file.dataDirectory + name;
 
   fileTransfer.download(
