@@ -12,11 +12,13 @@
       <div v-html="form.noticeBody"></div>
       <div class="bottom" >
         <div v-for="item in form?.attach || []" :key="item.url">
-          <div class="left">
-            <img src="~@/assets/images/filetip.png" alt="">
-            <span>{{ item.name }}</span>
-          </div>
-          <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
+          <a :href="item.url">
+            <div class="left">
+              <img src="~@/assets/images/filetip.png" alt="">
+              <span>{{ item.name }}</span>
+            </div>
+            <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
+          </a>
         </div>
       </div>
     </div>
@@ -34,7 +36,6 @@ const route = useRoute()
 defineProps()
 
 const downLoad = ({url,name})=>{
-  alert(url)
   const link = document.createElement('a')
   link.style.display = 'none'
   link.setAttribute('download', `${name}`)
