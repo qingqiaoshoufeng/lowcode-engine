@@ -54,25 +54,26 @@ const downLoad = ({url,name})=>{
   // iframe.style.display = "none"
   // iframe.src = url
   // document.body.appendChild(iframe)
-  let fileTransfer = new FileTransfer();
-  // let url = url;
-  let fileURL = cordova.file.dataDirectory + name;
+  // let fileTransfer = new FileTransfer();
+  // // let url = url;
+  // let fileURL = cordova.file.dataDirectory + name;
 
-  fileTransfer.download(
-    url,
-    fileURL,
-    function(entry) {
-      console.log("Download complete: ",entry);
-      entry.toURL()
-      // 下载完成后的处理逻辑
-    },
-    function(error) {
-      console.log("Download error: " ,error);
-      // 下载出错后的处理逻辑
-    },
-    false,
-    {}
-  );
+  // fileTransfer.download(
+  //   url,
+  //   fileURL,
+  //   function(entry) {
+  //     console.log("Download complete: ",entry);
+  //     entry.toURL()
+  //     // 下载完成后的处理逻辑
+  //   },
+  //   function(error) {
+  //     console.log("Download error: " ,error);
+  //     // 下载出错后的处理逻辑
+  //   },
+  //   false,
+  //   {}
+  // );
+  cordova.InAppBrowser.open(encodeURI(url), "_system");
 }
 
 const getFIleList = (res)=>{
