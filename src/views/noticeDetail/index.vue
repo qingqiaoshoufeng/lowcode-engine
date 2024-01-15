@@ -41,10 +41,28 @@ const downLoad = ({url,name})=>{
   // link.setAttribute('download', `${name}`)
   // link.setAttribute('href', `${url}`)
   // link.click()
-  const iframe = document.createElement("iframe")
-  iframe.style.display = "none"
-  iframe.src = url
-  document.body.appendChild(iframe)
+  // const iframe = document.createElement("iframe")
+  // iframe.style.display = "none"
+  // iframe.src = url
+  // document.body.appendChild(iframe)
+  var fileTransfer = new FileTransfer();
+  var uri = encodeURI(url);
+  var fileURL = cordova.file.dataDirectory + name;
+
+  fileTransfer.download(
+    uri,
+    fileURL,
+    function(entry) {
+      console.log("Download complete: " + entry.toURL());
+      // 下载完成后的处理逻辑
+    },
+    function(error) {
+      console.log("Download error: " + error);
+      // 下载出错后的处理逻辑
+    },
+    false,
+    {}
+  );
 }
 
 const getFIleList = (res)=>{
