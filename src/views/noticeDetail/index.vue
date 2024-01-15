@@ -12,7 +12,7 @@
       <div v-html="form.noticeBody"></div>
       <div class="bottom" >
         <div v-for="item in form?.attach || []" :key="item.url">
-          <a :href="item.url">
+          <a :href="item.url" :download="item.name">
             <div class="left">
               <img src="~@/assets/images/filetip.png" alt="">
               <span>{{ item.name }}</span>
