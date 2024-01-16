@@ -819,6 +819,7 @@ const getSubmitParams = () => {
   }
   if (unDispatch.value) {
     params.isNoDispatchFlag = '1'
+    params.isNew = true
   }
   if (props.isApproval) {
     params.isAudit = '1'
