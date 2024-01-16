@@ -21,7 +21,7 @@
           <DisplayCard :info="dispatchCardInfo" color="red"/>
         </div>
       </div>
-      <NoticeList class="notice_list" :list="noticeList" @click="goNotice"/>
+      <NoticeList v-if="noticeList.length" class="notice_list" :list="noticeList" @click="goNotice"/>
       <template v-if="!isStanding">
         <StatisticsInfo :formInfo="formInfo" :generalInfo="generalInfo" class="pt10 statistics_info" ref="statisticsInfoRef" :list="statisticsList" title="整体概况" :withTab="!isStanding" />
         <Chart class="mt10" title="百万人口火灾" type="FireInfo" :chartData="FireInfoList"/>
