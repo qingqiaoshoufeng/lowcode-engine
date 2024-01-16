@@ -4,7 +4,7 @@ import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 import { downloadAttachmentFile, getAttachmentFile,uploadFile } from '@/apis/index.js'
-
+import {downLoad} from '@/utils/download.js'
 const form = inject('form')
 
 const isDetail = inject('isDetail')
@@ -73,7 +73,11 @@ const OnAfterRead = async(file) => {
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
 }
-
+const downLoadFile = (val)=>{
+  if(isDetail){
+    downLoad(val)
+  }
+}
 onMounted(() => {
   if (isDetail || isEdit || (relevanceDraft && relevanceDraft.boFireInfoId) || currentRow?.boFireInfoId) {
     getAttachmentFile({
@@ -101,9 +105,18 @@ onMounted(() => {
       <div :span="24">
         <van-cell title="相关附件上传" class="item-cell">
           <van-uploader
+            :readonly="isDetail"
+            :deletable="!isDetail"
+            :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
+            :before-delete="onDelete"
+            @click-preview="downLoadFile"
             name="basicInfo.attach.value"
             :rules="form.otherAttach.attach.rules"
             :disabled="isDetail"
+            preview-full-image
+            :max-count="9"
+            accept="*"
+            :max-size="10 * 1000 * 1000000"
             id="attach"
             v-model="form.otherAttach.attach.value" 
             :after-read="OnAfterRead"
@@ -128,6 +141,7 @@ onMounted(() => {
           placeholder="请输入补充说明"
           autosize
           type="textarea"
+          @click-preview="downLoadFile"
         >
           <template v-slot:label="">
             <FieldAnnotation

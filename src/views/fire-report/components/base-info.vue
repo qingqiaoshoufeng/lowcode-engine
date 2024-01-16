@@ -17,7 +17,7 @@ import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
 import { getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { nonnegativeNumberReg, validateTelePhone } from '@/utils/validate.js'
-
+import {downLoad} from '@/utils/download.js'
  
 
 // import { 
@@ -144,6 +144,12 @@ const OnAfterRead = async(file) => {
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
+}
+
+const downLoadFile = (val)=>{
+  if(isDetail){
+    downLoad(val)
+  }
 }
 
 onMounted(() => {
@@ -1871,6 +1877,7 @@ const onFireLevel = () => {
             :disabled="isDetail"
             :after-read="OnAfterRead"
             @delete="onDelete"
+            @click-preview="downLoadFile"
           />
           <template v-slot:title="">
             <FieldAnnotation

@@ -116,7 +116,7 @@ if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
     overflow: hidden;
     background-color: #F6F7F8;
     height: 100%;
-    padding-top: 44px;
+    padding-top: 24px;
     padding-bottom: 56px;
     overflow-y: scroll;
     .time{

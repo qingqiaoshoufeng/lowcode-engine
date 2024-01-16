@@ -2,6 +2,7 @@
 import { inject, onMounted } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
+import {downLoad} from '@/utils/download.js'
 import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
@@ -76,6 +77,12 @@ const onDelete = (file) => {
     });
   })
 }
+
+const downLoadFile = (val)=>{
+  if(isDetail){
+    downLoad(val)
+  }
+}
 </script>
 
 <template>
@@ -95,6 +102,7 @@ const onDelete = (file) => {
             :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
             :after-read="onAfterRead"
             :before-delete="onDelete"
+            @click-preview="downLoadFile"
           >
             <van-button v-if="form.otherAttach.attach?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
               上传文件

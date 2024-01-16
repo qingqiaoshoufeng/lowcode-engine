@@ -150,11 +150,6 @@ const validateProgress = async()=>{
       }
       return current
     },[])
-    // eslint-disable-next-line no-console
-    console.log(statusList.value,'statusList.value');
-    // Object.keys(form.value).forEach(item=>{
-    //   form.value[item].validateProgress = statusList.includes(item) ? 0 : 100
-    // })
     setTimeout(()=>{
       formRef.value.resetValidation()
       hidevalidate.value = false
