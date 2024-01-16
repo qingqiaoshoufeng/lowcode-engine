@@ -27,6 +27,7 @@
 
 <script setup>
 import { getNoticeDetail,updateNotice,getAttachmentFile} from '@/apis/index.js'
+import {downLoad} from '@/utils/download.js'
 import {ref} from 'vue'
 import dayjs from 'dayjs';
 import {useRoute} from 'vue-router'
@@ -35,46 +36,6 @@ const form = ref({})
 const route = useRoute()
 defineProps()
 
-const downLoad = ({url,name})=>{
-  // window.open(url, "_system");
-  // var url = 'https://example.com'; // 替换为您要打开的网址
-  // var target = '_blank'; // 打开方式，'_blank' 为新窗口打开
-  // var options = {
-  //   location: 'yes', // 是否显示地址栏
-  //   toolbar: 'yes' // 是否显示工具栏
-  // };
-
-  // var browser = cordova.InAppBrowser.open(url, target, options);
-  // const link = document.createElement('a')
-  // link.style.display = 'none'
-  // link.setAttribute('download', `${name}`)
-  // link.setAttribute('href', `${url}`)
-  // link.click()
-  // const iframe = document.createElement("iframe")
-  // iframe.style.display = "none"
-  // iframe.src = url
-  // document.body.appendChild(iframe)
-  // let fileTransfer = new FileTransfer();
-  // // let url = url;
-  // let fileURL = cordova.file.dataDirectory + name;
-
-  // fileTransfer.download(
-  //   url,
-  //   fileURL,
-  //   function(entry) {
-  //     console.log("Download complete: ",entry);
-  //     entry.toURL()
-  //     // 下载完成后的处理逻辑
-  //   },
-  //   function(error) {
-  //     console.log("Download error: " ,error);
-  //     // 下载出错后的处理逻辑
-  //   },
-  //   false,
-  //   {}
-  // );
-  cordova.InAppBrowser.open(encodeURI(url), "_system");
-}
 
 const getFIleList = (res)=>{
   if (res.boUserNoticeId) {
@@ -156,7 +117,7 @@ getDetail()
     border-radius: 4px;
     margin-top: 6px;
     padding: 0 13px 0 9px;
-    >a{
+    >div{
       display:flex;
       align-items: center;
       img{
