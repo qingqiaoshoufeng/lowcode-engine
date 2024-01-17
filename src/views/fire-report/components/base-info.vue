@@ -591,30 +591,33 @@ const onFireLevel = () => {
       </template>
     </SelectSingle>
     </div>
-    <div class="fireType">
+    <div class="fireLevel">
       <SelectSingle
-        v-model:value="form.basicInfo.fireType.value"
-        name="basicInfo.fireType.value"
-        label="火灾类型："
-        :options="fireTypeOptions"
-        :rules="form.basicInfo.fireType.rules"
-        :required="true"
-        :disabled="fireTypeDisabled"
-        placeholder="请选择火灾类型"
-        title="请选择火灾类型"
+        v-model:value="form.basicInfo.fireLevel.value"
+        name="basicInfo.fireLevel.value"
         :showPreview="showPreview"
-        @change="fireTypeChange"
+        :is-link="false"
+        label="火灾等级："
+        :field-names="{ value: 'boDictId', label: 'dictName' }"
+        :options="options.fireLevel"
+        :rules="form.basicInfo.fireLevel.rules"
+        placeholder="请选择火灾等级"
+        title="请选择火灾等级"
+        disabled
+        right-icon="question-o"
+        class="fire-level-item"
+        @click-right-icon.stop="onFireLevel"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="火灾类型："
-            remark-field="fireType"
+            label="火灾等级："
+            remark-field="fireLevel"
             field-module="basicInfo"
-            :exist-data="fieldExist?.fireType"
+            :exist-data="fieldExist?.fireLevel"
             @refresh-callback="refreshField"
           />
-      </template>
-    </SelectSingle>
+        </template>
+      </SelectSingle>
     </div>
       <div class="fireDate">
         <SelectDateTime
@@ -825,29 +828,26 @@ const onFireLevel = () => {
           </template>
         </van-field >
       </div>
-      <div class="fireLevel">
+      <div class="fireType">
         <SelectSingle
-          v-model:value="form.basicInfo.fireLevel.value"
-          name="basicInfo.fireLevel.value"
+          v-model:value="form.basicInfo.fireType.value"
+          name="basicInfo.fireType.value"
+          label="火灾类型："
+          :options="fireTypeOptions"
+          :rules="form.basicInfo.fireType.rules"
+          :required="true"
+          :disabled="fireTypeDisabled"
+          placeholder="请选择火灾类型"
+          title="请选择火灾类型"
           :showPreview="showPreview"
-          :is-link="false"
-          label="火灾等级："
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          :options="options.fireLevel"
-          :rules="form.basicInfo.fireLevel.rules"
-          placeholder="请选择火灾等级"
-          title="请选择火灾等级"
-          disabled
-          right-icon="question-o"
-          class="fire-level-item"
-          @click-right-icon.stop="onFireLevel"
+          @change="fireTypeChange"
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="火灾等级："
-              remark-field="fireLevel"
+              label="火灾类型："
+              remark-field="fireType"
               field-module="basicInfo"
-              :exist-data="fieldExist?.fireLevel"
+              :exist-data="fieldExist?.fireType"
               @refresh-callback="refreshField"
             />
           </template>

@@ -199,7 +199,7 @@ const importantEdit = ref(true) // 重要信息更正
 
 const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
-const isNew = ref(!!props.showDraft)
+const isNew = ref(props.isUnDispatch || !!props.showDraft)
 
 const fireDetail = ref(null)
 
@@ -819,7 +819,6 @@ const getSubmitParams = () => {
   }
   if (unDispatch.value) {
     params.isNoDispatchFlag = '1'
-    params.isNew = true
   }
   if (props.isApproval) {
     params.isAudit = '1'
