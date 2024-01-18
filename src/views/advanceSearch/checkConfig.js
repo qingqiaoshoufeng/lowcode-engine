@@ -1594,7 +1594,11 @@ export const getSearchParams = (form) => {
         form.fieldValueThree = form.valueTwo
         form.fieldKeyThree = 'statisticRangeHoliday'
       }
-      if (form.valueTwo?.length > 0) {
+      else if (form.edit === '1' && (!form.valueTwo || form.valueTwo?.length <= 0)) {
+        form.fieldValueThree = ''
+        form.fieldKeyThree = ''
+      }
+      else if (form.valueTwo?.length > 0) {
         if (form.edit === '2') {
           form.fieldKeyThree = 'statisticRangeSeasonMin'
           form.fieldKeyFour = 'statisticRangeSeasonMax'
@@ -1649,7 +1653,6 @@ export const validateForm = (arr, item) => {
   return true
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const validateList = (arr, fireType) => {
   if (arr.length === 0) {
     showToast('请添加条件！')

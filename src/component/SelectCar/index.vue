@@ -45,7 +45,7 @@ const defaultFilterValue = {
   overQueryFlag: '1',
   status: '1',
   isSelfOrg: ['1'],
-  queryLoanFlag: '1',
+  queryLoanFlag: '1', // 借调车辆
 };
 
 watch(() => props.value, (val) => {

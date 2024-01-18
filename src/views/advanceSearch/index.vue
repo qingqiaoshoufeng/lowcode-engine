@@ -153,15 +153,6 @@ const getListParams = () => {
   return params
 }
 
-const getFormParams = () => {
-  return {
-    dataTimeSource: dataTimeSource.value,
-    staticFlag: searchDimension.value,
-    fireType: search.value,
-    seniorQueryDetailReq: getListParams(),
-  }
-}
-
 const checkConfigType = () => {
   let flag = true
   list.value.forEach((i) => {
@@ -170,6 +161,16 @@ const checkConfigType = () => {
     }
   })
   return activeKey.value === '4' && flag ? '1' : '0'
+}
+
+const getFormParams = () => {
+  return {
+    dataTimeSource: dataTimeSource.value,
+    staticFlag: searchDimension.value,
+    fireType: search.value,
+    seniorQueryDetailReq: getListParams(),
+    noFireFlag: checkConfigType(),
+  }
 }
 
 provide('getSearchParams', getFormParams)
