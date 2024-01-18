@@ -70,6 +70,7 @@ onMounted(async () => {
   options.value.warningType = res.JQ_TYPE
   // 火灾信息
   options.value.area = res.HZ_INFO_QY // 区域
+  options.value.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救')[0].children?.slice(0, 6) // 火灾类型
   options.value.firePlace = res.HZ_QHCS // 起火场所类型
   options.value.fireCause = res.HZ_QHYY // 起火原因
   options.value.fireLevel = res.HZ_INFO_HZDJ // 火灾等级

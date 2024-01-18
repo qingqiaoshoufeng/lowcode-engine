@@ -924,6 +924,12 @@ export const checkBoxs = [
     dict: 'area',
   },
   {
+    fieldKeyOne: 'fireType',
+    label: '火灾类型',
+    type: '7',
+    dict: 'fireType',
+  },
+  {
     fieldKeyOne: 'firePlace',
     label: '起火场所',
     type: '7',

@@ -9,6 +9,65 @@ import SelectRangeTime from "@/component/SelectRangeTime/index";
 import SelectCar from '@/component/SelectCar/index.vue';
 import SelectPerson from '@/component/SelectPerson/index.vue';
 import AreaCascader from "@/component/AreaCascader/index";
+import store from '@/store/index.js'
+import dayjs from 'dayjs'
+// import { message, notification } from '@castle/ant-design-vue'
+const getSystemDictSync = store.getters['dict/getSystemDictSync']
+const form = inject('form');
+
+let options = inject('options');
+
+
+const change = (value,selectedOptions ,val3)=>{
+  // console.log(val1,val2,val3,'val1,val2');
+  if(val3 !== 'fireType'){
+    return
+  }
+  debugger;
+  if (selectedOptions) {
+    const { fireType } = options.value
+    const node = fireType[0]
+    form.value.fireBase.fireType.text = [node.dictName, selectedOptions.dictName]
+    form.value.fireBase.fireType.completeValue = [node.boDictId, selectedOptions.boDictId]
+  }
+  else {
+    form.value.fireBase.fireType.text = []
+    form.value.fireBase.fireType.completeValue = []
+  }
+  form.value.fireBase.fireSite.value = []
+  // 起火场所根据火灾类型改变
+  form.value.fireBase.firePlace.value = undefined
+  let key = ''
+  const keyMap = selectedOptions.map((item) => {
+    return item[0].dictName
+  })
+  if (keyMap.includes('建构筑物火灾')) {
+    key += 'HZ_QHCS_JGZW,'
+  }
+  if (keyMap.includes('交通工具火灾')) {
+    key += 'HZ_QHCS_JGZW,HZ_QHCS_LTCS,HZ_QHCS_HWZB,'
+  }
+  if (keyMap.includes('室外设施设备火灾')) {
+    key += 'HZ_QHCS_SWSB,'
+  }
+  if (keyMap.includes('露天场所火灾')) {
+    key += 'HZ_QHCS_LTCS,'
+  }
+  if (keyMap.includes('户外植被火灾')) {
+    key += 'HZ_QHCS_HWZB,'
+  }
+  if (keyMap.includes('垃圾及废弃物火灾')) {
+    key += 'HZ_QHCS_LJFQ,'
+  }
+  key = [...new Set(key.split(','))].join(',')
+  getSystemDictSync(key.split(','), null, (res) => {
+    options.value.firePlace = []
+    key.split(',').forEach((item) => {
+      options.value.firePlace.push(...res[item])
+    })
+  })
+}
+
 
 const props = defineProps({
   fieldObj: {
@@ -18,8 +77,6 @@ const props = defineProps({
 });
 
 const searchDimension = inject('searchDimension')
-
-const options = inject('options');
 </script>
 
 <template>
@@ -127,6 +184,7 @@ const options = inject('options');
         :select-leaf="fieldObj.selectLeaf"
         :placeholder="`请选择${fieldObj.label}`"
         :title="`请选择${fieldObj.label}`"
+        @change="(val,val2)=>change(val,val2,fieldObj.options)"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'select-range'">

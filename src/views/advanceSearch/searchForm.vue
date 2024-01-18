@@ -11,6 +11,8 @@ const filterFormState = inject('filterFormState')
 
 const form = inject('form')
 
+const activeKey = inject('activeKey')
+
 const addFormRef = inject('addFormRef')
 
 const checked = ref(null)
@@ -44,7 +46,14 @@ const configList = ref([])
 const handleSearchForm = () => {
   getConfigList(filterFormState.value).then((res) => {
     configList.value = res
-    onRadio(res[0]?.mySearchConfigList[0])
+    if (activeKey.value === '4') {
+      const info = configList.value[1]?.mySearchConfigList.find(item => item.configName === '起火时间')
+      onRadio(info)
+    }
+    else {
+      onRadio(res[0]?.mySearchConfigList[0])
+    }
+    // onRadio(res[0]?.mySearchConfigList[0])
   })
 }
 
