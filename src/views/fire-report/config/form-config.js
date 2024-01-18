@@ -923,7 +923,7 @@ export const useFormConfig = (validateProgress) => {
     // form.value.basicInfo.area.text = []
     // form.value.basicInfo.fireOrgname.value = ''
     // form.value.basicInfo.fireTel.value = ''
-    // form.value.basicInfo.socialCreditCode.value = ''
+    form.value.basicInfo.socialCreditCode.value = ''
     // form.value.basicInfo.fireType.value = undefined
     // form.value.basicInfo.fireType.text = []
     // form.value.basicInfo.fireCause.value = undefined

@@ -1,18 +1,18 @@
 <script setup>
-import { inject, onMounted, watch, computed } from "vue";
+import { inject, watch, computed } from "vue";
 import dayjs from "dayjs";
 import ProCard from "@/component/ProCard/index.vue";
-import { cloneDeep } from 'lodash-es'
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { cloneDeep } from 'lodash-es';
+import { showToast } from "vant";
 import { validIdCode } from "@/utils/validate.js";
 import { getInfoByCard } from "@/utils/tools.js";
-import { getPersonDetail } from '@/apis/index.js'
+import { getPersonDetail } from '@/apis/index.js';
 
 const form = inject("form");
 
-const fieldExist = inject('fieldExist')
+const fieldExist = inject("fieldExist");
 
-const refreshField = inject('refreshField')
+const refreshField = inject("refreshField");
 
 const isDetail = inject("isDetail");
 
@@ -56,7 +56,6 @@ const nameOptions = computed(() => {
   }
   return []
 })
-
 
 const handleAddInjury = () => {
   form.value.casualtyWar.injuredList.push({
@@ -110,19 +109,12 @@ const handleAddDead = () => {
   });
 };
 
-const disabledDate = (current) => {
-  return current && current > Date.now();
-};
-
 const handleDeleteInjury = (index) => {
-  form.value.casualtyWar.injuredList =
-    form.value.casualtyWar.injuredList.filter((item, i) => i !== index);
+  form.value.casualtyWar.injuredList = form.value.casualtyWar.injuredList.filter((item, i) => i !== index);
 };
 
 const handleDeleteDead = (index) => {
-  form.value.casualtyWar.deadList = form.value.casualtyWar.deadList.filter(
-    (item, i) => i !== index
-  );
+  form.value.casualtyWar.deadList = form.value.casualtyWar.deadList.filter((item, i) => i !== index);
 };
 
 const validateCard = (value, rule) => {
@@ -139,73 +131,59 @@ const validateCard = (value, rule) => {
   }
 };
 
-const idNumberChange = (index)=>{
+const idNumberChange = (index) => {
   diyValidateMap.value.defaultKey.push(`casualtyWar.injuredList.${index}.idNumber`)
 }
 
-watch(
-  () => form.value.casualtyWar.injuredList,
-  () => {
-    const { injuredList } = form.value.casualtyWar;
-    injuredList.forEach((item) => {
-      if (item.idNumber && validIdCode(item.idNumber)) {
-        const { age, sex } = getInfoByCard(item.idNumber);
-        item.gender = sex;
-        item.age = age;
-      } else {
-        item.gender = "";
-        item.age = "";
-      }
-    });
-  },
-  { deep: true }
-);
-
-watch(
-  () => form.value.casualtyWar.deadList,
-  () => {
-    const { deadList } = form.value.casualtyWar;
-    deadList.forEach((item) => {
-      if (item.idNumber && validIdCode(item.idNumber)) {
-        const { age, sex } = getInfoByCard(item.idNumber);
-        item.gender = sex;
-        item.age = age;
-      } else {
-        item.gender = "";
-        item.age = "";
-      }
-    });
-  },
-  { deep: true }
-);
-
-watch(
-  () => form.value.casualtyWar.isInjured.value,
-  () => {
-    if (
-      form.value.casualtyWar.isInjured.value === "1" &&
-      form.value.casualtyWar.injuredList.length <= 0
-    ) {
-      handleAddInjury();
-    } else if (form.value.casualtyWar.isInjured.value === "2") {
-      form.value.casualtyWar.injuredList = [];
+watch(() => form.value.casualtyWar.injuredList, () => {
+  const { injuredList } = form.value.casualtyWar;
+  injuredList.forEach((item) => {
+    if (item.idNumber && validIdCode(item.idNumber)) {
+      const { age, sex } = getInfoByCard(item.idNumber);
+      item.gender = sex;
+      item.age = age;
+    } else {
+      item.gender = "";
+      item.age = "";
     }
-  }
-);
+  });
+}, { deep: true });
 
-watch(
-  () => form.value.casualtyWar.isDead.value,
-  () => {
-    if (
-      form.value.casualtyWar.isDead.value === "1" &&
-      form.value.casualtyWar.deadList.length <= 0
-    ) {
-      handleAddDead();
-    } else if (form.value.casualtyWar.isDead.value === "2") {
-      form.value.casualtyWar.deadList = [];
+watch(() => form.value.casualtyWar.deadList, () => {
+  const { deadList } = form.value.casualtyWar;
+  deadList.forEach((item) => {
+    if (item.idNumber && validIdCode(item.idNumber)) {
+      const { age, sex } = getInfoByCard(item.idNumber);
+      item.gender = sex;
+      item.age = age;
+    } else {
+      item.gender = "";
+      item.age = "";
     }
+  });
+}, { deep: true });
+
+watch(() => form.value.casualtyWar.isInjured.value, () => {
+  if (
+    form.value.casualtyWar.isInjured.value === "1" &&
+    form.value.casualtyWar.injuredList.length <= 0
+  ) {
+    handleAddInjury();
+  } else if (form.value.casualtyWar.isInjured.value === "2") {
+    form.value.casualtyWar.injuredList = [];
   }
-);
+});
+
+watch(() => form.value.casualtyWar.isDead.value, () => {
+  if (
+    form.value.casualtyWar.isDead.value === "1" &&
+    form.value.casualtyWar.deadList.length <= 0
+  ) {
+    handleAddDead();
+  } else if (form.value.casualtyWar.isDead.value === "2") {
+    form.value.casualtyWar.deadList = [];
+  }
+});
 
 const onChangeName = (item, index) => {
   if (form.value.casualtyWar.injuredList || form.value.casualtyWar.deadList) {
@@ -239,38 +217,37 @@ const onChangeName = (item, index) => {
   <ProCard title="参战伤亡" id="casualtyWar" :showOpenClose="!showPreview">
     <van-cell-group>
       <div class="injured-message">
-        共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡
-        {{ form.casualtyWar.deadList?.length }} 人
+        共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡 {{ form.casualtyWar.deadList?.length }} 人
       </div>
       <van-field
-          name="casualtyWar.isInjured.value"
-          label="是否有人员受伤："
-          label-width="130px"
-          :rules="form.casualtyWar.isInjured.rules"
-          required
-          class="field-radio"
-        >
-          <template #input>
-            <van-radio-group
-              v-model="form.casualtyWar.isInjured.value"
-              v-preview-text="showPreview"
-              icon-size="16px"
-              direction="horizontal"
-            >
-              <van-radio name="1">有</van-radio>
-              <van-radio name="2">无</van-radio>
-            </van-radio-group>
-          </template>
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="是否有人员受伤："
-              remark-field="isInjured"
-              field-module="casualtyWar"
-              :exist-data="fieldExist?.isInjured"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
+        name="casualtyWar.isInjured.value"
+        label="是否有人员受伤："
+        label-width="130px"
+        :rules="form.casualtyWar.isInjured.rules"
+        required
+        class="field-radio"
+      >
+        <template #input>
+          <van-radio-group
+            v-model="form.casualtyWar.isInjured.value"
+            v-preview-text="showPreview"
+            icon-size="16px"
+            direction="horizontal"
+          >
+            <van-radio name="1">有</van-radio>
+            <van-radio name="2">无</van-radio>
+          </van-radio-group>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否有人员受伤："
+            remark-field="isInjured"
+            field-module="casualtyWar"
+            :exist-data="fieldExist?.isInjured"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <!-- 受伤人员 -->
       <div v-if="form.casualtyWar.isInjured.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="block-dynamic-item">
@@ -326,7 +303,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
@@ -351,7 +328,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
@@ -376,7 +353,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectDateTime
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
@@ -389,7 +366,6 @@ const onChangeName = (item, index) => {
             label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
-            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -402,7 +378,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectDateTime> 
+          </SelectDateTime>
           <van-field
             v-model="item.personCode"
             v-preview-text="showPreview"
@@ -426,7 +402,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <van-field
             v-model="item.idNumber"
             v-preview-text="showPreview"
@@ -451,7 +427,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
@@ -476,7 +452,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <van-field
             v-model="item.age"
             v-preview-text="showPreview"
@@ -501,7 +477,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <AreaCascader
             :name="`casualtyWar.injuredList.${index}.nativePlace`"
             v-model:value="item.nativePlace"
@@ -574,7 +550,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <van-field
             v-model="item.duty"
             v-preview-text="showPreview"
@@ -598,7 +574,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -622,7 +598,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
@@ -646,7 +622,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
@@ -670,7 +646,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
@@ -695,7 +671,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
         </div>
         <template v-if="!isDetail">
           <van-button
@@ -709,35 +685,35 @@ const onChangeName = (item, index) => {
           </van-button>
         </template>
       </div>
-      <van-field 
-          name="casualtyWar.isDead.value"
-          label="是否有人员死亡："
-          label-width="130px"
-          :rules="form.casualtyWar.isDead.rules"
-          required
-          class="field-radio"
-        >
-          <template #input>
-            <van-radio-group
-              v-model="form.casualtyWar.isDead.value"
-              v-preview-text="showPreview"
-              icon-size="16px"
-              direction="horizontal"
-            >
-              <van-radio name="1">有</van-radio>
-              <van-radio name="2">无</van-radio>
-            </van-radio-group>
-          </template>
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="是否有人员死亡："
-              remark-field="isDead"
-              field-module="casualtyWar"
-              :exist-data="fieldExist?.isDead"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
+      <van-field
+        name="casualtyWar.isDead.value"
+        label="是否有人员死亡："
+        label-width="130px"
+        :rules="form.casualtyWar.isDead.rules"
+        required
+        class="field-radio"
+      >
+        <template #input>
+          <van-radio-group
+            v-model="form.casualtyWar.isDead.value"
+            v-preview-text="showPreview"
+            icon-size="16px"
+            direction="horizontal"
+          >
+            <van-radio name="1">有</van-radio>
+            <van-radio name="2">无</van-radio>
+          </van-radio-group>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否有人员死亡："
+            remark-field="isDead"
+            field-module="casualtyWar"
+            :exist-data="fieldExist?.isDead"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <!-- 死亡人员 -->
       <div v-if="form.casualtyWar.isDead.value === '1'" class="block-dynamic">
         <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="block-dynamic-item">
@@ -853,7 +829,6 @@ const onChangeName = (item, index) => {
             label-width="172px"
             placeholder="请选择入队时间"
             :rules="form.casualtyWar.teamEntryTime.rules"
-            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1185,7 +1160,7 @@ const onChangeName = (item, index) => {
             </template>
           </SelectSingle>
           <van-field
-          :name="`casualtyWar.deadList.${index}.isInstantDeath`"
+            :name="`casualtyWar.deadList.${index}.isInstantDeath`"
             label="是否当场死亡："
             label-width="124px"
             :rules="form.casualtyWar.isInstantDeath.rules"

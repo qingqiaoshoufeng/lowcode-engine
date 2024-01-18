@@ -13,6 +13,7 @@ export function getCarList(data) {
     organizationid: data.organizationId,
     isSelfOrg: data.isSelfOrg?.join(','),
     queryLoanFlag: data.queryLoanFlag,
+    overQueryFlag: data.overQueryFlag,
   }
   return axios.get('/acws/rest/biz/firetruck/query', { params }).then((res) => {
     return {
