@@ -141,7 +141,7 @@ const validateProgress = async()=>{
     }
     const statusMap = formRef.value.getValidationStatus()
     // eslint-disable-next-line no-console
-    console.log(statusMap,'statusMap');
+    // console.log(statusMap,'statusMap');
     statusList.value = Object.entries(statusMap).reduce((current,item)=>{
       const [type,status] = item
       if(status === 'failed'){

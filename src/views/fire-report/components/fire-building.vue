@@ -87,7 +87,7 @@ const validateBuildFloor = (value) => {
 }
 
 const buildFloorChange = ()=>{
-  checkFireResistanceRating(form, options)
+  checkFireResistanceRating(form.value, options)
   diyValidateMap.value.defaultKey.push('fireBuilding.buildFloor.value')
 }
 
@@ -131,13 +131,17 @@ const validateFireFloor = (value) => {
       return '请输入失火楼层'
     }
   }
-  else if (filter?.[0]?.dictName === '地下' && !integerReg.test(value)) {
-    return ('请输入正确失火楼层')
-    // callback(new Error('请输入正确失火楼层'))
-  }
-  else if (filter?.[0]?.dictName !== '地下' && (!positiveIntegerReg.test(value) || value === 0)) {
+  // else if (filter?.[0]?.dictName === '地下' && !integerReg.test(value)) {
+  //   return ('请输入正确失火楼层')
+  //   // callback(new Error('请输入正确失火楼层'))
+  // }
+  // else if (filter?.[0]?.dictName !== '地下' && (!positiveIntegerReg.test(value) || value === 0)) {
+  //   return '请输入正确失火楼层'
+  //   // callback(new Error('请输入正确失火楼层'))
+  // }
+  else if (!integerReg.test(value)) {
     return '请输入正确失火楼层'
-    // callback(new Error('请输入正确失火楼层'))
+    // callback(new Error(''))
   }
   else {
     // callback()
@@ -350,7 +354,6 @@ const onBuildTag = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入失火楼层"
-          type="digit"
           @change="fireFloorChange"
         >
           <template v-slot:label="">
