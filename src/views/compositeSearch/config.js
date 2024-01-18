@@ -957,6 +957,14 @@ export const useFormConfig = () => {
         options: 'area',
         selectLeaf: false,
       },
+      fireType: { // 火灾类型
+        value: undefined,
+        back: false,
+        type: 'cascader-multiple',
+        label: '火灾类型',
+        options: 'fireType',
+        selectLeaf: false,
+      },
       firePlace: { // 起火场所
         value: undefined,
         back: false,
@@ -1987,6 +1995,7 @@ export const useFormConfig = () => {
         areaDutyGroupFireNon: fireBase.areaDutyGroupFire.back,
         area: returnCascader(fireBase.area.value),
         areaNon: fireBase.area.back,
+        fireType: fireBase.fireType.value?.map(item => item[0]).join(','),
         firePlace: returnCascader(fireBase.firePlace.value),
         firePlaceNon: fireBase.firePlace.back,
         fireCause: returnCascader(fireBase.fireCause.value),
