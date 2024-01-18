@@ -132,8 +132,8 @@ export const checkDispatchTruckList = (form, prompt = true) => {
 }
 
 function getPersonNum(form) {
-  if (form.investForce?.commanderNum.value + form.investForce?.firemenNum.value > 0) {
-    return form.investForce?.commanderNum.value + form.investForce?.firemenNum.value
+  if (Number(form.investForce?.commanderNum.value) + Number(form.investForce?.firemenNum.value) > 0) {
+    return Number(form.investForce?.commanderNum.value) + Number(form.investForce?.firemenNum.value)
   }
   if (form.investForce.commander?.value || form.investForce.firemen?.value) {
     const ids = form.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''

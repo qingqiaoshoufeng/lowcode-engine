@@ -689,8 +689,8 @@ const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initR
 
 const getPersonNum = () => {
   // 非国家队
-  if (!showNationTeam.value && (form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value > 0)) {
-    return form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value
+  if (!showNationTeam.value && (Number(form.value.investForce?.commanderNum.value) + Number(form.value.investForce?.firemenNum.value) > 0)) {
+    return Number(form.value.investForce?.commanderNum.value) + Number(form.value.investForce?.firemenNum.value)
   }
   // 国家队
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
