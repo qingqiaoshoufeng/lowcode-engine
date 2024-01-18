@@ -15,17 +15,18 @@ const refreshField = inject('refreshField')
 
 const showPreview = inject("showPreview");
 
-const options = inject("options");
-
-const showDraft = inject("showDraft");
+const showNationTeam = inject('showNationTeam')
 
 const showMidwayReturn = inject("showMidwayReturn");
 
 const showDealSituation = inject("showDealSituation");
 
-const deptMembersOptions = inject("deptMembersOptions");
-
 const personNum = computed(() => {
+  // 非国家队
+  if (!showNationTeam.value && (form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value > 0)) {
+    return form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value
+  }
+  // 国家队
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
     const ids = form.value.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
     const result = cloneDeep(form.value.investForce.commander?.value) || []
@@ -222,7 +223,58 @@ const onCommander = () => {
         </template>
       </SelectMultiple>
     </template>
+    <van-field
+      v-if="!showNationTeam"
+      v-model="form.investForce.commanderNum.value"
+      v-preview-text="showPreview"
+      :readonly="showPreview"
+      type="digit"
+      maxlength="5"
+      name="investForce.commanderNum.value"
+      label="指挥员（人）："
+      placeholder="请输入指挥员人数"
+      :rules="form.investForce.commanderNum.rules"
+      @blur="OnCarNum"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="指挥员（人）："
+          remark-field="commanderNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.commanderNum"
+          @refresh-callback="refreshField"
+          :isWarning="form.investForce.commanderNum.warning"
+          warningTip="人车比不合理，请修改或备注！"
+        />
+      </template>
+    </van-field>
+    <van-field
+      v-if="!showNationTeam"
+      v-model="form.investForce.firemenNum.value"
+      v-preview-text="showPreview"
+      :readonly="showPreview"
+      type="digit"
+      maxlength="5"
+      name="investForce.firemenNum.value"
+      label="消防员（人）："
+      placeholder="请输入消防员人数"
+      :rules="form.investForce.firemenNum.rules"
+      @blur="OnCarNum"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="消防员（人）："
+          remark-field="firemenNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.firemenNum"
+          @refresh-callback="refreshField"
+          :isWarning="form.investForce.firemenNum.warning"
+          warningTip="人车比不合理，请修改或备注！"
+        />
+      </template>
+    </van-field>
     <SelectPerson
+      v-if="showNationTeam"
       v-model:value="form.investForce.commander.value"
       :showPreview="showPreview"
       required
@@ -248,6 +300,7 @@ const onCommander = () => {
       </template>
     </SelectPerson>
     <SelectMultiple
+      v-if="showNationTeam"
       v-model:value="form.investForce.groupLeader.value"
       :showPreview="showPreview"
       required
@@ -272,6 +325,7 @@ const onCommander = () => {
       </template>
     </SelectMultiple>
     <SelectPerson
+      v-if="showNationTeam"
       v-model:value="form.investForce.firemen.value"
       :showPreview="showPreview"
       required

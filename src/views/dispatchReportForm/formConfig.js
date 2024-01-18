@@ -464,10 +464,24 @@ export const useFormConfig = () => {
     investForce: { // 投入力量
       title: '投入力量',
       fieldAnnotation: false, // 批注
-      fieldWarning: 'commander:false;firemen:false;isResponseTruck:false;',
+      fieldWarning: 'commander:false;commanderNum:false;firemen:false;firemenNum:false;isResponseTruck:false;',
       groupLeader: { // 带队指挥员
         value: undefined,
         rules: [{ required: true, message: '请选择带队指挥员' }],
+      },
+      commanderNum: { // 指挥员（人）
+        value: '',
+        rules: [
+          { required: true, message: '请输入指挥员人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确指挥员人数' },
+        ],
+      },
+      firemenNum: { // 消防员（人）
+        value: '',
+        rules: [
+          { required: true, message: '请输入消防员人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确消防员人数' },
+        ],
       },
       commander: { // 指挥员人数（人）
         value: undefined,
@@ -1366,7 +1380,7 @@ export const useFormConfig = () => {
   }
 
   // 根据详情初始化表单，用于回显
-  const initFormByDetail = (detail, options, callback, warningDetail) => {
+  const initFormByDetail = (detail, options, callback, warningDetail, { nationTeamFlag }) => {
     const {
       fireDispatch,
       fireDispatchItem,
@@ -1508,6 +1522,8 @@ export const useFormConfig = () => {
     form.value.basicInformation.windDirection.value = fireDispatch?.windDirection
     // 投入力量
     form.value.investForce.groupLeader.value = fireDispatchItem?.groupLeader?.split(',')
+    form.value.investForce.commanderNum.value = fireDispatchItem?.commanderNum
+    form.value.investForce.firemenNum.value = fireDispatchItem?.firemenNum
     if (fireDispatchItem?.commander) {
       form.value.investForce.commander.value = generateByKeyValue(fireDispatchItem?.commanderName, fireDispatchItem?.commander, {
         key: 'userName',
@@ -1569,7 +1585,7 @@ export const useFormConfig = () => {
         return {
           ...item,
           nameIds: item.boFireUserId,
-          name: { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name },
+          name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
           duty: item.duty?.split(','),
@@ -1581,7 +1597,7 @@ export const useFormConfig = () => {
         return {
           ...item,
           nameIds: item.boFireUserId,
-          name: { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name },
+          name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
           duty: item.duty?.split(','),
