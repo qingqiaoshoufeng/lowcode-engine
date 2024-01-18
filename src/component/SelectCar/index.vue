@@ -41,6 +41,13 @@ const selectValue = ref([]);
 
 const selectText = ref("");
 
+const defaultFilterValue = {
+  overQueryFlag: '1',
+  status: '1',
+  isSelfOrg: ['1'],
+  queryLoanFlag: '1',
+};
+
 watch(() => props.value, (val) => {
   nextTick(() => {
     if (props.value) {
@@ -88,8 +95,6 @@ const handleShow = () => {
   }
   selectVisible.value = true;
   nextTick(() => {
-    proListRef.value.query.status = '1'
-    proListRef.value.query.queryLoanFlag = '1'
     if (proListRef.value.list?.length <= 0) {
       proListRef.value.filter();
     }
@@ -99,6 +104,10 @@ const handleShow = () => {
 const handleCancel = () => {
   selectVisible.value = false;
 };
+
+const onSelfChange = () => {
+  proListRef.value.filter();
+}
 
 defineOptions({
   name: "SelectCar",
@@ -151,11 +160,24 @@ defineOptions({
         <ProList
           ref="proListRef"
           title="车辆列表"
+          :defaultFilterValue="defaultFilterValue"
           :getListFn="getCarList"
           rowKey="boFireTruckId"
           :showLoad="false"
           :showBack="false"
         >
+          <template #search="{ filterFormState }">
+            <div class="list-tabs">
+              <van-checkbox-group
+                v-model="filterFormState.isSelfOrg"
+                shape="square"
+                style="padding: 10px 10px;"
+                @change="onSelfChange"
+              >
+                <van-checkbox name="1">仅查看本单位</van-checkbox>
+              </van-checkbox-group>
+            </div>
+          </template>
           <template #list="{ record }">
             <div class="pro-list-item" @click="handleItem(record)">
               <div class="car-item">

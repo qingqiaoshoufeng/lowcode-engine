@@ -303,7 +303,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.identity"
             :showPreview="showPreview"
@@ -328,7 +328,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.politicalOutlook"
@@ -353,7 +353,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectDateTime
             v-if="showMainGroup || showReinforce"
             v-model:value="item.teamEntryTime"
@@ -402,7 +402,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <van-field
             v-model="item.idNumber"
             v-preview-text="showPreview"
@@ -427,7 +427,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <SelectSingle
             v-model:value="item.gender"
             :showPreview="showPreview"
@@ -452,7 +452,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <van-field
             v-model="item.age"
             v-preview-text="showPreview"
@@ -477,7 +477,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <AreaCascader
             :name="`casualtyWar.injuredList.${index}.nativePlace`"
             v-model:value="item.nativePlace"
@@ -550,7 +550,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <van-field
             v-model="item.duty"
             v-preview-text="showPreview"
@@ -574,7 +574,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field> 
+          </van-field>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -598,7 +598,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.period"
             :showPreview="showPreview"
@@ -622,7 +622,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.injuryReason"
             :showPreview="showPreview"
@@ -646,7 +646,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.protectDevice"
             :showPreview="showPreview"
@@ -671,7 +671,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle> 
+          </SelectSingle>
         </div>
         <template v-if="!isDetail">
           <van-button
@@ -685,7 +685,7 @@ const onChangeName = (item, index) => {
           </van-button>
         </template>
       </div>
-      <van-field 
+      <van-field
         name="casualtyWar.isDead.value"
         label="是否有人员死亡："
         label-width="130px"
@@ -1160,7 +1160,7 @@ const onChangeName = (item, index) => {
             </template>
           </SelectSingle>
           <van-field
-          :name="`casualtyWar.deadList.${index}.isInstantDeath`"
+            :name="`casualtyWar.deadList.${index}.isInstantDeath`"
             label="是否当场死亡："
             label-width="124px"
             :rules="form.casualtyWar.isInstantDeath.rules"
