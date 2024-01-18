@@ -1588,7 +1588,7 @@ export const useFormConfig = () => {
           name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
-          duty: item.duty?.split(','),
+          duty: item.duty,
           nativePlace: item.nativePlace?.split(','),
         }
       })
@@ -1600,7 +1600,7 @@ export const useFormConfig = () => {
           name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
           rescueRank: item.rescueRank?.split(','),
-          duty: item.duty?.split(','),
+          duty: item.duty,
           nativePlace: item.nativePlace?.split(','),
           deathDate: item.deathDate ? dayjs(item.deathDate) : undefined,
         }

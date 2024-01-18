@@ -489,7 +489,7 @@ const initDict = () => {
     const res = store.getters?.["dict/filterDicts"](['COMMAND_MODE', 'JQ_TYPE', 'CD_ZZZH_LEVEL', 'CD_OTHER_ZY', 'CD_OTHER_ZZ', 'CD_DC_HZQK',
       'CD_MAIN_HZ', 'CD_MAIN_QX', 'CD_LINK_LEVEL', 'CD_LINK_DEP', 'CD_JYQK_CZ', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ',
       'CD_JBXX_BSY', 'CD_GDSS', 'CD_JBXX_GG', 'CD_HYZG', 'CD_CZRY_SF', 'CD_CZRY_FHZB', 'CD_CZRY_SFSD', 'CD_CZRY_SSBW', 'CD_CZRY_SSYY',
-      'CD_CZRY_SWYY', 'CD_CZRY_ZMBW', 'HZ_SW_MZ', 'JOB_TYPE', 'CD_RANK', 'CD_LOOK'], null, false);
+      'CD_CZRY_SWYY', 'CD_CZRY_ZMBW', 'HZ_SW_MZ', 'JOB_TYPE', 'CD_RANK', 'CD_LOOK', 'RY_XZ', 'USER_JOB'], null, false);
     options.value.commandMethod = res.COMMAND_MODE
     options.value.warningType = res.JQ_TYPE
     options.value.level = res.CD_ZZZH_LEVEL
@@ -509,7 +509,7 @@ const initDict = () => {
     options.value.fixedFireEquipment = res.CD_GDSS
     options.value.fireHydrantSituation = res.CD_JBXX_GG
     options.value.industryDepartment = res.CD_HYZG
-    options.value.identity = res.CD_CZRY_SF
+    options.value.identity = res.RY_XZ
     options.value.protectDevice = res.CD_CZRY_FHZB
     options.value.period = res.CD_CZRY_SFSD
     options.value.injuryPart = res.CD_CZRY_SSBW
@@ -521,6 +521,7 @@ const initDict = () => {
     options.value.position = res.JOB_TYPE
     options.value.rescueRank = res.CD_RANK
     options.value.gender = gender
+    options.value.duty = res.USER_JOB
 
     // 获取用户单位
     if (store.getters?.["userInfo/userInfo"]) {
@@ -1053,8 +1054,12 @@ const getSubmitParams = () => {
       const list = casualtyWar.injuredList.map((item) => {
         return {
           ...item,
+          name: item.name?.userName || item.name?.label,
+          boFireUserId: item.name?.boFireUserId || item.name?.value,
           injuryType: '1',
           nativePlace: item.nativePlace?.join(','),
+          duty: item.duty?.join(','),
+          rescueRank: item.rescueRank?.join(','),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
         }
       })
@@ -1064,7 +1069,11 @@ const getSubmitParams = () => {
       const list = casualtyWar.deadList.map((item) => {
         return {
           ...item,
+          name: item.name?.userName || item.name?.label,
+          boFireUserId: item.name?.boFireUserId || item.name?.value,
           injuryType: '2',
+          rescueRank: item.rescueRank?.join(','),
+          duty: item.duty?.join(','),
           nativePlace: item.nativePlace?.join(','),
           deathDate: interceptUnix(item.deathDate),
           teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
