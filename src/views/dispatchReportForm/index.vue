@@ -190,7 +190,7 @@ const fieldExist = ref({})
 
 const userInfo = ref({})
 
-const initDispatchDetail = ref({});
+const initDispatchDetail = ref({ nationTeamFlag: true });
 
 const deptMembersOptions = ref([]);
 
@@ -276,6 +276,11 @@ const showTactical = computed(() => {
     || warningType?.text?.join('/') === '社会救助/公共服务/排水排涝清淤'
     || warningType?.text?.join('/') === '安保勤务/特殊勤务/医疗卫生'
     || warningType?.text?.join('/').indexOf('安保勤务/防灾勤务') > -1
+})
+
+// 是否为国家队
+const showNationTeam = computed(() => {
+  return initDispatchDetail.value?.nationTeamFlag || showHeadquarter.value
 })
 
 // 段落信息
@@ -426,6 +431,8 @@ provide('fieldExist', fieldExist)
 
 provide('dataType', 2)
 
+provide('showNationTeam', showNationTeam)
+
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
@@ -543,6 +550,17 @@ const initWeather = () => {
   })
 }
 
+const initCasualty = () => {
+  if (!showNationTeam.value) {
+    form.value.casualtyWar.identity.rules[0].required = true
+    form.value.casualtyWar.rescueRank.rules[0].required = true
+    form.value.casualtyWar.duty.rules[0].required = true
+  }
+  if (props.showDraft) {
+    initDispatchDetail.value.nationTeamFlag = userInfo.value?.NATIONTEAMFLAG
+  }
+}
+
 const initDetail = () => {
   // 根据详情信息设置警情类型
   if (detail && detail.value && detail.value?.warningType) {
@@ -559,7 +577,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-          initFormByDetail(res, options.value, initWatch, detail.value)
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
         }
       }).finally(() => resolve())
     }
@@ -572,7 +590,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value)
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
         }
       }).finally(() => resolve())
     }
@@ -584,7 +602,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value)
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
         }
       }).finally(() => resolve())
     }
@@ -596,7 +614,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value)
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
         }
       }).finally(() => resolve())
     } else {
@@ -624,6 +642,7 @@ const initReport = () => {
           form.value.basicInfoHead.headquarterName.value = res.dispatchGroupName
           initDispatchDetail.value.detachment = res.detachment
           initDispatchDetail.value.warningOrgname = res.warningOrgname
+          initDispatchDetail.value.nationTeamFlag = res.nationTeamFlag
         }
       }).finally(() => resolve())
     } else {
@@ -665,9 +684,14 @@ const initWatch = () => {
   })
 }
 
-const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initReport, initDetail])
+const { result } = useAsyncQueue([initDict, initPoliceDetail, initWeather, initReport, initDetail, initCasualty])
 
 const getPersonNum = () => {
+  // 非国家队
+  if (!showNationTeam.value && (form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value > 0)) {
+    return form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value
+  }
+  // 国家队
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
     const ids = form.value.investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
     const result = cloneDeep(form.value.investForce.commander?.value) || []
@@ -738,6 +762,8 @@ const getSubmitParams = () => {
         groupLeader: investForce.groupLeader.value?.join(','),
         commander: investForce.commander.value?.map(item => item.boFireUserId)?.join(','),
         firemen: investForce.firemen.value?.map(item => item.boFireUserId)?.join(','),
+        commanderNum: investForce.commanderNum.value,
+        firemenNum: investForce.firemenNum.value,
         inputPersonNum: getPersonNum(),
         inputCarNum: form.investForce?.dispatchTruckList.value?.length || 0,
         isResponseTruck: investForce.isResponseTruck.value,
@@ -853,8 +879,8 @@ const getSubmitParams = () => {
       const list = casualtyWar.injuredList.map((item) => {
         return {
           ...item,
-          name: item.name?.userName || item.name?.label,
-          boFireUserId: item.name?.boFireUserId || item.name?.value,
+          name: showNationTeam.value ? (item.name?.userName || item.name?.label) : item.name,
+          boFireUserId: showNationTeam.value ? (item.name?.boFireUserId || item.name?.value) : '',
           injuryType: '1',
           rescueRank: item.rescueRank?.join(','),
           duty: item.duty?.join(','),
@@ -868,8 +894,8 @@ const getSubmitParams = () => {
       const list = casualtyWar.deadList.map((item) => {
         return {
           ...item,
-          name: item.name?.userName || item.name?.label,
-          boFireUserId: item.name?.boFireUserId || item.name?.value,
+          name: showNationTeam.value ? (item.name?.userName || item.name?.label) : item.name,
+          boFireUserId: showNationTeam.value ? (item.name?.boFireUserId || item.name?.value) : '',
           injuryType: '2',
           rescueRank: item.rescueRank?.join(','),
           duty: item.duty?.join(','),
