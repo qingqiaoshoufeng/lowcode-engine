@@ -125,6 +125,9 @@ const onTabsChange = (index) => {
               {{ selectItem?.warningStatusValue || selectItem?.dispatchStatusValue || selectItem?.fireStatusValue }}
             </span>
           </div>
+          <div class="number">
+            <slot name="number" />
+          </div>
         </div>
       </div>
     </div>

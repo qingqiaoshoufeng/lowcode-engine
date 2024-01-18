@@ -155,7 +155,16 @@ const finishCallback = (row) => {
       :tabs="tabsData"
       :select-tab-row="selectTabRow"
       @finish-callback="finishCallback"
-    />
+    >
+    <template #number>
+      <div v-if="selectTabRow?.boFireDispatchId" class="tip">
+        {{ `出动编号: ${selectTabRow.dispatchCode}` }}
+      </div>
+      <div v-if="selectTabRow?.boFireInfoId" class="tip">
+        {{ `火灾编号: ${selectTabRow.fireCode}` }}
+      </div>
+    </template>
+  </PloceTabs>
     <div v-if="(selectTabRow?.warningStatusValue || selectTabRow?.dispatchStatusValue || selectTabRow?.fireStatusValue) === '待填报' || selectTabRow?.isStorage === '1' || ((selectTabRow?.boFireDispatchId || selectTabRow?.boFireInfoId) && !selectTabRow?.commitDate)" class="tab-pane-content">
       <div v-if="selectTabRow?.fireStatusValue || (selectTabRow?.boFireInfoId && selectTabRow?.isStorage === '1') || (selectTabRow?.boFireInfoId && !selectTabRow?.commitDate)" class="no-data">
         <van-empty description="暂无火灾信息填报数据" />
@@ -215,6 +224,9 @@ const finishCallback = (row) => {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .tip{
+    margin-top: 3px;
   }
 }
 </style>
