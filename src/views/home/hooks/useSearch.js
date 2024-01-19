@@ -290,7 +290,6 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
   const getFireNoticeList = async()=>{
     const res = await getFireNotice({status:1}) || []
     state.noticeList = res.filter((item,index)=>(index<3))
-    console.log(res,'getStyle');
   } 
 
   const goNotice=()=>{

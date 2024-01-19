@@ -818,9 +818,9 @@ const onFireLevel = () => {
           <template v-slot:label="">
             <FieldAnnotation
               label="过火面积（平方米）："
-              remark-field="fireCause"
+              remark-field="burnedArea"
               field-module="basicInfo"
-              :exist-data="fieldExist?.fireCause"
+              :exist-data="fieldExist?.burnedArea"
               :isWarning="form.basicInfo.burnedArea.warning"
               @refresh-callback="refreshField"
               :warningTip="form.basicInfo.burnedArea.warningText"
