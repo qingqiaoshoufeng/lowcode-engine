@@ -23,8 +23,8 @@ const showDealSituation = inject("showDealSituation");
 
 const personNum = computed(() => {
   // 非国家队
-  if (!showNationTeam.value && (form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value > 0)) {
-    return form.value.investForce?.commanderNum.value + form.value.investForce?.firemenNum.value
+  if (!showNationTeam.value && (Number(form.value.investForce?.commanderNum.value) + Number(form.value.investForce?.firemenNum.value) > 0)) {
+    return Number(form.value.investForce?.commanderNum.value) + Number(form.value.investForce?.firemenNum.value)
   }
   // 国家队
   if (form.value.investForce.commander?.value || form.value.investForce.firemen?.value) {
@@ -232,6 +232,7 @@ const onCommander = () => {
       maxlength="5"
       name="investForce.commanderNum.value"
       label="指挥员（人）："
+      label-width="120px"
       placeholder="请输入指挥员人数"
       :rules="form.investForce.commanderNum.rules"
       @blur="OnCarNum"
@@ -257,6 +258,7 @@ const onCommander = () => {
       maxlength="5"
       name="investForce.firemenNum.value"
       label="消防员（人）："
+      label-width="120px"
       placeholder="请输入消防员人数"
       :rules="form.investForce.firemenNum.rules"
       @blur="OnCarNum"

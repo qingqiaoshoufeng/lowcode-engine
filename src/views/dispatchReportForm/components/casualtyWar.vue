@@ -28,6 +28,8 @@ const options = inject("options");
 
 const diyValidateMap = inject("diyValidateMap");
 
+const showNationTeam = inject('showNationTeam')
+
 const nameOptions = computed(() => {
   if (showHeadquarter.value) {
     const result = []
@@ -73,7 +75,7 @@ const handleAddInjury = () => {
     rescueRank: undefined, // 消防救援衔
     titleRank: "", // 衔级
     bridgingRank: undefined, // 职级
-    duty: "", // 职务
+    duty: undefined, // 职务
     injuryPart: undefined, // 受伤部位
     teamEntryTime: undefined, // 入队时间（进入消防系统）
     period: undefined, // 事发阶段
@@ -98,7 +100,7 @@ const handleAddDead = () => {
     rescueRank: undefined, // 消防救援衔
     titleRank: "", // 衔级
     bridgingRank: undefined, // 职级
-    duty: "", // 职务
+    duty: undefined, // 职务
     deathDate: undefined,
     injuryPart: undefined, // 致命伤部位
     teamEntryTime: undefined, // 入队时间（进入消防系统）
@@ -255,6 +257,7 @@ const onChangeName = (item, index) => {
             受伤人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteInjury(index)" />
           </div>
           <SelectSingle
+            v-if="showNationTeam"
             v-model:value="item.nameIds"
             :showPreview="showPreview"
             :name="`casualtyWar.injuredList.${index}.name`"
@@ -279,6 +282,31 @@ const onChangeName = (item, index) => {
               />
             </template>
           </SelectSingle>
+          <van-field
+            v-else
+            v-model="item.name"
+            v-preview-text="showPreview"
+            :readonly="showPreview"
+            required
+            maxlength="20"
+            :name="`casualtyWar.injuredList.${index}.name`"
+            label="人员姓名："
+            label-width="110px"
+            placeholder="请输入人员姓名"
+            :rules="form.casualtyWar.name.rules"
+          >
+           <template v-slot:label="">
+              <FieldAnnotation
+                label="人员姓名："
+                remark-field="injuredList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.injuredList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -314,7 +342,7 @@ const onChangeName = (item, index) => {
             title="请选择人员性质"
             label="人员性质："
             placeholder="请选择人员性质"
-            :disabled="true"
+            :disabled="showNationTeam"
             :rules="form.casualtyWar.identity.rules"
           >
             <template v-slot:label="">
@@ -514,7 +542,7 @@ const onChangeName = (item, index) => {
             label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
-            :disabled="true"
+            :disabled="showNationTeam"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -529,6 +557,7 @@ const onChangeName = (item, index) => {
             </template>
           </CascaderSingle> 
           <van-field
+            v-if="showHeadquarter"
             v-model="item.bridgingRank"
             v-preview-text="showPreview"
             :readonly="showPreview"
@@ -551,17 +580,17 @@ const onChangeName = (item, index) => {
               />
             </template>
           </van-field>
-          <van-field
-            v-model="item.duty"
-            v-preview-text="showPreview"
-            :readonly="showPreview"
-            required
-            maxlength="50"
+          <SelectSingle
+            v-model:value="item.duty"
+            :showPreview="showPreview"
             :name="`casualtyWar.injuredList.${index}.duty`"
+            required
+            :options="options.duty"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            title="请选择职务"
             label="职务："
-            placeholder="请输入职务"
+            placeholder="请选择职务"
             :rules="form.casualtyWar.duty.rules"
-            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -574,7 +603,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -719,6 +748,7 @@ const onChangeName = (item, index) => {
         <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="block-dynamic-item">
           <div class="title">死亡人员{{ index + 1}}<van-icon name="cross" v-if="!isDetail && index !== 0" @click="handleDeleteDead(index)" /></div>
           <SelectSingle
+            v-if="showNationTeam"
             v-model:value="item.nameIds"
             :showPreview="showPreview"
             :name="`casualtyWar.deadList.${index}.name`"
@@ -743,6 +773,31 @@ const onChangeName = (item, index) => {
               />
             </template>
           </SelectSingle>
+          <van-field
+            v-else
+            v-model="item.name"
+            v-preview-text="showPreview"
+            :readonly="showPreview"
+            required
+            maxlength="20"
+            :name="`casualtyWar.deadList.${index}.name`"
+            label="人员姓名："
+            label-width="110px"
+            placeholder="请输入人员姓名"
+            :rules="form.casualtyWar.name.rules"
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="人员姓名："
+                remark-field="deadList"
+                remark-field2="name"
+                :remark-field2-id="index"
+                field-module="casualtyWar"
+                :exist-data="fieldExist?.deadList?.[index]?.name"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
           <SelectSingle
             v-if="showMainGroup || showReinforce"
             v-model:value="item.nation"
@@ -778,7 +833,7 @@ const onChangeName = (item, index) => {
             label="人员性质："
             placeholder="请选择人员性质"
             :rules="form.casualtyWar.identity.rules"
-            :disabled="true"
+            :disabled="showNationTeam"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -976,7 +1031,7 @@ const onChangeName = (item, index) => {
             label-width="108px"
             placeholder="请选择消防救援衔"
             :rules="form.casualtyWar.rescueRank.rules"
-            :disabled="true"
+            :disabled="showNationTeam"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -991,6 +1046,7 @@ const onChangeName = (item, index) => {
             </template>
           </CascaderSingle>
           <van-field
+            v-if="showHeadquarter"
             v-model="item.bridgingRank"
             v-preview-text="showPreview"
             :readonly="showPreview"
@@ -1013,17 +1069,17 @@ const onChangeName = (item, index) => {
               />
             </template>
           </van-field>
-          <van-field
-            v-model="item.duty"
-            v-preview-text="showPreview"
-            :readonly="showPreview"
-            required
-            maxlength="50"
+          <SelectSingle
+            v-model:value="item.duty"
+            :showPreview="showPreview"
             :name="`casualtyWar.deadList.${index}.duty`"
+            required
+            :options="options.duty"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            title="请选择职务"
             label="职务："
-            placeholder="请输入职务"
+            placeholder="请选择职务"
             :rules="form.casualtyWar.duty.rules"
-            :disabled="true"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1036,7 +1092,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </van-field>
+          </SelectSingle>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
