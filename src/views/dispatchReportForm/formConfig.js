@@ -641,7 +641,7 @@ export const useFormConfig = () => {
       deadList: [], // 死亡人员列表
       name: {
         value: '',
-        rules: [{ required: true, message: '请输入人员姓名' }],
+        rules: [{ required: true, message: '请选择人员姓名' }],
       },
       identity: {
         value: undefined,

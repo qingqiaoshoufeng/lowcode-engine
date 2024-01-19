@@ -553,6 +553,7 @@ const initWeather = () => {
 
 const initCasualty = () => {
   if (!showNationTeam.value) {
+    form.value.casualtyWar.name.rules[0].message = '请输入人员姓名'
     form.value.casualtyWar.identity.rules[0].required = true
     form.value.casualtyWar.rescueRank.rules[0].required = true
     form.value.casualtyWar.duty.rules[0].required = true

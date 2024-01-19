@@ -752,6 +752,38 @@ const onFireLevel = () => {
           </template>
         </van-field>
       </div> -->
+      <div>
+        <van-field 
+          name="caseHandling.penaltyNum.value"
+          :disabled="!importantEdit"
+          label="过火面积（平方米）："
+          :rules="[{ validator: validateBurnedArea, trigger: 'onBlur' }, ...form.basicInfo.burnedArea.rules]"
+          @blur="checkBurnedArea(form)"
+          v-model="form.basicInfo.burnedArea.value" 
+          v-preview-text="showPreview"
+          id="penaltyNum"
+          :required="isRequired"
+          :maxlength="10"
+          style="width: 100%"
+          allow-clear
+          aria-autocomplete="none"
+          placeholder="请输入过火面积"
+          type="number" 
+          @change="penaltyNumChange"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="过火面积（平方米）："
+              remark-field="burnedArea"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.burnedArea"
+              :isWarning="form.basicInfo.burnedArea.warning"
+              @refresh-callback="refreshField"
+              :warningTip="form.basicInfo.burnedArea.warningText"
+            />
+          </template>
+        </van-field >
+      </div>
       <div v-if="!showOtherMinor" class="socialCreditCode">
         <van-field
           label="单位统一社会信用代码："
@@ -795,38 +827,6 @@ const onFireLevel = () => {
             />
           </template>
         </CascaderSingle>
-      </div>
-      <div>
-        <van-field 
-          name="caseHandling.penaltyNum.value"
-          :disabled="!importantEdit"
-          label="过火面积（平方米）："
-          :rules="[{ validator: validateBurnedArea, trigger: 'onBlur' }, ...form.basicInfo.burnedArea.rules]"
-          @blur="checkBurnedArea(form)"
-          v-model="form.basicInfo.burnedArea.value" 
-          v-preview-text="showPreview"
-          id="penaltyNum"
-          :required="isRequired"
-          :maxlength="10"
-          style="width: 100%"
-          allow-clear
-          aria-autocomplete="none"
-          placeholder="请输入过火面积"
-          type="number" 
-          @change="penaltyNumChange"
-        >
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="过火面积（平方米）："
-              remark-field="burnedArea"
-              field-module="basicInfo"
-              :exist-data="fieldExist?.burnedArea"
-              :isWarning="form.basicInfo.burnedArea.warning"
-              @refresh-callback="refreshField"
-              :warningTip="form.basicInfo.burnedArea.warningText"
-            />
-          </template>
-        </van-field >
       </div>
       <div class="fireType">
         <SelectSingle
