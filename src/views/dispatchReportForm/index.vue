@@ -579,7 +579,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -592,7 +592,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -604,7 +604,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -616,7 +616,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     } else {

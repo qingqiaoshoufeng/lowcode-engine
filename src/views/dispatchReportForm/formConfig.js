@@ -1361,12 +1361,12 @@ export const useFormConfig = () => {
   }
 
   // 校验表单规则是否需要显示 warning 提示
-  const checkFormField = (warningDetail) => {
+  const checkFormField = (warningDetail, nationTeamFlag) => {
     if (warningDetail?.warningStatusValue === '已归档') {
       return
     }
 
-    checkDispatchNum(form.value, false)
+    checkDispatchNum(form.value, false, nationTeamFlag)
 
     checkFireDistance(form.value, false)
 
@@ -1685,7 +1685,7 @@ export const useFormConfig = () => {
     form.value.disposalProcess.fireProcess.value = fireDispatchItem?.fireProcess
     // 流程流转
     form.value.proSteps.fireDispatchTransferVOList.value = fireDispatchTransferVOList
-    checkFormField(warningDetail)
+    checkFormField(warningDetail, nationTeamFlag)
 
     callback()
   }

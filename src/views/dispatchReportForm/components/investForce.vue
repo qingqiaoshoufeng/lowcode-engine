@@ -53,7 +53,7 @@ const onResponseTruck = (e) => {
     form.value.investForce.midwayCar.disabled = true;
   }
 
-  checkDispatchNum(form.value);
+  checkDispatchNum(form.value, true, showNationTeam.value);
 
   checkIsResponseTruck(form.value);
 
@@ -92,7 +92,7 @@ const onMidwayCarTruck = (value, items) => {
 }
 
 const OnCarNum = () => {
-  checkDispatchNum(form.value);
+  checkDispatchNum(form.value, true, showNationTeam.value);
 
   checkIsResponseTruck(form.value);
 };
