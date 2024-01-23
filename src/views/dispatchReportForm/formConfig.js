@@ -1255,7 +1255,7 @@ export const useFormConfig = () => {
       content = content.replace('【伤人数】', casualtyWar.injuredList?.length || 0)
     }
     else {
-      content = content.replace('造成参战人员【亡人数】死【伤人数】伤', '无参战人员伤亡')
+      content = content.replace('造成参战人员【亡人数】死【伤人数】伤。', '')
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')
     form.value.disposalProcess.fireProcess.value = content

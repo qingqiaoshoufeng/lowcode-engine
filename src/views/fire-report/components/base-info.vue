@@ -908,17 +908,17 @@ const onFireLevel = () => {
         <SelectSingle
           name="basicInfo.plantRiskClassification.value"
           v-model:value="form.basicInfo.plantRiskClassification.value"
-          label="厂房火灾危险性分类："
+          label="火灾危险性分类："
           :options="options.plantRiskClassification"
           :rules="form.basicInfo.plantRiskClassification.rules"
           :required="isRequired"
-          placeholder="请选择厂房火灾危险性分类"
-          title="请选择厂房火灾危险性分类"
+          placeholder="请选择火灾危险性分类"
+          title="请选择火灾危险性分类"
           :showPreview="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="厂房火灾危险性分类："
+              label="火灾危险性分类："
               remark-field="plantRiskClassification"
               field-module="basicInfo"
               :exist-data="fieldExist?.plantRiskClassification"
