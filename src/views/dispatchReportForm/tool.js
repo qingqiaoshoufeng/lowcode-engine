@@ -199,7 +199,7 @@ export const checkDispatchNum = (form, prompt = true, nationTeamFlag) => {
   }
 }
 
-// 时速在 20 ~ 120，显示到场时速异常原因
+// 时速在 20 ~ 120，显示平均时速异常原因
 export const checkReturnSpeed = (form) => {
   const { attendanceDate, dispatchDate, fireDistance } = form.basicInformation
   if (attendanceDate.value && dispatchDate.value && (attendanceDate.value?.unix() > dispatchDate.value?.unix()) && fireDistance.value) {

@@ -127,13 +127,13 @@ export const useFormConfig = () => {
         value: '',
         rules: [{ required: true, message: '' }],
       },
-      presentSpeed: { // 到场时速（公里/小时）
+      presentSpeed: { // 平均时速（公里/小时）
         value: '',
         rules: [{ required: false, message: '' }],
       },
-      returnLateReason: { // 到场时速异常原因
+      returnLateReason: { // 平均时速异常原因
         value: undefined,
-        rules: [{ required: true, message: '请选择到场时速异常原因' }],
+        rules: [{ required: true, message: '请选择平均时速异常原因' }],
       },
       dealEndDate: { // 警情处置结束时间
         value: '',

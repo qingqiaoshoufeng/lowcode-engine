@@ -39,7 +39,7 @@ const diyValidateMap = inject("diyValidateMap");
 
 const { speedConfig } = store.state?.rules?.ruleConfig
 
-// 时速在 20 ~ 120，显示到场时速异常原因
+// 时速在 20 ~ 120，显示平均时速异常原因
 const showReturnSlow = computed(() => {
   const { attendanceDate, dispatchDate } = form.value.basicInformation;
   const { fireDistance } = form.value.basicInformation;
@@ -580,15 +580,15 @@ const onDealEndDate = () => {
       type="number"
       maxlength="10"
       name="basicInformation.presentSpeed.value"
-      label="到场时速(公里/小时)："
+      label="平均时速(公里/小时)："
       label-width="158px"
-      placeholder="请输入到场时速"
+      placeholder="请输入平均时速"
       :rules="form.basicInformation.presentSpeed.rules"
       :disabled="!showPreview"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="到场时速(公里/小时)："
+          label="平均时速(公里/小时)："
           remark-field="presentSpeed"
           field-module="basicInformation"
           :exist-data="fieldExist?.presentSpeed"
@@ -604,15 +604,15 @@ const onDealEndDate = () => {
       required
       :options="options.returnLateReason"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
-      title="请选择到场时速异常原因"
-      label="到场时速异常原因："
+      title="请选择平均时速异常原因"
+      label="平均时速异常原因："
       label-width="142px"
-      placeholder="请选择到场时速异常原因"
+      placeholder="请选择平均时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="到场时速异常原因："
+          label="平均时速异常原因："
           field-module="basicInformation"
           :exist-data="fieldExist?.returnLateReason"
           @refresh-callback="refreshField"
