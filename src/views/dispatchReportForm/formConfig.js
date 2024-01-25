@@ -173,11 +173,11 @@ export const useFormConfig = () => {
         value: undefined,
         rules: [{ required: true, message: '请选择抢险救援措施' }],
       },
-      deliverWater: { // 送水量（吨）
+      deliverWater: { // 送水/物资量（吨）
         value: '',
         rules: [
-          { required: true, message: '请输入送水量' },
-          { pattern: nonnegativeNumberReg, message: '请输入正确送水量' },
+          { required: true, message: '请输入送水/物资量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确送水/物资量' },
         ],
       },
       drainWater: { // 排涝量（吨）
