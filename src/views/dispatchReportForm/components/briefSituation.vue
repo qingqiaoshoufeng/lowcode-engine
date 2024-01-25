@@ -454,29 +454,7 @@ const onDealEndDate = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectDateTime> 
-    <SelectDateTime
-      v-if="showDealSituation && !showFalsePolice"
-      v-model:value="form.basicInformation.washDate.value"
-      :show-preview="showPreview"
-      is-link
-      name="basicInformation.washDate.value"
-      title="请选择洗消时间"
-      label="洗消时间："
-      placeholder="请选择洗消时间"
-      :minDate="minInputTime"
-      :rules="form.basicInformation.washDate.rules"
-    >
-      <template v-slot:label="">
-        <FieldAnnotation
-          label="洗消时间："
-          remark-field="washDate"
-          field-module="basicInformation"
-          :exist-data="fieldExist?.washDate"
-          @refresh-callback="refreshField"
-        />
-      </template>
-    </SelectDateTime> 
+    </SelectDateTime>
     <SelectDateTime
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
@@ -500,7 +478,29 @@ const onDealEndDate = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectDateTime> 
+    </SelectDateTime>
+    <SelectDateTime
+      v-if="showDealSituation && !showFalsePolice"
+      v-model:value="form.basicInformation.washDate.value"
+      :show-preview="showPreview"
+      is-link
+      name="basicInformation.washDate.value"
+      title="请选择洗消时间"
+      label="洗消时间："
+      placeholder="请选择洗消时间"
+      :minDate="minInputTime"
+      :rules="form.basicInformation.washDate.rules"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="洗消时间："
+          remark-field="washDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.washDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime>
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"

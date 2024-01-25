@@ -20,7 +20,12 @@ export function getFireWarningEditApproval(data) {
   }).then((res) => {
     return {
       ...res,
-      list: res.items,
+      list: res.items?.map((temp) => {
+        return {
+          ...temp,
+          warningDate: temp.warningDate ? dayjs(temp.warningDate).unix() * 1000 : '',
+        }
+      }),
     }
   })
 }

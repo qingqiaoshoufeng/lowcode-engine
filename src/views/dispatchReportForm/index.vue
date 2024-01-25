@@ -272,10 +272,10 @@ const showFalsePolice = computed(() => {
 // 主要战术措施
 const showTactical = computed(() => {
   const { warningType } = form.value.draftInfo
-  return warningType?.text?.join('/') === '社会救助/公共服务/物资保障（送水/农田灌溉、运输物资等）'
+  return warningType?.text?.join('/')?.indexOf('社会救助/公共服务/物资保障') > -1
     || warningType?.text?.join('/') === '社会救助/公共服务/排水排涝清淤'
     || warningType?.text?.join('/') === '安保勤务/特殊勤务/医疗卫生'
-    || warningType?.text?.join('/').indexOf('安保勤务/防灾勤务') > -1
+    || warningType?.text?.join('/')?.indexOf('安保勤务/防灾勤务') > -1
 })
 
 // 是否为国家队
