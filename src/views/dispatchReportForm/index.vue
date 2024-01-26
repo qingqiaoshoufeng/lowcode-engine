@@ -658,6 +658,7 @@ const initFireProcess = () => {
     ...detail.value,
     detachment: initDispatchDetail.value.detachment,
     warningOrgname: initDispatchDetail.value.warningOrgname,
+    nationTeamFlag: showNationTeam.value,
   }, userInfo.value?.USERMESSAGE?.orgName)
 }
 

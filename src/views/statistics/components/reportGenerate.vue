@@ -2,7 +2,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
 import { showToast } from "vant";
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash-es';
 import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
 import { getRangeByCode } from "@/utils/_xlsxspread.min.js";
@@ -552,6 +552,29 @@ onMounted(() => {
         />
       </template>
       <template v-if="form.reportStyle === '1' && searchType === 1">
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="false"
+          :readonly="true"
+          :selectLeaf="false"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+          :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
+        />
+      </template>
+      <template v-else-if="form.reportStyle === '2' && searchType === 1">
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="searchType === 1 && reportType === '1'"
+          :readonly="true"
+          :selectLeaf="false"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+        />
+      </template>
+      <template v-if="form.reportStyle === '1' && searchType === 1">
         <SelectOrg
           v-model:value="form.createUserOrg"
           :readonly="true"
@@ -583,29 +606,6 @@ onMounted(() => {
           :select-leaf="false"
           :single="true"
           :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
-        />
-      </template>
-      <template v-if="form.reportStyle === '1' && searchType === 1">
-        <AreaCascader
-          v-model:value="form.areaId"
-          :required="false"
-          :readonly="true"
-          :selectLeaf="false"
-          label="行政区域："
-          :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
-          :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
-        />
-      </template>
-      <template v-else-if="form.reportStyle === '2' && searchType === 1">
-        <AreaCascader
-          v-model:value="form.areaId"
-          :required="searchType === 1 && reportType === '1'"
-          :readonly="true"
-          :selectLeaf="false"
-          label="行政区域："
-          :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
         />
       </template>
       <SelectSingle

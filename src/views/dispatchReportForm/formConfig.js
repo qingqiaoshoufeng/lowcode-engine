@@ -1115,7 +1115,7 @@ export const useFormConfig = () => {
   // 根据模版生成处置经过
   const generateRemarkField = (detail, orgName) => {
     const { draftInfo, basicInformation, battleResult, casualtyWar, investForce } = form.value
-    const { warningDate, warningTypeValue, warningAddr, distributeOrgName, warningOrgname } = detail
+    const { warningDate, warningTypeValue, warningAddr, distributeOrgName, warningOrgname, nationTeamFlag = true } = detail
     let content = ''
     const warningTypeText = cloneDeep(warningTypeValue?.split('/') || draftInfo.warningType?.text)
     if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场实施处置') {
@@ -1210,7 +1210,7 @@ export const useFormConfig = () => {
     if (investForce.dispatchTruckList.value?.length > 0) {
       content = content.replace('【车辆数】', investForce.dispatchTruckList.value?.length)
     }
-    if (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0) {
+    if (nationTeamFlag && (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0)) {
       const ids = investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
       const result = cloneDeep(investForce.commander?.value) || []
       investForce.firemen.value?.forEach((item) => {
@@ -1219,6 +1219,8 @@ export const useFormConfig = () => {
         }
       })
       content = content.replace('【指战员数】', result?.length)
+    } else if (!nationTeamFlag && (investForce.commanderNum?.value || investForce.firemenNum?.value)) {
+      content = content.replace('【指战员数】', Number(investForce.commanderNum?.value) + Number(investForce.firemenNum?.value))
     }
     if (basicInformation.attendanceDate.value) {
       content = content.replace('【到场时间】', dayjs(basicInformation.attendanceDate.value).format('MM月DD日HH时mm分'))
