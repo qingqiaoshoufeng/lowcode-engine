@@ -142,7 +142,7 @@ const menus = [
     key: 'rejectFlag',
   },
   {
-    label: '大规模出动警情',
+    label: '5队及以上出动警情',
     key: 'largeDispatchFlag',
   },
   {
@@ -152,6 +152,10 @@ const menus = [
   {
     label: '重要信息更正警情',
     key: 'importantWarningFlag',
+  },
+  {
+    label: '百人及以上出动警情',
+    key: 'largePeopleFlag',
   },
 ]
 const searchOptions = computed(()=>([
