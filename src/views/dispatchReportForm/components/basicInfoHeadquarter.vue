@@ -1,6 +1,6 @@
 <script setup>
 import { inject, ref, watch } from "vue";
-import { formatDiff } from "@/utils/tools.js";
+import { checkStartEnd, formatDiff } from "@/utils/tools.js";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProCard from "@/component/ProCard/index.vue";
 import { useStore } from "vuex";
@@ -31,7 +31,7 @@ const validateDispatch = (value, rule) => {
     } else {
       return "请选择出动时间";
     }
-  } else if (currentRow && dispatchDate.value?.valueOf() < currentRow.warningDate) {
+  } else if (currentRow && checkStartEnd(currentRow.warningDate, dispatchDate.value)) {
     return "出动时间不能早于接警时间";
   } else {
     return "";
@@ -46,7 +46,7 @@ const validateAttendance = (value, rule) => {
     } else {
       return "请选择到场时间";
     }
-  } else if (attendanceDate.value?.valueOf() < dispatchDate.value?.valueOf()) {
+  } else if (checkStartEnd(dispatchDate.value, attendanceDate.value)) {
     return "到场时间不能早于出动时间";
   } else {
     return "";
@@ -61,7 +61,7 @@ const validateEvacuate = (value, rule) => {
     } else {
       return "请选择撤离时间";
     }
-  } else if (evacuateDate.value?.valueOf() < attendanceDate.value?.valueOf()) {
+  } else if (checkStartEnd(attendanceDate.value, evacuateDate.value)) {
     return "撤离时间不能早于到场时间";
   } else {
     return "";
@@ -78,7 +78,7 @@ const validateMidway = (value, rule) => {
       return '请选择中途返回时间'
     }
   }
-  else if (midwayReturnDate.value?.valueOf() < dispatchDate.value?.valueOf()) {
+  else if (checkStartEnd(dispatchDate.value, midwayReturnDate.value)) {
     return '中途返回时间不能早于出动时间'
   }
   else {
@@ -96,7 +96,7 @@ const validateReturn = (value, rule) => {
       return '请选择归队时间'
     }
   }
-  else if (returnDate.value?.valueOf() < midwayReturnDate.value?.valueOf()) {
+  else if (checkStartEnd(midwayReturnDate.value, returnDate.value)) {
     return '归队时间不能早于中途返回时间'
   }
   else {

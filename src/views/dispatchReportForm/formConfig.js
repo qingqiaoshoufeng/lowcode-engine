@@ -127,13 +127,13 @@ export const useFormConfig = () => {
         value: '',
         rules: [{ required: true, message: '' }],
       },
-      presentSpeed: { // 到场时速（公里/小时）
+      presentSpeed: { // 平均时速（公里/小时）
         value: '',
         rules: [{ required: false, message: '' }],
       },
-      returnLateReason: { // 到场时速异常原因
+      returnLateReason: { // 平均时速异常原因
         value: undefined,
-        rules: [{ required: true, message: '请选择到场时速异常原因' }],
+        rules: [{ required: true, message: '请选择平均时速异常原因' }],
       },
       dealEndDate: { // 警情处置结束时间
         value: '',
@@ -173,11 +173,11 @@ export const useFormConfig = () => {
         value: undefined,
         rules: [{ required: true, message: '请选择抢险救援措施' }],
       },
-      deliverWater: { // 送水量（吨）
+      deliverWater: { // 送水/物资量（吨）
         value: '',
         rules: [
-          { required: true, message: '请输入送水量' },
-          { pattern: nonnegativeNumberReg, message: '请输入正确送水量' },
+          { required: true, message: '请输入送水/物资量' },
+          { pattern: nonnegativeNumberReg, message: '请输入正确送水/物资量' },
         ],
       },
       drainWater: { // 排涝量（吨）
@@ -641,7 +641,7 @@ export const useFormConfig = () => {
       deadList: [], // 死亡人员列表
       name: {
         value: '',
-        rules: [{ required: true, message: '请输入人员姓名' }],
+        rules: [{ required: true, message: '请选择人员姓名' }],
       },
       identity: {
         value: undefined,
@@ -1115,7 +1115,7 @@ export const useFormConfig = () => {
   // 根据模版生成处置经过
   const generateRemarkField = (detail, orgName) => {
     const { draftInfo, basicInformation, battleResult, casualtyWar, investForce } = form.value
-    const { warningDate, warningTypeValue, warningAddr, distributeOrgName, warningOrgname } = detail
+    const { warningDate, warningTypeValue, warningAddr, distributeOrgName, warningOrgname, nationTeamFlag = true } = detail
     let content = ''
     const warningTypeText = cloneDeep(warningTypeValue?.split('/') || draftInfo.warningType?.text)
     if (warningTypeText?.includes('火灾扑救') && basicInformation.dealSituation?.text === '到场实施处置') {
@@ -1210,7 +1210,7 @@ export const useFormConfig = () => {
     if (investForce.dispatchTruckList.value?.length > 0) {
       content = content.replace('【车辆数】', investForce.dispatchTruckList.value?.length)
     }
-    if (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0) {
+    if (nationTeamFlag && (investForce.commander.value?.length >= 0 || investForce.firemen.value?.length >= 0)) {
       const ids = investForce.commander?.value?.map(item => item.boFireUserId)?.join(',') || ''
       const result = cloneDeep(investForce.commander?.value) || []
       investForce.firemen.value?.forEach((item) => {
@@ -1219,6 +1219,8 @@ export const useFormConfig = () => {
         }
       })
       content = content.replace('【指战员数】', result?.length)
+    } else if (!nationTeamFlag && (investForce.commanderNum?.value || investForce.firemenNum?.value)) {
+      content = content.replace('【指战员数】', Number(investForce.commanderNum?.value) + Number(investForce.firemenNum?.value))
     }
     if (basicInformation.attendanceDate.value) {
       content = content.replace('【到场时间】', dayjs(basicInformation.attendanceDate.value).format('MM月DD日HH时mm分'))
@@ -1255,7 +1257,7 @@ export const useFormConfig = () => {
       content = content.replace('【伤人数】', casualtyWar.injuredList?.length || 0)
     }
     else {
-      content = content.replace('造成参战人员【亡人数】死【伤人数】伤', '无参战人员伤亡')
+      content = content.replace('造成参战人员【亡人数】死【伤人数】伤。', '')
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')
     form.value.disposalProcess.fireProcess.value = content
@@ -1361,12 +1363,12 @@ export const useFormConfig = () => {
   }
 
   // 校验表单规则是否需要显示 warning 提示
-  const checkFormField = (warningDetail) => {
+  const checkFormField = (warningDetail, nationTeamFlag) => {
     if (warningDetail?.warningStatusValue === '已归档') {
       return
     }
 
-    checkDispatchNum(form.value, false)
+    checkDispatchNum(form.value, false, nationTeamFlag)
 
     checkFireDistance(form.value, false)
 
@@ -1685,7 +1687,7 @@ export const useFormConfig = () => {
     form.value.disposalProcess.fireProcess.value = fireDispatchItem?.fireProcess
     // 流程流转
     form.value.proSteps.fireDispatchTransferVOList.value = fireDispatchTransferVOList
-    checkFormField(warningDetail)
+    checkFormField(warningDetail, nationTeamFlag)
 
     callback()
   }

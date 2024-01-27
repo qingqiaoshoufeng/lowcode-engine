@@ -649,7 +649,7 @@ const initDict = () => {
       options.value.costSource = res.HZ_INFO_SSLY // 损失来源
       options.value.installRange = res.HZ_INFO_XFSS_AZFW // 安装范围
       options.value.leadInspectionOrg = res.HZ_INFO_SGBM // 事故调查牵头部门
-      options.value.plantRiskClassification = res.WX_FL // 厂房火灾危险性分类
+      options.value.plantRiskClassification = res.WX_FL // 火灾危险性分类
       options.value.fireInspection = res.HZ_INFO_JCQK // 检查监督情况
       options.value.fireInspectionScope = res.HZ_INFO_JCQK[0]?.children || [] // 监督检查范围
       options.value.fireSafetyUnits = res.HZ_INFO_JCQK[0]?.children[1]?.children || [] // 消防安全重点单位

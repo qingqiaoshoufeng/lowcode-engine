@@ -2,7 +2,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
 import { showToast } from "vant";
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash-es';
 import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
 import { getRangeByCode } from "@/utils/_xlsxspread.min.js";
@@ -207,7 +207,7 @@ const handleSearch = () => {
           for (let i = 0; i < passNumber; i++) {
             columnData.shift()
           }
-          widthObj[i] = Math.max(...columnData) * 14 + 14
+          widthObj[i] = Math.max(...columnData) * 14 + 2
         }
         window.luckysheet.setColumnWidth(widthObj)
       })
@@ -227,16 +227,16 @@ const handleDefineSearch = () => {
     return
   }
   if (props.searchType !== 2 && props.searchType !== 3) {
+    if (!form.value.time || !form.value.time?.[0]) {
+      showToast('请先选择时间')
+      return
+    }
     if ((reportType.value === '1') && !form.value.areaId) {
       showToast('请先选择行政区域')
       return
     }
     if ((reportType.value === '2') && !form.value.createUserOrg) {
       showToast('请先选择所属队伍')
-      return
-    }
-    if (!form.value.time || !form.value.time?.[0]) {
-      showToast('请先选择时间')
       return
     }
   }
@@ -324,7 +324,7 @@ const handleDefineSearch = () => {
           columnData.shift()
           columnData.shift()
           columnData.shift()
-          widthObj[i] = Math.max(...columnData) * 14 + 14
+          widthObj[i] = Math.max(...columnData) * 14 + 2
         }
         window.luckysheet.setColumnWidth(widthObj)
       })
@@ -373,7 +373,7 @@ const onReportClass = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = getLastMonth()
+  // form.value.time = getLastMonth()
   form.value.perTypes = []
   selectReport.value = null
   options.value.reportNick = []
@@ -419,6 +419,7 @@ const initType = () => {
         reportType.value = res[0].reportType
         reportName.value = res[0].reportName
         form.value.queryType = res[0].boFireReportTypeId
+        // eslint-disable-next-line no-console
         console.log(reportType.value, reportName.value, form.value.queryType)
       }
     })
@@ -429,7 +430,7 @@ const onReportNick = () => {
   form.value.queryType = undefined
   form.value.createUserOrg = undefined
   form.value.areaId = undefined
-  form.value.time = getLastMonth()
+  // form.value.time = getLastMonth()
   form.value.perTypes = []
   reportType.value = ''
   reportName.value = ''
@@ -541,6 +542,38 @@ onMounted(() => {
         :rules="[{ required: true, message: '请选择报表维度' }]"
         :disabled="form.reportStyle === '1' ? options.queryType?.length <= 0 : true"
       />
+      <template v-if="searchType === 1">
+        <SelectRangeTime
+          v-model:value="form.time"
+          :required="true"
+          :readonly="true"
+          label="统计时间："
+          placeholder="请选择统计时间"
+        />
+      </template>
+      <template v-if="form.reportStyle === '1' && searchType === 1">
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="false"
+          :readonly="true"
+          :selectLeaf="false"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+          :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
+        />
+      </template>
+      <template v-else-if="form.reportStyle === '2' && searchType === 1">
+        <AreaCascader
+          v-model:value="form.areaId"
+          :required="searchType === 1 && reportType === '1'"
+          :readonly="true"
+          :selectLeaf="false"
+          label="行政区域："
+          :report-name="reportName"
+          :params="{ staticFlag: form.searchDimension }"
+        />
+      </template>
       <template v-if="form.reportStyle === '1' && searchType === 1">
         <SelectOrg
           v-model:value="form.createUserOrg"
@@ -564,7 +597,7 @@ onMounted(() => {
           :readonly="true"
           name="createUserOrg"
           :field-names="{ value: 'organizationid', label: 'name' }"
-          :required="false"
+          :required="searchType === 1 && reportType === '2'"
           label="所属队伍："
           placeholder="请选择所属队伍"
           title="请选择所属队伍"
@@ -573,38 +606,6 @@ onMounted(() => {
           :select-leaf="false"
           :single="true"
           :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
-        />
-      </template>
-      <template v-if="form.reportStyle === '1' && searchType === 1">
-        <AreaCascader
-          v-model:value="form.areaId"
-          :required="false"
-          :readonly="true"
-          :selectLeaf="false"
-          label="行政区域："
-          :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
-          :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
-        />
-      </template>
-      <template v-else-if="form.reportStyle === '2' && searchType === 1">
-        <AreaCascader
-          v-model:value="form.areaId"
-          :required="false"
-          :readonly="true"
-          :selectLeaf="false"
-          label="行政区域："
-          :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
-        />
-      </template>
-      <template v-if="searchType === 1">
-        <SelectRangeTime
-          v-model:value="form.time"
-          :required="true"
-          :readonly="true"
-          label="统计时间："
-          placeholder="请选择统计时间"
         />
       </template>
       <SelectSingle

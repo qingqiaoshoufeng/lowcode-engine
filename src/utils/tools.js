@@ -317,6 +317,35 @@ export const formatDiff = (startTime, endTime) => {
   return `${formatNumber(day * 24 + hours)}小时${formatNumber(minutes)}分钟`
 }
 
+// 校验时间的大小
+export const checkStartEnd = (start, end, type = '<') => {
+  if (!start || !end) {
+    return false
+  }
+  if (type === '<') {
+    if (typeof start === 'number' && typeof end !== 'number') {
+      return end.unix() < Math.floor(start / 1000)
+    }
+    else if (typeof start !== 'number' && typeof end === 'number') {
+      return Math.floor(end / 1000) < start.unix()
+    }
+    else {
+      return end.unix() < start.unix()
+    }
+  }
+  else if (type === '<=') {
+    if (typeof start === 'number' && typeof end !== 'number') {
+      return end.unix() <= Math.floor(start / 1000)
+    }
+    else if (typeof start !== 'number' && typeof end === 'number') {
+      return Math.floor(end / 1000) <= start.unix()
+    }
+    else {
+      return end.unix() <= start.unix()
+    }
+  }
+}
+
 export const renderLayoutHeight = () => {
   return `${document.body.clientHeight - 157}px`
 }

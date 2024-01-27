@@ -42,15 +42,15 @@ const proListRef = ref(null);
 
 const rejectType = computed(() => {
   switch (searchType.value) {
-    case 1:
-      return '1'
-    case 2:
-    case 3:
-      return '2'
-    case 4:
-      return '3'
-    default:
-      return '1'
+  case 1:
+    return '1'
+  case 2:
+  case 3:
+    return '2'
+  case 4:
+    return '3'
+  default:
+    return '1'
   }
 })
 
@@ -126,7 +126,7 @@ onMounted(() => {
                 {{ record.warningStatusValue }}
               </div>
             </div>
-            <div class="item-type">
+            <div v-if="record.warningTypeValue" class="item-type">
               <span>{{ record.warningTypeValue }}</span>
             </div>
             <template v-if="searchType === 4">

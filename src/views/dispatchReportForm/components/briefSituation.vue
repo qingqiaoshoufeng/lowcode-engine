@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { checkAttendanceDate, checkReturnSpeed } from "../tool.js";
 import { useStore } from "vuex";
 import { showDialog } from 'vant';
+import { checkStartEnd } from '@/utils/tools.js'
 
 const store = useStore();
 
@@ -39,7 +40,7 @@ const diyValidateMap = inject("diyValidateMap");
 
 const { speedConfig } = store.state?.rules?.ruleConfig
 
-// 时速在 20 ~ 120，显示到场时速异常原因
+// 时速在 20 ~ 120，显示平均时速异常原因
 const showReturnSlow = computed(() => {
   const { attendanceDate, dispatchDate } = form.value.basicInformation;
   const { fireDistance } = form.value.basicInformation;
@@ -67,10 +68,7 @@ const validateDispatch = (value, rule) => {
     } else {
       return "请选择出动时间";
     }
-  } else if (
-    currentRow &&
-    dispatchDate.value?.valueOf() < currentRow.warningDate
-  ) {
+  } else if (currentRow && checkStartEnd(currentRow.warningDate, dispatchDate.value)) {
     return "出动时间不能早于接警时间";
   } else {
     return "";
@@ -85,9 +83,7 @@ const validateMidway = (value, rule) => {
     } else {
       return "请选择中途返回时间";
     }
-  } else if (
-    midwayReturnDate.value?.valueOf() < dispatchDate.value?.valueOf()
-  ) {
+  } else if (checkStartEnd(dispatchDate.value, midwayReturnDate.value)) {
     return "中途返回时间不能早于出动时间";
   } else {
     return "";
@@ -102,7 +98,7 @@ const validateAttendance = (value, rule) => {
     } else {
       return "请选择到场时间";
     }
-  } else if (attendanceDate.value?.valueOf() < dispatchDate.value?.valueOf()) {
+  } else if (checkStartEnd(dispatchDate.value, attendanceDate.value)) {
     return "到场时间不能早于出动时间";
   } else {
     return "";
@@ -111,10 +107,7 @@ const validateAttendance = (value, rule) => {
 
 const validateCarryout = (value, rule) => {
   const { carryoutDate, attendanceDate } = form.value.basicInformation;
-  if (
-    carryoutDate.value &&
-    carryoutDate.value?.valueOf() < attendanceDate.value?.valueOf()
-  ) {
+  if (checkStartEnd(attendanceDate.value, carryoutDate.value)) {
     return "展开时间不能早于到场时间";
   } else {
     return "";
@@ -124,15 +117,9 @@ const validateCarryout = (value, rule) => {
 const validateWaterflow = (value, rule) => {
   const { carryoutDate, waterflowDate, attendanceDate } =
     form.value.basicInformation;
-  if (
-    waterflowDate.value &&
-    waterflowDate.value?.valueOf() < carryoutDate.value?.valueOf()
-  ) {
+  if (checkStartEnd(carryoutDate.value, waterflowDate.value)) {
     return "出水时间不能早于展开时间";
-  } else if (
-    waterflowDate.value &&
-    waterflowDate.value?.valueOf() < attendanceDate.value?.valueOf()
-  ) {
+  } else if (checkStartEnd(attendanceDate.value, waterflowDate.value)) {
     return "出水时间不能早于到场时间";
   } else {
     return "";
@@ -157,31 +144,22 @@ const validateExtinguish = (value, rule) => {
       return "请选择扑灭时间";
     }
   } else if (fireSituation.text === "火已熄灭") {
-    if (
-      attendanceDate.value &&
-      extinctDate.value?.valueOf() >= attendanceDate.value?.valueOf()
-    ) {
+    if (checkStartEnd(extinctDate.value, attendanceDate.value, '<=')) {
       return "到场时火已熄灭，扑灭时间应早于到场时间";
-    } else if (
-      evacuateDate.value &&
-      extinctDate.value?.valueOf() >= evacuateDate.value?.valueOf()
-    ) {
+    } else if (checkStartEnd(extinctDate.value, evacuateDate.value, '<=')) {
       return "到场时火已熄灭，扑灭时间应早于撤离时间";
-    } else if (
-      returnDate.value &&
-      extinctDate.value?.valueOf() >= returnDate.value?.valueOf()
-    ) {
+    } else if (checkStartEnd(extinctDate.value, returnDate.value, '<=')) {
       return "到场时火已熄灭，扑灭时间应早于归队时间";
     } else {
       return "";
     }
-  } else if (extinctDate.value?.valueOf() < controllingDate.value?.valueOf()) {
+  } else if (checkStartEnd(controllingDate.value, extinctDate.value)) {
     return "扑灭时间不能早于控制时间";
-  } else if (extinctDate.value?.valueOf() < waterflowDate.value?.valueOf()) {
+  } else if (checkStartEnd(waterflowDate.value, extinctDate.value)) {
     return "扑灭时间不能早于出水时间";
-  } else if (extinctDate.value?.valueOf() < carryoutDate.value?.valueOf()) {
+  } else if (checkStartEnd(carryoutDate.value, extinctDate.value)) {
     return "扑灭时间不能早于展开时间";
-  } else if (extinctDate.value?.valueOf() < attendanceDate.value?.valueOf()) {
+  } else if (checkStartEnd(attendanceDate.value, extinctDate.value)) {
     return "扑灭时间不能早于到场时间";
   } else {
     return "";
@@ -203,15 +181,15 @@ const validateEnd = (value, rule) => {
     } else {
       return "请选择结束时间";
     }
-  } else if (endDate.value?.valueOf() < extinctDate.value?.valueOf()) {
+  } else if (checkStartEnd(extinctDate.value, endDate.value)) {
     return "结束时间不能早于扑灭时间";
-  } else if (endDate.value?.valueOf() < controllingDate.value?.valueOf()) {
+  } else if (checkStartEnd(controllingDate.value, endDate.value)) {
     return "结束时间不能早于控制时间";
-  } else if (endDate.value?.valueOf() < waterflowDate.value?.valueOf()) {
+  } else if (checkStartEnd(waterflowDate.value, endDate.value)) {
     return "结束时间不能早于出水时间";
-  } else if (endDate.value?.valueOf() < carryoutDate.value?.valueOf()) {
+  } else if (checkStartEnd(carryoutDate.value, endDate.value)) {
     return "结束时间不能早于展开时间";
-  } else if (endDate.value?.valueOf() < attendanceDate.value?.valueOf()) {
+  } else if (checkStartEnd(attendanceDate.value, endDate.value)) {
     return "结束时间不能早于到场时间";
   } else {
     return "";
@@ -226,9 +204,9 @@ const validateEvacuate = (value, rule) => {
     } else {
       return "请选择撤离时间";
     }
-  } else if (evacuateDate.value?.valueOf() < attendanceDate.value?.valueOf()) {
+  } else if (checkStartEnd(attendanceDate.value, evacuateDate.value)) {
     return "撤离时间不能早于到场时间";
-  } else if (evacuateDate.value?.valueOf() < endDate.value?.valueOf()) {
+  } else if (checkStartEnd(endDate.value, evacuateDate.value)) {
     return "撤离时间不能早于结束时间";
   } else {
     return "";
@@ -244,9 +222,9 @@ const validateReturn = (value, rule) => {
     } else {
       return "请选择归队时间";
     }
-  } else if (returnDate.value?.valueOf() < midwayReturnDate.value?.valueOf()) {
+  } else if (checkStartEnd(midwayReturnDate.value, returnDate.value)) {
     return "归队时间不能早于中途返回时间";
-  } else if (returnDate.value?.valueOf() < evacuateDate.value?.valueOf()) {
+  } else if (checkStartEnd(evacuateDate.value, returnDate.value)) {
     return "归队时间不能早于撤离时间";
   } else {
     return "";
@@ -261,10 +239,7 @@ const validateDealEndDate = (value, rule) => {
     } else {
       return "请选择警情处置结束时间";
     }
-  } else if (
-    currentRow &&
-    dealEndDate.value?.valueOf() < currentRow.warningDate
-  ) {
+  } else if (currentRow && checkStartEnd(currentRow.warningDate, dealEndDate.value)) {
     return "警情处置结束时间不能早于接警时间";
   } else {
     return "";
@@ -454,29 +429,7 @@ const onDealEndDate = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectDateTime> 
-    <SelectDateTime
-      v-if="showDealSituation && !showFalsePolice"
-      v-model:value="form.basicInformation.washDate.value"
-      :show-preview="showPreview"
-      is-link
-      name="basicInformation.washDate.value"
-      title="请选择洗消时间"
-      label="洗消时间："
-      placeholder="请选择洗消时间"
-      :minDate="minInputTime"
-      :rules="form.basicInformation.washDate.rules"
-    >
-      <template v-slot:label="">
-        <FieldAnnotation
-          label="洗消时间："
-          remark-field="washDate"
-          field-module="basicInformation"
-          :exist-data="fieldExist?.washDate"
-          @refresh-callback="refreshField"
-        />
-      </template>
-    </SelectDateTime> 
+    </SelectDateTime>
     <SelectDateTime
       v-if="showDealSituation && showFireFighting && showMainGroup && !showFalsePolice"
       v-model:value="form.basicInformation.extinctDate.value"
@@ -500,7 +453,29 @@ const onDealEndDate = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectDateTime> 
+    </SelectDateTime>
+    <SelectDateTime
+      v-if="showDealSituation && !showFalsePolice"
+      v-model:value="form.basicInformation.washDate.value"
+      :show-preview="showPreview"
+      is-link
+      name="basicInformation.washDate.value"
+      title="请选择洗消时间"
+      label="洗消时间："
+      placeholder="请选择洗消时间"
+      :minDate="minInputTime"
+      :rules="form.basicInformation.washDate.rules"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="洗消时间："
+          remark-field="washDate"
+          field-module="basicInformation"
+          :exist-data="fieldExist?.washDate"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </SelectDateTime>
     <SelectDateTime
       v-if="showDealSituation && !showFalsePolice"
       v-model:value="form.basicInformation.endDate.value"
@@ -580,15 +555,15 @@ const onDealEndDate = () => {
       type="number"
       maxlength="10"
       name="basicInformation.presentSpeed.value"
-      label="到场时速(公里/小时)："
+      label="平均时速(公里/小时)："
       label-width="158px"
-      placeholder="请输入到场时速"
+      placeholder="请输入平均时速"
       :rules="form.basicInformation.presentSpeed.rules"
       :disabled="!showPreview"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="到场时速(公里/小时)："
+          label="平均时速(公里/小时)："
           remark-field="presentSpeed"
           field-module="basicInformation"
           :exist-data="fieldExist?.presentSpeed"
@@ -604,15 +579,15 @@ const onDealEndDate = () => {
       required
       :options="options.returnLateReason"
       :field-names="{ value: 'boDictId', label: 'dictName' }"
-      title="请选择到场时速异常原因"
-      label="到场时速异常原因："
+      title="请选择平均时速异常原因"
+      label="平均时速异常原因："
       label-width="142px"
-      placeholder="请选择到场时速异常原因"
+      placeholder="请选择平均时速异常原因"
       :rules="form.basicInformation.returnLateReason.rules"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="到场时速异常原因："
+          label="平均时速异常原因："
           field-module="basicInformation"
           :exist-data="fieldExist?.returnLateReason"
           @refresh-callback="refreshField"

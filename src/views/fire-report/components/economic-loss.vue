@@ -43,7 +43,7 @@ watch(() => form.value.economicLoss, () => {
   if (otherExpense.value > 0) {
     loss += Number(otherExpense.value)
   }
-  form.value.economicLoss.directEconomicLoss.value = loss
+  form.value.economicLoss.directEconomicLoss.value = loss > 0 ? Number((loss).toFixed(2)) : loss
 }, { deep: true })
 
 const validateDirectDamage = (val) => {

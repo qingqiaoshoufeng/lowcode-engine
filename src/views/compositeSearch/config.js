@@ -445,17 +445,17 @@ export const useFormConfig = () => {
         label: '到场时长（分钟）',
         labelWidth: '128px',
       },
-      speedStart: { // 到场时速（km/h）
+      speedStart: { // 平均时速（km/h）
         value: ['', ''],
         type: 'input-range',
-        label: '到场时速（km/h）',
+        label: '平均时速（km/h）',
         labelWidth: '136px',
       },
-      returnLateReason: { // 到场时速异常原因
+      returnLateReason: { // 平均时速异常原因
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '到场时速异常原因',
+        label: '平均时速异常原因',
         labelWidth: '130px',
         options: 'returnLateReason',
         fieldNames: { value: 'boDictId', label: 'dictName' },

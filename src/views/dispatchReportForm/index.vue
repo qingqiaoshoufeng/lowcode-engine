@@ -272,10 +272,10 @@ const showFalsePolice = computed(() => {
 // 主要战术措施
 const showTactical = computed(() => {
   const { warningType } = form.value.draftInfo
-  return warningType?.text?.join('/') === '社会救助/公共服务/物资保障（送水/农田灌溉、运输物资等）'
+  return warningType?.text?.join('/')?.indexOf('社会救助/公共服务/物资保障') > -1
     || warningType?.text?.join('/') === '社会救助/公共服务/排水排涝清淤'
     || warningType?.text?.join('/') === '安保勤务/特殊勤务/医疗卫生'
-    || warningType?.text?.join('/').indexOf('安保勤务/防灾勤务') > -1
+    || warningType?.text?.join('/')?.indexOf('安保勤务/防灾勤务') > -1
 })
 
 // 是否为国家队
@@ -553,6 +553,7 @@ const initWeather = () => {
 
 const initCasualty = () => {
   if (!showNationTeam.value) {
+    form.value.casualtyWar.name.rules[0].message = '请输入人员姓名'
     form.value.casualtyWar.identity.rules[0].required = true
     form.value.casualtyWar.rescueRank.rules[0].required = true
     form.value.casualtyWar.duty.rules[0].required = true
@@ -578,7 +579,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -591,7 +592,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -603,7 +604,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     }
@@ -615,7 +616,7 @@ const initDetail = () => {
             importantEdit.value = res.importantInfoRecheck
           }
 
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: initDispatchDetail.value.nationTeamFlag })
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
         }
       }).finally(() => resolve())
     } else {
@@ -657,6 +658,7 @@ const initFireProcess = () => {
     ...detail.value,
     detachment: initDispatchDetail.value.detachment,
     warningOrgname: initDispatchDetail.value.warningOrgname,
+    nationTeamFlag: showNationTeam.value,
   }, userInfo.value?.USERMESSAGE?.orgName)
 }
 

@@ -12,7 +12,7 @@ const showPreview = inject("showPreview");
 // 社会救助/物资保障/送水
 const showDeliverWater = computed(() => {
   return form.value.draftInfo.warningType?.text?.includes(
-    "物资保障（送水/农田灌溉、运输物资等）"
+    "物资保障"
   );
 });
 
@@ -43,13 +43,13 @@ const showDisaster = computed(() => {
         type="basicInformation.deliverWater.value"
         maxlength="10"
         name="deliverWater"
-        label="送水量(吨)："
-        placeholder="请输入送水量"
+        label="送水/物资量(吨)："
+        placeholder="请输入送水/物资量"
         :rules="form.basicInformation.deliverWater.rules"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="送水量(吨)："
+            label="送水/物资量(吨)："
             remark-field="deliverWater"
             field-module="basicInformation"
             :exist-data="fieldExist?.deliverWater"

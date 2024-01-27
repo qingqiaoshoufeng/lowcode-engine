@@ -403,14 +403,14 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'speedStart',
     fieldKeyTwo: 'speedEnd',
-    label: '到场时速（km/h）',
+    label: '平均时速（km/h）',
     type: '2',
     labelWidth: '138px',
   },
   // 归队时速过慢原因
   {
     fieldKeyOne: 'returnLateReason',
-    label: '到场时速异常原因',
+    label: '平均时速异常原因',
     type: '4',
     dict: 'returnLateReason',
     labelWidth: '132px',

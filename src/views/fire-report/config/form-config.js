@@ -97,9 +97,9 @@ export const useFormConfig = (validateProgress) => {
         value: '2',
         rules: [{ required: true, message: '请选择是否属于劳动密集型' }],
       },
-      plantRiskClassification: { // 厂房火灾危险性分类
+      plantRiskClassification: { // 火灾危险性分类
         value: undefined,
-        rules: [{ required: true, message: '请选择厂房火灾危险性分类' }],
+        rules: [{ required: true, message: '请选择火灾危险性分类' }],
       },
       otherFirePlace: { // 其他说明
         value: '',

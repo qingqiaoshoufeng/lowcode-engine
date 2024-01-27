@@ -114,17 +114,17 @@ onMounted(async () => {
         else if (item.boFireWarningId) {
           item.type = 1
         }
-        // if (item.boFireDispatchId && currentRow?.boFireDispatchId === item.boFireDispatchId && !selectTabRow.value) {
-        //   selectTabRow.value = item
-        // }
-        // else if (item.boFireInfoId && currentRow?.boFireInfoId === item.boFireInfoId && !selectTabRow.value) {
-        //   selectTabRow.value = item
-        // }
+        if (item.boFireDispatchId && currentRow?.boFireDispatchId === item.boFireDispatchId && !selectTabRow.value) {
+          selectTabRow.value = item
+        }
+        else if (item.boFireInfoId && currentRow?.boFireInfoId === item.boFireInfoId && !selectTabRow.value) {
+          selectTabRow.value = item
+        }
       })
-      // if (!selectTabRow.value?.boFireInfoId && !selectTabRow.value?.boFireDispatchId) {
-      //   selectTabRow.value = { ...props.currentRow, type: 1 }
-      // }
-      selectTabRow.value = tabsData.value?.[0]
+      if (!selectTabRow.value?.boFireInfoId && !selectTabRow.value?.boFireDispatchId) {
+        selectTabRow.value = { ...props.currentRow, type: 1 }
+      }
+      // selectTabRow.value = tabsData.value?.[0]
       await loadDetail()
       fireWarningInfo.value = detail.value
       localFireWarningId.value = detail.value?.boFireWarningId
