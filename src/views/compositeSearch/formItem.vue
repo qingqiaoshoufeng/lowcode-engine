@@ -1,5 +1,5 @@
 <script setup>
-import { inject } from 'vue'
+import { inject,watch } from 'vue'
 import InputNumberRange from "@/component/InputNumberRange/index.vue";
 import SelectMultiple from '@/component/SelectMultiple/index.vue';
 import SelectSingle from '@/component/SelectSingle/index.vue';
@@ -18,25 +18,80 @@ const form = inject('form');
 let options = inject('options');
 
 
-const change = (value,selectedOptions ,val3)=>{
-  // console.log(val1,val2,val3,'val1,val2');
-  if(val3 !== 'fireType'){
+// const change = (value,selectedOptions ,val3)=>{
+//   // console.log(val1,val2,val3,'val1,val2');
+//   if(val3 === 'firePlace'){
+//     form.value.fireBase.fireSite.value = []
+//   }
+//   if(val3 !== 'fireType'){
+//     return
+//   }
+//   if (selectedOptions) {
+//     const { fireType } = options.value
+//     const node = fireType[0]
+//     form.value.fireBase.fireType.text = [node.dictName, selectedOptions.dictName]
+//     form.value.fireBase.fireType.completeValue = [node.boDictId, selectedOptions.boDictId]
+//   }
+//   else {
+//     form.value.fireBase.fireType.text = []
+//     form.value.fireBase.fireType.completeValue = []
+//   }
+//   form.value.fireBase.fireSite.value = []
+//   // 起火场所根据火灾类型改变
+//   form.value.fireBase.firePlace.value = undefined
+//   let key = ''
+//   const keyMap = selectedOptions.map((item) => {
+//     return item[0].dictName
+//   })
+//   if (keyMap.includes('建构筑物火灾')) {
+//     key += 'HZ_QHCS_JGZW,'
+//   }
+//   if (keyMap.includes('交通工具火灾')) {
+//     key += 'HZ_QHCS_JGZW,HZ_QHCS_LTCS,HZ_QHCS_HWZB,'
+//   }
+//   if (keyMap.includes('室外设施设备火灾')) {
+//     key += 'HZ_QHCS_SWSB,'
+//   }
+//   if (keyMap.includes('露天场所火灾')) {
+//     key += 'HZ_QHCS_LTCS,'
+//   }
+//   if (keyMap.includes('户外植被火灾')) {
+//     key += 'HZ_QHCS_HWZB,'
+//   }
+//   if (keyMap.includes('垃圾及废弃物火灾')) {
+//     key += 'HZ_QHCS_LJFQ,'
+//   }
+//   key = [...new Set(key.split(','))].join(',')
+//   getSystemDictSync(key.split(','), null, (res) => {
+//     options.value.firePlace = []
+//     key.split(',').forEach((item) => {
+//       options.value.firePlace.push(...res[item])
+//     })
+//   })
+// }
+
+const change = (value, selectedOptions,type,isClear = true) => {
+  // if (selectedOptions) {
+  //   const { fireType } = options.value
+  //   const node = fireType[0]
+  //   form.value.fireBase.fireType.text = [node.dictName, selectedOptions.dictName]
+  //   form.value.fireBase.fireType.completeValue = [node.boDictId, selectedOptions.boDictId]
+  // }
+  // else {
+  //   form.value.fireBase.fireType.text = []
+  //   form.value.fireBase.fireType.completeValue = []
+  // }
+  if(type === 'firePlace'){
+    form.value.fireBase.fireSite.value = []
+  }
+  if(type !== 'fireType'){
     return
   }
-  debugger;
-  if (selectedOptions) {
-    const { fireType } = options.value
-    const node = fireType[0]
-    form.value.fireBase.fireType.text = [node.dictName, selectedOptions.dictName]
-    form.value.fireBase.fireType.completeValue = [node.boDictId, selectedOptions.boDictId]
+  if (isClear) {
+    form.value.fireBase.fireSite.value = []
+    // 起火场所根据火灾类型改变
+    form.value.fireBase.firePlace.value = undefined
   }
-  else {
-    form.value.fireBase.fireType.text = []
-    form.value.fireBase.fireType.completeValue = []
-  }
-  form.value.fireBase.fireSite.value = []
-  // 起火场所根据火灾类型改变
-  form.value.fireBase.firePlace.value = undefined
   let key = ''
   const keyMap = selectedOptions.map((item) => {
     return item[0].dictName
@@ -59,6 +114,12 @@ const change = (value,selectedOptions ,val3)=>{
   if (keyMap.includes('垃圾及废弃物火灾')) {
     key += 'HZ_QHCS_LJFQ,'
   }
+  if (!selectedOptions.length) {
+    // systemDict.getSystemDictSync(['HZ_QHCS'], null, (res) => {
+    //   options.value.firePlace = res.HZ_QHCS // 起火场所类型
+    // })
+    key = 'HZ_QHCS_JGZW,HZ_QHCS_LTCS,HZ_QHCS_HWZB,HZ_QHCS_SWSB,HZ_QHCS_LJFQ'
+  }
   key = [...new Set(key.split(','))].join(',')
   getSystemDictSync(key.split(','), null, (res) => {
     options.value.firePlace = []
@@ -67,6 +128,15 @@ const change = (value,selectedOptions ,val3)=>{
     })
   })
 }
+
+watch(() => form.value.fireBase.fireType.value, (val) => {
+  const list = val.map(item => item[0])
+  const selectedOptions = options.value.fireType.filter(item => list.includes(item.boDictId)).map(item => ([item]))
+  change(val, selectedOptions,'fireType', false)
+})
+
+
+
 
 
 const props = defineProps({

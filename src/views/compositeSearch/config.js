@@ -2548,6 +2548,7 @@ export const useFormConfig = () => {
     form.value.fireBase.areaDutyGroupFire.back = comprehensiveFireQueryReq.areaDutyGroupFireNon === 'true'
     form.value.fireBase.area.value = returnCascaderValue(comprehensiveFireQueryReq.area)
     form.value.fireBase.area.back = comprehensiveFireQueryReq.areaNon === 'true'
+    form.value.fireBase.fireType.value = comprehensiveFireQueryReq.fireType.split(',').map(item => ([item]))
     form.value.fireBase.firePlace.value = returnCascaderValue(comprehensiveFireQueryReq.firePlace)
     form.value.fireBase.firePlace.back = comprehensiveFireQueryReq.firePlaceNon === 'true'
     form.value.fireBase.fireCause.value = returnCascaderValue(comprehensiveFireQueryReq.fireCause)

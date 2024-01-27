@@ -110,7 +110,12 @@ const onInitCallback = (row) => {
                   : []
               }
               if (obj.type === '7') {
-                data.valueOne = JSON.parse(ele.fieldValueOne)
+                if (obj.label === '火灾类型') {
+                  data.valueOne = ele.fieldValueOne.split(',').map(item => ([item]))
+                }
+                else {
+                  data.valueOne = JSON.parse(ele.fieldValueOne)
+                }
               }
               if (obj.type === '8') {
                 data.edit = '1'
