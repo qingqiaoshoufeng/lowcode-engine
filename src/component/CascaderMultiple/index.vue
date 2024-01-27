@@ -107,6 +107,12 @@ watch(() => props.value, (newVal, oldVal) => {
     selectItem.value = [];
     selectValue.value = [];
     selectText.value = [];
+    // 选中按钮去掉
+    treeData.value?.forEach(i => {
+      i.forEach(node => {
+        node.checked = false
+      })
+    })
   }
 }, { immediate: true })
 
