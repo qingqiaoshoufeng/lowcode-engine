@@ -166,7 +166,7 @@ const getListParams = () => {
 const checkConfigType = () => {
   let flag = true
   list.value.forEach((i) => {
-    if (i.fireType !== '4' && i.fieldFlag === '1') {
+    if (i.fireType !== '4' && i.fieldFlag === '1' && i.label !== '行政区域') {
       flag = false
     }
   })

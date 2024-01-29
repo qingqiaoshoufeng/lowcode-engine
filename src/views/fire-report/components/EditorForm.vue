@@ -991,9 +991,15 @@ const approvalCallback = async (form) => {
     emits('finishCallback')
   }
 }
-const setTemporary = async()=>{
-  await temporarySubmit()
-  showToast('暂存成功')
+
+const setTemporary = async () => {
+  formRef.value.validate('basicInfo.fireDate.value').then(async () => {
+    await temporarySubmit()
+    showToast('暂存成功')
+  })
+    .catch((error) => {
+      showToast('请填写正确起火时间！')
+    })
 }
 
 const commonLoading = computed(() => {
