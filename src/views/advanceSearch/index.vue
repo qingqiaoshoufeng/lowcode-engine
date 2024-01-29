@@ -173,7 +173,7 @@ const checkConfigType = () => {
   return activeKey.value === '4' && flag ? '1' : '0'
 }
 
-const getFormParams = () => {
+const getQueryParams = () => {
   return {
     dataTimeSource: dataTimeSource.value,
     staticFlag: searchDimension.value,
@@ -183,7 +183,7 @@ const getFormParams = () => {
   }
 }
 
-provide('getSearchParams', getFormParams)
+provide('getQueryParams', getQueryParams)
 
 const onSearchCallback = () => {
   const flag = validateList(list.value, activeKey.value)
