@@ -1012,10 +1012,10 @@ onMounted(() => {
         await finishFn()
       }
       else {
-        if (!props.showDraft && false
-        //  && checkFieldWarning(fieldExist.value)
+        if (!props.showDraft && checkFieldWarning(fieldExist.value)
         ) {
           // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+          showToast('请对异常指标进行批注说明！')
         }
         else {
           await submit()
