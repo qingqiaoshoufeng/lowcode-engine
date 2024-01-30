@@ -100,7 +100,7 @@
     <template #default="{ setHandleOk, setHandleExtend }">
         <EditorForm
           :is-edit="isEdit"
-          :current-row="currentRow"
+          :current-row="{ ...currentRow, fillFlag: 1 }"
           :relevance-draft="relevanceDraft"
           :show-draft="isDraft"
           :set-handle-ok="setHandleOk"

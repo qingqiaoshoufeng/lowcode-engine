@@ -45,8 +45,8 @@ export function saveTemporaryFireDispatchReport(data) {
 }
 
 // 获取火灾填报详情
-export function getFireReportDetail(id) {
-  return axios.get(`/acws/rest/biz/fireinfo/getfireinfoviewbyinfoid?id=${id}`)
+export function getFireReportDetail(params) {
+  return axios.get(`/acws/rest/biz/fireinfo/getfireinfoviewbyinfoid`, { params })
 }
 
 // 火灾填报退回

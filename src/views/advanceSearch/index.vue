@@ -175,11 +175,11 @@ const checkConfigType = () => {
 
 const getQueryParams = () => {
   return {
-    dataTimeSource: dataTimeSource.value,
-    staticFlag: searchDimension.value,
-    fireType: search.value,
-    seniorQueryDetailReq: getListParams(),
-    noFireFlag: checkConfigType(),
+    dataTimeSource: queryParams.value.staticFlag,
+    staticFlag: queryParams.value.staticFlag,
+    fireType: queryParams.value.fireType,
+    seniorQueryDetailReq: queryParams.value.seniorQueryDetailReq,
+    noFireFlag: queryParams.value.noFireFlag,
   }
 }
 
