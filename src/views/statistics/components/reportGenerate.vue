@@ -156,6 +156,7 @@ const handleSearch = () => {
       const totalData = [...data?.head, ...data?.result]
       const luckysheetData = []
       for (let i = 0; i < totalData.length; i++) {
+        const leftAlign = data.leftLine?.includes(i) // 判断某一行是否需要居左
         for (let j = 0; j < totalData[i].length; j++) {
           luckysheetData.push({
             r: i,
@@ -163,7 +164,7 @@ const handleSearch = () => {
             v: {
               v: `${totalData[i][j]}`,
               m: `${totalData[i][j]}`,
-              ht: 0,
+              ht: leftAlign ? 1 : 0,
               vt: 0,
               ct: { fa: '@', t: 's' },
             },
@@ -319,12 +320,19 @@ const handleDefineSearch = () => {
           range: getRangeByCode(data?.mergeCells),
         })
         const widthObj = {}
+        let totalWidth = 0
         for (let i = 0; i < totalData[0].length; i++) {
           const columnData = totalData.map(row => String(row[i]).length)
           columnData.shift()
           columnData.shift()
           columnData.shift()
           widthObj[i] = Math.max(...columnData) * 14 + 2
+          totalWidth += widthObj[i]
+        }
+        if (totalWidth < 600) {
+          Object.keys(widthObj)?.forEach((key) => {
+            widthObj[key] = Math.floor((widthObj[key] / totalWidth) * 600)
+          })
         }
         window.luckysheet.setColumnWidth(widthObj)
       })
