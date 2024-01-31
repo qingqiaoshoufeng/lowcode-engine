@@ -465,9 +465,9 @@ export const useFormConfig = () => {
       title: '投入力量',
       fieldAnnotation: false, // 批注
       fieldWarning: 'commander:false;commanderNum:false;firemen:false;firemenNum:false;isResponseTruck:false;',
-      groupLeader: { // 带队指挥员
+      groupLeader: { // 带队指挥人员
         value: undefined,
-        rules: [{ required: true, message: '请选择带队指挥员' }],
+        rules: [{ required: true, message: '请选择带队指挥人员' }],
       },
       commanderNum: { // 指挥员（人）
         value: '',

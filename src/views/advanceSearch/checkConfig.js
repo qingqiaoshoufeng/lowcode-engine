@@ -542,12 +542,12 @@ export const checkBoxs = [
   },
   {
     fieldKeyOne: 'groupLeader',
-    label: '带队指挥员',
+    label: '带队指挥人员',
     fireType: '2',
     type: '10',
     dict: 'deptMembers',
     field: { value: 'userId', label: 'userNameJob' },
-    modalTitle: '请选择带队指挥员',
+    modalTitle: '请选择带队指挥人员',
   },
   {
     fieldKeyOne: 'fireUserIds',
