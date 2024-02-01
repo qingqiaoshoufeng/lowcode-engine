@@ -329,9 +329,9 @@ const handleDefineSearch = () => {
           widthObj[i] = Math.max(...columnData) * 14 + 2
           totalWidth += widthObj[i]
         }
-        if (totalWidth < 600) {
+        if (totalWidth < 680) {
           Object.keys(widthObj)?.forEach((key) => {
-            widthObj[key] = Math.floor((widthObj[key] / totalWidth) * 600)
+            widthObj[key] = Math.floor((widthObj[key] / totalWidth) * 680)
           })
         }
         window.luckysheet.setColumnWidth(widthObj)
