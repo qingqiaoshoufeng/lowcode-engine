@@ -8,7 +8,7 @@
         title="警情超时统计"
         :showExplainFn="showExplainFn"
       >
-      <template #search="{ tabsActive, filterFormState, resetForm }">
+      <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
             <SelectTime
@@ -25,7 +25,7 @@
         </div>
       </template>
         <template #list="{ record }">
-          <div class="list-item" @click="handleLook(record)">
+          <div class="pro-list-item" @click="handleLook(record)">
             <div class="item-header">
               <div class="item-title">{{ record.warningAddr }}</div>
               <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -39,7 +39,7 @@
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
+              <div class="item-field-label">接警时间：</div>
               <div>{{ formatYmdHm(record.warningDate) }}</div>
             </div>
             <div class="item-field">
@@ -48,17 +48,17 @@
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">行政区域：</div>
+              <div class="item-field-label">行政区域：</div>
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-              <div style="color: #929398">超期类型：</div>
+              <div class="item-field-label">超期类型：</div>
               <div>{{ record.timeoutType }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">超期时长：</div>
+              <div class="item-field-label">超期时长：</div>
               <div class="flex">
                 <span class="info">{{ record.timeoutTimeValue }}</span>
                 <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
@@ -116,7 +116,7 @@
     </DialogInfo>
      <!-- 规则查看 -->
      <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
-      <template v-slot="{setHandleOk}">
+      <template>
         <RegularLook :type="1" />
       </template>
     </DialogInfo>
@@ -269,90 +269,6 @@ const handleReason = (row) => {
 </script>
 <style lang="scss" scoped>
   .police-timeout{
-    .list-item {
-      display: flex;
-      flex-direction: column;
-      background: #ffffff;
-      margin-top: 10px;
-      .item-header {
-        display: flex;
-        padding: 8px 10px;
-        .item-title {
-          width: 260px;
-          font-size: 16px;
-          font-weight: bold;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .item-state {
-          width: 57px;
-          height: 24px;
-          font-size: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 2px;
-          margin-left: auto;
-        }
-      }
-      .item-field {
-        font-size: 14px;
-        color: #1f1f1f;
-        display: flex;
-        align-items: center;
-        padding: 0 0 8px 10px;
-        .flex{
-          flex: 1;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-right: 20px;
-          .info{
-            margin-right: 50px;
-          }
-        }
-        img {
-          width: 14px;
-          height: 14px;
-          margin-right: 6px;
-        }
-      }
-      .item-type {
-        margin: 0 0 8px 10px;
-        span {
-          display: inline-block;
-          font-size: 12px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #fc2902;
-          background: #ffefec;
-          border-radius: 2px;
-          padding: 4px 10px;
-        }
-      }
-      .item-line {
-        width: 100%;
-        border-top: 1px solid rgba(31, 31, 31, 0.15);
-      }
-      .item-operate {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 8px 10px;
-        .item-btn {
-          padding: 0 16px;
-          margin-left: 10px;
-          :deep(.van-button__content) {
-            height: 18px;
-          }
-          :deep(.van-button__text) {
-            white-space: nowrap;
-            word-break: break-all;
-          }
-        }
-      }
-    }
   }
   .list-tabs1 {
     display: flex;

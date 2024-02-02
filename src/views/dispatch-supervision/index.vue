@@ -6,7 +6,7 @@
         :getListFn="getDispatchSupervisionList"
         title="出动质量监督"
       >
-      <template #search="{ tabsActive, filterFormState, resetForm }">
+      <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
             <SelectTime
@@ -38,7 +38,7 @@
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
+              <div class="item-field-label">接警时间：</div>
               <div>{{ formatYmdHm(record.warningDate) }}</div>
             </div>
             <div class="item-field">
@@ -47,22 +47,22 @@
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">行政区域：</div>
+              <div class="item-field-label">行政区域：</div>
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-              <div style="color: #929398">稽查标签：</div>
+              <div class="item-field-label">稽查标签：</div>
               <div>{{ record.auditLabel }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
-              <div style="color: #929398">出动队伍：</div>
+              <div class="item-field-label">出动队伍：</div>
               <div>{{ record.dispatchGroupName }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火场所：</div>
+              <div class="item-field-label">起火场所：</div>
               <div>{{ record.firePlaceValue }}</div>
             </div> -->
             <div class="item-line" />
