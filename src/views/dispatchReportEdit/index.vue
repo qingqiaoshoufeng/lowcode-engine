@@ -71,7 +71,7 @@ const refreshCallback = () => {
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">接警时间：</div>
+            <div class="item-field-label">接警时间：</div>
             <div>{{ formatYmdHm(record.warningDate) }}</div>
           </div>
           <div class="item-field">
@@ -80,17 +80,17 @@ const refreshCallback = () => {
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">行政区域：</div>
+            <div class="item-field-label">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
-            <div style="color: #929398">出动队伍：</div>
+            <div class="item-field-label">出动队伍：</div>
             <div>{{ record.dispatchGroupName }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">投入力量：</div>
+            <div class="item-field-label">投入力量：</div>
             <div>{{ record.dispatchInput }}</div>
           </div>
           <div class="item-line" />

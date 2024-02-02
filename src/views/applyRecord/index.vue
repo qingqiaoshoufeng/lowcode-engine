@@ -132,24 +132,24 @@ onMounted(() => {
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon_power@2x.png" alt="" />
-            <div style="color: #929398">申请单位：</div>
+            <div class="item-field-label">申请单位：</div>
             <div>{{ record.createOrgName }}</div>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">申请时间：</div>
+            <div class="item-field-label">申请时间：</div>
             <div>{{ formatYmdHm(record.createDate) }}</div>
           </div>
           <div class="item-field" v-if="record.applyTypeValue">
             <img src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">申请类型：</div>
+            <div class="item-field-label">申请类型：</div>
             <span :class="generateColorByType(record.applyTypeValue)" class="text-nowrap">
               {{ record.applyTypeValue }}
             </span>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-area@2x.png" style="width: 13px; height: 15px;" alt="" />
-            <div style="color: #929398">申请原因：</div>
+            <div class="item-field-label">申请原因：</div>
             <div>{{ record.recheckReason || record.cancelReasonValue }}</div>
           </div>
         </div>

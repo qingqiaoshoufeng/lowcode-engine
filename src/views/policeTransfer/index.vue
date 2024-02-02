@@ -214,7 +214,7 @@ onMounted(() => {
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">接警时间：</div>
+            <div class="item-field-label">接警时间：</div>
             <div>{{ formatYmdHm(record.warningDate) }}</div>
           </div>
           <div class="item-field">
@@ -223,7 +223,7 @@ onMounted(() => {
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">行政区域：</div>
+            <div class="item-field-label">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
@@ -232,7 +232,7 @@ onMounted(() => {
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">发送单位：</div>
+            <div class="item-field-label">发送单位：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
@@ -241,7 +241,7 @@ onMounted(() => {
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">发送时间：</div>
+            <div class="item-field-label">发送时间：</div>
             <div>{{ formatYmdHm(record.sendTime) }}</div>
           </div>
           <div class="item-line" />
