@@ -204,7 +204,14 @@ const handleSearch = () => {
           passNumber = 4
         }
         for (let i = 0; i < totalData[0].length; i++) {
-          const columnData = totalData.map(row => String(row[i]).length)
+          const columnData = totalData.map((row) => {
+            if (String(row[i])?.indexOf('备注：') > -1) {
+              return 0
+            }
+            else {
+              return String(row[i]).length
+            }
+          })
           for (let i = 0; i < passNumber; i++) {
             columnData.shift()
           }
