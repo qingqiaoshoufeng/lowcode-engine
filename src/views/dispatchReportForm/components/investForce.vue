@@ -311,14 +311,14 @@ const onCommander = () => {
       :field-names="{ value: 'boFireUserId', label: 'userName' }"
       :rules="form.investForce.groupLeader.rules"
       :disabled="form.investForce.groupLeader.disabled"
-      label="带队指挥员："
-      label-width="102px"
-      placeholder="请选择带队指挥员"
-      title="请选择带队指挥员"
+      label="带队指挥人员："
+      label-width="120px"
+      placeholder="请选择带队指挥人员"
+      title="请选择带队指挥人员"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="带队指挥员："
+          label="带队指挥人员："
           remark-field="groupLeader"
           field-module="investForce"
           :exist-data="fieldExist?.groupLeader"

@@ -32,7 +32,7 @@ const searchDimension = inject('searchDimension');
 
 const dataTimeSource = inject('dataTimeSource');
 
-const getSearchParams = inject('getSearchParams')
+const getQueryParams = inject('getQueryParams')
 
 const { show } = useModal();
 
@@ -204,14 +204,14 @@ onMounted(() => {
         <ReportGenerate
           :current-row="{ sceneType: searchType === 1 ? '警情' : (searchType === 4 ? '火灾' : '出动') }"
           :search-type="2"
-          :query-params="() => ({ fireType: searchType, ...getSearchParams(), dataTimeSource, staticFlag: searchDimension })"
+          :query-params="() => getQueryParams()"
         />
       </template>
       <template v-else-if="type === 2">
         <ReportGenerate
           :current-row="{ sceneType: searchType === 1 ? '警情' : (searchType === 4 ? '火灾' : '出动') }"
           :search-type="3"
-          :query-params="() => getSearchParams()"
+          :query-params="() => getQueryParams()"
         />
       </template>
     </ProModal>

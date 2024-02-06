@@ -46,10 +46,13 @@ const getCurrentStatus = (item) => {
   if (!item.commentDate) {
     return 'process'
   }
+  else if (item.canceledReason) {
+    return 'error'
+  }
   else if (['通过', '同意', '审核通过'].includes(item.comment) || !item.comment) {
     return 'finish'
   }
-  else if (['不通过', '不同意', '退回起草人', '退回上一级'].includes(item.comment)) {
+  else if (['不通过', '不同意', '退回起草人', '退回上一级', '退回'].includes(item.comment)) {
     return 'error'
   }
 }
@@ -128,10 +131,15 @@ const getCurrentStatus = (item) => {
           </template>
           <template v-if="index !== (detail?.commentsInfo?.length - 1)">
             <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>
-            <p>审批单位：{{ item.commentOrgName }}</p>
+            <p v-if="!item.canceledReason">审批单位：{{ item.commentOrgName }}</p>
             <p v-if="item.commentUserName">审批人员：{{ item.commentUserName }}</p>
-            <p v-if="getCurrentStatus(item) !== 'process'">审批结果：{{ item.comment }}</p>
-            <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.remark }}</p>
+            <template v-if="item.canceledReason">
+              <p>终结原因：{{ item.canceledReason }}</p>
+            </template>
+            <template>
+              <p v-if="getCurrentStatus(item) !== 'process'">审批结果：{{ item.comment }}</p>
+              <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.remark }}</p>
+            </template>
           </template>
           <template v-else>
             <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>

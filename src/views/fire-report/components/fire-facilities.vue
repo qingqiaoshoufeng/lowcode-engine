@@ -176,6 +176,22 @@ const onFireShutterStart = () => {
     form.value.fireFacilities.fireShutterEffect.value = undefined
   }
 }
+
+const onEmergencyLight = () => {
+  form.value.fireFacilities.lightNonConformance.value = undefined
+}
+
+const onNetworking = () => {
+  form.value.fireFacilities.networkAlarm.value = undefined
+}
+
+const onEscapeRoute = () => {
+  form.value.fireFacilities.routeNonConformance.value = undefined
+}
+
+const onEmergencyExit = () => {
+  form.value.fireFacilities.exitNonConformance.value = undefined
+}
 </script>
 
 <template>
@@ -1047,6 +1063,7 @@ const onFireShutterStart = () => {
             placeholder="请选择应急疏散照明"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择应急疏散照明"
+            @change="onEmergencyLight"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1100,6 +1117,7 @@ const onFireShutterStart = () => {
             placeholder="请选择联网情况"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择联网情况"
+            @change="onNetworking"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1261,6 +1279,7 @@ const onFireShutterStart = () => {
             placeholder="请选择疏散通道"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择疏散通道"
+            @change="onEscapeRoute"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1314,6 +1333,7 @@ const onFireShutterStart = () => {
             placeholder="请选择紧急出口"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择紧急出口"
+            @change="onEmergencyExit"
           >
             <template v-slot:label="">
               <FieldAnnotation

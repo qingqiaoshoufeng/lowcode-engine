@@ -348,6 +348,11 @@ const vehicleTypeChange = (value, selectedOptions) => {
     form.value.basicInfo.vehicleType.text = []
   }
   form.value.basicInfo.fireSite.value = []
+  form.value.basicInfo.chargeState.value = undefined
+  form.value.basicInfo.carNumber.value = ''
+  form.value.basicInfo.vinCode.value = ''
+  form.value.basicInfo.batteryType.value = undefined
+  form.value.basicInfo.isRepack.value = undefined
 }
 
 const initialFuelsTypeChange = (value, selectedOptions) => {

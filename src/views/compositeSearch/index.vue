@@ -37,8 +37,6 @@ provide('searchDimension', searchDimension)
 
 provide('dataTimeSource', dataTimeSource)
 
-provide('getSearchParams', getSearchParams)
-
 const onSearchCallback = () => {
   const { policeBase, fireBase } = form.value
   if (searchType.value < 4 && !policeBase.warningDate.value?.[0]) {
@@ -62,6 +60,20 @@ const onSearchCallback = () => {
   queryParams.value.staticFlag = searchDimension.value
   show.value.resultVisible = true
 }
+
+const getQueryParams = () => {
+  return {
+    fireType: searchType.value,
+    comprehensiveWarningQueryReq: queryParams.value?.comprehensiveWarningQueryReq,
+    comprehensiveDispatchQueryReq: queryParams.value?.comprehensiveDispatchQueryReq,
+    comprehensiveDispatchHeadQueryReq: queryParams.value?.comprehensiveDispatchHeadQueryReq,
+    comprehensiveFireQueryReq: queryParams.value?.comprehensiveFireQueryReq,
+    dataTimeSource: dataTimeSource.value,
+    staticFlag: searchDimension.value,
+  }
+}
+
+provide('getQueryParams', getQueryParams)
 
 const onSearchChange = () => {
   initFormByType(searchType.value)

@@ -166,24 +166,24 @@ const getListParams = () => {
 const checkConfigType = () => {
   let flag = true
   list.value.forEach((i) => {
-    if (i.fireType !== '4' && i.fieldFlag === '1') {
+    if (i.fireType !== '4' && i.fieldFlag === '1' && i.label !== '行政区域') {
       flag = false
     }
   })
   return activeKey.value === '4' && flag ? '1' : '0'
 }
 
-const getFormParams = () => {
+const getQueryParams = () => {
   return {
-    dataTimeSource: dataTimeSource.value,
-    staticFlag: searchDimension.value,
-    fireType: search.value,
-    seniorQueryDetailReq: getListParams(),
-    noFireFlag: checkConfigType(),
+    dataTimeSource: queryParams.value.staticFlag,
+    staticFlag: queryParams.value.staticFlag,
+    fireType: queryParams.value.fireType,
+    seniorQueryDetailReq: queryParams.value.seniorQueryDetailReq,
+    noFireFlag: queryParams.value.noFireFlag,
   }
 }
 
-provide('getSearchParams', getFormParams)
+provide('getQueryParams', getQueryParams)
 
 const onSearchCallback = () => {
   const flag = validateList(list.value, activeKey.value)

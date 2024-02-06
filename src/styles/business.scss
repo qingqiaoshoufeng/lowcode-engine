@@ -151,8 +151,11 @@ $state-disable: gray; // 不能修改
     font-size: 14px;
     color: #1f1f1f;
     display: flex;
-    align-items: center;
-    padding: 0 0 8px 10px;
+    padding: 0 4px 8px 10px;
+    &-label {
+      color: #929398;
+      white-space: nowrap;
+    }
     .flex{
       flex: 1;
       display: flex;
@@ -166,7 +169,7 @@ $state-disable: gray; // 不能修改
     img {
       width: 14px;
       height: 14px;
-      margin-right: 6px;
+      margin: 2px 6px 2px 0px;
     }
   }
   .item-type {

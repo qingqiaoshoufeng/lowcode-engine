@@ -92,9 +92,12 @@ const onMapReady = (leafletObject) => {
     drawMaker(currentLat.value, currentLng.value)
   }
   leafletObject.on('click', (e) => {
-    currentLat.value = (e.latlng?.lat).toFixed(6)
-    currentLng.value = (e.latlng?.lng).toFixed(6)
-    drawMaker(currentLat.value, currentLng.value)
+    const { lat, lng } = e.latlng
+    if (lat && lng) {
+      currentLat.value = (Number(lat)).toFixed(6)
+      currentLng.value = (Number(lng)).toFixed(6)
+      drawMaker(currentLat.value, currentLng.value)
+    }
   })
 }
 
@@ -106,10 +109,12 @@ const handleSearch = () => {
   searchLocation({ ds: JSON.stringify({ keyWord: keyword.value }), tk: tiandituToken }).then((res) => {
     if (res?.data?.location) {
       const { lat, lon } = res?.data?.location
-      currentLat.value = (lat).toFixed(6)
-      currentLng.value = (lon).toFixed(6)
-      config.value.center = [Number(currentLat.value), Number(currentLng.value)]
-      drawMaker(currentLat.value, currentLng.value)
+      if (lat && lon) {
+        currentLat.value = (Number(lat)).toFixed(6)
+        currentLng.value = (Number(lon)).toFixed(6)
+        config.value.center = [Number(currentLat.value), Number(currentLng.value)]
+        drawMaker(currentLat.value, currentLng.value)
+      }
     }
     else {
       showToast('未查询到相关地址的经纬度！')
@@ -137,10 +142,12 @@ onMounted(() => {
     searchLocation({ ds: JSON.stringify({ keyWord: `${selectArea?.join('')}${selectAddr}` }), tk: tiandituToken }).then((res) => {
       if (res?.data?.location) {
         const { lat, lon } = res?.data?.location
-        currentLat.value = (lat).toFixed(6)
-        currentLng.value = (lon).toFixed(6)
-        config.value.center = [Number(lat), Number(lon)]
-        drawMaker(currentLat.value, currentLng.value)
+        if (lat && lon) {
+          currentLat.value = (Number(lat)).toFixed(6)
+          currentLng.value = (Number(lon)).toFixed(6)
+          config.value.center = [Number(lat), Number(lon)]
+          drawMaker(currentLat.value, currentLng.value)
+        }
       }
     })
   }

@@ -156,6 +156,7 @@ const handleSearch = () => {
       const totalData = [...data?.head, ...data?.result]
       const luckysheetData = []
       for (let i = 0; i < totalData.length; i++) {
+        const leftAlign = data.leftLine?.includes(i) // 判断某一行是否需要居左
         for (let j = 0; j < totalData[i].length; j++) {
           luckysheetData.push({
             r: i,
@@ -163,7 +164,7 @@ const handleSearch = () => {
             v: {
               v: `${totalData[i][j]}`,
               m: `${totalData[i][j]}`,
-              ht: 0,
+              ht: leftAlign ? 1 : 0,
               vt: 0,
               ct: { fa: '@', t: 's' },
             },
@@ -203,7 +204,14 @@ const handleSearch = () => {
           passNumber = 4
         }
         for (let i = 0; i < totalData[0].length; i++) {
-          const columnData = totalData.map(row => String(row[i]).length)
+          const columnData = totalData.map((row) => {
+            if (String(row[i])?.indexOf('备注：') > -1) {
+              return 0
+            }
+            else {
+              return String(row[i]).length
+            }
+          })
           for (let i = 0; i < passNumber; i++) {
             columnData.shift()
           }
@@ -319,12 +327,19 @@ const handleDefineSearch = () => {
           range: getRangeByCode(data?.mergeCells),
         })
         const widthObj = {}
+        let totalWidth = 0
         for (let i = 0; i < totalData[0].length; i++) {
           const columnData = totalData.map(row => String(row[i]).length)
           columnData.shift()
           columnData.shift()
           columnData.shift()
           widthObj[i] = Math.max(...columnData) * 14 + 2
+          totalWidth += widthObj[i]
+        }
+        if (totalWidth < 680) {
+          Object.keys(widthObj)?.forEach((key) => {
+            widthObj[key] = Math.floor((widthObj[key] / totalWidth) * 680)
+          })
         }
         window.luckysheet.setColumnWidth(widthObj)
       })

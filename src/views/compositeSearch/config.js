@@ -561,11 +561,11 @@ export const useFormConfig = () => {
         options: 'headPersonType',
         selectLeaf: false,
       },
-      groupLeader: { // 带队指挥员
+      groupLeader: { // 带队指挥人员
         value: undefined,
         back: false,
         type: 'select-person',
-        label: '带队指挥员',
+        label: '带队指挥人员',
         labelWidth: '100px',
       },
       fireUserIds: { // 指战员姓名

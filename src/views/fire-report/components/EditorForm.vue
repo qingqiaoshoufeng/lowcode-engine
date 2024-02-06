@@ -551,7 +551,7 @@ const initDetail = () => {
     || (isEdit && currentRow?.boFireInfoId)
     || (isDetail && currentRow?.boFireInfoId)) {
     const id = relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId
-    getFireReportDetail(id).then((res) => {
+    getFireReportDetail({ id, fillFlag: currentRow?.fillFlag }).then((res) => {
       if (res) {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
@@ -566,7 +566,7 @@ const initDetail = () => {
   }
   else if (currentRow?.isStorage === '1') {
     const id = currentRow?.boFireInfoId
-    getFireReportDetail(id).then((res) => {
+    getFireReportDetail({ id, fillFlag: currentRow?.fillFlag }).then((res) => {
       if (res) {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
@@ -991,9 +991,15 @@ const approvalCallback = async (form) => {
     emits('finishCallback')
   }
 }
-const setTemporary = async()=>{
-  await temporarySubmit()
-  showToast('暂存成功')
+
+const setTemporary = async () => {
+  formRef.value.validate('basicInfo.fireDate.value').then(async () => {
+    await temporarySubmit()
+    showToast('暂存成功')
+  })
+    .catch((error) => {
+      showToast('请填写正确起火时间！')
+    })
 }
 
 const commonLoading = computed(() => {
