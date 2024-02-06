@@ -177,7 +177,7 @@ onMounted(() => {
     </div>
     <div class="search-btn-wrapper">
       <div class="round-wrapper">
-        <div class="search-path" @click="handlePath">
+        <div class="search-path" @click="handlePath" v-if="false">
           查询口径<van-icon name="arrow-down" />
         </div>
         <img
