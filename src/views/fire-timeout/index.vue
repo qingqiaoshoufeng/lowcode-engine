@@ -32,15 +32,15 @@
               {{ record.warningStatusValue }}
             </div>
           </div>
-          <div class="item-type">
+          <div v-if="record.warningTypeValue" class="item-type">
             <span>{{ record.warningTypeValue }}</span>
           </div>
           <div class="item-field">
             <img 
               style="width: 13px; height: 15px; margin-right: 8px" 
               src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">接警时间：</div>
-            <div>{{ formatYmdHm(record.warningDate) }}</div>
+            <div class="item-field-label">起火时间：</div>
+            <div>{{ formatYmdHm(record.fireDate) }}</div>
           </div>
           <div class="item-field">
             <img
@@ -48,17 +48,17 @@
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">行政区域：</div>
+            <div class="item-field-label">行政区域：</div>
             <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div style="color: #929398">超期类型：</div>
+            <div class="item-field-label">超期类型：</div>
             <div>{{ record.overTimeType }}</div>
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">超期时长：</div>
+            <div class="item-field-label">超期时长：</div>
             <div class="flex">
               <span class="info">{{ record.overTimeHoursValue }}</span>
               <van-icon @click.stop="handleReason(record)" v-if="record.overTimeReason" name="comment-o" />

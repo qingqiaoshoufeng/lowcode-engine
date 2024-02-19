@@ -19,7 +19,7 @@
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">起火时间：</div>
+      <div class="item-field-label">起火时间：</div>
       <div>{{ formatYmdHm(record.fireDate) }}</div>
     </div>
     <div class="item-field" v-if="['fireFilled','fireReviewed','fireReject'].includes(type)">
@@ -28,14 +28,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">警情地址：</div>
+      <div class="item-field-label">警情地址：</div>
       <div>{{ record.warningAddr }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请单位：</div>
+      <div class="item-field-label">申请单位：</div>
       <div>{{ record.createOrg }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
@@ -44,14 +44,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">审批时间：</div>
+      <div class="item-field-label">审批时间：</div>
       <div>{{ formatYmdHm(record.reviewTime) }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请类型：</div>
+      <div class="item-field-label">申请类型：</div>
       <div>{{ record.applyTypeValue }}</div>
     </div>
     <div class="item-field" v-if="['fireAmend'].includes(type)">
@@ -60,7 +60,7 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">申请原因：</div>
+      <div class="item-field-label">申请原因：</div>
       <div>{{ record.recheckReason }}</div>
     </div>
   </div>

@@ -22,7 +22,7 @@
             <img 
               style="width: 13px; height: 15px; margin-right: 8px" 
               src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">接警时间：</div>
+            <div class="item-field-label">接警时间：</div>
             <div>{{ formatYmdHm(record.warningDate) }}</div>
           </div>
           <div class="item-field">
@@ -31,17 +31,17 @@
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div style="color: #929398">行政区域：</div>
+            <div class="item-field-label">行政区域：</div>
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
-            <div style="color: #929398">派发单位：</div>
+            <div class="item-field-label">派发单位：</div>
             <div>{{ record.createOrg }}</div>
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-            <div style="color: #929398">已派时长：</div>
+            <div class="item-field-label">已派时长：</div>
             <div v-if="checkTimeout(record.dispatchedInfoTime)" class="test-timeout">
               {{ record.dispatchedInfoTime }}
             </div>
