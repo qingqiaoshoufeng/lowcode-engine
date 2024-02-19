@@ -1,13 +1,13 @@
 <template>
   <div class="dispatch-timeout">
     <ProList
-        ref="proListRef"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getDispatchTimeout"
-        title="出动超时统计"
-        showExplain
-        :showExplainFn="showExplainFn"
-      >
+      ref="proListRef"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getDispatchTimeout"
+      title="出动超时统计"
+      showExplain
+      :showExplainFn="showExplainFn"
+    >
       <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
@@ -24,71 +24,70 @@
           </div>
         </div>
       </template>
-        <template #list="{ record }">
-          <div class="pro-list-item" @click="handleLook(record)">
-            <div class="item-header">
-              <div class="item-title">{{ record.warningAddr }}</div>
-              <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-                {{ record.warningStatusValue }}
-              </div>
-            </div>
-            <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
-            </div>
-            <div class="item-field">
-              <img 
-                style="width: 13px; height: 15px; margin-right: 8px" 
-                src="../../assets/images/icon-time@2x.png" alt="" />
-              <div class="item-field-label">接警时间：</div>
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
-            </div>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div class="item-field-label">行政区域：</div>
-              <div>{{ record.warningAreaValue }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-              <div class="item-field-label">超期类型：</div>
-              <div>{{ record.overTimeType }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div class="item-field-label">超期时长：</div>
-              <div class="flex">
-                <span class="info">{{ record.timeoutTimeValue }}</span>
-                <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
-              </div>
-            </div>
-            <div class="item-line" />
-            <div class="item-operate" @click.stop>
-              <!-- <van-button
-                v-p="['admin', 'dispatch-timeout:look']"
-                type="link"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click="handleLook(record)"
-              >
-                查看
-              </van-button> -->
-              <van-button
-                v-p="['admin', 'dispatch-timeout:back']"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                type="link"
-                @click="handleRemark(record)"
-              >
-                备注
-              </van-button>
+      <template #list="{ record }">
+        <div class="pro-list-item" @click="handleLook(record)">
+          <div class="item-header">
+            <div class="item-title">{{ record.warningAddr }}</div>
+            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+              {{ record.warningStatusValue }}
             </div>
           </div>
-        </template>
+          <div class="item-type">
+            <span>{{ record.warningTypeValue }}</span>
+          </div>
+          <div class="item-field">
+            <img 
+              style="width: 13px; height: 15px; margin-right: 8px" 
+              src="../../assets/images/icon-time@2x.png" alt="" />
+            <div class="item-field-label">接警时间：</div>
+            <div>{{ formatYmdHm(record.warningDate) }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div class="item-field-label">行政区域：</div>
+            <div>{{ record.warningAreaValue }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
+            <div class="item-field-label">超期类型：</div>
+            <div>{{ record.overTimeType }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div class="item-field-label">超期时长：</div>
+            <div class="flex">
+              <span class="info">{{ record.timeoutTimeValue }}</span>
+              <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
+            </div>
+          </div>
+          <div class="item-line" />
+          <div class="item-operate" @click.stop>
+            <!-- <van-button
+              v-p="['admin', 'dispatch-timeout:look']"
+              type="link"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click="handleLook(record)"
+            >
+              查看
+            </van-button> -->
+            <van-button
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              type="link"
+              @click="handleRemark(record)"
+            >
+              备注
+            </van-button>
+          </div>
+        </div>
+      </template>
     </ProList>
     <!-- 驳回 -->
     <!-- <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
@@ -109,8 +108,8 @@
         :is-detail="true"
       />
     </ProModal>
-     <!-- 超时原因 -->
-     <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
+    <!-- 超时原因 -->
+    <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
       <template v-slot="{setHandleOk}">
         <LookReason
           :data-type="2"
@@ -120,11 +119,9 @@
         />
       </template>
     </DialogInfo>
-   <!-- 规则查看 -->
-   <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
-      <template>
-        <RegularLook :type="2" />
-      </template>
+    <!-- 规则查看 -->
+    <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
+      <RegularLook :type="2" />
     </DialogInfo>
     <!-- 填写超时原因 -->
     <DialogInfo v-model:visible="show.remarkVisible" title="超时原因">
@@ -142,7 +139,6 @@
 </template>
   
 <script setup>
-import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
@@ -279,20 +275,20 @@ const selectTagsCallback = (selects) => {
   onSearchConfirm()
   finishCallback()
 }
-
 </script>
+
 <style lang="scss" scoped>
-  .dispatch-timeout{
-  }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .select_tags{
-        border-top: 10px solid #fff;
-      }
-  </style>
+.dispatch-timeout{
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+.select_tags {
+  border-top: 10px solid #fff;
+}
+</style>

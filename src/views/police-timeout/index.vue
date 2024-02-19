@@ -1,13 +1,13 @@
 <template>
   <div class="police-timeout">
     <ProList
-        showExplain
-        ref="proListRef"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getPoliceTimeout"
-        title="警情超时统计"
-        :showExplainFn="showExplainFn"
-      >
+      showExplain
+      ref="proListRef"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getPoliceTimeout"
+      title="警情超时统计"
+      :showExplainFn="showExplainFn"
+    >
       <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
@@ -24,71 +24,70 @@
           </div>
         </div>
       </template>
-        <template #list="{ record }">
-          <div class="pro-list-item" @click="handleLook(record)">
-            <div class="item-header">
-              <div class="item-title">{{ record.warningAddr }}</div>
-              <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-                {{ record.warningStatusValue }}
-              </div>
-            </div>
-            <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
-            </div>
-            <div class="item-field">
-              <img 
-                style="width: 13px; height: 15px; margin-right: 8px" 
-                src="../../assets/images/icon-time@2x.png" alt="" />
-              <div class="item-field-label">接警时间：</div>
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
-            </div>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div class="item-field-label">行政区域：</div>
-              <div>{{ record.warningAreaValue }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-              <div class="item-field-label">超期类型：</div>
-              <div>{{ record.timeoutType }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div class="item-field-label">超期时长：</div>
-              <div class="flex">
-                <span class="info">{{ record.timeoutTimeValue }}</span>
-                <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
-              </div>
-            </div>
-            <div class="item-line" />
-            <div class="item-operate" @click.stop>
-              <!-- <van-button
-                v-p="['admin', 'police-timeout:look']"
-                type="link"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click="handleLook(record)"
-              >
-                查看
-              </van-button> -->
-              <van-button
-                v-p="['admin', 'police-timeout:back']"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                type="link"
-                @click="handleRemark(record)"
-              >
-                备注
-              </van-button>
+      <template #list="{ record }">
+        <div class="pro-list-item" @click="handleLook(record)">
+          <div class="item-header">
+            <div class="item-title">{{ record.warningAddr }}</div>
+            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+              {{ record.warningStatusValue }}
             </div>
           </div>
-        </template>
+          <div class="item-type">
+            <span>{{ record.warningTypeValue }}</span>
+          </div>
+          <div class="item-field">
+            <img 
+              style="width: 13px; height: 15px; margin-right: 8px" 
+              src="../../assets/images/icon-time@2x.png" alt="" />
+            <div class="item-field-label">接警时间：</div>
+            <div>{{ formatYmdHm(record.warningDate) }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div class="item-field-label">行政区域：</div>
+            <div>{{ record.warningAreaValue }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
+            <div class="item-field-label">超期类型：</div>
+            <div>{{ record.timeoutType }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div class="item-field-label">超期时长：</div>
+            <div class="flex">
+              <span class="info">{{ record.timeoutTimeValue }}</span>
+              <van-icon @click.stop="handleReason(record)" v-if="record.timeoutReason" name="comment-o" />
+            </div>
+          </div>
+          <div class="item-line" />
+          <div class="item-operate" @click.stop>
+            <!-- <van-button
+              v-p="['admin', 'police-timeout:look']"
+              type="link"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click="handleLook(record)"
+            >
+              查看
+            </van-button> -->
+            <van-button
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              type="link"
+              @click="handleRemark(record)"
+            >
+              备注
+            </van-button>
+          </div>
+        </div>
+      </template>
     </ProList>
     <!-- 超时原因 -->
     <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
@@ -114,21 +113,18 @@
         />
       </template>
     </DialogInfo>
-     <!-- 规则查看 -->
-     <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
-      <template>
-        <RegularLook :type="1" />
-      </template>
+    <!-- 规则查看 -->
+    <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
+      <RegularLook :type="1" />
     </DialogInfo>
-     <!-- 警情详情 -->
-     <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+    <!-- 警情详情 -->
+    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
   </div>
 </template>
   
 <script setup>
-import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
@@ -265,98 +261,20 @@ const handleReason = (row) => {
   currentRow.value = row
   show.value.reasonVisible = true
 }
-
 </script>
+
 <style lang="scss" scoped>
-  .police-timeout{
-  }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-collect {
-  //       font-size: 20px;
-  //       margin-right: auto;
-  //     }
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
-  .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .select_tags{
-        border-top: 10px solid #fff;
-      }
-  </style>
+.police-timeout {
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+.select_tags {
+  border-top: 10px solid #fff;
+}
+</style>
