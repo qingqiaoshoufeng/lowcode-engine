@@ -428,7 +428,7 @@ const onBuildTag = (val) => {
           name="fireBuilding.housingLife.value"
           label="房龄（年）："
           :rules="form.fireBuilding.housingLife.rules"
-          label-width="100px"
+          label-width="120px"
           id="housingLife"
           v-model="form.fireBuilding.housingLife.value"
           v-preview-text="showPreview"
