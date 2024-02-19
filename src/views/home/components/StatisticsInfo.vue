@@ -12,11 +12,17 @@
       </div>
       <div v-if="currentTab === 0 && withTab" class="general">
         <div class="wrapper">
+          <div class="tip_per">
+              “-”表示同、环期无数据或者数据为0，无法计算出同环比
+            </div>
           <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
         </div>
       </div>
       <div v-else-if="currentTab === 5 && withTab" class="general">
         <div class="wrapper">
+          <div class="tip_per">
+              “-”表示同、环期无数据或者数据为0，无法计算出同环比
+            </div>
           <div v-for="(itm, index) in formInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
         </div>
       </div>
@@ -36,6 +42,7 @@
   
 <script setup>
 import useTab from '../hooks/useTab.js'
+// import { ref,onMounted  } from 'vue'
 const props = defineProps({
   info:{
     type:Object,
@@ -69,6 +76,7 @@ const props = defineProps({
   }
 })
 
+// const isAutoJump = ref(true)
 const {
   currentTab,
   tabList,tabChange} = useTab({
@@ -98,6 +106,22 @@ const {
   handleChange:props.handleChange,
   paramsKey:'annual'
 })
+
+// 自动轮播暂时关闭
+// const jumpNext = () => {
+//   setTimeout(() => {
+//     jumpNext()
+//     if (!isAutoJump.value) {
+//       return
+//     }
+//     const index = tabList.value.findIndex(item => item.value === currentTab.value)
+//     currentTab.value = tabList.value[(index + 1) % tabList.value.length].value
+//   }, 3000)
+// }
+
+// onMounted(() => {
+//   jumpNext()
+// })
 
 const getStatusColor = (val) => {
   if ((val || '-').includes('-') && val !== '-') {
@@ -205,7 +229,11 @@ export default {
       }
 }
 
-
+.tip_per{
+    margin-top: 10px;
+    color:red;
+    font-size: 12px;
+  }
 .general{
   padding: 0 6px;
   .generalInfo_item{
