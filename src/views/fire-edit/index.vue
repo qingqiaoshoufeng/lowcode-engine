@@ -21,7 +21,7 @@
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">接警时间：</div>
+              <div class="item-field-label">接警时间：</div>
               <div>{{ formatYmdHm(record.warningDate) }}</div>
             </div>
             <div class="item-field">
@@ -30,17 +30,17 @@
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">行政区域：</div>
+              <div class="item-field-label">行政区域：</div>
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
+              <div class="item-field-label">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火场所：</div>
+              <div class="item-field-label">起火场所：</div>
               <div>{{ record.firePlaceValue }}</div>
             </div> -->
             <div class="item-line" />

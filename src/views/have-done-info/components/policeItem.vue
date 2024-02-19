@@ -16,7 +16,7 @@
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">接警时间：</div>
+      <div class="item-field-label">接警时间：</div>
       <div>{{ formatYmdHm(record.warningDate) }}</div>
     </div>
     <div class="item-field" v-if="['policeDispatched','policeRejected','policeConfirmed','policeDispatchArea'].includes(type)">
@@ -25,14 +25,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">警情地址：</div>
+      <div class="item-field-label">警情地址：</div>
       <div>{{ record.warningAddr }}</div>
     </div>
     <div class="item-field" v-if="['policeAmend','policeInvalid'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请单位：</div>
+      <div class="item-field-label">申请单位：</div>
       <div>{{ record.createOrg }}</div>
     </div>
     <div class="item-field" v-if="['policeAmend','policeInvalid'].includes(type)">
@@ -41,14 +41,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">申请时间：</div>
+      <div class="item-field-label">申请时间：</div>
       <div>{{ record.createDate }}</div>
     </div>
     <div class="item-field" v-if="['policeAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请类型：</div>
+      <div class="item-field-label">申请类型：</div>
       <div>{{ record.applyTypeValue }}</div>
     </div>
     <div class="item-field" v-if="['policeAmend'].includes(type)">
@@ -57,7 +57,7 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">申请原因：</div>
+      <div class="item-field-label">申请原因：</div>
       <div>{{ record.recheckReason }}</div>
     </div>
     <div class="item-field" v-if="['policeInvalid'].includes(type)">
@@ -66,14 +66,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">申请原因：</div>
+      <div class="item-field-label">申请原因：</div>
       <div>{{ record.cancelReasonValue }}</div>
     </div>
     <div class="item-field" v-if="['policeConfirmed'].includes(type)">
       <img d
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">增援总队：</div>
+      <div class="item-field-label">增援总队：</div>
       <div>{{ record.otherProvinceName }}</div>
     </div>
     <div class="item-field" v-if="['policeConfirmed'].includes(type)">
@@ -82,7 +82,7 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">增援支队：</div>
+      <div class="item-field-label">增援支队：</div>
       <div>{{ record.otherCityName }}</div>
     </div>
   </div>

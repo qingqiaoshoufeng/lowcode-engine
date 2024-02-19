@@ -16,7 +16,7 @@
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">接警时间：</div>
+      <div class="item-field-label">接警时间：</div>
       <div>{{ formatYmdHm(record.warningDate) }}</div>
     </div>
     <div class="item-field" v-if="['dispatchFilled','dispatchReviewed','dispatchIdRejected'].includes(type)">
@@ -25,14 +25,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">警情地址：</div>
+      <div class="item-field-label">警情地址：</div>
       <div>{{ record.warningAddr }}</div>
     </div>
     <div class="item-field" v-if="['dispatchAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请单位：</div>
+      <div class="item-field-label">申请单位：</div>
       <div>{{ formatYmdHm(record.createOrg) }}</div>
     </div>
     <div class="item-field" v-if="['dispatchAmend'].includes(type)">
@@ -41,14 +41,14 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">审批时间：</div>
+      <div class="item-field-label">审批时间：</div>
       <div>{{ record.reviewTime }}</div>
     </div>
     <!-- <div class="item-field" v-if="['policeAmend'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 
         src="../../../assets/images/icon-time@2x.png" alt="" />
-      <div style="color: #929398">申请类型：</div>
+      <div class="item-field-label">申请类型：</div>
       <div>{{ formatYmdHm(record.applyTypeValue) }}</div>
     </div> -->
     <div class="item-field" v-if="['dispatchAmend'].includes(type)">
@@ -57,7 +57,7 @@
         style="width: 13px; height: 15px; margin-right: 8px"
         alt=""
       />
-      <div style="color: #929398">申请原因：</div>
+      <div class="item-field-label">申请原因：</div>
       <div>{{ record.recheckReason }}</div>
     </div>
   </div>
@@ -65,7 +65,6 @@
 <script setup>
 import { generateColorByState } from "@/utils/tools.js";
 import { formatYmdHm } from "@/utils/format.js";
-console.log(generateColorByState,'generateColorByState');
 
 const props = defineProps({
   record:{

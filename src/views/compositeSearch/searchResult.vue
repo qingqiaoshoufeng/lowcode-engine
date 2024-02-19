@@ -132,14 +132,14 @@ onMounted(() => {
             <template v-if="searchType === 4">
               <div class="item-field">
                 <img src="../../assets/images/icon-time@2x.png" alt="" />
-                <div style="color: #929398">起火时间：</div>
+                <div class="item-field-label">起火时间：</div>
                 <div>{{ formatYmdHm(record.fireDate) }}</div>
               </div>
             </template>
             <template v-else>
               <div class="item-field">
                 <img src="../../assets/images/icon-time@2x.png" alt="" />
-                <div style="color: #929398">接警时间：</div>
+                <div class="item-field-label">接警时间：</div>
                 <div>{{ formatYmdHm(record.warningDate) }}</div>
               </div>
             </template>
@@ -149,7 +149,7 @@ onMounted(() => {
                 style="width: 13px; height: 15px; margin-right: 8px"
                 alt=""
               />
-              <div style="color: #929398">行政区域：</div>
+              <div class="item-field-label">行政区域：</div>
               <div>{{ record.warningAreaValue }}</div>
             </div>
             <div class="item-line" />

@@ -91,7 +91,7 @@ const goDetail = (item)=>{
 .van-tabs{
   height: 100%;
   ::v-deep(.van-tabs__content){
-    height: calc(100% - 45px);
+    height: calc(100% - 90px);
     overflow-y: scroll;
   }
 }
@@ -104,7 +104,6 @@ const goDetail = (item)=>{
   }
   .item{
     width: 343px;
-    height: 98px;
     background: #FFFFFF;
     padding: 10px;
     box-sizing: border-box;

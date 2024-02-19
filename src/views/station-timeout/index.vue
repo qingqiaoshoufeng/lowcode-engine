@@ -1,11 +1,11 @@
 <template>
   <div class="police-timeout">
     <ProList
-        ref="proListRef"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getUnworkTimeout"
-        title="未填报队站统计"
-      >
+      ref="proListRef"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getUnworkTimeout"
+      title="未填报队站统计"
+    >
       <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
@@ -22,45 +22,36 @@
           </div>
         </div>
       </template>
-        <template #list="{ record }">
-          <div class="pro-list-item">
-            <div class="item-header">
-              <div class="item-title">{{ record.name }}</div>
-              <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-                {{ record.deptNatureValue }}
-              </div>
-            </div>
-            <!-- <div class="item-type">
-              <span>{{ record.warningTypeValue }}</span>
-            </div> -->
-            <div class="item-field">
-              <img 
-                style="width: 13px; height: 15px; margin-right: 8px" 
-                src="../../assets/images/icon_power@2x.png" alt="" />
-              <div style="color: #929398">上级大队：</div>
-              <div>{{ record.parentFireBrigadeName }}</div>
-            </div>
-            <!-- <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">行政区域：</div>
-              <div>{{ record.warningAreaValue }}</div>
-            </div> -->
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
-              <div style="color: #929398">上级支队：</div>
-              <div>{{ record.parentFireDetachmentName }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">最近录入报告时间：</div>
-              <div>{{ formatYmdHm(record.lastCommitDate) }}</div>
+      <template #list="{ record }">
+        <div class="pro-list-item">
+          <div class="item-header">
+            <div class="item-title">{{ record.name }}</div>
+            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+              {{ record.deptNatureValue }}
             </div>
           </div>
-        </template>
+          <!-- <div class="item-type">
+            <span>{{ record.warningTypeValue }}</span>
+          </div> -->
+          <div class="item-field">
+            <img 
+              style="width: 13px; height: 15px; margin-right: 8px" 
+              src="../../assets/images/icon_power@2x.png" alt="" />
+            <div class="item-field-label">上级大队：</div>
+            <div>{{ record.parentFireBrigadeName }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
+            <div class="item-field-label">上级支队：</div>
+            <div>{{ record.parentFireDetachmentName }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div class="item-field-label">最近录入报告时间：</div>
+            <div>{{ formatYmdHm(record.lastCommitDate) }}</div>
+          </div>
+        </div>
+      </template>
     </ProList>
     <!-- 驳回 -->
     <!-- <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
