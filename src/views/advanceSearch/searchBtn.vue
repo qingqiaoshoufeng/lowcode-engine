@@ -164,10 +164,10 @@ onMounted(() => {
         <div class="search-path" @click="handleSelects">
           已选条件<van-icon name="arrow-down" />
         </div>
-        <div class="search-path" @click="handlePath">
+        <div class="search-path" @click="handlePath" v-if="false" >
           查询口径<van-icon name="arrow-down" />
         </div>
-        <img class="collect" src="../../assets/images/icon-collect@2x.png" @click="handleCollect" />
+        <img class="collect" :style="{'margin-left': 'auto','margin-right': '10px'}" src="../../assets/images/icon-collect@2x.png" @click="handleCollect" />
         <van-button
           type="primary"
           size="small"

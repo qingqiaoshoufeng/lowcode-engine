@@ -477,7 +477,7 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [
           // { required: true, message: '请输入房龄' },
-          { pattern: positiveIntegerReg, message: '请输入正确房龄' },
+          // { pattern: positiveIntegerReg, message: '请输入正确房龄' },
         ],
       },
       buildUse: { // 建筑使用用途
