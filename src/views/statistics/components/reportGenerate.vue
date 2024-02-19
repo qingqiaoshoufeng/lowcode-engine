@@ -685,10 +685,20 @@ onMounted(() => {
       <p v-if="form.reportStyle === '1'" id="my-table-box" ref="reportContentRef" class="my-table-box" />
       <p v-if="form.reportStyle === '2'" id="my-table-define" ref="reportDefineRef" class="my-table-define" />
     </div>
+    <div class="tip_per">
+      “-”表示同、环期无数据或者数据为0，无法计算出同环比
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.tip_per{
+    padding: 10px 0;
+    color:red;
+    font-size: 12px;
+    // height: 20px;
+    background-color: #fff;
+  }
 .report-statistical-search {
   height: 100vh;
   overflow-y: auto;
@@ -699,7 +709,7 @@ onMounted(() => {
   }
   .report-content {
     width: 100%;
-    height: calc(100% - 120px);
+    height: calc(100% - 195px);
     overflow-x: auto;
     position: relative;
     .my-table-box {
