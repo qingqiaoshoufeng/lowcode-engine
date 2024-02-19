@@ -1,16 +1,16 @@
 <template>
-  <div class="fire-manage">
+  <div class="mine-collect">
     <ProList
-        ref="proListRef"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getMineCollect"
-        :tabs="tabs"
-        :onTabFn="onTabChangeFn"
-        title="我的收藏"
-      >
+      ref="proListRef"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getMineCollect"
+      :tabs="tabs"
+      :onTabFn="onTabChangeFn"
+      title="我的收藏"
+    >
       <template #list="{ record,tabsActive }">
         <!-- 警情列表展示 -->
-        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===1" :key="record.boFireWarningId">
+        <div class="pro-list-item" @click="handleItem(record)" v-if="tabsActive ===1" :key="record.boFireWarningId">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
@@ -99,81 +99,79 @@
           </div>
         </div>
         <!-- 火灾列表展示 -->
-        <div class="list-item" @click="handleItem(record)" v-if="tabsActive ===3" :key="record.boFireInfoId">
-            <div class="item-header">
-              <div class="item-title">{{ record.warningName }}</div>
-              <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
-                {{ record.fireStatusValue }}
-              </div>
-            </div>
-            <div class="item-type">
-              <span>{{ record.firePlaceValue }}</span>
-            </div>
-            <div class="item-field">
-              <img 
-                style="width: 13px; height: 15px; margin-right: 8px" 
-                src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">起火时间：</div> 
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
-            </div>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">警情地址：</div> 
-              <div>{{ record.warningAddr }}</div>
-            </div>
-            <div class="item-field">
-              <img
-                src="../../assets/images/icon-area@2x.png"
-                style="width: 13px; height: 15px; margin-right: 8px"
-                alt=""
-              />
-              <div style="color: #929398">起火地点：</div>
-              <div>{{ record.firePlaceValue }}</div>
-            </div>
-            <div class="item-field">
-              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
-              <div style="color: #929398">责任区大队：</div>
-              <div>{{ record.areaDutyGroupName }}</div>
-            </div>
-            <div class="item-line" />
-            <div class="item-operate" @click.stop>
-              <van-icon
-                name="star"
-                v-if="record.focusStatus === '1'"
-                style="color: #fed547"
-                class="item-collect"
-                @click="handleCollect(record, false,tabsActive)"
-              />
-              <van-icon
-                name="star-o"
-                v-else
-                class="item-collect"
-                @click="handleCollect(record, true,tabsActive)"
-              />
-              <van-button
-                v-p="['admin', 'fire-report:look']"
-                type="success"
-                size="mini"
-                color="#1989fa"
-                class="item-btn"
-                @click.stop="handleLook(record)"
-              >
-                查看
-              </van-button>
+        <div class="pro-list-item" @click="handleItem(record)" v-if="tabsActive ===3" :key="record.boFireInfoId">
+          <div class="item-header">
+            <div class="item-title">{{ record.warningName }}</div>
+            <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
+              {{ record.fireStatusValue }}
             </div>
           </div>
+          <div class="item-type">
+            <span>{{ record.firePlaceValue }}</span>
+          </div>
+          <div class="item-field">
+            <img 
+              style="width: 13px; height: 15px; margin-right: 8px" 
+              src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">起火时间：</div> 
+            <div>{{ formatYmdHm(record.warningDate) }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">警情地址：</div> 
+            <div>{{ record.warningAddr }}</div>
+          </div>
+          <div class="item-field">
+            <img
+              src="../../assets/images/icon-area@2x.png"
+              style="width: 13px; height: 15px; margin-right: 8px"
+              alt=""
+            />
+            <div style="color: #929398">起火地点：</div>
+            <div>{{ record.firePlaceValue }}</div>
+          </div>
+          <div class="item-field">
+            <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
+            <div style="color: #929398">责任区大队：</div>
+            <div>{{ record.areaDutyGroupName }}</div>
+          </div>
+          <div class="item-line" />
+          <div class="item-operate" @click.stop>
+            <van-icon
+              name="star"
+              v-if="record.focusStatus === '1'"
+              style="color: #fed547"
+              class="item-collect"
+              @click="handleCollect(record, false,tabsActive)"
+            />
+            <van-icon
+              name="star-o"
+              v-else
+              class="item-collect"
+              @click="handleCollect(record, true,tabsActive)"
+            />
+            <van-button
+              v-p="['admin', 'fire-report:look']"
+              type="success"
+              size="mini"
+              color="#1989fa"
+              class="item-btn"
+              @click.stop="handleLook(record)"
+            >
+              查看
+            </van-button>
+          </div>
+        </div>
       </template>
     </ProList>
     <ProModal showBack v-model:visible="show.lookVisible" :showHeader="false" :title="title">
-      <template #default="{ setHandleOk, setHandleExtend }">
-        <LookFireWarning v-if="lookType === 1" :current-row="currentRow" :is-detail="true"  />
-        <DispatchForm v-if="lookType === 2" :current-row="currentRow" :is-detail="true"  />
-        <FireForm v-if="lookType === 3" :current-row="currentRow" :is-detail="true"  />
-      </template>
+      <LookFireWarning v-if="lookType === 1" :current-row="currentRow" :is-detail="true"  />
+      <DispatchForm v-if="lookType === 2" :current-row="currentRow" :is-detail="true"  />
+      <FireForm v-if="lookType === 3" :current-row="currentRow" :is-detail="true"  />
     </ProModal>
   </div>
 </template>
@@ -181,14 +179,13 @@
 <script setup>
 import { getMineCollect ,getFocus,collectFireWarning} from '@/apis/index.js'
 import { computed,ref} from 'vue'
-import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
+import { MSG_LOCKING_TEXT } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import FireForm from '@/views/fire-report/components/EditorForm.vue'
 import LookFireWarning from '@/views/policeEntryDetail/index.vue'
 import DispatchForm from '@/views/dispatchReportForm/index.vue'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast} from 'vant';
-import store from '@/store/index.js'
 
 const statisticsTotal = ref({})
 
@@ -345,169 +342,17 @@ const onTimeChange = (value) => {
     closeToast();
   });
 };
-
 </script>
-  <style lang="scss" scoped>
-  .fire-manage{
-    .list-item {
-      display: flex;
-      flex-direction: column;
-      background: #ffffff;
-      margin-top: 10px;
-      .item-header {
-        display: flex;
-        padding: 8px 10px;
-        .item-title {
-          width: 260px;
-          font-size: 16px;
-          font-weight: bold;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .item-state {
-          width: 57px;
-          height: 24px;
-          font-size: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-radius: 2px;
-          margin-left: auto;
-        }
-      }
-      .item-field {
-        font-size: 14px;
-        color: #1f1f1f;
-        display: flex;
-        align-items: center;
-        padding: 0 0 8px 10px;
-        img {
-          width: 14px;
-          height: 14px;
-          margin-right: 6px;
-        }
-      }
-      .item-type {
-        margin: 0 0 8px 10px;
-        span {
-          display: inline-block;
-          font-size: 12px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          font-weight: 400;
-          color: #fc2902;
-          background: #ffefec;
-          border-radius: 2px;
-          padding: 4px 10px;
-        }
-      }
-      .item-line {
-        width: 100%;
-        border-top: 1px solid rgba(31, 31, 31, 0.15);
-      }
-      .item-operate {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 8px 10px;
-        .item-btn {
-          padding: 0 16px;
-          margin-left: 10px;
-          :deep(.van-button__content) {
-            height: 18px;
-          }
-          :deep(.van-button__text) {
-            white-space: nowrap;
-            word-break: break-all;
-          }
-        }
-      }
-    }
-  }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-collect {
-  //       font-size: 20px;
-  //       margin-right: auto;
-  //     }
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
-  .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-  </style>
+
+<style lang="scss" scoped>
+.mine-collect {
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+</style>

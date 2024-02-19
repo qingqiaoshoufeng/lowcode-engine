@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { message } from '@castle/ant-design-vue'
 import { useSubmit } from '@castle/castle-use'
 import { remarkReason } from '@/apis/index.js'
 import {showToast} from 'vant'
