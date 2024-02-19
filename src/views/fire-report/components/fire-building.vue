@@ -437,7 +437,7 @@ const onBuildTag = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入房龄"
-          type="number" 
+          type="digit" 
         >
           <template v-slot:label="">
             <FieldAnnotation
