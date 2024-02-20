@@ -6,7 +6,7 @@ import { cardList} from '../config.js'
 import { gethomePageInfo,getFireNotice} from '@/apis/index.js'
 import store from '@/store'
 
-export default function useSearch({dataPickerRef,statisticsInfoRef}){
+export default function useSearch({dataPickerRef,statisticsInfoRef,YearRankRef}){
   const ORGLEVEL = store.state.userInfo?.userInfo?.ORGLEVEL
   const state = reactive({
     currentTime:getCurrentTime(),
@@ -298,6 +298,7 @@ export default function useSearch({dataPickerRef,statisticsInfoRef}){
     })
   }
   const getAllData = ()=>{
+    YearRankRef && YearRankRef.value && (YearRankRef.value.currentTab = 1)
     const toast = showLoadingToast({
       duration: 0,
       forbidClick: true,
