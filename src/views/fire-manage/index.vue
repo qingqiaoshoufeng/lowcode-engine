@@ -31,8 +31,8 @@
                 {{ record.fireStatusValue }}
               </div>
             </div>
-            <div v-if="record.firePlaceValue" class="item-type">
-              <span>{{ record.firePlaceValue }}</span>
+            <div v-if="renderFirePlace(record)" class="item-type">
+              <span>{{ renderFirePlace(record) }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -335,6 +335,16 @@ const handleCollect = async (row, state) => {
   })
   showToast(state ? '收藏成功' : '取消收藏成功')
   proListRef.value.filter()
+}
+
+// 火灾场所格式化
+const renderFirePlace = (record) => {
+  let prefix = ''
+  if (record.fireTypeValue) {
+    const types = record.fireTypeValue?.split('/')
+    prefix = `${types[types.length - 1]}/`
+  }
+  return `${prefix}${record.firePlaceValue}`
 }
 // 查询辖区火灾
 const getPrefectureFire = ()=>{

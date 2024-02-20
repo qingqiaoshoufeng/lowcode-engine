@@ -14,8 +14,8 @@
                 {{ record.fireStatusValue }}
               </div>
             </div>
-            <div class="item-type">
-              <span>{{ record.firePlaceValue }}</span>
+            <div class="item-type" v-if="renderFirePlace(record)">
+              <span>{{ renderFirePlace(record) }}</span>
             </div>
             <div class="item-field">
               <img 
@@ -154,7 +154,15 @@ const getPrefectureFire = ()=>{
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }
-
+// 火灾场所格式化
+const renderFirePlace = (record) => {
+  let prefix = ''
+  if (record.fireTypeValue) {
+    const types = record.fireTypeValue?.split('/')
+    prefix = `${types[types.length - 1]}/`
+  }
+  return `${prefix}${record.firePlaceValue}`
+}
 const handleEdit = (row) => {
   currentRow.value = row
   relevanceDraft.value = null
