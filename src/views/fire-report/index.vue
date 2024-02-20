@@ -32,7 +32,7 @@
               alt=""
             />
             <div class="item-field-label">行政区域：</div>
-            <div>{{ record.createOrg }}</div>
+            <div>{{ record.warningAreaValue }}</div>
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
