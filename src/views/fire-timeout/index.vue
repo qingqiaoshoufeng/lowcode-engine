@@ -53,7 +53,7 @@
           </div>
           <div class="item-field">
             <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
-            <div class="item-field-label">超期类型：</div>
+            <div class="item-field-label">超时类型：</div>
             <div>{{ record.overTimeType }}</div>
           </div>
           <div class="item-field">
