@@ -386,7 +386,7 @@ const onDealEndDate = () => {
       </template>
     </SelectDateTime> 
     <SelectDateTime
-      v-if="showDealSituation && !showFalsePolice"
+      v-if="showDealSituation && showFireFighting"
       v-model:value="form.basicInformation.waterflowDate.value"
       :show-preview="showPreview"
       is-link
@@ -409,7 +409,7 @@ const onDealEndDate = () => {
       </template>
     </SelectDateTime> 
     <SelectDateTime
-      v-if="showDealSituation && !showFalsePolice && showMainGroup"
+      v-if="showDealSituation && showMainGroup && showFireFighting"
       v-model:value="form.basicInformation.controllingDate.value"
       :show-preview="showPreview"
       is-link
@@ -455,7 +455,7 @@ const onDealEndDate = () => {
       </template>
     </SelectDateTime>
     <SelectDateTime
-      v-if="showDealSituation && !showFalsePolice"
+      v-if="showDealSituation && showFireFighting"
       v-model:value="form.basicInformation.washDate.value"
       :show-preview="showPreview"
       is-link

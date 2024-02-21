@@ -216,6 +216,7 @@ onMounted(() => {
           :current-row="currentRow"
           :is-approval="true"
           process-key="warningCancel"
+          approval-text="警情作废审批"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />

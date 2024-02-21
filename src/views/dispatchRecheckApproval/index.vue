@@ -232,6 +232,7 @@ onMounted(() => {
           :is-detail="true"
           :is-approval="true"
           label-text="审批"
+          approval-text="出动更正审批"
           process-key="applyEditFlow"
           @finish-callback="finishCallback"
         />

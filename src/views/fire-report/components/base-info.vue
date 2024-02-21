@@ -468,7 +468,7 @@ const onIsChangeUseType = () => {
 const showBatteryType = computed(() => {
   const { vehicleType } = form.value.basicInfo
   return vehicleType?.text?.indexOf('道路交通') > -1
-  && (vehicleType?.text?.indexOf('纯电动') > -1 || vehicleType?.text?.indexOf('插电混动') > -1 || vehicleType?.text?.indexOf('燃料电池') > -1)
+  && (vehicleType?.text?.indexOf('纯电动') > -1 || vehicleType?.text?.indexOf('插电混动') > -1 || vehicleType?.text?.indexOf('燃料电池') > -1 || vehicleType?.text?.indexOf('低速电动车') > -1)
 })
 
 const showVinCode = computed(() => {
