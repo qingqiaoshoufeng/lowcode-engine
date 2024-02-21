@@ -1121,7 +1121,7 @@ const onSideBarChange = (e, k) => {
             <div class="wrapper">
               <van-form ref="formRef">
                 <!-- 警情信息 -->
-                <FireInfo v-if="!showDraft && !isPolice" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
+                <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->
                 <ProCard v-if="!showDraft" title="简要情况" id="briefSituation" :showOpenClose="!showPreview">
                   <BriefSituation />

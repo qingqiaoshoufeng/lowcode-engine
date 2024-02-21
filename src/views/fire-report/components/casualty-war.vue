@@ -446,7 +446,7 @@ const bigInjured = computed(() => {
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             :required="isRequired"
             id="idNumber"
-            v-model:value="item.idNumber"
+            v-model="item.idNumber"
             v-preview-text="showPreview"
             style="width: 100%"
             :maxlength="50"
@@ -890,9 +890,8 @@ const bigInjured = computed(() => {
             label="人员姓名："
             :rules="form.casualtyWar.name.rules"
             id="nation"
-            v-model:value="item.nation"
+            v-model="item.name"
             v-preview-text="showPreview"
-            :options="options.nation"
             allow-clear
             show-search
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
@@ -948,7 +947,7 @@ const bigInjured = computed(() => {
             :required="isRequired"
             id="idType"
             v-model:value="item.idType"
-            v-preview-text="showPreview"
+            :showPreview="showPreview"
             :options="options.idType"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
@@ -970,14 +969,14 @@ const bigInjured = computed(() => {
             </template>
           </SelectSingle>
         </div>
-        <div :span="8">
+        <div :span="9">
           <van-field
             :name="`casualtyWar.deadList.${index}.idNumber`"
             label="证件号码："
             :rules="!item.disabled ? [{ validator: validateCard, trigger: 'onBlur' }, { required: form.casualtyWar.idNumber.rules[0].required, message: '' }] : form.casualtyWar.idNumber.rules"
             id="idNumber"
             :required="isRequired"
-            v-model:value="item.idNumber"
+            v-model="item.idNumber"
             v-preview-text="showPreview"
             style="width: 100%"
             :maxlength="50"
@@ -1008,12 +1007,13 @@ const bigInjured = computed(() => {
             :showPreview="showPreview"
             :options="options.gender"
             :placeholder="item.genderHolder"
+            :field-names="{ value: 'value', label: 'label' }"
             :disabled="!item.disabled"
             allow-clear
           >
             <template v-slot:label="">
               <FieldAnnotation
-                label="证件号码："
+                label="人员性别："
                 remark-field="deadList"
                 remark-field2="gender"
                 :remark-field2-id="index"

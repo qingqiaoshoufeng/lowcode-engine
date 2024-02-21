@@ -26,7 +26,7 @@
         <div class="pro-list-item">
           <div class="item-header">
             <div class="item-title">{{ record.name }}</div>
-            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
+            <div class="item-state mw-90" :class="generateColorByState(record.warningStatusValue)">
               {{ record.deptNatureValue }}
             </div>
           </div>
@@ -153,6 +153,12 @@ const finishCallback = () => {
 </script>
 <style lang="scss" scoped>
   .police-timeout{
+    .mw-90{
+      max-width: 90px !important;
+      width: 90px !important;
+      text-align: right;
+      justify-content: flex-end;
+    }
     // .list-item {
     //   display: flex;
     //   flex-direction: column;
