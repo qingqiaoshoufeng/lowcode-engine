@@ -234,6 +234,7 @@ onMounted(() => {
           :is-detail="true"
           :is-approval="true"
           label-text="审批"
+          approval-text="火灾更正审批"
           process-key="applyEditFlow"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"

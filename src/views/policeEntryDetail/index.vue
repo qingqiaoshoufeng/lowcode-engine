@@ -26,6 +26,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  approvalText: {
+    type: String,
+    default: '警情审批',
+  },
   showExportPdf: { // 显示导出按钮
     type: Boolean,
     default: false,
@@ -197,7 +201,7 @@ const finishCallback = (row) => {
         :is-approval="isApproval"
       />
     </div>
-    <DialogInfo v-model:visible="show.approvalVisible" title="警情审批">
+    <DialogInfo v-model:visible="show.approvalVisible" :title="approvalText">
       <template #default="{ setHandleOk }">
         <ProcessReview
           :process-key="props.processKey"

@@ -233,6 +233,7 @@ onMounted(() => {
           :current-row="currentRow"
           :is-approval="true"
           process-key="applyEditFlow"
+          approval-text="警情更正审批"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
         />

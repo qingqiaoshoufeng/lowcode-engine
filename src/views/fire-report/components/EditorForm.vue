@@ -94,6 +94,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  approvalText: {
+    type: String,
+    default: '',
+  },
   labelText: {
     type: String,
     default: '审核',
@@ -1198,7 +1202,7 @@ const onSideBarChange = (e, k) => {
   </div>
 
   <!-- 提交审核 -->
-  <DialogInfo title="火灾审核" v-model:visible="show.approvalVisible" v-slot="{setHandleOk}">
+  <DialogInfo :title="approvalText ? approvalText : `火灾${labelText}`" v-model:visible="show.approvalVisible" v-slot="{setHandleOk}">
     <ProcessReview
       v-if="show.approvalVisible"
       process-key="fireInfoFlow"
