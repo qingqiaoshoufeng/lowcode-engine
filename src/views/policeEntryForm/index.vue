@@ -366,6 +366,12 @@ const warningTypeChange = (value, selectedOptions) => {
       labelWarningOrgname.value = "单位/户主/个体户/建筑名称";
       formRef.value.resetValidation(['warningOrgname'])
     }
+    if (selectedOptions && selectedOptions[0].dictName === '虚假警') {
+      showDialog({
+        message: '请谨慎选择虚假警类型！选择虚假警类型前，请先与大队负责人确认！',
+        confirmButtonText: '确定',
+      });
+    }
   } else {
     form.value.warningTypeText = [];
     form.value.areaDutyGroup = [];

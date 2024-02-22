@@ -539,7 +539,7 @@ const initWatch = () => {
     }, { deep: true })
   }
   loadingDetail.value = false
-  // 起火地点由警情地址代入
+  // 火灾地址由警情地址代入
   if (!form.value.basicInfo.fireDirection.value && detail.value?.warningAddr) {
     form.value.basicInfo.fireDirection.value = detail.value.warningAddr
   }

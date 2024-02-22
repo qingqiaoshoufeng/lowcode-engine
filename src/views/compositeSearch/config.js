@@ -944,10 +944,10 @@ export const useFormConfig = () => {
         headersDisabled: true,
         params: { permission: true }
       },
-      fireDirection: { // 起火地点
+      fireDirection: { // 火灾地址
         value: '',
         type: 'input',
-        label: '起火地点',
+        label: '火灾地址',
       },
       area: { // 区域
         value: undefined,
