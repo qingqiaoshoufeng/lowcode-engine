@@ -66,6 +66,7 @@ const OnAfterRead = async(file) => {
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
 }
+
 const onDelete = async(val,val1)=>{
   const res = await onRemove(val)
   if(res === true){
@@ -112,7 +113,7 @@ onMounted(() => {
 
 <template>
   <van-cell-group class="rootform1">
-    <div :gutter="gutter">
+    <div v-if="!(showPreview && form.firePhoto.isAllBack.value === '2')" :gutter="gutter">
       <div :span="8">
         <van-field
           name="firePhoto.isAllBack.value"
@@ -147,39 +148,39 @@ onMounted(() => {
     <div :gutter="gutter">
       <div :span="24">
         <van-cell title="火灾照片：" :required="isRequired" class="item-cell">
-            <van-field
-              name="firePhoto.photos.value"
-              :rules="form.firePhoto.isAllBack.value === '1' ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
-              :required="form.firePhoto.isAllBack.value === '1' ? false : isRequired"
-              label="火灾照片"
-              label-width="0"
-            >
-              <template #input>
-                <van-uploader
-                  v-model="form.firePhoto.photos.value"
-                  accept="image/png, image/jpeg, image/jpg"
-                  multiple
-                  preview-full-image
-                  preview-image
-                  :max-count="9"
-                  :max-size="10 * 1000 * 1000000"
-                  :readonly="isDetail"
-                  :deletable="!isDetail"
-                  :disabled="isDetail"
-                  :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
-                  :after-read="OnAfterRead"
-                  @delete="onDelete"
-                />
-              </template>
-              <template v-slot:label="">
-                  <FieldAnnotation
-                    label=""
-                    remark-field="photos"
-                    field-module="firePhoto"
-                    :exist-data="fieldExist?.photos"
-                    @refresh-callback="refreshField"
-                  />
-                </template>
+          <van-field
+            name="firePhoto.photos.value"
+            :rules="form.firePhoto.isAllBack.value === '1' ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
+            :required="form.firePhoto.isAllBack.value === '1' ? false : isRequired"
+            label="火灾照片"
+            label-width="0"
+          >
+            <template #input>
+              <van-uploader
+                v-model="form.firePhoto.photos.value"
+                accept="image/png, image/jpeg, image/jpg"
+                multiple
+                preview-full-image
+                preview-image
+                :max-count="9"
+                :max-size="10 * 1000 * 1000000"
+                :readonly="isDetail"
+                :deletable="!isDetail"
+                :disabled="isDetail"
+                :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
+                :after-read="OnAfterRead"
+                @delete="onDelete"
+              />
+            </template>
+            <template v-slot:label="">
+              <FieldAnnotation
+                label=""
+                remark-field="photos"
+                field-module="firePhoto"
+                :exist-data="fieldExist?.photos"
+                @refresh-callback="refreshField"
+              />
+            </template>
           </van-field>
         </van-cell>
         <span class="tip" v-if="!isDetail">只能上传 jpg/png 文件，最多9张且每张不超过10MB。</span>
@@ -187,24 +188,23 @@ onMounted(() => {
     </div>
   </van-cell-group>
 </template>
+
 <style lang="scss" scoped>
 .item-cell {
-    flex-direction: column;
-    :deep(.van-cell__value) {
-      display: flex;
-
-    }
-    :deep(.van-field__label--required){
-      width: 0 !important;
-      overflow: hidden;
-    }
-    &::after{
-      display: none;
-    }
+  flex-direction: column;
+  :deep(.van-cell__value) {
+    display: flex;
   }
-  .tip{
-    padding: 0 16px;
-    display: block;
+  :deep(.van-field__label--required) {
+    width: 0 !important;
+    overflow: hidden;
   }
+  &::after {
+    display: none;
+  }
+}
+.tip {
+  padding: 0 16px;
+  display: block;
+}
 </style>
-
