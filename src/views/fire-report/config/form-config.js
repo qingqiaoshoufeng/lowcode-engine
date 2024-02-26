@@ -1052,7 +1052,9 @@ export const useFormConfig = (validateProgress) => {
     form.value.basicInfo.area.value = fireInfo?.area?.split(',')
     form.value.basicInfo.isUrbanVillages.value = fireInfo?.isUrbanVillages
     form.value.basicInfo.otherArea.value = fireInfo?.otherArea
-    form.value.basicInfo.fireOrgname.value = fireInfo?.fireOrgname
+    if (fireInfo?.fireOrgname) {
+      form.value.basicInfo.fireOrgname.value = fireInfo?.fireOrgname
+    }
     // form.value.basicInfo.fireTel.value = fireInfo?.fireTel
     form.value.basicInfo.socialCreditCode.value = fireInfo?.socialCreditCode
     form.value.basicInfo.fireType.value = fireInfo?.fireType?.split(',')?.pop()

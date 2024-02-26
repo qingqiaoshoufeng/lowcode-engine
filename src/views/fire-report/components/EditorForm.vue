@@ -686,7 +686,7 @@ const getSubmitParams = () => {
       area: basicInfo.area.value?.join(','),
       isUrbanVillages: basicInfo.isUrbanVillages?.value,
       otherArea: basicInfo.otherArea?.value,
-      fireOrgname: basicInfo.fireOrgname?.value,
+      // fireOrgname: basicInfo.fireOrgname?.value,
       // fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
       fireType: cloneDeep(basicInfo.fireType?.completeValue)?.pop(),
@@ -823,6 +823,7 @@ const getSubmitParams = () => {
   }
   if (unDispatch.value) {
     params.isNoDispatchFlag = '1'
+    params.fireInfo.fireOrgname = basicInfo.fireOrgname?.value
   }
   if (props.isApproval) {
     params.isAudit = '1'
