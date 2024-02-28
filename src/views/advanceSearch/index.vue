@@ -9,7 +9,7 @@ import ProModal from "@/component/ProModal/index";
 import SelectSearch from './selectSearch.vue'
 import Form from './form.vue'
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { deleteAdvanceSearch, getAdvanceSearchDetail, getAdvanceSearchList, getAdvanceSearchResult } from '@/apis/index.js'
+import { deleteAdvanceSearch, getAdvanceSearchDetail, getAdvanceSearchList, getSystemAreaByIds } from '@/apis/index.js'
 import { checkInputRejectState, checkRejectState, formatYmdHm, generateByKeyValue, generateColorByState } from '@/utils/tools.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
@@ -77,12 +77,12 @@ provide('searchDimension', searchDimension)
 provide('dataTimeSource', dataTimeSource)
 
 const onInitCallback = (row) => {
-  getAdvanceSearchDetail(row.boSearchId).then((res) => {
+  getAdvanceSearchDetail(row.boSearchId).then(async (res) => {
     if (res?.boSearchId) {
       activeKey.value = res?.searchType
-      nextTick(() => {
+      nextTick(async () => {
         const resList = []
-        res.searchItems.forEach((ele) => {
+        for (const ele of res.searchItems) {
           ele.date = uuidv4()
           if (ele.fieldFlag === '2') {
             ele.fieldText = ele.text
@@ -98,7 +98,14 @@ const onInitCallback = (row) => {
               if (obj.type === '3' || obj.type === '8') {
                 data.valueOne = [ele.fieldValueOne, ele.fieldValueTwo]
               }
-              if (obj.type === '4' || obj.type === '5') {
+              if (obj.type === '5' && ele.fieldValueOne) {
+                data.valueOne = JSON.parse(ele.fieldValueOne)
+                const areaRes = await getSystemAreaByIds({ boAreaId: ele.fieldValueOne })
+                if (areaRes) {
+                  data.options = areaRes
+                }
+              }
+              if (obj.type === '4') {
                 data.valueOne = ele.fieldValueOne?.split(',')
               }
               if (obj.type === '6') {
@@ -142,7 +149,7 @@ const onInitCallback = (row) => {
               resList.push(data)
             }
           }
-        })
+        }
         list.value = resList
       })
     }

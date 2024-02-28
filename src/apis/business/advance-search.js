@@ -70,6 +70,10 @@ export function getAdvanceSearchList(data) {
   })
 }
 
+export function getSystemAreaByIds(data) {
+  return request.post(`/acws/rest/biz/common/sysarea/getAreaByCode`, data)
+}
+
 // 获取查询条件
 export function getConfigList(params) {
   return request.get('/acws/rest/biz/analysis/mysearch/getConfigList', { params }).then((res) => {

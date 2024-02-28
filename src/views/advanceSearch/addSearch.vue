@@ -11,7 +11,7 @@ import SelectSingle from '@/component/SelectSingle/index.vue';
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import CascaderMultiple from '@/component/CascaderMultiple/index.vue';
 import SelectOrg from "@/component/SelectOrg/index";
-import AreaCascader from "@/component/AreaCascader/index.vue";
+import AreaCascader from "@/component/AreaCascader/multiple.vue";
 import SelectCar from '@/component/SelectCar/index.vue';
 import SelectPerson from '@/component/SelectPerson/index.vue';
 
@@ -114,9 +114,10 @@ const onTimeChange = (time) => {
 }
 
 const onAreaChange = (value, selectedOptions)=> {
-  form.value.fieldValueOne = form.value.valueOne?.join(',')
-  const arr = selectedOptions?.map(val => val.areaName)
-  form.value.fieldText = `${form.value.label}：${arr?.join(',')}`
+  form.value.fieldValueOne = value?.length > 0 ? JSON.stringify(value) : ''
+  form.value.fieldText = `行政区域：${selectedOptions.map((temp) => {
+    return temp.map(item => (item.label || item.areaName))?.join('/')
+  })?.join('，')}`
 }
 
 const onCascaderChange = (value, selectedOptions) => {

@@ -89,7 +89,9 @@ const showText = computed(() => {
 watch(() => props.value, (newVal, oldVal) => {
   if (props.value?.length > 0) {
     selectValue.value = props.value
-    selectText.value = props.text
+    if (props.text?.length > 0) {
+      selectText.value = props.value
+    }
     selectItem.value = selectValue.value.map((item, index) => {
       return item.map((temp, i) => {
         return {
