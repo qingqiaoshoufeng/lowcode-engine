@@ -91,6 +91,18 @@ export const getLastMonth = () => {
   return [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day'), '近一月']
 }
 
+// 根据 value, text 生成二维数组对象
+export const generateByCascader = (value, text) => {
+  if (value?.length <= 0 || text?.length <= 0) {
+    return []
+  }
+  return value.map((temp, index) => {
+    return temp.map((item, i) => {
+      return { value: item, label: text[index][i], boAreaId: item, areaName: text[index][i] }
+    })
+  })
+}
+
 // 根据 key, value 生成数组对象，比如：列表返回了状态key，状态value
 export const generateByKeyValue = (keys, values, fields, keyType) => {
   if (!keys || !values) {

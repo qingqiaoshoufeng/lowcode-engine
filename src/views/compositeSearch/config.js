@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import dayjs from 'dayjs'
-import { generateByKeyValue } from '@/utils/tools.js'
+import { generateByKeyValue, generateByCascader } from '@/utils/tools.js'
 import { install, isCase, isNot } from '@/utils/constants.js'
 
 export const useFormConfig = () => {
@@ -40,8 +40,9 @@ export const useFormConfig = () => {
         headersDisabled: true,
         params: { permission: true }
       },
-      boAreaId: { // // 行政区划
+      boAreaId: { // 行政区划
         value: undefined,
+        text: undefined,
         type: 'area-cascader',
         label: '行政区划',
       },
@@ -1722,7 +1723,8 @@ export const useFormConfig = () => {
         areaGroup: policeBase.areaGroup.value?.map(item => item.organizationid)?.join(','),
         areaGroupText: policeBase.areaGroup.value?.map(item => item.name)?.join(','),
         areaGroupNon: policeBase.areaGroup.back,
-        boAreaId: policeBase.boAreaId.value?.join(','),
+        boAreaId: policeBase.boAreaId.value?.length > 0 ? JSON.stringify(policeBase.boAreaId.value) : '',
+        boAreaIdText: policeBase.boAreaId.text?.length > 0 ? JSON.stringify(policeBase.boAreaId.text) : '',
         warningAddr: policeBase.warningAddr.value,
         warningType: returnCascader(policeBase.warningType.value),
         warningTypeNon: policeBase.warningType.back,
@@ -2235,7 +2237,10 @@ export const useFormConfig = () => {
       }, 'Number')
       : []
     form.value.policeBase.areaGroup.back = comprehensiveWarningQueryReq.areaGroup === 'true'
-    form.value.policeBase.boAreaId.value = comprehensiveWarningQueryReq.boAreaId?.split(',')
+    form.value.policeBase.boAreaId.value = comprehensiveWarningQueryReq.boAreaId ? JSON.parse(comprehensiveWarningQueryReq.boAreaId) : []
+    if (comprehensiveWarningQueryReq.boAreaId && comprehensiveWarningQueryReq.boAreaIdText) {
+      form.value.policeBase.boAreaId.text = JSON.parse(comprehensiveWarningQueryReq.boAreaIdText)
+    }
     form.value.policeBase.warningAddr.value = comprehensiveWarningQueryReq.warningAddr
     form.value.policeBase.warningType.value = returnCascaderValue(comprehensiveWarningQueryReq.warningType)
     form.value.policeBase.warningType.back = comprehensiveWarningQueryReq.warningTypeNon === 'true'
@@ -2548,7 +2553,7 @@ export const useFormConfig = () => {
     form.value.fireBase.areaDutyGroupFire.back = comprehensiveFireQueryReq.areaDutyGroupFireNon === 'true'
     form.value.fireBase.area.value = returnCascaderValue(comprehensiveFireQueryReq.area)
     form.value.fireBase.area.back = comprehensiveFireQueryReq.areaNon === 'true'
-    form.value.fireBase.fireType.value = comprehensiveFireQueryReq.fireType.split(',').map(item => ([item]))
+    // form.value.fireBase.fireType.value = comprehensiveFireQueryReq.fireType.split(',').map(item => ([item]))
     form.value.fireBase.firePlace.value = returnCascaderValue(comprehensiveFireQueryReq.firePlace)
     form.value.fireBase.firePlace.back = comprehensiveFireQueryReq.firePlaceNon === 'true'
     form.value.fireBase.fireCause.value = returnCascaderValue(comprehensiveFireQueryReq.fireCause)
