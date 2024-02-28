@@ -913,7 +913,7 @@ export const checkBoxs = [
   },
   {
     fieldKeyOne: 'fireDirection',
-    label: '起火地点',
+    label: '火灾地址',
     type: '1',
     maxlength: 100,
   },

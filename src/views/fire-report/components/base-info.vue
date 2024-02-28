@@ -671,17 +671,17 @@ const onFireLevel = () => {
       </div>
       <div class="fireDirection">
         <van-field
-          label="起火地点："
+          label="火灾地址："
           v-model="form.basicInfo.fireDirection.value"
           name="basicInfo.fireDirection.value"
-          placeholder="请输入起火地点"
+          placeholder="请输入火灾地址"
           :rules="form.basicInfo.fireDirection.rules"
           :required="isRequired"
           v-preview-text="showPreview"
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="起火地点："
+              label="火灾地址："
               remark-field="fireDirection"
               field-module="basicInfo"
               :exist-data="fieldExist?.fireDirection"
@@ -723,6 +723,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
           label-width="105"
+          :disabled="!unDispatch"
         >
           <template v-slot:label="">
             <FieldAnnotation

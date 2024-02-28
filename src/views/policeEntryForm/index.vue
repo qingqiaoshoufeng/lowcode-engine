@@ -347,6 +347,17 @@ const initPermissionOptions = (res) => {
   }
 }
 
+const initWarningOrgname = () => {
+  if (form.value.warningTypeText?.indexOf('安保勤务') > -1) {
+    labelWarningOrgname.value = '活动/任务名称'
+    formRef.value.resetValidation(['warningOrgname'])
+  }
+  else {
+    labelWarningOrgname.value = '单位/户主/个体户/建筑名称'
+    formRef.value.resetValidation(['warningOrgname'])
+  }
+}
+
 const warningTypeChange = (value, selectedOptions) => {
   form.value.warningLevel = undefined;
   form.value.typhoonType = undefined;
@@ -359,12 +370,12 @@ const warningTypeChange = (value, selectedOptions) => {
     } else {
       options.value.warningLevelOptions = warningLevelOptions;
     }
-    if (selectedOptions && selectedOptions[0].dictName === "安保勤务") {
-      labelWarningOrgname.value = "活动/任务名称";
-      formRef.value.resetValidation(['warningOrgname'])
-    } else {
-      labelWarningOrgname.value = "单位/户主/个体户/建筑名称";
-      formRef.value.resetValidation(['warningOrgname'])
+    initWarningOrgname()
+    if (selectedOptions && selectedOptions[0].dictName === '虚假警') {
+      showDialog({
+        message: '请谨慎选择虚假警类型！选择虚假警类型前，请先与大队负责人确认！',
+        confirmButtonText: '确定',
+      });
     }
   } else {
     form.value.warningTypeText = [];
@@ -480,6 +491,7 @@ const initDetail = () => {
     nextTick(() => {
       loadDetail.value = false
       initLevelOptions()
+      initWarningOrgname()
     })
     closeToast()
   }
@@ -594,6 +606,8 @@ const initDetail = () => {
         if (showPreview) {
           initPermissionOptions(res)
         }
+
+        initWarningOrgname()
 
         importantEdit.value = res.importantInfoRecheck
       }

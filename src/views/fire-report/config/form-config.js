@@ -41,9 +41,9 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [{ required: true, message: '' }],
       },
-      fireDirection: { // 起火地点
+      fireDirection: { // 火灾地址
         value: '',
-        rules: [{ required: true, message: '请输入起火地点' }],
+        rules: [{ required: true, message: '请输入火灾地址' }],
       },
       area: { // 区域
         value: undefined,
@@ -848,7 +848,7 @@ export const useFormConfig = (validateProgress) => {
       content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
-      content = '【起火时间年月日时分】，【起火地点】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
+      content = '【起火时间年月日时分】，【火灾地址】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     // 替换各个字段
     if (basicInfo.fireDate.value) {
@@ -858,7 +858,7 @@ export const useFormConfig = (validateProgress) => {
       content = content.replace('【警情地址】', warningAddr)
     }
     if (basicInfo.fireDirection.value) {
-      content = content.replace('【起火地点】', basicInfo.fireDirection.value)
+      content = content.replace('【火灾地址】', basicInfo.fireDirection.value)
     }
     if (basicInfo.firePlace.text?.length > 0) {
       content = content.replace('【起火场所】', cloneDeep(basicInfo.firePlace.text)?.pop())
@@ -1052,7 +1052,9 @@ export const useFormConfig = (validateProgress) => {
     form.value.basicInfo.area.value = fireInfo?.area?.split(',')
     form.value.basicInfo.isUrbanVillages.value = fireInfo?.isUrbanVillages
     form.value.basicInfo.otherArea.value = fireInfo?.otherArea
-    form.value.basicInfo.fireOrgname.value = fireInfo?.fireOrgname
+    if (fireInfo?.fireOrgname) {
+      form.value.basicInfo.fireOrgname.value = fireInfo?.fireOrgname
+    }
     // form.value.basicInfo.fireTel.value = fireInfo?.fireTel
     form.value.basicInfo.socialCreditCode.value = fireInfo?.socialCreditCode
     form.value.basicInfo.fireType.value = fireInfo?.fireType?.split(',')?.pop()

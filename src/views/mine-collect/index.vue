@@ -131,7 +131,7 @@
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div class="item-field-label">起火地点：</div>
+            <div class="item-field-label">火灾地址：</div>
             <div>{{ record.firePlaceValue }}</div>
           </div>
           <div class="item-field">

@@ -944,10 +944,10 @@ export const useFormConfig = () => {
         headersDisabled: true,
         params: { permission: true }
       },
-      fireDirection: { // 起火地点
+      fireDirection: { // 火灾地址
         value: '',
         type: 'input',
-        label: '起火地点',
+        label: '火灾地址',
       },
       area: { // 区域
         value: undefined,
@@ -2548,7 +2548,7 @@ export const useFormConfig = () => {
     form.value.fireBase.areaDutyGroupFire.back = comprehensiveFireQueryReq.areaDutyGroupFireNon === 'true'
     form.value.fireBase.area.value = returnCascaderValue(comprehensiveFireQueryReq.area)
     form.value.fireBase.area.back = comprehensiveFireQueryReq.areaNon === 'true'
-    form.value.fireBase.fireType.value = comprehensiveFireQueryReq.fireType.split(',').map(item => ([item]))
+    form.value.fireBase.fireType.value = comprehensiveFireQueryReq.fireType?.split(',').map(item => ([item]))
     form.value.fireBase.firePlace.value = returnCascaderValue(comprehensiveFireQueryReq.firePlace)
     form.value.fireBase.firePlace.back = comprehensiveFireQueryReq.firePlaceNon === 'true'
     form.value.fireBase.fireCause.value = returnCascaderValue(comprehensiveFireQueryReq.fireCause)
