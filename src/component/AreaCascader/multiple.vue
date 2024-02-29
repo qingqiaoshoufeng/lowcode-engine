@@ -90,7 +90,7 @@ watch(() => props.value, (newVal, oldVal) => {
   if (props.value?.length > 0) {
     selectValue.value = props.value
     if (props.text?.length > 0) {
-      selectText.value = props.value
+      selectText.value = props.text
     }
     selectItem.value = selectValue.value.map((item, index) => {
       return item.map((temp, i) => {

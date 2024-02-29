@@ -165,6 +165,7 @@ defineOptions({
   }
   .pro-wrapper {
     height: calc(100% - 44px);
+    overflow-y: hidden;
   }
 }
 </style>
