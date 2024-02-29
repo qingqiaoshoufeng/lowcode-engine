@@ -1544,7 +1544,7 @@ const onSideBarChange = (e, k) => {
   display: flex;
   background-color: #F6F8FC;
   .form-left {
-    // width: 20%;
+    width: var(--van-sidebar-width);
   }
   .form-right {
     height: 100%;

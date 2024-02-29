@@ -222,6 +222,7 @@ const searchDimension = inject('searchDimension')
         v-model:value="fieldObj.value"
         v-model:text="fieldObj.text"
         :readonly="true"
+        :single="false"
         :label="`${fieldObj.label}：`"
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"

@@ -224,6 +224,7 @@ const onTabsChange = (index) => {
 
 <style lang="scss" scoped>
 .police-tabs {
+  height: 98px;
   display: flex;
   padding: 10px 10px 10px 10px;
   background-color: white;

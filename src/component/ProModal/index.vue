@@ -131,6 +131,7 @@ defineOptions({
   top: 0;
   z-index: 99;
   background-color: white;
+  overflow-y: hidden;
   .back {
     height: 44px;
     background: #0C207F;

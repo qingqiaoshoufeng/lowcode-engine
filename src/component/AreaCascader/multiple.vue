@@ -201,6 +201,56 @@ const handleCheck = (item) => {
       emit("change", selectValue.value, selectItem.value, selectText.value);
     })
     return
+  } else if (!props.single && item.checked) {
+    // 同级多选
+    const level = item.areaLvl - 1
+    selectValue.value = selectValue.value?.filter(temp => temp.length === level)
+    selectItem.value = selectItem.value?.filter(temp => temp.length === level)
+    // 已经选中的要重置
+    treeData.value.forEach((arr) => {
+      arr.forEach((i) => {
+        if (i.checked && item.areaLvl !== i.areaLvl) {
+          i.checked = false
+        }
+      })
+    })
+    nextTick(() => {
+      const values = []
+      const items = []
+      cloneDeep(treeData.value).reverse().forEach(arr => {
+        arr.forEach(i => {
+          if (i.boAreaId === item.boAreaId && i.checked) {
+            values.push(i.boAreaId)
+            items.push(i)
+          }
+          const parentIds = items?.map(item => item.parentAreaId)?.join(',')
+          if (parentIds.indexOf(i.boAreaId) > -1) {
+            values.push(i.boAreaId)
+            items.push(i)
+          }
+        })
+      })
+      selectValue.value.push(values.reverse());
+      selectItem.value.push(items.reverse());
+      selectText.value = selectItem.value?.map(item => {
+        return item.map(temp => temp.areaName)
+      });
+      emit("update:value", selectValue.value);
+      emit("update:text", selectText.value);
+      emit("change", selectValue.value, selectItem.value, selectText.value);
+    })
+    return
+  } else if (!props.single && !item.checked) {
+    // 同级多选
+    selectValue.value = selectValue.value?.filter(i => {
+      return !i.map(temp => temp)?.join(',')?.includes(item.boAreaId)
+    })
+    selectItem.value = selectItem.value?.filter(i => {
+      return !i.map(temp => temp.boAreaId)?.join(',')?.includes(item.boAreaId)
+    });
+    selectText.value = selectItem.value?.map(item => {
+      return item.map(temp => temp.areaName)
+    });
   } else if (props.single && !item.checked) {
     selectValue.value = [];
     selectItem.value = [];

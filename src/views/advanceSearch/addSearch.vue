@@ -237,6 +237,7 @@ defineExpose({
           <AreaCascader
             v-model:value="form.valueOne"
             :readonly="true"
+            :single="false"
             :label="`${form.label}：`"
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
