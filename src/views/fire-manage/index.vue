@@ -171,19 +171,20 @@ const tabs = ref([
     value: 3,
   },
 ]);
-const options = {}
+const options = ref({})
 getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM'], null, (res) => {
-  options.fireStatus = res.HZ_STATUS
-  options.fireLevel = res.HZ_INFO_HZDJ
-  options.fireCause = toRaw(res.HZ_QHYY)
-  options.area = res.HZ_INFO_QY
+  options.value.fireStatus = res.HZ_STATUS
+  options.value.fireLevel = res.HZ_INFO_HZDJ
+  options.value.fireCause = toRaw(res.HZ_QHYY)
+  options.value.area = res.HZ_INFO_QY
 })
 onMounted(() => {
   // 获取火灾标签
   getFireWarningTag({ tagType: 2 }).then((res) => {
-    options.fireTags = res.data || []
+    options.value.fireTags = res.data || []
+    show.value.moreFilter = true
   })
-  show.value.moreFilter = true
+  
 })
 
 const searchOptions = computed(()=>([
@@ -197,7 +198,7 @@ const searchOptions = computed(()=>([
     title: '状态',
     type: 'select',
     placeholder: '请选择状态',
-    options: options.fireStatus,
+    options: options.value.fireStatus,
     fieldNames: { value: 'boDictId', label: 'dictName' },
     value: 'fireStatus',
   },
@@ -233,9 +234,9 @@ const searchOptions = computed(()=>([
     title: '火灾标签',
     type: 'select-single',
     placeholder: '请选择火灾标签',
-    fieldNames:"{ label: 'tagName', value: 'boFireTagId' }",
+    fieldNames:{ label: 'tagName', value: 'boFireTagId' },
     value: 'fireTags',
-    options: options.fireTags,
+    options: options.value.fireTags,
   },
   {
     title: '所属队伍',
@@ -253,14 +254,14 @@ const searchOptions = computed(()=>([
     placeholder: '请选择火灾等级',
     fieldNames:{ value: 'boDictId', label: 'dictName' },
     value: 'fireLevel',
-    options: options.fireLevel,
+    options: options.value.fireLevel,
   },
   {
     title: '起火原因',
     type: 'cascader',
     placeholder: '请选择起火原因',
     fieldNames: { value: 'boDictId', text: 'dictName' },
-    options: options.fireCause,
+    options: options.value.fireCause,
     value: 'fireCause',
   },
   {
@@ -268,7 +269,7 @@ const searchOptions = computed(()=>([
     type: 'cascader',
     placeholder: '请选择区域',
     fieldNames: { value: 'boDictId', text: 'dictName' },
-    options: options.area,
+    options: options.value.area,
     value: 'area',
   }, 
   {
