@@ -313,6 +313,9 @@ const sections = computed(() => {
   }
   switch (type) {
   case '主战':
+    if (showPreview.value && props.isDetail) {
+      extra.disposalProcess = disposalProcess
+    }
     extra.basicInformation = basicInformation
     extra.investForce = investForce
     extra.casualtyWar = casualtyWar
@@ -324,7 +327,9 @@ const sections = computed(() => {
     ) {
       extra.battleResult = battleResult
     }
-    extra.disposalProcess = disposalProcess
+    if (!(showPreview.value && props.isDetail)) {
+      extra.disposalProcess = disposalProcess
+    }
     if (!showMidwayReturn.value) {
       extra.scenePhoto = scenePhoto
     }
@@ -335,6 +340,9 @@ const sections = computed(() => {
     }
     return extra
   case '增援':
+    if (showPreview.value && props.isDetail) {
+      extra.disposalProcess = disposalProcess
+    }
     extra.basicInformation = basicInformation
     extra.investForce = investForce
     extra.casualtyWar = casualtyWar
@@ -346,7 +354,9 @@ const sections = computed(() => {
     ) {
       extra.battleResult = battleResult
     }
-    extra.disposalProcess = disposalProcess
+    if (!(showPreview.value && props.isDetail)) {
+      extra.disposalProcess = disposalProcess
+    }
     if (!showMidwayReturn.value) {
       extra.scenePhoto = scenePhoto
     }
@@ -385,7 +395,7 @@ const sections = computed(() => {
   }
 })
 
-const { sideBarActive } = useIntersection(sections, '.form-right', props.offset);
+const { sideBarActive, openScroll } = useIntersection(sections, '.form-right', props.offset);
 
 const { detail, loadDetail } = useDetail({
   getDetailFn: () => getFireWarningDetail(props.currentRow.boFireWarningId),
@@ -1325,10 +1335,14 @@ const onFailed = (errorInfo) => {
 const onSideBarChange = (e, k) => {
   const targetElement = document.getElementById(k);
   if (targetElement) {
+    openScroll.value = false
     targetElement.scrollIntoView({
       block: 'start',
       // behavior: 'smooth', // 会影响左侧点击
     });
+    setTimeout(() => {
+      openScroll.value = true
+    }, 1000)
   }
 }
 </script>
@@ -1336,21 +1350,19 @@ const onSideBarChange = (e, k) => {
 <template>
   <div class="dispatch-report-form">
     <div class="form-left">
-      <van-sidebar v-model="sideBarActive">
-        <template v-for="(item, k) in sections" :key="k">
-          <van-sidebar-item @click="onSideBarChange(item, k)">
-            <template #title>
-              <div class="label_title"> 
-                {{ item.title }}
-                <div class="tip-wrapper">
-                  <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
-                  <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
-                  <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
-                </div>
+      <van-sidebar v-if="showPreview !== null" v-model="sideBarActive">
+        <van-sidebar-item v-for="(item, k) in sections" :key="item.title" @click="onSideBarChange(item, k)">
+          <template #title>
+            <div class="label_title">
+              {{ item.title }}
+              <div class="tip-wrapper">
+                <img v-if="item.fieldWarning?.indexOf('true') > -1 && !showDraft" class="field-wraning" src="@/assets/images/wraning-tip.png" >
+                <img v-show="item.fieldAnnotation" class="field-exist" src="@/assets/images/icon-edit.png">
+                <img :style="{ visibility: (!statusList.includes(k) && !isDetail) ? 'visible' : 'hidden' }" class="field-complate" src="@/assets/images/complate-tip.png" >
               </div>
-            </template>
-          </van-sidebar-item>
-        </template>
+            </div>
+          </template>
+        </van-sidebar-item>
       </van-sidebar>
     </div>
     <div class="form-right" :class="{'hidevalidate':hidevalidate}">
@@ -1358,6 +1370,10 @@ const onSideBarChange = (e, k) => {
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
         <template v-if="showMainGroup">
+          <!-- 处置经过 -->
+          <template v-if="showPreview && isDetail">
+            <DisposalProcess />
+          </template>
           <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
@@ -1414,7 +1430,9 @@ const onSideBarChange = (e, k) => {
             "
           />
           <!-- 处置经过 -->
-          <DisposalProcess />
+          <template v-if="!(showPreview && isDetail)">
+            <DisposalProcess />
+          </template>
           <!-- 现场照片 -->
           <ScenePhoto v-if="!showMidwayReturn" />
           <!-- 其他附件 -->
@@ -1423,6 +1441,10 @@ const onSideBarChange = (e, k) => {
           <BattleConsume />
         </template>
         <template v-else-if="showReinforce">
+          <!-- 处置经过 -->
+          <template v-if="showPreview && isDetail">
+            <DisposalProcess />
+          </template>
           <ProCard title="基本信息" id="basicInformation" :showOpenClose="!showPreview">
             <!-- 基本信息 -->
             <BasicInformation />
@@ -1455,7 +1477,9 @@ const onSideBarChange = (e, k) => {
             "
           />
           <!-- 处置经过 -->
-          <DisposalProcess />
+          <template v-if="!(showPreview && isDetail)">
+            <DisposalProcess />
+          </template>
           <!-- 现场照片 -->
           <ScenePhoto v-if="!showMidwayReturn" />
           <!-- 其他附件 -->
@@ -1520,7 +1544,7 @@ const onSideBarChange = (e, k) => {
   display: flex;
   background-color: #F6F8FC;
   .form-left {
-    // width: 20%;
+    width: var(--van-sidebar-width);
   }
   .form-right {
     height: 100%;

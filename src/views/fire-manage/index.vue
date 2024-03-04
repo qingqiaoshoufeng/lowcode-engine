@@ -156,7 +156,6 @@ import { showToast, showLoadingToast, closeToast } from 'vant';
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
-
 const tabs = ref([
   {
     title: "辖区火灾",
@@ -271,7 +270,13 @@ const searchOptions = computed(()=>([
     fieldNames: { value: 'boDictId', text: 'dictName' },
     options: options.value.area,
     value: 'area',
-  }, 
+  },
+  {
+    title: '火灾地址',
+    type: 'input',
+    placeholder: '请输入火灾地址',
+    value: "fireDirection",
+  },
   {
     title: '是否属于安全生产事故',
     type: 'select-single',
@@ -389,15 +394,16 @@ const handleItem = (record)=>{
   // selectVisible
 }
 </script>
-  <style lang="scss" scoped>
-  .fire-manage{
-  }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-  </style>
+
+<style lang="scss" scoped>
+.fire-manage {
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+</style>

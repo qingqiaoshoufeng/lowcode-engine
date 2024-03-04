@@ -41,6 +41,7 @@ export function getFireManageList(data) {
       isSafetyAccident: data?.isSafetyAccident,
       isResearch: data?.isResearch,
       finishQueryFlag: data?.finishQueryFlag,
+      fireDirection: data?.fireDirection,
     }
   }
   return axios.get('/acws/rest/biz/fireinfo/query', {

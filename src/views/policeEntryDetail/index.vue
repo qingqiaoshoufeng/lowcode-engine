@@ -221,6 +221,7 @@ const finishCallback = (row) => {
   position: relative;
   .tab-pane-content {
     height: calc(100% - 98px);
+    overflow-y: hidden;
   }
   .no-data {
     height: 100%;

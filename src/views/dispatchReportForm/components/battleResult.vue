@@ -1,6 +1,7 @@
 <script setup>
 import { inject } from "vue";
 import { positiveIntegerReg } from "@/utils/validate.js";
+import { checkEmergencyNum, checkProtectNum } from '../tool.js';
 import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
@@ -23,6 +24,14 @@ const onSurviveNum = () => {
     form.value.battleResult.deathNum.value = 0;
   }
 };
+
+const onEmergencyNum = () => {
+  checkEmergencyNum(form.value)
+}
+
+const onProtectNum = () => {
+  checkProtectNum(form.value)
+}
 
 const validateRescueNum = (value, rule) => {
   const { rescueNum } = form.value.battleResult;
@@ -198,14 +207,17 @@ const surviveNumChange = ()=>{
         label-width="148px"
         placeholder="请输入抢救财产价值"
         :rules="form.battleResult.emergencyNum.rules"
+        @blur="onEmergencyNum()"
       >
         <template v-slot:label="">
           <FieldAnnotation
+            :isWarning="form.battleResult.emergencyNum.warning"
             label="抢救财产价值(元)："
             remark-field="emergencyNum"
             field-module="battleResult"
             :exist-data="fieldExist?.emergencyNum"
             @refresh-callback="refreshField"
+            warningTip="抢救财产超1千万，请备注说明！"
           />
         </template>
       </van-field>
@@ -221,14 +233,17 @@ const surviveNumChange = ()=>{
         label-width="148px"
         placeholder="请输入保护财产价值"
         :rules="form.battleResult.protectNum.rules"
+        @blur="onProtectNum()"
       >
         <template v-slot:label="">
           <FieldAnnotation
+            :isWarning="form.battleResult.protectNum.warning"
             label="保护财产价值(元)："
             remark-field="protectNum"
             field-module="battleResult"
             :exist-data="fieldExist?.protectNum"
             @refresh-callback="refreshField"
+            warningTip="保护财产超1千万，请备注说明！"
           />
         </template>
       </van-field>

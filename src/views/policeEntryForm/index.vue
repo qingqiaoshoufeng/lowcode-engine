@@ -373,7 +373,7 @@ const warningTypeChange = (value, selectedOptions) => {
     initWarningOrgname()
     if (selectedOptions && selectedOptions[0].dictName === '虚假警') {
       showDialog({
-        message: '请谨慎选择虚假警类型！选择虚假警类型前，请先与大队负责人确认！',
+        message: '请谨慎选择虚假警，不得将真实火警列入虚假警统计，无论损失大小都列入统计范围。',
         confirmButtonText: '确定',
       });
     }
@@ -740,6 +740,16 @@ const validateFireTel = (value, rule) => {
   }
 };
 
+const validateWarningTypeOther = (value, rule) => {
+  if (!value) {
+    return "请输入其他说明";
+  } else if (value === '无') {
+    return "请输入具体说明";
+  } else {
+    return ''
+  }
+};
+
 const validateLng = (value, rule) => {
   if (!value) {
     return "请输入经度坐标";
@@ -1057,7 +1067,9 @@ const onWarningOrgname = () => {
         label="其他说明："
         placeholder="请输入其他说明"
         :disabled="isConfirm"
-        :rules="[{ required: true, message: '请输入其他说明' }]"
+        :rules="[
+          { required: true, message: '请输入其他说明' },
+          { validator: validateWarningTypeOther, trigger: 'onBlur' }]"
       >
         <template v-slot:label="">
           <FieldAnnotation

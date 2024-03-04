@@ -1,7 +1,7 @@
 import { nextTick, ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
-import { checkAttendanceDate, checkDispatchNum, checkFireDistance, checkIsResponseTruck, checkReturnSpeed, checkTrappedPerson } from './tool.js'
+import { checkAttendanceDate, checkDispatchNum, checkEmergencyNum, checkProtectNum, checkFireDistance, checkIsResponseTruck, checkReturnSpeed, checkTrappedPerson } from './tool.js'
 import { fixCarInfo, getTypeText, generateByKeyValue  } from '@/utils/tools.js'
 import { nonZeroPositiveInteger, nonnegativeNumberReg, positiveIntegerReg } from '@/utils/validate.js'
 
@@ -725,7 +725,7 @@ export const useFormConfig = () => {
     battleResult: { // 战斗成果
       title: '战斗成果',
       fieldAnnotation: false, // 批注
-      fieldWarning: 'rescueNum:false;',
+      fieldWarning: 'rescueNum:false;emergencyNum:false;protectNum:false;',
       rescueNum: { // 抢救（人）
         value: '',
         rules: [
@@ -1379,6 +1379,10 @@ export const useFormConfig = () => {
     checkIsResponseTruck(form.value, false)
 
     checkReturnSpeed(form.value)
+    
+    checkEmergencyNum(form.value, false)
+
+    checkProtectNum(form.value, false)
   }
 
   // 根据详情初始化表单，用于回显

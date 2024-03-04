@@ -3,9 +3,14 @@ import { throttle } from 'lodash';
 
 export const useIntersection = (classNames, wrapper = '.form-right', offset = 100) => {
 
+  const openScroll = ref(true)
+
   const sideBarActive = ref(0)
 
   const callback = () => {
+    if (!openScroll.value) {
+      return
+    }
     let visibleIndex = 0;
     let i = 0;
     const scrollTop = document.querySelector(wrapper).scrollTop;
@@ -29,5 +34,5 @@ export const useIntersection = (classNames, wrapper = '.form-right', offset = 10
     document.querySelector(wrapper)?.removeEventListener('scroll', throttle(callback, 100))
   })
 
-  return { sideBarActive }
+  return { sideBarActive, openScroll }
 }
