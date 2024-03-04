@@ -208,3 +208,27 @@ export const checkReturnSpeed = (form) => {
     form.basicInformation.presentSpeed.value = Number(speed.toFixed(2))
   }
 }
+
+// 校验抢救财产价值
+export const checkEmergencyNum = (form, prompt = true) => {
+  form.battleResult.emergencyNum.warning = false
+  form.battleResult.fieldWarning = form.battleResult.fieldWarning.replace('emergencyNum:true;', 'emergencyNum:false;')
+  const { emergencyNum } = form.battleResult
+  if (Number(emergencyNum.value) > 10000000) {
+    form.battleResult.emergencyNum.warning = true
+    form.battleResult.fieldWarning = form.battleResult.fieldWarning.replace('emergencyNum:false;', 'emergencyNum:true;')
+    prompt && showToast('抢救财产超1千万，请备注说明！')
+  }
+}
+
+// 校验保护财产价值
+export const checkProtectNum = (form, prompt = true) => {
+  form.battleResult.protectNum.warning = false
+  form.battleResult.fieldWarning = form.battleResult.fieldWarning.replace('protectNum:true;', 'protectNum:false;')
+  const { protectNum } = form.battleResult
+  if (Number(protectNum.value) > 10000000) {
+    form.battleResult.protectNum.warning = true
+    form.battleResult.fieldWarning = form.battleResult.fieldWarning.replace('protectNum:false;', 'protectNum:true;')
+    prompt && showToast('保护财产超1千万，请备注说明！')
+  }
+}
