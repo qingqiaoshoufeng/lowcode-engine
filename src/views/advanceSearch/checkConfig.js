@@ -1666,11 +1666,24 @@ export const validateList = (arr, fireType) => {
   }
   const warningDateObj = arr.find(val => val.fieldKeyOne === 'warningDateStart')
   const fireDateObj = arr.find(val => val.fieldKeyOne === 'fireDateStart')
-  if (['1', '2', '3'].includes(fireType) && !warningDateObj) {
-    showToast('请先选择接警时间！')
+  const warningCodeObj = arr.find(val => val.fieldKeyOne === 'warningCode')
+  const dispatchCodeObj = arr.find(val => val.fieldKeyOne === 'dispatchCode')
+  const dispatchCodeHeaderObj = arr.find(val => val.fieldKeyOne === 'dispatchCode')
+  const fireCodeObj = arr.find(val => val.fieldKeyOne === 'fireCode')
+  if (fireType === '1' && (!warningDateObj && !warningCodeObj)) {
+    showToast('请先选择接警时间或输入警情编号！')
     return false
-  } else if (fireType === '4' && !fireDateObj) {
-    showToast('请先选择起火时间！')
+  }
+  else if (fireType === '2' && (!warningDateObj && !dispatchCodeObj)) {
+    showToast('请先选择接警时间或输入出动编号！')
+    return false
+  }
+  else if (fireType === '3' && (!warningDateObj && !dispatchCodeHeaderObj)) {
+    showToast('请先选择接警时间或输入出动编号！')
+    return false
+  }
+  else if (fireType === '4' && (!fireDateObj && !fireCodeObj)) {
+    showToast('请先选择起火时间或输入火灾编号！')
     return false
   }
   const arr4 = arr.filter(val => val.fieldType === '4')

@@ -37,15 +37,31 @@ provide('searchDimension', searchDimension)
 
 provide('dataTimeSource', dataTimeSource)
 
+const checkParams = () => {
+  const { policeBase, fireBase, dispatchHeaderMessage, dispatchBase } = form.value
+  if (searchType.value === 1 && (!policeBase.warningCode.value && !policeBase.warningDate.value?.[0])) {
+    showToast('请先选择接警时间或输入警情编号！')
+    return true
+  }
+  else if (searchType.value === 2 && (!dispatchBase.dispatchCode.value && !policeBase.warningDate.value?.[0])) {
+    showToast('请先选择接警时间或输入出动编号！')
+    return true
+  }
+  else if (searchType.value === 3 && (!dispatchHeaderMessage.dispatchCode.value && !policeBase.warningDate.value?.[0])) {
+    showToast('请先选择接警时间或输入出动编号！')
+    return true
+  }
+  else if (searchType.value === 4 && (!fireBase.fireCode.value && !fireBase.fireDate.value?.[0])) {
+    showToast('请先选择起火时间或输入火灾编号！')
+    return true
+  }
+}
+
 const onSearchCallback = () => {
-  const { policeBase, fireBase } = form.value
-  if (searchType.value < 4 && !policeBase.warningDate.value?.[0]) {
-    showToast('请先选择接警时间！')
-    return
-  } else if (searchType.value === 4 && !fireBase.fireDate.value?.[0]) {
-    showToast('请先选择起火时间！')
+  if (checkParams()) {
     return
   }
+  const { policeBase, fireBase } = form.value
   queryParams.value = getSearchParams()
   queryParams.value.fireType = searchType.value
   queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
