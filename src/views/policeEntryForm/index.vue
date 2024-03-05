@@ -135,7 +135,7 @@ const form = ref({
   warningTypeOther: "", // 其他说明
   warningLevel: undefined, // 警情等级
   typhoonType: undefined, // 台风类型
-  isNaturalDisaster: "2", // 是否自然灾害引发
+  isNaturalDisaster: "", // 是否自然灾害引发
   naturalDisasterType: [], // 自然灾害类型
   naturalDisasterOther: "", // 自然灾害类型其他
   naturalDisasterTypeText: [],
@@ -257,10 +257,8 @@ const showWarningTypeOther = computed(() => {
 });
 
 const showNaturalDisaster = computed(() => {
-  const types = form.value.warningTypeText || [];
-  return (
-    types && ["社会救助", "抢险救援", "安保勤务", "虚假警"].includes(types[0])
-  );
+  const types = form.value.warningTypeText || []
+  return types && !['虚假警'].includes(types[0])
 });
 
 const showSecurityService = computed(() => {
@@ -1183,13 +1181,13 @@ const onWarningOrgname = () => {
         </template>
       </van-field>
       <van-field
-        v-if="showNaturalDisaster || form.isNaturalDisaster"
+        v-if="showNaturalDisaster"
         :readonly="showPreview"
         required
         name="isNaturalDisaster"
         label="是否自然灾害引发："
         label-width="150px"
-        class="switch-wrapper"
+        class="field-radio"
         :disabled="isConfirm"
       >
         <template #input>
@@ -1197,13 +1195,15 @@ const onWarningOrgname = () => {
             <div style="width: 100%;text-align: left;">{{ form.isNaturalDisaster === '1' ? '是' : '否'}}</div>
           </template>
           <template v-else>
-            <van-switch
+            <van-radio-group
               v-model="form.isNaturalDisaster"
-              size="20"
-              active-value="1"
-              inactive-value="2"
+              icon-size="16px"
+              direction="horizontal"
               :disabled="isConfirm"
-            />
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
           </template>
         </template>
         <template v-slot:label="">
