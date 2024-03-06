@@ -88,6 +88,29 @@ const handleGenerate = () => {
     showToast(MSG_NO_HEAD_REPORT)
     return
   }
+  if (props.type === 1) {
+    const { comprehensiveWarningQueryReq, comprehensiveFireQueryReq } = props.params
+    if (searchType.value < 4 && !comprehensiveWarningQueryReq?.warningDateStart) {
+      showToast('请先选择接警时间！')
+      return true
+    }
+    else if (searchType.value === 4 && !comprehensiveFireQueryReq?.fireDateStart) {
+      showToast('请先选择起火时间！')
+      return true
+    }
+  } else {
+    const { seniorQueryDetailReq: arr } = props.params
+    const warningDateObj = arr.find(val => val.fieldKeyOne === 'warningDateStart')
+    const fireDateObj = arr.find(val => val.fieldKeyOne === 'fireDateStart')
+    if ([1, 2, 3].includes(searchType.value) && !warningDateObj) {
+      showToast('请先选择接警时间！')
+      return false
+    }
+    else if (searchType.value === 4 && !fireDateObj) {
+      showToast('请先选择起火时间！')
+      return false
+    }
+  }
   show.value.reportUseVisible = true
 }
 

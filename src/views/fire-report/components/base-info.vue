@@ -723,7 +723,6 @@ const onFireLevel = () => {
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
           label-width="105"
-          :disabled="!unDispatch"
         >
           <template v-slot:label="">
             <FieldAnnotation

@@ -603,7 +603,7 @@ const onDealEndDate = () => {
       name="basicInformation.dealEndDate.value"
       title="请选择警情处置结束时间"
       label="警情处置结束时间："
-      label-width="142px"
+      label-width="148px"
       placeholder="请选择警情处置结束时间"
       :minDate="minInputTime"
       :rules="[{ validator: validateDealEndDate, trigger: 'onBlur' }, ...form.basicInformation.dealEndDate.rules]"
