@@ -190,6 +190,30 @@ onMounted(async () => {
       })
     }
   })
+  // 获取出动标签
+  getFireWarningTag({ tagType: 2 }).then((res) => {
+    if (res?.data) {
+      options.value.dispatchTag = options.value.dispatchHeadTag = res.data.map((val) => {
+        return {
+          ...val,
+          boDictId: val.boFireTagId,
+          dictName: val.tagName,
+        }
+      })
+    }
+  })
+  // 获取火灾标签
+  getFireWarningTag({ tagType: 3 }).then((res) => {
+    if (res?.data) {
+      options.value.fireInfoTag = res.data.map((val) => {
+        return {
+          ...val,
+          boDictId: val.boFireTagId,
+          dictName: val.tagName,
+        }
+      })
+    }
+  })
   // 获取全勤指挥部
   getHeaderOrg().then((res) => {
     if (res) {

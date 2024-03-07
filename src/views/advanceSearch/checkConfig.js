@@ -442,6 +442,13 @@ export const checkBoxs = [
     dict: 'dispatchStatus',
     field: { value: 'boDictId', label: 'dictName' },
   },
+  {
+    fieldKeyOne: 'dispatchTag',
+    label: '出动标签',
+    type: '4',
+    dict: 'dispatchTag',
+    field: { value: 'boDictId', label: 'dictName' }
+  },
   // 出动信息（队站）--时间信息
   {
     fieldKeyOne: 'dispatchDateStart',
@@ -562,6 +569,13 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'isDispatchTruck',
     label: '是否有车辆出动',
+    type: '9',
+    dict: 'isNot',
+    labelWidth: '116px',
+  },
+  {
+    fieldKeyOne: 'isReturnTruck',
+    label: '是否有车辆中返',
     type: '9',
     dict: 'isNot',
     labelWidth: '116px',
@@ -895,6 +909,13 @@ export const checkBoxs = [
     type: '2',
     labelWidth: '132px',
   },
+  {
+    fieldKeyOne: 'dispatchHeadTag',
+    label: '出动标签',
+    type: '4',
+    dict: 'dispatchHeadTag',
+    field: { value: 'boDictId', label: 'dictName' }
+  },
   // 火灾类查询条件--基本信息
   {
     fieldKeyOne: 'fireDateStart',
@@ -1159,6 +1180,13 @@ export const checkBoxs = [
     type: '4',
     dict: 'fireStatus',
     field: { value: 'boDictId', label: 'dictName' },
+  },
+  {
+    fieldKeyOne: 'fireInfoTag',
+    label: '火灾标签',
+    type: '4',
+    dict: 'fireInfoTag',
+    field: { value: 'boDictId', label: 'dictName' }
   },
   // 火灾类查询条件--人员伤亡
   {

@@ -477,9 +477,17 @@ export const useFormConfig = () => {
         value: undefined,
         back: false,
         type: 'select-multiple',
-        label: '车辆类型',
-        options: 'truckType',
+        label: '报告状态',
+        options: 'dispatchStatus',
         fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      dispatchTag: { // 出动标签
+        value: undefined,
+        back: false,
+        type: 'select-nodes',
+        label: '出动标签',
+        options: 'dispatchTag',
+        fieldNames: { value: 'boFireTagId', label: 'tagName' },
       },
     },
     dispatchTime: {
@@ -586,6 +594,13 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '是否有车辆出动',
+        labelWidth: '112px',
+        options: isNot
+      },
+      isReturnTruck: { // 是否有车辆中返
+        value: '',
+        type: 'radio-is',
+        label: '是否有车辆中返',
         labelWidth: '112px',
         options: isNot
       },
@@ -909,6 +924,14 @@ export const useFormConfig = () => {
         label: '指挥时长（小时）',
         labelWidth: '130px',
       },
+      dispatchHeadTag: { // 出动标签
+        value: undefined,
+        back: false,
+        type: 'select-nodes',
+        label: '出动标签',
+        options: 'dispatchHeadTag',
+        fieldNames: { value: 'boFireTagId', label: 'tagName' },
+      },
     },
     fireBase: {
       title: '基本信息',
@@ -1208,6 +1231,14 @@ export const useFormConfig = () => {
         label: '报告状态',
         options: 'fireStatus',
         fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
+      fireInfoTag: { // 火灾标签
+        value: undefined,
+        back: false,
+        type: 'select-nodes',
+        label: '火灾标签',
+        options: 'fireInfoTag',
+        fieldNames: { value: 'boFireTagId', label: 'tagName' },
       },
     },
     fireCasualty: {
@@ -1852,6 +1883,9 @@ export const useFormConfig = () => {
         isOtherCity: dispatchBase.isOtherCity.value,
         dispatchStatus: dispatchBase.dispatchStatus.value?.join(','),
         dispatchStatusNon: dispatchBase.dispatchStatus.back,
+        dispatchTag: dispatchBase.dispatchTag.value?.map(val => val.value)?.join(','),
+        dispatchTagText: dispatchBase.dispatchTag.value?.map(val => val.label)?.join(','),
+        dispatchTagNon: dispatchBase.dispatchTag.back,
         // 出动填报-时间信息
         dispatchDateStart: returnDate(dispatchTime.dispatchDate.value, 0),
         dispatchDateEnd: returnDate(dispatchTime.dispatchDate.value, 1),
@@ -1891,6 +1925,7 @@ export const useFormConfig = () => {
         firemenNumMin: dispatchInvest.firemenNumMin.value?.[0],
         firemenNumMax: dispatchInvest.firemenNumMin.value?.[1],
         isDispatchTruck: dispatchInvest.isDispatchTruck.value,
+        isReturnTruck: dispatchInvest.isReturnTruck.value,
         dispatchTruckInfo: dispatchInvest.dispatchTruckInfo.value?.map(val => val.boFireTruckId)?.join(','),
         dispatchTruckInfoText: dispatchInvest.dispatchTruckInfo.value?.map(val => val.truckNumber)?.join(','),
         dispatchTruckInfoNon: dispatchInvest.dispatchTruckInfo.back,
@@ -1987,6 +2022,9 @@ export const useFormConfig = () => {
         headCarNumMax: dispatchHeaderMessage.headCarNumMin.value?.[1],
         headTimeMin: dispatchHeaderMessage.headTimeMin.value?.[0],
         headTimeMax: dispatchHeaderMessage.headTimeMin.value?.[1],
+        dispatchHeadTag: dispatchHeaderMessage.dispatchHeadTag.value?.map(val => val.value)?.join(','),
+        dispatchHeadTagText: dispatchHeaderMessage.dispatchHeadTag.value?.map(val => val.label)?.join(','),
+        dispatchHeadTagNon: dispatchHeaderMessage.dispatchHeadTag.back,
       },
       comprehensiveFireQueryReq: {
         // 火灾信息-基本信息
@@ -2061,6 +2099,9 @@ export const useFormConfig = () => {
         undo: fireBase.undo.value,
         fireStatus: fireBase.fireStatus.value?.join(','),
         fireStatusNon: fireBase.fireStatus.back,
+        fireInfoTag: fireBase.fireInfoTag.value?.map(val => val.value)?.join(','),
+        fireInfoTagText: fireBase.fireInfoTag.value?.map(val => val.label)?.join(','),
+        fireInfoTagNon: fireBase.fireInfoTag.back,
         // 火灾信息-人员伤亡
         isInjury: fireCasualty.isInjury.value,
         injuryType: fireCasualty.injuryType.value?.map(val => val.value)?.join(','),
@@ -2399,6 +2440,13 @@ export const useFormConfig = () => {
     form.value.dispatchBase.isOtherCity.value = comprehensiveDispatchQueryReq.isOtherCity
     form.value.dispatchBase.dispatchStatus.value = comprehensiveDispatchQueryReq.dispatchStatus?.split(',')
     form.value.dispatchBase.dispatchStatus.back = comprehensiveDispatchQueryReq.dispatchStatusNon === 'true'
+    form.value.dispatchBase.dispatchTag.value = comprehensiveDispatchQueryReq.dispatchTag
+      ? generateByKeyValue(comprehensiveDispatchQueryReq.dispatchTagText, comprehensiveDispatchQueryReq.dispatchTag, {
+        key: 'label',
+        value: 'value',
+      })
+      : []
+    form.value.dispatchBase.dispatchTag.back = comprehensiveDispatchQueryReq.dispatchTagNon === 'true'
     // 出动填报-时间信息
     form.value.dispatchTime.dispatchDate.value = returnDateValue(comprehensiveDispatchQueryReq.dispatchDateStart, comprehensiveDispatchQueryReq.dispatchDateEnd)
     form.value.dispatchTime.midwayReturnDate.value = returnDateValue(comprehensiveDispatchQueryReq.midwayReturnDateStart, comprehensiveDispatchQueryReq.midwayReturnDateEnd)
@@ -2417,6 +2465,7 @@ export const useFormConfig = () => {
     form.value.dispatchInvest.commanderNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.commanderNumMin, comprehensiveDispatchQueryReq.commanderNumMax)
     form.value.dispatchInvest.firemenNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.firemenNumMin, comprehensiveDispatchQueryReq.firemenNumMax)
     form.value.dispatchInvest.isDispatchTruck.value = comprehensiveDispatchQueryReq.isDispatchTruck
+    form.value.dispatchInvest.isReturnTruck.value = comprehensiveDispatchQueryReq.isReturnTruck
     form.value.dispatchInvest.dispatchTruckInfo.value = comprehensiveDispatchQueryReq.dispatchTruckInfo
       ? generateByKeyValue(comprehensiveDispatchQueryReq.dispatchTruckInfoText, comprehensiveDispatchQueryReq.dispatchTruckInfo, {
         key: 'truckNumber',
@@ -2531,6 +2580,13 @@ export const useFormConfig = () => {
     form.value.dispatchHeaderMessage.headCarName.back = comprehensiveDispatchHeadQueryReq.headCarNameNon === 'true'
     form.value.dispatchHeaderMessage.headCarNumMin.value = returnNumValue(comprehensiveDispatchHeadQueryReq.headCarNumMin, comprehensiveDispatchHeadQueryReq.headCarNumMax)
     form.value.dispatchHeaderMessage.headTimeMin.value = returnNumValue(comprehensiveDispatchHeadQueryReq.headTimeMin, comprehensiveDispatchHeadQueryReq.headTimeMax)
+    form.value.dispatchHeaderMessage.dispatchHeadTag.value = comprehensiveDispatchHeadQueryReq.dispatchHeadTag
+      ? generateByKeyValue(comprehensiveDispatchHeadQueryReq.dispatchHeadTagText, comprehensiveDispatchHeadQueryReq.dispatchHeadTag, {
+        key: 'label',
+        value: 'value',
+      })
+      : []
+    form.value.dispatchHeaderMessage.dispatchHeadTag.back = comprehensiveDispatchHeadQueryReq.dispatchHeadTagNon === 'true'
     // 火灾信息-基本信息
     form.value.fireBase.fireDate.value = returnDateValue(comprehensiveFireQueryReq.fireDateStart, comprehensiveFireQueryReq.fireDateEnd)
     form.value.fireBase.statisticRangeSeasonMin.value = [comprehensiveFireQueryReq.statisticRangeSeasonMin, comprehensiveFireQueryReq.statisticRangeSeasonMax]
@@ -2619,6 +2675,13 @@ export const useFormConfig = () => {
     form.value.fireBase.undo.value = comprehensiveFireQueryReq.undo
     form.value.fireBase.fireStatus.value = comprehensiveFireQueryReq.fireStatus?.split(',')
     form.value.fireBase.fireStatus.back = comprehensiveFireQueryReq.fireStatusNon === 'true'
+    form.value.fireBase.fireInfoTag.value = comprehensiveFireQueryReq.fireInfoTag
+      ? generateByKeyValue(comprehensiveFireQueryReq.fireInfoTagText, comprehensiveFireQueryReq.fireInfoTag, {
+        key: 'label',
+        value: 'value',
+      })
+      : []
+    form.value.fireBase.fireInfoTag.back = comprehensiveFireQueryReq.fireInfoTagNon === 'true'
     // 火灾信息-人员伤亡
     form.value.fireCasualty.isInjury.value = comprehensiveFireQueryReq.isInjury
     form.value.fireCasualty.injuryType.value = comprehensiveFireQueryReq.injuryType
