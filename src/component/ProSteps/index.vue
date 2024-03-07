@@ -22,57 +22,108 @@ const renderState = (item) => {
   if (['警情确认', '出动审核', '火灾审核'].includes(item.transferType) && item.advice?.indexOf('退回') > -1) {
     return true
   }
-  if (['警情驳回', '出动驳回', '火灾驳回'].includes(item.transferType)) {
+  if (['任务退回', '警情驳回', '退回上一级', '退回填报员', '出动驳回', '火灾驳回'].includes(item.transferType)) {
+    return true
+  }
+  if (item.advice?.indexOf('不通过') > -1) {
     return true
   }
   return false
 }
 
 const renderAdvice = (transferType) => {
-  if (transferType?.indexOf('驳回') > -1) {
-    return '驳回原因：'
-  }
-  else if (transferType?.indexOf('退回') > -1) {
+  switch (transferType) {
+  // 警情
+  case '警情创建':
+  case '警情归档':
+    return ''
+  case '警情确认':
+    return '确认结果：'
+  case '任务退回':
     return '退回原因：'
-  }
-  else if (transferType?.indexOf('确认') > -1) {
-    return '审核结果：'
-  }
-  else if (transferType?.indexOf('更正申请') > -1) {
+  case '警情驳回':
+    return '驳回原因：'
+  case '更正申请':
     return '申请类型：'
-  }
-  else if (transferType?.indexOf('更正') > -1) {
+  case '更正审批':
     return '审批结果：'
-  }
-  else if (transferType?.indexOf('作废申请') > -1) {
+  case '作废申请':
     return '作废原因：'
-  }
-  else {
+  case '作废审批':
+    return '审批结果：'
+  case '警情修改':
+    return '修改内容：'
+    // 出动
+  case '出动填报':
+  case '出动归档':
+    return ''
+  case '出动审核':
     return '审核结果：'
+  case '出动驳回':
+    return '驳回原因：'
+  case '出动修改':
+    return '修改内容：'
+    // 火灾
+  case '火灾转派':
+  case '火灾填报':
+  case '火灾归档':
+    return ''
+  case '火灾审核':
+    return '审核结果：'
+  case '火灾驳回':
+    return '驳回原因：'
+  case '火灾修改':
+    return '修改内容：'
+  default:
+    return ''
   }
 }
 
 const renderRemark = (transferType) => {
-  if (transferType?.indexOf('驳回') > -1) {
-    return '驳回描述：'
-  }
-  else if (transferType?.indexOf('退回') > -1) {
-    return '备注：'
-  }
-  else if (transferType?.indexOf('确认') > -1) {
+  switch (transferType) {
+  // 警情
+  case '警情创建':
+  case '警情归档':
+    return ''
+  case '警情确认':
     return '确认意见：'
-  }
-  else if (transferType?.indexOf('更正申请') > -1) {
-    return '申请原因：'
-  }
-  else if (transferType?.indexOf('更正') > -1) {
-    return '审批意见：'
-  }
-  else if (transferType?.indexOf('作废申请') > -1) {
+  case '任务退回':
     return '备注：'
-  }
-  else {
+  case '警情驳回':
+    return '备注：'
+  case '更正申请':
+    return '备注：'
+  case '更正审批':
+    return '审批意见：'
+  case '作废申请':
+    return '备注：'
+  case '作废审批':
+    return '审批意见：'
+  case '警情修改':
+    return '修改内容：'
+    // 出动
+  case '出动填报':
+  case '出动归档':
+    return ''
+  case '出动审核':
     return '审核意见：'
+  case '出动驳回':
+    return '备注：'
+  case '出动修改':
+    return '修改内容：'
+    // 火灾
+  case '火灾转派':
+  case '火灾填报':
+  case '火灾归档':
+    return ''
+  case '火灾审核':
+    return '审核意见：'
+  case '火灾驳回':
+    return '备注：'
+  case '火灾修改':
+    return '修改内容：'
+  default:
+    return ''
   }
 }
 
@@ -93,7 +144,7 @@ export default {
       <strong>操作记录</strong>
     </div>
     <div v-for="(item, index) in data" :key="index" class="steps-wrap">
-      <div class="steps-name" :class="{ green: index === 0 }">
+      <div class="steps-name">
         {{ item.transferType }}
       </div>
       <div class="steps-box">

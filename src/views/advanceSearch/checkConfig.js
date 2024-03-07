@@ -980,10 +980,22 @@ export const checkBoxs = [
     dict: 'initialFuelsType',
   },
   {
+    fieldKeyOne: 'initialFuels',
+    label: '起火物名称',
+    type: '1',
+    maxlength: 50,
+  },
+  {
     fieldKeyOne: 'igniteSourceType',
     label: '引火源类型',
     type: '7',
     dict: 'igniteSourceType',
+  },
+  {
+    fieldKeyOne: 'igniteSource',
+    label: '引火源名称',
+    type: '1',
+    maxlength: 50,
   },
   {
     fieldKeyOne: 'firePattern',

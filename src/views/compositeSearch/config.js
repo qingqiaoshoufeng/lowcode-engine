@@ -1023,6 +1023,11 @@ export const useFormConfig = () => {
         options: 'initialFuelsType',
         selectLeaf: false,
       },
+      initialFuels: { // 起火物名称
+        value: '',
+        type: 'input',
+        label: '起火物名称',
+      },
       igniteSourceType: { // 引火源类型
         value: undefined,
         back: false,
@@ -1030,6 +1035,11 @@ export const useFormConfig = () => {
         label: '引火源类型',
         options: 'igniteSourceType',
         selectLeaf: false,
+      },
+      igniteSource: { // 引火源名称
+        value: '',
+        type: 'input',
+        label: '引火源名称',
       },
       firePattern: { // 事故形态
         value: undefined,

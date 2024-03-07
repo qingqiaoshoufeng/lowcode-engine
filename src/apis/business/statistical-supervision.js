@@ -194,10 +194,7 @@ export function getUnworkTimeout(data) {
 
 // 导出
 export function saveExportData(data, type) {
-  let url = '/acws/rest/export/excel/customtemplate'
-  if ([7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].includes(type)) {
-    url = '/acws/rest/biz/analysis/export/excel/customtemplate'
-  }
+  let url = '/acws/rest/biz/analysis/export/excel/customtemplate'
   return axios.post(url, data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
