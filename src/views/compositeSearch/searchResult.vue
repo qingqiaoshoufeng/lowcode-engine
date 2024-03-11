@@ -80,7 +80,7 @@ const handleReject = (row) => {
 }
 
 const handleGenerate = () => {
-  if (proListRef.value.list?.length <= 0) {
+  if (proListRef.value?.total <= 0) {
     showToast(MSG_EXPORT_NO_DATA)
     return
   }

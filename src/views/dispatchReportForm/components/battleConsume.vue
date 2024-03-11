@@ -168,14 +168,14 @@ onMounted(() => {
         "
         :field-names="{ value: 'boFireTruckId', label: 'truckNumber' }"
         :rules="form.battleConsume.wastageTruck.rules"
-        label="指挥车辆信息："
+        label="损耗车辆信息："
         label-width="118px"
-        placeholder="请选择指挥车辆信息"
-        title="请选择指挥车辆信息"
+        placeholder="请选择损耗车辆信息"
+        title="请选择损耗车辆信息"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="指挥车辆信息："
+            label="损耗车辆信息："
             remark-field="blockingTime"
             field-module="basicInformation"
             :exist-data="fieldExist?.blockingTime"

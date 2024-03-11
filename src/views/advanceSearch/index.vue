@@ -245,8 +245,8 @@ defineOptions({
     
     <SearchBtn
       :search-scene="2"
-      @searchCallback="onSearchCallback"
-      @initCallback="onInitCallback"
+      @search-callback="onSearchCallback"
+      @init-callback="onInitCallback"
     />
 
     <!-- 已选中条件 -->
