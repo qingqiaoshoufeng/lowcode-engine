@@ -1,5 +1,6 @@
 <script setup>
 import { computed, inject } from "vue";
+import SplitLines from "@/component/split-lines/index"
 import dayjs from "dayjs";
 import { checkAttendanceDate, checkReturnSpeed } from "../tool.js";
 import { useStore } from "vuex";
@@ -288,6 +289,7 @@ const onDealEndDate = () => {
 </script>
 
 <template>
+  <SplitLines title="时间信息" style="border-color: #A4A4A4" />
   <van-cell-group>
     <SelectDateTime
       v-model:value="form.basicInformation.dispatchDate.value"

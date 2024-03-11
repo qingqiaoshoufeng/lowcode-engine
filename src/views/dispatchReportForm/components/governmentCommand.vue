@@ -1,6 +1,7 @@
 <script setup>
 import { inject, watch } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
+import SplitLines from "@/component/split-lines/index"
 
 const form = inject("form");
 
@@ -57,6 +58,7 @@ const onIsCommand = (e) => {
 </script>
 
 <template>
+  <SplitLines title="政府指挥力量" />
   <van-cell-group>
     <van-field 
       name="investForce.isCommand.value" 

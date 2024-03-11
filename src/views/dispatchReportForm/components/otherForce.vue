@@ -1,7 +1,7 @@
 <script setup>
 import { inject, onMounted, ref, watch } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
-
+import SplitLines from "@/component/split-lines/index"
 const form = inject("form");
 
 const isDetail = inject("isDetail");
@@ -50,6 +50,7 @@ const onHaveVolunteer = (e) => {
 </script>
 
 <template>
+  <SplitLines title="其他消防救援力量" />
   <van-cell-group>
     <van-field 
       name="investForce.haveVolunteer.value" 

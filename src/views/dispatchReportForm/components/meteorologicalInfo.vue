@@ -1,6 +1,7 @@
 <script setup>
 import { inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
+import SplitLines from "@/component/split-lines/index"
 
 const form = inject("form");
 
@@ -14,6 +15,7 @@ const options = inject("options");
 </script>
 
 <template>
+  <SplitLines title="气象信息" />
   <SelectSingle
     v-model:value="form.basicInformation.weather.value"
     :showPreview="showPreview"

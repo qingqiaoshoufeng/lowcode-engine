@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash-es'
 import SelectMultiple from "@/component/SelectMultiple/index";
 import SelectCar from "@/component/SelectCar/index";
 import SelectPerson from '@/component/SelectPerson/index.vue';
+import SplitLines from "@/component/split-lines/index"
 
 const form = inject("form");
 
@@ -103,6 +104,7 @@ const onCommander = () => {
 </script>
 
 <template>
+  <SplitLines title="本队力量" />
   <van-cell-group>
     <div class="invest-message">
       共投入 {{ form.investForce?.dispatchTruckList.value?.length || 0 }} 车 {{ personNum || 0 }} 人

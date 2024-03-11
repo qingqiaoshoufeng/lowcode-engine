@@ -1,7 +1,7 @@
 <script setup>
 import { inject, watch } from 'vue'
 import SelectSingle from "@/component/SelectSingle/index";
-
+import SplitLines from "@/component/split-lines/index"
 const form = inject('form')
 
 const isDetail = inject('isDetail')
@@ -48,6 +48,7 @@ const onHaveLinkageUnit = (e) => {
 </script>
 
 <template>
+  <SplitLines title="联动单位力量" />
   <van-cell-group>
     <van-field 
       name="investForce.haveLinkageUnit.value" 
