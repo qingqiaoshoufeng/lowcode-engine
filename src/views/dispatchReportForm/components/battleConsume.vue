@@ -2,6 +2,7 @@
 import { inject, onMounted, ref, watch } from "vue";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import ProCard from "@/component/ProCard/index.vue";
+import SplitLines from "@/component/split-lines/index"
 
 const form = inject("form");
 
@@ -155,6 +156,7 @@ onMounted(() => {
 
 <template>
   <ProCard title="战斗消耗" id="battleConsume" :state="false">
+    <SplitLines title="车辆耗损" style="border-color: #A4A4A4" />
     <van-cell-group>
       <!-- 车辆耗损 -->
       <SelectMultiple
@@ -228,6 +230,7 @@ onMounted(() => {
       </template>
     </van-field>
       <!-- 灭火器材耗损 -->
+      <SplitLines title="灭火器材耗损" v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" />
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
         <van-field
           v-model="form.battleConsume.waterPump.value"
@@ -571,6 +574,7 @@ onMounted(() => {
         </van-button>
       </div>
       <!-- 个人装备耗损 -->
+      <SplitLines title="个人装备耗损" v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" />
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
         <van-field
           v-model="form.battleConsume.fireHat.value"
@@ -937,6 +941,7 @@ onMounted(() => {
         </van-button>
       </div>
       <!-- 灭火药剂耗损 -->
+      <SplitLines title="灭火药剂耗损" v-if="(showDealSituation && !showFalsePolice) || showHeadquarter"/>
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
         <van-field
           v-model="form.battleConsume.foamLiquid.value"
@@ -1084,6 +1089,7 @@ onMounted(() => {
         </van-button>
       </div>
       <!-- 消防用水量情况 -->
+      <SplitLines title="消防用水量情况" v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" />
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
         <van-field
           v-model="form.battleConsume.totalFlow.value"
