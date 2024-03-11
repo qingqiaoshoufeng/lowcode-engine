@@ -36,7 +36,6 @@ const filterCar = (list) => {
     .map((item) => item.value)
     .join(",");
   list.forEach((item) => {
-    // eslint-disable-next-line unicorn/prefer-includes
     if (ids.indexOf(item.value) < 0) {
       result.push(item);
     }
@@ -155,7 +154,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗" id="battleConsume" :showOpenClose="!showPreview">
+  <ProCard title="战斗消耗" id="battleConsume" :state="false">
     <van-cell-group>
       <!-- 车辆耗损 -->
       <SelectMultiple

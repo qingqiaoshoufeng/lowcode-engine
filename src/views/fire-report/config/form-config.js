@@ -840,7 +840,7 @@ export const useFormConfig = (validateProgress) => {
   //   console.log(res);
   // }
   // 根据模版生成简要情况
-  const generateRemarkField = (detail) => {
+  const generateRemarkField = (detail, type) => {
     const { basicInfo, casualtyWar, economicLoss } = form.value
     const { warningAddr, extinctDate } = detail
     let content = ''
@@ -903,10 +903,12 @@ export const useFormConfig = (validateProgress) => {
       content = content.replace('【直接经济损失】', economicLoss.directEconomicLoss.value)
     }
     content = content.replaceAll(/【[^【】]*】/g, 'xx')
-    form.value.briefSituation.content.value = content
+    if (type === 1) {
+      form.value.briefSituation.content.value = content
+    } else if (type === 2) {
+      form.value.fireCourse.firePassage.value = content
+    }
   }
-
-
 
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
@@ -1009,11 +1011,11 @@ export const useFormConfig = (validateProgress) => {
       fieldAnnotation: form.value.firePhoto.fieldAnnotation,
       fieldWarning: form.value.firePhoto.fieldWarning,
     }
-    form.value.fireCourse = {
-      ...cloneDeep(formOrigin.fireCourse),
-      fieldAnnotation: form.value.fireCourse.fieldAnnotation,
-      fieldWarning: form.value.fireCourse.fieldWarning,
-    }
+    // form.value.fireCourse = {
+    //   ...cloneDeep(formOrigin.fireCourse),
+    //   fieldAnnotation: form.value.fireCourse.fieldAnnotation,
+    //   fieldWarning: form.value.fireCourse.fieldWarning,
+    // }
     form.value.otherAttach = {
       ...cloneDeep(formOrigin.otherAttach),
       fieldAnnotation: form.value.otherAttach.fieldAnnotation,

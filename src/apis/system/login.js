@@ -20,7 +20,7 @@ export function loginOut(data) {
 
 // 获取验证码图片
 export function getCaptcha() {
-  return request.get('/acws/rest/captcha', { noErrorHandler: true })
+  return request.get('/acws/rest/security/captcha', { noErrorHandler: true })
 }
 
 // 获取用户信息
@@ -50,7 +50,7 @@ export function getAllRules() {
 //   return new Promise((resolve) => {
 //     const img = new Image()
 //     img.crossOrigin = ''
-//     img.src = '/acws/rest/captcha'
+//     img.src = '/acws/rest/security/captcha'
 //     img.onload = function () {
 //       const canvas = document.createElement('canvas')
 //       canvas.width = img.width
@@ -65,7 +65,7 @@ export function getAllRules() {
 // }
 
 export const getVerificationCode = async() =>{
-  const imgRes = await fetch(`${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/captcha`).then(r => r.blob()).then((blob) => {
+  const imgRes = await fetch(`${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
     return new Promise((resolve) => { 
       const reader = new FileReader()
       reader.readAsDataURL(blob)
@@ -81,7 +81,7 @@ export const getVerificationCode = async() =>{
 //   return new Promise(async(resolve) => { 
 //     const imgRes = await axios(
 //       {
-//         url:'/acws/rest/captcha',
+//         url:'/acws/rest/security/captcha',
 //         method:'get',
 //         responseType:'blob'
 //       }

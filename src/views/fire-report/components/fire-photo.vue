@@ -27,6 +27,8 @@ const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
 
+const unDispatch = inject('unDispatch')
+
 const {
   initViewer,
   handlePreview,
@@ -113,7 +115,7 @@ onMounted(() => {
 
 <template>
   <van-cell-group class="rootform1">
-    <div v-if="!(showPreview && form.firePhoto.isAllBack.value === '2')" :gutter="gutter">
+    <div v-if="!(showPreview && form.firePhoto.isAllBack.value === '2') && !unDispatch" :gutter="gutter">
       <div :span="8">
         <van-field
           name="firePhoto.isAllBack.value"
@@ -150,8 +152,8 @@ onMounted(() => {
         <van-cell title="火灾照片：" :required="isRequired" class="item-cell">
           <van-field
             name="firePhoto.photos.value"
-            :rules="form.firePhoto.isAllBack.value === '1' ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
-            :required="form.firePhoto.isAllBack.value === '1' ? false : isRequired"
+            :rules="(form.firePhoto.isAllBack.value === '1' || unDispatch) ? [{ required: false, message: '请选择火灾照片' }] : form.firePhoto.photos.rules"
+            :required="(form.firePhoto.isAllBack.value === '1' || unDispatch) ? false : isRequired"
             label="火灾照片"
             label-width="0"
           >

@@ -6,13 +6,17 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  state: {
+    type: Boolean,
+    default: true,
+  },
   showOpenClose: {
     type: Boolean,
     default: true,
   }
 });
 
-const openState = ref(true);
+const openState = ref(props.state);
 
 const handleClose = (value) => {
   openState.value = value
