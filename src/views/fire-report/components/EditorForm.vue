@@ -533,9 +533,15 @@ const initWatch = () => {
     initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
   // 只有当填报、详情、修改状态下才自动生成处置过程
-  if ((isShowTemporary?.value) || props.isDetail || props.isEdit) {
+  if ((isShowTemporary?.value) || props.isDetail || props.isEdit || unDispatch.value) {
     watch(() => [form.value, detail.value], () => {
-      generateRemarkField(detail.value)
+      generateRemarkField(detail.value, 1)
+    }, { deep: true })
+  }
+  // 只有当填报状态下才自动生成处置过程
+  if ((isShowTemporary?.value && !props.showDraft) || (unDispatch.value && !props.isDetail)) {
+    watch(() => [form.value.basicInfo, form.value.casualtyWar, form.value.economicLoss], () => {
+      generateRemarkField(detail.value, 2)
     }, { deep: true })
   }
   loadingDetail.value = false
@@ -548,6 +554,12 @@ const initWatch = () => {
     showPreview.value = Boolean(props.isDetail && form.value.basicInfo.severity.value)
   }, 0)
 }
+
+const initFireProcess = () => {
+  generateRemarkField(detail.value, 2)
+}
+
+provide('refreshProcess', initFireProcess)
 
 const initDetail = () => {
   const { relevanceDraft, currentRow, isEdit, isDetail } = props
@@ -823,6 +835,7 @@ const getSubmitParams = () => {
   }
   if (unDispatch.value) {
     params.isNoDispatchFlag = '1'
+    params.fireInfo.isAllBack = ''
   }
   if (props.isApproval) {
     params.isAudit = '1'
