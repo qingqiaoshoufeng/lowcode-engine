@@ -10,7 +10,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits('searchCallback', 'initCallback');
+const emits = defineEmits(['searchCallback', 'initCallback']);
 
 const options = inject('options');
 

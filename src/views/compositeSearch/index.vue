@@ -115,8 +115,8 @@ defineOptions({
     <Form />
     <SearchBtn
       :search-scene="1"
-      @searchCallback="onSearchCallback"
-      @initCallback="onInitCallback"
+      @search-callback="onSearchCallback"
+      @init-callback="onInitCallback"
     />
 
     <!-- 查询结果 -->
