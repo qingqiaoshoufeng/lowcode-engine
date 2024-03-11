@@ -83,6 +83,26 @@ const options = ref([
     value: '近一月',
     time: [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')],
   },
+  {
+    label: '近一周',
+    value: '近一周',
+    time: [dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
+  },
+  {
+    label: '本周以来',
+    value: '本周以来',
+    time: [dayjs().startOf('week'), dayjs().endOf('day')],
+  },
+  {
+    label: '本月以来',
+    value: '本月以来',
+    time: [dayjs().startOf('month'), dayjs().endOf('day')],
+  },
+  {
+    label: '今年以来',
+    value: '今年以来',
+    time: [dayjs().startOf('year'), dayjs().endOf('day')],
+  },
 ]);
 
 const selectVisible = ref(false);

@@ -11,6 +11,10 @@ export const dateTimeRange = {
   去年: [dayjs().subtract(1, 'year').startOf('year'), dayjs().subtract(1, 'year').endOf('year')],
   // 近一周: [dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
   近一个月: [dayjs().subtract(1, 'month').startOf('day').add(1, 'day'), dayjs().endOf('day')],
+  近一周:[dayjs().subtract(1, 'week').startOf('day').add(1, 'day'), dayjs().endOf('day')],
+  本周以来:[dayjs().startOf('week'), dayjs().endOf('day')],
+  本月以来:[dayjs().startOf('month'), dayjs().endOf('day')],
+  今年以来:[dayjs().startOf('year'), dayjs().endOf('day')]
 }
 
 export const gutter = 40
