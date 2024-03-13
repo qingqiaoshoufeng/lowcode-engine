@@ -420,6 +420,7 @@ provide('deleteField', deleteField)
 const initFireSite = () => {
   // 起火位置字典修改
   const { fireType, firePlace, vehicleType } = form.value.basicInfo
+  options.value.fireSite = []
   if (fireType.text?.includes('建构筑物火灾') && firePlace.text?.length > 0) {
     getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_CS.filter(item => item.dictName?.indexOf(firePlace.text[0]) > -1)
@@ -455,6 +456,11 @@ const initFireSite = () => {
       else if (vehicleType.text?.includes('航空航天')) {
         options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['航空飞行器'].includes(item.dictName))
       }
+    })
+  }
+  else {
+    getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
+      options.value.fireSite = res.HZ_QHWZ_CS
     })
   }
 }
