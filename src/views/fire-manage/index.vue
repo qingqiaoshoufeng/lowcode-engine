@@ -245,7 +245,7 @@ const searchOptions = computed(()=>([
     single: false,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'orgList',
+    value: 'orgId',
   },
   {
     title: '火灾等级',
