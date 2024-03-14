@@ -338,7 +338,7 @@ const onDealEndDate = () => {
           @refresh-callback="refreshField"
         />
       </template>
-    </SelectDateTime> 
+    </SelectDateTime>
     <SelectDateTime
       v-if="showDealSituation || showNotDealReason"
       v-model:value="form.basicInformation.attendanceDate.value"

@@ -773,7 +773,8 @@ const onFireLevel = () => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入过火面积"
-          type="number" 
+          type="number"
+          label-width="158px"
           @change="penaltyNumChange"
         >
           <template v-slot:label="">

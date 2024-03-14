@@ -1093,14 +1093,6 @@ onMounted(() => {
   })
 })
 
-// const handleExportPdf = () => {
-//   bus.emit('CASTLE__globalLoading', true)
-//   setTimeout(async () => {
-//     const fileName = `火灾信息（${fireDetail.value?.fireInfo?.fireCode}）.pdf`
-//     await exportPdf('.fire-content', fileName)
-//     bus.emit('CASTLE__globalLoading', false)
-//   }, 100)
-// }
 const onSideBarChange = (e, k) => {
   const targetElement = document.getElementById(k);
   if (targetElement) {
@@ -1114,7 +1106,6 @@ const onSideBarChange = (e, k) => {
 
 <template>
   <div class="editor-form" :class="{'hidevalidate':hidevalidate}">
-    <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
           v-model="sideBarActive" 
@@ -1206,18 +1197,6 @@ const onSideBarChange = (e, k) => {
             </div>
          </div>
       </div>
-      <van-button 
-        v-if="showExportPdf" 
-        type="primary" 
-        class="export-btn" 
-        @click="handleExportPdf"
-      >
-      导出
-      </van-button>
-      <!-- <a-button v-if="showExportPdf" type="primary" class="export-btn" @click="handleExportPdf">
-        导出
-      </a-button> -->
-    <!-- </a-row> -->
   </div>
 
   <!-- 提交审核 -->
@@ -1234,24 +1213,20 @@ const onSideBarChange = (e, k) => {
 </template>
 
 <style lang="scss" scoped>
-.editor-form{
-  // display: flex;
-  // align-items: flex-start;
-  // justify-content: space-between;
-  height:calc(100% - 44px);
-  .form-left{
-    width: 20%;
-    display: inline-block;
-    overflow-y: scroll;
-    height: 100%;
-    padding-right: 13px;
-    box-sizing: content-box;
-    overflow-x: hidden;
+.editor-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #F6F8FC;
+  .form-left {
+    width: var(--van-sidebar-width);
   }
-  .form-right{
-    display: inline-block;
-    width: 75%;
+  .form-right {
     height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     .box{
       height:100%;
       width:100%;

@@ -310,12 +310,12 @@ const minDate = computed(() => {
   return minInputTime
 })
 
-const maxDate = computed(() => {
+const maxDate = () => {
   if (props.currentRow?.boFireWarningId) { // 编辑不能修改年份
     return new Date(dayjs(detail.value?.warningDate).endOf('year').valueOf())
   }
   return new Date()
-})
+}
 
 const initLevelOptions = () => {
   const filter = options.value?.warningTypeOptions?.map(
