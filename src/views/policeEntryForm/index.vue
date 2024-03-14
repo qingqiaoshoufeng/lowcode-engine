@@ -1472,7 +1472,8 @@ const onWarningOrgname = () => {
         </template>
       </SelectOrg>
       <SelectMultiple
-        v-model:value="form.headquarters"
+        :value="form.headquarters?.map(item => item.organizationid) || []"
+        v-model:nodes="form.headquarters"
         :showPreview="showPreview"
         name="headquarters"
         :options="options.headquarters"
