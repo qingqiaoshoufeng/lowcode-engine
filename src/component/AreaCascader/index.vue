@@ -139,7 +139,7 @@ const handleOk = () => {
 
 const initValue = () => {
   // 已经选中的要重置
-  const boAreaId = props.value?.pop()
+  const boAreaId = cloneDeep(props.value)?.pop()
   treeData.value.forEach(arr => {
     arr.forEach(i => {
       if (i.boAreaId === boAreaId) {

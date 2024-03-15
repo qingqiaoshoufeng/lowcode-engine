@@ -230,6 +230,7 @@ const onCommander = () => {
       v-model="form.investForce.commanderNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
+      required
       type="digit"
       maxlength="5"
       name="investForce.commanderNum.value"
@@ -256,6 +257,7 @@ const onCommander = () => {
       v-model="form.investForce.firemenNum.value"
       v-preview-text="showPreview"
       :readonly="showPreview"
+      required
       type="digit"
       maxlength="5"
       name="investForce.firemenNum.value"
