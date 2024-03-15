@@ -205,6 +205,8 @@ const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
 const isNew = ref(props.isUnDispatch || !!props.showDraft)
 
+const initFireDetail = ref({ })
+
 const fireDetail = ref(null)
 
 const loadingDetail = ref(true)
@@ -334,6 +336,8 @@ provide('importantEdit', importantEdit)
 provide('fieldExist', fieldExist)
 
 provide('dataType', 3)
+
+provide('initFireDetail', initFireDetail)
 
 const sections = computed(() => {
   const { fireInfo, briefSituation, basicInfo, casualtyWar, economicLoss, fireBuilding, fireFacilities, caseHandling, firePhoto, fireCourse, otherAttach, proSteps } = form.value
@@ -1084,6 +1088,7 @@ onMounted(() => {
       if (res[2]) {
         isNew.value = res[2].isNew
         detail.value.extinctDate = res[2].extinctDate
+        initFireDetail.value.dispatchArriveFlag = res[2]?.fireWarning?.dispatchArriveFlag
       }
       initDetail()
     }

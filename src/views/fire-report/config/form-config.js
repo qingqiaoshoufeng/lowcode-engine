@@ -732,8 +732,8 @@ export const useFormConfig = (validateProgress) => {
       fieldAnnotation: false, // 批注
       fieldWarning: '',
       isAllBack: { // 队伍是否全部中返
-        value: '2',
-        rules: [{ required: true, message: '请选择队伍是否全部中返' }],
+        value: '',
+        rules: [{ required: false, message: '请选择队伍是否全部中返' }],
       },
       photos: {
         value: [],

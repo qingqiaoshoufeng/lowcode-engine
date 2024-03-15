@@ -139,9 +139,12 @@ const form = ref({
   naturalDisasterType: [], // 自然灾害类型
   naturalDisasterOther: "", // 自然灾害类型其他
   naturalDisasterTypeText: [],
+  dispatchArriveFlag: '1', // 是否有队伍到场
   dispatchGroup: [], // 出动队伍
   mainGroup: undefined, // 主战队站
   firstGroup: undefined, // 首到队站
+  isAreaMain: '1', // 是否辖区内队伍主战
+  isAreaFirst: '1', // 是否辖区内队伍首到
   isHeadquarters: "2", // 是否全勤指挥部参加
   headquarters: [], // 全勤指挥部
   areaDutyGroup: [], // 责任区大队
@@ -385,6 +388,13 @@ const warningTypeChange = (value, selectedOptions) => {
   }
 };
 
+const onDispatchArriveFlag = () => {
+  if (form.value.dispatchArriveFlag === '2') {
+    form.value.mainGroup = undefined
+    form.value.firstGroup = undefined
+  }
+}
+
 const handleMain = () => {
   if (!form.value.dispatchGroup || form.value.dispatchGroup.length <= 0) {
     showToast('请先选择出动队伍')
@@ -456,6 +466,7 @@ const { loading, submit } = useSubmit((res) => {
       otherProvinceName: values.otherProvince?.length > 0 ? values.otherProvince.map(item => (item.name || item.label)).join(',') : '',
       otherCity: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
       otherCityName: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
+      dispatchArriveFlag: values.dispatchArriveFlag,
       warningTag: values.warningTag ? values.warningTag.map(item => (item.boFireTagId || item.value)).join(',') : '',
       warningTagName: values.warningTag ? values.warningTag.map(item => (item.tagName || item.label)).join(',') : '',
       warningExt1: values.warningTypeOther, // 警情类型其他
@@ -587,6 +598,7 @@ const initDetail = () => {
             value: 'boFireTagId',
           })
           : []
+        form.value.dispatchArriveFlag = res.dispatchArriveFlag
         form.value.warningInfo = res.warningInfo
         form.value.warningStatus = props.currentRow?.warningStatus || res.warningStatus
         form.value.transferList = res.transferList
@@ -1341,6 +1353,45 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectMultiple>
+      <van-field
+        v-if="!showCityProvince"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="是否有队伍到场："
+        label-width="132px"
+        class="field-radio"
+        :disabled="isConfirm"
+      >
+        <template #input>
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.dispatchArriveFlag === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-radio-group
+              v-model="form.dispatchArriveFlag"
+              icon-size="16px"
+              direction="horizontal"
+              :disabled="isConfirm"
+              @change="onDispatchArriveFlag"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否有队伍到场："
+            :id="currentRow?.boFireWarningId"
+            remark-field="dispatchArriveFlag"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.dispatchArriveFlag"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectOrg
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
@@ -1394,6 +1445,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectOrg>
       <SelectSingle
+        v-if="form.isAreaFirst !== '2' && form.dispatchArriveFlag !== '2'"
         v-model:value="form.firstGroup"
         :showPreview="showPreview"
         name="firstGroup"
@@ -1419,6 +1471,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectSingle>
       <SelectSingle
+        v-if="form.isAreaMain !== '2' && form.dispatchArriveFlag !== '2'"
         v-model:value="form.mainGroup"
         :showPreview="showPreview"
         name="mainGroup"

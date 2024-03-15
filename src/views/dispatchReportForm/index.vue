@@ -447,6 +447,8 @@ provide('dataType', 2)
 
 provide('showNationTeam', showNationTeam)
 
+provide('initDispatchDetail', initDispatchDetail)
+
 const initPoliceDetail = () => {
   showLoadingToast()
   return new Promise((resolve) => {
@@ -659,6 +661,10 @@ const initReport = () => {
           initDispatchDetail.value.detachment = res.detachment
           initDispatchDetail.value.warningOrgname = res.warningOrgname
           initDispatchDetail.value.nationTeamFlag = res.nationTeamFlag
+          initDispatchDetail.value.dispatchArriveFlag = res.dispatchArriveFlag
+          if (res.dispatchArriveFlag === '2') {
+            form.value.basicInformation.dealSituation.value = '2023020800262'
+          }
         }
       }).finally(() => resolve())
     } else {
