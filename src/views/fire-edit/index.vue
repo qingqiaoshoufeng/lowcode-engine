@@ -62,7 +62,7 @@
     <ProModal  v-model:visible="show.editVisible" title="火灾填报">
       <template #default="{ setHandleOk, setHandleExtend }">
           <EditorForm
-            isAgain
+            :isAgain="isAgain"
             :is-edit="isEdit"
             :current-row="currentRow"
             :relevance-draft="relevanceDraft"
@@ -125,6 +125,7 @@ const relevanceDraft = ref(null)
 const refreshCallback = () => {
   proListRef.value.filter()
 }
+const isAgain = ref(false)
 // const onSearchConfirm = () => {
 //   showLoadingToast();
 //   proListRef.value.filter().then((res) => {
@@ -165,6 +166,11 @@ const renderFirePlace = (record) => {
 }
 const handleEdit = (row) => {
   currentRow.value = row
+  if (row.taskId) {
+    isAgain.value = true
+  }else{
+    isAgain.value = false
+  }
   relevanceDraft.value = null
   isDraft.value = true
   isEdit.value = true
@@ -173,162 +179,9 @@ const handleEdit = (row) => {
 const setHandleOk = ()=>{}
 </script>
   <style lang="scss" scoped>
-  .fire-manage{
-    // .list-item {
-    //   display: flex;
-    //   flex-direction: column;
-    //   background: #ffffff;
-    //   margin-top: 10px;
-    //   .item-header {
-    //     display: flex;
-    //     padding: 8px 10px;
-    //     .item-title {
-    //       width: 260px;
-    //       font-size: 16px;
-    //       font-weight: bold;
-    //       white-space: nowrap;
-    //       overflow: hidden;
-    //       text-overflow: ellipsis;
-    //     }
-    //     .item-state {
-    //       width: 57px;
-    //       height: 24px;
-    //       font-size: 12px;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: center;
-    //       border-radius: 2px;
-    //       margin-left: auto;
-    //     }
-    //   }
-    //   .item-field {
-    //     font-size: 14px;
-    //     color: #1f1f1f;
-    //     display: flex;
-    //     align-items: center;
-    //     padding: 0 0 8px 10px;
-    //     img {
-    //       width: 14px;
-    //       height: 14px;
-    //       margin-right: 6px;
-    //     }
-    //   }
-    //   .item-type {
-    //     margin: 0 0 8px 10px;
-    //     span {
-    //       display: inline-block;
-    //       font-size: 12px;
-    //       font-family: PingFangSC-Regular, PingFang SC;
-    //       font-weight: 400;
-    //       color: #fc2902;
-    //       background: #ffefec;
-    //       border-radius: 2px;
-    //       padding: 4px 10px;
-    //     }
-    //   }
-    //   .item-line {
-    //     width: 100%;
-    //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-    //   }
-    //   .item-operate {
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: flex-end;
-    //     padding: 8px 10px;
-    //     .item-btn {
-    //       padding: 0 16px;
-    //       margin-left: 10px;
-    //       :deep(.van-button__content) {
-    //         height: 18px;
-    //       }
-    //       :deep(.van-button__text) {
-    //         white-space: nowrap;
-    //         word-break: break-all;
-    //       }
-    //     }
-    //   }
-    // }
-  }
   .list-tabs1 {
     display: flex;
     padding: 10px 12px 0 12px;
   }
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-collect {
-  //       font-size: 20px;
-  //       margin-right: auto;
-  //     }
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
+
   </style>

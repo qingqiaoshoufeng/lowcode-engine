@@ -997,7 +997,9 @@ const { loading: backLoading, submit: backSubmit } = useSubmit(
 
 const approvalCallback = async (form) => {
   approvalForm.value = form
+
   if (form.approveType === '1' && props.isEdit) { // 审核通过
+   
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
