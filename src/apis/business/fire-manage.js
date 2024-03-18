@@ -44,6 +44,9 @@ export function getFireManageList(data) {
       fireDirection: data?.fireDirection,
     }
   }
+  
+  // eslint-disable-next-line no-console
+  console.log(params,data);
   return axios.get('/acws/rest/biz/fireinfo/query', {
     params,
   }).then((res) => {
