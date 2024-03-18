@@ -206,6 +206,8 @@ export const checkReturnSpeed = (form) => {
     const time = dayjs(attendanceDate.value).diff(dayjs(dispatchDate.value), 'second')
     const speed = fireDistance.value / time * 60 * 60
     form.basicInformation.presentSpeed.value = Number(speed.toFixed(2))
+  } else {
+    form.basicInformation.presentSpeed.value = ''
   }
 }
 
