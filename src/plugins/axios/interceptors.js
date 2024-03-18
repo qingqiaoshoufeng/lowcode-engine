@@ -1,6 +1,7 @@
 import { showFailToast } from 'vant'
 import { getCodeMessages } from '@/utils/http-code-messages.js'
 import { loginError } from '@/apis/index.js'
+import { getCookie } from '@/utils/tools.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
@@ -46,14 +47,16 @@ export const responseInterceptors = (response) => {
   return resData
 }
 
-
 export const responseError = (error) => {
   if (error.response?.status === 401) {
     const text = error.response?.data?.msg || '用户信息输入有误，请重新输入！'
     showFailToast({
       message: text,
     })
-    loginError(text)
+    const captcha_cookie = getCookie('captcha_cookie')
+    if (captcha) {
+      loginError(text)
+    }
   }
   else if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_REQUEST' || error.message === 'Network Error') {
     showFailToast({

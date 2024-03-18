@@ -4,6 +4,8 @@ import SelectMultiple from "@/component/SelectMultiple/index";
 import ProCard from "@/component/ProCard/index.vue";
 import SplitLines from "@/component/split-lines/index"
 
+const show = inject('show')
+
 const form = inject("form");
 
 const fieldExist = inject('fieldExist')
@@ -155,7 +157,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗" id="battleConsume" :state="false">
+  <ProCard title="战斗消耗" id="battleConsume" :state="show?.battleConsume">
     <SplitLines title="车辆耗损" style="border-color: #A4A4A4" />
     <van-cell-group>
       <!-- 车辆耗损 -->

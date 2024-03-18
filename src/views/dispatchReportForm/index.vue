@@ -3,7 +3,7 @@ import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, forIn } from 'lodash-es'
 import { showToast, showLoadingToast, closeToast } from "vant";
 import FireInfo from './components/fireInfo.vue';
 import BattleResult from './components/battleResult.vue';
@@ -447,6 +447,8 @@ provide('dataType', 2)
 
 provide('showNationTeam', showNationTeam)
 
+provide('show', show)
+
 provide('initDispatchDetail', initDispatchDetail)
 
 const initPoliceDetail = () => {
@@ -682,6 +684,14 @@ const initFireProcess = () => {
   }, userInfo.value?.USERMESSAGE?.orgName)
 }
 
+const initModuleState = () => {
+  forIn(form.value.battleConsume, (value, key) => {
+    if (typeof value === 'object' && (value?.length > 0 || value?.value)) {
+      show.value.battleConsume = true
+    }
+  })
+}
+
 provide('refreshProcess', initFireProcess)
 
 const initWatch = () => {
@@ -700,6 +710,7 @@ const initWatch = () => {
         initFireProcess()
       }, { deep: true })
     }
+    initModuleState()
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.draftInfo.warningType.value))
     })
