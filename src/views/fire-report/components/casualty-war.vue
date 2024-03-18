@@ -220,7 +220,7 @@ const bigInjured = computed(() => {
           :required="isRequired"
           :rules="form.casualtyWar.isInjured.rules" 
           class="field-radio"
-          label-width="150px"
+          label-width="128px"
         >
           <template #input>
             <van-radio-group 
@@ -364,6 +364,7 @@ const bigInjured = computed(() => {
             v-preview-text="showPreview"
             :maxlength="20"
             allow-clear
+            :required="true"
             aria-autocomplete="none"
             placeholder="请输入人员姓名"
             :name="`casualtyWar.injuredList.${index}.name`"
@@ -810,7 +811,7 @@ const bigInjured = computed(() => {
           :rules="form.casualtyWar.isDead.rules"
           :required="isRequired"
           class="field-radio"
-          label-width="130px"
+          label-width="128px"
         >
           <template #input>
             <van-radio-group 
@@ -894,9 +895,10 @@ const bigInjured = computed(() => {
             v-preview-text="showPreview"
             allow-clear
             show-search
+            :required="true"
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            placeholder="请选择民族"
+            placeholder="请输入人员姓名"
           >
             <template v-slot:label="">
               <FieldAnnotation

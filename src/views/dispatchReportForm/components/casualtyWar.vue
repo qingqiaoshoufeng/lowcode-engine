@@ -935,7 +935,7 @@ const onChangeName = (item, index) => {
           >
             <template v-slot:label="">
               <FieldAnnotation
-                label="消防证件号："
+                label="身份证号码："
                 remark-field="deadList"
                 remark-field2="idNumber"
                 :remark-field2-id="index"

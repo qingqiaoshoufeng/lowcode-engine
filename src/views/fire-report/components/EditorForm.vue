@@ -205,6 +205,8 @@ const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
 const isNew = ref(props.isUnDispatch || !!props.showDraft)
 
+const initFireDetail = ref({ })
+
 const fireDetail = ref(null)
 
 const loadingDetail = ref(true)
@@ -335,6 +337,8 @@ provide('fieldExist', fieldExist)
 
 provide('dataType', 3)
 
+provide('initFireDetail', initFireDetail)
+
 const sections = computed(() => {
   const { fireInfo, briefSituation, basicInfo, casualtyWar, economicLoss, fireBuilding, fireFacilities, caseHandling, firePhoto, fireCourse, otherAttach, proSteps } = form.value
   const result = {}
@@ -420,6 +424,7 @@ provide('deleteField', deleteField)
 const initFireSite = () => {
   // 起火位置字典修改
   const { fireType, firePlace, vehicleType } = form.value.basicInfo
+  options.value.fireSite = []
   if (fireType.text?.includes('建构筑物火灾') && firePlace.text?.length > 0) {
     getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_CS.filter(item => item.dictName?.indexOf(firePlace.text[0]) > -1)
@@ -455,6 +460,11 @@ const initFireSite = () => {
       else if (vehicleType.text?.includes('航空航天')) {
         options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['航空飞行器'].includes(item.dictName))
       }
+    })
+  }
+  else {
+    getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
+      options.value.fireSite = res.HZ_QHWZ_CS
     })
   }
 }
@@ -1080,6 +1090,7 @@ onMounted(() => {
       if (res[2]) {
         isNew.value = res[2].isNew
         detail.value.extinctDate = res[2].extinctDate
+        initFireDetail.value.dispatchArriveFlag = res[2]?.fireWarning?.dispatchArriveFlag
       }
       initDetail()
     }
@@ -1089,14 +1100,6 @@ onMounted(() => {
   })
 })
 
-// const handleExportPdf = () => {
-//   bus.emit('CASTLE__globalLoading', true)
-//   setTimeout(async () => {
-//     const fileName = `火灾信息（${fireDetail.value?.fireInfo?.fireCode}）.pdf`
-//     await exportPdf('.fire-content', fileName)
-//     bus.emit('CASTLE__globalLoading', false)
-//   }, 100)
-// }
 const onSideBarChange = (e, k) => {
   const targetElement = document.getElementById(k);
   if (targetElement) {
@@ -1110,7 +1113,6 @@ const onSideBarChange = (e, k) => {
 
 <template>
   <div class="editor-form" :class="{'hidevalidate':hidevalidate}">
-    <!-- <a-row class="fire-input" :gutter="40" :class="{ 'fire-form': isDetail }"> -->
       <div class="form-left">
         <van-sidebar 
           v-model="sideBarActive" 
@@ -1202,18 +1204,6 @@ const onSideBarChange = (e, k) => {
             </div>
          </div>
       </div>
-      <van-button 
-        v-if="showExportPdf" 
-        type="primary" 
-        class="export-btn" 
-        @click="handleExportPdf"
-      >
-      导出
-      </van-button>
-      <!-- <a-button v-if="showExportPdf" type="primary" class="export-btn" @click="handleExportPdf">
-        导出
-      </a-button> -->
-    <!-- </a-row> -->
   </div>
 
   <!-- 提交审核 -->
@@ -1230,24 +1220,20 @@ const onSideBarChange = (e, k) => {
 </template>
 
 <style lang="scss" scoped>
-.editor-form{
-  // display: flex;
-  // align-items: flex-start;
-  // justify-content: space-between;
-  height:calc(100% - 44px);
-  .form-left{
-    width: 20%;
-    display: inline-block;
-    overflow-y: scroll;
-    height: 100%;
-    padding-right: 13px;
-    box-sizing: content-box;
-    overflow-x: hidden;
+.editor-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #F6F8FC;
+  .form-left {
+    width: var(--van-sidebar-width);
   }
-  .form-right{
-    display: inline-block;
-    width: 75%;
+  .form-right {
     height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     .box{
       height:100%;
       width:100%;

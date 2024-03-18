@@ -41,7 +41,7 @@ const props = defineProps({
     default: () => ["hour", "minute", "second"],
   },
   maxDate: {
-    type: Object,
+    type: [Object, Function],
     default: () => new Date(),
   },
   minDate:{
@@ -61,10 +61,13 @@ const currentDate = ref([]);
 
 const currentTime = ref([]);
 
-const canConfirm = computed(() => {
+const canConfirm = () => {
   const value = dayjs(currentDate.value.join("-") + " " + currentTime.value.join(":"));
+  if (typeof props.maxDate === "function") {
+    return value.valueOf() >= dayjs(props.maxDate()).valueOf() || (props.minDate && value.valueOf() <= dayjs(props.minDate).valueOf())
+  }
   return value.valueOf() >= dayjs(props.maxDate).valueOf() || (props.minDate && value.valueOf() <= dayjs(props.minDate).valueOf())
-})
+}
 
 watch(() => props.value, (newVal) => {
   if (props.value) {
@@ -76,7 +79,7 @@ watch(() => props.value, (newVal) => {
 }, { immediate: true });
 
 const handleOk = () => {
-  if (canConfirm.value) {
+  if (canConfirm()) {
     return
   }
   const value = dayjs(currentDate.value.join("-") + " " + currentTime.value.join(":"));
@@ -138,14 +141,14 @@ defineOptions({
       <div class="header">
         <div class="cancel" @click="handleCancel">取消</div>
         <div class="modal-title">{{ title }}</div>
-        <div :class="{ 'cancel': canConfirm, 'confirm': !canConfirm }" @click="handleOk">确定</div>
+        <div :class="{ 'cancel': canConfirm(), 'confirm': !canConfirm() }" @click="handleOk">确定</div>
       </div>
       <div class="select-date-wrapper">
         <van-date-picker
           v-model="currentDate"
           title="选择日期"
           :show-toolbar="false"
-          :max-date="maxDate"
+          :max-date="typeof maxDate === 'function' ? maxDate() : maxDate"
           :min-date="minDate"
           class="left"
         />

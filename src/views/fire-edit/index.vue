@@ -66,7 +66,7 @@
             :is-edit="isEdit"
             :current-row="currentRow"
             :relevance-draft="relevanceDraft"
-            :show-draft="isDraft"
+            :show-draft="false"
             :set-handle-ok="setHandleOk"
             :set-handle-extend="setHandleExtend"
             @finish-callback="refreshCallback"

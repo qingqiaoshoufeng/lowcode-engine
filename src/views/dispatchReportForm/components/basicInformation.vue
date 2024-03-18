@@ -25,6 +25,8 @@ const showMidwayReturn = inject('showMidwayReturn')
 
 const detail = inject('detail')
 
+const initDispatchDetail = inject('initDispatchDetail')
+
 const store = useStore()
 
 const trappedConfig = store.state.rules.ruleConfig.trappedConfig
@@ -66,6 +68,7 @@ const onDealSituation = (value, option) => {
       title="请选择处置情况"
       label="处置情况："
       placeholder="请选择处置情况"
+      :disabled="initDispatchDetail?.dispatchArriveFlag === '2'"
       :rules="form.basicInformation.dealSituation.rules"
       @change="onDealSituation"
     >
