@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject } from "vue";
+import { watch, computed, inject } from "vue";
 import SplitLines from "@/component/split-lines/index"
 import dayjs from "dayjs";
 import { checkAttendanceDate, checkReturnSpeed } from "../tool.js";
@@ -60,6 +60,12 @@ const showReturnSlow = computed(() => {
   }
   return false;
 });
+
+watch(() => showReturnSlow.value, () => {
+  if (!showReturnSlow.value) {
+    form.value.basicInformation.returnLateReason.value = undefined
+  }
+})
 
 const validateDispatch = (value, rule) => {
   const { dispatchDate } = form.value.basicInformation;

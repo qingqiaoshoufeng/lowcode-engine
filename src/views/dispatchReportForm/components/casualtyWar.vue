@@ -580,7 +580,7 @@ const onChangeName = (item, index) => {
               />
             </template>
           </van-field>
-          <SelectSingle
+          <CascaderSingle
             v-model:value="item.duty"
             :showPreview="showPreview"
             :name="`casualtyWar.injuredList.${index}.duty`"
@@ -591,6 +591,7 @@ const onChangeName = (item, index) => {
             label="职务："
             placeholder="请选择职务"
             :rules="form.casualtyWar.duty.rules"
+            :disabled="showNationTeam"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -603,7 +604,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle>
+          </CascaderSingle>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
@@ -1069,7 +1070,7 @@ const onChangeName = (item, index) => {
               />
             </template>
           </van-field>
-          <SelectSingle
+          <CascaderSingle
             v-model:value="item.duty"
             :showPreview="showPreview"
             :name="`casualtyWar.deadList.${index}.duty`"
@@ -1080,6 +1081,7 @@ const onChangeName = (item, index) => {
             label="职务："
             placeholder="请选择职务"
             :rules="form.casualtyWar.duty.rules"
+            :disabled="showNationTeam"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1092,7 +1094,7 @@ const onChangeName = (item, index) => {
                 @refresh-callback="refreshField"
               />
             </template>
-          </SelectSingle>
+          </CascaderSingle>
           <SelectSingle
             v-model:value="item.injuryPart"
             :showPreview="showPreview"
