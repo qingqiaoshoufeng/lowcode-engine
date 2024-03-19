@@ -368,6 +368,7 @@ const renderFirePlace = (record) => {
 const getPrefectureFire = ()=>{
   proListRef.value.query.onlyMy = false
   proListRef.value.query.unEditFlag = false
+  proListRef.value.query.myCollect = false
   proListRef.value.filter()
 }
 // 查询我的火灾
