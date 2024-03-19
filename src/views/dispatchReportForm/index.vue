@@ -666,6 +666,7 @@ const initReport = () => {
           initDispatchDetail.value.dispatchArriveFlag = res.dispatchArriveFlag
           if (res.dispatchArriveFlag === '2') {
             form.value.basicInformation.dealSituation.value = '2023020800262'
+            form.value.basicInformation.dealSituation.text = '中途返回'
           }
         }
       }).finally(() => resolve())
