@@ -211,6 +211,7 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入单位名称"
+            required
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -325,6 +326,7 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入姓名"
+            required
           >
             <template v-slot:label="">
               <FieldAnnotation

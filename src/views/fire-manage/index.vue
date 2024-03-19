@@ -55,6 +55,11 @@
               <div class="item-field-label">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
             </div>
+            <div class="item-field">
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
+              <div class="item-field-label">起火场所：</div>
+              <div>{{ record.firePlaceValue }}</div>
+            </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
               <div class="item-field-label">起火场所：</div>
@@ -179,7 +184,7 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
 })
 onMounted(() => {
   // 获取火灾标签
-  getFireWarningTag({ tagType: 2 }).then((res) => {
+  getFireWarningTag({ tagType: 3 }).then((res) => {
     options.value.fireTags = res.data || []
     show.value.moreFilter = true
   })
@@ -226,15 +231,21 @@ const searchOptions = computed(()=>([
     type: 'select-single',
     placeholder: '请选择是否出动',
     fieldNames: { value: 'value', label: 'label' },
-    value: 'severity',
+    value: 'isDispatch',
     options: isNot,
   },
   {
+    title: '行政区域',
+    type: 'select-area',
+    placeholder: '请选择行政区域',
+    value: 'warningArea',
+  },
+  {
     title: '火灾标签',
-    type: 'select-single',
+    type: 'select', 
     placeholder: '请选择火灾标签',
     fieldNames:{ label: 'tagName', value: 'boFireTagId' },
-    value: 'fireTags',
+    value: 'fireInfoTag',
     options: options.value.fireTags,
   },
   {
@@ -290,7 +301,7 @@ const searchOptions = computed(()=>([
     type: 'select-single',
     placeholder: '请选择是否正在调查',
     fieldNames:{ value: 'value', label: 'label' },
-    value: 'isSafetyAccident',
+    value: 'isResearch',
     options: isNot,
   },
 ]))
@@ -305,8 +316,9 @@ const defaultFilterValue = {
   orgId: [],
   time: getLastMonth(),
   fireLevel: [],
-  fireCause: [],
-  area: [],
+  fireCause: null,
+  area: null,
+  warningArea:[],
 }
 
 const onTimeChange = (value) => {
@@ -354,6 +366,7 @@ const renderFirePlace = (record) => {
 }
 // 查询辖区火灾
 const getPrefectureFire = ()=>{
+  proListRef.value.query.onlyMy = false
   proListRef.value.query.unEditFlag = false
   proListRef.value.filter()
 }

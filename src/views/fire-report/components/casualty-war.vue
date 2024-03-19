@@ -203,7 +203,7 @@ watch(() => form.value.casualtyWar.isDead, () => {
 
 const smallInjured = computed(() => {
   const { injuryNum } = form.value.casualtyWar
-  return injuryNum.value || 0
+  return Number(injuryNum.value) || 0
 })
 
 const bigInjured = computed(() => {
@@ -693,9 +693,9 @@ const bigInjured = computed(() => {
             label="人为因素："
             :rules="form.casualtyWar.humanCause.rules"
             id="injuryBehavior"
-            v-model:value="item.injuryBehavior"
+            v-model:value="item.humanCause"
             :showPreview="showPreview"
-            :options="options.injuryBehavior"
+            :options="options.humanCause"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择人为因素："
@@ -744,12 +744,12 @@ const bigInjured = computed(() => {
             :name="`casualtyWar.injuredList.${index}.mainSymptoms`"
             label="身体主要症状："
             :rules="form.casualtyWar.mainSymptoms.rules"
-            v-model:value="item.injuryPart"
+            v-model:value="item.mainSymptoms"
             :showPreview="showPreview"
-            :options="options.injuryPart"
+            :options="options.mainSymptoms"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            placeholder="请选择受伤部位"
+            placeholder="请选择身体主要症状"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -770,12 +770,12 @@ const bigInjured = computed(() => {
             label="受伤部位："
             :rules="form.casualtyWar.injuryPart.rules"
             id="mainSymptoms"
-            v-model:value="item.mainSymptoms"
+            v-model:value="item.injuryPart"
             v-preview-text="showPreview"
-            :options="options.mainSymptoms"
+            :options="options.injuryPart"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
-            placeholder="请选择身体主要症状"
+            placeholder="请选择受伤部位"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -920,13 +920,12 @@ const bigInjured = computed(() => {
             :rules="form.casualtyWar.nation.rules"
             :required="isRequired"
             id="injuryType"
-            v-model:value="item.injuryType"
+            v-model:value="item.nation"
             :showPreview="showPreview"
-            :options="options.injuryType"
+            :options="options.nation"
             allow-clear
-            placeholder=""
-            disabled
-            :field-names="{ value: 'value', label: 'label' }"
+            placeholder="请选择民族"
+            :field-names="{ value: 'boDictId', label: 'dictName' }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -954,7 +953,7 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择证件类型"
-            @change="onInjuryIdType(index)"
+            @change="onDeadIdType(index)"
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             title="请选择证件类型"
           >
@@ -1222,9 +1221,9 @@ const bigInjured = computed(() => {
             label="人为因素："
             :rules="form.casualtyWar.humanCause.rules"
             id="injuryBehavior"
-            v-model:value="item.injuryBehavior"
+            v-model:value="item.humanCause"
             :showPreview="showPreview"
-            :options="options.injuryBehavior"
+            :options="options.humanCause"
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择受伤时行为"

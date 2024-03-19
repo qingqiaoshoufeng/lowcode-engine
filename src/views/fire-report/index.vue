@@ -118,7 +118,7 @@
     />
   </ProModal>
   <!-- 转派窗口 -->
-  <DialogInfo v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
+  <DialogInfo title="任务转派" v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
     <TransferTask :current-row="currentRow" :set-handle-ok="setHandleOk" @finish-callback="refreshCallback" />
   </DialogInfo>
   <!-- 退回窗口 -->
