@@ -1353,7 +1353,7 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectMultiple>
-      <van-field
+      <!-- <van-field
         v-if="!showCityProvince"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -1391,7 +1391,7 @@ const onWarningOrgname = () => {
             @refresh-callback="refreshField"
           />
         </template>
-      </van-field>
+      </van-field> -->
       <SelectOrg
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
