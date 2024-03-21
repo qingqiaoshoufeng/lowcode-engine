@@ -247,22 +247,22 @@ const onSeverity = () => {
 
 const validateBurnedArea = (val) => {
   const { burnedArea, severity, fireType } = form.value.basicInfo
-  if (!val && val !== 0) {
+  if (severity.value === '2' && Number(val) === 0) {
+    return '非轻微火灾过火面积不能为0！'
+  }
+  else if (!val && val !== 0) {
     if (!burnedArea.rules[0].required) {
       return true
     }
     else {
       return '请输入过火面积'
-      // callback(new Error(''))
     }
   }
   else if (!nonnegativeNumberReg.test(val)) {
-    // callback(new Error('请输入正确过火面积'))
     return '请输入正确过火面积'
   }
   else {
     return true
-    // callback()
   }
 }
 
@@ -760,7 +760,6 @@ const onFireLevel = () => {
       <div>
         <van-field 
           name="caseHandling.penaltyNum.value"
-          :disabled="!importantEdit"
           label="过火面积（平方米）："
           :rules="[{ validator: validateBurnedArea, trigger: 'onBlur' }, ...form.basicInfo.burnedArea.rules]"
           @blur="checkBurnedArea(form)"

@@ -1617,7 +1617,7 @@ const onWarningOrgname = () => {
         autosize
         label="警情描述："
         type="textarea"
-        maxlength="300"
+        maxlength="2000"
         placeholder="请输入警情描述"
         show-word-limit
         :rules="[{ required: true, message: '请输入警情描述'}]"

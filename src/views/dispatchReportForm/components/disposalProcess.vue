@@ -28,7 +28,7 @@ const showDraft = inject('showDraft')
         autosize
         label="处置经过："
         type="textarea"
-        maxlength="1000"
+        maxlength="2000"
         placeholder="请输入处置经过"
         show-word-limit
         :rules="form.disposalProcess.fireProcess.rules"
