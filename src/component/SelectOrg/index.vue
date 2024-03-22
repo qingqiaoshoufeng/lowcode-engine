@@ -181,6 +181,9 @@ const handleOk = () => {
 
 const handleCheck = (item) => {
   if (props.single && item.checked) {
+    selectValue.value = [];
+    selectText.value = [];
+    selectItem.value = [];
     // 已经选中的要重置
     treeData.value.forEach(arr => {
       arr.forEach(i => {

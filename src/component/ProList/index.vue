@@ -29,7 +29,7 @@ const props = defineProps({
     default: () => {},
   },
   rowKey: {
-    type: String,
+    type: [String, Function],
     default: "id",
   },
   paginationConfig: {
@@ -192,7 +192,12 @@ export default {
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <div v-for="(item, index) in list" :key="item[rowKey]" :title="item[rowKey]" class="list-content van-clearfix">
+          <div
+            v-for="(item, index) in list"
+            :key="item[typeof rowKey === 'function' && rowKey ? rowKey(item) : rowKey]"
+            :title="item[typeof rowKey === 'function' && rowKey ? rowKey(item) : rowKey]"
+            class="list-content van-clearfix"
+          >
             <slot name="list" :tabsActive="tabsActive" :record="item" :index="index" />
           </div>
         </van-list>
