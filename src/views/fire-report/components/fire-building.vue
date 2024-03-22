@@ -57,11 +57,14 @@ const validateBuildFloor = (value) => {
   const { buildType, buildFloor, buildUse } = form.value.fireBuilding
   const filter = options.value.buildType?.filter(item => item.boDictId === buildType.value)
   const use = options.value.buildUse?.filter(item => item.boDictId === buildUse.value?.[0])
-  if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '居住使用' && (buildFloor.value < 1 || buildFloor.value > 10)) {
-    return '建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层'
+  if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '居住使用' && (buildFloor.value < 2 || buildFloor.value > 10)) {
+    return '建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为2-10层'
   }
-  else if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '公共使用' && (buildFloor.value < 1 || buildFloor.value > 9)) {
-    return '建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层'
+  else if (filter?.[0]?.dictName === '多层' && use?.[0]?.dictName === '公共使用' && (buildFloor.value < 2 || buildFloor.value > 9)) {
+    return '建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为2-9层'
+  }
+  else if (filter?.[0]?.dictName === '多层' && buildFloor.value <= 1) {
+    return '多层建筑总楼层数不能小于等于1！'
   }
   else if (filter?.[0]?.dictName === '高层' && use?.[0]?.dictName === '居住使用' && buildFloor.value < 8) {
     return '建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上'
