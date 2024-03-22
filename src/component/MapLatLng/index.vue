@@ -220,7 +220,7 @@ defineOptions({
       border-radius: 6px;
       border: none;
       // background-color: #FF4D16;
-      background: url("../../assets/image/icon_map.png") no-repeat;
+      background: url("../../assets/images/icon_map.png") no-repeat;
       background-size: 100% 100%;
       margin-left: -6px;
       margin-top: -6px;
