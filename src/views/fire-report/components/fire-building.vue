@@ -95,24 +95,20 @@ const buildFloorChange = ()=>{
 }
 
 const onBuildUse = (value, selectedOptions) => {
-  const { buildType, buildFloor } = form.value.fireBuilding
-  const filter = options.value.buildType?.filter(item => item.boDictId === buildType.value)
-  if (filter?.[0]?.dictName === '多层' && selectedOptions?.[0]?.dictName === '居住使用' && (buildFloor.value < 1 || buildFloor.value > 10)) {
-    showToast('建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层')
-    // notification.open({ message: '填报异常提醒', description: '建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层', style: { backgroundColor: 'orange' } })
-  }
-  else if (filter?.[0]?.dictName === '多层' && selectedOptions?.[0]?.dictName === '公共使用' && (buildFloor.value < 1 || buildFloor.value > 9)) {
-    // notification.open({ message: '填报异常提醒', description: '建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层', style: { backgroundColor: 'orange' } })
-    showToast('建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层')
-  }
-  else if (filter?.[0]?.dictName === '高层' && selectedOptions?.[0]?.dictName === '居住使用' && buildFloor.value < 8) {
-    showToast('建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上')
-    // notification.open({ message: '填报异常提醒', description: '建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上', style: { backgroundColor: 'orange' } })
-  }
-  else if (filter?.[0]?.dictName === '高层' && selectedOptions?.[0]?.dictName === '公共使用' && buildFloor.value < 7) {
-    showToast('建筑类别为高层，建筑使用用途为公共时，建筑总楼层数可选范围为7层以上')
-    // notification.open({ message: '填报异常提醒', description: '建筑类别为高层，建筑使用用途为公共时，建筑总楼层数可选范围为7层以上', style: { backgroundColor: 'orange' } })
-  }
+  // const { buildType, buildFloor } = form.value.fireBuilding
+  // const filter = options.value.buildType?.filter(item => item.boDictId === buildType.value)
+  // if (filter?.[0]?.dictName === '多层' && selectedOptions?.[0]?.dictName === '居住使用' && (buildFloor.value < 1 || buildFloor.value > 10)) {
+  //   showToast('建筑类别为多层，建筑使用用途为居住时，建筑总楼层数可选范围为1-10层')
+  // }
+  // else if (filter?.[0]?.dictName === '多层' && selectedOptions?.[0]?.dictName === '公共使用' && (buildFloor.value < 1 || buildFloor.value > 9)) {
+  //   showToast('建筑类别为多层，建筑使用用途为公共时，建筑总楼层数可选范围为1-9层')
+  // }
+  // else if (filter?.[0]?.dictName === '高层' && selectedOptions?.[0]?.dictName === '居住使用' && buildFloor.value < 8) {
+  //   showToast('建筑类别为高层，建筑使用用途为居住时，建筑总楼层数可选范围为8层以上')
+  // }
+  // else if (filter?.[0]?.dictName === '高层' && selectedOptions?.[0]?.dictName === '公共使用' && buildFloor.value < 7) {
+  //   showToast('建筑类别为高层，建筑使用用途为公共时，建筑总楼层数可选范围为7层以上')
+  // }
 }
 
 const validateFireFloor = (value) => {

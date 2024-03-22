@@ -68,9 +68,13 @@ export function getFireSupervisionParams(data) {
   return {
     offset: (data.page - 1) * data.limit + 1,
     limit: data.limit,
+    warningCode: data.warningCode,
+    fireCode: data.fireCode,
     reportCreateTimeStart: data.time && data.time[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
     reportCreateTimeEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
     unit: data.unit?.length > 0 ? data.unit[0].organizationid : '',
+    fireDirection: data.fireDirection,
+    boAreaId: cloneDeep(data.boAreaId)?.pop(),
     ...tags,
   }
 }
