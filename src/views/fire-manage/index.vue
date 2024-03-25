@@ -313,7 +313,7 @@ const defaultFilterValue = {
   fireInfoTag: [],
   warningCode: '',
   warningArea: [],
-  orgId: [],
+  orgId: null,
   time: getLastMonth(),
   fireLevel: [],
   fireCause: null,
@@ -370,7 +370,6 @@ const getPrefectureFire = ()=>{
   proListRef.value.query.onlyMy = false
   proListRef.value.query.unEditFlag = false
   proListRef.value.query.myCollect = false
-  
   proListRef.value.filter()
 }
 // 查询我的火灾
