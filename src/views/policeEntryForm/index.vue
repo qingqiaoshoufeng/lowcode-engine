@@ -593,7 +593,7 @@ const initDetail = () => {
           }, 'Number')
           : []
         form.value.warningTag = res.warningTag
-          ? generateByKeyValue(res.warningTagValue, res.warningTag, {
+          ? generateByKeyValue(res.warningTagName, res.warningTag, {
             key: 'tagName',
             value: 'boFireTagId',
           })
@@ -823,7 +823,7 @@ const onWarningOrgname = () => {
         show-word-limit
         :class="{ 'form-textarea': !showPreview }"
       >
-    </van-field>
+      </van-field>
       <van-field
         v-model="form.warningName"
         v-preview-text="showPreview"
@@ -832,7 +832,7 @@ const onWarningOrgname = () => {
         required
         name="warningName"
         label="警情标题："
-        placeholder="请输入警情标题"
+        placeholder=""
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -1353,7 +1353,7 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectMultiple>
-      <van-field
+      <!-- <van-field
         v-if="!showCityProvince"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -1391,7 +1391,7 @@ const onWarningOrgname = () => {
             @refresh-callback="refreshField"
           />
         </template>
-      </van-field>
+      </van-field> -->
       <SelectOrg
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
@@ -1617,7 +1617,7 @@ const onWarningOrgname = () => {
         autosize
         label="警情描述："
         type="textarea"
-        maxlength="300"
+        maxlength="2000"
         placeholder="请输入警情描述"
         show-word-limit
         :rules="[{ required: true, message: '请输入警情描述'}]"

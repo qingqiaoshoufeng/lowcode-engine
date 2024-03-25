@@ -11,7 +11,6 @@ import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import '@/styles/common.scss';
 import 'vant/lib/index.css' // 全局引入样式
-import './mock/mock'
 import eventBus from './utils/eventBus'
 import { registerPlugins } from './utils/util'
 import directives from './directives/index';

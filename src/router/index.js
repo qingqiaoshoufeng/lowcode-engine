@@ -11,22 +11,6 @@ indexRouter.children = autoRegisteredRoutes()
 
 const routes = [
   indexRouter,
-  // {
-  //   path: '/nopermission',
-  //   name: 'nopermission',
-  //   meta: {
-  //     index: 1
-  //   },
-  //   component: () => import('@/views/old/error/NoPermission')
-  // },
-  // {
-  //   path: '/*',
-  //   name: '404',
-  //   meta: {
-  //     index: 1
-  //   },
-  //   component: () => import('@/views/old/error/404')
-  // },
 ]
 
 

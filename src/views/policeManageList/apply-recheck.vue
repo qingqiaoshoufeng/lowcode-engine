@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 import SelectSingle from "@/component/SelectSingle/index";
 import { recheckFireWarning } from '@/apis/index.js'
 import { useOptions } from '@/hooks/useOptions.js'
-// import { useSuccess } from '@/hooks/useSuccess.js'
 import { applyType } from '@/utils/constants.js'
 
 const props = defineProps({
@@ -27,14 +26,12 @@ const emits = defineEmits(['finishCallback'])
 
 const { options } = useOptions({ applyType })
 
-// const { showSuccessModal } = useSuccess()
-
 const localFireRecheckId = uuidv4()
 
 const tooltip = [
   '修改警情类型，请选择【重要信息更正】；修改警情其他信息选择【普通信息更正】',
   '修改受伤人数、死亡人数、过火面积，请选择【重要信息更正】；修改出动填报其他信息选择【普通信息更正】',
-  '修改受伤人数、死亡人数、过火面积、直接经济损失，请选择【重要信息更正】；修改火灾填报其他信息选择【普通信息更正】',
+  '修改受伤人数、死亡人数、直接经济损失，请选择【重要信息更正】；修改火灾填报其他信息选择【普通信息更正】',
 ]
 
 const formRef = ref(null)
@@ -73,14 +70,6 @@ const { loading, submit } = useSubmit(() => {
 const onSubmit = async () => {
   await submit()
   await formRef.value.finishFn()
-  // showSuccessModal({
-  //   title: '申请更正成功！',
-  //   okText: '查看申请记录',
-  //   pathName: 'apply-record',
-  //   query: {
-  //     applyType: props.recheckType,
-  //   },
-  // })
 }
 
 onMounted(() => {
@@ -130,6 +119,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .apply-recheck {
+  height: 100%;
+  overflow-y: auto;
   .tooltip {
     background: #FEF7E3;
     padding: 8px 10px;

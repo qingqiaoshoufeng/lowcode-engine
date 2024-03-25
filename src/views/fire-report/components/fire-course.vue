@@ -31,7 +31,7 @@ const showDraft = inject('showDraft')
           v-model="form.fireCourse.firePassage.value"
           v-preview-text="showPreview"
           :rows="6"
-          :maxlength="1000"
+          :maxlength="2000"
           show-count
           allow-clear
           autosize

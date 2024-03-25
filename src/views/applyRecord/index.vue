@@ -77,6 +77,16 @@ const onSearchConfirm = () => {
   });
 };
 
+const getRowKey = (row) => {
+  if (proListRef.value.query?.applyType === '1' || proListRef.value.query?.applyType === '4') {
+    return row.boFireWarningId
+  } else if (proListRef.value.query?.applyType === '2') {
+    return row.boFireDispatchId
+  } else if (proListRef.value.query?.applyType === '3') {
+    return row.boFireInfoId
+  }
+}
+
 onMounted(() => {
   searchOptions.value[2].options = applyStatus;
   nextTick(() => {
@@ -92,7 +102,7 @@ onMounted(() => {
       title="申请记录"
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getApplyRecordList"
-      rowKey="boFireWarningId"
+      :rowKey="getRowKey"
       :showLoad="false"
     >
       <template #search="{ filterFormState, resetForm }">
