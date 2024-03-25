@@ -366,16 +366,18 @@ const renderFirePlace = (record) => {
 }
 // 查询辖区火灾
 const getPrefectureFire = ()=>{
+  proListRef.value.query = defaultFilterValue
   proListRef.value.query.onlyMy = false
   proListRef.value.query.unEditFlag = false
   proListRef.value.query.myCollect = false
+  
   proListRef.value.filter()
 }
 // 查询我的火灾
 const handleMyFire = () => {
   proListRef.value.query = {
     onlyMy: true,
-    time: getLastMonth(),
+    time: getLastMonth(), 
     unEditFlag: false,
     orgId: [],
   }
