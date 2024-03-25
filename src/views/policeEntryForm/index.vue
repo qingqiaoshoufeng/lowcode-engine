@@ -593,7 +593,7 @@ const initDetail = () => {
           }, 'Number')
           : []
         form.value.warningTag = res.warningTag
-          ? generateByKeyValue(res.warningTagValue, res.warningTag, {
+          ? generateByKeyValue(res.warningTagName, res.warningTag, {
             key: 'tagName',
             value: 'boFireTagId',
           })

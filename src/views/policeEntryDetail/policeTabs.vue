@@ -224,12 +224,13 @@ const onTabsChange = (index) => {
 
 <style lang="scss" scoped>
 .police-tabs {
+  width: 100%;
   height: 98px;
   display: flex;
   padding: 10px 10px 10px 10px;
   background-color: white;
   .top-row {
-    width: 100%;
+    width: calc(100% - 37px);
     display: flex;
     flex: 1;
     align-items: center;
@@ -238,7 +239,7 @@ const onTabsChange = (index) => {
     }
   }
   &-item {
-    width: 100%;
+    width: calc(100% - 10px);
     display: flex;
     align-items: center;
     background: #ffffff;
@@ -297,11 +298,16 @@ const onTabsChange = (index) => {
     border: 1px solid #0F7DE4;
   }
   .police-icon {
+    width: 27px;
     height: 74px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
+    img {
+      width: 27px;
+      height: 27px;
+    }
   }
 }
 .select-tabs {
