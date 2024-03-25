@@ -1,13 +1,13 @@
 <template>
   <div class="fire-manage">
     <ProList
-        ref="proListRef"
-        title="火灾管理"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getFireManageList"
-        :tabs="tabs"
-        :onTabFn="onTabChangeFn"
-      >
+      ref="proListRef"
+      title="火灾管理"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getFireManageList"
+      :tabs="tabs"
+      :onTabFn="onTabChangeFn"
+    >
       <template #search="{ tabsActive, filterFormState, resetForm }">
         <div class="list-tabs1" v-if="tabsActive === 1 || tabsActive === 2">
           <SelectTime
@@ -100,7 +100,7 @@
                 :disabled="!checkFireChangeState(record.fireStatusValue, record.updatePermission)"
 
               >
-               申请更正
+               更正
               </van-button>
             </div>
           </div>

@@ -823,7 +823,7 @@ const onWarningOrgname = () => {
         show-word-limit
         :class="{ 'form-textarea': !showPreview }"
       >
-    </van-field>
+      </van-field>
       <van-field
         v-model="form.warningName"
         v-preview-text="showPreview"
@@ -832,7 +832,7 @@ const onWarningOrgname = () => {
         required
         name="warningName"
         label="警情标题："
-        placeholder="请输入警情标题"
+        placeholder=""
       >
         <template v-slot:label="">
           <FieldAnnotation

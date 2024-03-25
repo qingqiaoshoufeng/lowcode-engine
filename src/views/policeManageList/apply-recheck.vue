@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 import SelectSingle from "@/component/SelectSingle/index";
 import { recheckFireWarning } from '@/apis/index.js'
 import { useOptions } from '@/hooks/useOptions.js'
-// import { useSuccess } from '@/hooks/useSuccess.js'
 import { applyType } from '@/utils/constants.js'
 
 const props = defineProps({
@@ -26,8 +25,6 @@ const props = defineProps({
 const emits = defineEmits(['finishCallback'])
 
 const { options } = useOptions({ applyType })
-
-// const { showSuccessModal } = useSuccess()
 
 const localFireRecheckId = uuidv4()
 
@@ -73,14 +70,6 @@ const { loading, submit } = useSubmit(() => {
 const onSubmit = async () => {
   await submit()
   await formRef.value.finishFn()
-  // showSuccessModal({
-  //   title: '申请更正成功！',
-  //   okText: '查看申请记录',
-  //   pathName: 'apply-record',
-  //   query: {
-  //     applyType: props.recheckType,
-  //   },
-  // })
 }
 
 onMounted(() => {
@@ -130,6 +119,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .apply-recheck {
+  height: 100%;
+  overflow-y: auto;
   .tooltip {
     background: #FEF7E3;
     padding: 8px 10px;
