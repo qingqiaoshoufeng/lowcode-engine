@@ -13,6 +13,8 @@ const refreshField = inject('refreshField')
 const refreshProcess = inject('refreshProcess')
 
 const showDraft = inject('showDraft')
+
+const isDetail = inject("isDetail")
 </script>
 
 <template>
@@ -20,7 +22,6 @@ const showDraft = inject('showDraft')
     <van-cell-group>
       <van-field
         v-model="form.disposalProcess.fireProcess.value"
-        v-preview-text="showPreview"
         :readonly="showPreview"
         required
         name="disposalProcess.fireProcess.value"
@@ -45,6 +46,9 @@ const showDraft = inject('showDraft')
         </template>
         <template v-if="!showPreview && !showDraft" v-slot:right-icon="">
           <div class="refresh-btn" @click="refreshProcess"><van-icon size="small" name="replay" />一键更新</div>
+        </template>
+        <template v-if="showPreview && isDetail" v-slot:input="">
+          <div>{{ form.disposalProcess.fireProcess.value }}</div>
         </template>
       </van-field>
     </van-cell-group>

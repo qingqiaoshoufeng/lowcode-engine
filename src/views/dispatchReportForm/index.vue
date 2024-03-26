@@ -130,8 +130,8 @@ const emits = defineEmits(['finishCallback'])
 const { options } = useOptions();
 
 const { show } = useModal();
-const formRef = ref(null);
 
+const formRef = ref(null);
 
 const { form, initFormWhenChange, initFormByDetail, checkFieldWarning, generateRemarkField } = useFormConfig();
 
