@@ -130,6 +130,8 @@ export function getDispatchTimeoutParams(data) {
     timeoutDateEnd: data.timeoutDateEnd,
     warningType: cloneDeep(data.warningType)?.pop(),
     timeOutType: data.timeOutType,
+    warningCode: data.warningCode,
+    dispatchCode: data.dispatchCode,
   }
 }
 

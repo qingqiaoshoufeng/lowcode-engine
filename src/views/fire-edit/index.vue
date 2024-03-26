@@ -21,8 +21,8 @@
               <img 
                 style="width: 13px; height: 15px; margin-right: 8px" 
                 src="../../assets/images/icon-time@2x.png" alt="" />
-              <div class="item-field-label">接警时间：</div>
-              <div>{{ formatYmdHm(record.warningDate) }}</div>
+              <div class="item-field-label">起火时间：</div>
+              <div>{{ formatYmdHm(record.fireDate) }}</div>
             </div>
             <div class="item-field">
               <img
@@ -37,6 +37,11 @@
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_power@2x.png" alt="" />
               <div class="item-field-label">责任区大队：</div>
               <div>{{ record.areaDutyGroupName }}</div>
+            </div>
+            <div class="item-field">
+              <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon_menu@2x.png" alt="" />
+              <div class="item-field-label">起火场所：</div>
+              <div>{{ record.firePlaceValue }}</div>
             </div>
             <!-- <div class="item-field">
               <img style="width: 13px; height: 15px; margin-right: 8px" src="../../assets/images/icon-time@2x.png" alt="" />
