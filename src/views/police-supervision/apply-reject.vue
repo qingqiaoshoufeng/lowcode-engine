@@ -98,7 +98,7 @@ onMounted(() => {
     <SelectSingle
       name="rejectCause"
       label="驳回原因"
-      label-width="80px"
+      label-width="85px"
       :rules="[{ required: true, message: `请选择驳回原因` }]"
       v-model:value="form.rejectCause" 
       :options="options" 
@@ -111,7 +111,7 @@ onMounted(() => {
     <van-field
       name="rejectRemark"
       label="驳回描述"
-      label-width="80px"
+      label-width="85px"
       :rules="[{ required: true, message: '请输入驳回描述' }]"
       id="fileRemark"
       v-model="form.rejectRemark"

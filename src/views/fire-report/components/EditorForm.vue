@@ -1210,7 +1210,7 @@ const onSideBarChange = (e, k) => {
   <DialogInfo :title="approvalText ? approvalText : `火灾${labelText}`" v-model:visible="show.approvalVisible" v-slot="{setHandleOk}">
     <ProcessReview
       v-if="show.approvalVisible"
-      process-key="fireInfoFlow"
+      :process-key="props.processKey || 'fireInfoFlow'"
       :current-row="currentRow"
       :set-handle-ok="setHandleOk"
       :label-text="labelText"

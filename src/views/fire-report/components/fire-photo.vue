@@ -72,8 +72,25 @@ const OnAfterRead = async(file) => {
 }
 
 const onDelete = async(val,val1)=>{
-  const res = await onRemove(val)
-  if(res === true){
+  try {
+    const res = await onRemove(val)
+    getAttachmentFile({
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessType: 'image',
+    }).then((res) => {
+      form.value.firePhoto.photos.value = res.data.map((item) => {
+        return {
+          isImage: true,
+          deletable:!isDetail,
+          ...item,
+          uid: item.attachmentId,
+          name: item.attachmentName,
+          status: 'done',
+          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+        }
+      }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+    })
+  } catch (error) {
     getAttachmentFile({
       businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
       businessType: 'image',
@@ -91,6 +108,11 @@ const onDelete = async(val,val1)=>{
       }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
     })
   }
+  
+  // if(res === true){
+   
+  // }
+
 }
 
 onMounted(() => {

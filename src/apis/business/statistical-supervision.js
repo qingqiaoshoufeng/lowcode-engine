@@ -132,6 +132,8 @@ export function getDispatchTimeoutParams(data) {
     timeOutType: data.timeOutType,
     warningCode: data.warningCode,
     dispatchCode: data.dispatchCode,
+    warningAddr: data.warningAddr,
+    warningArea: cloneDeep(data?.warningArea)?.pop(),
   }
 }
 
