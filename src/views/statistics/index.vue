@@ -231,6 +231,12 @@ onMounted(() => {
   background-color: #f6f7f8;
   .statistical-list-wrapper {
     height: calc(100% - 56px);
+    :deep(.pro-list-item) {
+      .item-title {
+        width: auto;
+        white-space: normal;
+      }
+    }
   }
   .list-tabs {
     display: flex;

@@ -66,6 +66,7 @@ const form = ref({
   reportStyle: '1',
   reportClass: undefined,
   reportNick: undefined,
+  deactivateFlag: true,
   searchDimension: 2,
   dataTimeSource: '',
 })
@@ -141,6 +142,7 @@ const handleSearch = () => {
     perTypes: form.value.perTypes?.join(','),
     staticFlag: form.value.searchDimension,
     dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
+    deactivateFlag: form.value.deactivateFlag ? 2 : 1,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.type = props.searchType
@@ -270,6 +272,7 @@ const handleDefineSearch = () => {
     querytype: 1,
     staticFlag: form.value.searchDimension,
     dataTimeSource: form.value.dataTimeSource === '1' ? '' : form.value.dataTimeSource,
+    deactivateFlag: form.value.deactivateFlag ? 2 : 1,
   }
   if (props.searchType === 2 || props.searchType === 3) {
     params.querytype = props.searchType
@@ -659,6 +662,11 @@ onMounted(() => {
         placeholder="请选择查询类型"
         :rules="[{ required: true, message: '请选择查询类型' }]"
       /> -->
+      <van-field label="">
+        <template #input>
+          <van-checkbox v-model="form.deactivateFlag">不查停用单位和地区</van-checkbox>
+        </template>
+      </van-field>
     </van-form>
 
     <div class="search-btn">
@@ -692,13 +700,13 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.tip_per{
-    padding: 10px 0;
-    color:red;
-    font-size: 12px;
-    // height: 20px;
-    background-color: #fff;
-  }
+.tip_per {
+  padding: 10px 0;
+  color:red;
+  font-size: 12px;
+  // height: 20px;
+  background-color: #fff;
+}
 .report-statistical-search {
   height: 100vh;
   overflow-y: auto;

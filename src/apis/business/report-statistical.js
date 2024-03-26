@@ -57,6 +57,7 @@ export function searchReportByTemplate(data) {
     queryReq: data.queryReq ? data.queryReq : undefined,
     staticFlag: data.staticFlag,
     dataTimeSource: data.dataTimeSource,
+    deactivateFlag: data.deactivateFlag,
   }, {
     noErrorHandler: true,
   })
@@ -80,6 +81,7 @@ export function searchReportByDefine(data) {
     queryData: data.queryData,
     staticFlag: data.staticFlag,
     dataTimeSource: data.dataTimeSource,
+    deactivateFlag: data.deactivateFlag,
   }, {
     noErrorHandler: true,
   })
