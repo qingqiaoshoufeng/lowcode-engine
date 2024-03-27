@@ -134,7 +134,7 @@ onMounted(() => {
       :defaultFilterValue="defaultFilterValue"
       :getListFn="getFireWarningEditApproval"
       :tabs="tabs"
-      rowKey="boFireWarningId"
+      rowKey="boFireRecheckId"
       :showLoad="false"
       :onTabFn="onTabFn"
     >

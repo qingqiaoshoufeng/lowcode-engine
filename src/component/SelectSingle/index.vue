@@ -116,7 +116,8 @@ defineOptions({
   <van-field
     class="select_single"
     :class="{
-      'van-field--disabled':$attrs.disabled
+      'van-field--disabled1':$attrs.disabled,
+      'is-black-detail':showPreview,
     }"
     v-model="selectText"
     v-preview-text="showPreview"

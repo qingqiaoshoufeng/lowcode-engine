@@ -90,7 +90,7 @@
     <ProModal
       v-model:visible="show.reviewVisible"
       :showBack="true" :showHeader="false" 
-      title="火灾详情"
+      title="火灾审核详情"
       :ok-display="true"
       ok-text="审核"
       pro-card-id="card-wrap"
@@ -189,7 +189,7 @@ const searchOptions = computed(()=>([
     single: false,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'orgList',
+    value: 'fireGroup',
   },
 ]))
 const currentRow = ref({})

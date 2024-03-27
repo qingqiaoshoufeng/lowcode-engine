@@ -561,7 +561,7 @@ const initWatch = () => {
   }
   initDraftRules(!props.showDraft, formRef)
   setTimeout(() => {
-    showPreview.value = Boolean(props.isDetail && form.value.basicInfo.severity.value)
+    showPreview.value = Boolean(props.isDetail && (form.value.basicInfo.severity.value || form.value.basicInfo.fireType.value))
   }, 0)
 }
 
@@ -1197,7 +1197,7 @@ const onSideBarChange = (e, k) => {
                 <van-button class="temporary" v-if="isShowTemporary" :loading="commonLoading" round block type="primary" @click.stop="setTemporary">
                   暂存
                 </van-button>
-                <van-button v-if="isReview" class="temporary" :loading="commonLoading" round block type="primary" @click.stop="showReviewDialog">
+                <van-button v-if="isReview" round block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
                   审核
                 </van-button>
               </div>

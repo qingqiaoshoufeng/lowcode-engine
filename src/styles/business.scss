@@ -233,3 +233,9 @@ $state-disable: gray; // 不能修改
 .van-dialog__message {
   text-align: left;
 }
+
+.is-black-detail{
+  .label {
+    color: #1f1f1f;
+  }
+}

@@ -100,25 +100,27 @@ const fireTypeDisabled = computed(() => {
   return value
 })
 const onDelete = async(val,val1)=>{
+
   const res = await onRemove(val)
-  if(res === true){
-    getAttachmentFile({
-      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
-      businessType: 'safetyFile',
-    }).then((res) => {
-      form.value.firePhoto.photos.value = res.data.map((item) => {
-        return {
-          isImage: true,
-          deletable:!isDetail,
-          ...item,
-          uid: item.attachmentId,
-          name: item.attachmentName,
-          status: 'done',
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
-        }
-      }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
-    })
-  }
+  // if(res === true){
+    
+  // }
+  getAttachmentFile({
+    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+    businessType: 'safetyFile',
+  }).then((res) => {
+    form.value.firePhoto.photos.value = res.data.map((item) => {
+      return {
+        isImage: true,
+        deletable:!isDetail,
+        ...item,
+        uid: item.attachmentId,
+        name: item.attachmentName,
+        status: 'done',
+        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+      }
+    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+  })
 }
 
 const OnAfterRead = async(file) => {

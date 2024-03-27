@@ -161,6 +161,10 @@ export function getFireTimeoutParams(data) {
     timeOutHoursEnd: data.timeOutHoursEnd,
     fireType: cloneDeep(data.fireType)?.pop(),
     timeOutType: data.timeOutType,
+    warningCode: data.warningCode,
+    dispatchCode: data.dispatchCode,
+    fireDirection: data.fireDirection,
+    warningArea: cloneDeep(data?.warningArea)?.pop(),
   }
 }
 

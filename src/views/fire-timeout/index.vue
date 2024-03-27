@@ -154,6 +154,18 @@ const showExplainFn = ()=>{
 }
 const searchOptions = computed(()=>([
   {
+    title: '警情编号',
+    type: 'input',
+    placeholder: '请输入警情编号',
+    value: "warningCode",
+  },
+  {
+    title: '出动编号',
+    type: 'input',
+    placeholder: '请输入出动编号',
+    value: "dispatchCode",
+  },
+  {
     title: '选择时间',
     type: 'select-range',
     placeholder: '请选择时间',
@@ -190,6 +202,18 @@ const searchOptions = computed(()=>([
     options: options.timeOutType,
     fieldNames:{ value: 'dictName', label: 'dictName' },
     value: 'timeOutType',
+  },
+  {
+    title: '行政区域',
+    type: 'select-area',
+    placeholder: '请选择行政区域',
+    value: 'warningArea',
+  },
+  {
+    title: '警情地址',
+    type: 'input',
+    placeholder: '请输入警情地址',
+    value: "fireDirection",
   },
 ]))
 const currentRow = ref({})

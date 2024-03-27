@@ -154,6 +154,10 @@ const menus = [
     label: '过火面积超500平方的非建构筑火灾',
     key: 'nonBuildingsBurnedArea',
   },
+  {
+    label: '到场实施处置但现场处置费用为0的火灾',
+    key: 'disposeButCostZero',
+  },
 ]
 
 const searchOptions = computed(()=>([
