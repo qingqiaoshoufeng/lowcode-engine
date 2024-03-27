@@ -130,8 +130,8 @@ const emits = defineEmits(['finishCallback'])
 const { options } = useOptions();
 
 const { show } = useModal();
-const formRef = ref(null);
 
+const formRef = ref(null);
 
 const { form, initFormWhenChange, initFormByDetail, checkFieldWarning, generateRemarkField } = useFormConfig();
 
@@ -1383,7 +1383,7 @@ const onSideBarChange = (e, k) => {
         </van-sidebar-item>
       </van-sidebar>
     </div>
-    <div class="form-right" :class="{'hidevalidate':hidevalidate}">
+    <div class="form-right" :class="{ 'hidevalidate': hidevalidate }">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" required="auto">
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />

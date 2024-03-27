@@ -126,7 +126,7 @@ onMounted(async () => {
         }
       })
       if (!selectTabRow.value?.boFireInfoId && !selectTabRow.value?.boFireDispatchId) {
-        selectTabRow.value = { ...props.currentRow, type: 1 }
+        selectTabRow.value = { ...props.currentRow, type: 1, ...tabsData.value?.[0] }
       }
       // selectTabRow.value = tabsData.value?.[0]
       await loadDetail()
