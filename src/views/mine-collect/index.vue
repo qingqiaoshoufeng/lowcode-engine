@@ -154,7 +154,7 @@
               class="item-collect"
               @click="handleCollect(record, true,tabsActive)"
             />
-            <van-button
+            <!-- <van-button
               v-p="['admin', 'fire-report:look']"
               type="success"
               size="mini"
@@ -163,7 +163,7 @@
               @click.stop="handleLook(record)"
             >
               查看
-            </van-button>
+            </van-button> -->
           </div>
         </div>
       </template>

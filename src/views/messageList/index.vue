@@ -16,7 +16,7 @@
           <div class="list-item">
             <div class="item-header">
               <div class="item-title" :class="{unread:record.status === '1'}">{{formatYmdHm(record.createDate, 'YYYY-MM-DD HH:mm:ss') }}</div>
-              <div class="item-state" :class="record.fireStatusValue" @click="handleUpdate(record)">设为已读</div>
+              <div class="item-state" v-if="record.status === '1'" :class="record.fireStatusValue" @click.stop="handleUpdate(record)">设为已读</div>
             </div>
             <div class="item-type">
               <span>{{ record.firePlaceValue }}</span>
@@ -26,7 +26,7 @@
         </template>
     </ProList>
     <ProModal showBack v-model:visible="show.lookVisible" :showHeader="false" :title="title">
-      <template #default="{ setHandleOk, setHandleExtend }">
+      <template #default="{ }">
         <LookFireWarning v-if="lookType === '1'" :current-row="currentRow" :is-detail="true"  />
         <DispatchForm v-if="lookType === '2'" :current-row="currentRow" :is-detail="true"  />
         <FireForm v-if="lookType === '3'" :current-row="currentRow" :is-detail="true"  />
