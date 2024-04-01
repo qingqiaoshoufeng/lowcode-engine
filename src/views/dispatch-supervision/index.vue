@@ -216,7 +216,19 @@ const searchOptions = computed(()=>([
     selectLeaf: false,
     headersDisabled: true,
     value: 'queryOrd',
-  }
+  },
+  {
+    title: '行政区域',
+    type: 'select-area',
+    placeholder: '请选择行政区域',
+    value: 'warningArea',
+  },
+  {
+    title: '警情地址',
+    type: 'input',
+    placeholder: '请输入警情地址',
+    value: "warningAddr",
+  },
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);

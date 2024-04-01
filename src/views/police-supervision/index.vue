@@ -160,6 +160,13 @@ const menus = [
 ]
 const searchOptions = computed(()=>([
   {
+    title: '警情编号',
+    type: 'input',
+    placeholder: '请输入警情编号',
+    value: "warningCode",
+  },
+
+  {
     title: '选择时间',
     type: 'select-range',
     placeholder: '请选择时间',
@@ -174,7 +181,19 @@ const searchOptions = computed(()=>([
     selectLeaf: false,
     headersDisabled: true,
     value: 'createUserOrg',
-  }
+  },
+  {
+    title: '行政区域',
+    type: 'select-area',
+    placeholder: '请选择行政区域',
+    value: 'boAreaId',
+  },
+  {
+    title: '警情地址',
+    type: 'input',
+    placeholder: '请输入警情地址',
+    value: "warningAddr",
+  },
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);

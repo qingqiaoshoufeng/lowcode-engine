@@ -225,7 +225,7 @@ const searchOptions = computed(()=>([
     title: '警情地址',
     type: 'input',
     placeholder: '请输入警情地址',
-    value: "fireDirection",
+    value: "warningAddr",
   },
 ]))
 const currentRow = ref({})

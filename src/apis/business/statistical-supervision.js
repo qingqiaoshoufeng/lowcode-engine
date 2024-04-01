@@ -9,9 +9,12 @@ export function getFireWarningSupervisionParams(data) {
   return {
     offset: (data.page - 1) * data.limit + 1,
     limit: data.limit,
+    warningCode: data.warningCode,
     createUserOrg: data?.createUserOrg?.length > 0 ? data.createUserOrg[0].organizationid : '',
     warningDateStart: data.time && data.time[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
     warningDateEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
+    warningAddr: data.warningAddr,
+    boAreaId: cloneDeep(data?.boAreaId)?.pop(),
     ...tags,
   }
 }
@@ -43,9 +46,13 @@ export function getDispatchSupervisionParams(data) {
   return {
     offset: (data.page - 1) * data.limit + 1,
     limit: data.limit,
+    dispatchCode: data.dispatchCode,
+    warningCode: data.warningCode,
     warningDateStart: data.time && data.time[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
     warningDateEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
     queryOrd: data?.queryOrd?.length > 0 ? data.queryOrd[0].organizationid : '',
+    warningAddr: data.warningAddr,
+    warningArea: cloneDeep(data?.warningArea)?.pop(),
     ...tags,
   }
 }
@@ -96,6 +103,7 @@ export function getPoliceTimeoutParams(data) {
   return {
     offset: (data.page - 1) * data.limit + 1,
     limit: data.limit,
+    warningCode: data.warningCode,
     warningDateStart: data.time && data.time[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
     warningDateEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
     createUserOrg: data?.createUserOrg?.length > 0 ? data.createUserOrg[0].organizationid : '',
@@ -103,6 +111,8 @@ export function getPoliceTimeoutParams(data) {
     timeoutEnd: data.timeoutEnd,
     warningType: cloneDeep(data.warningType)?.pop(),
     timeOutType: data.timeOutType,
+    warningAddr: data.warningAddr,
+    boAreaId: cloneDeep(data.boAreaId)?.pop(),
   }
 }
 
