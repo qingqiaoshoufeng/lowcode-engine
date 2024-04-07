@@ -162,6 +162,12 @@ const menus = [
 
 const searchOptions = computed(()=>([
   {
+    title: '选择时间',
+    type: 'select-range',
+    placeholder: '请选择时间',
+    value: 'time',
+  },
+  {
     title: '火灾编号',
     type: 'input',
     placeholder: '请输入火灾编号',
@@ -172,12 +178,6 @@ const searchOptions = computed(()=>([
     type: 'input',
     placeholder: '请输入警情编号',
     value: "warningCode",
-  },
-  {
-    title: '选择时间',
-    type: 'select-range',
-    placeholder: '请选择时间',
-    value: 'time',
   },
   {
     title: '所属队伍',
@@ -277,7 +277,7 @@ const selectTagsCallback = (selects) => {
 
 .select_tags {
   margin-top: 10px;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 }

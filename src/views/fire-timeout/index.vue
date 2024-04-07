@@ -154,6 +154,12 @@ const showExplainFn = ()=>{
 }
 const searchOptions = computed(()=>([
   {
+    title: '选择时间',
+    type: 'select-range',
+    placeholder: '请选择时间',
+    value: 'time',
+  },
+  {
     title: '警情编号',
     type: 'input',
     placeholder: '请输入警情编号',
@@ -164,12 +170,6 @@ const searchOptions = computed(()=>([
     type: 'input',
     placeholder: '请输入出动编号',
     value: "dispatchCode",
-  },
-  {
-    title: '选择时间',
-    type: 'select-range',
-    placeholder: '请选择时间',
-    value: 'time',
   },
   {
     title: '所属队伍',
