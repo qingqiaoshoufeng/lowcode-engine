@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import dayjs from 'dayjs';
-import { showToast } from "vant";
+import { showToast, showLoadingToast, closeToast} from "vant";
 import { cloneDeep } from 'lodash-es';
 import { useOptions } from "@/hooks/useOptions.js";
 import { useExcelConfig } from "./config.js";
@@ -130,6 +130,7 @@ const handleSearch = () => {
     }
   }
   searchLoading.value = true
+  showLoadingToast()
   const params = {
     queryType: form.value.queryType,
     boFireReportTypeId: form.value.queryType,
@@ -227,6 +228,8 @@ const handleSearch = () => {
     }
   }).catch((_error) => {
     searchLoading.value = false
+  }).finally(() => {
+    closeToast()
   })
 };
 
@@ -278,6 +281,7 @@ const handleDefineSearch = () => {
     params.querytype = props.searchType
     params.queryData = props.queryParams()
   }
+  showLoadingToast()
   searchReportByDefine(params).then((res) => {
     searchLoading.value = false
     if (res?.data?.data) {
@@ -352,6 +356,8 @@ const handleDefineSearch = () => {
     }
   }).catch((_error) => {
     searchLoading.value = false
+  }).finally(() => {
+    closeToast()
   })
 }
 
@@ -577,7 +583,7 @@ onMounted(() => {
           :selectLeaf="false"
           label="行政区域："
           :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
+          :params="{ staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
           :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
         />
       </template>
@@ -589,7 +595,7 @@ onMounted(() => {
           :selectLeaf="false"
           label="行政区域："
           :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
+          :params="{ staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <template v-if="form.reportStyle === '1' && searchType === 1">
@@ -606,7 +612,7 @@ onMounted(() => {
           :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <template v-else-if="form.reportStyle === '2' && searchType === 1">
@@ -623,7 +629,7 @@ onMounted(() => {
           :disabled="!(reportType === '3' || reportType === '2')"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <SelectSingle
@@ -723,15 +729,15 @@ onMounted(() => {
     .my-table-box {
       width: 100%;
       height: 100%;
-      .luckysheet-work-area {
+      :deep(.luckysheet-work-area) {
         display: none;
       }
-      .luckysheet-loading-mask  {
+      :deep(.luckysheet-loading-mask)  {
         width: 0;
         height: 0;
         background-color: transparent;
       }
-      .luckysheet-loading-content {
+      :deep(.luckysheet-loading-content) {
         display: none;
       }
       .luckysheet-column-count-show.luckysheet-count-show {
@@ -744,15 +750,15 @@ onMounted(() => {
     .my-table-define {
       width: 100%;
       height: 100%;
-      .luckysheet-work-area {
+      :deep(.luckysheet-work-area) {
         display: none;
       }
-      .luckysheet-loading-mask  {
+      :deep(.luckysheet-loading-mask)  {
         width: 0;
         height: 0;
         background-color: transparent;
       }
-      .luckysheet-loading-content {
+      :deep(.luckysheet-loading-content) {
         display: none;
       }
       .luckysheet-column-count-show.luckysheet-count-show {
