@@ -583,7 +583,7 @@ onMounted(() => {
           :selectLeaf="false"
           label="行政区域："
           :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
+          :params="{ staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
           :disabled="!(reportType === '1' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
         />
       </template>
@@ -595,7 +595,7 @@ onMounted(() => {
           :selectLeaf="false"
           label="行政区域："
           :report-name="reportName"
-          :params="{ staticFlag: form.searchDimension }"
+          :params="{ staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <template v-if="form.reportStyle === '1' && searchType === 1">
@@ -612,7 +612,7 @@ onMounted(() => {
           :disabled="!(reportType === '2' || options.queryType?.length <= 0) || (form.reportStyle === '1' && options.queryType?.length > 0)"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <template v-else-if="form.reportStyle === '2' && searchType === 1">
@@ -629,7 +629,7 @@ onMounted(() => {
           :disabled="!(reportType === '3' || reportType === '2')"
           :select-leaf="false"
           :single="true"
-          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension }"
+          :params="{ isReportQuery: 1, reportName, permission: true, staticFlag: form.searchDimension, deactivateFlag: form.deactivateFlag ? 2 : 1 }"
         />
       </template>
       <SelectSingle
