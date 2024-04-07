@@ -1015,9 +1015,15 @@ const onWarningOrgname = () => {
           />
         </template>
         <template v-if="!isConfirm" #button>
-          <van-button size="small" type="primary" @click="handleLngLat"
-            >自动获取</van-button
+          <van-button
+            size="small"
+            type="primary"
+            plain
+            style="border-width: 0px;margin-left: 20px;"
+            @click="handleLngLat"
           >
+            自动获取
+          </van-button>
         </template>
       </van-field>
       <van-field
