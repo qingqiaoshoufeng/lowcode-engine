@@ -158,7 +158,7 @@ onMounted(() => {
             <div class="item-header">
               <div class="item-title">{{ record.templateName }}</div>
             </div>
-            <div class="card-img" @click="handleItem(record)">
+            <div class="card-img" @click="handleChange(record)">
               <img :src="record.url" alt="">
             </div>
             <div class="item-line" />
