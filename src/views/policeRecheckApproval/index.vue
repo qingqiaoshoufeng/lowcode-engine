@@ -217,14 +217,20 @@ onMounted(() => {
     </ProList>
 
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="警情详情"
+    >
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 警情更正审批 -->
     <ProModal
       v-model:visible="show.reviewVisible"
       :showBack="false"
-      :showHeader="true"
+      :showConfirmBack="true"
+      :showHeader="false"
       ok-text="审批"
       title="警情更正审批"
     >

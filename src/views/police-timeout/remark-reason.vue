@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import { useSubmit } from '@castle/castle-use'
 import { remarkReason } from '@/apis/index.js'
 import {showToast} from 'vant'
+
 const props = defineProps({
   dataType: {
     type: Number,
@@ -59,10 +60,12 @@ onMounted(() => {
         v-model="form.remarkContent"
         placeholder="请输入超时原因"
         :rows="6"
+        autosize
         :maxlength="500" 
         show-count
         type="textarea" 
         required
+        show-word-limit
       />
     </van-form>
   </div>
@@ -70,6 +73,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .remark-reason {
-  margin-right: 20px;
+  // margin-right: 20px;
 }
 </style>

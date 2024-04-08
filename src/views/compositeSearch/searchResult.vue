@@ -205,7 +205,12 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 发起驳回说明 -->
-    <ProModal v-model:visible="show.rejectVisible" :showBack="false" :showHeader="true" title="发起驳回说明">
+    <ProModal
+      v-model:visible="show.rejectVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="发起驳回说明"
+    >
       <template #default="{ setHandleOk }">
         <ApplyReject
           :type="rejectType"

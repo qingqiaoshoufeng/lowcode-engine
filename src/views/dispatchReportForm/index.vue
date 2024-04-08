@@ -334,7 +334,9 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    extra.battleConsume = battleConsume
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -361,33 +363,26 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    extra.battleConsume = battleConsume
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
     return extra
   case '指挥':
+    extra.basicInfoHead = basicInfoHead
+    extra.personInfo = personInfo
+    extra.deployEquipment = deployEquipment
+    extra.commandProcess = commandProcess
+    extra.casualtyWar = casualtyWar
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
-      return {
-        ...extra,
-        basicInfoHead,
-        personInfo,
-        deployEquipment,
-        commandProcess,
-        casualtyWar,
-        battleConsume,
-        proSteps,
-      }
+      extra.proSteps = proSteps
     }
-    return {
-      ...extra,
-      basicInfoHead,
-      personInfo,
-      deployEquipment,
-      commandProcess,
-      casualtyWar,
-      battleConsume,
-    }
+    return extra
   default:
     return {
       draftInfo,
@@ -1541,7 +1536,12 @@ const onSideBarChange = (e, k) => {
     </div>
 
     <!-- 出动审核 -->
-    <ProModal v-model:visible="show.approvalVisible" :title="approvalText ? approvalText : `出动${labelText}`">
+    <ProModal
+      v-model:visible="show.approvalVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      :title="approvalText ? approvalText : `出动${labelText}`"
+    >
       <template #default="{ setHandleOk }">
         <ProcessReview
           :process-key="props.processKey"

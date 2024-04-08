@@ -4,6 +4,7 @@ import { message } from '@castle/ant-design-vue'
 import { useSubmit } from '@castle/castle-use'
 import { rejectBatch } from '@/apis/index.js'
 import {showToast} from 'vant'
+
 const props = defineProps({
   type: {
     type: String,
@@ -117,6 +118,7 @@ onMounted(() => {
       v-model="form.rejectRemark"
       :rows="4"
       :maxlength="500"
+      show-word-limit
       show-count
       required
       allow-clear

@@ -1898,7 +1898,12 @@ const onWarningOrgname = () => {
       </van-button>
     </div>
 
-    <ProModal v-model:visible="show.lngLatVisible" title="选择地图">
+    <ProModal
+      v-model:visible="show.lngLatVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="选择地图"
+    >
       <template #default="{ setHandleOk }">
         <MapLatLng
           :select-area="form.warningAreaText"
@@ -1911,7 +1916,12 @@ const onWarningOrgname = () => {
       </template>
     </ProModal>
     <!-- 警情确认说明 -->
-    <ProModal v-model:visible="show.confirmVisible" title="警情确认说明">
+    <ProModal
+      v-model:visible="show.confirmVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="警情确认说明"
+    >
       <template #default="{ setHandleOk }">
         <PoliceConfirm
           :current-row="currentRow"

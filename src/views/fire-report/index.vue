@@ -96,7 +96,12 @@
       </template>
   </ProList>
   <!-- 填报窗口 -->
-  <ProModal  v-model:visible="show.editVisible" title="火灾填报">
+  <ProModal
+    v-model:visible="show.editVisible"
+    :showConfirmBack="true"
+    :showHeader="false"
+    title="火灾填报"
+  >
     <template #default="{ setHandleOk, setHandleExtend }">
         <EditorForm
           :is-edit="isEdit"
@@ -118,13 +123,25 @@
     />
   </ProModal>
   <!-- 转派窗口 -->
-  <DialogInfo title="任务转派" v-model:visible="show.transferVisible" v-slot="{setHandleOk}">
+  <ProModal
+    title="任务转派"
+    v-model:visible="show.transferVisible"
+    :showConfirmBack="true"
+    :showHeader="false"
+    v-slot="{setHandleOk}"
+  >
     <TransferTask :current-row="currentRow" :set-handle-ok="setHandleOk" @finish-callback="refreshCallback" />
-  </DialogInfo>
+  </ProModal>
   <!-- 退回窗口 -->
-  <DialogInfo title="退回" v-model:visible="show.rejectVisible" v-slot="{setHandleOk}">
+  <ProModal
+    title="退回"
+    v-model:visible="show.rejectVisible"
+    :showConfirmBack="true"
+    :showHeader="false"
+    v-slot="{setHandleOk}"
+  >
     <ApplyReject :setHandleOk="setHandleOk" :current-row="currentRow" @finish-callback="refreshCallback" />
-  </DialogInfo>
+  </ProModal>
 </div>
 </template>
 

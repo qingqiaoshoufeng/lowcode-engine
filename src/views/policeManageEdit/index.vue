@@ -97,7 +97,12 @@ const finishCallback = () => {
     </ProList>
 
     <!-- 修改警情 -->
-    <ProModal v-model:visible="show.editVisible" :showBack="true" :showHeader="false" title="修改警情">
+    <ProModal
+      v-model:visible="show.editVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="修改警情"
+    >
       <template #default="{ setHandleOk, closeModal }">
         <PoliceForm
           :current-row="currentRow"
@@ -109,7 +114,12 @@ const finishCallback = () => {
       </template>
     </ProModal>
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="警情详情"
+    >
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
   </div>

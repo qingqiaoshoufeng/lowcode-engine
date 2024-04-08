@@ -148,7 +148,12 @@ const refreshCallback = () => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 退回说明 -->
-    <ProModal v-model:visible="show.rejectVisible" title="退回说明">
+    <ProModal
+      v-model:visible="show.rejectVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="退回说明"
+    >
       <template #default="{ setHandleOk }">
         <ApplyReject
           :current-row="currentRow"

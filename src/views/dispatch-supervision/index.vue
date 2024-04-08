@@ -1,11 +1,11 @@
 <template>
   <div class="dispatch-supervision">
     <ProList
-        ref="proListRef"
-        :defaultFilterValue="defaultFilterValue"
-        :getListFn="getDispatchSupervisionList"
-        title="出动质量监督"
-      >
+      ref="proListRef"
+      :defaultFilterValue="defaultFilterValue"
+      :getListFn="getDispatchSupervisionList"
+      title="出动质量监督"
+    >
       <template #search="{ filterFormState, resetForm }">
         <div class="form">
           <div class="list-tabs1">
@@ -93,17 +93,21 @@
         </template>
     </ProList>
     <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+    <ProModal
+      v-model:visible="show.rejectVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="发起驳回说明"
+    >
       <template v-slot="{setHandleOk}">
         <ApplyReject
           type="2"
           :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
           :finish-callback="finishCallback"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
@@ -190,6 +194,12 @@ const menus = [
 ]
 const searchOptions = computed(()=>([
   {
+    title: '选择时间',
+    type: 'select-range',
+    placeholder: '请选择时间',
+    value: 'time',
+  },
+  {
     title: '警情编号',
     type: 'input',
     placeholder: '请输入警情编号',
@@ -200,12 +210,6 @@ const searchOptions = computed(()=>([
     type: 'input',
     placeholder: '请输入出动编号',
     value: "dispatchCode",
-  },
-  {
-    title: '选择时间',
-    type: 'select-range',
-    placeholder: '请选择时间',
-    value: 'time',
   },
   {
     title: '所属队伍',
@@ -278,98 +282,24 @@ const selectTagsCallback = (selects) => {
   onSearchConfirm()
   // finishCallback()
 }
-
 </script>
+
 <style lang="scss" scoped>
-  .dispatch-supervision{
-    // .list-item {
-    //   display: flex;
-    //   flex-direction: column;
-    //   background: #ffffff;
-    //   margin-top: 10px;
-    //   .item-header {
-    //     display: flex;
-    //     padding: 8px 10px;
-    //     .item-title {
-    //       width: 260px;
-    //       font-size: 16px;
-    //       font-weight: bold;
-    //       white-space: nowrap;
-    //       overflow: hidden;
-    //       text-overflow: ellipsis;
-    //     }
-    //     .item-state {
-    //       width: 57px;
-    //       height: 24px;
-    //       font-size: 12px;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: center;
-    //       border-radius: 2px;
-    //       margin-left: auto;
-    //     }
-    //   }
-    //   .item-field {
-    //     font-size: 14px;
-    //     color: #1f1f1f;
-    //     display: flex;
-    //     align-items: center;
-    //     padding: 0 0 8px 10px;
-    //     img {
-    //       width: 14px;
-    //       height: 14px;
-    //       margin-right: 6px;
-    //     }
-    //   }
-    //   .item-type {
-    //     margin: 0 0 8px 10px;
-    //     span {
-    //       display: inline-block;
-    //       font-size: 12px;
-    //       font-family: PingFangSC-Regular, PingFang SC;
-    //       font-weight: 400;
-    //       color: #fc2902;
-    //       background: #ffefec;
-    //       border-radius: 2px;
-    //       padding: 4px 10px;
-    //     }
-    //   }
-    //   .item-line {
-    //     width: 100%;
-    //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-    //   }
-    //   .item-operate {
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: flex-end;
-    //     padding: 8px 10px;
-    //     .item-btn {
-    //       padding: 0 16px;
-    //       margin-left: 10px;
-    //       :deep(.van-button__content) {
-    //         height: 18px;
-    //       }
-    //       :deep(.van-button__text) {
-    //         white-space: nowrap;
-    //         word-break: break-all;
-    //       }
-    //     }
-    //   }
-    // }
+.dispatch-supervision {
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+.select_tags {
+  margin-top: 10px;
+  &::-webkit-scrollbar {
+    display: none;
   }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  
-  .item-collect {
-    font-size: 20px;
-    margin-right: auto;
-  }
-  .select_tags{
-    margin-top: 10px;
-    &::-webkit-scrollbar{
-      display: none;
-    }
-  }
-  </style>
+}
+</style>
