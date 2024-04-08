@@ -1366,7 +1366,7 @@ const onFireLevel = () => {
           :field-name="['basicInfo', 'initialFuelsType', 'value']"
           show-description
           title="请选择起火物类型"
-          placeholder="请选择起火物类型或者指标说明"
+          placeholder="请选择起火物类型"
           @change="initialFuelsTypeChange"
           label-width="105"
         >
@@ -1422,7 +1422,7 @@ const onFireLevel = () => {
           show-description
           :required="isRequired"
           title="请选择引火源类型"
-          placeholder="请选择引火源类型或者指标说明"
+          placeholder="请选择引火源类型"
           @change="initialFuelsTypeChange"
           label-width="105"
         >

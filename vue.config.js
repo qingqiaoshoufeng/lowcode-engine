@@ -27,7 +27,7 @@ module.exports = {
           // target: 'http://10.13.5.47:8080',
           // target: 'http://172.18.203.18:8080', 
           target: 'http://10.13.5.47:8080',
-          // target: 'http://172.18.203.23:8080', // 潘恒
+          // target: 'http://172.18.108.47:8081', // 潘恒
           changeOrigin: true,
           // secure: false,
         },

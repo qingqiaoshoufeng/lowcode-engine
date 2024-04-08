@@ -52,7 +52,7 @@ const options = {
   ],
   series: [
     {
-      name: '火灾起数',
+      name: '途中时长',
       type: 'bar',
       data: [],
       barWidth:14,

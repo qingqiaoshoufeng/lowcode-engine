@@ -504,8 +504,8 @@ const fightListMap2 = [
   },
   {
     label: '抢救财产价值（万元） ',
-    numberKey: 'mergencyNum:',
-    YOYkey: 'mergencyNumPro',
+    numberKey: 'emergencyNum',
+    YOYkey: 'emergencyNumPro',
   },
   {
     label: '保护财产价值（万元）',

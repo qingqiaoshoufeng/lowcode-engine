@@ -193,7 +193,7 @@ const searchOptions = computed(()=>([
     title: '行政区域',
     type: 'select-area',
     placeholder: '请选择行政区域',
-    value: 'boAreaId',
+    value: 'warningArea',
   },
   {
     title: '火灾地址',

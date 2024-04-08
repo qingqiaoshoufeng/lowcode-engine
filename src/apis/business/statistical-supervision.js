@@ -81,7 +81,7 @@ export function getFireSupervisionParams(data) {
     reportCreateTimeEnd: data.time && data.time[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
     unit: data.unit?.length > 0 ? data.unit[0].organizationid : '',
     fireDirection: data.fireDirection,
-    boAreaId: cloneDeep(data.boAreaId)?.pop(),
+    warningArea: cloneDeep(data.warningArea)?.pop(),
     ...tags,
   }
 }

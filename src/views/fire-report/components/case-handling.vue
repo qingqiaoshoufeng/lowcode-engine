@@ -252,12 +252,12 @@ const handleDeletePerson = (index) => {
             </template>
           </van-field>
         </div>
-        <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoOrgList.${index}.penalty`"
             label="行政处罚："
             :rules="form.caseHandling.penalty.rules"
             id="penalty"
+            class="adminSanction"
             v-model:value="item.penalty"
             :showPreview="showPreview"
             :options="options.penalty"
@@ -277,7 +277,7 @@ const handleDeletePerson = (index) => {
               />
             </template>
           </SelectSingle>
-        </div>
+      
       </div>
   
       <van-button 
@@ -367,12 +367,12 @@ const handleDeletePerson = (index) => {
             </template>
           </SelectSingle>
         </div>
-        <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoPersonList.${index}.adminSanction`"
             label="行政处罚："
             :rules="form.caseHandling.adminSanction.rules"
             id="adminSanction"
+            class="adminSanction"
             v-model:value="item.adminSanction"
             v-preview-text="showPreview"
             :options="options.penalty"
@@ -392,7 +392,7 @@ const handleDeletePerson = (index) => {
               />
             </template>
           </SelectSingle>
-        </div>
+      
       </div>
       <van-button 
         v-if="!isDetail"
@@ -452,5 +452,10 @@ const handleDeletePerson = (index) => {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+  .adminSanction{
+    &::after{
+      display: none !important;
+    }
   }
 </style>

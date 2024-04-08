@@ -57,11 +57,6 @@ const isShowTitle = computed(()=>{
   return !!list.length
 })
 </script>
-<script>
-export default {
-  name:'DisplayEntry'
-}
-</script>
   <style lang="scss" scoped>
   .entry_list{
     width: 100%;
@@ -74,15 +69,15 @@ export default {
           position: absolute;
           left:50px;
           top:0;
-          height: 10px;
-          line-height: 10px;
+          height: 14px;
+          line-height: 14px;
           background: #EE0D24;
-          border-radius: 5px;
-          font-size: 8px;
+          border-radius: 10px;
+          font-size: 10px;
           font-family: PingFangSC, PingFang SC;
           font-weight: 400;
           color: #FFFFFF;
-          padding: 0 3px;
+          padding: 0 4px;
         }
       }
     }

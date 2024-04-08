@@ -1,7 +1,7 @@
 <template>
   <div class="pro-list-item">
     <div class="item-header">
-      <div class="item-title">{{ record.warningAddr }}</div>
+      <div class="item-title">{{ record.warningName }}</div>
       <div class="item-state" v-if="['dispatchAmend','dispatchInvalid'].includes(type)" :class="generateColorByState(record.warningStatusValue)">
         {{ record.statusValue }}
       </div>

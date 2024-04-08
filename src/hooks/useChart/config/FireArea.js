@@ -21,7 +21,7 @@ const options = {
   },
   series: [
     {
-      name: '姓名',
+      name: '参展形式',
       type: 'pie',
       // center:['40%','40%'],
       radius: ['0', '50%'],

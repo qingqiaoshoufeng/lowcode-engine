@@ -193,10 +193,10 @@ const onBuildTag = (val) => {
           label="建筑标签："
           :rules="form.fireBuilding.buildTag.rules"
           :required="isRequired"
+          class="buildTag"
         >
           <template #input>
             <van-checkbox-group 
-              id="buildTag"
               v-preview-text="showPreview"
               class="muti-check"
               style="width: 100%"
@@ -255,31 +255,29 @@ const onBuildTag = (val) => {
           </template>
         </SelectSingle>
       </div>
-      <div :span="8">
-        <SelectSingle
-          name="fireBuilding.buildStructure.value"
-          label="建筑结构："
-          :rules="form.fireBuilding.buildStructure.rules"
-          id="buildStructure"
-          v-model:value="form.fireBuilding.buildStructure.value"
-          :showPreview="showPreview"
-          :options="options.buildStructure"
-          :field-names="{ value: 'boDictId', label: 'dictName' }"
-          allow-clear
-          placeholder="请选择建筑结构"
-          @change="checkFireResistanceRating(form, options)"
-        >
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="建筑结构："
-              remark-field="buildStructure"
-              field-module="fireBuilding"
-              :exist-data="fieldExist?.buildStructure"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </SelectSingle>
-      </div>
+      <SelectSingle
+        name="fireBuilding.buildStructure.value"
+        label="建筑结构："
+        :rules="form.fireBuilding.buildStructure.rules"
+        id="buildStructure"
+        v-model:value="form.fireBuilding.buildStructure.value"
+        :showPreview="showPreview"
+        :options="options.buildStructure"
+        :field-names="{ value: 'boDictId', label: 'dictName' }"
+        allow-clear
+        placeholder="请选择建筑结构"
+        @change="checkFireResistanceRating(form, options)"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="建筑结构："
+            remark-field="buildStructure"
+            field-module="fireBuilding"
+            :exist-data="fieldExist?.buildStructure"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
           name="fireBuilding.fireResistanceRating.value"
@@ -561,5 +559,16 @@ const onBuildTag = (val) => {
 <style scoped lang="scss">
 .checks{
   margin-top:10px
+}
+.buildTag{
+  display: block !important;
+  .muti-check{
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    >div{
+      width: 50% !important;
+    }
+  }
 }
 </style>
