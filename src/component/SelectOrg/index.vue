@@ -205,10 +205,16 @@ const handleCheck = (item) => {
     selectValue.value.push(item.organizationid);
     selectText.value.push(item.name);
     selectItem.value.push(item);
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
   } else {
     selectValue.value = selectValue.value.filter((temp) => temp !== item.organizationid);
     selectText.value = selectText.value.filter((temp) => temp !== item.name);
     selectItem.value = selectItem.value.filter((temp) => temp.organizationid !== item.organizationid);
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
   }
 };
 

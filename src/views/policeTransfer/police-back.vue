@@ -100,13 +100,5 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .police-back {
-  .form-textarea {
-    flex-direction: column;
-    :deep(.van-field__body) {
-      border: 1px solid #f6f6f6;
-      padding: 5px 5px;
-      margin-top: 5px;
-    }
-  }
 }
 </style>
