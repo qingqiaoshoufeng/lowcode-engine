@@ -334,7 +334,9 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    extra.battleConsume = battleConsume
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -361,33 +363,26 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    extra.battleConsume = battleConsume
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
     return extra
   case '指挥':
+    extra.basicInfoHead = basicInfoHead
+    extra.personInfo = personInfo
+    extra.deployEquipment = deployEquipment
+    extra.commandProcess = commandProcess
+    extra.casualtyWar = casualtyWar
+    if (!showSecurityService.value) {
+      extra.battleConsume = battleConsume
+    }
     if (props.isDetail) {
-      return {
-        ...extra,
-        basicInfoHead,
-        personInfo,
-        deployEquipment,
-        commandProcess,
-        casualtyWar,
-        battleConsume,
-        proSteps,
-      }
+      extra.proSteps = proSteps
     }
-    return {
-      ...extra,
-      basicInfoHead,
-      personInfo,
-      deployEquipment,
-      commandProcess,
-      casualtyWar,
-      battleConsume,
-    }
+    return extra
   default:
     return {
       draftInfo,

@@ -233,7 +233,7 @@ onMounted(() => {
               alt=""
             />
             <div class="item-field-label">发送单位：</div>
-            <div>{{ record.warningAreaValue }}</div>
+            <div>{{ record.distributeOrgName }}</div>
           </div>
           <div class="item-field">
             <img
@@ -288,7 +288,12 @@ onMounted(() => {
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 警情转派 -->
-    <ProModal v-model:visible="show.transferVisible" title="警情转派">
+    <ProModal
+      v-model:visible="show.transferVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="警情转派"
+    >
       <template #default="{ setHandleOk }">
         <PoliceTransfer
           :current-row="currentRow"
@@ -298,7 +303,12 @@ onMounted(() => {
       </template>
     </ProModal>
     <!-- 警情退回 -->
-    <ProModal v-model:visible="show.backVisible" title="警情退回">
+    <ProModal
+      v-model:visible="show.backVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="警情退回"
+    >
       <template #default="{ setHandleOk }">
         <PoliceBack
           :current-row="currentRow"
