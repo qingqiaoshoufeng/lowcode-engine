@@ -206,8 +206,8 @@ onMounted(() => {
     <!-- 警情作废审批 -->
     <ProModal
       v-model:visible="show.reviewVisible"
-      :showBack="false"
-      :showHeader="true"
+      :showConfirmBack="true"
+      :showHeader="false"
       ok-text="审批"
       title="警情作废审批"
     >

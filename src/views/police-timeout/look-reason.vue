@@ -41,5 +41,7 @@ onMounted(() => {
 
 <style lang="scss" scoped> 
 .look-reason {
+  height: 100%;
+  overflow-y: auto;
 }
 </style>

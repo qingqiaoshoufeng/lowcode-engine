@@ -90,7 +90,12 @@
       </template>
     </ProList>
     <!-- 超时原因 -->
-    <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.reasonVisible" title="超时原因详情">
+    <ProModal
+      v-model:visible="show.reasonVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="超时原因详情"
+    >
       <template v-slot="{setHandleOk}">
         <LookReason
           :data-type="1"
@@ -99,20 +104,24 @@
           v-if="show.reasonVisible"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
     <!-- 填写超时原因 -->
-    <DialogInfo v-model:visible="show.remarkVisible" title="超时原因">
+    <ProModal
+      v-model:visible="show.remarkVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="超时原因"
+    >
       <template v-slot="{setHandleOk}">
         <RemarkReason
           :data-type="1"
           :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
           @finish-callback="finishCallback"
           v-if="show.remarkVisible"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
     <!-- 规则查看 -->
     <DialogInfo :showConfirmButton="false" :showCancelButton="false" v-model:visible="show.regularVisible" title="规则说明">
       <RegularLook :type="1" />
@@ -151,16 +160,16 @@ onMounted(() => {
 })
 const searchOptions = computed(()=>([
   {
-    title: '警情编号',
-    type: 'input',
-    placeholder: '请输入警情编号',
-    value: "warningCode",
-  },
-  {
     title: '选择时间',
     type: 'select-range',
     placeholder: '请选择时间',
     value: 'time',
+  },
+  {
+    title: '警情编号',
+    type: 'input',
+    placeholder: '请输入警情编号',
+    value: "warningCode",
   },
   {
     title: '所属队伍',

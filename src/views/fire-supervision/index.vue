@@ -93,17 +93,21 @@
       </template>
     </ProList>
     <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+    <ProModal
+      v-model:visible="show.rejectVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="发起驳回说明"
+    >
       <template v-slot="{setHandleOk}">
         <ApplyReject
           type="3"
           :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
           :finish-callback="finishCallback"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"
@@ -162,6 +166,12 @@ const menus = [
 
 const searchOptions = computed(()=>([
   {
+    title: '选择时间',
+    type: 'select-range',
+    placeholder: '请选择时间',
+    value: 'time',
+  },
+  {
     title: '火灾编号',
     type: 'input',
     placeholder: '请输入火灾编号',
@@ -172,12 +182,6 @@ const searchOptions = computed(()=>([
     type: 'input',
     placeholder: '请输入警情编号',
     value: "warningCode",
-  },
-  {
-    title: '选择时间',
-    type: 'select-range',
-    placeholder: '请选择时间',
-    value: 'time',
   },
   {
     title: '所属队伍',
@@ -277,7 +281,7 @@ const selectTagsCallback = (selects) => {
 
 .select_tags {
   margin-top: 10px;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 }

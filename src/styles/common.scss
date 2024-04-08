@@ -75,6 +75,6 @@
   pointer-events: none;
 }
 
-.van-field__label--required:has(.field-annotation){
+.van-field__label--required:has(.field-annotation) {
   // display: flex !important;
 }

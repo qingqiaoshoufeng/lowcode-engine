@@ -316,11 +316,11 @@ export const applyStatus = [
   },
   {
     value: '3',
-    label: '已审批',
+    label: '已通过',
   },
   {
     value: '4',
-    label: '被终结',
+    label: '不通过',
   },
 ]
 

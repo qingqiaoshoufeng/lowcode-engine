@@ -29,6 +29,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  showConfirmBack: {
+    type: Boolean,
+    default: false,
+  },
   leftBackFn: {
     type: Function,
   }
@@ -116,6 +120,13 @@ defineOptions({
       <div class="modal-title">{{ title }}</div>
       <van-button type="primary" size="small" @click="handleOk">{{ okText }}</van-button>
     </div>
+    <div v-if="showConfirmBack" class="confirm-back" >
+      <div class="arrow">
+        <van-icon @click="onLeftBack" name="arrow-left" />
+      </div>
+      <div>{{ title }}</div>
+      <div class="confirm" @click="handleOk">{{ okText }}</div>
+    </div>
     <div class="pro-wrapper">
       <slot name="default" :set-handle-ok="setHandleOk" :handle-ok="handleOk" :close-modal="closeModal" />
     </div>
@@ -142,12 +153,37 @@ defineOptions({
     text-align: center;
     justify-content: center;
     align-items: center;
-    .arrow{
+    .arrow {
       position: absolute;
       top: 50%;
       left: 16px;
       font-size: 18px;
       transform: translateY(-50%);
+    }
+  }
+  .confirm-back {
+    height: 44px;
+    background: #0C207F;
+    display: flex;
+    position: relative;
+    font-size: 18px;
+    color: #fff;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+    .arrow {
+      font-size: 18px;
+      padding-left: 16px;
+      padding-right: 16px;
+      pointer-events: all;
+    }
+    .confirm {
+      font-size: 14px;
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      pointer-events: all;
     }
   }
   .header {

@@ -201,7 +201,12 @@ const finishCallback = (row) => {
         :is-approval="isApproval"
       />
     </div>
-    <DialogInfo v-model:visible="show.approvalVisible" :title="approvalText">
+    <ProModal
+      v-model:visible="show.approvalVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      :title="approvalText"
+    >
       <template #default="{ setHandleOk }">
         <ProcessReview
           :process-key="props.processKey"
@@ -211,14 +216,14 @@ const finishCallback = (row) => {
           @finish-callback="approvalCallback"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .police-manage-detail {
   height: 100%;
-  position: relative;
+  // position: relative;
   .tab-pane-content {
     height: calc(100% - 98px);
     overflow-y: hidden;

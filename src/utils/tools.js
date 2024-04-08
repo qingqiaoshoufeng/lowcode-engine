@@ -218,9 +218,9 @@ export const generateTextByStatus = (state) => {
   case '2':
     return '审批中'
   case '3':
-    return '已审批'
+    return '已通过'
   case '4':
-    return '被终结'
+    return '不通过'
   case 'running':
     return '正在审批'
   case 'completed':

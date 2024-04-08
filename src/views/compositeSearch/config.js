@@ -1240,6 +1240,13 @@ export const useFormConfig = () => {
         options: 'fireInfoTag',
         fieldNames: { value: 'boFireTagId', label: 'tagName' },
       },
+      isOperating: { // 是否涉及生产经营
+        value: '',
+        type: 'radio-is',
+        label: '是否涉及生产经营',
+        labelWidth: '132px',
+        options: isNot
+      },
     },
     fireCasualty: {
       title: '人员伤亡',
@@ -2102,6 +2109,7 @@ export const useFormConfig = () => {
         fireInfoTag: fireBase.fireInfoTag.value?.map(val => val.value)?.join(','),
         fireInfoTagText: fireBase.fireInfoTag.value?.map(val => val.label)?.join(','),
         fireInfoTagNon: fireBase.fireInfoTag.back,
+        isOperating: fireBase.isOperating.value,
         // 火灾信息-人员伤亡
         isInjury: fireCasualty.isInjury.value,
         injuryType: fireCasualty.injuryType.value?.map(val => val.value)?.join(','),
@@ -2682,6 +2690,7 @@ export const useFormConfig = () => {
       })
       : []
     form.value.fireBase.fireInfoTag.back = comprehensiveFireQueryReq.fireInfoTagNon === 'true'
+    form.value.fireBase.isOperating.value = comprehensiveFireQueryReq.isOperating
     // 火灾信息-人员伤亡
     form.value.fireCasualty.isInjury.value = comprehensiveFireQueryReq.isInjury
     form.value.fireCasualty.injuryType.value = comprehensiveFireQueryReq.injuryType

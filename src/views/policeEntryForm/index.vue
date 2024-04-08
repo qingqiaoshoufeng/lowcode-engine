@@ -55,6 +55,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isCrossRegion: { // 跨区警情
+    type: Boolean,
+    default: false,
+  },
   showExportPdf: { // 显示导出按钮
     type: Boolean,
     default: false,
@@ -143,6 +147,9 @@ const form = ref({
   dispatchGroup: [], // 出动队伍
   mainGroup: undefined, // 主战队站
   firstGroup: undefined, // 首到队站
+  mainOrgId: undefined, // 主战单位
+  firstOrgId: undefined, // 首到单位
+  isAreaDispatch: '1', // 辖区内队伍是否出动
   isAreaMain: '1', // 是否辖区内队伍主战
   isAreaFirst: '1', // 是否辖区内队伍首到
   isHeadquarters: "2", // 是否全勤指挥部参加
@@ -284,6 +291,17 @@ const showCityProvince = computed(() => {
   return props.isCrossRegion || form.value.isOtherCity === '1' || form.value.isOtherProvince === '1'
 })
 
+const otherOptions = computed(() => {
+  const list = []
+  form.value.otherCity?.forEach((i) => {
+    list.push({ ...i, name: i.name || i.label, organizationid: i.value || i.organizationid })
+  })
+  form.value.otherProvince?.forEach((i) => {
+    list.push({ ...i, name: i.name || i.label, organizationid: i.value || i.organizationid })
+  })
+  return list
+})
+
 const showNaturalDisasterOther = computed(() => {
   const types = form.value.naturalDisasterTypeText || [];
   return types && types[1] === "其他";
@@ -403,6 +421,12 @@ const handleMain = () => {
   return false
 }
 
+const handleOther = () => {
+  if (form.value.otherCity?.length <= 0 && form.value.otherProvince?.length <= 0) {
+    showToast('请先选择增援支队或者增援总队')
+  }
+}
+
 const onChangeDispatchGroup = (values, items, texts) => {
   form.value.dispatchGroup = items
   if (!items || items.length <= 0) {
@@ -467,6 +491,13 @@ const { loading, submit } = useSubmit((res) => {
       otherCity: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
       otherCityName: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
       dispatchArriveFlag: values.dispatchArriveFlag,
+      firstGroup: values.firstGroup,
+      firstOrgId: values.firstOrgId,
+      mainGroup: values.mainGroup,
+      mainOrgId: values.mainOrgId,
+      isAreaDispatch: values.isAreaDispatch,
+      isAreaMain: values.isAreaMain,
+      isAreaFirst: values.isAreaFirst,
       warningTag: values.warningTag ? values.warningTag.map(item => (item.boFireTagId || item.value)).join(',') : '',
       warningTagName: values.warningTag ? values.warningTag.map(item => (item.tagName || item.label)).join(',') : '',
       warningExt1: values.warningTypeOther, // 警情类型其他
@@ -559,6 +590,11 @@ const initDetail = () => {
           : []
         form.value.firstGroup = res.firstGroup ? Number(res.firstGroup) : undefined // TODO ?
         form.value.mainGroup = res.mainGroup ? Number(res.mainGroup) : undefined // TODO ?
+        form.value.firstOrgId = res.firstOrgId ? Number(res.firstOrgId) : undefined
+        form.value.mainOrgId = res.mainOrgId ? Number(res.mainOrgId) : undefined
+        form.value.isAreaDispatch = res.isAreaDispatch
+        form.value.isAreaMain = res.isAreaMain
+        form.value.isAreaFirst = res.isAreaFirst
         form.value.dutyGroup = res.dutyGroup
           ? generateByKeyValue(res.dutyGroupName, res.dutyGroup, {
             key: 'name',
@@ -736,6 +772,39 @@ const lngLatCallback = (lat, lng) => {
   formRef.value.resetValidation(['warningLng', 'warningLat'])
 };
 
+const onOtherChange = () => {
+  form.value.firstOrgId = undefined
+  form.value.mainOrgId = undefined
+}
+
+const onIsAreaDispatch = () => {
+  if (form.value.isAreaDispatch === '2') {
+    form.value.dispatchGroup = []
+    form.value.isAreaMain = '2'
+    form.value.isAreaFirst = '2'
+    form.value.mainGroup = undefined
+    form.value.firstGroup = undefined
+  }
+}
+
+const onIsAreaMain = () => {
+  if (form.value.isAreaMain === '2') {
+    form.value.mainGroup = undefined
+  }
+  else {
+    form.value.mainOrgId = undefined
+  }
+}
+
+const onIsAreaFirst = () => {
+  if (form.value.isAreaFirst === '2') {
+    form.value.firstGroup = undefined
+  }
+  else {
+    form.value.firstOrgId = undefined
+  }
+}
+
 const validateFireTel = (value, rule) => {
   const { warningSource } = form.value;
   const filter = options.value.warningSource?.filter(
@@ -821,7 +890,7 @@ const onWarningOrgname = () => {
         type="textarea"
         placeholder="请输入警情概况"
         show-word-limit
-        :class="{ 'form-textarea': !showPreview }"
+        class="form-textarea"
       >
       </van-field>
       <van-field
@@ -946,9 +1015,15 @@ const onWarningOrgname = () => {
           />
         </template>
         <template v-if="!isConfirm" #button>
-          <van-button size="small" type="primary" @click="handleLngLat"
-            >自动获取</van-button
+          <van-button
+            size="small"
+            type="primary"
+            plain
+            style="border-width: 0px;margin-left: 20px;"
+            @click="handleLngLat"
           >
+            自动获取
+          </van-button>
         </template>
       </van-field>
       <van-field
@@ -1353,6 +1428,61 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectMultiple>
+      <SelectMultiple
+        v-if="showCityProvince && !userMessage?.ISMUNICIPALORG"
+        :value="form.otherCity?.map(item => item.organizationid) || []"
+        v-model:nodes="form.otherCity"
+        :showPreview="showPreview"
+        name="otherCity"
+        :options="options.otherCityOptions"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队（本省）'}]"
+        :required="true"
+        label="增援支队（本省）："
+        label-width="142px"
+        placeholder="无"
+        title="请选择增援支队（本省）"
+        class="special-place"
+        :class="{'special-no-data': showPreview && form.otherCity?.length <= 0}"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="增援支队（本省）："
+            :id="currentRow?.boFireWarningId"
+            remark-field="otherCity"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.otherCity"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
+      <SelectMultiple
+        v-if="showCityProvince"
+        :value="form.otherProvince?.map(item => item.organizationid) || []"
+        v-model:nodes="form.otherProvince"
+        :showPreview="showPreview"
+        name="otherProvince"
+        :options="options.otherProvinceOptions"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :rules="[{ required: false, validator: validateOtherProvince, message: '请选择增援总队'}]"
+        :required="true"
+        label="增援总队："
+        placeholder="无"
+        title="请选择增援总队"
+        class="special-place"
+        :class="{'special-no-data': showPreview && form.otherProvince?.length <= 0}"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="增援总队："
+            :id="currentRow?.boFireWarningId"
+            remark-field="otherProvince"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.otherProvince"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectMultiple>
       <!-- <van-field
         v-if="!showCityProvince"
         v-preview-text="showPreview"
@@ -1392,7 +1522,46 @@ const onWarningOrgname = () => {
           />
         </template>
       </van-field> -->
+      <van-field
+        v-if="showCityProvince"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="辖区内队伍是否出动："
+        label-width="158px"
+        class="field-radio"
+        :disabled="isConfirm"
+      >
+        <template #input>
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.isAreaDispatch === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-radio-group
+              v-model="form.isAreaDispatch"
+              icon-size="16px"
+              direction="horizontal"
+              :disabled="isConfirm"
+              @change="onIsAreaDispatch"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="辖区内队伍是否出动："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isAreaDispatch"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isAreaDispatch"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectOrg
+        v-if="form.isAreaDispatch !== '2'"
         v-model:value="form.dispatchGroup"
         :showPreview="showPreview"
         :readonly="true"
@@ -1418,32 +1587,134 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectOrg>
-      <SelectOrg
-        v-model:value="form.dutyGroup"
+      <van-field
+        v-if="showCityProvince"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="是否辖区内队伍主战："
+        label-width="158px"
+        class="field-radio"
+        :disabled="isConfirm || form.isAreaDispatch === '2'"
+      >
+        <template #input>
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.isAreaMain === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-radio-group
+              v-model="form.isAreaMain"
+              icon-size="16px"
+              direction="horizontal"
+              :disabled="isConfirm || form.isAreaDispatch === '2'"
+              @change="onIsAreaMain"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否辖区内队伍主战："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isAreaMain"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isAreaMain"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <SelectSingle
+        v-if="form.isAreaMain !== '2' && form.dispatchArriveFlag !== '2'"
+        v-model:value="form.mainGroup"
         :showPreview="showPreview"
-        :readonly="true"
-        name="dutyGroup"
+        name="mainGroup"
+        :options="form.dispatchGroup"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
-        label="辖区队站："
-        placeholder="请选择辖区队站"
-        title="请选择辖区队站"
-        :single="true"
-        :rules="[{ required: true, message: '请选择辖区队站' }]"
-        :params="{ deptType: 1 }"
+        label="主战队站："
+        title="请选择主战队站"
+        placeholder="请选择主战队站"
+        :rules="[{ required: true, message: '请选择主战队站' }]"
+        :checkShowFn="handleMain"
         :disabled="isConfirm"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="辖区队站："
+            label="主战队站："
             :id="currentRow?.boFireWarningId"
-            remark-field="dutyGroup"
+            remark-field="mainGroup"
             field-module="policeWarning"
-            :exist-data="fieldExist?.dutyGroup"
+            :exist-data="fieldExist?.mainGroup"
             @refresh-callback="refreshField"
           />
         </template>
-      </SelectOrg>
+      </SelectSingle>
+      <SelectSingle
+        v-if="form.isAreaMain === '2'"
+        v-model:value="form.mainOrgId"
+        :showPreview="showPreview"
+        name="mainOrgId"
+        :options="otherOptions"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="主战单位："
+        title="请选择主战单位"
+        placeholder="请选择主战单位"
+        :rules="[{ required: true, message: '请选择主战单位' }]"
+        :checkShowFn="handleOther"
+        :disabled="isConfirm"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="主战单位："
+            :id="currentRow?.boFireWarningId"
+            remark-field="mainOrgId"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.mainOrgId"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectSingle>
+      <van-field
+        v-if="showCityProvince"
+        :readonly="showPreview"
+        required
+        name="switch"
+        label="是否辖区内队伍首到："
+        label-width="158px"
+        class="field-radio"
+        :disabled="isConfirm || form.isAreaDispatch === '2'"
+      >
+        <template #input>
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.isAreaFirst === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-radio-group
+              v-model="form.isAreaFirst"
+              icon-size="16px"
+              direction="horizontal"
+              :disabled="isConfirm || form.isAreaDispatch === '2'"
+              @change="onIsAreaFirst"
+            >
+              <van-radio name="1">是</van-radio>
+              <van-radio name="2">否</van-radio>
+            </van-radio-group>
+          </template>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="是否辖区内队伍首到："
+            :id="currentRow?.boFireWarningId"
+            remark-field="isAreaFirst"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.isAreaFirst"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <SelectSingle
         v-if="form.isAreaFirst !== '2' && form.dispatchArriveFlag !== '2'"
         v-model:value="form.firstGroup"
@@ -1471,31 +1742,57 @@ const onWarningOrgname = () => {
         </template>
       </SelectSingle>
       <SelectSingle
-        v-if="form.isAreaMain !== '2' && form.dispatchArriveFlag !== '2'"
-        v-model:value="form.mainGroup"
+        v-if="form.isAreaFirst === '2'"
+        v-model:value="form.firstOrgId"
         :showPreview="showPreview"
-        name="mainGroup"
-        :options="form.dispatchGroup"
+        name="firstOrgId"
+        :options="otherOptions"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :required="true"
-        label="主战队站："
-        title="请选择主战队站"
-        placeholder="请选择主战队站"
-        :rules="[{ required: true, message: '请选择主战队站' }]"
-        :checkShowFn="handleMain"
+        label="首到单位："
+        title="请选择首到单位"
+        placeholder="请选择首到单位"
+        :rules="[{ required: true, message: '请选择首到单位' }]"
+        :checkShowFn="handleOther"
         :disabled="isConfirm"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="主战队站："
+            label="首到单位："
             :id="currentRow?.boFireWarningId"
-            remark-field="mainGroup"
+            remark-field="firstOrgId"
             field-module="policeWarning"
-            :exist-data="fieldExist?.mainGroup"
+            :exist-data="fieldExist?.firstOrgId"
             @refresh-callback="refreshField"
           />
         </template>
       </SelectSingle>
+      <SelectOrg
+        v-model:value="form.dutyGroup"
+        :showPreview="showPreview"
+        :readonly="true"
+        name="dutyGroup"
+        :field-names="{ value: 'organizationid', label: 'name' }"
+        :required="true"
+        label="辖区队站："
+        placeholder="请选择辖区队站"
+        title="请选择辖区队站"
+        :single="true"
+        :rules="[{ required: true, message: '请选择辖区队站' }]"
+        :params="{ deptType: 1 }"
+        :disabled="isConfirm"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="辖区队站："
+            :id="currentRow?.boFireWarningId"
+            remark-field="dutyGroup"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.dutyGroup"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </SelectOrg>
       <SelectOrg
         v-if="showAreaDutyGroup"
         v-model:value="form.areaDutyGroup"
@@ -1552,61 +1849,6 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectMultiple>
-      <SelectMultiple
-        v-if="showCityProvince && !userMessage?.ISMUNICIPALORG"
-        :value="form.otherCity?.map(item => item.organizationid) || []"
-        v-model:nodes="form.otherCity"
-        :showPreview="showPreview"
-        name="otherCity"
-        :options="options.otherCityOptions"
-        :field-names="{ value: 'organizationid', label: 'name' }"
-        :rules="[{ required: false, validator: validateOtherCity, message: '请选择增援支队（本省）'}]"
-        :required="true"
-        label="增援支队（本省）："
-        label-width="142px"
-        placeholder="无"
-        title="请选择增援支队（本省）"
-        class="special-place"
-        :class="{'special-no-data': showPreview && form.otherCity?.length <= 0}"
-      >
-        <template v-slot:label="">
-          <FieldAnnotation
-            label="增援支队（本省）："
-            :id="currentRow?.boFireWarningId"
-            remark-field="otherCity"
-            field-module="policeWarning"
-            :exist-data="fieldExist?.otherCity"
-            @refresh-callback="refreshField"
-          />
-        </template>
-      </SelectMultiple>
-      <SelectMultiple
-        v-if="showCityProvince"
-        :value="form.otherProvince?.map(item => item.organizationid) || []"
-        v-model:nodes="form.otherProvince"
-        :showPreview="showPreview"
-        name="otherProvince"
-        :options="options.otherProvinceOptions"
-        :field-names="{ value: 'organizationid', label: 'name' }"
-        :rules="[{ required: false, validator: validateOtherProvince, message: '请选择增援总队'}]"
-        :required="true"
-        label="增援总队："
-        placeholder="无"
-        title="请选择增援总队"
-        class="special-place"
-        :class="{'special-no-data': showPreview && form.otherProvince?.length <= 0}"
-      >
-        <template v-slot:label="">
-          <FieldAnnotation
-            label="增援总队："
-            :id="currentRow?.boFireWarningId"
-            remark-field="otherProvince"
-            field-module="policeWarning"
-            :exist-data="fieldExist?.otherProvince"
-            @refresh-callback="refreshField"
-          />
-        </template>
-      </SelectMultiple>
       <van-field
         v-model="form.warningInfo"
         v-preview-text="showPreview"
@@ -1656,7 +1898,12 @@ const onWarningOrgname = () => {
       </van-button>
     </div>
 
-    <ProModal v-model:visible="show.lngLatVisible" title="选择地图">
+    <ProModal
+      v-model:visible="show.lngLatVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="选择地图"
+    >
       <template #default="{ setHandleOk }">
         <MapLatLng
           :select-area="form.warningAreaText"
@@ -1669,7 +1916,12 @@ const onWarningOrgname = () => {
       </template>
     </ProModal>
     <!-- 警情确认说明 -->
-    <ProModal v-model:visible="show.confirmVisible" title="警情确认说明">
+    <ProModal
+      v-model:visible="show.confirmVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="警情确认说明"
+    >
       <template #default="{ setHandleOk }">
         <PoliceConfirm
           :current-row="currentRow"
@@ -1715,14 +1967,6 @@ const onWarningOrgname = () => {
   .switch-wrapper {
     :deep(.van-field__control.van-field__control--custom) {
       justify-content: right;
-    }
-  }
-  .form-textarea {
-    flex-direction: column;
-    :deep(.van-field__body) {
-      border: 1px solid #f6f6f6;
-      padding: 5px 5px;
-      margin-top: 5px;
     }
   }
 

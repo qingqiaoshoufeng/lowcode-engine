@@ -39,15 +39,31 @@ export function saveFireWarning(data) {
 }
 
 // 获取行政区域
-export function getSystemArea({ parentAreaId, reportName, showAllArea, staticFlag }) {
+export function getSystemArea({ parentAreaId, reportName, showAllArea, staticFlag, deactivateFlag }) {
   let url = ''
   if (parentAreaId) {
-    url = `/acws/rest/biz/common/sysarea/unfold/arealist?parentAreaId=${parentAreaId}&reportName=${reportName}&showAllArea=${showAllArea}&staticFlag=${staticFlag}`
+    url = `/acws/rest/biz/common/sysarea/unfold/arealist`
+    return request.get(url, {
+      params: {
+        parentAreaId,
+        reportName,
+        showAllArea,
+        staticFlag,
+        deactivateFlag,
+      }
+    })
   }
   else {
-    url = `/acws/rest/biz/common/sysarea/unfold/arealist?reportName=${reportName}&showAllArea=${showAllArea}&staticFlag=${staticFlag}`
+    url = `/acws/rest/biz/common/sysarea/unfold/arealist`
+    return request.get(url, {
+      params: {
+        reportName,
+        showAllArea,
+        staticFlag,
+        deactivateFlag,
+      }
+    })
   }
-  return request.get(url)
 }
 
 // 获取警情类型

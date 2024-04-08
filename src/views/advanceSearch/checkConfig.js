@@ -1188,6 +1188,12 @@ export const checkBoxs = [
     dict: 'fireInfoTag',
     field: { value: 'boDictId', label: 'dictName' }
   },
+  {
+    fieldKeyOne: 'isOperating',
+    label: '是否生产经营',
+    type: '9',
+    dict: 'isNot',
+  },
   // 火灾类查询条件--人员伤亡
   {
     fieldKeyOne: 'isInjury',

@@ -158,7 +158,7 @@ onMounted(() => {
             <div class="item-header">
               <div class="item-title">{{ record.templateName }}</div>
             </div>
-            <div class="card-img" @click="handleItem(record)">
+            <div class="card-img" @click="handleChange(record)">
               <img :src="record.url" alt="">
             </div>
             <div class="item-line" />
@@ -219,7 +219,12 @@ onMounted(() => {
       </template>
     </van-image-preview>
     <!-- 报表查询 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="报表查询">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="报表查询"
+    >
       <ReportGenerate :current-row="currentRow" />
     </ProModal>
   </div>
