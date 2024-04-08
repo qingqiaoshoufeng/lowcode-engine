@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-// import { message } from '@castle/ant-design-vue'
 import { transferFire } from '@/apis/index.js'
 import { showToast } from 'vant';
 // import SelectTree from '@/components/select-tree/index1.vue'
@@ -35,7 +34,6 @@ onMounted(() => {
           }
           else {
             showToast(res?.data?.msg)
-            // message.warning()
           }
         })
     })
@@ -67,8 +65,10 @@ onMounted(() => {
   .title {
     display: inline-block;
     font-weight: bold;
-    padding-bottom: 20px;
+    padding-bottom: 12px;
+    padding-top: 12px;
     font-size: 12px;
+    margin-left: 20px;
   }
 }
 </style>

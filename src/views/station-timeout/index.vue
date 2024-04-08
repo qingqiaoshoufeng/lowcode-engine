@@ -53,22 +53,6 @@
         </div>
       </template>
     </ProList>
-    <!-- 驳回 -->
-    <!-- <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
-      <template v-slot="{setHandleOk}">
-        <ApplyReject
-          type="1"
-          :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
-          :set-handle-ok="setHandleOk"
-          :finish-callback="finishCallback"
-        />
-      </template>
-    </DialogInfo> -->
-    <!-- 警情详情 -->
-    <!-- <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
-      <PoliceEntryDetail :current-row="currentRow" />
-    </ProModal> -->
   </div>
 </template>
   
@@ -149,179 +133,26 @@ const finishCallback = () => {
   currentRow.value = null
   proListRef.value.filter()
 }
-
 </script>
+
 <style lang="scss" scoped>
-  .police-timeout{
-    .mw-90{
-      max-width: 90px !important;
-      width: 90px !important;
-      text-align: right;
-      justify-content: flex-end;
-    }
-    // .list-item {
-    //   display: flex;
-    //   flex-direction: column;
-    //   background: #ffffff;
-    //   margin-top: 10px;
-    //   .item-header {
-    //     display: flex;
-    //     padding: 8px 10px;
-    //     .item-title {
-    //       width: 260px;
-    //       font-size: 16px;
-    //       font-weight: bold;
-    //       white-space: nowrap;
-    //       overflow: hidden;
-    //       text-overflow: ellipsis;
-    //     }
-    //     .item-state {
-    //       min-width: 67px;
-    //       max-width: 100px;
-    //       height: 24px;
-    //       font-size: 12px;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: center;
-    //       border-radius: 2px;
-    //       margin-left: auto;
-    //     }
-    //   }
-    //   .item-field {
-    //     font-size: 14px;
-    //     color: #1f1f1f;
-    //     display: flex;
-    //     align-items: center;
-    //     padding: 0 0 8px 10px;
-    //     img {
-    //       width: 14px;
-    //       height: 14px;
-    //       margin-right: 6px;
-    //     }
-    //   }
-    //   .item-type {
-    //     margin: 0 0 8px 10px;
-    //     span {
-    //       display: inline-block;
-    //       font-size: 12px;
-    //       font-family: PingFangSC-Regular, PingFang SC;
-    //       font-weight: 400;
-    //       color: #fc2902;
-    //       background: #ffefec;
-    //       border-radius: 2px;
-    //       padding: 4px 10px;
-    //     }
-    //   }
-    //   .item-line {
-    //     width: 100%;
-    //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-    //   }
-    //   .item-operate {
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: flex-end;
-    //     padding: 8px 10px;
-    //     .item-btn {
-    //       padding: 0 16px;
-    //       margin-left: 10px;
-    //       :deep(.van-button__content) {
-    //         height: 18px;
-    //       }
-    //       :deep(.van-button__text) {
-    //         white-space: nowrap;
-    //         word-break: break-all;
-    //       }
-    //     }
-    //   }
-    // }
+.police-timeout{
+  .mw-90{
+    max-width: 90px !important;
+    width: 90px !important;
+    text-align: right;
+    justify-content: flex-end;
   }
-  .list-tabs1 {
-    display: flex;
-    padding: 10px 12px 0 12px;
-  }
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-collect {
-  //       font-size: 20px;
-  //       margin-right: auto;
-  //     }
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
-  .item-collect {
-        font-size: 20px;
-        margin-right: auto;
-      }
-      .select_tags{
-        border-top: 10px solid #fff;
-      }
-  </style>
+}
+.list-tabs1 {
+  display: flex;
+  padding: 10px 12px 0 12px;
+}
+.item-collect {
+  font-size: 20px;
+  margin-right: auto;
+}
+.select_tags {
+  border-top: 10px solid #fff;
+}
+</style>

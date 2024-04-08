@@ -1536,7 +1536,12 @@ const onSideBarChange = (e, k) => {
     </div>
 
     <!-- 出动审核 -->
-    <ProModal v-model:visible="show.approvalVisible" :title="approvalText ? approvalText : `出动${labelText}`">
+    <ProModal
+      v-model:visible="show.approvalVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      :title="approvalText ? approvalText : `出动${labelText}`"
+    >
       <template #default="{ setHandleOk }">
         <ProcessReview
           :process-key="props.processKey"

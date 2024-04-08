@@ -220,8 +220,8 @@ onMounted(() => {
     <!-- 出动更正审批 -->
     <ProModal
       v-model:visible="show.reviewVisible"
-      :showBack="false"
-      :showHeader="true"
+      :showConfirmBack="true"
+      :showHeader="false"
       ok-text="审批"
       title="出动更正审批"
     >

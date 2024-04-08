@@ -1916,7 +1916,12 @@ const onWarningOrgname = () => {
       </template>
     </ProModal>
     <!-- 警情确认说明 -->
-    <ProModal v-model:visible="show.confirmVisible" title="警情确认说明">
+    <ProModal
+      v-model:visible="show.confirmVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="警情确认说明"
+    >
       <template #default="{ setHandleOk }">
         <PoliceConfirm
           :current-row="currentRow"

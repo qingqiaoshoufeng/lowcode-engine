@@ -93,17 +93,21 @@
         </template>
     </ProList>
     <!-- 驳回 -->
-    <DialogInfo v-model:visible="show.rejectVisible" title="发起驳回说明">
+    <ProModal
+      v-model:visible="show.rejectVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="发起驳回说明"
+    >
       <template v-slot="{setHandleOk}">
         <ApplyReject
           type="2"
           :current-row="currentRow"
-          :selected-keys="selectedRowKeys"
           :set-handle-ok="setHandleOk"
           :finish-callback="finishCallback"
         />
       </template>
-    </DialogInfo>
+    </ProModal>
     <!-- 查看详情 -->
     <ProModal
       v-model:visible="show.lookVisible"

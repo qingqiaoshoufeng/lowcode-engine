@@ -360,11 +360,21 @@ onMounted(() => {
     </ProList>
 
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="警情详情"
+    >
       <PoliceEntryDetail :current-row="currentRow" />
     </ProModal>
     <!-- 申请更正 -->
-    <ProModal v-model:visible="show.recheckVisible" title="申请更正">
+    <ProModal
+      v-model:visible="show.recheckVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="申请更正"
+    >
       <template #default="{ setHandleOk }">
         <ApplyRecheck
           :recheck-type="1"
@@ -375,7 +385,12 @@ onMounted(() => {
       </template>
     </ProModal>
     <!-- 申请作废 -->
-    <ProModal v-model:visible="show.abolishVisible" title="申请作废">
+    <ProModal
+      v-model:visible="show.abolishVisible"
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="申请作废"
+    >
       <template #default="{ setHandleOk }">
         <ApplyAbolish
           :current-row="currentRow"

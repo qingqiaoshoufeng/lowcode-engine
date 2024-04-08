@@ -219,7 +219,12 @@ onMounted(() => {
       </template>
     </van-image-preview>
     <!-- 报表查询 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="报表查询">
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      title="报表查询"
+    >
       <ReportGenerate :current-row="currentRow" />
     </ProModal>
   </div>
