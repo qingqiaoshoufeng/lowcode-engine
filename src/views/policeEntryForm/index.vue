@@ -890,7 +890,7 @@ const onWarningOrgname = () => {
         type="textarea"
         placeholder="请输入警情概况"
         show-word-limit
-        :class="{ 'form-textarea': !showPreview }"
+        class="form-textarea"
       >
       </van-field>
       <van-field
@@ -1967,14 +1967,6 @@ const onWarningOrgname = () => {
   .switch-wrapper {
     :deep(.van-field__control.van-field__control--custom) {
       justify-content: right;
-    }
-  }
-  .form-textarea {
-    flex-direction: column;
-    :deep(.van-field__body) {
-      border: 1px solid #f6f6f6;
-      padding: 5px 5px;
-      margin-top: 5px;
     }
   }
 

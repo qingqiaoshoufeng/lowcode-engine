@@ -42,7 +42,9 @@ const props = defineProps({
   },
   maxDate: {
     type: [Object, Function],
-    default: () => new Date(),
+    default: () => () => {
+      return new Date();
+    },
   },
   minDate:{
     type: Object,

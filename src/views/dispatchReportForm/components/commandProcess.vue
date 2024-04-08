@@ -196,14 +196,6 @@ const onDelete = (file) => {
 </template>
 
 <style lang="scss" scoped>
-.form-textarea {
-  flex-direction: column;
-  :deep(.van-field__body) {
-    border: 1px solid #f6f6f6;
-    padding: 5px 5px;
-    margin-top: 5px;
-  }
-}
 .other-attach {
   padding: 10px 0 0 10px;
   .item-cell {
