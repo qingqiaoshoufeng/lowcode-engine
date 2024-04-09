@@ -717,18 +717,18 @@ const onFireLevel = () => {
       </div>
       <div class="fireOrgname">
         <van-field
-          label="单位/户主/个体户名称："
+          label="单位/户主名："
           v-model="form.basicInfo.fireOrgname.value"
           v-preview-text="showPreview"
           name="basicInfo.fireOrgname.value"
-          placeholder="单位/户主/个体户名称"
+          placeholder="请输入单位/户主名"
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
-          label-width="105"
+          label-width="108"
         >
           <template v-slot:label="">
             <FieldAnnotation
-              label="单位/户主/个体户名称："
+              label="单位/户主名："
               remark-field="fireOrgname"
               field-module="basicInfo"
               :exist-data="fieldExist?.fireOrgname"
