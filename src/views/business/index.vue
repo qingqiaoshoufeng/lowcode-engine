@@ -19,6 +19,7 @@
 import { ref, computed } from "vue";
 import store from "@/store/index.js";
 import { onMounted } from "vue";
+import DisplayEntry from '@/component/DisplayEntry/index.vue'
 
 const menuInfoList = store.getters['menuInfo/menuInfoList']
 const currentab = ref(3);

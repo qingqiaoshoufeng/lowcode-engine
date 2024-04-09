@@ -14,6 +14,7 @@
 </template>
 <script setup>
 import {menuListMap,titleList} from './config.js'
+import DisplayEntry from '@/component/DisplayEntry/index.vue'
 </script>
 <style lang="scss" scoped>
 .have-done{

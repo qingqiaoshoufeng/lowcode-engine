@@ -23,7 +23,7 @@
         </div>
     </div>
   </template>
-  
+
 <script setup>
 import { computed, ref, getCurrentInstance,defineProps, onMounted } from "vue";
 import { useStore } from "vuex";
