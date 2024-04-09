@@ -684,6 +684,7 @@ const initModuleState = () => {
   forIn(form.value.battleConsume, (value, key) => {
     if (typeof value === 'object' && (value?.length > 0 || value?.value)) {
       show.value.battleConsume = true
+      show.value.battleConsumeHaveData = true
     }
   })
 }

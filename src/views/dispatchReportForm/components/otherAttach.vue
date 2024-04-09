@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted } from "vue";
+import { inject, onMounted, ref } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import {downLoad} from '@/utils/download.js'
@@ -20,6 +20,10 @@ const isEdit = inject("isEdit");
 const currentRow = inject("currentRow");
 
 const localFireDispatchId = inject("localFireDispatchId");
+
+const isOpen = ref((form.value.otherAttach.attach.value?.length > 0 || !isDetail))
+
+const haveData = ref((form.value.otherAttach.attach.value?.length > 0 || !isDetail))
 
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
@@ -79,14 +83,14 @@ const onDelete = (file) => {
 }
 
 const downLoadFile = (val)=>{
-  if(isDetail){
+  if(isDetail) {
     downLoad(val)
   }
 }
 </script>
 
 <template>
-  <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
+  <ProCard :title="haveData ? '其他附件' : '其他附件（无数据）'" id="otherAttach" :state="isOpen">
     <van-cell-group>
       <div class="scene-photo">
         <van-cell title="相关附件上传：" name="otherAttach.attach.value" class="item-cell">

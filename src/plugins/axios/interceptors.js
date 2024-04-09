@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/tools.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
+  config.headers.platform = 'App'
   return config
 }
 
