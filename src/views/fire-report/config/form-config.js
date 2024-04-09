@@ -58,9 +58,9 @@ export const useFormConfig = (validateProgress) => {
         value: undefined,
         // rules: [{ required: true, message: '请选择其他类型' }],
       },
-      fireOrgname: { // 单位/户主/个体户名称
+      fireOrgname: { // 单位/户主名
         value: '',
-        rules: [{ required: true, message: '请输入单位/户主/个体户名称' }],
+        rules: [{ required: true, message: '请输入单位/户主名' }],
       },
       // fireTel: { // 失火单位/户主联系电话
       //   value: '',
@@ -1201,6 +1201,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.fireFacilities.fireSeparation.value = fireInfoBuild?.fireSeparation
     form.value.fireFacilities.separationMeter.value = fireInfoBuild?.separationMeter
     form.value.fireFacilities.escapeRoute.value = fireInfoBuild?.escapeRoute
+    form.value.fireFacilities.routeNonConformance.value = fireInfoBuild?.routeNonConformance
     form.value.fireFacilities.emergencyExit.value = fireInfoBuild?.emergencyExit
     form.value.fireFacilities.exitNonConformance.value = fireInfoBuild?.exitNonConformance
     // 案件办理
