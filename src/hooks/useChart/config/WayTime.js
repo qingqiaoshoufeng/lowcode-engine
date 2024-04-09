@@ -6,7 +6,12 @@ const mockData = [
 
 
 const options = {
-  tooltip: {},
+  tooltip: {
+    formatter(data){
+      const {seriesName,value} = data
+      return `<span style="font-size: 14px;font-weight: 400;">${seriesName}</span>&nbsp&nbsp&nbsp${value}`
+    }
+  },
   grid:{
     left:45,
     top:35,
@@ -52,7 +57,7 @@ const options = {
   ],
   series: [
     {
-      name: '途中时长',
+      name: '出动队次',
       type: 'bar',
       data: [],
       barWidth:14,

@@ -14,7 +14,7 @@ const legendData = ['<10分钟', '10-20分钟', '30-60分钟', '60-90分钟', '9
 let realDataMap = {}
 const options = {
   tooltip: {
-    formatter: '<span style="font-size: 14px;font-weight: 400;">{b}：</span>{c}分钟',
+    formatter: '<span style="font-size: 14px;font-weight: 400;">{b}：</span>{c}队次',
   },
   grid:{
     left:0,

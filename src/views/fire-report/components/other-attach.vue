@@ -33,7 +33,7 @@ const onDelete = async(val,val1)=>{
     businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
     businessType: 'file',
   }).then((res) => {
-    form.value.firePhoto.photos.value = res.data.map((item) => {
+    form.value.otherAttach.attach.value = res.data.map((item) => {
       return {
         isImage: true,
         deletable:isEdit || isShowTemporary.value,
