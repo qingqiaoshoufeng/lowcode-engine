@@ -81,3 +81,7 @@ szqwjhzzd.d@ha
 [云图](https://lanhuapp.com/link/#/invite?sid=lxC2OM0a)
 
 [应用模块](https://lanhuapp.com/link/#/invite?sid=lx058k10)
+
+## 问题
+
+1. 报表引起页面不能滚动[luckysheet.js]问题(https://blog.csdn.net/badbaby52906/article/details/129493981)

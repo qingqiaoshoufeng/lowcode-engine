@@ -160,7 +160,6 @@ export default {
           <div @click="showExplainFn" class="explain">规则说明</div>
         </slot>
       </template>
-      
     </HeaderTitle>
     <div class="total" v-if="showTotal">
       <strong>查询结果：</strong><span>共查到</span><span class="total-num">{{total}}</span><span>起记录</span>
@@ -213,16 +212,16 @@ export default {
   flex-direction: column;
   .list-search {
   }
-  .explain{
+  .explain {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FFFFFF;
     line-height: 22px;
   }
-  .total{
+  .total {
     padding: 10px 0 0 16px;
-    .total-num{
+    .total-num {
       color: #FC5B3F;
     }
   }
