@@ -62,7 +62,7 @@ const handleDeletePerson = (index) => {
   <van-cell-group class="rootform1">
     <div :gutter="gutter">
       <div :span="8">
-        <van-field 
+        <van-field
           name="caseHandling.handleTwoCase.value"
           label="两案处理情况-是否立案："
           label-width="130"
@@ -71,7 +71,7 @@ const handleDeletePerson = (index) => {
           :rules="form.caseHandling.handleTwoCase.rules"
         >
           <template #input>
-            <van-radio-group 
+            <van-radio-group
               class="field-radio"
               id="handleTwoCase"
               v-model="form.caseHandling.handleTwoCase.value"
@@ -94,7 +94,7 @@ const handleDeletePerson = (index) => {
         </van-field>
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
-        <van-field 
+        <van-field
           name="caseHandling.penaltyNum.value"
           label="追究人数（人）："
           :rules="form.caseHandling.penaltyNum.rules"
@@ -121,7 +121,7 @@ const handleDeletePerson = (index) => {
         </van-field>
       </div>
       <div v-if="form.caseHandling.handleTwoCase.value === '1'" :span="8">
-        <van-field 
+        <van-field
           name="caseHandling.suggestDealNum.value"
           label="建议处理人数（人）："
           :rules="form.caseHandling.suggestDealNum.rules"
@@ -150,7 +150,7 @@ const handleDeletePerson = (index) => {
     </div>
     <div :gutter="gutter">
       <div :span="8">
-        <van-field 
+        <van-field
           name="caseHandling.firePenalty.value"
           label="火灾处罚情况-是否立案："
           label-width="130"
@@ -159,7 +159,7 @@ const handleDeletePerson = (index) => {
           class="field-radio"
         >
           <template #input>
-            <van-radio-group 
+            <van-radio-group
               id="firePenalty"
               class="field-radio"
               v-model="form.caseHandling.firePenalty.value"
@@ -189,7 +189,7 @@ const handleDeletePerson = (index) => {
       <div class="dead-item" v-for="(item, index) in form.caseHandling.fireInfoOrgList" :key="index" :gutter="gutter">
         <div class="flex-wrapper">
             <div class="border-minus1 border-mius1" v-if="!isDetail" >
-              <van-icon 
+              <van-icon
                 class="form-col-delete"
                 title="删除该处罚单位"
                 name="minus"
@@ -202,7 +202,7 @@ const handleDeletePerson = (index) => {
             </div>
           </div>
         <div :span="8">
-          <van-field 
+          <van-field
             :name="`caseHandling.fireInfoOrgList.${index},orgName`"
             label="单位名称："
             :rules="form.caseHandling.orgName.rules"
@@ -229,7 +229,7 @@ const handleDeletePerson = (index) => {
           </van-field>
         </div>
         <div :span="8">
-          <van-field 
+          <van-field
             :name="`caseHandling.fireInfoOrgList.${index}.legalPerson`"
             label="法人代表："
             :rules="form.caseHandling.legalPerson.rules"
@@ -255,12 +255,12 @@ const handleDeletePerson = (index) => {
             </template>
           </van-field>
         </div>
+        <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoOrgList.${index}.penalty`"
             label="行政处罚："
             :rules="form.caseHandling.penalty.rules"
             id="penalty"
-            class="adminSanction"
             v-model:value="item.penalty"
             :showPreview="showPreview"
             :options="options.penalty"
@@ -281,15 +281,15 @@ const handleDeletePerson = (index) => {
               />
             </template>
           </SelectSingle>
-      
+        </div>
       </div>
-  
-      <van-button 
+
+      <van-button
         v-if="!isDetail"
         @click="handleAddUnit"
         title="新增处罚单位"
-        icon="plus" 
-        type="default" 
+        icon="plus"
+        type="default"
         handleAddUnit
         size="small"
         style="margin: 0 20px"
@@ -306,7 +306,7 @@ const handleDeletePerson = (index) => {
       <div class="dead-item" v-for="(item, index) in form.caseHandling.fireInfoPersonList" :key="index" :gutter="gutter">
         <div class="flex-wrapper">
             <div class="border-minus1 border-mius1" v-if="!isDetail" >
-              <van-icon 
+              <van-icon
                 class="form-col-delete"
                 title="删除该处罚个人"
                 name="minus"
@@ -319,7 +319,7 @@ const handleDeletePerson = (index) => {
             </div>
           </div>
         <div :span="8">
-          <van-field 
+          <van-field
             :name="`caseHandling,fireInfoPersonList,${index},name`"
             label="姓名："
             :rules="form.caseHandling.name.rules"
@@ -372,12 +372,12 @@ const handleDeletePerson = (index) => {
             </template>
           </SelectSingle>
         </div>
+        <div :span="8">
           <SelectSingle
             :name="`caseHandling.fireInfoPersonList.${index}.adminSanction`"
             label="行政处罚："
             :rules="form.caseHandling.adminSanction.rules"
             id="adminSanction"
-            class="adminSanction"
             v-model:value="item.adminSanction"
             v-preview-text="showPreview"
             :options="options.penalty"
@@ -398,15 +398,15 @@ const handleDeletePerson = (index) => {
               />
             </template>
           </SelectSingle>
-      
+        </div>
       </div>
-      <van-button 
+      <van-button
         v-if="!isDetail"
         @click="handleAddPerson"
         title="新增处罚个人"
         class="add"
-        icon="plus" 
-        type="default" 
+        icon="plus"
+        type="default"
         size="small"
         style="margin: 0 20px"
         >
@@ -458,10 +458,5 @@ const handleDeletePerson = (index) => {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-  }
-  .adminSanction{
-    &::after{
-      display: none !important;
-    }
   }
 </style>
