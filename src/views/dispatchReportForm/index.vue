@@ -51,7 +51,9 @@ import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue } from '@vueuse/core';
 import { useStore } from "vuex";
 import { useIntersection } from '@/hooks/useIntersection.js';
+
 const hidevalidate = ref(false)
+
 const props = defineProps({
   showDraft: {
     type: Boolean,
@@ -119,10 +121,13 @@ const props = defineProps({
     type: Function,
   },
 })
+
 const diyValidateMap = ref({
   defaultKey:[]
 })
+
 const statusList = ref([])
+
 provide('diyValidateMap',diyValidateMap)
 
 const emits = defineEmits(['finishCallback'])
@@ -710,6 +715,7 @@ const initWatch = () => {
     initModuleState()
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.draftInfo.warningType.value))
+      show.value.apiLoading = true
     })
     resolve()
   })
@@ -1362,7 +1368,7 @@ const onSideBarChange = (e, k) => {
 </script>
 
 <template>
-  <div class="dispatch-report-form">
+  <div v-if="show.apiLoading" class="dispatch-report-form" :style="{ height: !showPreview ? 'calc(100% - 64px)' : '100%' }">
     <div class="form-left">
       <van-sidebar v-if="showPreview !== null" v-model="sideBarActive">
         <van-sidebar-item v-for="(item, k) in sections" :key="item.title" @click="onSideBarChange(item, k)">
@@ -1518,22 +1524,6 @@ const onSideBarChange = (e, k) => {
         <!-- 操作记录 -->
         <ProSteps v-if="isDetail" :data="form?.proSteps?.fireDispatchTransferVOList?.value" />
       </van-form>
-
-      <div class="form-footer" v-if="!showPreview">
-        <template v-if="isApproval && isEdit">
-          <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
-            审核
-          </van-button>
-        </template>
-        <template v-else>
-          <van-button round block type="default" size="small" :loading="commonLoading" @click="handleTemporary">
-            暂存
-          </van-button>
-          <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
-            确定
-          </van-button>
-        </template>
-      </div>
     </div>
 
     <!-- 出动审核 -->
@@ -1554,12 +1544,28 @@ const onSideBarChange = (e, k) => {
       </template>
     </ProModal>
   </div>
+  <div v-if="!showPreview && show.apiLoading" class="dispatch-report-footer">
+    <div class="form-footer">
+      <template v-if="isApproval && isEdit">
+        <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
+          审核
+        </van-button>
+      </template>
+      <template v-else>
+        <van-button round block type="default" size="small" :loading="commonLoading" @click="handleTemporary">
+          暂存
+        </van-button>
+        <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
+          确定
+        </van-button>
+      </template>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .dispatch-report-form {
   width: 100%;
-  height: 100%;
   display: flex;
   background-color: #F6F8FC;
   .form-left {
@@ -1571,12 +1577,16 @@ const onSideBarChange = (e, k) => {
     display: flex;
     flex: 1;
     flex-direction: column;
-    .form-footer {
-      display: flex;
-      padding: 20px 30px;
-      button:first-child {
-        margin-right: 20px;
-      }
+  }
+}
+.dispatch-report-footer {
+  padding: 0 20px;
+  .form-footer {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    button:first-child {
+      margin-right: 20px;
     }
   }
 }
