@@ -92,6 +92,12 @@ const selectText = ref('');
 
 watch(() => props.value, (newVal, oldVal) => {
   if (props.value?.length <= 0) {
+    // 已经选中的要重置
+    treeData.value.forEach(arr => {
+      arr.forEach(i => {
+        i.checked = false
+      })
+    })
     selectItem.value = [];
     selectValue.value = [];
     selectText.value = '';

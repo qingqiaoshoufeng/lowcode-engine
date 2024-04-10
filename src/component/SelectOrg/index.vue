@@ -95,6 +95,12 @@ watch(() => props.value, (newVal, oldVal) => {
       selectValue.value = props.value.map((item) => item[props.fieldNames.value]);
       selectText.value = props.value.map((item) => item[props.fieldNames.label]);
     } else {
+      // 已经选中的要重置
+      treeData.value.forEach(arr => {
+        arr.forEach(i => {
+          i.checked = false
+        })
+      })
       selectItem.value = [];
       selectValue.value = [];
       selectText.value = [];

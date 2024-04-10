@@ -379,6 +379,7 @@ const onDealEndDate = () => {
       title="请选择展开时间"
       label="展开时间："
       placeholder="请选择展开时间"
+      class="field-not-required"
       :minDate="minInputTime"
       :rules="[{ validator: validateCarryout, trigger: 'onBlur' }, ...form.basicInformation.carryoutDate.rules]"
       @change="carryoutDateChange"
@@ -402,6 +403,7 @@ const onDealEndDate = () => {
       title="请选择出水时间"
       label="出水时间："
       placeholder="请选择出水时间"
+      class="field-not-required"
       :minDate="minInputTime"
       :rules="[{ validator: validateWaterflow, trigger: 'onBlur' }, ...form.basicInformation.waterflowDate.rules]"
       @change="waterflowDateChange"
@@ -425,6 +427,7 @@ const onDealEndDate = () => {
       title="请选择控制时间"
       label="控制时间："
       placeholder="请选择控制时间"
+      class="field-not-required"
       :minDate="minInputTime"
       :rules="form.basicInformation.controllingDate.rules"
     >
@@ -471,6 +474,7 @@ const onDealEndDate = () => {
       title="请选择洗消时间"
       label="洗消时间："
       placeholder="请选择洗消时间"
+      class="field-not-required"
       :minDate="minInputTime"
       :rules="form.basicInformation.washDate.rules"
     >
@@ -566,6 +570,7 @@ const onDealEndDate = () => {
       label="平均时速(公里/小时)："
       label-width="158px"
       placeholder="请输入平均时速"
+      class="field-not-required"
       :rules="form.basicInformation.presentSpeed.rules"
       :disabled="!showPreview"
     >

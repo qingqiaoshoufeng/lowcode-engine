@@ -273,6 +273,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择安装范围"
                 @change="onAlarm"
                 title="请选择自动报警系统"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -299,6 +300,7 @@ const onEmergencyExit = () => {
                 @change="onAlarmStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否启动"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -324,6 +326,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择是否有效"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否有效"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                     <FieldAnnotation
@@ -349,6 +352,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未启动原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未启动原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -378,6 +382,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未安装原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未安装原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -436,6 +441,7 @@ const onEmergencyExit = () => {
                 allow-clear
                 placeholder="请选择安装范围"
                 title="请选择安装范围"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -462,6 +468,7 @@ const onEmergencyExit = () => {
                 @change="onFireFightStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否启动"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -487,6 +494,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择是否有效"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否有效"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -512,6 +520,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未启动原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未启动原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -541,6 +550,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未安装原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未安装原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -599,6 +609,7 @@ const onEmergencyExit = () => {
                 allow-clear
                 placeholder="请选择安装范围"
                 title="请选择室内消火栓系统"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -625,6 +636,7 @@ const onEmergencyExit = () => {
                 @change="onIndoorHydrantStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否启动"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -650,6 +662,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择是否有效"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否有效"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -675,6 +688,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未启动原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未启动原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -704,6 +718,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未安装原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未安装原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -763,6 +778,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择安装范围"
                 @change="onSmokeControl"
                 title="请选择安装范围"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -789,6 +805,7 @@ const onEmergencyExit = () => {
                 @change="onSmokeControlStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否启动"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -815,6 +832,7 @@ const onEmergencyExit = () => {
                 @change="onSmokeControlStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否有效"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -840,6 +858,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未启动原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未启动原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -869,6 +888,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未安装原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未安装原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -927,6 +947,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择安装范围"
                 :field-names="{ value: 'boDictId', label: 'dictName' }"
                 title="请选择安装范围"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -953,6 +974,7 @@ const onEmergencyExit = () => {
                 @change="onFireShutterStart"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否启动"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -978,6 +1000,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择是否有效"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择是否有效"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -1003,6 +1026,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未启动原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未启动原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -1032,6 +1056,7 @@ const onEmergencyExit = () => {
                 placeholder="请选择未安装原因"
                 :field-names="{ value: 'value', label: 'label' }"
                 title="请选择未安装原因"
+                class="field-not-required"
               >
                 <template v-slot:label="">
                   <FieldAnnotation
@@ -1089,6 +1114,7 @@ const onEmergencyExit = () => {
             placeholder="请选择不符合规定原因"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择不符合规定原因"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1134,6 +1160,7 @@ const onEmergencyExit = () => {
           <SelectSingle
             name="fireFacilities,networkAlarm,value"
             label="联网报警方式："
+            label-width="124px"
             :rules="form.fireFacilities.networkAlarm.rules"
             id="networkAlarm"
             v-model:value="form.fireFacilities.networkAlarm.value"
@@ -1143,6 +1170,7 @@ const onEmergencyExit = () => {
             placeholder="请选择联网报警方式"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             title="请选择联网报警方式"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1187,6 +1215,7 @@ const onEmergencyExit = () => {
           <van-field 
             name="fireBuilding,compartmentArea,value"
             label="分区面积（m2）："
+            label-width="136px"
             :rules="form.fireFacilities.compartmentArea.rules"
             id="compartmentArea"
             v-model="form.fireFacilities.compartmentArea.value"
@@ -1197,6 +1226,7 @@ const onEmergencyExit = () => {
             aria-autocomplete="none"
             placeholder="请输入分区面积"
             type="number" 
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1241,6 +1271,7 @@ const onEmergencyExit = () => {
           <van-field 
             name="fireBuilding,separationMeter,value"
             label="间距（m2）："
+            label-width="112px"
             :rules="form.fireFacilities.separationMeter.rules"
             id="separationMeter"
             v-model="form.fireFacilities.separationMeter.value"
@@ -1250,7 +1281,8 @@ const onEmergencyExit = () => {
             :maxlength="10"
             aria-autocomplete="none"
             placeholder="请输入间距"
-            type="number" 
+            type="number"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1305,6 +1337,7 @@ const onEmergencyExit = () => {
             placeholder="请选择不符合规定原因"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择不符合规定原因"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1359,6 +1392,7 @@ const onEmergencyExit = () => {
             placeholder="请选择不符合规定原因"
             :field-names="{ value: 'value', label: 'label' }"
             title="请选择不符合规定原因"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation

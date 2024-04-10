@@ -404,7 +404,22 @@ const warningTypeChange = (value, selectedOptions) => {
     formRef.value.resetValidation(['warningOrgname'])
     // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
   }
+  if (!selectedOptions || selectedOptions?.length <= 0 || selectedOptions?.[0]?.dictName === '虚假警') {
+    form.value.isNaturalDisaster = ''
+    form.value.naturalDisasterType = []
+    form.value.naturalDisasterTypeText = []
+    form.value.naturalDisasterOther = ''
+    form.value.typhoonType = undefined
+  }
 };
+
+const naturalDisasterTypeChange = (value) => {
+  if (value === '2') {
+    form.value.naturalDisasterTypeText = []
+    form.value.naturalDisasterOther = ''
+    form.value.typhoonType = undefined
+  }
+}
 
 const onDispatchArriveFlag = () => {
   if (form.value.dispatchArriveFlag === '2') {
@@ -1249,9 +1264,10 @@ const onWarningOrgname = () => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         name="warningTel"
-        label="报警人联系方式："
-        placeholder="请输入报警人联系方式"
+        label="联系方式："
+        placeholder="请输入联系方式"
         maxlength="13"
+        class="field-not-required"
         :required="false"
         :disabled="isConfirm"
         :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
@@ -1287,6 +1303,7 @@ const onWarningOrgname = () => {
               icon-size="16px"
               direction="horizontal"
               :disabled="isConfirm"
+              @change="naturalDisasterTypeChange"
             >
               <van-radio name="1">是</van-radio>
               <van-radio name="2">否</van-radio>
@@ -1386,6 +1403,7 @@ const onWarningOrgname = () => {
         label-width="112px"
         placeholder="请输入119警情编号"
         maxlength="50"
+        class="field-not-required"
         :required="false"
         :rules="[
           { pattern: /^[A-Za-z0-9]*$/, message: '请输入正确119警情编号' },
@@ -1416,6 +1434,7 @@ const onWarningOrgname = () => {
         placeholder="请选择警情标签"
         title="请选择警情标签"
         :disabled="isConfirm"
+        class="field-not-required"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -1966,7 +1985,7 @@ const onWarningOrgname = () => {
   }
   .switch-wrapper {
     :deep(.van-field__control.van-field__control--custom) {
-      justify-content: right;
+      // justify-content: right;
     }
   }
 

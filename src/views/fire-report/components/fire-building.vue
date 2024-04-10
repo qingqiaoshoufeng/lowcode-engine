@@ -461,6 +461,7 @@ const onBuildTag = (val) => {
           :options="options.buildUse"
           placeholder="请选择建筑使用用途"
           allow-clear
+          class="field-not-required"
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
           @change="onBuildUse"
         >
