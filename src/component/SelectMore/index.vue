@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
+import CascaderMultiple from "@/component/CascaderMultiple/index";
 import SelectOrg from "@/component/SelectOrg/index";
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import AreaCascader from "@/component/AreaCascader/index";
@@ -145,6 +146,19 @@ defineOptions({
               :single="item.single"
               :select-leaf="item.selectLeaf"
               :headers-disabled="item.headersDisabled"
+            />
+          </template>
+          <template v-else-if="item.type === 'cascader-level'">
+            <CascaderMultiple
+              v-model:value="query[item.value]"
+              v-model:text="item.text"
+              :options="item.options"
+              :required="false"
+              :readonly="true"
+              :single="true"
+              :field-names="item.fieldNames ? item.fieldNames : { value: 'boDictId', label: 'dictName' }"
+              label=""
+              :placeholder="item.placeholder"
             />
           </template>
           <template v-else-if="item.type === 'cascader'">

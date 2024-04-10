@@ -98,8 +98,8 @@
   <!-- 填报窗口 -->
   <ProModal
     v-model:visible="show.editVisible"
-    :showConfirmBack="true"
     :showHeader="false"
+    :showBack="true"
     title="火灾填报"
   >
     <template #default="{ setHandleOk, setHandleExtend }">

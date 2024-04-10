@@ -379,7 +379,7 @@ const container = () => {
 }
 
 // 打开审核弹窗
-const showReviewDialog = ()=>{
+const showReviewDialog = () => {
   show.value.approvalVisible = true
 }
 
@@ -562,6 +562,7 @@ const initWatch = () => {
   initDraftRules(!props.showDraft, formRef)
   setTimeout(() => {
     showPreview.value = Boolean(props.isDetail && (form.value.basicInfo.severity.value || form.value.basicInfo.fireType.value))
+    show.value.apiLoading = true
   }, 0)
 }
 
@@ -1035,36 +1036,37 @@ const commonLoading = computed(() => {
   return loading.value || againLoading.value || backLoading.value || approvalLoading.value || temporaryLoading.value
 })
 
-onMounted(() => {
-  showLoadingToast()
-  props.setHandleOk && props.setHandleOk((finishFn) => {
-    formRef.value.validate().then(async (values) => {   
-      if (props.isApproval) {
-        show.value.approvalVisible = true
-      }
-      else if (props.isAgain) {
-        await againSubmit()
-        await finishFn()
+const handleSubmit = () => {
+  formRef.value.validate().then(async (values) => {   
+    if (props.isApproval) {
+      show.value.approvalVisible = true
+    }
+    else if (props.isAgain) {
+      await againSubmit()
+      await finishFn()
+    }
+    else {
+      if (!props.showDraft && checkFieldWarning(fieldExist.value)
+      ) {
+        // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
+        showToast('请对异常指标进行批注说明！')
       }
       else {
-        if (!props.showDraft && checkFieldWarning(fieldExist.value)
-        ) {
-          // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
-          showToast('请对异常指标进行批注说明！')
-        }
-        else {
-          await submit()
-          await finishFn()
-        }
+        await submit()
+        await finishFn()
       }
+    }
+  })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error,'error')
+      showToast('信息填写不完整，请检查填写内容！')
+      scrollFormFailed()
     })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error,'error')
-        showToast('信息填写不完整，请检查填写内容！')
-        scrollFormFailed()
-      })
-  }, commonLoading)
+}
+
+onMounted(() => {
+  showLoadingToast()
   // 暂存
   // props.setHandleExtend && props.setHandleExtend(async (finishFn) => {
   //   await temporarySubmit()
@@ -1112,7 +1114,7 @@ const onSideBarChange = (e, k) => {
 </script>
 
 <template>
-  <div class="editor-form" :class="{'hidevalidate':hidevalidate}">
+  <div v-if="show.apiLoading" class="editor-form" :class="{'hidevalidate':hidevalidate}" :style="{ height: !showPreview ? 'calc(100% - 64px)' : '100%' }">
       <div class="form-left">
         <van-sidebar 
           v-model="sideBarActive" 
@@ -1191,17 +1193,26 @@ const onSideBarChange = (e, k) => {
                   />
                 </ProCard>
               </van-form>
-              <div class="form-footer" v-if="!showPreview">
-                <van-button class="temporary" v-if="isShowTemporary" :loading="commonLoading" round block type="primary" @click.stop="setTemporary">
-                  暂存
-                </van-button>
-                <van-button v-if="isReview" round block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
-                  审核
-                </van-button>
-              </div>
             </div>
          </div>
       </div>
+  </div>
+  <div v-if="!showPreview && show.apiLoading" class="fire-report-footer">
+    <div class="form-footer" v-if="!showPreview">
+      <template v-if="isReview">
+        <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
+          审核
+        </van-button>
+      </template>
+      <template v-else>
+        <van-button type="primary" size="small" v-if="isShowTemporary" :loading="commonLoading" round block @click.stop="setTemporary">
+          暂存
+        </van-button>
+        <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
+          确定
+        </van-button>
+      </template>
+    </div>
   </div>
 
   <!-- 提交审核 -->
@@ -1226,7 +1237,6 @@ const onSideBarChange = (e, k) => {
 <style lang="scss" scoped>
 .editor-form {
   width: 100%;
-  height: 100%;
   display: flex;
   background-color: #F6F8FC;
   .form-left {
@@ -1248,14 +1258,16 @@ const onSideBarChange = (e, k) => {
     }
   }
 }
-.form-footer {
-    padding: 0 33px 30px 33px;
-    .temporary{
-      height: 42px;
-      background: #1833A9;
-      border-radius: 21px;
-      opacity: 0.6;
+.fire-report-footer {
+  padding: 0 20px;
+  .form-footer {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    button:first-child {
+      margin-right: 20px;
     }
+  }
 }
 
 .fire-input {
