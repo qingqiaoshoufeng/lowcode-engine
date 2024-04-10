@@ -26,16 +26,16 @@ import CompositeSearch from "@/views/compositeSearch/index.vue";
 import AdvanceSearch from "@/views/advanceSearch/index.vue";
 
 const option = [
-  { text: "全局搜索", value: "GlobalSearch" },
   { text: "综合查询", value: "CompositeSearch" },
   { text: "高级查询", value: "AdvanceSearch" },
+  { text: "全局搜索", value: "GlobalSearch" },
 ];
 
-const dropValue = ref("GlobalSearch");
+const dropValue = ref("CompositeSearch");
 
 const currentab = ref(2);
 
-const currentValue = shallowRef(GlobalSearch)
+const currentValue = shallowRef(CompositeSearch)
 
 const onDropdown = (value) => {
   if (value === 'GlobalSearch') {

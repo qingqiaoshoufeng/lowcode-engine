@@ -64,7 +64,7 @@
           </div>
         </template>
     </ProList>
-    <ProModal  v-model:visible="show.editVisible" title="火灾填报">
+    <ProModal v-model:visible="show.editVisible" :showBack="true" :showHeader="false" title="火灾填报">
       <template #default="{ setHandleOk, setHandleExtend }">
           <EditorForm
             :isAgain="isAgain"
