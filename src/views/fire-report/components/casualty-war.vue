@@ -639,6 +639,7 @@ const bigInjured = computed(() => {
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.schooling`"
             label="受教育程度："
+            label-width="112px"
             :rules="form.casualtyWar.schooling.rules"
             id="schooling"
             v-model:value="item.schooling"
@@ -716,6 +717,7 @@ const bigInjured = computed(() => {
         <div :span="8">
           <SelectSingle
             label="受伤时行为："
+            label-width="112px"
             :name="`casualtyWar.injuredList.${index}.injuryBehavior`"
             :rules="form.casualtyWar.injuryBehavior.rules"
             id="injuryBehavior"
@@ -743,6 +745,7 @@ const bigInjured = computed(() => {
           <SelectSingle
             :name="`casualtyWar.injuredList.${index}.mainSymptoms`"
             label="身体主要症状："
+            label-width="124px"
             :rules="form.casualtyWar.mainSymptoms.rules"
             v-model:value="item.mainSymptoms"
             :showPreview="showPreview"
@@ -1167,6 +1170,7 @@ const bigInjured = computed(() => {
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.schooling`"
             label="受教育程度："
+            label-width="112px"
             :rules="form.casualtyWar.schooling.rules"
             id="schooling"
             v-model:value="item.schooling"
@@ -1245,6 +1249,7 @@ const bigInjured = computed(() => {
           <SelectSingle
             :name="`casualtyWar.deadList.${index}.injuryBehavior`"
             label="受害时行为："
+            label-width="112px"
             :rules="[{ required: form.casualtyWar.injuryBehavior.rules[0].required, message: '请选择受害时行为' }]"
             id="injuryBehavior"
             v-model:value="item.injuryBehavior"
@@ -1271,6 +1276,7 @@ const bigInjured = computed(() => {
           <SelectSingle
            :name="`casualtyWar.deadList.${index}.bodyLocation`"
             label="发现尸体位置："
+            label-width="124px"
             :rules="form.casualtyWar.bodyLocation.rules"
             id="bodyLocation"
             v-model:value="item.bodyLocation"

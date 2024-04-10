@@ -106,7 +106,8 @@ const handleDeletePerson = (index) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入追究人数"
-          type="number" 
+          type="number"
+          class="field-not-required"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -132,7 +133,8 @@ const handleDeletePerson = (index) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入处理人数"
-          type="number" 
+          type="number"
+          class="field-not-required"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -238,6 +240,7 @@ const handleDeletePerson = (index) => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入法人代表"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -264,6 +267,7 @@ const handleDeletePerson = (index) => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择行政处罚"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -353,6 +357,7 @@ const handleDeletePerson = (index) => {
             allow-clear
             placeholder="请选择性别"
             :field-names="{ value: 'value', label: 'label' }"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -379,6 +384,7 @@ const handleDeletePerson = (index) => {
             allow-clear
             placeholder="请选择行政处罚"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
+            class="field-not-required"
           >
             <template v-slot:label="">
               <FieldAnnotation
