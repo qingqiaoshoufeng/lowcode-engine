@@ -136,7 +136,7 @@ const getCurrentStatus = (item) => {
             <template v-if="item.canceledReason">
               <p>终结原因：{{ item.canceledReason }}</p>
             </template>
-            <template>
+            <template v-else>
               <p v-if="getCurrentStatus(item) !== 'process'">审批结果：{{ item.comment }}</p>
               <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.remark }}</p>
             </template>
@@ -145,6 +145,8 @@ const getCurrentStatus = (item) => {
             <p style="font-weight: bold;">{{ item.commentDate ? formatYmdHm(item.commentDate) : '' }}</p>
             <p>申请单位：{{ item.commentOrgName }}</p>
             <p>申请人员：{{ item.commentUserName }}</p>
+            <!-- <p v-if="getCurrentStatus(item) !== 'process'">审批意见：{{ item.comment }}</p>
+            <p v-if="getCurrentStatus(item) !== 'process'">审批结果：{{ item.remark }}</p> -->
           </template>
         </van-step>
       </van-steps>

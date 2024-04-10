@@ -26,7 +26,7 @@ import {
   getOtherProvince,
   saveFireWarning,
   getHeaderOrg,
-  // updateFormFieldAnnotationIds,
+  updateFormFieldAnnotationIds,
 } from "@/apis/index.js";
 import { generateByKeyValue, getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
 import { validateLatitude, validateLongitude, validateTelePhone } from '@/utils/validate.js'
@@ -460,7 +460,7 @@ const { loading, submit } = useSubmit((res) => {
     emits('finishCallback')
   }
   if (res.boFireWarningId) {
-    // updateFormFieldAnnotationIds({ newId: res.boFireWarningId, oldId: localFireWarningId.value })
+    updateFormFieldAnnotationIds({ newId: res.boFireWarningId, oldId: localFireWarningId.value })
   }
   if (props.currentRow?.boFireWarningId) {
     emits('finishCallback')
@@ -658,7 +658,7 @@ const initDetail = () => {
         importantEdit.value = res.importantInfoRecheck
       }
 
-      // refreshField()
+      refreshField()
     }).finally(() => {
       loadDetail.value = false
       closeToast()

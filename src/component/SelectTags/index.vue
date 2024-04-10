@@ -16,6 +16,9 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+defineOptions({
+  name: 'SelectTags'
+})
 const props = defineProps({
   menus:{
     type:Array,
@@ -27,32 +30,47 @@ const props = defineProps({
   },
   selectCallback:{
     type:Function
+  },
+  multiple:{
+    default:true
   }
 })
 
-const value = ref([])
+const value = ref(props.selects)
 const emit = defineEmits(['update:value'])
 const click = (data)=>{
   let selects
-  if(value.value.some(item=>item.key === data.key)){
-    selects = value.value.filter(item=>item.key !== data.key)
+  if(props.multiple){
+    if(value.value.some(item=>item.key === data.key)){
+      selects = value.value.filter(item=>item.key !== data.key)
+    }else{
+      selects= [...value.value,{
+        checked: data.key,
+        hidden: false,
+        key: data.key,
+        label:data.label,
+      }]
+    }
   }else{
-    selects= [...value.value,{
-      checked: data.key,
-      hidden: false,
-      key: data.key,
-      label:data.label,
-    }]
+    selects = [
+      {
+        checked: data.key,
+        hidden: false,
+        key: data.key,
+        label:data.label,
+      }
+    ]
   }
+ 
   value.value = selects
   props.selectCallback(value)
 }
 </script>
-<script>
+<!-- <script>
 export default {
   name:'SelectTags'
 }
-</script>
+</script> -->
 <style lang="scss" scoped>
 .tips-selected-multiple{
   overflow-x: scroll;

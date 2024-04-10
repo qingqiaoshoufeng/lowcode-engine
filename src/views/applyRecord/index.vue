@@ -45,6 +45,15 @@ const searchOptions = ref([
   },
 ]);
 
+const selects = ref([
+  {
+    checked: '1',
+    hidden: false,
+    key: '1',
+    label:'警情更正申请',
+  }
+])
+
 const defaultFilterValue = {
   applyType: "1",
   time: getLastMonth(),
@@ -70,6 +79,10 @@ const onTimeChange = (value) => {
   });
 };
 
+const selectTagsCallback = (val)=>{
+  proListRef.value.query.applyType = val.value[0].key
+  proListRef.value?.filter();
+}
 const onSearchConfirm = () => {
   showLoadingToast();
   proListRef.value.filter().then((res) => {
@@ -107,7 +120,7 @@ onMounted(() => {
     >
       <template #search="{ filterFormState, resetForm }">
         <div class="list-tabs">
-          <SelectSingle
+          <!-- <SelectSingle
             v-model:value="filterFormState.applyType"
             :readonly="true"
             name="applyType"
@@ -119,7 +132,7 @@ onMounted(() => {
             style="margin-right: 10px"
             :rules="[{ required: true, message: '请选择申请类型' }]"
             @change="onTimeChange"
-          />
+          /> -->
           <SelectTime
             v-model:value="filterFormState.time"
             title="选择时间"
@@ -131,6 +144,7 @@ onMounted(() => {
             @confirmCallback="onSearchConfirm"
           />
         </div>
+        <SelectTags class="select_tags" :multiple="false" :menus="applyRecordType.map(item=>({key:item.value,label:item.label}))" :selects="selects" :select-callback="selectTagsCallback" />
       </template>
       <template #list="{ record }">
         <div class="pro-list-item" @click="handleItem(record)">
@@ -188,6 +202,12 @@ onMounted(() => {
   .list-tabs {
     display: flex;
     padding: 10px 12px 0 12px;
+  }
+}
+.select_tags {
+  margin-top: 10px;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 </style>

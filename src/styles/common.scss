@@ -74,6 +74,11 @@
 .p_e_n{
   pointer-events: none;
 }
+.van-field--disabled{
+  .label{
+    color: #323233 !important;
+  }
+}
 
 .van-field__label--required:has(.field-annotation) {
   // display: flex !important;

@@ -7,7 +7,7 @@ import HeaderTitle from '../HeaderTitle/index.vue'
 const props = defineProps({
   showTotal:{
     type: Boolean,
-    default: false,
+    default: true,
   },
   title: {
     type:String,
@@ -146,11 +146,7 @@ defineExpose({
   resetForm,
 })
 </script>
-<script>
-export default {
-  name:'ProList'
-}
-</script>
+
 
 <template>
   <div class="pro-list">
@@ -162,9 +158,6 @@ export default {
       </template>
       
     </HeaderTitle>
-    <div class="total" v-if="showTotal">
-      <strong>查询结果：</strong><span>共查到</span><span class="total-num">{{total}}</span><span>起记录</span>
-    </div>
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
         <van-tab
@@ -178,12 +171,16 @@ export default {
     <div class="list-search">
       <slot name="search" :tabsActive="tabsActive" :filter-form-state="query" :reset-form="resetForm" />
     </div>
+    <div class="total" v-if="showTotal">
+      <strong>查询结果：</strong><span>共查到</span><span class="total-num">{{total}}</span><span>起记录</span>
+    </div>
     <div class="list-wrapper">
       <template v-if="total === 0 && finished">
         <div class="no-data">
           <van-empty image-size="100" description="暂无数据" />
         </div>
       </template>
+      
       <template v-else>
         <van-list
           v-model:loading="loading"
@@ -222,6 +219,7 @@ export default {
   }
   .total{
     padding: 10px 0 0 16px;
+    padding-bottom: 10px;
     .total-num{
       color: #FC5B3F;
     }
