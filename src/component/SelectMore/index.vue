@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
-import CascaderMultiple from "@/component/CascaderMultiple/index";
+import CascaderSingleLevel from "@/component/CascaderSingle/level";
 import SelectOrg from "@/component/SelectOrg/index";
 import SelectRangeTime from "@/component/SelectRangeTime/index";
 import AreaCascader from "@/component/AreaCascader/index";
@@ -149,7 +149,7 @@ defineOptions({
             />
           </template>
           <template v-else-if="item.type === 'cascader-level'">
-            <CascaderMultiple
+            <CascaderSingleLevel
               v-model:value="query[item.value]"
               v-model:text="item.text"
               :options="item.options"

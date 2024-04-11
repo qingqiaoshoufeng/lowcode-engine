@@ -324,8 +324,7 @@ const sections = computed(() => {
     extra.basicInformation = basicInformation
     extra.investForce = investForce
     extra.casualtyWar = casualtyWar
-    if (!showFalsePolice.value
-          && !(showSecurityService.value && (showNotDealReason.value || showMidwayReturn.value))
+    if (!showFalsePolice.value && !showSecurityService.value
           && !(showSocialAssistance.value && (showNotDealReason.value || showMidwayReturn.value))
           && !(showRescueRescue.value && (showNotDealReason.value || showMidwayReturn.value))
           && !(showFireFighting.value && (showNotDealReason.value || showMidwayReturn.value))
@@ -339,9 +338,7 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    if (!showSecurityService.value) {
-      extra.battleConsume = battleConsume
-    }
+    extra.battleConsume = battleConsume
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -353,8 +350,7 @@ const sections = computed(() => {
     extra.basicInformation = basicInformation
     extra.investForce = investForce
     extra.casualtyWar = casualtyWar
-    if (!showFalsePolice.value
-          && !(showSecurityService.value && (showNotDealReason.value || showMidwayReturn.value))
+    if (!showFalsePolice.value && !showSecurityService.value
           && !(showSocialAssistance.value && (showNotDealReason.value || showMidwayReturn.value))
           && !(showRescueRescue.value && (showNotDealReason.value || showMidwayReturn.value))
           && !(showFireFighting.value && (showNotDealReason.value || showMidwayReturn.value))
@@ -368,9 +364,7 @@ const sections = computed(() => {
       extra.scenePhoto = scenePhoto
     }
     extra.otherAttach = otherAttach
-    if (!showSecurityService.value) {
-      extra.battleConsume = battleConsume
-    }
+    extra.battleConsume = battleConsume
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -381,9 +375,7 @@ const sections = computed(() => {
     extra.deployEquipment = deployEquipment
     extra.commandProcess = commandProcess
     extra.casualtyWar = casualtyWar
-    if (!showSecurityService.value) {
-      extra.battleConsume = battleConsume
-    }
+    extra.battleConsume = battleConsume
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -1442,8 +1434,7 @@ const onSideBarChange = (e, k) => {
           <!-- 战斗成果 -->
           <BattleResult
             v-if="
-              !showFalsePolice
-                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+              !showFalsePolice && !showSecurityService
                 && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
@@ -1489,8 +1480,7 @@ const onSideBarChange = (e, k) => {
           <!-- 战斗成果 -->
           <BattleResult
             v-if="
-              !showFalsePolice
-                && !(showSecurityService && (showNotDealReason || showMidwayReturn))
+              !showFalsePolice && !showSecurityService
                 && !(showSocialAssistance && (showNotDealReason || showMidwayReturn))
                 && !(showRescueRescue && (showNotDealReason || showMidwayReturn))
                 && !(showFireFighting && (showNotDealReason || showMidwayReturn))
