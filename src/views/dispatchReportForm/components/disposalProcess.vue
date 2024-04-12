@@ -27,15 +27,15 @@ const isDetail = inject("isDetail")
         name="disposalProcess.fireProcess.value"
         rows="4"
         autosize
-        label="处置经过："
+        :label="showPreview ? '' : '处置经过：'"
         type="textarea"
         maxlength="2000"
         placeholder="请输入处置经过"
-        show-word-limit
+        :show-word-limit="!showPreview"
         :rules="form.disposalProcess.fireProcess.rules"
         :class="{ 'form-textarea': !showPreview }"
       >
-        <template v-slot:label="">
+        <template v-if="!showPreview" v-slot:label="">
           <FieldAnnotation
             label="处置经过："
             remark-field="fireProcess"

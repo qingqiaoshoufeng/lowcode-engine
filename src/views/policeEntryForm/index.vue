@@ -112,7 +112,7 @@ const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正
 
-const labelWarningOrgname = ref("单位/户主/个体户/建筑名称");
+const labelWarningOrgname = ref("单位/户主名");
 
 let warningLevelOptions = []; // 警情等级
 
@@ -124,7 +124,7 @@ const form = ref({
   warningName: "", // 警情标题
   warningDate: undefined, // 接警时间
   warningCodeYyj: "", // 119警情编号
-  warningOrgname: "", // 单位/户主/个体户/建筑名称
+  warningOrgname: "", // 单位/户主名
   warningArea: "", // 行政区域
   warningAreaText: "",
   warningAddr: "", // 警情地址
@@ -372,7 +372,7 @@ const initWarningOrgname = () => {
     formRef.value.resetValidation(['warningOrgname'])
   }
   else {
-    labelWarningOrgname.value = '单位/户主/个体户/建筑名称'
+    labelWarningOrgname.value = '单位/户主名'
     formRef.value.resetValidation(['warningOrgname'])
   }
 }
@@ -400,7 +400,7 @@ const warningTypeChange = (value, selectedOptions) => {
     form.value.warningTypeText = [];
     form.value.areaDutyGroup = [];
     form.value.warningSource = undefined
-    labelWarningOrgname.value = "单位/户主/个体户/建筑名称";
+    labelWarningOrgname.value = "单位/户主名";
     formRef.value.resetValidation(['warningOrgname'])
     // deleteField(['warningTypeOther', 'warningLevel', 'typhoonType', 'areaDutyGroup'])
   }
@@ -1199,7 +1199,7 @@ const onWarningOrgname = () => {
         maxlength="50"
         required
         name="warningOrgname"
-        label-width="150px"
+        label-width="108px"
         :label="`${labelWarningOrgname}：`"
         :placeholder="`请输入${labelWarningOrgname}`"
         :rules="[{ required: true, message: `请输入${labelWarningOrgname}` }]"

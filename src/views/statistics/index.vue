@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, provide } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
@@ -40,6 +40,8 @@ const currentRow = ref(null);
 const proListRef = ref(null);
 
 const isRote = ref(false)
+
+provide('show', show)
 
 const onTabFn = (name, title) => {
   if (title === tabs.value[1].title) {

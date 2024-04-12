@@ -156,7 +156,6 @@ defineExpose({
           <div @click="showExplainFn" class="explain">规则说明</div>
         </slot>
       </template>
-      
     </HeaderTitle>
     <div v-if="tabs?.length > 0" class="list-tabs">
       <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
@@ -210,14 +209,14 @@ defineExpose({
   flex-direction: column;
   .list-search {
   }
-  .explain{
+  .explain {
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FFFFFF;
     line-height: 22px;
   }
-  .total{
+  .total {
     padding: 10px 0 0 16px;
     padding-bottom: 10px;
     .total-num{

@@ -1180,9 +1180,7 @@ const onSideBarChange = (e, k) => {
                   <FireCourse />
                 </ProCard>
                 <!-- 其他附件 -->
-                <ProCard title="其他附件" id="otherAttach" :showOpenClose="!showPreview">
-                  <OtherAttach />
-                </ProCard>
+                <OtherAttach />
                 <!-- 操作记录 -->
                 <ProCard title="操作记录" id="proSteps" v-if="isDetail || (isApproval && labelText === '审核')">
                   <ProSteps

@@ -97,12 +97,18 @@ const onTabsChange = (index) => {
           </template>
           <template v-if="selectItem?.type === 1">
             <div class="time">
-              填报时间：{{ dayjs(selectItem?.createDate).format('YYYY-MM-DD HH:mm:ss') }}
+              填报时间：
+              <span :class="generateTextByState(selectItem?.warningStatusValue || selectItem?.dispatchStatusValue || selectItem?.fireStatusValue)">
+                {{ dayjs(selectItem?.createDate).format('YYYY-MM-DD HH:mm:ss') }}
+              </span>
             </div>
           </template>
           <template v-else-if="selectItem?.type === 5">
             <div v-if="selectItem?.commitDate" class="time">
-                填报时间：{{ selectItem?.commitDate ? dayjs(selectItem?.commitDate).format('YYYY-MM-DD HH:mm:ss') : '' }}
+                填报时间：
+                <span :class="generateTextByState(selectItem?.warningStatusValue || selectItem?.dispatchStatusValue || selectItem?.fireStatusValue)">
+                  {{ selectItem?.commitDate ? dayjs(selectItem?.commitDate).format('YYYY-MM-DD HH:mm:ss') : '' }}
+                </span>
               </div>
             <div v-else class="time">
               填报时间：
@@ -110,7 +116,10 @@ const onTabsChange = (index) => {
           </template>
           <template v-if="selectItem?.type === 2 || selectItem?.type === 3 || selectItem?.type === 4">
             <div v-if="selectItem?.commitDate" class="time">
-                填报时间：{{ selectItem?.commitDate ? dayjs(selectItem?.commitDate).format('YYYY-MM-DD HH:mm:ss') : '' }}
+                填报时间：
+                <span :class="generateTextByState(selectItem?.warningStatusValue || selectItem?.dispatchStatusValue || selectItem?.fireStatusValue)">
+                  {{ selectItem?.commitDate ? dayjs(selectItem?.commitDate).format('YYYY-MM-DD HH:mm:ss') : '' }}
+                </span>
               </div>
             <div v-else class="time">
               填报时间：

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, inject, watch, onUnmounted } from "vue";
 import dayjs from 'dayjs';
 import { showToast, showLoadingToast, closeToast} from "vant";
 import { cloneDeep } from 'lodash-es';
@@ -61,6 +61,8 @@ const { options } = useOptions({
 
 const { luckyOption } = useExcelConfig();
 
+const show = inject('show')
+
 const form = ref({
   time: getLastMonth(),
   reportStyle: '1',
@@ -86,6 +88,12 @@ const reportDefineRef = ref(null)
 const tableStream = ref(null)
 
 const selectReport = ref(cloneDeep(props.currentRow))
+
+watch(() => show.value?.lookVisible, () => {
+  if (show.value && !show.value.lookVisible) {
+    window.luckysheet.destroy()
+  }
+})
 
 const getExcelTitle = () => {
   if (tableStream.value?.excelTitle) {

@@ -157,7 +157,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProCard title="战斗消耗" id="battleConsume" :state="show?.battleConsume">
+  <ProCard :title="(!show?.battleConsumeHaveData && isDetail) ? '战斗消耗（无数据）' : '战斗消耗'" id="battleConsume" :state="Boolean(show?.battleConsume)">
     <SplitLines title="车辆耗损" style="border-color: #A4A4A4" />
     <van-cell-group>
       <!-- 车辆耗损 -->

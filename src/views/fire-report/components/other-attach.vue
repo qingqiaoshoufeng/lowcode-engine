@@ -1,10 +1,12 @@
 <script setup>
-import { inject, onMounted } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
+import ProCard from "@/component/ProCard/index.vue";
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 import { downloadAttachmentFile, getAttachmentFile,uploadFile } from '@/apis/index.js'
 import {downLoad} from '@/utils/download.js'
+
 const form = inject('form')
 
 const isDetail = inject('isDetail')
@@ -24,6 +26,10 @@ const relevanceDraft = inject('relevanceDraft')
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
+
+const isOpen = ref((((form.value.otherAttach.attach.value && form.value.otherAttach.attach.value.length) || form.value.otherAttach.otherRemark.value) || !isDetail))
+
+const haveData = ref((((form.value.otherAttach.attach.value && form.value.otherAttach.attach.value.length) || form.value.otherAttach.otherRemark.value) || !isDetail))
 
 const { onRemove } = useUpload()
 
@@ -98,72 +104,74 @@ onMounted(() => {
 </script>
 
 <template>
-  <van-cell-group class="rootform1">
-    <div :gutter="gutter">
-      <div :span="24">
-        <van-cell title="相关附件上传" class="item-cell">
-          <van-uploader
-            :readonly="isDetail"
-            :deletable="!isDetail"
-            :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
-            :before-delete="onDelete"
-            @click-preview="downLoadFile"
-            name="basicInfo.attach.value"
-            :rules="form.otherAttach.attach.rules"
-            :disabled="isDetail"
-            preview-full-image
-            :max-count="9"
-            accept="*"
-            :max-size="10 * 1000 * 1000000"
-            id="attach"
-            v-model="form.otherAttach.attach.value" 
-            :after-read="OnAfterRead"
-            @delete="onDelete"
-          />
-        </van-cell>
-      </div>
-    </div>
-    <div :gutter="gutter">
-      <div :span="24">
-        <van-field
-          name="otherAttach.otherRemark.value"
-          label="补充说明"
-          :rules="form.otherAttach.otherRemark.rules"
-          id="otherRemark"
-          v-model="form.otherAttach.otherRemark.value"
-          v-preview-text="showPreview"
-          :rows="6"
-          :maxlength="1000"
-          show-count
-          allow-clear
-          placeholder="请输入补充说明"
-          autosize
-          type="textarea"
-          @click-preview="downLoadFile"
-        >
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="补充说明"
-              remark-field="attach"
-              field-module="otherAttach"
-              :exist-data="fieldExist?.attach"
-              @refresh-callback="refreshField"
+  <ProCard :title="haveData ? '其他附件' : '其他附件（无数据）'" id="otherAttach" :state="isOpen">
+    <van-cell-group class="rootform1">
+      <div :gutter="gutter">
+        <div :span="24">
+          <van-cell title="相关附件上传" class="item-cell">
+            <van-uploader
+              :readonly="isDetail"
+              :deletable="!isDetail"
+              :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
+              :before-delete="onDelete"
+              @click-preview="downLoadFile"
+              name="basicInfo.attach.value"
+              :rules="form.otherAttach.attach.rules"
+              :disabled="isDetail"
+              preview-full-image
+              :max-count="9"
+              accept="*"
+              :max-size="10 * 1000 * 1000000"
+              id="attach"
+              v-model="form.otherAttach.attach.value" 
+              :after-read="OnAfterRead"
+              @delete="onDelete"
             />
-          </template>
-        </van-field>
-       </div>
-    </div>
-  </van-cell-group>
+          </van-cell>
+        </div>
+      </div>
+      <div :gutter="gutter">
+        <div :span="24">
+          <van-field
+            name="otherAttach.otherRemark.value"
+            label="补充说明"
+            :rules="form.otherAttach.otherRemark.rules"
+            id="otherRemark"
+            v-model="form.otherAttach.otherRemark.value"
+            v-preview-text="showPreview"
+            :rows="6"
+            :maxlength="1000"
+            show-count
+            allow-clear
+            placeholder="请输入补充说明"
+            autosize
+            type="textarea"
+            @click-preview="downLoadFile"
+          >
+            <template v-slot:label="">
+              <FieldAnnotation
+                label="补充说明"
+                remark-field="attach"
+                field-module="otherAttach"
+                :exist-data="fieldExist?.attach"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
+        </div>
+      </div>
+    </van-cell-group>
+  </ProCard>
 </template>
+
 <style lang="scss" scoped>
 .item-cell {
-    flex-direction: column;
-    :deep(.van-cell__value) {
-      display: flex;
-
-    }
-    &::after{
-      display: none;
-    }
+  flex-direction: column;
+  :deep(.van-cell__value) {
+    display: flex;
   }
+  &::after{
+    display: none;
+  }
+}
 </style>
