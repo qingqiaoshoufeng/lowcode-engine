@@ -612,7 +612,7 @@ const onFireLevel = () => {
         title="请选择火灾等级"
         disabled
         right-icon="question-o"
-        class="fire-level-item"
+        class="fire-level-item field-not-required"
         @click-right-icon.stop="onFireLevel"
       >
         <template v-slot:label="">
@@ -651,25 +651,25 @@ const onFireLevel = () => {
       </SelectDateTime>
       </div>
       <div class="noDispatchArea" v-if="unDispatch">
-          <AreaCascader
-            name="basicInfo.noDispatchArea.value"
-            label="行政区域："
-            :rules="form.basicInfo.noDispatchArea.rules"
-            v-model:value="form.basicInfo.noDispatchArea.value"
-            :showPreview="showPreview"
-            :show-all-area="!!showPreview"
-            :required="!showPreview"
-          >
-            <template v-slot:label="">
-              <FieldAnnotation
-                label="行政区域："
-                remark-field="noDispatchArea"
-                field-module="basicInfo"
-                :exist-data="fieldExist?.noDispatchArea"
-                @refresh-callback="refreshField"
-              />
-            </template>
-          </AreaCascader>
+        <AreaCascader
+          name="basicInfo.noDispatchArea.value"
+          label="行政区域："
+          :rules="form.basicInfo.noDispatchArea.rules"
+          v-model:value="form.basicInfo.noDispatchArea.value"
+          :showPreview="showPreview"
+          :show-all-area="!!showPreview"
+          :required="!showPreview"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="行政区域："
+              remark-field="noDispatchArea"
+              field-module="basicInfo"
+              :exist-data="fieldExist?.noDispatchArea"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </AreaCascader>
       </div>
       <div class="fireDirection">
         <van-field
@@ -799,6 +799,7 @@ const onFireLevel = () => {
           name="basicInfo.socialCreditCode.value"
           placeholder="单位统一社会信用代码"
           label-width="105"
+          class="field-not-required"
           :rules="form.basicInfo.socialCreditCode.rules"
         >
           <template v-slot:label="">
@@ -1437,8 +1438,6 @@ const onFireLevel = () => {
           </template>
         </CascaderSingle>
       </div>
-   
-    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field
           label="引起火灾人员年龄："
@@ -1450,6 +1449,7 @@ const onFireLevel = () => {
           :maxlength="3"
           aria-autocomplete="none"
           placeholder="请输入引起火灾人员年龄"
+          class="field-not-required"
           name="basicInfo.firePersonAge.value"
           type="digit"
         >
@@ -1477,6 +1477,7 @@ const onFireLevel = () => {
           placeholder="请选择受教育程度"
           title="请选择受教育程度"
           label-width="105"
+          class="field-not-required"
         >
         <template v-slot:label="">
           <FieldAnnotation
@@ -1501,6 +1502,7 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择健康状况"
           title="请选择健康状况"
+          class="field-not-required"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1677,7 +1679,7 @@ const onFireLevel = () => {
           name="basicInfo.isInsurance.value" 
           label="是否保险：" 
           :rules="form.basicInfo.isInsurance.rules"
-          class="field-radio"
+          class="field-radio field-not-required"
         >
           <template #input>
             <van-radio-group 
@@ -1731,12 +1733,17 @@ const onFireLevel = () => {
         </SelectMultiple>
       </div>
     
-    
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
-        <van-field label-width="130" class="field-radio" name="basicInfo.isOnesided.value" label="是否单方面火灾：" :rules="form.basicInfo.isOnesided.rules">
+        <van-field
+          label-width="130"
+          class="field-radio field-not-required"
+          name="basicInfo.isOnesided.value"
+          label="是否单方面火灾："
+          :rules="form.basicInfo.isOnesided.rules"
+        >
           <template #input>
             <van-radio-group 
-              class="field-radio"
+              class="field-radio field-not-required"
               id="isOnesided"
               v-model="form.basicInfo.isOnesided.value"
               v-preview-text="showPreview"
@@ -1757,7 +1764,6 @@ const onFireLevel = () => {
         </van-field>
       </div>
     
-    
       <div v-if="!showOtherMinor" :span="8">
         <SelectSingle
           label="监督检查情况："
@@ -1773,6 +1779,7 @@ const onFireLevel = () => {
           @change="onFireInspection"
           title="请选择事故牵头调查部门"
           label-width="120"
+          class="field-not-required"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1839,7 +1846,6 @@ const onFireLevel = () => {
           </template>
         </SelectSingle>
       </div>
-    
     
       <div v-if="!showBuildingMinor && !showOtherMinor" :span="8">
         <van-field 
@@ -1993,13 +1999,13 @@ const onFireLevel = () => {
   }
 }
 .item-cell {
-    flex-direction: column;
-    :deep(.van-cell__value) {
-      display: flex;
+  flex-direction: column;
+  :deep(.van-cell__value) {
+    display: flex;
 
-    }
-    &::after{
-      display: none;
-    }
   }
+  &::after{
+    display: none;
+  }
+}
 </style>

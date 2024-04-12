@@ -109,24 +109,24 @@ const handleCancel = () => {
 const handleConfirm = () => {
   formRef.value.validate().then(async (values) => {
     const params = {
-        dataId: localFieldRemarkId.value,
-        dataType,
-        remarkField: props.remarkField,
-        remarkField2: props.remarkField2,
-        remarkContent: form.value.remarkContent,
-        fieldModule: props.fieldModule,
+      dataId: localFieldRemarkId.value,
+      dataType,
+      remarkField: props.remarkField,
+      remarkField2: props.remarkField2,
+      remarkContent: form.value.remarkContent,
+      fieldModule: props.fieldModule,
+    }
+    if (props.remarkField2Id > -1) {
+      params.remarkField2Id = props.remarkField2Id
+    }
+    addFieldAnnotation(params).then((res) => {
+      if (res) {
+        form.value.remarkContent = ''
+        showVisible.value = false
+        initList()
+        emits('refreshCallback')
       }
-      if (props.remarkField2Id > -1) {
-        params.remarkField2Id = props.remarkField2Id
-      }
-      addFieldAnnotation(params).then((res) => {
-        if (res) {
-          form.value.remarkContent = ''
-          showVisible.value = false
-          initList()
-          emits('refreshCallback')
-        }
-      })
+    })
   })
 }
 
@@ -148,32 +148,31 @@ watch(() => showVisible.value, () => {
 })
 
 const handleDelete = async (item) => {
-
-showConfirmDialog({
-  title: '提示',
-  message:
+  showConfirmDialog({
+    title: '提示',
+    message:
     '确定删除该备注？',
-})
-  .then(async() => {
-      const res = await deleteFormFieldAnnotation({
-      delType: 1,
-      boFieldRemarkIds: [item.boFieldRemarkId],
-      dataId: item.dataId,
-      dataType: item.dataType,
-    })
-    if (res?.data?.code === 200) {
-      showVisible.value = true
-      // message.success('删除成功')
-      showToast('删除成功')
-      initList()
-      emits('refreshCallback')
-    }
   })
-  .catch(() => {
+    .then(async() => {
+      const res = await deleteFormFieldAnnotation({
+        delType: 1,
+        boFieldRemarkIds: [item.boFieldRemarkId],
+        dataId: item.dataId,
+        dataType: item.dataType,
+      })
+      if (res?.data?.code === 200) {
+        showVisible.value = true
+        // message.success('删除成功')
+        showToast('删除成功')
+        initList()
+        emits('refreshCallback')
+      }
+    })
+    .catch(() => {
     // on cancel
-  }); 
-
+    }); 
 }
+
 const openInfo = (val)=>{
   if(val === 'label' && isDetail === true){
     return
@@ -181,6 +180,7 @@ const openInfo = (val)=>{
   showVisible.value = true
 }
 </script>
+
 <script>
 export default {
   name:'FieldAnnotation'

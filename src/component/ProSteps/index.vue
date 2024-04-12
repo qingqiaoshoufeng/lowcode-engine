@@ -282,6 +282,7 @@ export default {
     }
     .steps-history {
       display: flex;
+      flex-direction: column;
       .sub-title {
         color: #48556a;
         white-space: nowrap;

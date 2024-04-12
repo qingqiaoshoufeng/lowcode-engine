@@ -142,6 +142,7 @@ const surviveNumChange = ()=>{
         name="battleResult.deathNum.value"
         label="死亡(人)："
         placeholder="请输入死亡人数"
+        class="field-not-required"
       >
         <template v-slot:label="">
           <FieldAnnotation
@@ -162,6 +163,7 @@ const surviveNumChange = ()=>{
         name="battleResult.evacuateNum.value"
         label="疏散(人)："
         placeholder="请输入疏散人数"
+        class="field-not-required"
         :rules="form.battleResult.evacuateNum.rules"
       >
        <template v-slot:label="">
@@ -183,6 +185,7 @@ const surviveNumChange = ()=>{
         name="battleResult.transferNum.value"
         label="转移(人)："
         placeholder="请输入转移人数"
+        class="field-not-required"
         :rules="form.battleResult.transferNum.rules"
       >
         <template v-slot:label="">

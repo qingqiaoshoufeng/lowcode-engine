@@ -366,6 +366,7 @@ const onCommander = () => {
       name="investForce.fireBoatNum.value"
       label="艇(艘)："
       placeholder="请输入艇数量"
+      class="field-not-required"
       :rules="form.investForce.fireBoatNum.rules"
     >
       <template v-slot:label="">
@@ -389,6 +390,7 @@ const onCommander = () => {
       label="消防直升机(架)："
       label-width="128px"
       placeholder="请输入消防直升机数量"
+      class="field-not-required"
       :rules="form.investForce.fireAirplaneNum.rules"
     >
       <template v-slot:label="">
@@ -412,6 +414,7 @@ const onCommander = () => {
       label="搜救犬(只)："
       label-width="104px"
       placeholder="请输入搜救犬数量"
+      class="field-not-required"
       :rules="form.investForce.rescueDogNum.rules"
     >
       <template v-slot:label="">
@@ -435,6 +438,7 @@ const onCommander = () => {
       label="无人机(架)："
       label-width="104px"
       placeholder="请输入无人机数量"
+      class="field-not-required"
       :rules="form.investForce.uavNum.rules"
     >
       <template v-slot:label="">
