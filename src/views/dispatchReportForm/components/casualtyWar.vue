@@ -1,12 +1,13 @@
 <script setup>
-import { inject, watch, computed } from "vue";
 import dayjs from "dayjs";
-import ProCard from "@/component/ProCard/index.vue";
+import { inject, watch, computed, ref } from "vue";
+
 import { cloneDeep } from 'lodash-es';
 import { showToast } from "vant";
 import { validIdCode } from "@/utils/validate.js";
 import { getInfoByCard } from "@/utils/tools.js";
 import { getPersonDetail } from '@/apis/index.js';
+import ProCard from "@/component/ProCard/index.vue";
 
 const form = inject("form");
 
@@ -29,6 +30,10 @@ const options = inject("options");
 const diyValidateMap = inject("diyValidateMap");
 
 const showNationTeam = inject('showNationTeam')
+
+const isOpen = ref(((form.value.casualtyWar.injuredList.length || form.value.casualtyWar.deadList.length) || !isDetail))
+
+const haveData = ref(((form.value.casualtyWar.injuredList.length || form.value.casualtyWar.deadList.length) || !isDetail))
 
 const nameOptions = computed(() => {
   if (showHeadquarter.value) {
@@ -216,7 +221,7 @@ const onChangeName = (item, index) => {
 </script>
 
 <template>
-  <ProCard title="参战伤亡" id="casualtyWar" :showOpenClose="!showPreview">
+  <ProCard :title="haveData ? '参战伤亡' : `参战伤亡（无数据）`" id="casualtyWar" :state="isOpen">
     <van-cell-group>
       <div class="injured-message">
         共受伤 {{ form.casualtyWar.injuredList?.length }} 人，死亡 {{ form.casualtyWar.deadList?.length }} 人

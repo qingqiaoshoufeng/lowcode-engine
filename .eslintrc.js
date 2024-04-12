@@ -13,7 +13,7 @@ module.exports = {
   rules: {
     'no-console': 'error',
     'no-debugger': 'error',
-    "indent": ["error", 2],
+    "indent": 'off',
     'vue/no-mutating-props': 'off'
   }
 }
