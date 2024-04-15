@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick, provide } from "vue";
+import { ref, onMounted, nextTick, provide, watch } from "vue";
 import ProList from "@/component/ProList/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
@@ -35,6 +35,8 @@ const currentab = ref(4)
 
 const { show } = useModal();
 
+show.value.lookVisible = false
+
 const currentRow = ref(null);
 
 const proListRef = ref(null);
@@ -42,6 +44,12 @@ const proListRef = ref(null);
 const isRote = ref(false)
 
 provide('show', show)
+
+watch(() => show.value, () => {
+  if (show.value && !show.value.lookVisible && window.luckysheet) {
+    window.luckysheet.destroy()
+  }
+})
 
 const onTabFn = (name, title) => {
   if (title === tabs.value[1].title) {
