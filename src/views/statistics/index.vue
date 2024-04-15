@@ -52,7 +52,7 @@ watch(() => show.value, () => {
       console.log('销毁destory')
     })
   }
-})
+}, { deep: true })
 
 const onTabFn = (name, title) => {
   if (title === tabs.value[1].title) {
