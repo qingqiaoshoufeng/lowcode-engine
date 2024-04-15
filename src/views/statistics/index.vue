@@ -47,7 +47,9 @@ provide('show', show)
 
 watch(() => show.value, () => {
   if (show.value && !show.value.lookVisible && window.luckysheet) {
-    window.luckysheet.destroy()
+    nextTick(() => {
+      window.luckysheet.destroy()
+    })
   }
 })
 
