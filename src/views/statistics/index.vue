@@ -49,7 +49,6 @@ watch(() => show.value, () => {
   if (show.value && !show.value.lookVisible && window.luckysheet) {
     nextTick(() => {
       window.luckysheet.destroy()
-      console.log('销毁destory')
     })
   }
 }, { deep: true })

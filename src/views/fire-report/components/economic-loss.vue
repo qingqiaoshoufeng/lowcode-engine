@@ -95,6 +95,8 @@ const directDamageChange =()=>{
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择调查方式"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -123,7 +125,8 @@ const directDamageChange =()=>{
           :disabled="!importantEdit"
           placeholder="请输入直接财产损失"
           aria-autocomplete="none"
-          type="number" 
+          type="number"
+          :class="{ 'field-not-required': !isRequired }"
           @change="directDamageChange"
         >
           <template v-slot:label="">
@@ -153,7 +156,8 @@ const directDamageChange =()=>{
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入火灾现场处置费用（元)"
-          type="number" 
+          type="number"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -188,6 +192,7 @@ const directDamageChange =()=>{
             @blur="checkFireInjuryCost(form)"
             type="number" 
             label-width="115"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -219,6 +224,7 @@ const directDamageChange =()=>{
             placeholder="请输入其他费用"
             type="number" 
             label-width="130"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -243,6 +249,8 @@ const directDamageChange =()=>{
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择损失来源"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
             <template v-slot:label="">
               <FieldAnnotation
@@ -272,6 +280,7 @@ const directDamageChange =()=>{
             placeholder="请输入受灾户数"
             @blur="checkAffectedHouse(form)"
             label-width="140"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
                 <FieldAnnotation

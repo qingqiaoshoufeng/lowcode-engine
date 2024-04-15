@@ -221,6 +221,7 @@ const bigInjured = computed(() => {
           :rules="form.casualtyWar.isInjured.rules" 
           class="field-radio"
           label-width="128px"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group 
@@ -398,6 +399,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择民族"
             title="请选择民族"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -456,6 +458,7 @@ const bigInjured = computed(() => {
             placeholder="请输入证件号码"
             :name="`casualtyWar.injuredList.${index}.idNumber`"
             @change="idNumberChange(index)"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -512,7 +515,8 @@ const bigInjured = computed(() => {
             :disabled="!item.disabled"
             aria-autocomplete="none"
             allow-clear
-            type="number" 
+            type="number"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -540,6 +544,7 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择人员来源"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -567,6 +572,7 @@ const bigInjured = computed(() => {
             placeholder="请选择来源详情"
             :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -594,6 +600,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择职业"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -621,6 +628,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择健康状况"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -815,6 +823,7 @@ const bigInjured = computed(() => {
           :required="isRequired"
           class="field-radio"
           label-width="128px"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group 
@@ -929,6 +938,7 @@ const bigInjured = computed(() => {
             allow-clear
             placeholder="请选择民族"
             :field-names="{ value: 'boDictId', label: 'dictName' }"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -959,6 +969,7 @@ const bigInjured = computed(() => {
             @change="onDeadIdType(index)"
             :filter-option="(inputValue, option) => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1"
             title="请选择证件类型"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -987,6 +998,7 @@ const bigInjured = computed(() => {
             allow-clear
             aria-autocomplete="none"
             placeholder="请输入证件号码"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1043,7 +1055,8 @@ const bigInjured = computed(() => {
             :disabled="!item.disabled"
             allow-clear
             :name="`casualtyWar.deadList.${index}.ageHolder`"
-            type="number" 
+            type="number"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1071,6 +1084,7 @@ const bigInjured = computed(() => {
             allow-clear
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             placeholder="请选择人员来源"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1098,6 +1112,7 @@ const bigInjured = computed(() => {
             placeholder="请选择来源详情"
             :required="isRequired"
             :rules="form.casualtyWar.injurySourceInfo.rules"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1125,6 +1140,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择职业"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1152,6 +1168,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', label: 'dictName' }"
             allow-clear
             placeholder="请选择健康状况"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1312,6 +1329,7 @@ const bigInjured = computed(() => {
             :field-names="{ value: 'boDictId', text: 'dictName' }"
             placeholder="请选择死亡时间"
             allow-clear
+            :class="{ 'field-not-required': !isRequired }"
             :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
           >
             <template v-slot:label="">

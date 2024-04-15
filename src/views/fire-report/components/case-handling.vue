@@ -68,6 +68,7 @@ const handleDeletePerson = (index) => {
           label-width="130"
           :required="isRequired"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
           :rules="form.caseHandling.handleTwoCase.rules"
         >
           <template #input>
@@ -157,6 +158,7 @@ const handleDeletePerson = (index) => {
           :rules="form.caseHandling.firePenalty.rules"
           :required="isRequired"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group

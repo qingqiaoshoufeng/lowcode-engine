@@ -147,6 +147,7 @@ onMounted(() => {
           :required="isRequired"
           :rules="form.firePhoto.isAllBack.rules"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group 
@@ -176,6 +177,7 @@ onMounted(() => {
         <van-cell
           title="火灾照片："
           class="item-cell"
+          style="margin-left: 10px;"
           :required="(initFireDetail.dispatchArriveFlag === '2' || form.firePhoto.isAllBack.value === '1' || unDispatch) ? false : isRequired"
         >
           <van-field
@@ -234,7 +236,7 @@ onMounted(() => {
   }
 }
 .tip {
-  padding: 0 16px;
+  padding: 0 16px 0 26px;
   display: block;
 }
 </style>

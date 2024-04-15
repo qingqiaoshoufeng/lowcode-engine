@@ -205,6 +205,7 @@ const onEmergencyExit = () => {
           :required="isRequired"
           :rules="form.fireFacilities.isFirefightFacility.rules"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group 
