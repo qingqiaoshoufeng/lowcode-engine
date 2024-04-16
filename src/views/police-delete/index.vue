@@ -30,9 +30,9 @@ const searchOptions = ref([
   },
   {
     title: '警情类型',
-    type: 'cascader',
+    type: 'cascader-level',
     placeholder: '请选择警情类型',
-    fieldNames: { value: 'boDictId', text: 'dictName' },
+    fieldNames: { value: 'boDictId', label: 'dictName' },
     options: [],
     value: 'warningType',
   },
