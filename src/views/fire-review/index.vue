@@ -26,7 +26,7 @@
       <template #list="{ record }">
         <div class="pro-list-item"  @click.stop="handleLook(record)">
           <div class="item-header">
-            <div class="item-title">{{ record.warningAddr }}</div>
+            <div class="item-title">{{ record.warningName }}</div>
             <div class="item-state" :class="generateColorByState(record.fireStatusValue)">
               {{ record.fireStatusValue }}
             </div>
