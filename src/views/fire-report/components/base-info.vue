@@ -680,6 +680,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.fireDirection.rules"
           :required="isRequired"
           v-preview-text="showPreview"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -703,6 +704,7 @@ const onFireLevel = () => {
           label="区域："
           placeholder="请选择区域"
           :rules="form.basicInfo.area.rules"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -725,6 +727,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.fireOrgname.rules"
           :required="isRequired"
           label-width="108"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -777,6 +780,7 @@ const onFireLevel = () => {
           type="number"
           label-width="158px"
           @change="penaltyNumChange"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -824,6 +828,7 @@ const onFireLevel = () => {
           placeholder="请选择起火原因"
           :rules="form.basicInfo.fireCause.rules"
           @change="fireCauseChange"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -875,6 +880,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.firePlace.rules"
           @change="firePlaceChange"
           @click="onFirePlace"
+          :class="{ 'field-not-required': !isRequired }"
         >
          <template v-slot:label="">
             <FieldAnnotation
@@ -894,6 +900,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.isLaborIntensive.rules"
           :required="isRequired"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group class="field-radio" v-preview-text="showPreview" v-model="form.basicInfo.isLaborIntensive.value" direction="horizontal">
@@ -923,6 +930,7 @@ const onFireLevel = () => {
           placeholder="请选择火灾危险性分类"
           title="请选择火灾危险性分类"
           :showPreview="showPreview"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -944,6 +952,7 @@ const onFireLevel = () => {
           placeholder="请输入其他说明"
           :rules="form.basicInfo.otherFirePlace.rules"
           :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -970,6 +979,7 @@ const onFireLevel = () => {
           :required="isRequired"
           :rules="form.basicInfo.liveType.rules"
           title="请选择居住形式"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -990,6 +1000,7 @@ const onFireLevel = () => {
             :rules="form.basicInfo.isPoorHouse.rules"
             :required="isRequired"
             class="field-radio"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template #input>
               <van-radio-group 
@@ -1019,6 +1030,7 @@ const onFireLevel = () => {
             :required="isRequired"
             :rules="form.basicInfo.isChangeUseType.rules" 
             class="field-radio"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template #input>
               <van-radio-group 
@@ -1055,6 +1067,7 @@ const onFireLevel = () => {
             allow-clear
             placeholder="请选择变更后使用性质"
             title="请选择变更后使用性质"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1082,6 +1095,7 @@ const onFireLevel = () => {
           placeholder="请选择交通工具类型"
           @change="vehicleTypeChange"
           v-preview-text="showPreview"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1111,6 +1125,7 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择起火时充电状态"
           title="请选择起火时充电状态"
+          :class="{ 'field-not-required': !isRequired }"
         >
          <template v-slot:label="">
             <FieldAnnotation
@@ -1130,6 +1145,7 @@ const onFireLevel = () => {
           :rules="form.basicInfo.isRepack.rules"
           :required="isRequired"
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-radio-group 
@@ -1165,6 +1181,7 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择电池类型"
           title="请选择电池类型"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1238,6 +1255,7 @@ const onFireLevel = () => {
             aria-autocomplete="none"
             placeholder="请输入车牌号"
             name="basicInfo.carNumber.rules"
+            :class="{ 'field-not-required': !isRequired }"
           >
            <template v-slot:label="">
               <FieldAnnotation
@@ -1263,6 +1281,7 @@ const onFireLevel = () => {
             allow-clear
             placeholder="请选择行驶状态"
             title="请选择行驶状态"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template v-slot:label="">
               <FieldAnnotation
@@ -1289,6 +1308,7 @@ const onFireLevel = () => {
           :field-names="{ value: 'boDictId', text: 'dictName' }"
           :field-name="['basicInfo', 'firePattern', 'value']"
           placeholder="请选择事故形态"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1314,6 +1334,7 @@ const onFireLevel = () => {
           :field-name="['basicInfo', 'fireSite', 'value']"
           placeholder="请选择起火位置"
           :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1341,6 +1362,7 @@ const onFireLevel = () => {
           placeholder="请输入起火物名称"
           name="basicInfo.initialFuels.value"
           label-width="105"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1370,6 +1392,7 @@ const onFireLevel = () => {
           placeholder="请选择起火物类型"
           @change="initialFuelsTypeChange"
           label-width="105"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1397,6 +1420,7 @@ const onFireLevel = () => {
           placeholder="请输入引火源名称"
           name="basicInfo.igniteSource.value"
           label-width="105"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1426,6 +1450,7 @@ const onFireLevel = () => {
           placeholder="请选择引火源类型"
           @change="initialFuelsTypeChange"
           label-width="105"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1523,6 +1548,7 @@ const onFireLevel = () => {
             :required="isRequired"
             :rules="form.basicInfo.isOperating.rules"
             class="field-radio"
+            :class="{ 'field-not-required': !isRequired }"
           >
             <template #input>
               <van-radio-group 
@@ -1560,6 +1586,7 @@ const onFireLevel = () => {
           placeholder="请选择所属行业"
           allow-clear
           :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
         >
           <template v-slot:label="">
@@ -1585,6 +1612,8 @@ const onFireLevel = () => {
           allow-clear
           placeholder="请选择行业主管部门"
           title="请选择行业主管部门"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1610,6 +1639,7 @@ const onFireLevel = () => {
           :required="isRequired"
           placeholder="请选择经济类型"
           title="请选择经济类型"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1637,6 +1667,7 @@ const onFireLevel = () => {
           placeholder="请选择事故牵头调查部门"
           @change="onLeadInspectionOrg"
           title="请选择事故牵头调查部门"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1662,6 +1693,7 @@ const onFireLevel = () => {
           aria-autocomplete="none"
           placeholder="请输入其他单位说明"
           name="basicInfo.otherOrgRemark.value"
+          :class="{ 'field-not-required': !isRequired }"
         >
          <template v-slot:label="">
             <FieldAnnotation
@@ -1720,6 +1752,7 @@ const onFireLevel = () => {
           max-tag-count="responsive"
           placeholder="请选择保险类型"
           title="请选择警情标签"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1809,6 +1842,7 @@ const onFireLevel = () => {
           placeholder="请选择监督检查范围"
           @change="onFireInspectionScope"
           title="请选择监督检查范围"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1834,6 +1868,7 @@ const onFireLevel = () => {
           placeholder="请选择消防安全重点单位"
           @change="onFireInspectionScope"
           title="请选择消防安全重点单位"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -1852,6 +1887,7 @@ const onFireLevel = () => {
           name="basicInfo.isSafetyAccident.value"   
           label="是否属于安全生产事故："
           class="field-radio"
+          :class="{ 'field-not-required': !isRequired }"
           :required="isRequired"
           label-width="105"
           :rules="form.basicInfo.isSafetyAccident.rules">
@@ -1881,7 +1917,7 @@ const onFireLevel = () => {
     
     <div v-if="form.basicInfo.isSafetyAccident.value === '1'" :gutter="gutter">
       <div :span="24">
-        <van-cell title="相关附件上传：" :required="isRequired" class="item-cell">
+        <van-cell title="相关附件上传：" :required="isRequired" class="item-cell" :class="{ 'field-not-required': !isRequired }">
           <van-uploader
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"

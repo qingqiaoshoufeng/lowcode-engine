@@ -284,8 +284,7 @@ const onTabsChange = (index) => {
       text-overflow: ellipsis;
     }
     .time {
-      font-size: 12px;
-      color: #48556A;
+      font-size: 12px !important;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -294,13 +293,16 @@ const onTabsChange = (index) => {
     }
     .state {
       display: inline-block;
-      font-size: 10px;
+      font-size: 12px !important;
       font-weight: 400;
       color: #ffffff;
       line-height: 10px;
       background: #34c38f;
       border-radius: 4px;
       padding: 6px 8px;
+    }
+    .number {
+      font-size: 12px !important;
     }
   }
   &-item-active {

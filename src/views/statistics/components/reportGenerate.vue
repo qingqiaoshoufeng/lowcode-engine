@@ -89,8 +89,8 @@ const tableStream = ref(null)
 
 const selectReport = ref(cloneDeep(props.currentRow))
 
-watch(() => show.value?.lookVisible, () => {
-  if (show.value && !show.value.lookVisible) {
+watch(() => show.value.lookVisible, () => {
+  if (show.value && !show.value.lookVisible && window.luckysheet) {
     window.luckysheet.destroy()
   }
 })

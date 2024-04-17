@@ -194,6 +194,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.buildTag.rules"
           :required="isRequired"
           class="buildTag"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template #input>
             <van-checkbox-group 
@@ -240,6 +241,8 @@ const onBuildTag = (val) => {
           :field-name="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择建筑类别"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
           @change="onBuildType(), checkFireResistanceRating(form, options)"
           :show-search="{ filter: (inputValue, path) => path.some(option => option.dictName.toLowerCase().indexOf(inputValue.toLowerCase()) > -1) }"
         >
@@ -266,6 +269,8 @@ const onBuildTag = (val) => {
         :field-names="{ value: 'boDictId', label: 'dictName' }"
         allow-clear
         placeholder="请选择建筑结构"
+        :required="isRequired"
+        :class="{ 'field-not-required': !isRequired }"
         @change="checkFireResistanceRating(form, options)"
       >
         <template v-slot:label="">
@@ -290,6 +295,8 @@ const onBuildTag = (val) => {
           :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择耐火等级"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
           @change="checkFireResistanceRating(form, options)"
         >
           <template v-slot:label="">
@@ -324,7 +331,8 @@ const onBuildTag = (val) => {
           :disabled="editDiabled"
           placeholder="请输入建筑总楼层"
           @change="buildFloorChange"
-          type="digit" 
+          type="digit"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -351,6 +359,7 @@ const onBuildTag = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入失火楼层"
+          :class="{ 'field-not-required': !isRequired }"
           @change="fireFloorChange"
         >
           <template v-slot:label="">
@@ -379,7 +388,8 @@ const onBuildTag = (val) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入总建筑面积"
-          type="number" 
+          type="number"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -398,6 +408,7 @@ const onBuildTag = (val) => {
           label="单层建筑面积（平方米）："
           :rules="form.fireBuilding.buildFloorArea.rules"
           :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
           label-width="115px"
           id="buildFloorArea"
           v-model="form.fireBuilding.buildFloorArea.value"
@@ -488,6 +499,8 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否蔓延"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -513,6 +526,8 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择是否发生轰燃"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
@@ -541,6 +556,8 @@ const onBuildTag = (val) => {
           :options="options.isNot"
           allow-clear
           placeholder="请选择失火建筑门窗在过程中是否开启"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation

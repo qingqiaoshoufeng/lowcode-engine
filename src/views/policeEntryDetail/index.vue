@@ -162,10 +162,10 @@ const finishCallback = (row) => {
     >
       <template #number>
         <div v-if="selectTabRow?.boFireDispatchId" class="tip">
-          {{ `出动编号: ${selectTabRow.dispatchCode}` }}
+          {{ `出动编号： ${selectTabRow.dispatchCode}` }}
         </div>
         <div v-if="selectTabRow?.boFireInfoId" class="tip">
-          {{ `火灾编号: ${selectTabRow.fireCode}` }}
+          {{ `火灾编号： ${selectTabRow.fireCode}` }}
         </div>
       </template>
     </PloceTabs>

@@ -108,7 +108,7 @@ onMounted(() => {
     <van-cell-group class="rootform1">
       <div :gutter="gutter">
         <div :span="24">
-          <van-cell title="相关附件上传" class="item-cell">
+          <van-cell title="相关附件上传" class="item-cell" style="margin-left: 10px;">
             <van-uploader
               :readonly="isDetail"
               :deletable="!isDetail"
@@ -146,6 +146,7 @@ onMounted(() => {
             placeholder="请输入补充说明"
             autosize
             type="textarea"
+            :class="{ 'field-not-required': true }"
             @click-preview="downLoadFile"
           >
             <template v-slot:label="">

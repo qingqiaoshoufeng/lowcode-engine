@@ -37,7 +37,7 @@ const showDraft = inject('showDraft')
           autosize
           type="textarea"
           placeholder="请输入起火经过"
-          :class="{ 'form-textarea': !showPreview }"
+          :class="{ 'form-textarea': !showPreview, 'field-not-required': !isRequired }"
         >
           <template v-slot:label="">
             <FieldAnnotation
