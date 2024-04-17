@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "35792450",
+      "name": "段首缩紧",
+      "font_class": "duanshousuojin",
+      "unicode": "e79d",
+      "unicode_decimal": 59293
+    },
+    {
       "icon_id": "38476406",
       "name": "作废警情",
       "font_class": "jingqingzuofei",

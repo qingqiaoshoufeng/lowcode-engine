@@ -175,10 +175,10 @@ const searchOptions = computed(()=>([
     value: "warningCode",
   },
   {
-    title: '出动编号',
+    title: '火灾编号',
     type: 'input',
     placeholder: '请输入出动编号',
-    value: "dispatchCode",
+    value: "fireCode",
   },
   {
     title: '所属队伍',
@@ -219,7 +219,7 @@ const searchOptions = computed(()=>([
     value: 'warningArea',
   },
   {
-    title: '警情地址',
+    title: '火灾地址',
     type: 'input',
     placeholder: '请输入警情地址',
     value: "fireDirection",

@@ -370,7 +370,10 @@ const sections = computed(() => {
   }
   return result
 })
-
+const isOpen = ref(true)
+const triggerMenu = (val)=>{
+  isOpen.value = val
+}
 
 const { sideBarActive } = useIntersection(sections, '.box', props.offset);
 
@@ -1115,10 +1118,11 @@ const onSideBarChange = (e, k) => {
 
 <template>
   <div v-if="show.apiLoading" class="editor-form" :class="{'hidevalidate':hidevalidate}" :style="{ height: !showPreview ? 'calc(100% - 64px)' : '100%' }">
-      <div class="form-left">
+      <div class="form-left"  :class="{'is-close':!isOpen}">
         <van-sidebar 
           v-model="sideBarActive" 
           v-if="showPreview !== null"
+          class="menu"
         >
           <van-sidebar-item 
             v-for="(item, k) in sections" 
@@ -1138,6 +1142,13 @@ const onSideBarChange = (e, k) => {
           </van-sidebar-item>
           <!-- :badge="!isDetail && item.validateProgress >= 100 ? '√' : '×'" -->
         </van-sidebar>
+        <div class="trigger" @click.stop="triggerMenu(false)">
+          <div class="wrapper">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use v-bind:xlink:href="`#icon-duanshousuojin`"></use>
+            </svg>
+          </div>
+        </div>
       </div>
       <div class="form-right">
          <div class="box">
@@ -1197,6 +1208,8 @@ const onSideBarChange = (e, k) => {
          </div>
       </div>
   </div>
+
+
   <div v-if="!showPreview && show.apiLoading" class="fire-report-footer">
     <div class="form-footer" v-if="!showPreview">
       <template v-if="isReview">
@@ -1213,6 +1226,14 @@ const onSideBarChange = (e, k) => {
         </van-button>
       </template>
     </div>
+  </div>
+
+  <div class="trigger-close" :class="{'btt':!isOpen}" v-show="!isOpen" @click.stop="triggerMenu(true)">
+    <div class="wrapper">
+        <svg class="icon svg-icon" aria-hidden="true">
+          <use v-bind:xlink:href="`#icon-duanshousuojin`"></use>
+        </svg>
+      </div>
   </div>
 
   <!-- 提交审核 -->
@@ -1241,7 +1262,35 @@ const onSideBarChange = (e, k) => {
   background-color: #F6F8FC;
   .form-left {
     width: var(--van-sidebar-width);
+    transition: all .3s;
+    .menu{
+      height: calc(100% - 80px);
+    }
+    .trigger{
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .wrapper{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+      }
+      svg{
+        // border: 5px solid #F6F8FC;
+        background-color: #F6F8FC;
+        box-sizing: content-box;
+        font-size: 20px;
+        width: 100%;
+        height: 100%
+      }
+    }
   }
+
   .form-right {
     height: 100%;
     overflow-y: auto;
@@ -1258,6 +1307,42 @@ const onSideBarChange = (e, k) => {
     }
   }
 }
+.trigger-close{
+    width: var(--van-sidebar-width);
+    height: 80px;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    z-index: 111;
+    border-radius: 50%;
+    bottom: 0;
+    // box-sizing: content-box;
+  }
+  .btt.trigger-close{
+    .wrapper{
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F6F8FC;
+      border-radius: 50%;
+      padding: 12px;
+    }
+    svg{
+      // border: 5px solid #F6F8FC;
+      background-color: #F6F8FC;
+      box-sizing: content-box;
+      font-size: 20px;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .is-close.form-left{
+    width: 0px;
+    overflow: hidden;
+  }
 .fire-report-footer {
   padding: 0 20px;
   .form-footer {
