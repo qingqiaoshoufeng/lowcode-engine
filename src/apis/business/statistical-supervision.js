@@ -172,7 +172,7 @@ export function getFireTimeoutParams(data) {
     fireType: cloneDeep(data.fireType)?.pop(),
     timeOutType: data.timeOutType,
     warningCode: data.warningCode,
-    dispatchCode: data.dispatchCode,
+    fireCode: data.fireCode,
     fireDirection: data.fireDirection,
     warningArea: cloneDeep(data?.warningArea)?.pop(),
   }
@@ -250,3 +250,5 @@ export function getRemarkReason(params) {
 export function reportSupervision(data) {
   return axios.post('/acws/rest/biz/firewarningtimeout/remark/addremark', data)
 }
+
+
