@@ -118,7 +118,7 @@ defineOptions({
     <div class="header" v-if="showHeader">
       <van-button type="default" size="small" style="margin-right: 10px;" @click="closeModal">取消</van-button>
       <div class="modal-title">{{ title }}</div>
-      <van-button type="primary" size="small" @click="handleOk">{{ okText }}</van-button>
+      <van-button type="primary" :loading="loading" size="small" @click="handleOk">{{ okText }}</van-button>
     </div>
     <div v-if="showConfirmBack" class="confirm-back" >
       <div class="arrow">
