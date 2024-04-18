@@ -130,7 +130,12 @@
       <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
     <!-- 申请更正 -->
-    <ProModal v-model:visible="show.recheckVisible" title="申请更正">
+    <ProModal
+      v-model:visible="show.recheckVisible"
+      title="申请更正"
+      :showConfirmBack="true"
+      :showHeader="false"
+    >
       <template #default="{ setHandleOk }">
         <ApplyRecheck
           :recheck-type="3"

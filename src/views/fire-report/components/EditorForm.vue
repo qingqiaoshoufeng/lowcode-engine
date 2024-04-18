@@ -1218,7 +1218,7 @@ const onSideBarChange = (e, k) => {
         </van-button>
       </template>
       <template v-else>
-        <van-button type="primary" size="small" v-if="isShowTemporary" :loading="commonLoading" round block @click.stop="setTemporary">
+        <van-button round block type="default" size="small" v-if="isShowTemporary" :loading="commonLoading" @click.stop="setTemporary">
           暂存
         </van-button>
         <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
