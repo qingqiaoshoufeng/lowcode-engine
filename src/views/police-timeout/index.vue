@@ -189,9 +189,9 @@ const searchOptions = computed(()=>([
   },
   {
     title: '警情类型',
-    type: 'cascader-level',
+    type: 'cascader',
     placeholder: '请选择警情类型',
-    fieldNames: { value: 'boDictId', label: 'dictName' },
+    fieldNames: { value: 'boDictId', text: 'dictName' },
     options: options.warningType,
     value: 'warningType',
   },

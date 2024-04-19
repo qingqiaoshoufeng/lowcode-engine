@@ -1011,9 +1011,7 @@ const { loading: backLoading, submit: backSubmit } = useSubmit(
 
 const approvalCallback = async (form) => {
   approvalForm.value = form
-
   if (form.approveType === '1' && props.isEdit) { // 审核通过
-   
     await approvalSubmit()
     show.value.approvalVisible = false
     emits('finishCallback')
@@ -1068,6 +1066,12 @@ const handleSubmit = () => {
     })
 }
 
+const onSubmit = async () => {
+  if (props.isApproval) {
+    show.value.approvalVisible = true
+  }
+};
+
 onMounted(() => {
   showLoadingToast()
   // 暂存
@@ -1075,6 +1079,10 @@ onMounted(() => {
   //   await temporarySubmit()
   //   await finishFn()
   // }, temporaryLoading)
+  props.setHandleOk && props.setHandleOk(async (finishFn) => {
+    formRef.value.submit()
+    formRef.value.finishFn = finishFn
+  }, commonLoading)
   const promiseAll = []
   promiseAll.push(initDict())
   if (props.currentRow?.boFireWarningId) {
@@ -1153,7 +1161,7 @@ const onSideBarChange = (e, k) => {
       <div class="form-right">
          <div class="box">
             <div class="wrapper">
-              <van-form ref="formRef">
+              <van-form ref="formRef" @submit="onSubmit">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
                 <!-- 简要情况 -->
@@ -1218,7 +1226,7 @@ const onSideBarChange = (e, k) => {
         </van-button>
       </template>
       <template v-else>
-        <van-button type="primary" size="small" v-if="isShowTemporary" :loading="commonLoading" round block @click.stop="setTemporary">
+        <van-button round block type="default" size="small" v-if="isShowTemporary" :loading="commonLoading" @click.stop="setTemporary">
           暂存
         </van-button>
         <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
