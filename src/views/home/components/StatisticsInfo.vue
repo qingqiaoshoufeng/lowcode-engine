@@ -12,27 +12,27 @@
       </div>
       <div v-if="currentTab === 0 && withTab" class="general">
         <div class="wrapper">
-          <div class="tip_per">
+          <!-- <div class="tip_per">
               “-”表示同、环期无数据或者数据为0，无法计算出同环比
-            </div>
+            </div> -->
           <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
         </div>
       </div>
       <div v-else-if="currentTab === 5 && withTab" class="general">
         <div class="wrapper">
-          <div class="tip_per">
+          <!-- <div class="tip_per">
               “-”表示同、环期无数据或者数据为0，无法计算出同环比
-            </div>
+            </div> -->
           <div v-for="(itm, index) in formInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
         </div>
       </div>
       <div v-else class="card_list">
-          <div class="card_item" :class="{ml9:index%2}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
+          <div class="card_item" :class="{ml9:index%2,[item.color]: withTab}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
                 <div class="title">{{ item.title }}</div>
               </div>
               <div class="buttom">
-                <div class="number">{{ item.number }}</div>
+                <div class="number">{{ item.number }}<span>{{ item.unit }}</span></div>
                 <div class="percent" :class="getStatusColor(item.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
@@ -201,6 +201,13 @@ export default {
         white-space: nowrap;
         max-width: 60%;
         overflow: hidden;
+        >span{
+          font-family: PingFangSC, PingFang SC;
+          font-weight: 400;
+          font-size: 12px;
+          color: #333333;
+          margin-left: 2px
+        }
       }
       .percent{
         font-size: 14px;
@@ -221,7 +228,22 @@ export default {
         color: #FF7F2C ;
       }
     }
-   
+    .blue.card_item{
+      background: #F7FAFF;
+      border-radius: 8px;
+      border: 1px solid #E6E9EF;
+    }
+
+    .red.card_item{
+      background: #EEF8F8;
+      border-radius: 8px;
+      border: 1px solid #B2E7D7;
+    }
+    .green.card_item{
+      background: rgba(243,176,93,0.05);
+      border-radius: 8px;
+      border: 1px solid #F9D8B0;
+    }
   }
   .isActive{
         color: #1833A9 !important;

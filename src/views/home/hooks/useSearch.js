@@ -552,7 +552,7 @@ const dispatchListMap2 = [
     unit: '人次',
   },
   {
-    label: '抢险救援（）',
+    label: '抢险救援',
     numberKey: 'qxjy',
     YOYkey: 'qxjyPro',
     unit: '队次',
