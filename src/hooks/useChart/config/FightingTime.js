@@ -43,6 +43,7 @@ const options = {
       labelLine:{
         show:false,
       },
+      minAngle: 3,
       label:{
         show:false
       },
