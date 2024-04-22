@@ -297,7 +297,7 @@ const bigInjured = computed(() => {
             @change="checkFireInjuryCost(form)"
             direction="horizontal"
             name="casualtyWar,injuryNum,value"
-            type="number" 
+            type="digit" 
           >
             <template v-slot:label="">
               <FieldAnnotation

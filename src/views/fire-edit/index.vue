@@ -134,7 +134,7 @@ const refreshCallback = () => {
 
 const editRefreshCallback = ()=>{
   // console.log('editRefreshCallback');
-  show.value.false = false
+  show.value.editVisible = false
   proListRef.value.filter()
 }
 const isAgain = ref(false)

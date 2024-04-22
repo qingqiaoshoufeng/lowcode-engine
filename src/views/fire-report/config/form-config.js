@@ -286,7 +286,7 @@ export const useFormConfig = (validateProgress) => {
         value: 0,
         rules: [
           { required: true, message: '请输入轻伤人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确轻伤人数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确轻伤人数' },
         ],
       },
       injuredList: [], // 受伤人员列表
@@ -306,7 +306,7 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [
           { required: true, message: '请输入人员年龄' },
-          { pattern: positiveIntegerReg, message: '请输入正确人员年龄' },
+          // { pattern: positiveIntegerReg, message: '请输入正确人员年龄' },
         ],
       },
       injuryCause: { // 致伤/致死原因
@@ -686,14 +686,14 @@ export const useFormConfig = (validateProgress) => {
         value: '',
         rules: [
           // { required: true, message: '请输入追究人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确追究人数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确追究人数' },
         ],
       },
       suggestDealNum: { // 建议处理人数（人）
         value: '',
         rules: [
           // { required: true, message: '请输入建议处理人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确处理人数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确处理人数' },
         ],
       },
       firePenalty: { // 火灾处罚情况-是否立案

@@ -107,7 +107,7 @@ const handleDeletePerson = (index) => {
           allow-clear
           aria-autocomplete="none"
           placeholder="请输入追究人数"
-          type="number"
+          type="digit" 
           class="field-not-required"
         >
           <template v-slot:label="">
@@ -132,9 +132,9 @@ const handleDeletePerson = (index) => {
           style="width: 100%"
           :maxlength="10"
           allow-clear
+          type="digit" 
           aria-autocomplete="none"
           placeholder="请输入处理人数"
-          type="number"
           class="field-not-required"
         >
           <template v-slot:label="">

@@ -249,7 +249,7 @@ const onSeverity = () => {
 
 const validateBurnedArea = (val) => {
   const { burnedArea, severity, fireType } = form.value.basicInfo
-  if (severity.value === '2' && Number(val) === 0) {
+  if (severity.value === '2' && val === 0) {
     return '非轻微火灾过火面积不能为0！'
   }
   else if (!val && val !== 0) {
