@@ -1604,7 +1604,8 @@ const onSideBarChange = (e, k) => {
         box-sizing: content-box;
         font-size: 20px;
         width: 100%;
-        height: 100%
+        height: 100%;
+        transform:rotateY(180deg);
       }
     }
   }

@@ -1297,7 +1297,8 @@ const onSideBarChange = (e, k) => {
         box-sizing: content-box;
         font-size: 20px;
         width: 100%;
-        height: 100%
+        height: 100%;
+        transform: rotateY(180deg);
       }
     }
   }
@@ -1329,7 +1330,7 @@ const onSideBarChange = (e, k) => {
     z-index: 111;
     border-radius: 50%;
     bottom: 0;
-    transform: rotateY(180deg);
+    
     // box-sizing: content-box;
   }
   .btt.trigger-close{
