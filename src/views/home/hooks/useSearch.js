@@ -310,7 +310,10 @@ export default function useSearch({ dataPickerRef, statisticsInfoRef, YearRankRe
   // 获取通知列表
   const getFireNoticeList = async () => {
     const res = await getFireNotice({ status: 1 }) || []
-    state.noticeList = res.filter((item, index) => (index < 3))
+    // console.log();
+    state.noticeList = [
+      ...res.filter((item, index) => (index < 3))
+    ]
   }
 
   const goNotice = () => {

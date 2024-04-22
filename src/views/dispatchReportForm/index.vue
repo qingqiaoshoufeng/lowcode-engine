@@ -1618,6 +1618,7 @@ const onSideBarChange = (e, k) => {
     z-index: 111;
     border-radius: 50%;
     bottom: 0;
+    transform: rotateY(180deg);
     // box-sizing: content-box;
   }
   .btt.trigger-close{
