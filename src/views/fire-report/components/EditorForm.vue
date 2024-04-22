@@ -53,6 +53,8 @@ const diyValidateMap = ref({
 
 provide('diyValidateMap',diyValidateMap)
 
+let handlefinishFn
+
 const props = defineProps({
   currentRow: {
     type: Object,
@@ -129,7 +131,7 @@ const formRef = ref(null)
 const hidevalidate = ref(false)
 
 // provide('validateProgress',validateProgress)
-const emits = defineEmits(['finishCallback'])
+const emits = defineEmits(['finishCallback','refreshEdit'])
 const isShowTemporary = inject('isShowTemporary',false)
 // const bus = inject('bus')
 
@@ -1044,7 +1046,7 @@ const handleSubmit = () => {
     }
     else if (props.isAgain) {
       await againSubmit()
-      await finishFn()
+      emits('refreshEdit')
     }
     else {
       if (!props.showDraft && checkFieldWarning(fieldExist.value)
@@ -1054,7 +1056,7 @@ const handleSubmit = () => {
       }
       else {
         await submit()
-        await finishFn()
+        emits('refreshEdit')
       }
     }
   })
@@ -1082,6 +1084,7 @@ onMounted(() => {
   props.setHandleOk && props.setHandleOk(async (finishFn) => {
     formRef.value.submit()
     formRef.value.finishFn = finishFn
+    handlefinishFn = finishFn
   }, commonLoading)
   const promiseAll = []
   promiseAll.push(initDict())

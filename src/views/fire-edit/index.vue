@@ -75,6 +75,7 @@
             :set-handle-ok="setHandleOk"
             :set-handle-extend="setHandleExtend"
             @finish-callback="refreshCallback"
+            @refreshEdit="editRefreshCallback"
           />
         </template>
     </ProModal>
@@ -128,6 +129,12 @@ const isEdit = ref(false)
 const isDraft = ref(false)
 const relevanceDraft = ref(null)
 const refreshCallback = () => {
+  proListRef.value.filter()
+}
+
+const editRefreshCallback = ()=>{
+  // console.log('editRefreshCallback');
+  show.value.false = false
   proListRef.value.filter()
 }
 const isAgain = ref(false)
