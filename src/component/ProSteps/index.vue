@@ -1,7 +1,7 @@
 <script setup>
 import { computed, inject, onMounted, provide, ref } from "vue";
 import dayjs from "dayjs";
-import { generateColorByState } from '@/utils/tools.js'
+import { generateColorByState, formatYmdHm } from '@/utils/tools.js'
 
 const props = defineProps({
   data: {
@@ -131,11 +131,6 @@ defineOptions({
   name: "ProSteps",
 });
 </script>
-<script>
-export default {
-  name: "ProSteps"
-}
-</script>
 
 <template>
   <div id="proSteps" class="pro-steps">
@@ -156,7 +151,7 @@ export default {
         <div class="steps-title">
           {{ item.createOrg }}
         </div>
-        <div>{{ dayjs(item.createDate).format("YYYY-MM-DD HH:mm:ss") }}</div>
+        <div>{{ formatYmdHm(item.createDate, 'YYYY-MM-DD HH:mm:ss') }}</div>
         <div v-if="item.applyType">{{ renderAdvice(item.transferType) }}{{ item.applyType }}</div>
         <div v-if="item.advice">{{ renderAdvice(item.transferType) }}{{ item.advice }}</div>
         <div v-if="item.remark">{{ renderRemark(item.transferType) }}{{ item.remark }}</div>

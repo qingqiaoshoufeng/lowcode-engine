@@ -658,7 +658,8 @@ const onFireLevel = () => {
           v-model:value="form.basicInfo.noDispatchArea.value"
           :showPreview="showPreview"
           :show-all-area="!!showPreview"
-          required
+          :preview-text="form.basicInfo.noDispatchArea.text?.join('/')"
+          :required="isRequired"
         >
           <template v-slot:label="">
             <FieldAnnotation
