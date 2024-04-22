@@ -1049,6 +1049,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.basicInfo.draftName.value = fireInfo?.draftName
     form.value.basicInfo.severity.value = fireInfo?.severity
     form.value.basicInfo.noDispatchArea.value = fireInfo?.noDispatchArea?.split(',')
+    form.value.basicInfo.noDispatchArea.text = fireInfo?.noDispatchAreaValue?.split('/')
     form.value.basicInfo.fireDate.value = fireInfo?.fireDate && dayjs(fireInfo?.fireDate)
     form.value.basicInfo.fireDirection.value = fireInfo?.fireDirection
     form.value.basicInfo.area.value = fireInfo?.area?.split(',')
@@ -1098,6 +1099,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.basicInfo.health.value = fireInfo?.health
     form.value.basicInfo.isOperating.value = fireInfo?.isOperating
     form.value.basicInfo.industry.value = fireInfo?.industry?.split(',')
+    form.value.basicInfo.industryDepartment.value = fireInfo?.industryDepartment
     form.value.basicInfo.economicType.value = fireInfo?.economicType
     form.value.basicInfo.leadInspectionOrg.value = fireInfo?.leadInspectionOrg
     form.value.basicInfo.otherOrgRemark.value = fireInfo?.otherOrgRemark
