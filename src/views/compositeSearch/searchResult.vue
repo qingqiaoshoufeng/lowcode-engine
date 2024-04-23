@@ -115,6 +115,7 @@ const handleGenerate = () => {
 }
 
 const finishCallback = () => {
+  show.value.rejectVisible = false
   currentRow.value = null
   proListRef.value.filter()
 }

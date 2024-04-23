@@ -40,7 +40,20 @@ const makerList = ref([])
 
 const keyword = ref(`${props.selectArea?.join('')}${props.selectAddr}`)
 
-const tiandituToken = 'cf8b627df2989291ecfc67605220bf98'
+let tiandituToken = ''
+
+if (new Date().getHours() <= 8) {
+  // yzq
+  tiandituToken = '20705c5187117906d28da0d093cd1488'
+}
+else if (new Date().getHours() <= 16) {
+  // hxf
+  tiandituToken = 'b413f808ec9717538011ede0b1116566'
+}
+else {
+  // yzj
+  tiandituToken = '614019e3f3000d4b2fdff1308508feee'
+}
 
 const mapTileLayerUrl = `http://t{s}.tianditu.gov.cn/DataServer?T=vec_c&x={x}&y={y}&l={z}&tk=${tiandituToken}`
 

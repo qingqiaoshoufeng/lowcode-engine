@@ -62,11 +62,11 @@
 <script setup>
 import { reactive, ref ,onMounted} from "vue";
 import verification from '@/assets/images/verification.png'
-import { loginIn,getVerificationCode} from '@/apis/index.js'
+import { loginIn, getVerificationCode } from '@/apis/index.js'
 import router from '@/router/index.js'
 import { encrypt } from '@/utils/tools.js'
 import { useStore } from "vuex";
-import { showToast,closeToast  } from "vant";
+import { showToast, closeToast  } from "vant";
 
 const store = useStore()
 
