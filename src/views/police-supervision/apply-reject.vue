@@ -30,6 +30,10 @@ const emits = defineEmits(['finishCallback'])
 
 const options = [
   {
+    label: '分类错误',
+    value: '分类错误',
+  },
+  {
     label: '数据不准',
     value: '数据不准',
   },
