@@ -1678,7 +1678,7 @@ export const useFormConfig = () => {
         label: '防火间距',
         options: 'regulation',
       },
-      separationMeterMin: { // 间距（m2）
+      separationMeterMin: { // 间距（m）
         value: ['', ''],
         type: 'input-range',
         label: '间距（米）',

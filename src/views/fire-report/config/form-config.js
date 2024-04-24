@@ -653,7 +653,7 @@ export const useFormConfig = (validateProgress) => {
         value: undefined,
         rules: [{ required: true, message: '请选择防火间距' }],
       },
-      separationMeter: { // 间距（m2）
+      separationMeter: { // 间距（m）
         value: '',
         rules: [{ pattern: nonnegativeNumberReg, message: '请输入正确间距' }],
       },
