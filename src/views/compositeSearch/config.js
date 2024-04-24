@@ -1752,8 +1752,106 @@ export const useFormConfig = () => {
     return value === null ? '' : value
   }
 
-  const getSearchParams = () => {
+  const getSearchParams = (simple) => {
     const { policeBase, policeInvest, policeOther, dispatchBase, dispatchTime, dispatchInvest, dispatchCasualty, dispatchBattle, dispatchOther, dispatchHeaderMessage, fireBase, fireCasualty, fireEconomic, fireVehicle, fireBuilding, fireFacilities, fireOther } = form.value
+    if (simple) {
+      const params = {
+        comprehensiveWarningQueryReq: {
+          warningDateStart: returnDate(policeBase.warningDate.value, 0),
+          warningDateEnd: returnDate(policeBase.warningDate.value, 1),
+          warningCode: policeBase.warningCode.value,
+          warningType: returnCascader(policeBase.warningType.value),
+          warningTypeNon: policeBase.warningType.back,
+          areaGroup: policeBase.areaGroup.value
+            ?.map((item) => item.organizationid)
+            ?.join(","),
+          areaGroupText: policeBase.areaGroup.value
+            ?.map((item) => item.name)
+            ?.join(","),
+          areaGroupNon: policeBase.areaGroup.back,
+          boAreaId: params.comprehensiveWarningQueryReq.boAreaId,
+          boAreaIdText: params.comprehensiveWarningQueryReq.boAreaIdText,
+          boAreaId:
+            policeBase.boAreaId.value?.length > 0
+              ? JSON.stringify(policeBase.boAreaId.value)
+              : "",
+          boAreaIdText:
+            policeBase.boAreaId.text?.length > 0
+              ? JSON.stringify(policeBase.boAreaId.text)
+              : "",
+          warningAddr: policeBase.warningAddr.value,
+        },
+        comprehensiveDispatchQueryReq: {
+          dispatchCode: dispatchBase.dispatchCode.value,
+          dispatchGroupOrg: dispatchBase.dispatchGroupOrg.value
+            ?.map((item) => item.organizationid)
+            ?.join(","),
+          dispatchGroupOrgText: dispatchBase.dispatchGroupOrg.value
+            ?.map((item) => item.name)
+            ?.join(","),
+          dispatchGroupOrgNon: dispatchBase.dispatchGroupOrg.back,
+          deptNature: returnCascader(dispatchBase.deptNature.value),
+          deptNatureNon: dispatchBase.deptNature.back,
+          dispatchType: dispatchBase.dispatchType.value
+            ?.map((val) => val.value)
+            ?.join(","),
+          dispatchTypeText: dispatchBase.dispatchType.value
+            ?.map((val) => val.label)
+            ?.join(","),
+          dispatchTypeNon: dispatchBase.dispatchType.back,
+          dealSituation: dispatchBase.dealSituation.value?.join(","),
+          dealSituationNon: dispatchBase.dealSituation.back,
+          fireSituation: dispatchBase.fireSituation.value?.join(","),
+          fireSituationNon: dispatchBase.fireSituation.back,
+        },
+        comprehensiveDispatchHeadQueryReq: {
+          dispatchCode: dispatchHeaderMessage.dispatchCode.value,
+          FireHeadLvl: dispatchHeaderMessage.FireHeadLvl.value?.join(","),
+          FireHeadLvlNon: dispatchHeaderMessage.FireHeadLvl.back,
+          fireHead: dispatchHeaderMessage.fireHead.value
+            ?.map((item) => item.organizationid)
+            ?.join(","),
+          fireHeadText: dispatchHeaderMessage.fireHead.value
+            ?.map((item) => item.name)
+            ?.join(","),
+          fireHeadNon: dispatchHeaderMessage.fireHead.back,
+          groupLeader: dispatchHeaderMessage.groupLeader.value
+            ?.map((item) => item.boFireUserId)
+            ?.join(","),
+          groupLeaderName: dispatchHeaderMessage.groupLeader.value
+            ?.map((item) => item.userName)
+            ?.join(","),
+          groupLeaderNon: dispatchHeaderMessage.groupLeader.back,
+          commanderNumMin: dispatchHeaderMessage.commanderNumMin.value?.[0],
+          commanderNumMax: dispatchHeaderMessage.commanderNumMin.value?.[1],
+          headCarName: dispatchHeaderMessage.headCarName.value
+            ?.map((val) => val.boFireTruckId)
+            ?.join(","),
+          headCarNameText: dispatchHeaderMessage.headCarName.value
+            ?.map((val) => val.truckNumber)
+            ?.join(","),
+          headCarNameNon: dispatchHeaderMessage.headCarName.back,
+          headCarNumMin: dispatchHeaderMessage.headCarNumMin.value?.[0],
+          headCarNumMax: dispatchHeaderMessage.headCarNumMin.value?.[1],
+          headTimeMin: dispatchHeaderMessage.headTimeMin.value?.[0],
+          headTimeMax: dispatchHeaderMessage.headTimeMin.value?.[1],
+        },
+        comprehensiveFireQueryReq: {
+          fireDateStart: returnDate(fireBase.fireDate.value, 0),
+          fireDateEnd: returnDate(fireBase.fireDate.value, 1),
+          fireType: fireBase.fireType.value?.map((item) => item[0]).join(","),
+          firePlace: returnCascader(fireBase.firePlace.value),
+          firePlaceNon: fireBase.firePlace.back,
+          fireCause: returnCascader(fireBase.fireCause.value),
+          fireCauseNon: fireBase.fireCause.back,
+          fireLevel: fireBase.fireLevel.value?.join(","),
+          fireLevelNon: fireBase.fireLevel.back,
+          severity: fireBase.severity.value,
+          isOperating: fireBase.isOperating.value,
+        },
+      };
+      return params
+    }
     const params = {
       comprehensiveWarningQueryReq: {
         // 警情信息-基本信息

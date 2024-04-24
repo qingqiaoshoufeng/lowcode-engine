@@ -9,6 +9,13 @@ import { useFormConfig } from './config.js'
 import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 
+const props = defineProps({
+  simple: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const { form, getSearchParams, initSearchParams, initFormByType, resetForm } = useFormConfig()
 
 const { show } = useModal();
@@ -62,7 +69,7 @@ const onSearchCallback = () => {
     return
   }
   const { policeBase, fireBase } = form.value
-  queryParams.value = getSearchParams()
+  queryParams.value = getSearchParams(props.simple)
   queryParams.value.fireType = searchType.value
   queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
   const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
@@ -112,7 +119,7 @@ defineOptions({
       <van-tab title="指挥部出动" :name="3"></van-tab>
       <van-tab title="火灾" :name="4"></van-tab>
     </van-tabs>
-    <Form />
+    <Form :simple="simple" />
     <SearchBtn
       :search-scene="1"
       @search-callback="onSearchCallback"

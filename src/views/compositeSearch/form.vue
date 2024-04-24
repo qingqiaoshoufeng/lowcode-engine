@@ -19,6 +19,13 @@ import {
 import store from '@/store/index.js'
 import { useIntersection } from './useIntersection.js';
 
+const props = defineProps({
+  simple: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const form = inject('form');
 
 const searchType = inject('searchType');
@@ -184,6 +191,99 @@ onMounted(() => {
 
 const sections = computed(() => {
   const keys = Object.keys(form.value)
+  if (props.simple) {
+    const list = [
+      {
+        title: "警情信息",
+        link: "policeMessage",
+        display: true,
+        sort: searchType.value === 1 ? 1 : 2,
+        children: [
+          {
+            title: "警情信息",
+            children: {
+              warningDate: form.value.policeBase.warningDate,
+              warningCode: form.value.policeBase.warningCode,
+              warningType: form.value.policeBase.warningType,
+              areaGroup: form.value.policeBase.areaGroup,
+              boAreaId: form.value.policeBase.boAreaId,
+              warningAddr: form.value.policeBase.warningAddr,
+            },
+          },
+        ],
+      },
+      {
+        title: "出动信息（队站）",
+        link: "dispatchStationMessage",
+        display: searchType.value !== 3,
+        sort: searchType.value === 2 ? 1 : 2,
+        children: [
+          {
+            title: "出动信息",
+            link: "dispatchStationPolice",
+            children: {
+              dispatchCode: form.value.dispatchBase.dispatchCode,
+              dispatchGroupOrg: form.value.dispatchBase.dispatchGroupOrg,
+              deptNature: form.value.dispatchBase.deptNature,
+              dispatchType: form.value.dispatchBase.dispatchType,
+              dealSituation: form.value.dispatchBase.dealSituation,
+              fireSituation: form.value.dispatchBase.fireSituation,
+            },
+          },
+        ],
+      },
+      {
+        title: "出动信息（指挥）",
+        link: "dispatchMessage",
+        display: searchType.value === 3,
+        sort: searchType.value === 3 ? 1 : 2,
+        children: [
+          {
+            title: "出动信息",
+            link: "dispatchHeaderPolice",
+            children: {
+              dispatchCode: form.value.dispatchHeaderMessage.dispatchCode,
+              FireHeadLvl: form.value.dispatchHeaderMessage.FireHeadLvl,
+              fireHead: form.value.dispatchHeaderMessage.fireHead,
+              groupLeader: form.value.dispatchHeaderMessage.groupLeader,
+              commanderNumMin: form.value.dispatchHeaderMessage.commanderNumMin,
+              headCarName: form.value.dispatchHeaderMessage.headCarName,
+              headCarNumMin: form.value.dispatchHeaderMessage.headCarNumMin,
+              headTimeMin: form.value.dispatchHeaderMessage.headTimeMin,
+            },
+          },
+        ],
+      },
+      {
+        title: "火灾信息",
+        link: "fireMessage",
+        display: true,
+        sort: searchType.value === 4 ? 1 : 3,
+        children: [
+          {
+            title: "火灾信息",
+            link: "firePolice",
+            children: {
+              fireDate: form.value.fireBase.fireDate,
+              fireType: form.value.fireBase.fireType,
+              firePlace: form.value.fireBase.firePlace,
+              fireCause: form.value.fireBase.fireCause,
+              fireLevel: form.value.fireBase.fireLevel,
+              severity: form.value.fireBase.severity,
+              isOperating: form.value.fireBase.isOperating,
+            },
+          },
+        ],
+      },
+    ];
+    return list
+      .filter((val) => val.display)
+      .sort((a, b) => {
+        if (a.sort < b.sort) return -1;
+        if (a.sort > b.sort) return 1;
+        return 0;
+      });
+  }
   const list = [{
     title: '警情信息',
     link: 'policeMessage',
@@ -304,7 +404,7 @@ const onSideBarChange = (e, k) => {
 
 <template>
   <div class="composite-search-wrapper">
-    <div class="composite-search-anchor">
+    <div v-if="!simple" class="composite-search-anchor">
         <van-sidebar v-model="sideBarActive">
         <template v-for="(item, k) in sections" :key="k">
           <van-sidebar-item @click="onSideBarChange(item, k)" class="anchor-item">
