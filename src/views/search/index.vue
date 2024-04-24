@@ -17,40 +17,40 @@
     <Tabbar :currentTab="currentab" />
   </div>
 </template>
-    
+
 <script setup>
 import { ref, shallowRef } from "vue";
 import Tabbar from "@/component/tabbar/index.vue";
-import GlobalSearch from "@/views/globalSearch/index.vue";
+// import GlobalSearch from "@/views/globalSearch/index.vue";
 import CompositeSearch from "@/views/compositeSearch/index.vue";
-import AdvanceSearch from "@/views/advanceSearch/index.vue";
+// import AdvanceSearch from "@/views/advanceSearch/index.vue";
 
 const option = [
   { text: "综合查询", value: "CompositeSearch" },
-  { text: "高级查询", value: "AdvanceSearch" },
-  { text: "全局搜索", value: "GlobalSearch" },
+  // { text: "高级查询", value: "AdvanceSearch" },
+  // { text: "全局搜索", value: "GlobalSearch" },
 ];
 
 const dropValue = ref("CompositeSearch");
 
 const currentab = ref(2);
 
-const currentValue = shallowRef(CompositeSearch)
+const currentValue = shallowRef(CompositeSearch);
 
 const onDropdown = (value) => {
-  if (value === 'GlobalSearch') {
-    currentValue.value = GlobalSearch
+  // if (value === 'GlobalSearch') {
+  //   currentValue.value = GlobalSearch
+  // }
+  if (value === "CompositeSearch") {
+    currentValue.value = CompositeSearch;
   }
-  else if (value === 'CompositeSearch') {
-    currentValue.value = CompositeSearch
-  }
-  else if (value === 'AdvanceSearch') {
-    currentValue.value = AdvanceSearch
-  }
+  // else if (value === 'AdvanceSearch') {
+  //   currentValue.value = AdvanceSearch
+  // }
 };
 </script>
-    
-<style scoped lang="scss" >
+
+<style scoped lang="scss">
 .statistics {
   .statistics-header {
     :deep(.van-dropdown-menu__bar) {
@@ -62,4 +62,3 @@ const onDropdown = (value) => {
   }
 }
 </style>
-    
