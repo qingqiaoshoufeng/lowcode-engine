@@ -1271,7 +1271,7 @@ const onEmergencyExit = () => {
         <div :span="8">
           <van-field 
             name="fireBuilding,separationMeter,value"
-            label="间距（m2）："
+            label="间距（m）："
             label-width="112px"
             :rules="form.fireFacilities.separationMeter.rules"
             id="separationMeter"
@@ -1287,7 +1287,7 @@ const onEmergencyExit = () => {
           >
             <template v-slot:label="">
               <FieldAnnotation
-                label="间距（m2）："
+                label="间距（m）："
                 remark-field="separationMeter"
                 field-module="fireFacilities"
                 :exist-data="fieldExist?.separationMeter"
