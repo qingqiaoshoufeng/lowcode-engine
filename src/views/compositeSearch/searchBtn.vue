@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted, nextTick, inject } from "vue";
-import { getMySearchList, getMySearchDetail, getSourceOption } from "@/apis/index.js";
+import {
+  getMySearchList,
+  getMySearchDetail,
+  getSourceOption,
+} from "@/apis/index.js";
 import { useModal } from "@/hooks/useModal.js";
 import { showLoadingToast, closeToast } from "vant";
 
@@ -104,22 +108,22 @@ onMounted(() => {
     >
       <div class="collect-header">
         <div style="font-weight: bold">已保存条件</div>
-        <van-button
-          size="small"
-          :type="proListRef?.query?.shareFlag === 2 ? 'primary' : ''"
-          style="height: 28px; margin-left: auto"
-          @click.stop="handleTab(2)"
-        >
-          自建
-        </van-button>
-        <van-button
-          size="small"
-          :type="proListRef?.query?.shareFlag === 1 ? 'primary' : ''"
-          style="height: 28px; margin-left: 10px"
-          @click.stop="handleTab(1)"
-        >
-          共享
-        </van-button>
+        <div class="collect-group">
+          <div
+            class="collect-group-item"
+            :class="{ active: proListRef?.query?.shareFlag === 2 }"
+            @click.stop="handleTab(2)"
+          >
+            自建
+          </div>
+          <div
+            class="collect-group-item"
+            :class="{ active: proListRef?.query?.shareFlag === 1 }"
+            @click.stop="handleTab(1)"
+          >
+            共享
+          </div>
+        </div>
       </div>
       <div style="width: 100%; height: 1px; border: 1px solid #f6f6f6"></div>
       <div class="collect-list" @click.stop>
@@ -134,6 +138,18 @@ onMounted(() => {
           <template #list="{ record }">
             <div class="pro-list-item">
               <div class="item-result">{{ record.searchName }}</div>
+              <div class="item-search-type" v-if="record.searchType === '1'">
+                警情
+              </div>
+              <div class="item-search-type" v-if="record.searchType === '2'">
+                出动
+              </div>
+              <div class="item-search-type" v-if="record.searchType === '3'">
+                指挥出动
+              </div>
+              <div class="item-search-type" v-if="record.searchType === '4'">
+                火灾
+              </div>
               <div class="item-enter" @click="handleByResult(record)">
                 一键带入
               </div>
@@ -217,6 +233,34 @@ onMounted(() => {
       display: flex;
       align-items: center;
       background-color: white;
+      .collect-group {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        border: 1px solid #d9d9d9;
+        border-radius: 5px;
+        .collect-group-item {
+          height: 28px;
+          display: flex;
+          align-items: center;
+          font-weight: 400;
+          padding: 0 10px;
+          &.active {
+            color: #fff;
+            background: #2f6bff;
+          }
+          &:first-child {
+            &.active {
+              border-radius: 5px 0 0 5px;
+            }
+          }
+          &:last-child {
+            &.active {
+              border-radius: 0 5px 5px 0;
+            }
+          }
+        }
+      }
     }
     .collect-list {
       height: 40vh;
@@ -226,13 +270,19 @@ onMounted(() => {
         position: relative;
         margin-bottom: 10px;
         .item-result {
-          width: 270px;
+          width: 200px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 14px;
           font-weight: 400;
           color: #0e203c;
+        }
+        .item-search-type {
+          font-size: 14px;
+          font-weight: 400;
+          color: #0e203c;
+          margin-left: auto;
         }
         .item-enter {
           font-size: 14px;
