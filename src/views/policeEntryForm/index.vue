@@ -578,6 +578,7 @@ const initDetail = () => {
         else {
           form.value.warningAddr = res.warningAddr
         }
+        form.value.warningLnglat = `${res?.warningLnglat.replace(/,/g, '，')}`;
         form.value.warningLng = res.warningLnglat?.split(',')?.[0]
         form.value.warningLat = res.warningLnglat?.split(',')?.[1]
         form.value.warningTel = res.warningTel
@@ -1002,6 +1003,29 @@ const onWarningOrgname = () => {
         </template>
       </van-field>
       <van-field
+        v-model="form.warningLnglat"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        required
+        name="warningLnglat"
+        label="经纬度："
+        placeholder="请输入经纬度"
+        :disabled="isConfirm"
+        v-if="showPreview"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="经纬度："
+            :id="currentRow?.boFireWarningId"
+            remark-field="warningLnglat"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.warningLnglat"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-if="!showPreview"
         v-model="form.warningLng"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -1042,6 +1066,7 @@ const onWarningOrgname = () => {
         </template>
       </van-field>
       <van-field
+        v-if="!showPreview"
         v-model="form.warningLat"
         v-preview-text="showPreview"
         :readonly="showPreview"
