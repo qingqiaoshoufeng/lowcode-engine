@@ -578,7 +578,7 @@ const initDetail = () => {
         else {
           form.value.warningAddr = res.warningAddr
         }
-        form.value.warningLnglat = `${res?.warningLnglat.replace(/,/g, '，')}`;
+        form.value.warningLnglat = `${res?.warningLnglat?.replace(/,/g, '，')}`;
         form.value.warningLng = res.warningLnglat?.split(',')?.[0]
         form.value.warningLat = res.warningLnglat?.split(',')?.[1]
         form.value.warningTel = res.warningTel
@@ -834,6 +834,18 @@ const validateFireTel = (value, rule) => {
     return '';
   }
 };
+
+const validateWarningType = (value, rule) => {
+  if (!value) {
+    return '请选择警情类型'
+  } else if (!importantEdit.value
+    && !form.value.warningTypeText?.includes('火灾扑救')
+    && detail.value?.warningTypeValue?.includes('火灾扑救')) {
+    return '普通更正不允许将火警变更为其他警情！'
+  } else {
+    return ''
+  }
+}
 
 const validateWarningTypeOther = (value, rule) => {
   if (!value) {
@@ -1104,10 +1116,11 @@ const onWarningOrgname = () => {
         :options="options.warningTypeOptions"
         :required="true"
         :field-names="{ value: 'boDictId', text: 'dictName' }"
-        :disabled="showPreview ? false : !importantEdit"
         label="警情类型："
         placeholder="请选择警情类型"
-        :rules="[{ required: true, message: '请选择警情类型' }]"
+        :rules="[{ required: true, message: '请选择警情类型' },
+          { validator: validateWarningType, trigger: 'onBlur' }
+        ]"
         @change="warningTypeChange"
       >
         <template v-slot:label="">
