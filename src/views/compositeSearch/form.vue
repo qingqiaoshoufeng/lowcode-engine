@@ -56,7 +56,7 @@ onMounted(() => {
     'JQ_LEVEL', 'CD_JYQK_CZ', 'CD_DC_HZQK', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ', 'USER_JOB', 'CD_JBXX_GG', 'CD_JBXX_BSY', 'CD_OTHER_ZY',
     'DEAD_TIME', 'HZ_INFO_JZXS', 'CD_STATUS', 'HZ_STATUS', 'CD_RANK', 'CD_CZRY_FHZB', 'CD_CZRY_SSBW', 'CD_CZRY_SFSD', 'CD_HYZG', 'STA_TIME', 'RANK_TYPE', 'CD_QQHEAD_TYPE',
     'CAR_TYPE', 'JQ_STATUS', 'CD_LOOK', 'HZ_QHW_TYPE', 'HZ_YHY', 'HZ_INFO_RWYS', 'HZ_INFO_SSBW', 'HZ_INFO_YY', 'DEPT_NATURE', 'HZ_QHWZ_JTGJ', 'USER_JOB', 'CD_CZRY_ZMBW', 'CD_CZRY_SWYY',
-    'WX_FL'], null, false)
+    'WX_FL', 'JQ_LY'], null, false)
   options.value.warningType = res.JQ_TYPE
   // 火灾信息
   options.value.area = res.HZ_INFO_QY // 区域
@@ -133,6 +133,7 @@ onMounted(() => {
   options.value.deptNature = res.DEPT_NATURE // 队伍性质
   options.value.duty = res.USER_JOB // 职务
   options.value.plantRiskClassification = res.WX_FL // 火灾危险性分类
+  options.value.warningSource = res.JQ_LY
   options.value.buildTag = options.value.buildTag?.map((item) => {
     return {
       ...item,

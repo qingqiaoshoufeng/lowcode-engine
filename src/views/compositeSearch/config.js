@@ -135,6 +135,14 @@ export const useFormConfig = () => {
         options: 'warningDealStatus',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
+      warningSource: { // 报警来源
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '报警来源',
+        options: 'warningSource',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
     },
     policeInvest: {
       title: '投入力量',
@@ -648,6 +656,13 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '无人机数',
+        numType: 'digit',
+      },
+      robotNumMin: { // 灭火机器人（个）
+        value: ['', ''],
+        type: 'input-range',
+        label: '灭火机器人（个）',
+        labelWidth: '132px',
         numType: 'digit',
       },
     },
@@ -1902,6 +1917,8 @@ export const useFormConfig = () => {
         warningStatusNon: policeBase.warningStatus.back,
         warningDealStatus: policeBase.warningDealStatus.value,
         // warningDealStatusNon: policeBase.warningDealStatus.back,
+        warningSource: policeBase.warningSource.value?.join(','),
+        warningSourceNon: policeBase.warningSource.back,
         // 警情信息-投入力量
         dispatchGroup: policeInvest.dispatchGroup.value?.map(item => item.organizationid)?.join(','),
         dispatchGroupText: policeInvest.dispatchGroup.value?.map(item => item.name)?.join(','),
@@ -2056,6 +2073,8 @@ export const useFormConfig = () => {
         rescueDogNumMax: dispatchInvest.rescueDogNumMin.value?.[1],
         uavMin: dispatchInvest.uavMin.value?.[0],
         uavMax: dispatchInvest.uavMin.value?.[1],
+        robotNumMin: dispatchInvest.robotNumMin.value?.[0],
+        robotNumMax: dispatchInvest.robotNumMin.value?.[1],
         // 出动填报-参战伤亡
         injuryType: dispatchCasualty.injuryType.value?.map(val => val.value)?.join(','),
         injuryTypeText: dispatchCasualty.injuryType.value?.map(val => val.label)?.join(','),
@@ -2440,6 +2459,8 @@ export const useFormConfig = () => {
     form.value.policeBase.warningStatus.back = comprehensiveWarningQueryReq.warningStatusNon === 'true'
     form.value.policeBase.warningDealStatus.value = comprehensiveWarningQueryReq.warningDealStatus
     // form.value.policeBase.warningDealStatus.back = comprehensiveWarningQueryReq.warningDealStatusNon === 'true'
+    form.value.policeBase.warningSource.value = comprehensiveWarningQueryReq.warningSource?.split(',')
+    form.value.policeBase.warningSource.back = comprehensiveWarningQueryReq.warningSourceNon === 'true'
     // 警情信息-投入力量
     form.value.policeInvest.dispatchGroup.value = comprehensiveWarningQueryReq.dispatchGroup
       ? generateByKeyValue(comprehensiveWarningQueryReq.dispatchGroupText, comprehensiveWarningQueryReq.dispatchGroup, {
@@ -2599,6 +2620,7 @@ export const useFormConfig = () => {
     form.value.dispatchInvest.fireAirplaneNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.fireAirplaneNumMin, comprehensiveDispatchQueryReq.fireAirplaneNumMax)
     form.value.dispatchInvest.rescueDogNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.rescueDogNumMin, comprehensiveDispatchQueryReq.rescueDogNumMax)
     form.value.dispatchInvest.uavMin.value = returnNumValue(comprehensiveDispatchQueryReq.uavMin, comprehensiveDispatchQueryReq.uavMax)
+    form.value.dispatchInvest.robotNumMin.value = returnNumValue(comprehensiveDispatchQueryReq.robotNumMin, comprehensiveDispatchQueryReq.robotNumMax)
     form.value.dispatchInvest.headPersonType.value = returnCascaderValue(comprehensiveDispatchQueryReq.headPersonType)
     form.value.dispatchInvest.headPersonType.back = comprehensiveDispatchQueryReq.headPersonTypeNon === 'true'
     form.value.dispatchInvest.groupLeader.value = comprehensiveDispatchQueryReq.groupLeader

@@ -110,6 +110,13 @@ export const checkBoxs = [
     labelWidth: '104px',
     field: { value: 'boDictId', label: 'dictName' }
   },
+  {
+    fieldKeyOne: 'warningSource',
+    label: '报警来源',
+    type: '4',
+    dict: 'warningSource',
+    field: { value: 'boDictId', label: 'dictName' },
+  },
   // 警情类查询--投入力量
   {
     fieldKeyOne: 'dispatchGroup',
@@ -630,6 +637,14 @@ export const checkBoxs = [
     fieldKeyOne: 'uavMin',
     fieldKeyTwo: 'uavMax',
     label: '无人机数',
+    type: '2',
+    numType: 'digit',
+  },
+  {
+    fieldKeyOne: 'robotNumMin',
+    fieldKeyTwo: 'robotNumMax',
+    label: '灭火机器人（个）',
+    labelWidth: '132px',
     type: '2',
     numType: 'digit',
   },

@@ -114,13 +114,17 @@ const handleUserLogin = async () => {
   })
   if (res?.token) {
     localStorage.token = res.token
-    const {jcaptchaCode,...rest} = loginForm.value
+    const { jcaptchaCode, ...rest } = loginForm.value
     isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
     await initStore()
     closeToast()
     router.replace({
       name:'Home'
     })
+  } else if (res?.code === 401 && res?.msg) {
+    showToast(res?.msg)
+    loginForm.value.jcaptchaCode = ''
+    getCode()
   }
 };
 
