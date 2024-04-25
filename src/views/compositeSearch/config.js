@@ -1779,6 +1779,8 @@ export const useFormConfig = () => {
               : "",
           warningAddr: policeBase.warningAddr.value,
         },
+        comprehensiveDispatchQueryReq: {},
+        comprehensiveDispatchHeadQueryReq: {},
         comprehensiveFireQueryReq: {
           fireDateStart: returnDate(fireBase.fireDate.value, 0),
           fireDateEnd: returnDate(fireBase.fireDate.value, 1),
