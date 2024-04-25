@@ -1194,6 +1194,13 @@ export const checkBoxs = [
     type: '9',
     dict: 'isNot',
   },
+  {
+    fieldKeyOne: 'plantRiskClassification',
+    label: '火灾危险性分类',
+    type: '4',
+    dict: 'plantRiskClassification',
+    field: { value: 'boDictId', label: 'dictName' }
+  },
   // 火灾类查询条件--人员伤亡
   {
     fieldKeyOne: 'isInjury',

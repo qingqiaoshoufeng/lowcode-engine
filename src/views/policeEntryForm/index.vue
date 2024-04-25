@@ -144,6 +144,7 @@ const form = ref({
   naturalDisasterOther: "", // 自然灾害类型其他
   naturalDisasterTypeText: [],
   dispatchArriveFlag: '1', // 是否有队伍到场
+  returnWarningFlag: false, // 中返警情
   dispatchGroup: [], // 出动队伍
   mainGroup: undefined, // 主战队站
   firstGroup: undefined, // 首到队站
@@ -428,6 +429,17 @@ const onDispatchArriveFlag = () => {
   }
 }
 
+const onReturnWarningFlag = () => {
+  form.value.firstGroup = undefined
+  form.value.firstOrgId = undefined
+  if (form.value.returnWarningFlag) {
+    form.value.isAreaFirst = '2'
+  }
+  else {
+    form.value.isAreaFirst = '1'
+  }
+}
+
 const handleMain = () => {
   if (!form.value.dispatchGroup || form.value.dispatchGroup.length <= 0) {
     showToast('请先选择出动队伍')
@@ -506,6 +518,7 @@ const { loading, submit } = useSubmit((res) => {
       otherCity: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.organizationid || item.value)).join(',') : '',
       otherCityName: values.otherCity?.length > 0 ? values.otherCity.map(item => (item.name || item.label)).join(',') : '',
       dispatchArriveFlag: values.dispatchArriveFlag,
+      returnWarningFlag: values.returnWarningFlag ? '1' : '2',
       firstGroup: values.firstGroup,
       firstOrgId: values.firstOrgId,
       mainGroup: values.mainGroup,
@@ -651,6 +664,7 @@ const initDetail = () => {
           })
           : []
         form.value.dispatchArriveFlag = res.dispatchArriveFlag
+        form.value.returnWarningFlag = res.returnWarningFlag === '1'
         form.value.warningInfo = res.warningInfo
         form.value.warningStatus = props.currentRow?.warningStatus || res.warningStatus
         form.value.transferList = res.transferList
@@ -1545,7 +1559,7 @@ const onWarningOrgname = () => {
         v-preview-text="showPreview"
         :readonly="showPreview"
         required
-        name="switch"
+        name="dispatchArriveFlag"
         label="是否有队伍到场："
         label-width="132px"
         class="field-radio"
@@ -1579,6 +1593,39 @@ const onWarningOrgname = () => {
           />
         </template>
       </van-field> -->
+      <van-field
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        :required="false"
+        name="returnWarningFlag"
+        label="中返警情："
+        class="field-radio field-not-required"
+        :disabled="isConfirm"
+      >
+        <template #input>
+          <template v-if="showPreview">
+            <div style="width: 100%;text-align: left;">{{ form.returnWarningFlag === '1' ? '是' : '否'}}</div>
+          </template>
+          <template v-else>
+            <van-switch
+              v-model="form.returnWarningFlag"
+              size="18px"
+              :disabled="isConfirm"
+              @change="onReturnWarningFlag"
+            />
+          </template>
+        </template>
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="中返警情："
+            :id="currentRow?.boFireWarningId"
+            remark-field="returnWarningFlag"
+            field-module="policeWarning"
+            :exist-data="fieldExist?.returnWarningFlag"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <van-field
         v-if="showCityProvince"
         :readonly="showPreview"
@@ -1735,7 +1782,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectSingle>
       <van-field
-        v-if="showCityProvince"
+        v-if="showCityProvince && !form.returnWarningFlag"
         :readonly="showPreview"
         required
         name="switch"
@@ -1773,7 +1820,7 @@ const onWarningOrgname = () => {
         </template>
       </van-field>
       <SelectSingle
-        v-if="form.isAreaFirst !== '2' && form.dispatchArriveFlag !== '2'"
+        v-if="form.isAreaFirst !== '2' && !form.returnWarningFlag && form.dispatchArriveFlag !== '2'"
         v-model:value="form.firstGroup"
         :showPreview="showPreview"
         name="firstGroup"
@@ -1799,7 +1846,7 @@ const onWarningOrgname = () => {
         </template>
       </SelectSingle>
       <SelectSingle
-        v-if="form.isAreaFirst === '2'"
+        v-if="form.isAreaFirst === '2' && !form.returnWarningFlag"
         v-model:value="form.firstOrgId"
         :showPreview="showPreview"
         name="firstOrgId"

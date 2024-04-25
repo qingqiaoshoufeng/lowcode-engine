@@ -1247,6 +1247,15 @@ export const useFormConfig = () => {
         labelWidth: '132px',
         options: isNot
       },
+      plantRiskClassification: { // 火灾危险性分类
+        value: undefined,
+        back: false,
+        type: 'select-nodes',
+        label: '火灾危险性分类',
+        labelWidth: '132px',
+        options: 'plantRiskClassification',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
     },
     fireCasualty: {
       title: '人员伤亡',
@@ -2209,6 +2218,9 @@ export const useFormConfig = () => {
         fireInfoTagText: fireBase.fireInfoTag.value?.map(val => val.label)?.join(','),
         fireInfoTagNon: fireBase.fireInfoTag.back,
         isOperating: fireBase.isOperating.value,
+        plantRiskClassification: fireBase.plantRiskClassification.value?.map(val => (val.value || val.boDictId))?.join(','),
+        plantRiskClassificationText: fireBase.plantRiskClassification.value?.map(val => (val.label || val.dictName))?.join(','),
+        plantRiskClassificationNon: fireBase.plantRiskClassification.back,
         // 火灾信息-人员伤亡
         isInjury: fireCasualty.isInjury.value,
         injuryType: fireCasualty.injuryType.value?.map(val => val.value)?.join(','),
@@ -2790,6 +2802,13 @@ export const useFormConfig = () => {
       : []
     form.value.fireBase.fireInfoTag.back = comprehensiveFireQueryReq.fireInfoTagNon === 'true'
     form.value.fireBase.isOperating.value = comprehensiveFireQueryReq.isOperating
+    form.value.fireBase.plantRiskClassification.value = comprehensiveFireQueryReq.plantRiskClassification
+      ? generateByKeyValue(comprehensiveFireQueryReq.plantRiskClassificationText, comprehensiveFireQueryReq.plantRiskClassification, {
+        key: 'label',
+        value: 'value',
+      })
+      : []
+    form.value.fireBase.plantRiskClassification.back = comprehensiveFireQueryReq.plantRiskClassificationNon === 'true'
     // 火灾信息-人员伤亡
     form.value.fireCasualty.isInjury.value = comprehensiveFireQueryReq.isInjury
     form.value.fireCasualty.injuryType.value = comprehensiveFireQueryReq.injuryType
