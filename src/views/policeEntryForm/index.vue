@@ -578,7 +578,7 @@ const initDetail = () => {
         else {
           form.value.warningAddr = res.warningAddr
         }
-        form.value.warningLnglat = `${res?.warningLnglat?.replace(/,/g, '，')}`;
+        form.value.warningLnglat = `${res?.warningLnglat?.replace(/,/g, '，') || ''}`;
         form.value.warningLng = res.warningLnglat?.split(',')?.[0]
         form.value.warningLat = res.warningLnglat?.split(',')?.[1]
         form.value.warningTel = res.warningTel
