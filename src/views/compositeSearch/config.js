@@ -1752,7 +1752,7 @@ export const useFormConfig = () => {
     return value === null ? '' : value
   }
 
-  const getSearchParams = (simple) => {
+  const getSearchParams = (simple, searchType) => {
     const { policeBase, policeInvest, policeOther, dispatchBase, dispatchTime, dispatchInvest, dispatchCasualty, dispatchBattle, dispatchOther, dispatchHeaderMessage, fireBase, fireCasualty, fireEconomic, fireVehicle, fireBuilding, fireFacilities, fireOther } = form.value
     if (simple) {
       const params = {
@@ -1769,8 +1769,6 @@ export const useFormConfig = () => {
             ?.map((item) => item.name)
             ?.join(","),
           areaGroupNon: policeBase.areaGroup.back,
-          boAreaId: params.comprehensiveWarningQueryReq.boAreaId,
-          boAreaIdText: params.comprehensiveWarningQueryReq.boAreaIdText,
           boAreaId:
             policeBase.boAreaId.value?.length > 0
               ? JSON.stringify(policeBase.boAreaId.value)
@@ -1781,30 +1779,22 @@ export const useFormConfig = () => {
               : "",
           warningAddr: policeBase.warningAddr.value,
         },
-        comprehensiveDispatchQueryReq: {
-          dispatchCode: dispatchBase.dispatchCode.value,
-          dispatchGroupOrg: dispatchBase.dispatchGroupOrg.value
-            ?.map((item) => item.organizationid)
-            ?.join(","),
-          dispatchGroupOrgText: dispatchBase.dispatchGroupOrg.value
-            ?.map((item) => item.name)
-            ?.join(","),
-          dispatchGroupOrgNon: dispatchBase.dispatchGroupOrg.back,
-          deptNature: returnCascader(dispatchBase.deptNature.value),
-          deptNatureNon: dispatchBase.deptNature.back,
-          dispatchType: dispatchBase.dispatchType.value
-            ?.map((val) => val.value)
-            ?.join(","),
-          dispatchTypeText: dispatchBase.dispatchType.value
-            ?.map((val) => val.label)
-            ?.join(","),
-          dispatchTypeNon: dispatchBase.dispatchType.back,
-          dealSituation: dispatchBase.dealSituation.value?.join(","),
-          dealSituationNon: dispatchBase.dealSituation.back,
-          fireSituation: dispatchBase.fireSituation.value?.join(","),
-          fireSituationNon: dispatchBase.fireSituation.back,
+        comprehensiveFireQueryReq: {
+          fireDateStart: returnDate(fireBase.fireDate.value, 0),
+          fireDateEnd: returnDate(fireBase.fireDate.value, 1),
+          fireType: fireBase.fireType.value?.map((item) => item[0]).join(","),
+          firePlace: returnCascader(fireBase.firePlace.value),
+          firePlaceNon: fireBase.firePlace.back,
+          fireCause: returnCascader(fireBase.fireCause.value),
+          fireCauseNon: fireBase.fireCause.back,
+          fireLevel: fireBase.fireLevel.value?.join(","),
+          fireLevelNon: fireBase.fireLevel.back,
+          severity: fireBase.severity.value,
+          isOperating: fireBase.isOperating.value,
         },
-        comprehensiveDispatchHeadQueryReq: {
+      };
+      if (searchType === 3) {
+        params.comprehensiveDispatchHeadQueryReq = {
           dispatchCode: dispatchHeaderMessage.dispatchCode.value,
           FireHeadLvl: dispatchHeaderMessage.FireHeadLvl.value?.join(","),
           FireHeadLvlNon: dispatchHeaderMessage.FireHeadLvl.back,
@@ -1835,21 +1825,32 @@ export const useFormConfig = () => {
           headCarNumMax: dispatchHeaderMessage.headCarNumMin.value?.[1],
           headTimeMin: dispatchHeaderMessage.headTimeMin.value?.[0],
           headTimeMax: dispatchHeaderMessage.headTimeMin.value?.[1],
-        },
-        comprehensiveFireQueryReq: {
-          fireDateStart: returnDate(fireBase.fireDate.value, 0),
-          fireDateEnd: returnDate(fireBase.fireDate.value, 1),
-          fireType: fireBase.fireType.value?.map((item) => item[0]).join(","),
-          firePlace: returnCascader(fireBase.firePlace.value),
-          firePlaceNon: fireBase.firePlace.back,
-          fireCause: returnCascader(fireBase.fireCause.value),
-          fireCauseNon: fireBase.fireCause.back,
-          fireLevel: fireBase.fireLevel.value?.join(","),
-          fireLevelNon: fireBase.fireLevel.back,
-          severity: fireBase.severity.value,
-          isOperating: fireBase.isOperating.value,
-        },
-      };
+        };
+      } else {
+        params.comprehensiveDispatchQueryReq = {
+          dispatchCode: dispatchBase.dispatchCode.value,
+          dispatchGroupOrg: dispatchBase.dispatchGroupOrg.value
+            ?.map((item) => item.organizationid)
+            ?.join(","),
+          dispatchGroupOrgText: dispatchBase.dispatchGroupOrg.value
+            ?.map((item) => item.name)
+            ?.join(","),
+          dispatchGroupOrgNon: dispatchBase.dispatchGroupOrg.back,
+          deptNature: returnCascader(dispatchBase.deptNature.value),
+          deptNatureNon: dispatchBase.deptNature.back,
+          dispatchType: dispatchBase.dispatchType.value
+            ?.map((val) => val.value)
+            ?.join(","),
+          dispatchTypeText: dispatchBase.dispatchType.value
+            ?.map((val) => val.label)
+            ?.join(","),
+          dispatchTypeNon: dispatchBase.dispatchType.back,
+          dealSituation: dispatchBase.dealSituation.value?.join(","),
+          dealSituationNon: dispatchBase.dealSituation.back,
+          fireSituation: dispatchBase.fireSituation.value?.join(","),
+          fireSituationNon: dispatchBase.fireSituation.back,
+        };
+      }
       return params
     }
     const params = {

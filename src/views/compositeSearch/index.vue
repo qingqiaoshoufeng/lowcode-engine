@@ -69,7 +69,7 @@ const onSearchCallback = () => {
     return
   }
   const { policeBase, fireBase } = form.value
-  queryParams.value = getSearchParams(props.simple)
+  queryParams.value = getSearchParams(props.simple,searchType.value)
   queryParams.value.fireType = searchType.value
   queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
   const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
