@@ -79,6 +79,9 @@ watch(() => [props.value, props.options], (val) => {
 }, { immediate: true })
 
 const handleSelect = (item) => {
+  if (item.disabled) {
+    return
+  }
   if (selectValue.value !== item[props.fieldNames.value]) {
     selectVisible.value = false;
     selectValue.value = item[props.fieldNames.value];
@@ -150,6 +153,7 @@ defineOptions({
             :key="item[fieldNames.value]"
             clickable
             @click="handleSelect(item)"
+            :class="{'single-disabled': item.disabled}"
           >
             <template #right-icon>
               <van-radio :name="item[fieldNames.value]">
@@ -207,6 +211,9 @@ defineOptions({
       background-color: white;
       border: white;
       color: #1989fa;
+    }
+    .single-disabled {
+      color: #969799;
     }
   }
 }

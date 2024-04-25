@@ -668,6 +668,9 @@ const initReport = () => {
             form.value.basicInformation.dealSituation.value = '2023020800262'
             form.value.basicInformation.dealSituation.text = '中途返回'
           }
+          if (res.isFirst && options.value.dealSituation) {
+            options.value.dealSituation[2].disabled = true
+          }
         }
       }).finally(() => resolve())
     } else {

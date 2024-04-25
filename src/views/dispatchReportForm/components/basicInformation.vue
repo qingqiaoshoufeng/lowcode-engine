@@ -3,6 +3,8 @@ import { ref, inject } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
 import { useStore } from "vuex";
+import { showToast, showLoadingToast, closeToast } from "vant";
+
 const form = inject("form");
 
 const options = inject("options");
@@ -56,7 +58,7 @@ const onDealSituation = (value, option) => {
   if (initDispatchDetail.value.isFirst && form.value.basicInformation.dealSituation.text === '中途返回') {
     form.value.basicInformation.dealSituation.value = undefined
     form.value.basicInformation.dealSituation.text = ''
-    message.warning('首到队伍不能选择中途返回')
+    showToast('首到队伍不能选择中途返回')
   }
 }
 </script>

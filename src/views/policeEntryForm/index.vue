@@ -1594,7 +1594,6 @@ const onWarningOrgname = () => {
         </template>
       </van-field> -->
       <van-field
-        v-preview-text="showPreview"
         :readonly="showPreview"
         :required="false"
         name="returnWarningFlag"
@@ -1604,7 +1603,7 @@ const onWarningOrgname = () => {
       >
         <template #input>
           <template v-if="showPreview">
-            <div style="width: 100%;text-align: left;">{{ form.returnWarningFlag === '1' ? '是' : '否'}}</div>
+            <div style="width: 100%;text-align: left;">{{ form.returnWarningFlag ? '是' : '否'}}</div>
           </template>
           <template v-else>
             <van-switch
