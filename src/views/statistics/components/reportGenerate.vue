@@ -68,7 +68,7 @@ const form = ref({
   reportStyle: '1',
   reportClass: undefined,
   reportNick: undefined,
-  deactivateFlag: true,
+  deactivateFlag: false,
   searchDimension: 2,
   dataTimeSource: '',
 })
