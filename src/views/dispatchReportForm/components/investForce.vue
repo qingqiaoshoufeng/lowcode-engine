@@ -149,14 +149,14 @@ const onCommander = () => {
         name="investForce.dispatchTruckList.value" 
         :rules="form.investForce.dispatchTruckList.rules"
         :readonly="true"
-        label="消防车辆信息："
+        label="消防车辆信息（船舶)："
         label-width="118px"
-        placeholder="请选择消防车辆信息"
+        placeholder="请选择消防车辆信息（船舶)"
         @change="onDispatchTruck"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="消防车辆信息："
+            label="消防车辆信息（船舶)："
             remark-field="dispatchTruckList"
             field-module="investForce"
             :exist-data="fieldExist?.dispatchTruckList"

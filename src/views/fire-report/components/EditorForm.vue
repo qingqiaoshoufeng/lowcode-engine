@@ -1107,6 +1107,10 @@ onMounted(() => {
         isNew.value = res[2].isNew
         detail.value.extinctDate = res[2].extinctDate
         initFireDetail.value.dispatchArriveFlag = res[2]?.fireWarning?.dispatchArriveFlag
+        initFireDetail.value.dispatchAllBackFlag = res[2]?.dispatchAllBackFlag
+        if (res[2]?.dispatchAllBackFlag) {
+          form.value.firePhoto.isAllBack.value = '1'
+        }
       }
       initDetail()
     }

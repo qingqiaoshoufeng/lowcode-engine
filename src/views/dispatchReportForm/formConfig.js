@@ -499,9 +499,9 @@ export const useFormConfig = () => {
         value: '1',
         rules: [{ required: true, message: '请选择是否有车辆出动' }],
       },
-      dispatchTruckList: { // 消防车辆信息
+      dispatchTruckList: { // 消防车辆信息（船舶)
         value: undefined,
-        rules: [{ required: true, message: '请选择消防车辆信息' }],
+        rules: [{ required: true, message: '请选择消防车辆信息（船舶)' }],
       },
       isReturnTruck: { // 是否有车辆中途返回
         value: '2',

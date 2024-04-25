@@ -53,6 +53,11 @@ const onDealSituation = (value, option) => {
   else {
     form.value.basicInformation.dealSituation.text = ''
   }
+  if (initDispatchDetail.value.isFirst && form.value.basicInformation.dealSituation.text === '中途返回') {
+    form.value.basicInformation.dealSituation.value = undefined
+    form.value.basicInformation.dealSituation.text = ''
+    message.warning('首到队伍不能选择中途返回')
+  }
 }
 </script>
 
@@ -68,7 +73,7 @@ const onDealSituation = (value, option) => {
       title="请选择处置情况"
       label="处置情况："
       placeholder="请选择处置情况"
-      :disabled="initDispatchDetail?.dispatchArriveFlag === '2'"
+      :disabled="initDispatchDetail?.dispatchArriveFlag === '2' || initDispatchDetail?.returnWarningFlag === '1'"
       :rules="form.basicInformation.dealSituation.rules"
       @change="onDealSituation"
     >

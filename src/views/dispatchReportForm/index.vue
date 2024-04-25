@@ -662,7 +662,9 @@ const initReport = () => {
           initDispatchDetail.value.warningOrgname = res.warningOrgname
           initDispatchDetail.value.nationTeamFlag = res.nationTeamFlag
           initDispatchDetail.value.dispatchArriveFlag = res.dispatchArriveFlag
-          if (res.dispatchArriveFlag === '2') {
+          initDispatchDetail.value.returnWarningFlag = res.returnWarningFlag
+          initDispatchDetail.value.isFirst = res.isFirst
+          if (res.dispatchArriveFlag === '2' || res.returnWarningFlag === '1') {
             form.value.basicInformation.dealSituation.value = '2023020800262'
             form.value.basicInformation.dealSituation.text = '中途返回'
           }
