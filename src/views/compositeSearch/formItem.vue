@@ -11,8 +11,9 @@ import SelectPerson from '@/component/SelectPerson/index.vue';
 import AreaCascader from "@/component/AreaCascader/multiple.vue";
 import store from '@/store/index.js'
 import dayjs from 'dayjs'
-// import { message, notification } from '@castle/ant-design-vue'
+
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
+
 const form = inject('form');
 
 let options = inject('options');
