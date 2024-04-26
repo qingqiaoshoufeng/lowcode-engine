@@ -60,7 +60,7 @@ watch(() => props.value,
         selectText.value = `${startDate.value.join("-")} ${startTime.value.join(":")} ~ ${endDate.value.join("-")}  ${endTime.value.join(":")}`;
       }
     } else {
-      startDate.value = dayjs().subtract(1, 'day').format("YYYY-MM-DD").split("-");
+      startDate.value = dayjs().format("YYYY-MM-DD").split("-");
       startTime.value = ['00', '00', '00'];
       endDate.value = dayjs().format("YYYY-MM-DD").split("-");
       endTime.value = ['23', '59', '59'];
