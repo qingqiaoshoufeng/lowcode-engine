@@ -245,6 +245,10 @@ const onSeverity = () => {
       return item
     })
   }
+  // 起火原因不能选择‘刑事放火’
+  if (form.value.basicInfo.fireCause.value?.includes('2023020801437')) {
+    form.value.basicInfo.fireCause.value = undefined
+  }
 }
 
 const validateBurnedArea = (val) => {
