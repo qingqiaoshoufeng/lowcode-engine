@@ -451,6 +451,30 @@ const onCommander = () => {
         />
       </template>
     </van-field>
+    <van-field
+      v-if="showDealSituation"
+      v-model="form.investForce.robotNum.value"
+      v-preview-text="showPreview"
+      :readonly="showPreview"
+      type="digit"
+      maxlength="20"
+      name="investForce.robotNum.value"
+      label="灭火机器人(个)："
+      label-width="132px"
+      placeholder="请输入灭火机器人数量"
+      class="field-not-required"
+      :rules="form.investForce.robotNum.rules"
+    >
+      <template v-slot:label="">
+        <FieldAnnotation
+          label="灭火机器人(个)："
+          remark-field="robotNum"
+          field-module="investForce"
+          :exist-data="fieldExist?.robotNum"
+          @refresh-callback="refreshField"
+        />
+      </template>
+    </van-field>
   </van-cell-group>
 </template>
 

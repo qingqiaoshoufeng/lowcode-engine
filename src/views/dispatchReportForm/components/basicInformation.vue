@@ -55,7 +55,7 @@ const onDealSituation = (value, option) => {
   else {
     form.value.basicInformation.dealSituation.text = ''
   }
-  if (initDispatchDetail.value.isFirst && form.value.basicInformation.dealSituation.text === '中途返回') {
+  if (initDispatchDetail.value.isFirst === '1' && form.value.basicInformation.dealSituation.text === '中途返回') {
     form.value.basicInformation.dealSituation.value = undefined
     form.value.basicInformation.dealSituation.text = ''
     showToast('首到队伍不能选择中途返回')

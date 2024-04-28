@@ -188,7 +188,6 @@ onMounted(() => {
         </template>
       </SelectMultiple>
       <van-field
-        v-if="showMainGroup || showReinforce"
         v-model="form.battleConsume.wastageTruckExplain.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -210,7 +209,6 @@ onMounted(() => {
       </template>
     </van-field>
       <van-field
-        v-if="showMainGroup || showReinforce"
         v-model="form.battleConsume.fuel.value"
         v-preview-text="showPreview"
         :readonly="showPreview"
@@ -231,6 +229,112 @@ onMounted(() => {
           />
       </template>
     </van-field>
+      <van-field
+        v-model="form.battleConsume.boat.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="10"
+        name="battleConsume.boat.value"
+        label="损耗舟艇(艘)："
+        placeholder="请输入损耗舟艇数量"
+        :rules="form.battleConsume.boat.rules"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="损耗舟艇(艘)："
+            remark-field="boat"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.boat"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.battleConsume.airplane.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="10"
+        name="battleConsume.airplane.value"
+        label="损耗消防直升机(架)："
+        placeholder="请输入损耗消防直升机数量"
+        :rules="form.battleConsume.airplane.rules"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="损耗消防直升机(架)："
+            remark-field="airplane"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.airplane"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.battleConsume.rescueDog.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="10"
+        name="battleConsume.rescueDog.value"
+        label="损耗搜救犬(只)："
+        placeholder="请输入损耗搜救犬数量"
+        :rules="form.battleConsume.rescueDog.rules"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="损耗搜救犬(只)："
+            remark-field="rescueDog"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.rescueDog"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.battleConsume.uav.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="digit"
+        maxlength="20"
+        name="battleConsume.uav.value"
+        label="无人机(架)："
+        label-width="115px"
+        placeholder="请输入无人机数量"
+        :rules="form.battleConsume.uav.rules"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="无人机(架)："
+            remark-field="uav"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.uav"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
+      <van-field
+        v-model="form.battleConsume.robot.value"
+        v-preview-text="showPreview"
+        :readonly="showPreview"
+        type="number"
+        maxlength="10"
+        name="battleConsume.robot.value"
+        label="损耗灭火机器人(个)："
+        placeholder="请输入损耗灭火机器人数量"
+        :rules="form.battleConsume.robot.rules"
+      >
+        <template v-slot:label="">
+          <FieldAnnotation
+            label="损耗灭火机器人(个)："
+            remark-field="robot"
+            field-module="battleConsume"
+            :exist-data="fieldExist?.robot"
+            @refresh-callback="refreshField"
+          />
+        </template>
+      </van-field>
       <!-- 灭火器材耗损 -->
       <SplitLines title="灭火器材耗损" v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" />
       <template v-if="(showDealSituation && !showFalsePolice) || showHeadquarter">
@@ -862,29 +966,7 @@ onMounted(() => {
               @refresh-callback="refreshField"
             />
           </template>
-        </van-field>  
-        <van-field
-          v-model="form.battleConsume.uav.value"
-          v-preview-text="showPreview"
-          :readonly="showPreview"
-          type="digit"
-          maxlength="20"
-          name="battleConsume.uav.value"
-          label="无人机(架)："
-          label-width="115px"
-          placeholder="请输入无人机数量"
-          :rules="form.battleConsume.uav.rules"
-        >
-          <template v-slot:label="">
-            <FieldAnnotation
-              label="无人机(架)："
-              remark-field="uav"
-              field-module="battleConsume"
-              :exist-data="fieldExist?.uav"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>  
+        </van-field>
       </template>
       <div v-if="(showDealSituation && !showFalsePolice) || showHeadquarter" class="block-dynamic">
         <div v-for="(item, index) in form.battleConsume.lossOtherPersonal" :key="index" class="block-dynamic-item">

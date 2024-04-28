@@ -541,6 +541,13 @@ export const useFormConfig = () => {
           // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
         ],
       },
+      robotNum: { // 灭火机器人（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入灭火机器人数量' },
+          { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
+        ],
+      },
       // governmentCommand: { // 政府指挥
       //   title: '政府指挥',
       isCommand: { // 政府到场指挥情况
@@ -794,7 +801,42 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入燃油量' },
-          { pattern: nonnegativeNumberReg, message: '请输入正确燃油量' },
+          // { pattern: nonnegativeNumberReg, message: '请输入正确燃油量' },
+        ],
+      },
+      boat: { // 损耗舟艇（艘）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入损耗舟艇数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确损耗舟艇数量' },
+        ],
+      },
+      airplane: { // 损耗消防直升机（架）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入损耗消防直升机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确损耗消防直升机数量' },
+        ],
+      },
+      rescueDog: { // 损耗搜救犬（只）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入损耗搜救犬数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确损耗搜救犬数量' },
+        ],
+      },
+      uav: { // 无人机（架）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入无人机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+        ],
+      },
+      robot: { // 损耗灭火机器人（个）
+        value: '',
+        rules: [
+          // { required: true, message: '请输入灭火机器人数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
         ],
       },
       waterPump: { // 机动消防泵（含浮艇泵）（台）
@@ -979,13 +1021,13 @@ export const useFormConfig = () => {
           // { pattern: positiveIntegerReg, message: '请输入正确图传数量' },
         ],
       },
-      uav: { // 无人机（架）
-        value: '',
-        rules: [
-          // { required: true, message: '请输入无人机数量' },
-          // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
-        ],
-      },
+      // uav: { // 无人机（架）
+      //   value: '',
+      //   rules: [
+      //     // { required: true, message: '请输入无人机数量' },
+      //     // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
+      //   ],
+      // },
       foamLiquid: { // 泡沫液（千克）
         value: '',
         rules: [
@@ -1555,6 +1597,7 @@ export const useFormConfig = () => {
     form.value.investForce.fireAirplaneNum.value = fireDispatchItem?.fireAirplaneNum
     form.value.investForce.rescueDogNum.value = fireDispatchItem?.rescueDogNum
     form.value.investForce.uavNum.value = fireDispatchItem?.uavNum
+    form.value.investForce.robotNum.value = fireDispatchItem?.robotNum
     // 政府指挥
     form.value.investForce.isCommand.value = fireDispatchZfList && fireDispatchZfList.length > 0 ? '1' : '2'
     form.value.investForce.fireDispatchZfList = fireDispatchZfList?.map(item => item)
@@ -1625,6 +1668,11 @@ export const useFormConfig = () => {
       form.value.battleConsume.wastageTruck.value = fireDispatchLoss?.wastageTruck?.split(',')
     }
     form.value.battleConsume.wastageTruckExplain.value = fireDispatchLoss?.wastageTruckExplain
+    form.value.battleConsume.boat.value = fireDispatchLoss?.boat
+    form.value.battleConsume.airplane.value = fireDispatchLoss?.airplane
+    form.value.battleConsume.rescueDog.value = fireDispatchLoss?.rescueDog
+    form.value.battleConsume.uav.value = fireDispatchLoss?.uav
+    form.value.battleConsume.robot.value = fireDispatchLoss?.robot
     form.value.battleConsume.fuel.value = fireDispatchLoss?.fuel
     form.value.battleConsume.waterPump.value = fireDispatchLoss?.waterPump
     form.value.battleConsume.hoseReel.value = fireDispatchLoss?.hoseReel

@@ -343,8 +343,8 @@ const sections = computed(() => {
     if (!showMidwayReturn.value) {
       extra.scenePhoto = scenePhoto
     }
-    extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
+    extra.otherAttach = otherAttach
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -369,8 +369,8 @@ const sections = computed(() => {
     if (!showMidwayReturn.value) {
       extra.scenePhoto = scenePhoto
     }
-    extra.otherAttach = otherAttach
     extra.battleConsume = battleConsume
+    extra.otherAttach = otherAttach
     if (props.isDetail) {
       extra.proSteps = proSteps
     }
@@ -668,7 +668,7 @@ const initReport = () => {
             form.value.basicInformation.dealSituation.value = '2023020800262'
             form.value.basicInformation.dealSituation.text = '中途返回'
           }
-          if (res.isFirst && options.value.dealSituation) {
+          if (res.isFirst === '1' && options.value.dealSituation) {
             options.value.dealSituation[2].disabled = true
           }
         }
@@ -812,6 +812,7 @@ const getSubmitParams = () => {
         fireAirplaneNum: investForce.fireAirplaneNum.value,
         rescueDogNum: investForce.rescueDogNum.value,
         uavNum: investForce.uavNum.value,
+        robotNum: investForce.robotNum.value,
         isBlocking: basicInformation.isBlocking.value,
         blockingTime: basicInformation.blockingTime.value,
         // isPublicFireHydrant: basicInformation.isPublicFireHydrant.value,
@@ -845,6 +846,11 @@ const getSubmitParams = () => {
         wastageTruck: battleConsume.wastageTruck.value ? battleConsume.wastageTruck.value?.join(',') : '',
         wastageTruckExplain: battleConsume.wastageTruckExplain.value,
         fuel: battleConsume.fuel.value,
+        boat: battleConsume.boat.value,
+        airplane: battleConsume.airplane.value,
+        rescueDog: battleConsume.rescueDog.value,
+        uav: battleConsume.uav.value,
+        robot: battleConsume.robot.value,
         waterPump: battleConsume.waterPump.value,
         hoseReel: battleConsume.hoseReel.value,
         fireGun: battleConsume.fireGun.value,
@@ -871,7 +877,6 @@ const getSubmitParams = () => {
         fireAxe: battleConsume.fireAxe.value,
         interphone: battleConsume.interphone.value,
         transferImage: battleConsume.transferImage.value,
-        uav: battleConsume.uav.value,
         foamLiquid: battleConsume.foamLiquid.value,
         dryPowder: battleConsume.dryPowder.value,
         carbonDioxide: battleConsume.carbonDioxide.value,
@@ -1047,6 +1052,11 @@ const getSubmitParams = () => {
         wastageTruck: battleConsume.wastageTruck.value ? battleConsume.wastageTruck.value?.join(',') : '',
         wastageTruckExplain: battleConsume.wastageTruckExplain.value,
         fuel: battleConsume.fuel.value,
+        boat: battleConsume.boat.value,
+        airplane: battleConsume.airplane.value,
+        rescueDog: battleConsume.rescueDog.value,
+        uav: battleConsume.uav.value,
+        robot: battleConsume.robot.value,
         waterPump: battleConsume.waterPump.value,
         hoseReel: battleConsume.hoseReel.value,
         fireGun: battleConsume.fireGun.value,
@@ -1470,10 +1480,10 @@ const onSideBarChange = (e, k) => {
           </template>
           <!-- 现场照片 -->
           <ScenePhoto v-if="!showMidwayReturn" />
-          <!-- 其他附件 -->
-          <OtherAttach />
           <!-- 战斗消耗 -->
           <BattleConsume />
+          <!-- 其他附件 -->
+          <OtherAttach />
         </template>
         <template v-else-if="showReinforce">
           <!-- 处置经过 -->
@@ -1516,10 +1526,10 @@ const onSideBarChange = (e, k) => {
           </template>
           <!-- 现场照片 -->
           <ScenePhoto v-if="!showMidwayReturn" />
-          <!-- 其他附件 -->
-          <OtherAttach />
           <!-- 战斗消耗 -->
           <BattleConsume />
+          <!-- 其他附件 -->
+          <OtherAttach />
         </template>
         <template v-else-if="showHeadquarter">
           <!-- 基本信息-全勤指挥部 -->
