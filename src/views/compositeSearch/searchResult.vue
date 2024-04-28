@@ -150,7 +150,10 @@ onMounted(() => {
                 {{ record.warningStatusValue }}
               </div>
             </div>
-            <div v-if="record.warningTypeValue" class="item-type">
+            <div v-if="record.firePlaceName" class="item-type">
+              <span>{{ record.firePlaceName }}</span>
+            </div>
+            <div v-else-if="record.warningTypeValue" class="item-type">
               <span>{{ record.warningTypeValue }}</span>
             </div>
             <template v-if="searchType === 4">
