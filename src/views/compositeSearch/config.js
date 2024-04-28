@@ -135,14 +135,6 @@ export const useFormConfig = () => {
         options: 'warningDealStatus',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
-      warningSource: { // 报警来源
-        value: undefined,
-        back: false,
-        type: 'select-multiple',
-        label: '报警来源',
-        options: 'warningSource',
-        fieldNames: { value: 'boDictId', label: 'dictName' },
-      },
     },
     policeInvest: {
       title: '投入力量',
@@ -387,6 +379,14 @@ export const useFormConfig = () => {
         type: 'radio-is',
         label: '交通事故是否发生火灾',
         options: isNot
+      },
+      warningSource: { // 报警来源
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '报警来源',
+        options: 'warningSource',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
       },
     },
     dispatchBase: {
@@ -1919,8 +1919,6 @@ export const useFormConfig = () => {
         warningStatusNon: policeBase.warningStatus.back,
         warningDealStatus: policeBase.warningDealStatus.value,
         // warningDealStatusNon: policeBase.warningDealStatus.back,
-        warningSource: policeBase.warningSource.value?.join(','),
-        warningSourceNon: policeBase.warningSource.back,
         // 警情信息-投入力量
         dispatchGroup: policeInvest.dispatchGroup.value?.map(item => item.organizationid)?.join(','),
         dispatchGroupText: policeInvest.dispatchGroup.value?.map(item => item.name)?.join(','),
@@ -1984,6 +1982,8 @@ export const useFormConfig = () => {
         groupType: policeOther.groupType.value?.join(','),
         groupTypeNon: policeOther.groupType.back,
         isHappenFire: policeOther.isHappenFire.value,
+        warningSource: policeOther.warningSource.value?.join(','),
+        warningSourceNon: policeOther.warningSource.back,
       },
       comprehensiveDispatchQueryReq: {
         // 出动填报-基本信息
@@ -2461,8 +2461,6 @@ export const useFormConfig = () => {
     form.value.policeBase.warningStatus.back = comprehensiveWarningQueryReq.warningStatusNon === 'true'
     form.value.policeBase.warningDealStatus.value = comprehensiveWarningQueryReq.warningDealStatus
     // form.value.policeBase.warningDealStatus.back = comprehensiveWarningQueryReq.warningDealStatusNon === 'true'
-    form.value.policeBase.warningSource.value = comprehensiveWarningQueryReq.warningSource?.split(',')
-    form.value.policeBase.warningSource.back = comprehensiveWarningQueryReq.warningSourceNon === 'true'
     // 警情信息-投入力量
     form.value.policeInvest.dispatchGroup.value = comprehensiveWarningQueryReq.dispatchGroup
       ? generateByKeyValue(comprehensiveWarningQueryReq.dispatchGroupText, comprehensiveWarningQueryReq.dispatchGroup, {
@@ -2543,6 +2541,8 @@ export const useFormConfig = () => {
     form.value.policeOther.groupType.value = comprehensiveWarningQueryReq.groupType?.split(',')
     form.value.policeOther.groupType.back = comprehensiveWarningQueryReq.groupTypeNon === 'true'
     form.value.policeOther.isHappenFire.value = comprehensiveWarningQueryReq.isHappenFire
+    form.value.policeOther.warningSource.value = comprehensiveWarningQueryReq.warningSource?.split(',')
+    form.value.policeOther.warningSource.back = comprehensiveWarningQueryReq.warningSourceNon === 'true'
     // 出动填报-基本信息
     form.value.dispatchBase.dispatchCode.value = comprehensiveDispatchQueryReq.dispatchCode
     form.value.dispatchBase.dispatchGroupOrg.value = comprehensiveDispatchQueryReq.dispatchGroupOrg

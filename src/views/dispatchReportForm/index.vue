@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, onMounted, watch, computed, nextTick } from "vue";
+import { ref, provide, onMounted, watch, onUnmounted, computed, nextTick } from "vue";
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
@@ -1344,6 +1344,12 @@ onMounted(() => {
     formRef.value.submit()
     formRef.value.finishFn = finishFn
   }, commonLoading)
+})
+
+onUnmounted(() => {
+  if (options.value.dealSituation) {
+    options.value.dealSituation[2].disabled = false
+  }
 })
 
 const onFailed = (errorInfo) => {
