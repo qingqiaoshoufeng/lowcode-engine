@@ -502,10 +502,10 @@ provide('deleteField', deleteField)
 
 const initDict = () => {
   return new Promise((resolve) => {
-    const res = store.getters?.["dict/filterDicts"](['COMMAND_MODE', 'JQ_TYPE', 'CD_ZZZH_LEVEL', 'CD_OTHER_ZY', 'CD_OTHER_ZZ', 'CD_DC_HZQK',
+    const res = cloneDeep(store.getters?.["dict/filterDicts"](['COMMAND_MODE', 'JQ_TYPE', 'CD_ZZZH_LEVEL', 'CD_OTHER_ZY', 'CD_OTHER_ZZ', 'CD_DC_HZQK',
       'CD_MAIN_HZ', 'CD_MAIN_QX', 'CD_LINK_LEVEL', 'CD_LINK_DEP', 'CD_JYQK_CZ', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ',
       'CD_JBXX_BSY', 'CD_GDSS', 'CD_JBXX_GG', 'CD_HYZG', 'CD_CZRY_SF', 'CD_CZRY_FHZB', 'CD_CZRY_SFSD', 'CD_CZRY_SSBW', 'CD_CZRY_SSYY',
-      'CD_CZRY_SWYY', 'CD_CZRY_ZMBW', 'HZ_SW_MZ', 'JOB_TYPE', 'CD_RANK', 'CD_LOOK', 'RY_XZ', 'USER_JOB'], null, false);
+      'CD_CZRY_SWYY', 'CD_CZRY_ZMBW', 'HZ_SW_MZ', 'JOB_TYPE', 'CD_RANK', 'CD_LOOK', 'RY_XZ', 'USER_JOB'], null, false));
     options.value.commandMethod = res.COMMAND_MODE
     options.value.warningType = res.JQ_TYPE
     options.value.level = res.CD_ZZZH_LEVEL
@@ -1354,12 +1354,6 @@ onMounted(() => {
     formRef.value.submit()
     formRef.value.finishFn = finishFn
   }, commonLoading)
-})
-
-onUnmounted(() => {
-  if (options.value.dealSituation) {
-    options.value.dealSituation[2].disabled = false
-  }
 })
 
 const onFailed = (errorInfo) => {
