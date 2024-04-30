@@ -67,7 +67,7 @@ onMounted(async () => {
     'JQ_LEVEL', 'CD_JYQK_CZ', 'CD_DC_HZQK', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ', 'USER_JOB', 'CD_JBXX_GG', 'CD_JBXX_BSY', 'CD_OTHER_ZY',
     'DEAD_TIME', 'HZ_INFO_JZXS', 'JQ_STATUS', 'CD_STATUS', 'HZ_STATUS', 'CD_RANK', 'CD_CZRY_FHZB', 'CD_CZRY_SSBW', 'CD_CZRY_SFSD', 'CD_HYZG', 'STA_TIME', 'RANK_TYPE', 'CD_QQHEAD_TYPE',
     'CAR_TYPE', 'CD_LOOK', 'HZ_QHW_TYPE', 'HZ_YHY', 'HZ_INFO_RWYS', 'HZ_INFO_YY', 'DEPT_NATURE', 'HZ_INFO_SSBW', 'USER_JOB', 'CD_CZRY_ZMBW', 'CD_CZRY_SWYY',
-    'WX_FL', 'JQ_LY'], null, false)
+    'WX_FL', 'JQ_LY'], null, true)
   options.value.warningType = res.JQ_TYPE
   // 火灾信息
   options.value.area = res.HZ_INFO_QY // 区域
@@ -154,7 +154,7 @@ onMounted(async () => {
     }
   })
   const key = 'HZ_QHCS_JGZW,HZ_QHCS_SWSB,HZ_QHCS_LTCS,HZ_QHCS_HWZB,HZ_QHCS_LJFQ'
-  const res1 = store.getters?.["dict/filterDicts"](key.split(','), null, false)
+  const res1 = store.getters?.["dict/filterDicts"](key.split(','), null, true)
   if (res1) {
     options.value.firePlace = []
     key.split(',').forEach((item) => {
@@ -162,7 +162,7 @@ onMounted(async () => {
     })
   }
   const sites = 'HZ_QHWZ_CS,HZ_QHWZ_LTCS,HZ_QHWZ_SWSS,HZ_QHWZ_JTGJ'
-  const res2 = store.getters?.["dict/filterDicts"](sites.split(','), null, false)
+  const res2 = store.getters?.["dict/filterDicts"](sites.split(','), null, true)
   if (res2) {
     options.value.fireSite = []
     sites.split(',').forEach((item) => {

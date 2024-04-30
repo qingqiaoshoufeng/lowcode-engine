@@ -251,7 +251,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, false);
+  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE', 'JQ_LEVEL', 'NATURAL_DISASTER_TYPE'], null, true);
   searchOptions.value[1].options = res.JQ_STATUS
   searchOptions.value[3].options = res.JQ_TYPE
   searchOptions.value[4].options = res.JQ_LEVEL
