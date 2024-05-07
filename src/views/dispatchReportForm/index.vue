@@ -705,9 +705,11 @@ const initWatch = () => {
     watch(() => [
       form.value.draftInfo.warningType,
       form.value.draftInfo.partakeType,
-      form.value.basicInformation.dealSituation.value,
     ], () => {
       initFormWhenChange()
+    }, { deep: true })
+    watch(() => form.value.basicInformation.dealSituation.value, () => {
+      initFormWhenChange(false,'0')
     }, { deep: true })
     // 只有当填报状态下才自动生成处置过程
     if (props.closeModal && props.isInput) {

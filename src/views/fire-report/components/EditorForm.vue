@@ -539,12 +539,16 @@ const initWatch = () => {
   ], () => {
     initFireSite()
   })
-  watch(() => [
-    form.value.basicInfo.fireType.value,
-    form.value.basicInfo.firePlace.value,
-    form.value.basicInfo.severity.value,
-  ], () => {
+  watch(() => form.value.basicInfo.fireType.value, () => {
     initFormWhenChange()
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
+  })
+  watch(() => form.value.basicInfo.severity.value, () => {
+    initFormWhenChange(false, '0')
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
+  })
+  watch(() => form.value.basicInfo.firePlace.value, () => {
+    initFormWhenChange(false, '1')
     initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
   // 只有当填报、详情、修改状态下才自动生成处置过程
