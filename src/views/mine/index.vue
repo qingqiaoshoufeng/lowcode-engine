@@ -41,6 +41,7 @@ const handleOut = () => {
 const getNewNumber = async()=>{
   const res = await getRemind()
   list.value[3].number = res.dispatchEditBacklogNum
+  list.value[1].number = res.messageNum
   clearTimeout(id.value)
   if(id.value){
     id.value = setTimeout(getNewNumber,30*1000)
