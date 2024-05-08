@@ -2,7 +2,7 @@
   <div class="noticeList">
     <HeaderTitle title="通知列表"/>
     <van-tabs v-model:active="currentTab" ref="tabRef">
-      <van-tab :title="item.label" v-for="item in tabList" :key="item.label" :before-change="getNotice" @click-tab="getNotice">
+      <van-tab :title="item.label" v-for="item in tabList" :name="item.value" :key="item.label" :before-change="getNotice" @click-tab="getNotice">
         <div class="list">
           <div class="wrap">
             <div class="item" v-for="item in list" :key="item.boUserNoticeId" @click="goDetail(item)">
@@ -46,7 +46,7 @@ const {
   list:[
     {
       label:'全部',
-      value:'2',
+      value:'0',
     },
     {
       label:'未查看',
@@ -54,10 +54,10 @@ const {
     },
     {
       label:'已查看',
-      value:'0',
+      value:'2',
     },
   ],
-  defaultTab:'2',
+  defaultTab:'1',
   // handleChange:getNotice,
   paramsKey:'annual'
 })
@@ -73,9 +73,8 @@ watch(()=>tabRef.value.active,(val)=>{
     },
   ]
   getNotice(paramsMap[val])
-  
 })
-getNotice()
+getNotice( {status: 1})
 const goDetail = (item)=>{
   router.push({
     path:'/noticeDetail',

@@ -102,3 +102,17 @@
   border-radius: 0;
   background: rgba(0, 0, 0, 0.06);
 }
+
+.detail-form-info{
+  .van-cell__title.van-field__label.van-field__label--required{
+    &::before{
+      display: none !important;
+    }
+  }
+  .field-not-required{
+    .field-annotation{
+      margin-left: 0px !important;
+    }
+  }
+  
+}

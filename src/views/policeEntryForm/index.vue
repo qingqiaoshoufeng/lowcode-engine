@@ -917,7 +917,7 @@ const onWarningOrgname = () => {
 </script>
 
 <template>
-  <div class="police-entry-form">
+  <div class="police-entry-form" :class="{'detail-form-info':showPreview}">
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
       <van-field
         v-if="showSurvey"

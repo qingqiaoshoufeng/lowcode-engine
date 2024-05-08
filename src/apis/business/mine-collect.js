@@ -18,3 +18,9 @@ export const getMineCollect = (params)=>{
 export function getFocus() {
   return axios.get('/acws/rest/biz/mystatistics/query/focus')
 }
+
+
+//  我的统计--待办、消息--统计数量
+export function getRemind() {
+  return axios.get('/acws/rest/biz/mystatistics/query/remind')
+}

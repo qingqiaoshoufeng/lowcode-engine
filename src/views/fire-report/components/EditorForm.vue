@@ -1167,7 +1167,7 @@ const onSideBarChange = (e, k) => {
       </div>
       <div class="form-right">
          <div class="box">
-            <div class="wrapper">
+            <div class="wrapper" :class="{'detail-form-info':showPreview}">
               <van-form ref="formRef" @submit="onSubmit">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />

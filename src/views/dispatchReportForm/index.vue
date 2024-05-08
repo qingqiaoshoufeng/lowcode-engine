@@ -1397,7 +1397,7 @@ const onSideBarChange = (e, k) => {
           </template>
         </van-sidebar-item>
       </van-sidebar>
-      <div class="trigger" @click.stop="triggerMenu(false)">
+      <div class="trigger" @click.stop="triggerMenu(false)"> 
         <div class="wrapper">
           <svg class="icon svg-icon" aria-hidden="true">
             <use v-bind:xlink:href="`#icon-duanshousuojin`"></use>
@@ -1405,7 +1405,7 @@ const onSideBarChange = (e, k) => {
         </div>
       </div>
     </div>
-    <div class="form-right" :class="{ 'hidevalidate': hidevalidate }">
+    <div class="form-right" :class="{ 'hidevalidate': hidevalidate ,'detail-form-info':showPreview}">
       <van-form ref="formRef" @failed="onFailed" @submit="onSubmit" required="auto">
         <!-- 警情信息 -->
         <FireInfo v-if="!showDraft && !isPolice" />
