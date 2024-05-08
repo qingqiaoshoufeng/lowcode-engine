@@ -4,7 +4,10 @@
             <template #title>
                 <div class="title" @click="item.click">
                     <img :src="item.icon" alt="">
-                    <div class="label">{{ item.label }}</div>
+                    <div class="label">
+                      {{ item.label }}
+                      <div class="dot" v-if="item.number">{{ item.number }}</div>
+                    </div>
                 </div>
             </template> 
         </van-cell>
@@ -12,6 +15,7 @@
   </template>
   
 <script setup>
+import { Item } from "@castle/ant-design-vue/lib/menu";
 import {defineProps } from "vue";
 import { useRouter } from "vue-router";
 
@@ -54,6 +58,22 @@ export default {
             display: block;
             margin-right: 11px;
         }
+    }
+    .label{
+      position: relative;
+      .dot{
+        position: absolute;
+        right: -15px;
+        top:0;
+        background: #FF3131;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        font-size: 12px;
+        color: #fff;
+        line-height: 16px;
+        text-align: center;
+      }
     }
   }
   </style>

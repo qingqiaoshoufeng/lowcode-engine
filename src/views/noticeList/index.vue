@@ -9,8 +9,8 @@
               <div class="top">
                 <div class="left">
                   <div class="img">
-                    <div class="dot"></div>
-                    <img src="" alt="">
+                    <div class="dot" v-if="item.readFlag === '1'"></div>
+                    <img src="~@/assets/images/message1.png" />
                   </div>
                   <div class="name">{{ item.noticeTitle }}</div>
                 </div>
@@ -117,10 +117,36 @@ const goDetail = (item)=>{
       align-items: center;
       justify-content: space-between;
       margin-bottom: 7px;
+      font-family: PingFangSC, PingFang SC;
+      font-weight: 400;
+      font-size: 14px;
+      color: #0E203C;
+      line-height: 20px;
+      text-align: left;
+      font-style: normal;
       .left{
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        .img{
+          display: flex;
+          align-items: center;
+          position: relative;
+          .dot{
+            position: absolute;
+            right: 3px;
+            top: 0;
+            width: 6px;
+            height:6px;
+            border-radius: 50%;
+            background: #FF3131;
+          }
+        }
+        img{
+          width: 20px;
+          height: 20px;
+          margin-right: 5px;
+        }
       }
     }
     .bottom{
