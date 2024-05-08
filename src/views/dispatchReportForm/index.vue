@@ -1185,8 +1185,12 @@ const { loading, submit } = useSubmit(
       emits('finishCallback', res, props.showDraft)
     }
     else if (!props.isApproval && !props.isAgain && props.showDraft) {
-      showToast('保存成功')
+      showToast('保存成功！')
       emits('finishCallback', res, props.showDraft)
+    } else if (props.isInput) {
+      showToast('出动填报成功!')
+    } else if (props.isEdit && !props.isApproval) {
+      showToast('出动修改成功!')
     }
   },
   {
@@ -1207,14 +1211,14 @@ const { loading, submit } = useSubmit(
 
 const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   (res) => {
-    if (!props.isApproval) {
-      showToast('审核成功')
+    if (props.isApproval) {
+      showToast(`${props.approvalText || '出动' + props.labelText}` + '成功!')
       emits('finishCallback')
     }
   },
   {
     submitFn: () => {
-      showLoadingToast()
+       showLoadingToast()
 
       let type = false
       if (showHeadquarter.value) {
@@ -1239,8 +1243,8 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
 
 const { loading: backLoading, submit: backSubmit } = useSubmit(
   (res) => {
-    if (!props.isApproval) {
-      showToast(`${props.labelText}成功！`)
+    if (props.isApproval) {
+      showToast(`${props.approvalText || '出动' + props.labelText}` + '成功!')
       emits('finishCallback')
     }
   },

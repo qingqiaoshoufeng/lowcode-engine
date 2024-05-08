@@ -1001,7 +1001,7 @@ export const useFormConfig = (validateProgress) => {
     // if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
     //   form.value.fireBuilding.buildTag.value = ['2023020801767']
     // }
-    if (flag !== "0" && flag != "1") {
+    if (flag !== "0" && flag !== "1") {
       form.value.firePhoto = {
         ...cloneDeep(formOrigin.firePhoto),
         fieldAnnotation: form.value.firePhoto.fieldAnnotation,

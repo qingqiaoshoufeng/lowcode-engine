@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { showLoadingToast, closeToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant"
 import { useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import SelectSingle from "@/component/SelectSingle/index";
@@ -54,6 +54,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
+  showToast('申请更正成功!')
   emits('finishCallback')
 }, {
   submitFn: () => recheckFireWarning({

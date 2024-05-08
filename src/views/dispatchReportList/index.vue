@@ -45,10 +45,7 @@ const handleItem = (row) => {
 
 const refreshCallback = () => {
   show.value.editVisible = false
-  showLoadingToast()
-  proListRef.value.filter().then(res => {
-    closeToast()
-  })
+  proListRef.value.filter()
 }
 </script>
 

@@ -481,15 +481,16 @@ const refreshField = () => {
   }
 }
 
-const { loading, submit } = useSubmit((res) => {
+const { loading, submit } = useSubmit((res) => { 
   if (props.isConfirm) {
-    showToast('警情确认成功')
+    showToast('警情确认成功!')
     emits('finishCallback')
   }
-  if (res.boFireWarningId) {
+  if (res.boFireWarningId) {  
     updateFormFieldAnnotationIds({ newId: res.boFireWarningId, oldId: localFireWarningId.value })
   }
-  if (props.currentRow?.boFireWarningId) {
+  if (props.currentRow?.boFireWarningId) { 
+    showToast('警情修改成功!')
     emits('finishCallback')
   }
   else {
@@ -498,6 +499,7 @@ const { loading, submit } = useSubmit((res) => {
   }
 }, {
   submitFn: () => {
+    showLoadingToast()
     const { boWarningYyjId } = props.currentRow
     const values = form.value
     const params = {
