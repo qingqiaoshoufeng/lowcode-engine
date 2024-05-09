@@ -155,7 +155,7 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
   options.fireLevel = res.HZ_INFO_HZDJ
   options.fireCause = toRaw(res.HZ_QHYY)
   options.area = res.HZ_INFO_QY
-})
+}, true)
 onMounted(() => {
 })
 

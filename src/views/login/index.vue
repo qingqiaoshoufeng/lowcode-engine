@@ -44,16 +44,53 @@
           />
           <div class="img" @click="getCode"><img :src="imgUrl" alt="" /></div>
         </div>
+        <van-field
+          v-if="needSmsCheck"
+          v-model="loginForm.phone"
+          left-icon="phone"
+          name="phone"
+          placeholder="请输入手机号"
+          maxlength="20"
+          :required="false"
+          :disabled="true"
+          :rules="[{ required: false, message: '请输入手机号' }]"
+        />
+        <van-field
+          v-if="needSmsCheck"
+          class="verification"
+          v-model="loginForm.smsCode"
+          :left-icon="verification"
+          name="smsCode"
+          placeholder="请输入手机验证码"
+          maxlength="6"
+          :required="true"
+          :rules="[{ required: true, message: '请输入手机验证码' }]"
+          type="number"
+        >
+          <template #button>
+            <van-button
+              size="small"
+              type="primary"
+              :disabled="countdown.disabled"
+              @click="startCountdown"
+            >
+              {{ countdown.innerText }}
+            </van-button>
+          </template>
+        </van-field>
         <div class="isRemember">
           <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
         </div>
         <van-button
           class="submit"
+          :class="{ 'submit-phone': needSmsCheck }"
           round
           block
           type="primary"
           native-type="submit"
-        >登录</van-button>
+        >
+          登录
+        </van-button>
       </van-form>
     </div>
   </div>
@@ -61,10 +98,11 @@
 
 <script setup>
 import { reactive, ref ,onMounted} from "vue";
-import verification from '@/assets/images/verification.png'
-import { loginIn, getVerificationCode } from '@/apis/index.js'
-import router from '@/router/index.js'
-import { encrypt } from '@/utils/tools.js'
+import verification from '@/assets/images/verification.png';
+import { loginIn, getVerificationCode, getMsgCode } from '@/apis/index.js';
+import router from '@/router/index.js';
+import { encrypt, maskPhoneNumber } from '@/utils/tools.js';
+import { validatePhone } from '@/utils/validate.js';
 import { useStore } from "vuex";
 import { showToast, closeToast  } from "vant";
 
@@ -78,10 +116,18 @@ const pswType = ref(false)
 
 const isRemember = ref(false)
 
+const needSmsCheck = ref(false)
+
+const countdownFn = ref(null)
+
+const countdown = ref({ disabled: false, innerText: '发送验证码' })
+
 const loginForm = ref({
   loginid: '',
   password: '',
   jcaptchaCode: '',
+  phone: '',
+  smsCode: '',
 // ssoTag: 'abcdefg', // 跳过验证码验证
 })
 
@@ -101,18 +147,27 @@ const handleUserLogin = async () => {
     duration:0,
     forbidClick:true
   })
-  const { loginid, password, jcaptchaCode } = loginForm.value
+  const { loginid, password, jcaptchaCode, smsCode } = loginForm.value
   const params = {
     loginid: encrypt(loginid),
     password: encrypt(password),
-    jcaptchaCode
+    jcaptchaCode,
+    loginType: needSmsCheck.value ? 2 : undefined,
+    smsCode: needSmsCheck.value ? smsCode : undefined,
   }
   const res = await loginIn(params).catch(error => {
     if (error) {
       getCode()
     }
   })
-  if (res?.token) {
+  if (res?.code === 401 && res?.data) {
+    showToast(res?.msg)
+    loginForm.value.phone = maskPhoneNumber(res?.data)
+    loginForm.value.jcaptchaCode = ''
+    needSmsCheck.value = true
+    getCode()
+  }
+  else if (res?.token) {
     localStorage.token = res.token
     const { jcaptchaCode, ...rest } = loginForm.value
     isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
@@ -124,6 +179,7 @@ const handleUserLogin = async () => {
   } else if (res?.code === 401 && res?.msg) {
     showToast(res?.msg)
     loginForm.value.jcaptchaCode = ''
+    loginForm.value.smsCode = ''
     getCode()
   }
 };
@@ -137,6 +193,27 @@ const autoLoginInfo = ()=>{
   if(info){
     loginForm.value = JSON.parse(info)
   }
+}
+
+const startCountdown = () => {
+  if (!loginForm.value.loginid) {
+    showToast('请输入用户名')
+    return
+  }
+  let seconds = 60
+  countdownFn.value = setInterval(() => {
+    seconds -= 1
+    if (seconds > 0) {
+      countdown.value.disabled = true
+      countdown.value.innerText = `${seconds}秒后重新发送`
+    }
+    else {
+      clearInterval(countdownFn.value)
+      countdown.value.disabled = false
+      countdown.value.innerText = '发送验证码'
+    }
+  }, 1000)
+  getMsgCode({ username: encrypt(loginForm.value.loginid) })
 }
 
 onMounted(()=>{
@@ -163,14 +240,12 @@ const handleSwitch = () => {
   background-position: 0% 0%;
   overflow: hidden;
   background-color: #fff;
-
   .logo {
     height: 66px;
     width: 68px;
     margin: 50px auto 11px;
     display: block;
   }
-
   .title {
     width: 264px;
     height: 33px;
@@ -188,48 +263,47 @@ const handleSwitch = () => {
     padding:46px 16px 0 16px;
     margin-top: 26px;
   }
-  .isRemember{
+  .isRemember {
     margin-top: 21px;
     font-size: 16px;
-    ::v-deep(.van-checkbox__label){
+    ::v-deep(.van-checkbox__label) {
       font-size: 14px;
       font-family: PingFangSC, PingFang SC;
       font-weight: 400;
       color: #545A66;
     }
   }
-  ::v-deep .van-field{
+  ::v-deep .van-field {
     background-color: #F0F5F8 !important;
     margin-top: 16px;
   }
-  .submit{
-    margin-top: 65px;
+  .submit {
+    margin-top: 60px;
     background-color: #7485CB !important;
     height: 36px;
   }
-  .img{
+  .submit-phone {
+    margin-top: 30px;
+  }
+  .img {
     width: 105px;
     height: 40px;
     margin-top: 17px;
-    img{
+    img {
       width: 100%;
       height: 100%;
     }
   }
-  .validator{
+  .validator {
     display:flex;
     justify-content:space-between;
     align-items:center;
-    .verification{
+    .verification {
       margin-right:12px;
-
     }
   }
-  .verification{
-    ::v-deep(.van-field__left-icon){
-      margin-top: 3px;
-    }
+  .verification {
+    align-items: center;
   }
 }
 </style>
-
