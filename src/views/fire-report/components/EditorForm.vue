@@ -344,7 +344,8 @@ provide('initFireDetail', initFireDetail)
 const sections = computed(() => {
   const { fireInfo, briefSituation, basicInfo, casualtyWar, economicLoss, fireBuilding, fireFacilities, caseHandling, firePhoto, fireCourse, otherAttach, proSteps } = form.value
   const result = {}
-  if (!props.showDraft && !props.isPolice && !unDispatch.value) {
+  // if (!props.showDraft && !props.isPolice && !unDispatch.value) {
+  if (!props.showDraft && !unDispatch.value) {
     result.fireInfo = fireInfo
   }
   if (!props.showDraft) {
