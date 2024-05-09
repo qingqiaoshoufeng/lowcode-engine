@@ -231,7 +231,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['CD_STATUS', 'JQ_TYPE', 'CD_JYQK_CZ'], null, false);
+  const res = store.getters?.["dict/filterDicts"](['CD_STATUS', 'JQ_TYPE', 'CD_JYQK_CZ'], null, true);
   searchOptions.value[1].options = res.CD_STATUS
   searchOptions.value[4].options = res.JQ_TYPE
   searchOptions.value[12].options = res.CD_JYQK_CZ

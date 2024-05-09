@@ -118,8 +118,8 @@ defineOptions({
       :label="`${labelText}意见：`"
       type="textarea"
       maxlength="500"
-      :placeholder="`请选择${labelText}意见`"
-      :rules="[{ required: true, message: `请选择${labelText}意见` }]"
+      :placeholder="`请输入${labelText}意见`"
+      :rules="[{ required: true, message: `请输入${labelText}意见` }]"
       show-word-limit
       class="form-textarea"
     />

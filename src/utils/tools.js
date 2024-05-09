@@ -609,3 +609,10 @@ export const getCookie = (name) => {
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export const maskPhoneNumber = (phone) => {
+  if (!phone) {
+    return ''
+  }
+  return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+}

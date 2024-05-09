@@ -218,3 +218,8 @@ export function searchLocation(params) {
 export function getSourceOption(params) {
   return request.get('/acws/rest/biz/analysis/snapshot/getSourceOption', { params })
 }
+
+// 获取验证码
+export function getMsgCode(data) {
+  return request.post(`/acws/rest/biz/factor/sendloginmsg`, data)
+}

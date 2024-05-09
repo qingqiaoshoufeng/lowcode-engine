@@ -65,8 +65,8 @@ provide('fieldByState', currenState)
 
 const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   (res) => {
-    if (!props.isApproval) {
-      showToast('审批成功')
+    if (props.isApproval) {
+      showToast(`${props.approvalText}` + '成功!')
       emits('finishCallback')
     }
   },

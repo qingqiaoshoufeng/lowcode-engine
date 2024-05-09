@@ -912,7 +912,10 @@ export const useFormConfig = (validateProgress) => {
 
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
   // 当严重程度、火灾类型、起火场所，发生变化时重置表单，避免无用数据提交到后端
-  const initFormWhenChange = (draft) => {
+  // 切换火灾严重程度，不清除【经济损失】【火灾照片】【其他附件】三个模块已填写内容，同时对于【基本信息】模板，仅清除轻微与非轻微火灾模板差异的字段信息，其他已录入信息不做清除。差异信息包括社会统一信用代码、引起火灾人员年龄、健康状况、受教育程度、【是否保险】、【是否单方面火灾】、【是否属于安全生产事故】及其连带的信息。
+  // 切换【起火场所类型】，不清除人员伤亡、经济损失、起火建筑、消防设施、案件办理、火灾照片、其他附件等7个模板已有内容
+  // flag 0 表示是切换【火灾严重程度】，1 表示是切换【起火场所类型】
+  const initFormWhenChange = (draft, flag) => {
     form.value.fireInfo = cloneDeep(formOrigin.fireInfo)
     if (draft) {
       // form.value.basicInfo.draftName.value = ''
@@ -926,6 +929,18 @@ export const useFormConfig = (validateProgress) => {
     // form.value.basicInfo.fireOrgname.value = ''
     // form.value.basicInfo.fireTel.value = ''
     form.value.basicInfo.socialCreditCode.value = ''
+    form.value.basicInfo.firePersonAge.value = ''
+    form.value.basicInfo.health.value = undefined
+    form.value.basicInfo.schooling.value = undefined
+    form.value.basicInfo.isInsurance.value = '2'
+    form.value.basicInfo.insuranceInfo.value = undefined
+    form.value.basicInfo.isOnesided.value = '2'
+    form.value.basicInfo.fireInspection.value = undefined
+    form.value.basicInfo.fireInspectionScope.value = undefined
+    form.value.basicInfo.fireSafetyUnits.value = undefined
+    form.value.basicInfo.isSafetyAccident.value = '2'
+    form.value.basicInfo.attach.value = []
+    form.value.basicInfo.fileRemark.value = ''
     // form.value.basicInfo.fireType.value = undefined
     // form.value.basicInfo.fireType.text = []
     // form.value.basicInfo.fireCause.value = undefined
@@ -936,95 +951,90 @@ export const useFormConfig = (validateProgress) => {
     // form.value.basicInfo.fireLevel.value = ''
     // form.value.basicInfo.firePlace.value = undefined
     // form.value.basicInfo.firePlace.text = []
-    form.value.basicInfo.isLaborIntensive.value = '2'
-    form.value.basicInfo.plantRiskClassification.value = undefined
-    form.value.basicInfo.otherFirePlace.value = ''
-    form.value.basicInfo.liveType.value = undefined
-    form.value.basicInfo.vehicleType.value = undefined
-    form.value.basicInfo.vehicleType.text = []
-    form.value.basicInfo.chargeState.value = undefined
-    form.value.basicInfo.isRepack.value = undefined
-    form.value.basicInfo.batteryType.value = undefined
-    form.value.basicInfo.energyType.value = undefined
-    form.value.basicInfo.vinCode.value = ''
-    form.value.basicInfo.carNumber.value = ''
-    form.value.basicInfo.driveState.value = undefined
-    form.value.basicInfo.isPoorHouse.value = '2'
-    form.value.basicInfo.isChangeUseType.value = '2'
-    form.value.basicInfo.useType.value = undefined
-    // form.value.basicInfo.buildType.value = undefined
-    // form.value.basicInfo.fireResistanceRating.value = undefined
-    // form.value.basicInfo.buildStructure.value = undefined
-    form.value.basicInfo.firePattern.value = ['2023020801194']
-    form.value.basicInfo.fireSite.value = undefined
-    form.value.basicInfo.initialFuelsType.value = undefined
-    form.value.basicInfo.initialFuelsType.text = []
-    form.value.basicInfo.initialFuels.value = undefined
-    form.value.basicInfo.igniteSourceType.value = undefined
-    form.value.basicInfo.igniteSource.value = undefined
-    form.value.basicInfo.firePersonAge.value = ''
-    form.value.basicInfo.schooling.value = undefined
-    form.value.basicInfo.health.value = undefined
-    form.value.basicInfo.isOperating.value = '2'
-    form.value.basicInfo.industry.value = undefined
-    form.value.basicInfo.industryDepartment.value = undefined
-    form.value.basicInfo.economicType.value = undefined
-    form.value.basicInfo.leadInspectionOrg.value = undefined
-    form.value.basicInfo.otherOrgRemark.value = ''
-    form.value.basicInfo.isInsurance.value = '2'
-    form.value.basicInfo.insuranceInfo.value = undefined
-    // form.value.basicInfo.isResearch.value = '2'
-    form.value.basicInfo.isOnesided.value = '2'
-    form.value.basicInfo.fireInspection.value = undefined
-    form.value.basicInfo.fireInspectionScope.value = undefined
-    form.value.basicInfo.fireSafetyUnits.value = undefined
-    form.value.basicInfo.isSafetyAccident.value = '2'
-    form.value.basicInfo.attach.value = []
-    form.value.basicInfo.fileRemark.value = ''
-    form.value.casualtyWar = {
-      ...cloneDeep(formOrigin.casualtyWar),
-      fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
-      fieldWarning: form.value.casualtyWar.fieldWarning,
+    if (flag !== '0') {
+      form.value.basicInfo.isLaborIntensive.value = '2'
+      form.value.basicInfo.plantRiskClassification.value = undefined
+      form.value.basicInfo.otherFirePlace.value = ''
+      form.value.basicInfo.liveType.value = undefined
+      form.value.basicInfo.vehicleType.value = undefined
+      form.value.basicInfo.vehicleType.text = []
+      form.value.basicInfo.chargeState.value = undefined
+      form.value.basicInfo.isRepack.value = undefined
+      form.value.basicInfo.batteryType.value = undefined
+      form.value.basicInfo.energyType.value = undefined
+      form.value.basicInfo.vinCode.value = ''
+      form.value.basicInfo.carNumber.value = ''
+      form.value.basicInfo.driveState.value = undefined
+      form.value.basicInfo.isPoorHouse.value = '2'
+      form.value.basicInfo.isChangeUseType.value = '2'
+      form.value.basicInfo.useType.value = undefined
+      // form.value.basicInfo.buildType.value = undefined
+      // form.value.basicInfo.fireResistanceRating.value = undefined
+      // form.value.basicInfo.buildStructure.value = undefined
+      form.value.basicInfo.firePattern.value = ['2023020801194']
+      form.value.basicInfo.fireSite.value = undefined
+      form.value.basicInfo.initialFuelsType.value = undefined
+      form.value.basicInfo.initialFuelsType.text = []
+      form.value.basicInfo.initialFuels.value = undefined
+      form.value.basicInfo.igniteSourceType.value = undefined
+      form.value.basicInfo.igniteSource.value = undefined
+      form.value.basicInfo.isOperating.value = '2'
+      form.value.basicInfo.industry.value = undefined
+      form.value.basicInfo.industryDepartment.value = undefined
+      form.value.basicInfo.economicType.value = undefined
+      form.value.basicInfo.leadInspectionOrg.value = undefined
+      form.value.basicInfo.otherOrgRemark.value = ''
+      // form.value.basicInfo.isResearch.value = '2'
     }
     // form.value.economicLoss = {
     //   ...cloneDeep(formOrigin.economicLoss),
     //   fieldAnnotation: form.value.economicLoss.fieldAnnotation,
     //   fieldWarning: form.value.economicLoss.fieldWarning,
     // }
-    form.value.fireBuilding = {
-      ...cloneDeep(formOrigin.fireBuilding),
-      fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
-      fieldWarning: form.value.fireBuilding.fieldWarning,
-    }
-    form.value.fireFacilities = {
-      ...cloneDeep(formOrigin.fireFacilities),
-      fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
-      fieldWarning: form.value.fireBuilding.fieldWarning,
-    }
-    form.value.caseHandling = {
-      ...cloneDeep(formOrigin.caseHandling),
-      fieldAnnotation: form.value.caseHandling.fieldAnnotation,
-      fieldWarning: form.value.caseHandling.fieldWarning,
-    }
-    form.value.firePhoto = {
-      ...cloneDeep(formOrigin.firePhoto),
-      fieldAnnotation: form.value.firePhoto.fieldAnnotation,
-      fieldWarning: form.value.firePhoto.fieldWarning,
-    }
     // form.value.fireCourse = {
     //   ...cloneDeep(formOrigin.fireCourse),
     //   fieldAnnotation: form.value.fireCourse.fieldAnnotation,
     //   fieldWarning: form.value.fireCourse.fieldWarning,
     // }
-    form.value.otherAttach = {
-      ...cloneDeep(formOrigin.otherAttach),
-      fieldAnnotation: form.value.otherAttach.fieldAnnotation,
-      fieldWarning: form.value.otherAttach.fieldWarning,
-    }
+
     // const { basicInfo } = form.value
     // if (basicInfo.severity.value === '2' && basicInfo.fireType?.text?.includes('建构筑物火灾')) {
     //   form.value.fireBuilding.buildTag.value = ['2023020801767']
     // }
+    if (flag !== "0" && flag !== "1") {
+      form.value.firePhoto = {
+        ...cloneDeep(formOrigin.firePhoto),
+        fieldAnnotation: form.value.firePhoto.fieldAnnotation,
+        fieldWarning: form.value.firePhoto.fieldWarning,
+      }
+      form.value.otherAttach = {
+        ...cloneDeep(formOrigin.otherAttach),
+        fieldAnnotation: form.value.otherAttach.fieldAnnotation,
+        fieldWarning: form.value.otherAttach.fieldWarning,
+      }
+    }
+    if (flag !== "1") {
+      form.value.casualtyWar = {
+        ...cloneDeep(formOrigin.casualtyWar),
+        fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
+        fieldWarning: form.value.casualtyWar.fieldWarning,
+      }
+      form.value.fireBuilding = {
+        ...cloneDeep(formOrigin.fireBuilding),
+        fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
+        fieldWarning: form.value.fireBuilding.fieldWarning,
+      }
+      form.value.fireFacilities = {
+        ...cloneDeep(formOrigin.fireFacilities),
+        fieldAnnotation: form.value.fireFacilities.fieldAnnotation,
+        fieldWarning: form.value.fireFacilities.fieldWarning,
+      };
+      form.value.caseHandling = {
+        ...cloneDeep(formOrigin.caseHandling),
+        fieldAnnotation: form.value.caseHandling.fieldAnnotation,
+        fieldWarning: form.value.caseHandling.fieldWarning,
+      }
+    }
   }
 
   // 校验表单规则是否需要显示 warning 提示

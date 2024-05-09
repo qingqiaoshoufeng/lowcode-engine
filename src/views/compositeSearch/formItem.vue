@@ -64,7 +64,7 @@ const change = (value, selectedOptions,type,isClear = true) => {
     key.split(',').forEach((item) => {
       options.value.firePlace.push(...res[item])
     })
-  })
+  }, true)
 }
 
 watch(() => form.value.fireBase.fireType.value, (val) => {

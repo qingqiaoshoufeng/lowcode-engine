@@ -36,11 +36,8 @@ const handleItem = (row) => {
 };
 
 const finishCallback = () => {
-  show.value.editVisible = false
-  showLoadingToast();
-  proListRef.value.filter().then((res) => {
-    closeToast();
-  });
+  show.value.editVisible = false 
+  proListRef.value.filter()
 }
 </script>
 

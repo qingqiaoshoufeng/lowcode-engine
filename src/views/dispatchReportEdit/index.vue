@@ -41,10 +41,7 @@ const handleItem = (row) => {
 
 const refreshCallback = () => {
   isAgain.value = false
-  showLoadingToast();
-  proListRef.value.filter().then((res) => {
-    closeToast();
-  });
+  proListRef.value.filter()
 }
 </script>
 

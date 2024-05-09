@@ -155,7 +155,7 @@ const options = {}
 getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.HZ_TIMEOUT_TYPE
   options.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
-})
+}, true)
 onMounted(() => {
 })
 const showExplainFn = ()=>{

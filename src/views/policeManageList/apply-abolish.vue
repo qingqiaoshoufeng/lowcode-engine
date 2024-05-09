@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
-import { showLoadingToast, closeToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant";
 // import { useSuccess } from '@/hooks/useSuccess.js'
 import SelectSingle from "@/component/SelectSingle/index";
 import { abolishFireWarning } from '@/apis/index.js'
@@ -50,7 +50,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  closeToast()
+  showToast('申请作废成功!')
   emits('finishCallback')
 }, {
   submitFn: () => abolishFireWarning({

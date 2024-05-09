@@ -157,7 +157,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE'], null, false);
+  const res = store.getters?.["dict/filterDicts"](['JQ_STATUS', 'JQ_TYPE'], null, true);
   searchOptions.value[4].options = res.JQ_TYPE
   searchOptions.value[7].options = res.JQ_STATUS
   // 获取增援总队

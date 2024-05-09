@@ -111,6 +111,7 @@
           :set-handle-ok="setHandleOk"
           :set-handle-extend="setHandleExtend"
           @finish-callback="refreshCallback"
+          @refreshEdit="editRefreshCallback"
         />
       </template>
   </ProModal> 
@@ -171,7 +172,9 @@ const relevanceDraft = ref(null)
 const refreshCallback = () => {
   proListRef.value.filter()
 }
-
+const editRefreshCallback = ()=>{
+  show.value.editVisible = false
+}
 provide('isShowTemporary', isShowTemporary)
 
 

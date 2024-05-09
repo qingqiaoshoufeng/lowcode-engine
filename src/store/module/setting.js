@@ -1,5 +1,5 @@
 const state = {
-  minInputTime: new Date('2023-12-31 23:59:59'),
+  minInputTime: new Date('2024-01-01 00:00:00'),
 }
 
 export default {

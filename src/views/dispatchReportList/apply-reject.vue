@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { showLoadingToast, closeToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant"
 import { useSubmit } from '@castle/castle-use'
 import SelectSingle from "@/component/SelectSingle/index";
 import { rejectDispatchBack } from '@/apis/index.js'
@@ -44,13 +44,13 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  closeToast()
+  showToast('退回成功!')
   emits('finishCallback')
 }, {
   submitFn: () => rejectDispatchBack({
-    ...form.value,
-    boFireDispatchId: props.currentRow?.boFireDispatchId,
-  }),
+      ...form.value,
+      boFireDispatchId: props.currentRow?.boFireDispatchId,
+    }),
 })
 
 const onSubmit = async () => {
