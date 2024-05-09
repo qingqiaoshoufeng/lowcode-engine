@@ -170,7 +170,7 @@ const options = {}
 getSystemDictSync(['JQ_TYPE', 'CD_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.CD_TIMEOUT_TYPE
   options.warningType = res.JQ_TYPE
-})
+}, true)
 onMounted(() => {
 })
 const searchOptions = computed(()=>([

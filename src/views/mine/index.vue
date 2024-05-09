@@ -14,12 +14,18 @@ import { ref } from "vue";
 import InfoCard from "./components/InfoCard.vue";
 import { entryList } from "./config.js";
 import { showLoadingToast, closeToast } from "vant";
-import { loginOut } from "@/apis/index.js";
+import { loginOut,getRemind } from "@/apis/index.js";
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { onUnmounted } from "vue";
 
 const currentab = ref(5);
 
+const list = ref(entryList)
+
 const router = useRouter();
+
+const id = ref(1)
 
 const handleOut = () => {
   showLoadingToast();
@@ -31,6 +37,24 @@ const handleOut = () => {
     });
   });
 };
+
+const getNewNumber = async()=>{
+  const res = await getRemind()
+  list.value[3].number = res.dispatchEditBacklogNum
+  list.value[1].number = res.messageNum
+  clearTimeout(id.value)
+  if(id.value){
+    id.value = setTimeout(getNewNumber,30*1000)
+  }
+}
+onMounted(()=>{
+  getNewNumber()
+})
+
+onUnmounted(()=>{
+  id.value = 0
+  clearTimeout(id.value)
+})
 </script>
     
 <style scoped lang="scss">

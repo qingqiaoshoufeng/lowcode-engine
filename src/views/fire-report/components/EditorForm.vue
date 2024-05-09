@@ -348,7 +348,8 @@ provide('initFireDetail', initFireDetail)
 const sections = computed(() => {
   const { fireInfo, briefSituation, basicInfo, casualtyWar, economicLoss, fireBuilding, fireFacilities, caseHandling, firePhoto, fireCourse, otherAttach, proSteps } = form.value
   const result = {}
-  if (!props.showDraft && !props.isPolice && !unDispatch.value) {
+  // if (!props.showDraft && !props.isPolice && !unDispatch.value) {
+  if (!props.showDraft && !unDispatch.value) {
     result.fireInfo = fireInfo
   }
   if (!props.showDraft) {
@@ -1179,7 +1180,7 @@ const onSideBarChange = (e, k) => {
       </div>
       <div class="form-right">
          <div class="box">
-            <div class="wrapper">
+            <div class="wrapper" :class="{'detail-form-info':showPreview}">
               <van-form ref="formRef" @submit="onSubmit">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />

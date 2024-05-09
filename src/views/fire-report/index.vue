@@ -6,7 +6,11 @@
       :getListFn="getFireReportList"
       :tabs="[]"
       title="火灾填报"
+      showExplain
     >
+      <template #explain>
+        <div class="undispatch-btn" @click.stop="handleAddUnDispatch">未出动火灾填报</div>
+      </template>
       <template #list="{ record }">
         <div class="pro-list-item" @click.stop="handleclick({type:'look' ,record})">
           <div class="item-header">
@@ -95,6 +99,27 @@
         </div>
       </template>
   </ProList>
+  <!-- 未出动火灾填报 -->
+  <ProModal
+    v-model:visible="show.unDispatchVisible"
+    title="未出动火灾填报"
+    :ok-display="true"
+    pro-card-id="card-wrap"
+    :showHeader="false"
+    :showBack="true"
+  >
+    <template #default="{ setHandleOk }">
+      <EditorForm
+        :show-draft="isDraft"
+        :is-edit="isEdit"
+        :current-row="currentRow"
+        :relevance-draft="relevanceDraft"
+        is-un-dispatch
+        :set-handle-ok="setHandleOk"
+        @finish-callback="refreshCallback"
+      />
+    </template>
+  </ProModal>
   <!-- 填报窗口 -->
   <ProModal
     v-model:visible="show.editVisible"
@@ -251,79 +276,8 @@ const setHandleOk = ()=>{}
 </script>
 <style lang="scss" scoped>
 .fire-report{
-  // .list-item {
-  //   display: flex;
-  //   flex-direction: column;
-  //   background: #ffffff;
-  //   margin-top: 10px;
-  //   .item-header {
-  //     display: flex;
-  //     padding: 8px 10px;
-  //     .item-title {
-  //       width: 260px;
-  //       font-size: 16px;
-  //       font-weight: bold;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //     .item-state {
-  //       width: 57px;
-  //       height: 24px;
-  //       font-size: 12px;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       border-radius: 2px;
-  //       margin-left: auto;
-  //     }
-  //   }
-  //   .item-field {
-  //     font-size: 14px;
-  //     color: #1f1f1f;
-  //     display: flex;
-  //     align-items: center;
-  //     padding: 0 0 8px 10px;
-  //     img {
-  //       width: 14px;
-  //       height: 14px;
-  //       margin-right: 6px;
-  //     }
-  //   }
-  //   .item-type {
-  //     margin: 0 0 8px 10px;
-  //     span {
-  //       display: inline-block;
-  //       font-size: 12px;
-  //       font-family: PingFangSC-Regular, PingFang SC;
-  //       font-weight: 400;
-  //       color: #fc2902;
-  //       background: #ffefec;
-  //       border-radius: 2px;
-  //       padding: 4px 10px;
-  //     }
-  //   }
-  //   .item-line {
-  //     width: 100%;
-  //     border-top: 1px solid rgba(31, 31, 31, 0.15);
-  //   }
-  //   .item-operate {
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: flex-end;
-  //     padding: 8px 10px;
-  //     .item-btn {
-  //       padding: 0 16px;
-  //       margin-left: 10px;
-  //       :deep(.van-button__content) {
-  //         height: 18px;
-  //       }
-  //       :deep(.van-button__text) {
-  //         white-space: nowrap;
-  //         word-break: break-all;
-  //       }
-  //     }
-  //   }
-  // }
+ .undispatch-btn{
+  font-size: 12px;
+ }
 }
 </style>

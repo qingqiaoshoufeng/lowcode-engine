@@ -2,15 +2,15 @@
   <div class="noticeList">
     <HeaderTitle title="通知列表"/>
     <van-tabs v-model:active="currentTab" ref="tabRef">
-      <van-tab :title="item.label" v-for="item in tabList" :key="item.label" :before-change="getNotice" @click-tab="getNotice">
+      <van-tab :title="item.label" v-for="item in tabList" :name="item.value" :key="item.label" :before-change="getNotice" @click-tab="getNotice">
         <div class="list">
           <div class="wrap">
             <div class="item" v-for="item in list" :key="item.boUserNoticeId" @click="goDetail(item)">
               <div class="top">
                 <div class="left">
                   <div class="img">
-                    <div class="dot"></div>
-                    <img src="" alt="">
+                    <div class="dot" v-if="item.readFlag === '1'"></div>
+                    <img src="~@/assets/images/message1.png" />
                   </div>
                   <div class="name">{{ item.noticeTitle }}</div>
                 </div>
@@ -46,7 +46,7 @@ const {
   list:[
     {
       label:'全部',
-      value:'2',
+      value:'0',
     },
     {
       label:'未查看',
@@ -54,10 +54,10 @@ const {
     },
     {
       label:'已查看',
-      value:'0',
+      value:'2',
     },
   ],
-  defaultTab:'2',
+  defaultTab:'1',
   // handleChange:getNotice,
   paramsKey:'annual'
 })
@@ -73,9 +73,8 @@ watch(()=>tabRef.value.active,(val)=>{
     },
   ]
   getNotice(paramsMap[val])
-  
 })
-getNotice()
+getNotice( {status: 1})
 const goDetail = (item)=>{
   router.push({
     path:'/noticeDetail',
@@ -118,10 +117,36 @@ const goDetail = (item)=>{
       align-items: center;
       justify-content: space-between;
       margin-bottom: 7px;
+      font-family: PingFangSC, PingFang SC;
+      font-weight: 400;
+      font-size: 14px;
+      color: #0E203C;
+      line-height: 20px;
+      text-align: left;
+      font-style: normal;
       .left{
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        .img{
+          display: flex;
+          align-items: center;
+          position: relative;
+          .dot{
+            position: absolute;
+            right: 3px;
+            top: 0;
+            width: 6px;
+            height:6px;
+            border-radius: 50%;
+            background: #FF3131;
+          }
+        }
+        img{
+          width: 20px;
+          height: 20px;
+          margin-right: 5px;
+        }
       }
     }
     .bottom{
