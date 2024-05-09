@@ -12,6 +12,7 @@ import PoliceTags from "@/component/PoliceTags/index";
 import ProModal from "@/component/ProModal/index";
 import SelectSingle from "@/component/SelectSingle/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
+import SelectMultipleFilter from "@/component/SelectMultipleFilter/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProSteps from "@/component/ProSteps/index.vue";
@@ -1924,13 +1925,14 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectOrg>
-      <SelectMultiple
+      <SelectMultipleFilter
         :value="form.headquarters?.map(item => item.organizationid) || []"
         v-model:nodes="form.headquarters"
         :showPreview="showPreview"
         name="headquarters"
         :options="options.headquarters"
         :field-names="{ value: 'organizationid', label: 'name' }"
+        :filter-options="{ value: 'organizationid', label: 'name' }"
         label="全勤指挥部："
         placeholder="未出动"
         title="请选择全勤指挥部"
@@ -1951,7 +1953,7 @@ const onWarningOrgname = () => {
             @refresh-callback="refreshField"
           />
         </template>
-      </SelectMultiple>
+      </SelectMultipleFilter>
       <van-field
         v-model="form.warningInfo"
         v-preview-text="showPreview"

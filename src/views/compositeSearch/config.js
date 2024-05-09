@@ -174,16 +174,16 @@ export const useFormConfig = () => {
         label: '出动队伍数',
         numType: 'digit',
       },
-      dispatchNumMin: { // 作战人员数
+      dispatchNumMin: { // 出动人员数
         value: ['', ''],
         type: 'input-range',
-        label: '作战人员数',
+        label: '出动人员数',
         numType: 'digit',
       },
-      dispatchTruckMin: { // 作战车辆数
+      dispatchTruckMin: { // 出动车辆数
         value: ['', ''],
         type: 'input-range',
-        label: '作战车辆数',
+        label: '出动车辆数',
         numType: 'digit',
       },
       isHeadquarters: { // 全勤指挥部出动
