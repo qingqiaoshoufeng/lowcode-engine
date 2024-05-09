@@ -1306,7 +1306,9 @@ export const useFormConfig = () => {
   }
 
   // 当警情类型、参战形式、处置情况，发生变化时重置表单，避免无用数据提交到后端
-  const initFormWhenChange = (draft) => {
+  // 切换【处置情况】时，不清除参战伤亡、其他附件两个模块已录内容。
+  // flag 0 表示是切换【处置情况】
+  const initFormWhenChange = (draft, flag) => {
     form.value.fireInfo = cloneDeep(formOrigin.fireInfo)
     if (draft) {
       form.value.draftInfo.draftName.value = ''
@@ -1370,21 +1372,16 @@ export const useFormConfig = () => {
       fieldAnnotation: form.value.investForce.fieldAnnotation,
       fieldWarning: formOrigin.investForce.fieldWarning,
     }
-    form.value.casualtyWar = {
-      ...cloneDeep(formOrigin.casualtyWar),
-      fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
-      fieldWarning: formOrigin.casualtyWar.fieldWarning,
-    }
     form.value.battleResult = {
       ...cloneDeep(formOrigin.battleResult),
       fieldAnnotation: form.value.battleResult.fieldAnnotation,
       fieldWarning: formOrigin.battleResult.fieldWarning,
     }
-    form.value.battleConsume = {
-      ...cloneDeep(formOrigin.battleConsume),
-      fieldAnnotation: form.value.battleConsume.fieldAnnotation,
-      fieldWarning: formOrigin.battleConsume.fieldWarning,
-    }
+     form.value.battleConsume = {
+       ...cloneDeep(formOrigin.battleConsume),
+       fieldAnnotation: form.value.battleConsume.fieldAnnotation,
+       fieldWarning: formOrigin.battleConsume.fieldWarning,
+     }
     if (draft) {
       form.value.disposalProcess = {
         ...cloneDeep(formOrigin.disposalProcess),
@@ -1397,10 +1394,17 @@ export const useFormConfig = () => {
       fieldAnnotation: form.value.scenePhoto.fieldAnnotation,
       fieldWarning: formOrigin.scenePhoto.fieldWarning,
     }
-    form.value.otherAttach = {
-      ...cloneDeep(formOrigin.otherAttach),
-      fieldAnnotation: form.value.otherAttach.fieldAnnotation,
-      fieldWarning: formOrigin.otherAttach.fieldWarning,
+    if (flag !== "0") {
+      form.value.casualtyWar = {
+        ...cloneDeep(formOrigin.casualtyWar),
+        fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
+        fieldWarning: formOrigin.casualtyWar.fieldWarning,
+      }
+      form.value.otherAttach = {
+        ...cloneDeep(formOrigin.otherAttach),
+        fieldAnnotation: form.value.otherAttach.fieldAnnotation,
+        fieldWarning: formOrigin.otherAttach.fieldWarning,
+      }
     }
   }
 

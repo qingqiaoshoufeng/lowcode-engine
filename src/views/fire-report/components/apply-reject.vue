@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { showLoadingToast, closeToast } from "vant";
+import { showToast, showLoadingToast, closeToast } from "vant"
 import { useSubmit } from '@castle/castle-use'
 import SelectSingle from "@/component/SelectSingle/index";
 import { rejectFireBack } from '@/apis/index.js'
@@ -44,7 +44,7 @@ const form = ref({
 })
 
 const { loading, submit } = useSubmit(() => {
-  closeToast()
+  showToast('退回成功!')
   form.value = {
     backCause: undefined,
     backRemark: '',

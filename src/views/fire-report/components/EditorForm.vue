@@ -539,12 +539,16 @@ const initWatch = () => {
   ], () => {
     initFireSite()
   })
-  watch(() => [
-    form.value.basicInfo.fireType.value,
-    form.value.basicInfo.firePlace.value,
-    form.value.basicInfo.severity.value,
-  ], () => {
+  watch(() => form.value.basicInfo.fireType.value, () => {
     initFormWhenChange()
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
+  })
+  watch(() => form.value.basicInfo.severity.value, () => {
+    initFormWhenChange(false, '0')
+    initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
+  })
+  watch(() => form.value.basicInfo.firePlace.value, () => {
+    initFormWhenChange(false, '1')
     initDraftRules(props.showDraft ? false : form.value.basicInfo.isResearch.value === '2', formRef)
   })
   // 只有当填报、详情、修改状态下才自动生成处置过程
@@ -910,11 +914,13 @@ const getSubmitParams = () => {
 const { loading, submit } = useSubmit(
   (res) => {
     if (!props.isApproval && !props.isAgain && !props.showDraft) {
-      showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+      // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+      showToast('提交送审成功！')
       emits('finishCallback', res, props.showDraft)
     }
     else if (!props.isApproval && !props.isAgain && props.showDraft) {
       // message.success('保存成功')
+      showToast('保存成功！')
       emits('finishCallback', res, props.showDraft)
     }
   },
@@ -941,8 +947,8 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
 
 const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   (res) => {
-    if (!props.isApproval) {
-      showToast(`${props.labelText}成功！`)
+    if (props.isApproval) {
+      showToast(`${props.approvalText || '火灾' + props.labelText}` + '成功!')
       emits('finishCallback')
     }
   },
@@ -967,7 +973,8 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
 
 const { loading: againLoading, submit: againSubmit } = useSubmit(
   (res) => {
-    showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+    // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
+    showToast('提交送审成功！')
     emits('finishCallback')
   },
   {
@@ -991,8 +998,8 @@ const { loading: againLoading, submit: againSubmit } = useSubmit(
 
 const { loading: backLoading, submit: backSubmit } = useSubmit(
   (res) => {
-    if (!props.isApproval) {
-      showToast(`${props.labelText}成功！`)
+    if (props.isApproval) {
+      showToast(`${props.approvalText || '火灾' + props.labelText}` + '成功!')
       emits('finishCallback')
     }
   },
