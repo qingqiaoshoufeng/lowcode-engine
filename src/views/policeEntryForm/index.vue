@@ -113,6 +113,8 @@ const loadDetail = ref(true);
 
 const importantEdit = ref(true); // 重要信息更正
 
+const importantInfoReject = ref(true) // 高级驳回
+
 const labelWarningOrgname = ref("单位/户主名");
 
 let warningLevelOptions = []; // 警情等级
@@ -689,6 +691,7 @@ const initDetail = () => {
         initWarningOrgname()
 
         importantEdit.value = res.importantInfoRecheck
+        importantInfoReject.value = res.importantInfoReject
       }
 
       refreshField()
@@ -859,6 +862,10 @@ const validateWarningType = (value, rule) => {
     && !form.value.warningTypeText?.includes('火灾扑救')
     && detail.value?.warningTypeValue?.includes('火灾扑救')) {
     return '普通更正不允许将火警变更为其他警情！'
+  } else if (!importantInfoReject.value
+    && !form.value.warningTypeText?.includes('火灾扑救')
+    && detail.value?.warningTypeValue?.includes('火灾扑救')) {
+    return '普通驳回不允许将火警变更为其他警情！'
   } else {
     return ''
   }

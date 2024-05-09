@@ -82,7 +82,9 @@
               size="mini"
               color="#1989fa"
               class="item-btn"
-              :disabled="!checkInputRejectState(record.fireStatusValue)"
+              :class="{
+                gay: !record.permission
+              }"
               type="link"
               @click="handleReject(record)"
             >
@@ -134,7 +136,7 @@ import SelectMore from "@/component/SelectMore/index";
 import { getFireSupervisionList } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
-import { showToast,showLoadingToast,closeToast } from 'vant';
+import { showDialog, showToast, showLoadingToast, closeToast } from 'vant'
 import { useModal } from '@/hooks/useModal.js'
 
 const menus = [
@@ -245,6 +247,10 @@ const onTimeChange = (value) => {
 };
 
 const handleReject = (row) => {
+  if (!row.permission) {
+    showDialog({ message: `报告状态为已审核，且没有申请更正，才允许驳回！` })
+    return
+  }
   if (row.isLock === '1') {
     showToast(MSG_LOCKING_TEXT)
     return

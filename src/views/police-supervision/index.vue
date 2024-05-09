@@ -77,7 +77,9 @@
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                :disabled="!checkRejectState(record.warningStatusValue)"
+                :class="{
+                  gay: !record.permission
+                }"
                 type="link"
                 @click="handleReject(record)"
               >
@@ -123,7 +125,7 @@ import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
 import { getFireWarningSupervision } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
-import { showToast,showLoadingToast,closeToast } from 'vant';
+import { showDialog, showToast, showLoadingToast, closeToast } from 'vant';
 // import store from '@/store/index.js'
 
 onMounted(() => {
@@ -228,6 +230,10 @@ const handleItem = (row) => {
 };
 
 const handleReject = (row) => {
+  if (!row.permission) {
+    showDialog({ message: `警情状态为已发送，且申请更正/申请作废，才允许驳回！` })
+    return
+  }
   if (row.isLock === '1') {
     showToast(MSG_LOCKING_TEXT)
     return

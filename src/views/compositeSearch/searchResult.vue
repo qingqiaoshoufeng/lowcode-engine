@@ -7,7 +7,7 @@ import ApplyReject from "@/views/police-supervision/apply-reject.vue";
 import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
 import ReportGenerate from "@/views/statistics/components/reportGenerate.vue";
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showDialog, showToast, showLoadingToast, closeToast } from "vant"
 import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { MSG_EXPORT_NO_DATA, MSG_NO_HEAD_REPORT, MSG_LOCKING_ADMIN } from '@/utils/constants.js';
@@ -71,6 +71,14 @@ const handleItem = (row) => {
 };
 
 const handleReject = (row) => {
+  if (!row.permission) {
+    if (searchType.value === 1) {
+      showDialog({ message: `警情状态为已发送，且申请更正/申请作废，才允许驳回！` })
+    } else {
+      showDialog({ message: `报告状态为已审核，且没有申请更正，才允许驳回！` })
+    }
+    return
+  }
   if (row.isLock === '1') {
     showToast(MSG_LOCKING_ADMIN)
     return
@@ -186,7 +194,9 @@ onMounted(() => {
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
-                :disabled="!checkRejectState(record.warningStatusValue)"
+                :class="{
+                  gay: !record.permission
+                }"
                 type="link"
                 @click="handleReject(record)"
               >

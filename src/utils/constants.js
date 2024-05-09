@@ -335,6 +335,17 @@ export const applyType = [
   },
 ]
 
+export const rejectApplyType = [
+  {
+    label: "高级驳回",
+    value: "1",
+  },
+  {
+    label: "普通驳回",
+    value: "2",
+  },
+];
+
 export const statisticalTime = [
   {
     label: '近三天',
