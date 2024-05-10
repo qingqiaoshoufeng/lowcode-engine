@@ -34,6 +34,10 @@ const showHousingLife = computed(() => {
   return form.value.basicInfo.firePlace?.text?.indexOf('居住场所') > -1
 })
 
+const showHistoryBuildLevel = computed(() => {
+  return form.value.fireBuilding.buildTag?.value?.indexOf('2023020801763') > -1
+})
+
 watch(form.value.basicInfo.firePlace, () => {
   if (form.value.basicInfo.firePlace?.text?.indexOf('居住场所') < 0) {
     form.value.fireBuilding.housingLife.value = ''
@@ -168,19 +172,9 @@ const onBuildTag = (val) => {
     }
     form.value.fireBuilding.buildTag.value = form.value.fireBuilding.buildTag.value.filter((item)=>item !== '2023020801767')
   }
-  // debugger;
-  // if (e.target.checked) {
-  //   if (e.target.value === '2023020801767') {
-  //     form.value.fireBuilding.buildTag.value = ['2023020801767']
-  //   }
-  //   else {
-  //     form.value.fireBuilding.buildTag.value.push(e.target.value)
-  //     form.value.fireBuilding.buildTag.value = form.value.fireBuilding.buildTag.value.filter(item => item !== '2023020801767')
-  //   }
-  // }
-  // else {
-  //   form.value.fireBuilding.buildTag.value = form.value.fireBuilding.buildTag.value.filter(item => item !== e.target.value)
-  // }
+  if (form.value.fireBuilding.buildTag.value?.indexOf('2023020801763') < 0) {
+    form.value.fireBuilding.historyBuildLevel.value = undefined
+  }
 }
 </script>
 
@@ -572,7 +566,37 @@ const onBuildTag = (val) => {
       </div>
     </div>
 
-</van-cell-group>
+    <div v-if="showHistoryBuildLevel" :gutter="gutter">
+      <div :span="8">
+        <SelectSingle
+          :fieldNames="{label:'label',value:'value'}"
+          name="fireBuilding.historyBuildLevel.value"
+          label="文物古建筑级别："
+          label-width="135px"
+          :rules="form.fireBuilding.historyBuildLevel.rules"
+          id="historyBuildLevel"
+          v-model:value="form.fireBuilding.historyBuildLevel.value"
+          :field-name="{ value: 'boDictId', label: 'dictName' }"
+          :showPreview="showPreview"
+          :options="options.historyBuildLevel"
+          allow-clear
+          placeholder="请选择文物古建筑级别"
+          :required="isRequired"
+          :class="{ 'field-not-required': !isRequired }"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="文物古建筑级别："
+              remark-field="historyBuildLevel"
+              field-module="fireBuilding"
+              :exist-data="fieldExist?.historyBuildLevel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </SelectSingle>
+      </div>
+    </div>
+  </van-cell-group>
 </template>
 <style scoped lang="scss">
 .checks{

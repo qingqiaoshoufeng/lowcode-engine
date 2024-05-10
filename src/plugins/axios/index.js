@@ -32,7 +32,7 @@ const toLogin = () => {
 // 创建axios实例
 export const request = window.__axios = axios.create({
   // baseURL: process.env.VUE_APP_BASE_URL,
-  baseURL: ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : '/',
+  baseURL: ['production','test', 'production-h5','test-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : '/',
   timeout: 1000 * 12
 })
 // 设置post请求头
