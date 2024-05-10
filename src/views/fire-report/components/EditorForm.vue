@@ -640,7 +640,7 @@ const initDict = () => {
       'HZ_INFO_SJY', 'HZ_INFO_BXLX', 'HZ_SW_MZ', 'HZ_QHJZ_JZYT', 'HZ_XZCF', 'HZ_INFO_CDZT', 'HZ_INFO_DLLX',
       'HZ_SW_LYXQ', 'HZ_SW_STWZ', 'HZ_SW_ZJLX', 'HZ_INFO_SZ', 'HZ_INFO_LY', 'HZ_INFO_JCQK', 'HZ_INFO_JCQK_JC',
       'CD_CZRY_SEX', 'JQ_TYPE', 'HZ_INFO_HZDJ', 'HZ_QHJZ_JZBQ', 'HZ_INFO_YY', 'HZ_INFO_QY', 'HZ_INFO_QY_QT', 'DEAD_TIME',
-      'HZ_INFO_RWYS','CD_HYZG', 'WX_FL'], null, (res) => {
+      'HZ_INFO_RWYS','CD_HYZG', 'WX_FL', 'HZ_WWGJZ'], null, (res) => {
       options.value.firePattern = res.HZ_QHXT_SGXT // 事故形态
       options.value.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
       options.value.firePlace = res.HZ_QHCS // 起火场所类型
@@ -689,6 +689,7 @@ const initDict = () => {
       options.value.deathDate = res.DEAD_TIME // 死亡时间
       options.value.humanCause = res.HZ_INFO_RWYS // 人为因素
       options.value.industryDepartment = res.CD_HYZG
+      options.value.historyBuildLevel = res.HZ_WWGJZ // 文物古建筑级别
       options.value.buildTag = res.HZ_QHJZ_JZBQ?.map((item) => {
         return {
           ...item,
@@ -798,6 +799,7 @@ const getSubmitParams = () => {
       isSpread: fireBuilding.isSpread?.value,
       isLoud: fireBuilding.isLoud?.value,
       isWindowOpened: fireBuilding.isWindowOpened?.value,
+      historyBuildLevel: fireBuilding.historyBuildLevel?.value,
       // 消防设施
       isFirefightFacility: fireFacilities.isFirefightFacility?.value,
       autoAlarm: fireFacilities.autoAlarm?.value,

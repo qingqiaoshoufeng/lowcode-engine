@@ -496,6 +496,10 @@ export const useFormConfig = (validateProgress) => {
         value: undefined,
         rules: [{ required: true, message: '请选择失火建筑门窗在过程中是否开启' }],
       },
+      historyBuildLevel: { // 文物古建筑级别
+        value: undefined,
+        rules: [{ required: true, message: '请选择文物古建筑级别' }],
+      },
     },
     fireFacilities: { // 消防设施
       title: '消防设施',
@@ -1162,6 +1166,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.fireBuilding.isSpread.value = fireInfoBuild?.isSpread
     form.value.fireBuilding.isLoud.value = fireInfoBuild?.isLoud
     form.value.fireBuilding.isWindowOpened.value = fireInfoBuild?.isWindowOpened
+    form.value.fireBuilding.historyBuildLevel.value = fireInfoBuild?.historyBuildLevel
     // 消防设施
     form.value.fireFacilities.isFirefightFacility.value = fireInfoBuild?.isFirefightFacility
     form.value.fireFacilities.autoAlarm.value = fireInfoBuild?.autoAlarm
@@ -1345,6 +1350,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.fireBuilding.isSpread.rules[0].required = value
     form.value.fireBuilding.isLoud.rules[0].required = value
     form.value.fireBuilding.isWindowOpened.rules[0].required = value
+    form.value.fireBuilding.historyBuildLevel.rules[0].required = value
     // 消防设施
     form.value.fireFacilities.isFirefightFacility.rules[0].required = value
     form.value.fireFacilities.autoAlarm.rules[0].required = value
