@@ -6,10 +6,6 @@ import wait from '@/assets/images/wait.png'
 import handled from '@/assets/images/handled.png'
 import router from '@/router/index.js'
 export const entryList = [
-  // {
-  //   icon:wait,
-  //   label:'我的待办',
-  // },
   {
     icon:handled,
     label:'我的已办',
