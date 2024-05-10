@@ -65,7 +65,7 @@ export function updateMessage(params) {
 // 通知状态更新
 export function updateNotice(params) {
   const {id}= params
-  return axios.get(`/acws/rest/biz/mystatistics/notice/update/${id}`)
+  return axios.post(`/acws/rest/biz/mystatistics/notice/update/${id}`)
 }
 
 // 获取用户信息

@@ -62,7 +62,7 @@ const getDetail = ()=>{
       form.value.noticeType = res.noticeType
       form.value.noticeStatus = res.noticeStatus
       form.value.noticeBody = res.noticeBody
-      if(res.noticeStatus !== '1'){
+      if(res.readFlag !== '1'){
         updateNotice({id:route.query.id})
       }
     }
