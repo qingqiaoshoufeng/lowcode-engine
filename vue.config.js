@@ -6,7 +6,7 @@ function resolve(dir) {
 
 module.exports = {
   lintOnSave: false,
-  publicPath: process.env.NODE_ENV?.indexOf('-h5') > -1 ? './fire_alarm_statistics_app/' : './',
+  publicPath: process.env.NODE_ENV?.indexOf('-h5') > -1 ? './fire_alarm_statistics_app_h5/' : './',
   outputDir: process.env.NODE_ENV?.indexOf('-h5') > -1 ? 'dist' : resolve('cordova/www'),
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
