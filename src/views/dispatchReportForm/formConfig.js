@@ -545,7 +545,7 @@ export const useFormConfig = () => {
         value: '',
         rules: [
           // { required: true, message: '请输入灭火机器人数量' },
-          { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
         ],
       },
       // governmentCommand: { // 政府指挥
