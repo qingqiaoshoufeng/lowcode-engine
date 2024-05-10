@@ -67,7 +67,7 @@ onMounted(async () => {
     'JQ_LEVEL', 'CD_JYQK_CZ', 'CD_DC_HZQK', 'CD_BACK', 'TQ_TYPE_FL', 'TQ_TYPE_FX', 'TQ_TYPE_TQ', 'USER_JOB', 'CD_JBXX_GG', 'CD_JBXX_BSY', 'CD_OTHER_ZY',
     'DEAD_TIME', 'HZ_INFO_JZXS', 'JQ_STATUS', 'CD_STATUS', 'HZ_STATUS', 'CD_RANK', 'CD_CZRY_FHZB', 'CD_CZRY_SSBW', 'CD_CZRY_SFSD', 'CD_HYZG', 'STA_TIME', 'RANK_TYPE', 'CD_QQHEAD_TYPE',
     'CAR_TYPE', 'CD_LOOK', 'HZ_QHW_TYPE', 'HZ_YHY', 'HZ_INFO_RWYS', 'HZ_INFO_YY', 'DEPT_NATURE', 'HZ_INFO_SSBW', 'USER_JOB', 'CD_CZRY_ZMBW', 'CD_CZRY_SWYY',
-    'WX_FL', 'JQ_LY'], null, true)
+    'WX_FL', 'JQ_LY', 'HZ_WWGJZ'], null, true)
   options.value.warningType = res.JQ_TYPE
   // 火灾信息
   options.value.area = res.HZ_INFO_QY // 区域
@@ -146,6 +146,7 @@ onMounted(async () => {
   options.value.duty = res.USER_JOB // 职务
   options.value.plantRiskClassification = res.WX_FL // 火灾危险性分类
   options.value.warningSource = res.JQ_LY
+  options.value.historyBuildLevel = res.HZ_WWGJZ // 文物古建筑级别
   options.value.buildTag = options.value.buildTag?.map((item) => {
     return {
       ...item,
