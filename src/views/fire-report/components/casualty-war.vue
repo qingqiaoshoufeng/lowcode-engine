@@ -24,6 +24,8 @@ const isRequired = inject('isRequired')
 
 const importantEdit = inject('importantEdit')
 
+const importantInfoReject = inject('importantInfoReject')
+
 const fieldExist = inject('fieldExist')
 
 const refreshField = inject('refreshField')
@@ -229,7 +231,7 @@ const bigInjured = computed(() => {
               id="isInjured"
               v-model="form.casualtyWar.isInjured.value"
               v-preview-text="showPreview"
-              :disabled="!importantEdit"
+              :disabled="!importantEdit || !importantInfoReject"
               @change="checkFireInjuryCost(form)"
               direction="horizontal">
               <van-radio name="1">有</van-radio>
@@ -289,7 +291,7 @@ const bigInjured = computed(() => {
             v-model="form.casualtyWar.injuryNum.value"
             v-preview-text="showPreview"
             :maxlength="6"
-            :disabled="!importantEdit"
+            :disabled="!importantEdit || !importantInfoReject"
             style="width: 100%"
             allow-clear
             aria-autocomplete="none"
@@ -314,7 +316,7 @@ const bigInjured = computed(() => {
       <div v-for="(item, index) in form.casualtyWar.injuredList" :key="index" class="injured-item">
         <div class="injured-message title flex-wrapper">
           受伤人员{{ index + 1 }}
-          <div class="border-minus1 border-mius1" v-if="!isDetail && importantEdit" >
+          <div class="border-minus1 border-mius1" v-if="!isDetail && (importantEdit || importantInfoReject)" >
             <van-icon 
               class="form-col-delete"
               title="删除该受重伤人员"
@@ -803,7 +805,7 @@ const bigInjured = computed(() => {
         </div>
       </div>
       <van-button 
-        v-if="!isDetail && importantEdit" 
+        v-if="!isDetail && (importantEdit || importantInfoReject)"
         class="form-col-delete add"
         title="新增受重伤人员"
         icon="plus"  
@@ -831,7 +833,7 @@ const bigInjured = computed(() => {
               id="isDead"
               v-model="form.casualtyWar.isDead.value"
               v-preview-text="showPreview"
-              :disabled="!importantEdit"
+              :disabled="!importantEdit || !importantInfoReject"
               @change="checkFireInjuryCost(form)"
               direction="horizontal">
               <van-radio name="1">有</van-radio>
@@ -857,7 +859,7 @@ const bigInjured = computed(() => {
       <div v-for="(item, index) in form.casualtyWar.deadList" :key="index" class="dead-item">
         <div class="injured-message title flex-wrapper">
           死亡人员{{ index + 1 }}
-          <div class="border-minus1" v-if="!isDetail && importantEdit" >
+          <div class="border-minus1" v-if="!isDetail && (importantEdit || importantInfoReject)" >
             <van-icon 
               class="form-col-delete"
               title="删除该死亡人员"
@@ -1347,7 +1349,7 @@ const bigInjured = computed(() => {
         </div>
       </div>
       <van-button 
-        v-if="!isDetail && importantEdit"
+        v-if="!isDetail && (importantEdit || importantInfoReject)"
         class="add"
         @click="handleAddDead"
         title="新增死亡人员"

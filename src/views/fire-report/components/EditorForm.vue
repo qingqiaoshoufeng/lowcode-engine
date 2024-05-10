@@ -203,6 +203,8 @@ const showPreview = ref(null)
 
 const importantEdit = ref(true) // 重要信息更正
 
+const importantInfoReject = ref(true) // 高级驳回
+
 const localFireInfoId = ref(props.currentRow?.boFireInfoId || uuidv4())
 
 const isNew = ref(props.isUnDispatch || !!props.showDraft)
@@ -334,6 +336,8 @@ provide('showOtherMinor', showOtherMinor)
 provide('loadingDetail', loadingDetail)
 
 provide('importantEdit', importantEdit)
+
+provide('importantInfoReject', importantInfoReject)
 
 provide('fieldExist', fieldExist)
 
@@ -597,6 +601,7 @@ const initDetail = () => {
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
+        importantInfoReject.value = res.importantInfoReject
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
@@ -609,7 +614,7 @@ const initDetail = () => {
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
         }
-
+        importantInfoReject.value = res.importantInfoReject
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })

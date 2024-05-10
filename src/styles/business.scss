@@ -208,6 +208,9 @@ $state-disable: gray; // 不能修改
         white-space: nowrap;
         word-break: break-all;
       }
+      &.gay{
+        opacity: var(--van-button-disabled-opacity);
+      }
     }
   }
   .card-img {
