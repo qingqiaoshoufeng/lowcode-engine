@@ -69,7 +69,7 @@ const form = ref({
   reportClass: undefined,
   reportNick: undefined,
   deactivateFlag: false,
-  searchDimension: 2,
+  searchDimension: 1,
   dataTimeSource: '',
 })
 
@@ -664,7 +664,7 @@ onMounted(() => {
         placeholder="请选择对比类型"
         title="请选择对比类型"
       />
-      <!-- <SelectSingle
+      <SelectSingle
         v-model:value="form.searchDimension"
         :readonly="true"
         name="searchDimension"
@@ -675,7 +675,7 @@ onMounted(() => {
         label="查询口径："
         placeholder="请选择查询类型"
         :rules="[{ required: true, message: '请选择查询类型' }]"
-      /> -->
+      />
       <van-field label="">
         <template #input>
           <van-checkbox v-model="form.deactivateFlag">不查停用单位和地区</van-checkbox>

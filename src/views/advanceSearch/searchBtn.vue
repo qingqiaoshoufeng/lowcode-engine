@@ -144,7 +144,7 @@ onMounted(() => {
           <van-icon v-if="dataTimeSource === item.value" name="success" />
         </div>
       </div>
-      <!-- <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
+      <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
       <div class="path-wrapper">
         <div class="path-wrapper-title">数据口径</div>
         <div
@@ -156,7 +156,7 @@ onMounted(() => {
           <span>{{ item.label }}</span>
           <van-icon v-if="searchDimension === item.value" name="success" />
         </div>
-      </div> -->
+      </div>
       <div style="width: 100%;height: 1px;border: 1px solid #F6F6F6;"></div>
     </div>
     <div class="search-btn-wrapper">
@@ -164,7 +164,7 @@ onMounted(() => {
         <div class="search-path" @click="handleSelects">
           已选条件<van-icon name="arrow-down" />
         </div>
-        <div class="search-path" @click="handlePath" v-if="false" >
+        <div class="search-path" @click="handlePath" >
           查询口径<van-icon name="arrow-down" />
         </div>
         <img class="collect" :style="{'margin-left': 'auto','margin-right': '10px'}" src="../../assets/images/icon-collect@2x.png" @click="handleCollect" />
