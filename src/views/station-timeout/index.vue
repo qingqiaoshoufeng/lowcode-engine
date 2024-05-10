@@ -76,7 +76,7 @@ const options = {}
 getSystemDictSync(['JQ_TYPE', 'JQ_TIMEOUT_TYPE'], null, (res) => {
   options.warningType = res.JQ_TYPE
   options.timeOutType = res.JQ_TIMEOUT_TYPE
-}, true)
+})
 onMounted(() => {
 })
 const searchOptions = computed(()=>([

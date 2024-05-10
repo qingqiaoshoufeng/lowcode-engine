@@ -186,7 +186,7 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
   options.value.fireLevel = res.HZ_INFO_HZDJ
   options.value.fireCause = toRaw(res.HZ_QHYY)
   options.value.area = res.HZ_INFO_QY
-}, true)
+})
 onMounted(() => {
   // 获取火灾标签
   getFireWarningTag({ tagType: 3 }).then((res) => {
