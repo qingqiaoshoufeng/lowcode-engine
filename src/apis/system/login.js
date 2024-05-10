@@ -65,7 +65,7 @@ export function getAllRules() {
 // }
 
 export const getVerificationCode = async() =>{
-  const imgRes = await fetch(`${ ['production','test'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
+  const imgRes = await fetch(`${ ['production','test', 'production-h5','test-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
     return new Promise((resolve) => { 
       const reader = new FileReader()
       reader.readAsDataURL(blob)
