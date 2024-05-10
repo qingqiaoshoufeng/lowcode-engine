@@ -952,7 +952,7 @@ const onFireLevel = () => {
       <div v-if="showOtherFirePlace" class="otherFirePlace">
         <van-field
           label="其他说明："
-          v-model:value="form.basicInfo.otherFirePlace.value"
+          v-model="form.basicInfo.otherFirePlace.value"
           v-preview-text="showPreview"
           name="basicInfo.otherFirePlace.value"
           placeholder="请输入其他说明"
