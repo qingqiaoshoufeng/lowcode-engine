@@ -28,7 +28,7 @@ const queryParams = ref({})
 
 const searchType = ref(1)
 
-const searchDimension = ref(2)
+const searchDimension = ref(1)
 
 const dataTimeSource = ref('')
 

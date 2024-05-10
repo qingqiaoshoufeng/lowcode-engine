@@ -19,7 +19,7 @@ export default createStore({
     menuInfo,
     setting
   },
-  strict: process.env.NODE_ENV !== 'production',
+  strict: process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'production-h5',
   plugins: [
     createPersistedstate({
       key: 'saveInfo',

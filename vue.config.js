@@ -4,10 +4,21 @@ function resolve(dir) {
   return path.join(__dirname, '.', dir)
 }
 
+function getPublicPath() {
+  switch (process.env.NODE_ENV) {
+    case 'test-h5':
+      return './fire_alarm_statistics_app_h5_test/'
+    case 'production-h5':
+      return './fire_alarm_statistics_app_h5_production/'
+    default:
+      return './'
+  }
+}
+
 module.exports = {
   lintOnSave: false,
-  publicPath: './',
-  outputDir: resolve('cordova/www'),
+  publicPath: getPublicPath(),
+  outputDir: process.env.NODE_ENV?.indexOf('-h5') > -1 ? 'dist' : resolve('cordova/www'),
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
     svgRule.uses.clear();
