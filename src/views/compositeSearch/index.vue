@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed } from 'vue'
+import { ref, provide, computed,nextTick  } from 'vue'
 import SearchBtn from './searchBtn.vue'
 import SearchResult from './searchResult.vue'
 import ProModal from "@/component/ProModal/index";
@@ -98,8 +98,31 @@ const getQueryParams = () => {
 
 provide('getQueryParams', getQueryParams)
 
-const onSearchChange = () => {
+const keyComputed = computed(() => {
+  switch (searchType.value) {
+    case 1:
+      return 'policeMessage'
+    case 2:
+      return 'dispatchStationMessage'
+    case 3:
+      return 'dispatchMessage'
+    case 4:
+      return 'fireMessage'
+    default:
+      return ''
+  }
+})
+
+const onSearchChange = () => { 
   initFormByType(searchType.value)
+  if (keyComputed.value) {
+    nextTick(() => {
+      document?.querySelector('.composite-search-form')?.querySelector(`#${keyComputed.value}`)?.scrollIntoView({
+        // behavior: 'smooth',
+        block: 'start',
+      })
+    })
+  }
 }
 
 const onInitCallback = (res) => {

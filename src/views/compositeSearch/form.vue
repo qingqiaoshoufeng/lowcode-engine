@@ -403,6 +403,20 @@ const onSideBarChange = (e, k) => {
     });
   }
 }
+
+const handleClick = (e, link) => {
+  e.preventDefault()
+  const flag = document?.querySelector('.composite-search-form')?.querySelector(`${link?.href}`)
+  if (!flag) {
+    const key = sections.value.find((val) => {
+      return link.href.includes(val.link) || val.children.find(ele => link.href.includes(ele.link))
+    })?.link
+    document?.querySelector('.composite-search-form')?.querySelector(`#${key}-title`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
+}
 </script>
 
 <template>
