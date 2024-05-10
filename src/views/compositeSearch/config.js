@@ -1630,6 +1630,14 @@ export const useFormConfig = () => {
         labelWidth: '130px',
         options: isNot
       },
+      historyBuildLevel: { // 文物古建筑级别
+        value: undefined,
+        back: false,
+        type: 'select-multiple',
+        label: '文物古建筑级别',
+        options: 'historyBuildLevel',
+        fieldNames: { value: 'boDictId', label: 'dictName' },
+      },
     },
     fireFacilities: {
       title: '消防设施',
@@ -2334,6 +2342,8 @@ export const useFormConfig = () => {
         isSpread: fireBuilding.isSpread.value,
         isLoud: fireBuilding.isLoud.value,
         isWindowOpened: fireBuilding.isWindowOpened.value,
+        historyBuildLevel: fireBuilding.historyBuildLevel.value?.join(','),
+        historyBuildLevelNon: fireBuilding.historyBuildLevel.back,
         // 火灾信息-消防设施
         isFirefightFacility: fireFacilities.isFirefightFacility.value,
         autoAlarm: fireFacilities.autoAlarm.value,
@@ -2920,6 +2930,8 @@ export const useFormConfig = () => {
     form.value.fireBuilding.isSpread.value = comprehensiveFireQueryReq.isSpread
     form.value.fireBuilding.isLoud.value = comprehensiveFireQueryReq.isLoud
     form.value.fireBuilding.isWindowOpened.value = comprehensiveFireQueryReq.isWindowOpened
+    form.value.fireBuilding.historyBuildLevel.value = comprehensiveFireQueryReq.historyBuildLevel?.split(',')
+    form.value.fireBuilding.historyBuildLevel.back = comprehensiveFireQueryReq.historyBuildLevelNon === 'true'
     // 火灾信息-消防设施
     form.value.fireFacilities.isFirefightFacility.value = comprehensiveFireQueryReq.isFirefightFacility
     form.value.fireFacilities.autoAlarm.value = comprehensiveFireQueryReq.autoAlarm
