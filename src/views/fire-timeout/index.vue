@@ -150,14 +150,16 @@ import { getFireTimeout } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
+
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
+
 const options = {}
+
 getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.HZ_TIMEOUT_TYPE
   options.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
-}, true)
-onMounted(() => {
-})
+}, 3)
+
 const showExplainFn = ()=>{
   show.value.regularVisible = true
 }

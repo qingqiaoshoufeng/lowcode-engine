@@ -49,7 +49,7 @@ const getFIleList = (res)=>{
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${ ['production','test', 'production-h5','test-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${ ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
     })

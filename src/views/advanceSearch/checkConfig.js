@@ -1508,6 +1508,13 @@ export const checkBoxs = [
     type: '9',
     dict: 'isNot',
   },
+  {
+    fieldKeyOne: 'historyBuildLevel',
+    label: '文物古建筑级别',
+    type: '4',
+    dict: 'historyBuildLevel',
+    field: { value: 'boDictId', label: 'dictName' },
+  },
   // 火灾类查询条件--消防设施
   {
     fieldKeyOne: 'isFirefightFacility',

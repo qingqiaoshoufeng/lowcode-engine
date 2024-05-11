@@ -180,13 +180,16 @@ const tabs = ref([
     value: 3,
   },
 ]);
+
 const options = ref({})
+
 getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INFO_JJLX', 'HZ_INFO_SGBM'], null, (res) => {
   options.value.fireStatus = res.HZ_STATUS
   options.value.fireLevel = res.HZ_INFO_HZDJ
   options.value.fireCause = toRaw(res.HZ_QHYY)
   options.value.area = res.HZ_INFO_QY
-}, true)
+}, 3)
+
 onMounted(() => {
   // 获取火灾标签
   getFireWarningTag({ tagType: 3 }).then((res) => {

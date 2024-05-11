@@ -140,7 +140,6 @@ import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import RegularLook from '@/views/police-timeout/regular-look.vue';
 import RemarkReason from '@/views/police-timeout/remark-reason.vue';
 import LookReason from '@/views/police-timeout/look-reason.vue';
-// import ApplyReject from "./apply-reject.vue";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
@@ -150,14 +149,16 @@ import { getPoliceTimeout } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js"; 
 import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
+
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
+
 const options = {}
+
 getSystemDictSync(['JQ_TYPE', 'JQ_TIMEOUT_TYPE'], null, (res) => {
   options.warningType = res.JQ_TYPE
   options.timeOutType = res.JQ_TIMEOUT_TYPE
-}, true)
-onMounted(() => {
-})
+}, 3)
+
 const searchOptions = computed(()=>([
   {
     title: '选择时间',

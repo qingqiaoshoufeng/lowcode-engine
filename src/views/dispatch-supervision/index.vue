@@ -140,10 +140,7 @@ import SelectMore from "@/component/SelectMore/index";
 import { getDispatchSupervisionList } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showDialog, showToast, showLoadingToast, closeToast } from 'vant';
-// import store from '@/store/index.js'
 
-onMounted(() => {
-})
 const menus = [
   {
     label: '跨省增援',
