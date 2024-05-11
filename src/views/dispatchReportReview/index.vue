@@ -126,7 +126,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['CD_STATUS'], null, true);
+  const res = store.getters?.["dict/filterDicts"](['CD_STATUS'], null, 3);
   searchOptions.value[3].options = res.CD_STATUS
   nextTick(() => {
     proListRef.value?.filter();

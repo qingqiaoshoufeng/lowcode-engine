@@ -1,104 +1,114 @@
 import { getFireWarningType } from '@/apis/index.js'
 
-const filterDicts =( state,dictType, transformRes, callback , detail) => {
-  if (detail) {
-    if (Array.isArray(dictType)) {
-      const filters = {}
-      dictType.forEach((temp) => {
+const filterDicts = (state, dictType, transformRes, callback , detail) => {
+  if (Array.isArray(dictType)) {
+    const filters = {}
+    dictType.forEach((temp) => {
+      if (detail === 3) {
+        filters[temp] = state.systemDictsUnKnow.filter(item => item.dictType === temp)
+      }
+      else if (detail) {
         filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
-      })
-      const result = transformRes ? transformRes(filters) : filters
-      callback && callback(result)
-      return result
-    }
-    else {
-      const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
-      const result = transformRes ? transformRes(filters) : filters
-      callback && callback(result)
-      return result
-    }
-  } else {
-    if (Array.isArray(dictType)) {
-      const filters = {}
-      dictType.forEach((temp) => {
+      }
+      else {
         filters[temp] = state.systemDicts.filter(item => item.dictType === temp)
-      })
-      const result = transformRes ? transformRes(filters) : filters
-      callback(result)
-      return result
+      }
+    })
+    const result = transformRes ? transformRes(filters) : filters
+    callback && callback(result)
+    return result
+  }
+  else {
+    let filters = null
+    if (detail === 3) {
+      filters = state.systemDictsUnKnow.filter(item => item.dictType === dictType)
+    }
+    else if (detail) {
+      filters = state.systemDictsAll.filter(item => item.dictType === dictType)
     }
     else {
-      const filters = state.systemDicts.filter(item => item.dictType === dictType)
-      const result = transformRes ? transformRes(filters) : filters
-      callback(result)
-      return result
+      filters = state.systemDicts.filter(item => item.dictType === dictType)
     }
+    const result = transformRes ? transformRes(filters) : filters
+    callback && callback(result)
+    return result
   }
 }
 const state = {
-  systemDicts: [],
-  systemDictsAll: [], // 包含已删除字典
+  systemDicts: [], // 不包含已删除、未知字典
+  systemDictsAll: [], // 包含已删除、不包含未知字典
+  systemDictsUnKnow: [], // 不包含已删除、包含未知字典 
 }
+
 const getters = {
   filterDicts: (state) => (dictType, transformRes, detail) => {
-    if (detail) {
-      if (Array.isArray(dictType)) {
-        const filters = {}
-        dictType.forEach((temp) => {
+    if (Array.isArray(dictType)) {
+      const filters = {}
+      dictType.forEach((temp) => {
+        if (detail === 3) {
+          filters[temp] = state.systemDictsUnKnow.filter(item => item.dictType === temp)
+        }
+        else if (detail) {
           filters[temp] = state.systemDictsAll.filter(item => item.dictType === temp)
-        })
-        const result = transformRes ? transformRes(filters) : filters
-        // callback(result)
-        return result
-      }
-      else {
-        const filters = state.systemDictsAll.filter(item => item.dictType === dictType)
-        const result = transformRes ? transformRes(filters) : filters
-        // callback(result)
-        return result
-      }
-    } else {
-      if (Array.isArray(dictType)) {
-        const filters = {}
-        dictType.forEach((temp) => {
+        }
+        else {
           filters[temp] = state.systemDicts.filter(item => item.dictType === temp)
-        })
-        const result = transformRes ? transformRes(filters) : filters
-        // callback && callback(result)
-        return result
+        }
+      })
+      const result = transformRes ? transformRes(filters) : filters
+      return result
+    }
+    else {
+      let filters = null
+      if (detail === 3) {
+        filters = state.systemDictsUnKnow.filter(item => item.dictType === dictType)
+      }
+      else if (detail) {
+        filters = state.systemDictsAll.filter(item => item.dictType === dictType)
       }
       else {
-        const filters = state.systemDicts.filter(item => item.dictType === dictType)
-        const result = transformRes ? transformRes(filters) : filters
-        // callback(result)
-        return result
+        filters = state.systemDicts.filter(item => item.dictType === dictType)
       }
+      const result = transformRes ? transformRes(filters) : filters
+      return result
     }
   },
-  getSystemDictSync:(state) =>(dictType, transformRes, callback, detail = false)=> {
+  getSystemDictSync:(state) => (dictType, transformRes, callback, detail = false)=> {
+    if (detail === 3) {
+      if (!state.systemDictsUnKnow || state.systemDictsUnKnow.length <= 0) {
+        getFireWarningType({ allFlag: true }).then((res) => {
+          if (res && res.items) {
+            state.systemDictsUnKnow = res.items
+            filterDicts(state, dictType, transformRes, callback, detail)
+          }
+        })
+        return
+      }
+      filterDicts(state, dictType, transformRes, callback, detail)
+    }
     if (detail) {
       if (!state.systemDictsAll || state.systemDictsAll.length <= 0) {
         getFireWarningType({ allFlag: true }).then((res) => {
           if (res && res.items) {
             state.systemDictsAll = res.items
-            state.filterDictsAll(dictType, transformRes, callback)
+            filterDicts(state, dictType, transformRes, callback, detail)
           }
         })
         return
       }
-      state.filterDictsAll(dictType, transformRes, callback)
+      filterDicts(state, dictType, transformRes, callback, detail)
     }
     if (!state.systemDicts || state.systemDicts.length <= 0) {
       getFireWarningType().then((res) => {
         if (res && res.items) {
           state.systemDicts = res.items
-          filterDicts(dictType, transformRes, callback)
+          filterDicts(state, dictType, transformRes, callback, detail)
         }
       })
       return
     }
 
-    filterDicts(state,dictType, transformRes, callback)
+    filterDicts(state, dictType, transformRes, callback, detail)
   },
 }
 const mutations = {
@@ -107,6 +117,9 @@ const mutations = {
   },
   setSystemDictsAll(state, val) {
     state.systemDictsAll = val.items
+  },
+  setSystemDictsUnKnow(state, val) {
+    state.systemDictsUnKnow = val.items
   }
 }
 
@@ -122,32 +135,47 @@ const actions = {
         if (res && res.items) {
           commit('setSystemDictsAll', res)
         }
+      }),
+      getFireWarningType({ displayClean: true }).then((res) => {
+        if (res && res.items) {
+          commit('setSystemDictsUnKnow', res)
+        }
       })
     ])
   },
   getSystemDictSync(dictType, transformRes, callback, detail = false) {
-    if (detail) {
-      if (!this.$state.systemDictsAll || this.$state.systemDictsAll.length <= 0) {
-        getFireWarningType({ allFlag: true }).then((res) => {
+    if (detail === 3) {
+      if (!this.$state.systemDictsUnKnow || this.$state.systemDictsUnKnow.length <= 0) {
+        getFireWarningType({ displayClean: true }).then((res) => {
           if (res && res.items) {
-            this.$state.systemDictsAll = res.items
-            this.filterDictsAll(dictType, transformRes, callback)
+            this.$state.systemDictsUnKnow = res.items
+            this.filterDicts(dictType, transformRes, detail)
           }
         })
         return
       }
-      this.filterDictsAll(dictType, transformRes, callback)
     }
-    if (!this.$state.systemDicts || this.$state.systemDicts.length <= 0) {
+    else if (detail) {
+      if (!this.$state.systemDictsAll || this.$state.systemDictsAll.length <= 0) {
+        getFireWarningType({ allFlag: true }).then((res) => {
+          if (res && res.items) {
+            this.$state.systemDictsAll = res.items
+            this.filterDicts(dictType, transformRes, detail)
+          }
+        })
+        return
+      }
+    }
+    else if (!this.$state.systemDicts || this.$state.systemDicts.length <= 0) {
       getFireWarningType().then((res) => {
         if (res && res.items) {
           this.$state.systemDicts = res.items
-          this.filterDicts(dictType, transformRes, callback)
+          this.filterDicts(dictType, transformRes, detail)
         }
       })
       return
     }
-    this.filterDicts(dictType, transformRes, callback)
+    this.filterDicts(dictType, transformRes, detail)
   },
 }
 

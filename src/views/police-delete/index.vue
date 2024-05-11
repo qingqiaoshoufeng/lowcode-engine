@@ -114,7 +114,7 @@ const finishCallback = () => {
 }
 
 onMounted(() => {
-  const res = store.getters?.["dict/filterDicts"](['JQ_TYPE'], null, true);
+  const res = store.getters?.["dict/filterDicts"](['JQ_TYPE'], null, 3);
   searchOptions.value[2].options = res.JQ_TYPE
 
   nextTick(() => {

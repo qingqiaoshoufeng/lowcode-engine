@@ -151,7 +151,6 @@
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
-// import ApplyReject from "./apply-reject.vue";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import RegularLook from '@/views/police-timeout/regular-look.vue';
 import DispatchForm from '@/views/dispatchReportForm/index.vue';
@@ -165,14 +164,16 @@ import { getDispatchTimeout } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
 import store from '@/store/index.js'
+
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
+
 const options = {}
+
 getSystemDictSync(['JQ_TYPE', 'CD_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.CD_TIMEOUT_TYPE
   options.warningType = res.JQ_TYPE
-})
-onMounted(() => {
-})
+}, 3)
+
 const searchOptions = computed(()=>([
   {
     title: '选择时间',
