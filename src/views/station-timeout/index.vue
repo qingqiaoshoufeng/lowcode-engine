@@ -61,7 +61,6 @@ import { getFireReviewList } from '@/apis/index.js'
 import SelectTags from '@/component/SelectTags/index.vue'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
-// import ApplyReject from "./apply-reject.vue";
 import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
 import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
@@ -70,16 +69,8 @@ import SelectMore from "@/component/SelectMore/index";
 import { getUnworkTimeout} from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showToast,showLoadingToast,closeToast } from 'vant';
-import store from '@/store/index.js'
-const getSystemDictSync = store.getters['dict/getSystemDictSync']
-const options = {}
-getSystemDictSync(['JQ_TYPE', 'JQ_TIMEOUT_TYPE'], null, (res) => {
-  options.warningType = res.JQ_TYPE
-  options.timeOutType = res.JQ_TIMEOUT_TYPE
-})
-onMounted(() => {
-})
-const searchOptions = computed(()=>([
+
+const searchOptions = computed(() => ([
   {
     title: '选择时间',
     type: 'select-range',
