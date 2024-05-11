@@ -12,6 +12,7 @@ import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { MSG_EXPORT_NO_DATA, MSG_NO_HEAD_REPORT, MSG_LOCKING_ADMIN } from '@/utils/constants.js';
 import { useModal } from '@/hooks/useModal.js';
+import store from '@/store/index.js'
 
 const props = defineProps({
   type: {
@@ -134,6 +135,19 @@ onMounted(() => {
     proListRef.value.filter()
   })
 })
+
+const permissionMap = store?.getters?.['userInfo/permission'] || {}
+
+const applyTypeFlag = computed(() => {
+  const data = []
+  if(permissionMap?.['admin'] || permissionMap?.['composite-search:back'] || permissionMap?.['advance-search:back']){
+    data.push('1')
+  }
+  if(permissionMap?.['admin'] || permissionMap?.['composite-search:common-back'] || permissionMap?.['advance-search:common-back']){
+    data.push('2')
+  }
+  return data
+})
 </script>
 
 <template>
@@ -190,7 +204,7 @@ onMounted(() => {
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button
-                v-p="['admin', 'composite-search:back', 'advance-search:back']"
+                v-p="['admin', 'composite-search:back', 'advance-search:back', 'composite-search:common-back', 'advance-search:common-back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
@@ -231,6 +245,7 @@ onMounted(() => {
           :current-row="currentRow"
           :selected-keys="[]"
           :set-handle-ok="setHandleOk"
+          :apply-type-flag="applyTypeFlag"
           @finish-callback="finishCallback"
         />
       </template>
