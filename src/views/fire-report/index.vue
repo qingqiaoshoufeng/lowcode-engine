@@ -117,6 +117,7 @@
         is-un-dispatch
         :set-handle-ok="setHandleOk"
         @finish-callback="refreshCallback"
+        @refreshEdit="editRefreshCallback"
       />
     </template>
   </ProModal>
@@ -199,6 +200,7 @@ const refreshCallback = () => {
 }
 const editRefreshCallback = ()=>{
   show.value.editVisible = false
+  show.value.unDispatchVisible = false
 }
 provide('isShowTemporary', isShowTemporary)
 

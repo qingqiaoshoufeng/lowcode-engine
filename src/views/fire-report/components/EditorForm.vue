@@ -1064,6 +1064,7 @@ const handleSubmit = () => {
       emits('refreshEdit')
     }
     else {
+    
       if (!props.showDraft && checkFieldWarning(fieldExist.value)
       ) {
         // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
@@ -1077,8 +1078,8 @@ const handleSubmit = () => {
   })
     .catch((error) => {
       // eslint-disable-next-line no-console
-      console.log(error,'error')
-      showToast('信息填写不完整，请检查填写内容！')
+      console.log(error,'error11')
+      showToast(error?.message || '信息填写不完整，请检查填写内容！')
       scrollFormFailed()
     })
 }

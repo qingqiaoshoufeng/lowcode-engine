@@ -125,13 +125,13 @@ const onDelete = async(val,val1)=>{
 
 const OnAfterRead = async(file) => {
   const formData = new FormData()
-  formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId)
+  formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId)
   formData.append('attachmentType', 'safetyFile')
   formData.append('extend2', '其他附件')
   formData.append('file', file.file)
   await uploadFile(formData)
   getAttachmentFile({
-    businessObjId: currentRow?.boFireInfoId || localFireInfoId,
+    businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
     businessType: 'safetyFile',
   }).then((res) => {
     form.value.firePhoto.photos.value = res.data.map((item) => {
@@ -157,7 +157,7 @@ const downLoadFile = (val)=>{
 onMounted(() => {
   if (isDetail || isEdit || (relevanceDraft && relevanceDraft.boFireInfoId) || currentRow?.boFireInfoId) {
     getAttachmentFile({
-      businessObjId: currentRow?.boFireInfoId || localFireInfoId,
+      businessObjId: currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId,
       businessType: 'safetyFile',
     }).then((res) => {
       form.value.basicInfo.attach.value = res.data.map((item) => {
