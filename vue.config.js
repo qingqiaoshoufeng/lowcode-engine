@@ -7,9 +7,9 @@ function resolve(dir) {
 function getPublicPath() {
   switch (process.env.NODE_ENV) {
     case 'staging-h5':
-      return './fire_alarm_statistics_app_h5_staging/'
+      return '/fire_alarm_statistics_app_h5_staging'
     case 'production-h5':
-      return './fire_alarm_statistics_app_h5_production/'
+      return '/fire_alarm_statistics_app_h5_production'
     default:
       return './'
   }
