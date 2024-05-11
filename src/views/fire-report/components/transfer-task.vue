@@ -29,6 +29,7 @@ onMounted(() => {
       transferFire({ boFireInfoId: props.currentRow.boFireInfoId, fillReportOrg })
         .then((res) => {
           if (res?.data?.code === 200) {
+            showToast('任务转派成功!')
             emits('finishCallback')
             finishFn()
           }
