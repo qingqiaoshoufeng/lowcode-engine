@@ -48,13 +48,13 @@ const onPreview = (file) => {
 
 const OnAfterRead = async(file) => {
   const formData = new FormData()
-  formData.append('businessId', relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId)
+  formData.append('businessId', relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'image')
   formData.append('extend2', '火灾照片')
   formData.append('file', file.file)
   await uploadFile(formData)
   getAttachmentFile({
-    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
     businessType: 'image',
   }).then((res) => {
     form.value.firePhoto.photos.value = res.data.map((item) => {

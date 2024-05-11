@@ -55,13 +55,13 @@ const onDelete = async(val,val1)=>{
 
 const OnAfterRead = async(file) => {
   const formData = new FormData()
-  formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId)
+  formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'file')
   formData.append('extend2', '其他附件')
   formData.append('file', file.file)
   await uploadFile(formData) 
   getAttachmentFile({
-    businessObjId: currentRow?.boFireInfoId || localFireInfoId,
+    businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
     businessType: 'file',
   }).then((res) => {
     form.value.otherAttach.attach.value = res.data.map((item) => {
