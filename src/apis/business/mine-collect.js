@@ -24,3 +24,8 @@ export function getFocus() {
 export function getRemind() {
   return axios.get('/acws/rest/biz/mystatistics/query/remind')
 }
+
+//  我的统计--通知公告--统计数量
+export function getNotice() {
+  return axios.get('/acws/rest/biz/mystatistics/query/notice')
+}

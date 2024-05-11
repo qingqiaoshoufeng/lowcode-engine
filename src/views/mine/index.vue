@@ -14,7 +14,7 @@ import { ref } from "vue";
 import InfoCard from "./components/InfoCard.vue";
 import { entryList } from "./config.js";
 import { showLoadingToast, closeToast } from "vant";
-import { loginOut,getRemind } from "@/apis/index.js";
+import { loginOut,getRemind,getNotice } from "@/apis/index.js";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { onUnmounted } from "vue";
@@ -40,7 +40,8 @@ const handleOut = () => {
 
 const getNewNumber = async()=>{
   const res = await getRemind()
-  list.value[3].number = res.dispatchEditBacklogNum
+  const res1 = await getNotice()
+  list.value[3].number = res1.uncheckNoticeNum
   list.value[1].number = res.messageNum
   clearTimeout(id.value)
   if(id.value){
