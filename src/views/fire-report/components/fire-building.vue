@@ -6,6 +6,7 @@ import { gutter } from '@/utils/constants.js'
 import { integerReg, positiveIntegerReg } from '@/utils/validate.js'
 import CascaderSingle from "@/component/CascaderSingle/index";
 import { showToast } from 'vant';
+import { getCheckboxBabelByvalue } from '@/utils/tools.js'
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 
 const form = inject('form')
@@ -188,9 +189,9 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.buildTag.rules"
           :required="isRequired"
           class="buildTag"
-          :class="{ 'field-not-required': !isRequired }"
+          :class="{ 'field-not-required': !isRequired,'isdetail':showPreview}"
         >
-          <template #input>
+          <template #input v-if="!showPreview">
             <van-checkbox-group 
               v-preview-text="showPreview"
               class="muti-check"
@@ -208,6 +209,12 @@ const onBuildTag = (val) => {
                 @click="onBuildTag(item.boDictId)"
                 >{{ item.dictName }}</van-checkbox>
             </van-checkbox-group>
+          </template>
+          <template #input v-else>
+            <div>
+              <div v-for="item in getCheckboxBabelByvalue(form.fireBuilding.buildTag.value, options.buildTag)" :key="item"> {{ item }}</div>
+            </div>
+            <!-- <span>{{ ?.join('、') }}</span> -->
           </template>
           <template v-slot:label="">
             <FieldAnnotation
@@ -611,6 +618,14 @@ const onBuildTag = (val) => {
     >div{
       width: 50% !important;
     }
+  }
+}
+</style>
+<style lang="scss">
+.buildTag.isdetail{
+  display: flex !important;
+  .van-field__body{
+  
   }
 }
 </style>

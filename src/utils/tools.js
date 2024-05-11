@@ -616,3 +616,14 @@ export const maskPhoneNumber = (phone) => {
   }
   return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
+
+
+export const getCheckboxBabelByvalue = (value, options, field = { label: 'label', value: 'value' }) => {
+  const { label, value: valuekey } = field
+  const map = options?.reduce((current, item) => {
+    current[item[valuekey]] = item[label]
+    return current
+  }, {})
+  const result = value?.map(item => map?.[item])
+  return result || []
+}
