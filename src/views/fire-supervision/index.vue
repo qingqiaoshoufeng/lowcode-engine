@@ -78,7 +78,7 @@
               查看
             </van-button> -->
             <van-button
-              v-p="['admin', 'fire-supervision:back']"
+              v-p="['admin', 'fire-supervision:back', 'fire-supervision:common-back']"
               size="mini"
               color="#1989fa"
               class="item-btn"
@@ -107,6 +107,7 @@
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
           :finish-callback="finishCallback"
+          :apply-type-flag="applyTypeFlag"
         />
       </template>
     </ProModal>
@@ -138,6 +139,7 @@ import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import { showDialog, showToast, showLoadingToast, closeToast } from 'vant'
 import { useModal } from '@/hooks/useModal.js'
+import store from '@/store/index.js'
 
 const menus = [
   {
@@ -269,6 +271,19 @@ const selectTagsCallback = (selects) => {
   onSearchConfirm()
   // finishCallback()
 }
+
+const permissionMap = store?.getters?.['userInfo/permission'] || {}
+
+const applyTypeFlag = computed(() => {
+  const data = []
+  if(permissionMap?.['admin'] || permissionMap?.['fire-supervision:back']){
+    data.push('1')
+  }
+  if(permissionMap?.['admin'] || permissionMap?.['fire-supervision:common-back']){
+    data.push('2')
+  }
+  return data
+})
 </script>
 
 <style lang="scss" scoped>

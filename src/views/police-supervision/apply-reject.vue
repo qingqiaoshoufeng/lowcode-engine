@@ -5,8 +5,7 @@ import { useSubmit } from '@castle/castle-use'
 import { rejectBatch } from '@/apis/index.js'
 import {showToast} from 'vant'
 import { rejectApplyType } from '@/utils/constants.js'
-import store from '@/store/index.js'
-
+ 
 const props = defineProps({
   type: {
     type: String,
@@ -25,7 +24,12 @@ const props = defineProps({
   },
   finishCallback:{
     type: Function,
-  }
+  },
+  // 1: 高级驳回 2: 普通驳回
+  applyTypeFlag: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const emits = defineEmits(['finishCallback'])
@@ -52,11 +56,6 @@ const options = [
     value: '数据不规范',
   },
 ]
-
-// 2:高级管理员 6:高级驳回 11:普通驳回
-const roleIds = ref([])
-
-const applyTypeFlag = ref(false)
 
 const formRef = ref(null)
 
@@ -104,13 +103,11 @@ onMounted(() => {
       finishFn()
     })
   }, loading)
-  roleIds.value = store.state.userInfo?.userInfo?.ROLELIST.map(val => val.roleId)
-  applyTypeFlag.value = (roleIds.value.includes('6') && roleIds.value.includes('11')) || roleIds.value.includes('2')
-  if (!applyTypeFlag.value) {
-    if (roleIds.value.includes('6')) {
+  if (props.type !== '2' && props.applyTypeFlag?.length < 2) {
+    if (props.applyTypeFlag.includes('1')) {
       form.value.applyType = '1'
     }
-    if (roleIds.value.includes('11')) {
+    if (props.applyTypeFlag.includes('2')) {
       form.value.applyType = '2'
     }
   }
@@ -140,7 +137,7 @@ onMounted(() => {
       label="驳回类型"
       label-width="85px"
       placeholder="请选择驳回类型"
-      :disabled="!applyTypeFlag"
+      :disabled="applyTypeFlag?.length < 2"
       :rules="[{ required: true, message: '请选择驳回类型' }]"
     />
     <SelectSingle

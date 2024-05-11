@@ -73,7 +73,7 @@
                 查看
               </van-button> -->
               <van-button
-                v-p="['admin', 'police-supervision:back']"
+                v-p="['admin', 'police-supervision:back', 'police-supervision:common-back']"
                 size="mini"
                 color="#1989fa"
                 class="item-btn"
@@ -102,6 +102,7 @@
           :current-row="currentRow"
           :set-handle-ok="setHandleOk"
           :finish-callback="finishCallback"
+          :apply-type-flag="applyTypeFlag"
         />
       </template>
     </ProModal>
@@ -126,6 +127,7 @@ import SelectMore from "@/component/SelectMore/index";
 import { getFireWarningSupervision } from '@/apis/index.js'
 import { formatYmdHm } from "@/utils/format.js";
 import { showDialog, showToast, showLoadingToast, closeToast } from 'vant';
+import store from '@/store/index.js'
 
 const menus = [
   // {
@@ -255,6 +257,19 @@ const selectTagsCallback = (selects) => {
   onSearchConfirm()
   finishCallback()
 }
+
+const permissionMap = store?.getters?.['userInfo/permission'] || {}
+
+const applyTypeFlag = computed(() => {
+  const data = []
+  if(permissionMap?.['admin'] || permissionMap?.['police-supervision:back']){
+    data.push('1')
+  }
+  if(permissionMap?.['admin'] || permissionMap?.['police-supervision:common-back']){
+    data.push('2')
+  }
+  return data
+})
 </script>
 
 <style lang="scss" scoped>
