@@ -583,7 +583,7 @@ const onBuildTag = (val) => {
           :rules="form.fireBuilding.historyBuildLevel.rules"
           id="historyBuildLevel"
           v-model:value="form.fireBuilding.historyBuildLevel.value"
-          :field-name="{ value: 'boDictId', label: 'dictName' }"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
           :showPreview="showPreview"
           :options="options.historyBuildLevel"
           allow-clear
