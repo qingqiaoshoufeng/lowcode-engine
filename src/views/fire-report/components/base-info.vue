@@ -665,6 +665,9 @@ const onFireLevel = () => {
           :show-all-area="!!showPreview"
           :preview-text="form.basicInfo.noDispatchArea.text?.join('/')"
           :required="isRequired"
+          :params="{
+            deactivateFlag: 2,
+          }"
         >
           <template v-slot:label="">
             <FieldAnnotation

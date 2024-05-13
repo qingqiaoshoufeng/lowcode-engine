@@ -1002,6 +1002,7 @@ const onWarningOrgname = () => {
         :required="true"
         :rules="[{ required: true, message: '请选择行政区域' }]"
         :disabled="isConfirm"
+        :params="{deactivateFlag: 2}"
         @change="onAreaChange"
       >
         <template v-slot:label="">
@@ -1892,7 +1893,7 @@ const onWarningOrgname = () => {
         title="请选择辖区队站"
         :single="true"
         :rules="[{ required: true, message: '请选择辖区队站' }]"
-        :params="{ deptType: 1 }"
+        :params="{ deptType: 1,deactivateFlag: 2}"
         :disabled="isConfirm"
       >
         <template v-slot:label="">
@@ -1939,7 +1940,7 @@ const onWarningOrgname = () => {
         v-model:nodes="form.headquarters"
         :showPreview="showPreview"
         name="headquarters"
-        :options="options.headquarters"
+        :options="options.headquarters?.filter(item => item.status === '0')"
         :field-names="{ value: 'organizationid', label: 'name' }"
         :filter-options="{ value: 'organizationid', label: 'name' }"
         label="全勤指挥部："
