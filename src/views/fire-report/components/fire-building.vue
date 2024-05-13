@@ -239,7 +239,7 @@ const onBuildTag = (val) => {
           v-model:value="form.fireBuilding.buildType.value"
           :showPreview="showPreview"
           :options="options.buildType"
-          :field-name="{ value: 'boDictId', label: 'dictName' }"
+          :field-names="{ value: 'boDictId', label: 'dictName' }"
           allow-clear
           placeholder="请选择建筑类别"
           :required="isRequired"
@@ -491,7 +491,7 @@ const onBuildTag = (val) => {
       <div v-if="showSevereFire" :span="8">
         <SelectSingle
           name="fireBuilding.isSpread.value"
-          :fieldNames="{label:'label',value:'value'}"
+          :field-names="{ label: 'label', value: 'value' }"
           label="是否蔓延："
           :rules="form.fireBuilding.isSpread.rules"
           id="isSpread"
@@ -520,7 +520,7 @@ const onBuildTag = (val) => {
           label="是否发生轰燃："
           :rules="form.fireBuilding.isLoud.rules"
           label-width="120"
-          :fieldNames="{label:'label',value:'value'}"
+          :field-names="{ label: 'label', value: 'value' }"
           id="isLoud"
           v-model:value="form.fireBuilding.isLoud.value"
           :showPreview="showPreview"
@@ -546,7 +546,7 @@ const onBuildTag = (val) => {
     <div v-if="showSevereFire" :gutter="gutter">
       <div :span="8">
         <SelectSingle
-          :fieldNames="{label:'label',value:'value'}"
+          :field-names="{ label: 'label', value: 'value' }"
           name="fireBuilding.isWindowOpened.value"
           label="失火建筑门窗在过程中是否开启："
           label-width="135px"
@@ -576,7 +576,6 @@ const onBuildTag = (val) => {
     <div v-if="showHistoryBuildLevel" :gutter="gutter">
       <div :span="8">
         <SelectSingle
-          :fieldNames="{label:'label',value:'value'}"
           name="fireBuilding.historyBuildLevel.value"
           label="文物古建筑级别："
           label-width="135px"
