@@ -443,7 +443,7 @@ const firelistMap = [
     unit: '人',
   },
   {
-    label: '较大火灾（死亡人数）',
+    label: '死亡人数（较大火灾）',
     numberKey: 'largerFireDeathCount',
     YOYkey: 'largerFireDeathCountYOY',
     color: 'red',
