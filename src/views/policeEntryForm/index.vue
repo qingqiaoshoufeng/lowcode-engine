@@ -1686,7 +1686,7 @@ const onWarningOrgname = () => {
         placeholder="请选择出动队伍"
         title="请选择出动队伍"
         :rules="[{ required: true, message: '请选择出动队伍' }]"
-        :params="{ deptType: 1 }"
+        :params="{ deptType: 1,deactivateFlag: '2'}"
         :disabled="isConfirm"
         @change="onChangeDispatchGroup"
       >
