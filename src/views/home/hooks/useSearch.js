@@ -447,7 +447,7 @@ const firelistMap = [
     numberKey: 'largerFireDeathCount',
     YOYkey: 'largerFireDeathCountYOY',
     color: 'red',
-    unit: '起',
+    unit: '人',
   },
   {
     label: '重伤人数',
