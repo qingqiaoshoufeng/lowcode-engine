@@ -41,8 +41,8 @@ const handleOut = () => {
 const getNewNumber = async()=>{
   const res = await getRemind()
   const res1 = await getNotice()
-  list.value[3].number = res1.uncheckNoticeNum
-  list.value[1].number = res.messageNum
+  list.value[3].number = Number(res1.uncheckNoticeNum)
+  list.value[1].number = Number(res.messageNum)
   clearTimeout(id.value)
   if(id.value){
     id.value = setTimeout(getNewNumber,30*1000)
