@@ -238,7 +238,7 @@ const handleSwitch = () => {
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 0% 0%;
-  overflow: hidden;
+  overflow: auto;
   background-color: #fff;
   .logo {
     height: 66px;
@@ -279,6 +279,7 @@ const handleSwitch = () => {
   }
   .submit {
     margin-top: 60px;
+    margin-bottom: 20px;
     background-color: #7485CB !important;
     height: 36px;
   }
