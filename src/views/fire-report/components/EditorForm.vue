@@ -597,11 +597,15 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
-        importantInfoReject.value = res.importantInfoReject
+        if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
@@ -613,8 +617,12 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
-        importantInfoReject.value = res.importantInfoReject
+        if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
