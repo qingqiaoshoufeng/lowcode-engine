@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { getUserDetail, getAttachmentFile, uploadFile } from '@/apis/index.js';
 import { useDetail } from '@castle/castle-use';
 import HeaderTitle from "@/component/HeaderTitle/index.vue";
+import { getAttachUrl } from '@/utils/tools.js'
 
 const form = ref({
   img: [],
@@ -29,7 +30,7 @@ const getAvatar = () => {
         name: imgs?.[0]?.attachmentName,
         status: "done",
         isImage: true,
-        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`,
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`,
       }]
     }
     else {

@@ -3,6 +3,7 @@ import { inject, nextTick, onMounted, ref } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
+import { getAttachUrl } from '@/utils/tools.js'
 
 const form = inject("form");
 
@@ -23,10 +24,10 @@ const localFireDispatchId = inject("localFireDispatchId");
 const onChange = (file, fileList, event) => {
   form.value.scenePhoto.photos.value?.forEach((item, i) => {
     if (!item.url && (item.attachmentId || item.response?.attachmentId)) {
-      item.url = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
+      item.url = `${getAttachUrl()}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
-      item.thumbUrl = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${
+      item.thumbUrl = `${getAttachUrl()}/acws/rest/app/attachments/${
         item.attachmentId || item.response?.attachmentId
       }`;
     }
@@ -49,7 +50,7 @@ onMounted(() => {
           name: item.attachmentName,
           status: "done",
           isImage: true,
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });
