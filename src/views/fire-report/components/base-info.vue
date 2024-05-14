@@ -494,7 +494,8 @@ const showLowSpeed = computed(() => {
 
 const showResidence = computed(() => {
   const { basicInfo } = form.value
-  return basicInfo.firePlace?.text?.indexOf('居住场所') > -1 && basicInfo.fireType?.text?.includes('建构筑物火灾')
+  return basicInfo.firePlace?.text?.indexOf('居住场所') > -1 && (basicInfo.fireType?.text?.includes('建构筑物火灾')
+    || basicInfo.fireType?.text?.includes('交通工具火灾'))
 })
 
 const showisLaborIntensive = computed(() => {
