@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <InfoCard />
-    <ListEntry :list="entryList" class="mt9" />
+    <ListEntry :list="list" class="mt9" />
     <van-button type="primary" plain block style="margin-top: 20px" @click="handleOut">
       退出登录
     </van-button>
