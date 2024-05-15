@@ -860,6 +860,7 @@ const onFireLevel = () => {
           :options="fireTypeOptions"
           :rules="form.basicInfo.fireType.rules"
           :required="true"
+          :is-link="false"
           :disabled="fireTypeDisabled"
           placeholder="请选择火灾类型"
           title="请选择火灾类型"

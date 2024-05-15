@@ -429,6 +429,7 @@ defineOptions({
     input {
       padding-left: 8px;
       padding-right: 8px;
+      border: 1px solid #ebebeb;
       border-top-left-radius: 2px;
       border-bottom-left-radius: 2px;
     }
