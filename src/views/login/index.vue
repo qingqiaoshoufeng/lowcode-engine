@@ -3,7 +3,7 @@
     <img class="logo" src="@/assets/images/login-logo.png" alt="">
     <div class="title" @click="handleSwitch">
       全国火灾与警情统计系统
-      <span v-if="getSystemEnv()" style="font-size: 12px;">({{ getSystemEnv() }})</span>
+      <span v-if="systemEnv" style="font-size: 12px;">({{ systemEnv }})</span>
     </div>
     <div class="form">
       <van-form @submit="handleUserLogin">
@@ -125,6 +125,8 @@ const countdownFn = ref(null)
 
 const countdown = ref({ disabled: false, innerText: '发送验证码' })
 
+const systemEnv = ref(localStorage.SYSTEM_ENV)
+
 const loginForm = ref({
   loginid: '',
   password: '',
@@ -228,21 +230,21 @@ const handleSwitch = () => {
   clickNumber.value += 1
   if (process.env.NODE_ENV === 'test') {
     if (clickNumber.value === 7) {
-      localStorage.SYSTEM_ENV = '预发布环境'
+      localStorage.SYSTEM_ENV = systemEnv.value = '预发布环境'
       localStorage.SYSTEM_BASE_URL = 'http://stat.119.gov.cn/staging';
       window.__axios.defaults.baseURL = 'http://stat.119.gov.cn/staging';
       getCode()
       showToast('已切换为预发布环境')
       window.checkAppVersion(false)
     } else if (clickNumber.value === 10) {
-      localStorage.SYSTEM_ENV = '压测环境'
+      localStorage.SYSTEM_ENV = systemEnv.value = '压测环境'
       localStorage.SYSTEM_BASE_URL = 'http://10.13.5.100';
       window.__axios.defaults.baseURL = 'http://10.13.5.100';
       getCode()
       showToast('已切换为压测环境')
       window.checkAppVersion(false)
     } else if (clickNumber.value === 15) {
-      localStorage.SYSTEM_ENV = '测试环境'
+      localStorage.SYSTEM_ENV = systemEnv.value = '测试环境'
       localStorage.SYSTEM_BASE_URL = 'http://10.13.5.47:8080';
       window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
       getCode()
@@ -250,10 +252,6 @@ const handleSwitch = () => {
       window.checkAppVersion(false)
     }
   }
-}
-
-const getSystemEnv = () => {
-  return localStorage.SYSTEM_ENV
 }
 </script>
 
