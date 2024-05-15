@@ -267,6 +267,7 @@ const bigInjured = computed(() => {
             :options="options.injuryType"
             allow-clear
             disabled
+            :is-link="false"
             :field-names="{label:'label',value:'value'}"
             :required="true"
             placeholder="请选择是伤亡情况"
@@ -340,6 +341,7 @@ const bigInjured = computed(() => {
             :options="options.injuryType"
             allow-clear
             disabled
+            :is-link="false"
             :field-names="{label:'label',value:'value'}"
             :required="true"
             placeholder="请选择是伤亡情况"
@@ -884,6 +886,7 @@ const bigInjured = computed(() => {
             allow-clear
             placeholder="请输入伤亡情况"
             disabled
+            :is-link="false"
             :field-names="{ value: 'value', label: 'label' }"
           >
             <template v-slot:label="">
@@ -1377,6 +1380,10 @@ const bigInjured = computed(() => {
   .dead-message {
     color: red;
     margin-bottom: 20px;
+    margin: 5px 15px;
+    &::after{
+      display: none !important;
+    }
   }
   .injured-item {
     padding-right: 0px;

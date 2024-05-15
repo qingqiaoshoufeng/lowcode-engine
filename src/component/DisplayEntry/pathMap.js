@@ -22,7 +22,7 @@ export const pathMap = {
   "huozaichaoshitongji":"/fire-timeout",
   "chudongchaoshitongji":"/dispatch-timeout",
   // 已办
-  "weitianbaoduizhantongji":"station-timeout",
+  "weitianbaoduizhantongji":"/station-timeout",
   "policeDispatched":'have-done-info/policeDispatched',
   "policeRejected":'have-done-info/policeRejected',
   "policeAmend":'have-done-info/policeAmend',
@@ -41,10 +41,6 @@ export const pathMap = {
   "jingqingzhuanpai": '/policeTransfer',
   "jingqingzuofei":'/police-delete'
 }
-
-
-// policeDispatched,policeRejected,policeAmend,policeInvalid,policeConfirmed,policeDispatchArea,dispatchFilled
-// ,dispatchReviewed,dispatchIdRejected,dispatchAmend,fireFilled,fireReviewed,fireReject,fireAmend
 
 export const permission={
   "jingqingluru":["admin", "police-entry"],
@@ -71,6 +67,7 @@ export const permission={
   "jingqingchaoshitongji":["admin", "police-timeout"],
   "huozaichaoshitongji":["admin", "fire-timeout"],
   "chudongchaoshitongji":["admin", "dispatch-timeout"],
-  "jingqingzuofei":["admin", "police-delete"]
+  "jingqingzuofei":["admin", "police-delete"],
+  "weitianbaoduizhantongji":["admin", "station-timeout"]
 }
   
