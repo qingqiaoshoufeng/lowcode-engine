@@ -16,6 +16,7 @@ const options = {
     start: 0,
     end: 15,
     zoomLock:true,
+    preventDefaultMouseMove:false,
   },
   xAxis: {
     data: [],

@@ -13,6 +13,8 @@ const options = {
     start: 0,
     end: 15,
     zoomLock:true,
+    orient:'horizontal',
+    preventDefaultMouseMove:false,
   },
   tooltip: {},
   grid:{
