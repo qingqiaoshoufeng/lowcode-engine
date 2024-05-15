@@ -1,7 +1,10 @@
 <template>
   <div class="login">
     <img class="logo" src="@/assets/images/login-logo.png" alt="">
-    <div class="title" @click="handleSwitch">全国火灾与警情统计系统</div>
+    <div class="title" @click="handleSwitch">
+      全国火灾与警情统计系统
+      <span v-if="getSystemEnv()" style="font-size: 12px;">({{ getSystemEnv() }})</span>
+    </div>
     <div class="form">
       <van-form @submit="handleUserLogin">
         <van-field
@@ -97,7 +100,7 @@
 </template>
 
 <script setup>
-import { reactive, ref ,onMounted} from "vue";
+import { reactive, ref ,onMounted, computed } from "vue";
 import verification from '@/assets/images/verification.png';
 import { loginIn, getVerificationCode, getMsgCode } from '@/apis/index.js';
 import router from '@/router/index.js';
@@ -233,8 +236,8 @@ const handleSwitch = () => {
       window.checkAppVersion(false)
     } else if (clickNumber.value === 10) {
       localStorage.SYSTEM_ENV = '压测环境'
-      localStorage.SYSTEM_BASE_URL = 'http://10.13.5.100:8080';
-      window.__axios.defaults.baseURL = 'http://10.13.5.100:8080';
+      localStorage.SYSTEM_BASE_URL = 'http://10.13.5.100';
+      window.__axios.defaults.baseURL = 'http://10.13.5.100';
       getCode()
       showToast('已切换为压测环境')
       window.checkAppVersion(false)
@@ -247,6 +250,10 @@ const handleSwitch = () => {
       window.checkAppVersion(false)
     }
   }
+}
+
+const getSystemEnv = () => {
+  return localStorage.SYSTEM_ENV
 }
 </script>
 
