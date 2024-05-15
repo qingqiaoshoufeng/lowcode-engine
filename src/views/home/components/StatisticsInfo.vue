@@ -32,8 +32,8 @@
                 <div class="title" :style="item.labelStyle || {}">{{ item.title }}</div>
               </div>
               <div class="buttom">
-                <div class="number">{{ item.number }}<span>{{ item.unit }}</span></div>
-                <div class="percent" :class="getStatusColor(item.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
+                <div class="number" :style="{'font-size': (`${item.number}`?.length >= 6) ? '12px': '18px'}">{{ item.number }}<span :style="{'font-size': (`${item.number}`?.length >= 6) ? '10px': '12px'}">{{ item.unit }}</span></div>
+                <div class="percent" :style="{'font-size': (`${item.percent}`?.length >= 6) ? '12px': '14px'}" :class="getStatusColor(item.percent)">{{ (item.percent || '-').includes('-') ? item.percent : `+${item.percent}` }}</div>
               </div>
           </div>
       </div>
