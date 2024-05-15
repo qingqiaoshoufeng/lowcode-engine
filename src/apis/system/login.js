@@ -45,27 +45,7 @@ export function getAllRules() {
   return request.get('/acws/rest/biz/ruleconfig/get')
 }
 
-
-
-// export const getVerificationCode=() =>{
-//   return new Promise((resolve) => {
-//     const img = new Image()
-//     img.crossOrigin = ''
-//     img.src = '/acws/rest/security/captcha'
-//     img.onload = function () {
-//       const canvas = document.createElement('canvas')
-//       canvas.width = img.width
-//       canvas.height = img.height
-//       const ctx = canvas.getContext('2d')
-//       ctx?.drawImage(img, 0, 0, img.width, img.height)
-//       const ext = img.src.substring(img.src.lastIndexOf('.') + 1).toLowerCase()
-//       const dataURL = canvas.toDataURL(`image/${ext}`)
-//       resolve(dataURL)
-//     }
-//   })
-// }
-
-export const getVerificationCode = async() =>{
+export const getVerificationCode = async() => {
   const imgRes = await fetch(`${ ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
     return new Promise((resolve) => { 
       const reader = new FileReader()
@@ -77,29 +57,3 @@ export const getVerificationCode = async() =>{
   })
   return Promise.resolve(imgRes)
 }
-
-// export const getVerificationCode = async() =>{
-//   return new Promise(async(resolve) => { 
-//     const imgRes = await axios(
-//       {
-//         url:'/acws/rest/security/captcha',
-//         method:'get',
-//         responseType:'blob'
-//       }
-//     ).then(response =>{
-//       debugger;
-//       // debugger
-//       // let blob = new Blob([response.data], { type: "image/jpeg" });
-//       // debugger;
-//       const reader = new FileReader()
-//       reader.readAsDataURL(new Blob([response.data])) 
-      
-//       reader.onloadend = () => {
-//         console.log(reader.result);
-//         resolve(reader.result)
-//       }
-//       // const url = "data:image/png;base64," + (Buffer.from(response.data, "binary").toString("base64"));
-//       // resolve(url)
-//     })
-//   })
-// }
