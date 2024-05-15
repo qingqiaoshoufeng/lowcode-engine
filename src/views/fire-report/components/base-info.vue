@@ -107,7 +107,7 @@ const onDelete = async(val,val1)=>{
     
   // }
   getAttachmentFile({
-    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId,
     businessType: 'safetyFile',
   }).then((res) => {
     form.value.basicInfo.attach.value  = res.data.map((item) => {
@@ -1933,7 +1933,6 @@ const onFireLevel = () => {
           <van-uploader
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"
-            accept="file"
             id="attach"
             v-model="form.basicInfo.attach.value"
             :disabled="isDetail"
