@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 document.addEventListener("deviceready", checkAppVersion, false);
 function checkAppVersion(isProd = true) {
-  const updateUrl = `http://223.4.79.9:31201/foodreserver-apps/${
-    isProd ? "" : "dev-"
-  }fire-alarm-version.xml?t=${new Date().getTime()}`;
+  if (window._SYSTEM_CURRENT_ENV === 'test') {
+    isProd = false
+  }
+  const updateUrl = `http://223.4.79.9:31201/foodreserver-apps/${isProd ? "" : "dev-"}fire-alarm-version.xml?t=${new Date().getTime()}`;
   console.log("updateUrl: ", updateUrl);
   fetch(updateUrl)
     .then((res) => res.text())

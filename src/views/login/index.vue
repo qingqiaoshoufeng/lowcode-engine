@@ -223,11 +223,22 @@ onMounted(()=>{
 
 const handleSwitch = () => {
   clickNumber.value += 1
-  if (clickNumber.value > 7) {
-    window.__axios.defaults.baseURL = 'http://10.13.5.47:8080';
-    getCode()
-    showToast('已切换为测试环境')
-    window.checkAppVersion(false)
+  if (process.env.NODE_ENV === 'test') {
+    if (clickNumber.value > 5) {
+      localStorage.SYSTEM_ENV = '预发布环境'
+      localStorage.SYSTEM_BASE_URL = 'http://stat.119.gov.cn/staging';
+      window.__axios.defaults.baseURL = 'http://stat.119.gov.cn/staging';
+      getCode()
+      showToast('已切换为预发布环境')
+      window.checkAppVersion(false)
+    } else if (clickNumber.value > 10) {
+      localStorage.SYSTEM_ENV = '压测环境'
+      localStorage.SYSTEM_BASE_URL = 'http://10.13.5.100:8080';
+      window.__axios.defaults.baseURL = 'http://10.13.5.100:8080';
+      getCode()
+      showToast('已切换为压测环境')
+      window.checkAppVersion(false)
+    }
   }
 }
 </script>

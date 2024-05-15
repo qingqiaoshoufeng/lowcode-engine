@@ -13,6 +13,9 @@
       // VConsole will be exported to `window.VConsole` by default.
       var vConsole = new window.VConsole();
     </script>
+    <script>
+      window._SYSTEM_CURRENT_ENV = "<%= process.env.NODE_ENV %>"
+    </script>
 
     <link rel='stylesheet' href='luckysheet/plugins/css/pluginsCss.css' />
     <link rel='stylesheet' href='luckysheet/plugins/plugins.css' />

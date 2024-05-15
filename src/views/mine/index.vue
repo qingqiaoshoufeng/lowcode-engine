@@ -31,7 +31,7 @@ const handleOut = () => {
   showLoadingToast();
   loginOut({}).finally(() => {
     closeToast();
-    localStorage.token = "";
+    localStorage.clear()
     router.replace({
       path: "/login",
     });

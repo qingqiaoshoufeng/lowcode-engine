@@ -629,5 +629,8 @@ export const getCheckboxBabelByvalue = (value, options, field = { label: 'label'
 
 // 获取附件地址
 export const getAttachUrl = () => {
+  if (localStorage.SYSTEM_BASE_URL) {
+    return localStorage.SYSTEM_BASE_URL
+  }
   return process.env.VUE_APP_BASE_URL
 }
