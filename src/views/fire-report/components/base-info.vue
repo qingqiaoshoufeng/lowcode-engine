@@ -17,7 +17,8 @@ import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
 import { getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { nonnegativeNumberReg, validateTelePhone } from '@/utils/validate.js'
-import {downLoad} from '@/utils/download.js'
+import { downLoad } from '@/utils/download.js'
+import { getAttachUrl } from '@/utils/tools.js'
  
 
 // import { 
@@ -117,7 +118,7 @@ const onDelete = async(val,val1)=>{
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
@@ -142,7 +143,7 @@ const OnAfterRead = async(file) => {
         uid: item.attachmentId,
         name: item.attachmentName,
         status: 'done',
-        url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
       }
     }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
   })
@@ -167,7 +168,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
     })
@@ -343,7 +344,7 @@ const fireTypeChange = (value, selectedOptions) => {
     key.split(',').forEach((item) => {
       options.value.firePlace.push(...res[item])
     })
-  })
+  }, showPreview.value || isDetail)
 }
 
 const vehicleTypeChange = (value, selectedOptions) => {

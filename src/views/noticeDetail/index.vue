@@ -26,14 +26,18 @@
 </template>
 
 <script setup>
-import { getNoticeDetail,updateNotice,getAttachmentFile} from '@/apis/index.js'
-import {downLoad} from '@/utils/download.js'
-import {ref} from 'vue'
+import { getNoticeDetail, updateNotice, getAttachmentFile } from '@/apis/index.js'
+import { downLoad } from '@/utils/download.js'
+import { ref } from 'vue'
 import dayjs from 'dayjs';
-import {useRoute} from 'vue-router'
+import { useRoute } from 'vue-router'
 import { Item } from '@castle/ant-design-vue/lib/menu';
+import { getAttachUrl } from '@/utils/tools.js'
+
 const form = ref({})
+
 const route = useRoute()
+
 defineProps()
 
 
@@ -49,7 +53,7 @@ const getFIleList = (res)=>{
           uid: item.attachmentId,
           name: item.attachmentName,
           status: 'done',
-          url: `${ ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : ''}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${ ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
     })

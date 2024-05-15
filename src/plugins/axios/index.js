@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router/index'
 import { Toast } from 'vant'
 import { requestInterceptors, responseInterceptors, responseError } from './interceptors.js'
-
+import { getAttachUrl } from '@/utils/tools.js'
 
 /**
  * 提示函数
@@ -31,8 +31,7 @@ const toLogin = () => {
 
 // 创建axios实例
 export const request = window.__axios = axios.create({
-  // baseURL: process.env.VUE_APP_BASE_URL,
-  baseURL: ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? process.env.VUE_APP_BASE_URL : '/',
+  baseURL: ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : '/',
   timeout: 1000 * 12
 })
 // 设置post请求头

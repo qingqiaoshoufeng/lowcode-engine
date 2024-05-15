@@ -3,6 +3,7 @@ import { inject, onMounted } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, downloadAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
+import { getAttachUrl } from '@/utils/tools.js'
 
 const form = inject("form");
 
@@ -32,7 +33,7 @@ onMounted(() => {
           uid: item.attachmentId,
           name: item.attachmentName,
           status: "done",
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
         };
       });
     });

@@ -36,8 +36,8 @@ const filterDicts = (state, dictType, transformRes, callback , detail) => {
 }
 const state = {
   systemDicts: [], // 不包含已删除、未知字典
-  systemDictsAll: [], // 包含已删除、不包含未知字典
-  systemDictsUnKnow: [], // 不包含已删除、包含未知字典 
+  systemDictsAll: [], // 包含已删除、包含未知字典
+  systemDictsUnKnow: [], // 不包含已删除、包含未知字典
 }
 
 const getters = {
@@ -76,7 +76,7 @@ const getters = {
   getSystemDictSync:(state) => (dictType, transformRes, callback, detail = false)=> {
     if (detail === 3) {
       if (!state.systemDictsUnKnow || state.systemDictsUnKnow.length <= 0) {
-        getFireWarningType({ allFlag: true }).then((res) => {
+        getFireWarningType({ displayClean: true }).then((res) => {
           if (res && res.items) {
             state.systemDictsUnKnow = res.items
             filterDicts(state, dictType, transformRes, callback, detail)
@@ -88,7 +88,7 @@ const getters = {
     }
     if (detail) {
       if (!state.systemDictsAll || state.systemDictsAll.length <= 0) {
-        getFireWarningType({ allFlag: true }).then((res) => {
+        getFireWarningType({ allFlag: true, displayClean: true }).then((res) => {
           if (res && res.items) {
             state.systemDictsAll = res.items
             filterDicts(state, dictType, transformRes, callback, detail)
@@ -131,7 +131,7 @@ const actions = {
           commit('setSystemDicts', res)
         }
       }),
-      getFireWarningType({ allFlag: true }).then((res) => {
+      getFireWarningType({ allFlag: true, displayClean: true }).then((res) => {
         if (res && res.items) {
           commit('setSystemDictsAll', res)
         }
@@ -157,7 +157,7 @@ const actions = {
     }
     else if (detail) {
       if (!this.$state.systemDictsAll || this.$state.systemDictsAll.length <= 0) {
-        getFireWarningType({ allFlag: true }).then((res) => {
+        getFireWarningType({ allFlag: true, displayClean: true }).then((res) => {
           if (res && res.items) {
             this.$state.systemDictsAll = res.items
             this.filterDicts(dictType, transformRes, detail)

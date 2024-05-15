@@ -21,6 +21,7 @@ import store from '@/store/index.js'
 import dayjs from 'dayjs'
 import { getAttachmentFile } from '@/apis/index.js';
 import { useRouter } from "vue-router";
+import { getAttachUrl } from '@/utils/tools.js'
 
 const router = useRouter();
 
@@ -56,7 +57,7 @@ const getAvatar = () => {
       }).sort((a, b) => {
         return b.createDate - a.createDate
       })
-      avatarUrl.value = `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`
+      avatarUrl.value = `${getAttachUrl()}/acws/rest/app/attachments/${imgs?.[0]?.attachmentId}`
     }
     else {
       avatarUrl.value = ''

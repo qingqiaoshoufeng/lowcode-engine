@@ -617,7 +617,6 @@ export const maskPhoneNumber = (phone) => {
   return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
 
-
 export const getCheckboxBabelByvalue = (value, options, field = { label: 'label', value: 'value' }) => {
   const { label, value: valuekey } = field
   const map = options?.reduce((current, item) => {
@@ -626,4 +625,12 @@ export const getCheckboxBabelByvalue = (value, options, field = { label: 'label'
   }, {})
   const result = value?.map(item => map?.[item])
   return result || []
+}
+
+// 获取附件地址
+export const getAttachUrl = () => {
+  if (localStorage.SYSTEM_BASE_URL) {
+    return localStorage.SYSTEM_BASE_URL
+  }
+  return process.env.VUE_APP_BASE_URL
 }

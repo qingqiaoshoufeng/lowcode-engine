@@ -438,17 +438,17 @@ const initFireSite = () => {
   if (fireType.text?.includes('建构筑物火灾') && firePlace.text?.length > 0) {
     getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_CS.filter(item => item.dictName?.indexOf(firePlace.text[0]) > -1)
-    })
+    }, showPreview.value || props.isDetail)
   }
   else if (fireType.text?.includes('露天场所火灾') && firePlace.text?.length > 0) {
     getSystemDictSync(['HZ_QHWZ_LTCS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_LTCS.filter(item => item.dictName?.indexOf(firePlace.text[0]) > -1)
-    })
+    }, showPreview.value || props.isDetail)
   }
   else if (fireType.text?.includes('室外设施设备火灾') && firePlace.text?.length > 0) {
     getSystemDictSync(['HZ_QHWZ_SWSS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_SWSS.filter(item => item.dictName?.indexOf(firePlace.text[0]) > -1)
-    })
+    }, showPreview.value || props.isDetail)
   }
   else if (fireType.text?.includes('交通工具火灾')) {
     getSystemDictSync(['HZ_QHWZ_JTGJ'], null, (res) => {
@@ -470,12 +470,12 @@ const initFireSite = () => {
       else if (vehicleType.text?.includes('航空航天')) {
         options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['航空飞行器'].includes(item.dictName))
       }
-    })
+    }, showPreview.value || props.isDetail)
   }
   else {
     getSystemDictSync(['HZ_QHWZ_CS'], null, (res) => {
       options.value.fireSite = res.HZ_QHWZ_CS
-    })
+    }, showPreview.value || props.isDetail)
   }
 }
 
@@ -533,7 +533,7 @@ const initWatch = () => {
         options.value.firePlace.push(...res[item])
       })
       form.value.basicInfo.firePlace.text = getTypeText(form.value.basicInfo.firePlace.value, options.value.firePlace)
-    })
+    }, showPreview.value || props.isDetail)
     initFireSite()
     refreshField()
   }
@@ -597,11 +597,15 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
-        importantInfoReject.value = res.importantInfoReject
+        if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
@@ -613,8 +617,12 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
-        importantInfoReject.value = res.importantInfoReject
+        if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
         initFormByDetail(res, options.value, initWatch, detail.value)
       }
     })
@@ -708,7 +716,7 @@ const initDict = () => {
         }
       }) // 建筑标签
       resolve({})
-    })
+    }, showPreview.value || props.isDetail)
   })
 }
 

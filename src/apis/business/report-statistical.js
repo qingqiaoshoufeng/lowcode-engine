@@ -1,6 +1,7 @@
 import { request } from '@/plugins/axios/index.js'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
+import { getAttachUrl } from '@/utils/tools.js'
 
 // 获取报表模版列表
 export function getReportTemplateList(data) {
@@ -21,7 +22,7 @@ export function getReportTemplateList(data) {
         return {
           ...item,
           templateStatus: item.templateStatus === '1',
-          url: `${process.env.VUE_APP_BASE_URL}/acws/rest/app/attachments/${item.attachmentId}`,
+          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       }),
     }
