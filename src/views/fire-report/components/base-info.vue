@@ -1933,6 +1933,7 @@ const onFireLevel = () => {
           <van-uploader
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"
+            accept="file"
             id="attach"
             v-model="form.basicInfo.attach.value"
             :disabled="isDetail"
