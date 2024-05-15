@@ -1934,6 +1934,7 @@ const onFireLevel = () => {
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"
             id="attach"
+            accept="file"
             v-model="form.basicInfo.attach.value"
             :disabled="isDetail"
             :after-read="OnAfterRead"

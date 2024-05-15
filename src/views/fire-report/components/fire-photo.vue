@@ -76,7 +76,7 @@ const onDelete = async(val,val1)=>{
   try {
     const res = await onRemove(val)
     getAttachmentFile({
-      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
       businessType: 'image',
     }).then((res) => {
       form.value.firePhoto.photos.value = res.data.map((item) => {
@@ -93,7 +93,7 @@ const onDelete = async(val,val1)=>{
     })
   } catch (error) {
     getAttachmentFile({
-      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
       businessType: 'image',
     }).then((res) => {
       form.value.firePhoto.photos.value = res.data.map((item) => {
@@ -116,7 +116,7 @@ onMounted(() => {
     getAttachmentFile({
       businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
       businessType: 'image',
-    }).then((res) => {
+    }).then((res) => { 
       form.value.firePhoto.photos.value = res.data.map((item) => {
         return {
           isImage: true,
