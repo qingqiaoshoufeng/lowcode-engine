@@ -102,7 +102,7 @@ const {
       value: 5,
     },
   ],
-  defaultTab:5,
+  defaultTab:0,
   handleChange:props.handleChange,
   paramsKey:'annual'
 })
