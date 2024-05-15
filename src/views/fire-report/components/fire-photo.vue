@@ -51,7 +51,7 @@ const OnAfterRead = async(file) => {
   const formData = new FormData()
   formData.append('businessId', relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'image')
-  formData.append('extend2', '火灾照片')
+  formData.append('extend2', '照片')
   formData.append('file', file.file)
   await uploadFile(formData)
   getAttachmentFile({

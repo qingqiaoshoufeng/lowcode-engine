@@ -20,6 +20,8 @@ const options = {
       // rotate: 30,
       // margin: 28,
       fontSize: 10,
+      width: 90,
+      overflow: 'truncate',
     },
     axisTick: {
       show: false,
@@ -85,7 +87,7 @@ export default {
       options.series[index].data = data[index]
     })
     options.yAxis.data = data[1]
-    options.grid.left = `${Math.max(...data[1].map(item=>item.length))}` * 11 + 10
+    // options.grid.left = `${Math.max(...data[1].map(item=>item.length))}` * 11 + 10
     return options
   },
 }

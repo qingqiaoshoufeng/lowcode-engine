@@ -110,7 +110,7 @@ const onDelete = async(val,val1)=>{
     businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
     businessType: 'safetyFile',
   }).then((res) => {
-    form.value.firePhoto.photos.value = res.data.map((item) => {
+    form.value.basicInfo.attach.value  = res.data.map((item) => {
       return {
         isImage: true,
         deletable:!isDetail,
@@ -135,7 +135,7 @@ const OnAfterRead = async(file) => {
     businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
     businessType: 'safetyFile',
   }).then((res) => {
-    form.value.firePhoto.photos.value = res.data.map((item) => {
+    form.value.basicInfo.attach.value  = res.data.map((item) => {
       return {
         isImage: true,
         deletable:!isDetail,
