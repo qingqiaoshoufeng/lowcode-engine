@@ -344,7 +344,7 @@ const fireTypeChange = (value, selectedOptions) => {
     key.split(',').forEach((item) => {
       options.value.firePlace.push(...res[item])
     })
-  })
+  }, showPreview.value || isDetail)
 }
 
 const vehicleTypeChange = (value, selectedOptions) => {
