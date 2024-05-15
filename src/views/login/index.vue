@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { reactive, ref ,onMounted, computed } from "vue";
+import { reactive, ref ,onMounted, computed, onUnmounted } from "vue";
 import verification from '@/assets/images/verification.png';
 import { loginIn, getVerificationCode, getMsgCode } from '@/apis/index.js';
 import router from '@/router/index.js';
@@ -193,7 +193,7 @@ const getCode = async ()=>{
   imgUrl.value = await getVerificationCode()
 }
 
-const autoLoginInfo = ()=>{
+const autoLoginInfo = ()=> {
   const info = localStorage.getItem('loginForm')
   if(info){
     loginForm.value = JSON.parse(info)
@@ -221,9 +221,13 @@ const startCountdown = () => {
   getMsgCode({ username: encrypt(loginForm.value.loginid) })
 }
 
-onMounted(()=>{
+onMounted(() => {
   autoLoginInfo()
   getCode()
+})
+
+onUnmounted(() => {
+  clickNumber.value === 0
 })
 
 const handleSwitch = () => {
