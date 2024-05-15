@@ -79,7 +79,7 @@
           </template>
         </van-field>
         <div class="isRemember">
-          <van-checkbox v-model="isRemember" shape="square">记住密码</van-checkbox>
+          <van-checkbox v-model="isRemember" shape="square">记住账号</van-checkbox>
         </div>
         <van-button
           class="submit"
@@ -169,7 +169,7 @@ const handleUserLogin = async () => {
   }
   else if (res?.token) {
     localStorage.token = res.token
-    const { jcaptchaCode, ...rest } = loginForm.value
+    const { jcaptchaCode,password, ...rest } = loginForm.value
     isRemember.value && localStorage.setItem('loginForm',JSON.stringify(rest))
     await initStore()
     closeToast()

@@ -29,7 +29,7 @@
       <div v-else class="card_list">
           <div class="card_item" :class="{ml9:index%2,[item.color]: withTab}" v-for="(item, index) in list.filter(item=>((item.type === currentTab) || !item.type))" :key="item.label">
               <div class="top">
-                <div class="title">{{ item.title }}</div>
+                <div class="title" :style="item.labelStyle || {}">{{ item.title }}</div>
               </div>
               <div class="buttom">
                 <div class="number">{{ item.number }}<span>{{ item.unit }}</span></div>
@@ -82,10 +82,6 @@ const {
   tabList,tabChange} = useTab({
   list:[
     {
-      label: '形势分析',
-      value: 5,
-    },
-    {
       label: '录入情况',
       value: 0,
     },
@@ -100,6 +96,10 @@ const {
     {
       label:'火灾',
       value:3,
+    },
+    {
+      label: '形势分析',
+      value: 5,
     },
   ],
   defaultTab:5,

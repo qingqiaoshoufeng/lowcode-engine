@@ -5,6 +5,7 @@ import Time from '@/utils/time.js'
 import { cardList } from '../config.js'
 import { gethomePageInfo, getFireNotice } from '@/apis/index.js'
 import store from '@/store'
+import { size } from 'lodash-es';
 
 export default function useSearch({ dataPickerRef, statisticsInfoRef, YearRankRef }) {
   const ORGLEVEL = store.state.userInfo?.userInfo?.ORGLEVEL
@@ -448,6 +449,11 @@ const firelistMap = [
     YOYkey: 'largerFireDeathCountYOY',
     color: 'green',
     unit: '人',
+    labelStyle:{
+      'font-size':'12px',
+    },
+    valueStyle:{},
+    YOYStyle:{},
   },
   {
     label: '重伤人数',
@@ -659,6 +665,9 @@ const getStatisticsInfo = (data, type, flag) => {
       type: typeMap[type],
       color: item.color,
       unit: item.unit,
+      labelStyle:item.labelStyle,
+      valueStyle:item.valueStyle,
+      YoYStyle:item.YoYStyle
     }
   })
 }
