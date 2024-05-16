@@ -120,7 +120,7 @@ onMounted(() => {
           url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
         }
       })
-      haveData.value = !!res.data.length
+      haveData.value = !!res.data?.length
     })
   }
 })
