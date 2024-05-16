@@ -690,8 +690,8 @@ const initDetail = () => {
 
         initWarningOrgname()
 
-        importantEdit.value = res.importantInfoRecheck
-        importantInfoReject.value = res.importantInfoReject
+        importantEdit.value = res.importantInfoRecheck || res.importantInfoReject
+        importantInfoReject.value = res.importantInfoReject || res.importantInfoRecheck
       }
 
       refreshField()
@@ -860,11 +860,13 @@ const validateWarningType = (value, rule) => {
     return '请选择警情类型'
   } else if (!importantEdit.value
     && !form.value.warningTypeText?.includes('火灾扑救')
-    && detail.value?.warningTypeValue?.includes('火灾扑救')) {
+    && detail.value?.warningTypeValue?.includes('火灾扑救')
+    && detail.value?.warningStatusValue?.includes('待更正')) {
     return '普通更正不允许将火警变更为其他警情！'
   } else if (!importantInfoReject.value
     && !form.value.warningTypeText?.includes('火灾扑救')
-    && detail.value?.warningTypeValue?.includes('火灾扑救')) {
+    && detail.value?.warningTypeValue?.includes('火灾扑救')
+    && detail.value?.warningStatusValue?.includes('被驳回')) {
     return '普通驳回不允许将火警变更为其他警情！'
   } else {
     return ''
