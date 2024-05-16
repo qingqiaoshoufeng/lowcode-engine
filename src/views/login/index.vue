@@ -107,7 +107,7 @@ import router from '@/router/index.js';
 import { encrypt, maskPhoneNumber } from '@/utils/tools.js';
 import { validatePhone } from '@/utils/validate.js';
 import { useStore } from "vuex";
-import { showToast, closeToast  } from "vant";
+import { showToast, closeToast, showFailToast  } from "vant";
 
 const store = useStore()
 
@@ -166,7 +166,7 @@ const handleUserLogin = async () => {
     }
   })
   if (res?.code === 401 && res?.data) {
-    showToast(res?.msg)
+    showFailToast(res?.msg)
     loginForm.value.phone = maskPhoneNumber(res?.data)
     loginForm.value.jcaptchaCode = ''
     needSmsCheck.value = true
@@ -181,8 +181,8 @@ const handleUserLogin = async () => {
     router.replace({
       name:'Home'
     })
-  } else if (res?.code === 401 && res?.msg) {
-    showToast(res?.msg)
+  } else if ((res?.code === 401 || res?.code === 409)) {
+    showFailToast(res?.msg || '用户信息输入有误，请检查后重试！')
     loginForm.value.jcaptchaCode = ''
     loginForm.value.smsCode = ''
     getCode()

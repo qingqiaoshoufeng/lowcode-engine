@@ -11,7 +11,7 @@ import { getAttachUrl } from '@/utils/tools.js'
 const tip = msg => {
   Toast({
     message: msg,
-    duration: 1000,
+    duration: 4000,
     forbidClick: true
   })
 }

@@ -183,16 +183,17 @@ const onBuildTag = (val) => {
   <van-cell-group class="rootform1">
     <div>
       <div :span="24">
-        <van-field 
+        <van-field
           name="fireBuilding.buildTag.value"
+          :model-value="form.fireBuilding.buildTag.value"
           label="建筑标签："
           :rules="form.fireBuilding.buildTag.rules"
           :required="isRequired"
           class="buildTag"
-          :class="{ 'field-not-required': !isRequired,'isdetail':showPreview}"
+          :class="{ 'field-not-required': !isRequired, 'isdetail': showPreview }"
         >
           <template #input v-if="!showPreview">
-            <van-checkbox-group 
+            <van-checkbox-group
               v-preview-text="showPreview"
               class="muti-check"
               style="width: 100%"
@@ -214,7 +215,6 @@ const onBuildTag = (val) => {
             <div>
               <div v-for="item in getCheckboxBabelByvalue(form.fireBuilding.buildTag.value, options.buildTag)" :key="item"> {{ item }}</div>
             </div>
-            <!-- <span>{{ ?.join('、') }}</span> -->
           </template>
           <template v-slot:label="">
             <FieldAnnotation
