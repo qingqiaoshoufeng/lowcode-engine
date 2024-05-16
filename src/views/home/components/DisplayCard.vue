@@ -73,7 +73,7 @@ export default {
     margin-top: 5px;
     .unit{
       float: right;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 400;
       margin-top: 4px;
     }
