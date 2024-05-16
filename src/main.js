@@ -18,13 +18,17 @@ import './styles/index.scss'
 import '@/assets/fonts/iconfont.js'
 import 'dayjs/locale/zh-cn'
 import FormPreviewText from '@/component/FormPreviewText/index'
+import { setToastDefaultOptions } from 'vant'
 
 dayjs.locale('zh-cn')
 dayjs.extend(duration)
+
+setToastDefaultOptions({ duration: 4000 });
 
 // console.log(router);
 const plugins = [Vant, store, axios, icons, component, eventBus, directives, FormPreviewText]
 const app = createApp(App);
 app.use(registerPlugins(plugins))
 app.use(router)
+
 app.mount("#app")
