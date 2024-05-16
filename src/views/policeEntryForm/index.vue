@@ -690,8 +690,8 @@ const initDetail = () => {
 
         initWarningOrgname()
 
-        importantEdit.value = res.importantInfoRecheck
-        importantInfoReject.value = res.importantInfoReject
+        importantEdit.value = res.importantInfoRecheck || res.importantInfoReject
+        importantInfoReject.value = res.importantInfoReject || res.importantInfoRecheck
       }
 
       refreshField()
