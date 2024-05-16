@@ -181,8 +181,8 @@ const handleUserLogin = async () => {
     router.replace({
       name:'Home'
     })
-  } else if ((res?.code === 401 || res?.code === 409) && res?.msg) {
-    showFailToast(res?.msg)
+  } else if ((res?.code === 401 || res?.code === 409)) {
+    showFailToast(res?.msg || '用户信息输入有误，请检查后重试！')
     loginForm.value.jcaptchaCode = ''
     loginForm.value.smsCode = ''
     getCode()
