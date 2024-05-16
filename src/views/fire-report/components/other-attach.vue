@@ -35,9 +35,28 @@ const haveData = ref((((form.value.otherAttach.attach.value && form.value.otherA
 const { onRemove } = useUpload()
 
 const onDelete = async(val,val1)=>{
+ try {
   const res = await onRemove(val)
+ } catch (error) {
   getAttachmentFile({
-    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
+    businessType: 'file',
+  }).then((res) => {
+    form.value.otherAttach.attach.value = res.data.map((item) => {
+      return {
+        isImage: true,
+        deletable:isEdit || isShowTemporary.value,
+        ...item,
+        uid: item.attachmentId,
+        name: item.attachmentName,
+        status: 'done',
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+      }
+    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+  })
+ }
+  getAttachmentFile({
+    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
     businessType: 'file',
   }).then((res) => {
     form.value.otherAttach.attach.value = res.data.map((item) => {
@@ -86,7 +105,7 @@ const downLoadFile = (val)=>{
 onMounted(() => {
   if (isDetail || isEdit || (relevanceDraft && relevanceDraft.boFireInfoId) || currentRow?.boFireInfoId) {
     getAttachmentFile({
-      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId,
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
       businessType: 'file',
     }).then((res) => {
       form.value.otherAttach.attach.value = res.data.map((item) => {
