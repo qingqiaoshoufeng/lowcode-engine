@@ -186,20 +186,23 @@ export default function useSearch({ dataPickerRef, statisticsInfoRef, YearRankRe
     const data = res.dateAnalysisHeadResult
     if (data) {
       state.policeCardInfo = {
-        name: '警情总数',
+        name: '警情',
         percent: data.warningHeadStatisticsVo?.qsWarningNumYOY,
-        number: data.warningHeadStatisticsVo?.qsWarningNum
+        number: data.warningHeadStatisticsVo?.qsWarningNum,
+        unit:'起'
       },
-        state.dispatchCardInfo = {
-          name: '火灾起数',
-          percent: data.fireHeadStatisticsVo?.fireCountYOY,
-          number: data.fireHeadStatisticsVo?.fireCount
-        },
-        state.fireCardInfo = {
-          name: '出动总队次',
-          percent: data.dispatchStatisticsVO?.totalDispatchPro,
-          number: data.dispatchStatisticsVO?.totalDispatch
-        }
+      state.dispatchCardInfo = {
+        name: '火灾',
+        percent: data.fireHeadStatisticsVo?.fireCountYOY,
+        number: data.fireHeadStatisticsVo?.fireCount,
+        unit:'起'
+      },
+      state.fireCardInfo = {
+        name: '出动',
+        percent: data.dispatchStatisticsVO?.totalDispatchPro,
+        number: data.dispatchStatisticsVO?.totalDispatch,
+        unit:'队次'
+      }
     }
   }
 

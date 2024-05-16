@@ -40,7 +40,6 @@ const options = {
         type:'dashed'
       }
     },
-    rotate:30
   },
   xAxis: [
     {

@@ -4,7 +4,10 @@
       <div class="title">{{ info.name }}</div>
       <div class="percent">{{ (info.percent || '-').includes('-') ? info.percent : `+${info.percent}`  }}</div>
     </div>
-    <div class="number">{{info.number }}</div>
+    <div class="number">
+      <span>{{info.number }}</span>
+      <span class="unit">{{ info.unit }}</span>
+    </div>
   </div>
 </template>
   
@@ -47,11 +50,11 @@ export default {
     align-items: center;
   }
   .title{
-    font-size: 12px;
+    font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #FFFFFF; 
-    min-width: 50px;
+    // min-width: 50px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
@@ -62,18 +65,25 @@ export default {
     font-family: D-DINExp-Bold, D-DINExp;
     font-weight: bold;
     color: #FFFFFF;
-    max-width: 80px;
+    // max-width: 80px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;
     white-space: nowrap;
+    margin-top: 5px;
+    .unit{
+      float: right;
+      font-size: 14px;
+      font-weight: 400;
+      margin-top: 4px;
+    }
   }
   .percent{
     font-size: 11px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     color: #FFFFFF; 
-    max-width: 50px;
+    max-width: 150px;
     text-overflow: ellipsis;
     overflow: hidden;
     word-break: break-all;

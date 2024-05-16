@@ -9,6 +9,7 @@ const options = {
   grid: {
     left: 100,
     top: 10,
+    bottom:40,
   },
   yAxis: {
     data: [],
@@ -46,6 +47,10 @@ const options = {
           type: 'dashed',
         },
       },
+      axisLabel: {
+        rotate:30
+      },
+     
     },
   ],
   series: [
