@@ -21,9 +21,9 @@
 <script setup>
 import { ref, shallowRef } from "vue";
 import Tabbar from "@/component/tabbar/index.vue";
-// import GlobalSearch from "@/views/globalSearch/index.vue";
+import GlobalSearch from "@/views/globalSearch/index.vue";
 import CompositeSearch from "@/views/compositeSearch/index.vue";
-// import AdvanceSearch from "@/views/advanceSearch/index.vue";
+import AdvanceSearch from "@/views/advanceSearch/index.vue";
 
 const option = [
   { text: "简易查询", value: "SimpleSearch" },
@@ -41,9 +41,9 @@ const currentValue = shallowRef(CompositeSearch);
 const simple = ref(true);
 
 const onDropdown = (value) => {
-  // if (value === 'GlobalSearch') {
-  //   currentValue.value = GlobalSearch
-  // }
+  if (value === 'GlobalSearch') {
+    currentValue.value = GlobalSearch
+  }
   if (value === "SimpleSearch") {
     currentValue.value = CompositeSearch;
     simple.value = true;
@@ -51,9 +51,9 @@ const onDropdown = (value) => {
     currentValue.value = CompositeSearch;
     simple.value = false;
   }
-  // else if (value === 'AdvanceSearch') {
-  //   currentValue.value = AdvanceSearch
-  // }
+  else if (value === 'AdvanceSearch') {
+    currentValue.value = AdvanceSearch
+  }
 };
 </script>
 

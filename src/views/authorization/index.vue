@@ -21,6 +21,10 @@ onMounted(() => {
       router.replace({
         path:'home'
       })
+    }).catch((error) => {
+      router.replace({
+        path:'login'
+      })
     })
   } else {
     setTimeout(() => {
