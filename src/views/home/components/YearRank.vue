@@ -4,7 +4,7 @@
       <div class="tab">
         <div 
           :class="{isActive:(item.value === currentTab)}" 
-          v-for="item in tabList" :key="item.label" 
+          v-for="item in tabList" :key="item.id + item.name + item.label" 
           class="tab_item"
           @click="tabChange(item.value)"
         >{{ item.label }}</div>
@@ -13,7 +13,7 @@
         <img src="~@/assets/images/empty.png" alt="">
       </div>
       <div v-show="!checkEmpty" class="info_list">
-        <div class="info_item" :class="{no_line:index===9}" v-for="(item,index) in list" :key="item.name + currentTab">
+        <div class="info_item" :class="{no_line:index===9}" v-for="(item,index) in list" :key="item.id + item.name + item.label + currentTab">
           <div class="index">
             <img v-if="iconList[index] && currentTab === 1" :src="iconList[index]" alt="">
             <span v-else>{{ index + 1  }}</span>
@@ -82,15 +82,14 @@ const checkEmpty = computed(()=>{
   if(!props.list || props.list.length === 0){
     return true
   }else{
-    false
+    return false
   }
 })
 
-</script>
-<script>
-export default {
+defineOptions({
   name:'YearRank'
-}
+})
+
 </script>
    
  <style scoped lang="scss">
@@ -132,9 +131,10 @@ export default {
     }
     .info_list{
       .info_item{
-        height: 34px;
+        min-height: 34px;
         border-bottom: 1px solid #E1E6EE;
         display: flex;
+        padding-right: 10px;
         img{
           width: 20px;
           height: 20px;
@@ -149,26 +149,24 @@ export default {
           justify-content: center;
         }
         .name{
-          max-width: 180px;
+          // max-width: 180px;
           width: 180px;
-          // flex-shrink: 0;
-          // flex-grow: 0;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          word-break: break-all;
-          white-space: nowrap;
-          line-height: 34px;
+          display: flex;
+          flex: 1;
         }
         .warningName{
-          max-width: 200px;
+          // max-width: 200px;
           width: 200px;
+          flex: 1;
+          display: flex;
+          align-items: center;
           // flex-shrink: 0;
           // flex-grow: 0;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          word-break: break-all;
-          white-space: nowrap;
-          line-height: 34px;
+          // text-overflow: ellipsis;
+          // overflow: hidden;
+          // word-break: break-all;
+          // white-space: nowrap;
+          // line-height: 34px;
         }
         .times,.cars{
           width:64px;
@@ -177,9 +175,12 @@ export default {
 
         }
         .deadNum{
-          width:80px;
+          width:60px;
           text-align: center;
-          line-height: 34px;
+          text-align: right;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .people{
           line-height: 34px;
