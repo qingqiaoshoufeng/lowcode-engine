@@ -9,6 +9,19 @@ import { showLoadingToast, closeToast } from "vant";
 import { startAuthorization } from '@/apis/index.js';
 import { getParams } from '@/utils/tools.js';
 import router from '@/router/index.js';
+import { useStore } from "vuex";
+
+const store = useStore()
+
+const initStore = async () => {
+	const storeList = ['rules', 'userInfo', 'dict','menuInfo']
+	const isInited = await Promise.all(
+		storeList.map(item => {
+			return store.dispatch(item + '/init')
+		})
+	)
+	return isInited
+}
 
 onMounted(() => {
   showLoadingToast({
@@ -17,10 +30,19 @@ onMounted(() => {
   })
   const params = getParams(location.href)
   if (params?.a2_ticket) {
-    startAuthorization({ a2_ticket: params.a2_ticket }).then(res => {
-      router.replace({
-        path:'home'
-      })
+    startAuthorization({ a2_ticket: params.a2_ticket }).then(async (res) => {
+      if (res) {
+        localStorage.token = res.token
+        await initStore()
+		    closeToast()
+        router.replace({
+          path:'home'
+        })
+      } else {
+        router.replace({
+          path:'login'
+        })
+      }
     }).catch((error) => {
       router.replace({
         path:'login'

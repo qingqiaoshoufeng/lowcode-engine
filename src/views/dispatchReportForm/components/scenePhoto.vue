@@ -4,10 +4,13 @@ import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
 import { getAttachUrl } from '@/utils/tools.js'
+import { formatYmdHm } from "@/utils/format.js";
 
 const form = inject("form");
 
 const isDetail = inject("isDetail");
+
+const detail = inject("detail");
 
 const fieldExist = inject('fieldExist')
 
@@ -37,23 +40,27 @@ const onChange = (file, fileList, event) => {
   }, 1000);
 };
 
+const initImages = () => {
+  getAttachmentFile({
+    businessObjId: currentRow?.boFireDispatchId,
+    businessType: "image",
+  }).then((res) => {
+    form.value.scenePhoto.photos.value = res.data.map((item) => {
+      return {
+        ...item,
+        uid: item.attachmentId,
+        name: item.attachmentName,
+        status: "done",
+        isImage: true,
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+      };
+    });
+  });
+}
+
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
-    getAttachmentFile({
-      businessObjId: currentRow?.boFireDispatchId,
-      businessType: "image",
-    }).then((res) => {
-      form.value.scenePhoto.photos.value = res.data.map((item) => {
-        return {
-          ...item,
-          uid: item.attachmentId,
-          name: item.attachmentName,
-          status: "done",
-          isImage: true,
-          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
-        };
-      });
-    });
+    initImages()
   }
 });
 
@@ -62,15 +69,19 @@ const onAfterRead = (file) => {
   formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
   formData.append('attachmentType', 'image')
   formData.append('extend2', '照片')
+  formData.append('extend3', formatYmdHm(detail.value?.warningDate, 'YYYY年MM月DD日'))
   formData.append('file', file.file)
   return uploadFile(formData).then(res => {
     if (res?.attachmentId) {
+      file.file.url = `${getAttachUrl()}/acws/rest/app/attachments/${res.attachmentId}`
+      file.file.uid = res.attachmentId
       file.file.attachmentId = res.attachmentId
       file.file.attachmentName = res.attachmentName
       file.file.attachmentSize = res.attachmentSize
       file.file.fileType = res.fileType
       file.file.fullPath = res.fullPath
     }
+    initImages()
   })
 }
 

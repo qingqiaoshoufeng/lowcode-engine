@@ -5,6 +5,7 @@ import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile,uploadFile  } from '@/apis/index.js'
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 import { getAttachUrl } from '@/utils/tools.js'
+import { formatYmdHm } from "@/utils/format.js";
 
 const form = inject('form')
 
@@ -52,6 +53,7 @@ const OnAfterRead = async(file) => {
   formData.append('businessId', relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'image')
   formData.append('extend2', '照片')
+  formData.append('extend3', formatYmdHm(form.value.basicInfo.fireDate.value, 'YYYY年MM月DD日'))
   formData.append('file', file.file)
   await uploadFile(formData)
   getAttachmentFile({
