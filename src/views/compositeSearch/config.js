@@ -222,11 +222,11 @@ export const useFormConfig = () => {
         type: 'input-range',
         label: '警情处置时长（分钟）',
       },
-      // areaDutyGroup: { // 火灾调查单位
+      // areaDutyGroup: { // 责任区大队
       //   value: [],
       //   back: false,
       //   type: 'select-org',
-      //   label: '火灾调查单位',
+      //   label: '责任区大队',
       //   labelWidth: `var(--van-field-label-width-104)`,
       //   single: false,
       //   selectLeaf: false,
@@ -972,16 +972,16 @@ export const useFormConfig = () => {
       statisticRangeHourMin: { // 统计范围--小时
         value: undefined,
       },
-      areaDutyGroupFire: { // 火灾调查单位
+      areaDutyGroupFire: { // 责任区大队
         value: [],
         back: false,
         type: 'select-org',
-        label: '火灾调查单位',
+        label: '责任区大队',
         labelWidth: `var(--van-field-label-width-104)`,
         single: false,
-        selectLeaf: false,
-        headersDisabled: true,
-        params: { permission: true }
+        selectLeaf: true,
+        headersDisabled: false,
+        params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' }
       },
       fireDirection: { // 火灾地址
         value: '',

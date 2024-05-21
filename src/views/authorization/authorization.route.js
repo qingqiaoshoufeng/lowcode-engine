@@ -6,4 +6,3 @@ export default [{
   },
   component: () => import('@/views/authorization/index.vue')
 }]
-    

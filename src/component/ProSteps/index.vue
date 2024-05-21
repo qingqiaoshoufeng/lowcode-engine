@@ -44,6 +44,8 @@ const renderAdvice = (transferType) => {
   case '警情驳回':
     return '驳回原因：'
   case '更正申请':
+  case '普通更正申请':
+  case '重要更正申请':
     return '申请类型：'
   case '更正审批':
     return '审批结果：'
@@ -60,6 +62,8 @@ const renderAdvice = (transferType) => {
   case '出动审核':
     return '审核结果：'
   case '出动驳回':
+  case '出动普通驳回':
+  case '出动高级驳回':
     return '驳回原因：'
   case '出动修改':
     return '修改内容：'
@@ -71,6 +75,8 @@ const renderAdvice = (transferType) => {
   case '火灾审核':
     return '审核结果：'
   case '火灾驳回':
+  case '火灾普通驳回':
+  case '火灾高级驳回':
     return '驳回原因：'
   case '火灾修改':
     return '修改内容：'
@@ -92,6 +98,8 @@ const renderRemark = (transferType) => {
   case '警情驳回':
     return '备注：'
   case '更正申请':
+  case '普通更正申请':
+  case '重要更正申请':
     return '备注：'
   case '更正审批':
     return '审批意见：'
@@ -108,6 +116,8 @@ const renderRemark = (transferType) => {
   case '出动审核':
     return '审核意见：'
   case '出动驳回':
+  case '出动普通驳回':
+  case '出动高级驳回':
     return '备注：'
   case '出动修改':
     return '修改内容：'
@@ -119,6 +129,8 @@ const renderRemark = (transferType) => {
   case '火灾审核':
     return '审核意见：'
   case '火灾驳回':
+  case '火灾普通驳回':
+  case '火灾高级驳回':
     return '备注：'
   case '火灾修改':
     return '修改内容：'
