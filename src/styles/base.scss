@@ -90,24 +90,34 @@ body.dialog-open {
     width: 100%;
 }
 
-.field-annotation1{
+.field-annotation1 {
     display: inline-block !important;
 }
 
-.hidevalidate .van-field__error-message{
+.hidevalidate .van-field__error-message {
     display: none !important;
 }
 
-.van-field__label--required:before{
+.van-field__label--required:before {
     float: left;
     overflow: hidden;
 }
 
 :root {
-  --van-sidebar-width: 85px;
-  --van-field-label-width-104: 104px;
-  --van-field-label-width-112: 112px;
-  --van-field-label-width-116: 116px;
-  --van-field-label-width-130: 130px;
-  --van-field-label-width-132: 132px;
+    --van-sidebar-width: 85px;
+    --van-field-label-width-104: 104px;
+    --van-field-label-width-112: 112px;
+    --van-field-label-width-116: 116px;
+    --van-field-label-width-130: 130px;
+    --van-field-label-width-132: 132px;
+}
+
+
+.fireLevel,.fireType {
+    .van-field__value {
+        input {
+            color: #323233 !important;
+            -webkit-text-fill-color: #323233 !important;
+        }
+    }
 }
