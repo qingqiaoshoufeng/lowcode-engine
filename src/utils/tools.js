@@ -634,3 +634,17 @@ export const getAttachUrl = () => {
   }
   return process.env.VUE_APP_BASE_URL
 }
+
+// 获取 url 参数
+export const getParams = (url) => {
+  const params = {};
+  const queryString = url.split('?')[1];
+  if (queryString) {
+    const paramPairs = queryString.split('&');
+    paramPairs.forEach(pair => {
+      const [key, value] = pair.split('=');
+      params[decodeURIComponent(key)] = decodeURIComponent(value);
+    });
+  }
+  return params;
+}

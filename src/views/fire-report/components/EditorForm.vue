@@ -268,7 +268,7 @@ const checkArray = (arr, text) => {
 }
 const showFireSite = computed(() => {
   const { fireType, firePlace, vehicleType } = form.value.basicInfo
-  if (fireType?.text?.includes('建构筑物火灾') && checkArray(firePlace?.text, ['标志性/点缀性建筑', '废弃建筑', '发电储能场所', '城市地下综合管廊', '其他建构筑物'])) {
+  if (fireType?.text?.includes('建构筑物火灾') && checkArray(firePlace?.text, ['标志性、点缀性建筑', '废弃建筑', '发电储能场所', '城市地下综合管廊', '其他建构筑物'])) {
     return false
   }
   else if (fireType?.text?.includes('露天场所火灾') && !checkArray(firePlace?.text, ['公园', '影视基地'])) {

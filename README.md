@@ -85,3 +85,9 @@ szqwjhzzd.d@ha
 ## 问题
 
 1. 报表引起页面不能滚动[luckysheet.js]问题(https://blog.csdn.net/badbaby52906/article/details/129493981)
+
+## 应急部 app 对接
+
+开发文档：https://lab.zaiyaa.com/lisa/app/ecpot/developer/1.0.0/，/docs/240514 应急管理移动应用接入技术规范v2.docx
+
+调试工具及SDK：https://lab.zaiyaa.com/lisa/app/ecpot/developer/1.0.0/

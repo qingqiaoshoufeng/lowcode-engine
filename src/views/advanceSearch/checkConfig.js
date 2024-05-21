@@ -197,7 +197,7 @@ export const checkBoxs = [
   },
   {
     fieldKeyOne: 'areaDutyGroup',
-    label: '火灾调查单位',
+    label: '责任区大队',
     type: '6',
     single: false,
     selectLeaf: false,
@@ -940,11 +940,12 @@ export const checkBoxs = [
   },
   {
     fieldKeyOne: 'areaDutyGroupFire',
-    label: '火灾调查单位',
+    label: '责任区大队',
     type: '6',
     single: false,
-    selectLeaf: false,
-    params: { permission: true },
+    selectLeaf: true,
+    headersDisabled: false,
+    params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' },
     labelWidth: '104px',
   },
   {
