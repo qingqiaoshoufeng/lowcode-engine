@@ -14,7 +14,7 @@ import { useStore } from "vuex";
 const store = useStore()
 
 const initStore = async () => {
-	const storeList = ['rules', 'userInfo', 'dict','menuInfo']
+	const storeList = ['rules', 'userInfo', 'dict']
 	const isInited = await Promise.all(
 		storeList.map(item => {
 			return store.dispatch(item + '/init')
@@ -23,7 +23,17 @@ const initStore = async () => {
 	return isInited
 }
 
+const initError = () => {
+  setTimeout(() => {
+    closeToast()
+    router.replace({
+      path:'login'
+    })
+  }, 1000);
+}
+
 onMounted(() => {
+  localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
   showLoadingToast({
     message: '授权认证中...',
     duration: 0,
@@ -31,30 +41,22 @@ onMounted(() => {
   const params = getParams(location.href)
   if (params?.a2_ticket) {
     startAuthorization({ a2_ticket: params.a2_ticket }).then(async (res) => {
-      if (res) {
+      if (res?.token) {
         localStorage.token = res.token
+        localStorage.platform = 'ydyj-app'
         await initStore()
 		    closeToast()
         router.replace({
           path:'home'
         })
       } else {
-        router.replace({
-          path:'login'
-        })
+        initError()
       }
     }).catch((error) => {
-      router.replace({
-        path:'login'
-      })
+      initError()
     })
   } else {
-    setTimeout(() => {
-      closeToast()
-      router.replace({
-        path:'login'
-      })
-    }, 1000);
+    initError()
   }
 })
 </script>

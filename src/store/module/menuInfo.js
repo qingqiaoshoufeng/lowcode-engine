@@ -4,6 +4,7 @@ const state = {
   menuInfo: null,
 }
 const getters = {
+  getMenuInfo: state => state.menuInfo,
   menuInfoList(state){
     const {
       dispatchEditBacklogNum, //出动待修改数量
