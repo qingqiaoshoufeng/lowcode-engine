@@ -2,7 +2,7 @@
   <div class="mine">
     <InfoCard />
     <ListEntry :list="list" class="mt9" />
-    <van-button type="primary" plain block style="margin-top: 20px" @click="handleOut">
+    <van-button v-if="!isInsert" type="primary" plain block style="margin-top: 20px" @click="handleOut">
       退出登录
     </van-button>
   </div>
@@ -10,7 +10,7 @@
 </template>
     
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted,provide } from "vue";
 import InfoCard from "./components/InfoCard.vue";
 import { entryList } from "./config.js";
 import { showLoadingToast, closeToast } from "vant";
@@ -18,11 +18,19 @@ import { loginOut, getRemind, getNotice } from "@/apis/index.js";
 import { useRouter } from "vue-router";
 
 const currentab = ref(5);
+const isInsert = ref(localStorage.platform === 'ydyj-app')
 
-const list = ref(entryList)
+const list = ref(entryList.filter(item=>{
+  const flag = (item.label === '修改密码' && isInsert.value)
+  return !flag
+}))
 
 const router = useRouter();
 
+// 判断是否为接入平台
+
+
+provide('isInsert',isInsert)
 const id = ref(-1)
 
 const handleOut = () => {

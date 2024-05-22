@@ -5,7 +5,7 @@
     <div class="info">
       <div class="top">
         <div class="name">{{info.userName}}</div> 
-        <div class="editor" @click.stop="handleEdit">
+        <div class="editor" @click.stop="handleEdit" v-if="!isInsert">
           <span>编辑资料</span>
           <van-icon name="edit" color="#1E86FE" />
         </div>
@@ -22,8 +22,11 @@ import dayjs from 'dayjs'
 import { getAttachmentFile } from '@/apis/index.js';
 import { useRouter } from "vue-router";
 import { getAttachUrl } from '@/utils/tools.js'
+import { inject } from 'vue';
 
 const router = useRouter();
+
+const isInsert = inject('isInsert')
 
 const info = computed(()=>{
   return store.state.userInfo.userInfo.USERMESSAGE
