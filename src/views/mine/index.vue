@@ -31,6 +31,8 @@ const handleOut = () => {
     closeToast();
     // 记住密码存在了 localStorage，这里不使用 localStorage.clear()
     localStorage.token = ""
+    localStorage.platform = ""
+    localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
     localStorage.SYSTEM_ENV = ""
     localStorage.SYSTEM_BASE_URL = ""
     router.replace({

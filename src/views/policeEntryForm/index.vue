@@ -344,7 +344,7 @@ const maxDate = () => {
 
 const initLevelOptions = () => {
   const filter = options.value?.warningTypeOptions?.map(
-    (item) => item.boDictId === form.value.warningType[0]
+    (item) => item.boDictId === form.value.warningType?.[0]
   );
   if (filter && filter[0].dictName === "抢险救援") {
     options.value.warningLevelOptions = warningLevelOptions.slice(0, 4);

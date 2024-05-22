@@ -103,7 +103,7 @@ const initStore = async () => {
   return isInited
 }
 
-if (!store.getters?.["userInfo/userInfo"]?.USERMESSAGE) {
+if (!store.getters?.["menuInfo/getMenuInfo"]) {
   initStore()
 }
 </script>

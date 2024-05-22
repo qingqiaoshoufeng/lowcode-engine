@@ -137,7 +137,7 @@ const loginForm = ref({
 })
 
 const initStore = async () => {
-	const storeList = ['rules', 'userInfo', 'dict','menuInfo']
+	const storeList = ['rules', 'userInfo', 'dict']
 	const isInited = await Promise.all(
 		storeList.map(item => {
 			return store.dispatch(item + '/init')
@@ -174,6 +174,11 @@ const handleUserLogin = async () => {
 	}
 	else if (res?.token) {
 		localStorage.token = res.token
+		if (['staging-h5', 'production-h5'].indexOf(process.env.NODE_ENV === 'test') > -1) {
+			localStorage.platform = "hztj-h5"
+		} else {
+			localStorage.platform = "hztj-app"
+		}
 		const { jcaptchaCode, password, ...rest } = loginForm.value
 		isRemember.value && localStorage.setItem('loginForm', JSON.stringify(rest))
 		await initStore()
@@ -222,6 +227,7 @@ const startCountdown = () => {
 }
 
 onMounted(() => {
+	localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
 	autoLoginInfo()
 	getCode()
 })

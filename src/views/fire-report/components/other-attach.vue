@@ -14,7 +14,7 @@ const isDetail = inject('isDetail')
 
 const showPreview = inject('showPreview')
 
-const isShowTemporary = inject('isShowTemporary')
+const isShowTemporary = inject('isShowTemporary', false)
 
 // const isRequired = inject('isRequired')
 
