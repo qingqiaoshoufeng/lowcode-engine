@@ -18,6 +18,8 @@ import { loginOut, getRemind, getNotice } from "@/apis/index.js";
 import { useRouter } from "vue-router";
 
 const currentab = ref(5);
+
+// 判断是否为接入平台
 const isInsert = ref(localStorage.platform === 'ydyj-app')
 
 const list = ref(entryList.filter(item=>{
@@ -26,9 +28,6 @@ const list = ref(entryList.filter(item=>{
 }))
 
 const router = useRouter();
-
-// 判断是否为接入平台
-
 
 provide('isInsert',isInsert)
 const id = ref(-1)
