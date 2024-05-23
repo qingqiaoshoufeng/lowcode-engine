@@ -28,16 +28,6 @@
 
     <!-- 应急部 js sdk -->
     <script src="<%= process.env.VUE_APP_JS_SDK %>"></script>
-
-    <script>
-      $c.init(function ()  {
-        // 初始成功回调
-        console.log('onetalk：初始化成功！', window.ecpot)
-        if (window.ecpot && location.href.indexOf('a2_ticket') > -1) {
-          window.ecpot.close()
-        }
-      });
-    </script>
   </head>
   <body>
     <noscript>
@@ -47,5 +37,17 @@
     <!-- built files will be auto injected -->
 
     <script src="./app-update.js"></script>
+
+    <script>
+      if ($c && $c.init) {
+        $c.init(function ()  {
+          // 初始成功回调
+          console.log('onetalk：初始化成功！', window.ecpot)
+          if (window.ecpot && location.href.indexOf('a2_ticket') > -1) {
+            window.ecpot.close()
+          }
+        });
+      }
+    </script>
   </body>
 </html>
