@@ -943,7 +943,7 @@ export const checkBoxs = [
     label: '责任区大队',
     type: '6',
     single: false,
-    selectLeaf: true,
+    selectLeaf: false,
     headersDisabled: false,
     params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' },
     labelWidth: '104px',

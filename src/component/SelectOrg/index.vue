@@ -144,10 +144,8 @@ const showCheck = (item) => {
   if (props.selectLeaf) {
     return item.isLeaf;
   }
-  if (!props.headersDisabled && item.isheadquarters === 1) {
+  if (!props.headersDisabled && Number(item.isheadquarters) === 1) {
     return true;
-  } else if (!props.headersDisabled && item.isheadquarters !== 1) {
-    return false
   }
   if (!props.single) {
     return true

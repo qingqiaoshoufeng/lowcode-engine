@@ -979,7 +979,7 @@ export const useFormConfig = () => {
         label: '责任区大队',
         labelWidth: `var(--van-field-label-width-104)`,
         single: false,
-        selectLeaf: true,
+        selectLeaf: false,
         headersDisabled: false,
         params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' }
       },
