@@ -26,6 +26,8 @@ const initStore = async () => {
 const initError = (msg) => {
   if (msg) {
     showFailToast(msg)
+  } else {
+    closeToast()
   }
   setTimeout(() => {
     router.replace({
@@ -43,7 +45,7 @@ onMounted(async () => {
   const params = getParams(location.href)
   if (params?.a2_ticket) {
     const res = await startAuthorization({
-       a2_ticket: params.a2_ticket,
+      ticket: params.a2_ticket,
       ssoTag: 'abcdefg', // 跳过验证码验证
      }).catch((error) => {
       initError()
