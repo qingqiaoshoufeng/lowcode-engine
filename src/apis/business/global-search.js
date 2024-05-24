@@ -17,7 +17,7 @@ export function getGlobalSearchList(data) {
     },
   }).then((res) => {
     let list = res.data?.fireWarningList || res.data?.fireDispatchList || res.data?.fireDispatchHeadList || res.data?.fireInfoList
-    const total = res.data?.fireWarning?.warningCount || res.data?.fireDispatch?.dispatchCount || res.data?.fireDispatchHead?.dispatchCount || res.data?.fireInfo?.fireCount || res.data?.total
+    const total = res.data?.total >= 0 ? res.data?.total : res.data?.fireWarning?.warningCount || res.data?.fireDispatch?.dispatchCount || res.data?.fireDispatchHead?.dispatchCount || res.data?.fireInfo?.fireCount
     if (list) {
       list = list.map((item) => {
         return {

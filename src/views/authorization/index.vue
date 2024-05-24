@@ -23,38 +23,42 @@ const initStore = async () => {
 	return isInited
 }
 
-const initError = () => {
+const initError = (msg) => {
+  if (msg) {
+    showFailToast(msg)
+  }
   setTimeout(() => {
-    closeToast()
     router.replace({
       path:'login'
     })
-  }, 1000);
+  }, 2000);
 }
 
-onMounted(() => {
+onMounted(async () => {
   localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
   showLoadingToast({
-    message: '授权认证中...',
+    // message: '授权认证中...',
     duration: 0,
   })
   const params = getParams(location.href)
   if (params?.a2_ticket) {
-    startAuthorization({ a2_ticket: params.a2_ticket }).then(async (res) => {
-      if (res?.token) {
-        localStorage.token = res.token
-        localStorage.platform = 'ydyj-app'
-        await initStore()
-		    closeToast()
-        router.replace({
-          path:'home'
-        })
-      } else {
-        initError()
-      }
-    }).catch((error) => {
+    const res = await startAuthorization({
+       a2_ticket: params.a2_ticket,
+      ssoTag: 'abcdefg', // 跳过验证码验证
+     }).catch((error) => {
       initError()
     })
+    if (res?.token) {
+      localStorage.token = res.token
+      localStorage.platform = 'ydyj-app'
+      await initStore()
+      closeToast()
+      router.replace({
+        path:'home'
+      })
+    } else {
+      initError(res?.msg)
+    }
   } else {
     initError()
   }
