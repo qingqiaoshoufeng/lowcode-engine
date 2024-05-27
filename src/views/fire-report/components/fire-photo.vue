@@ -133,6 +133,19 @@ onMounted(() => {
     })
   }
 })
+
+const onOpenPreview = () => {
+  // 在应急部app内，预览图片时开启水印
+  if (window.ecpot) {
+    window.ecpot.showWatermark();
+  }
+}
+
+const onClosePreview = () => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+}
 </script>
 
 <template>
@@ -200,6 +213,8 @@ onMounted(() => {
                 :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
                 :after-read="OnAfterRead"
                 @delete="onDelete"
+                @click-preview="onOpenPreview"
+                @close-preview="onClosePreview"
               />
             </template>
             <template v-slot:label="">
