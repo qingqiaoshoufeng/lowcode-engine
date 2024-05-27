@@ -42,6 +42,8 @@ const renderAdvice = (transferType) => {
   case '任务退回':
     return '退回原因：'
   case '警情驳回':
+  case '警情普通驳回':
+  case '警情高级驳回':
     return '驳回原因：'
   case '更正申请':
   case '普通更正申请':
@@ -96,6 +98,8 @@ const renderRemark = (transferType) => {
   case '任务退回':
     return '备注：'
   case '警情驳回':
+  case '警情普通驳回':
+  case '警情高级驳回':
     return '备注：'
   case '更正申请':
   case '普通更正申请':

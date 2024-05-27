@@ -459,10 +459,10 @@ const initFireSite = () => {
         options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['电动助力车'].includes(item.dictName))
       }
       else if (vehicleType.text?.includes('铁路交通')) {
-        options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['火车/地铁'].includes(item.dictName))
+        options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['火车、地铁'].includes(item.dictName))
       }
       else if (vehicleType.text?.includes('城市轨道交通')) {
-        options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['火车/地铁'].includes(item.dictName))
+        options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['火车、地铁'].includes(item.dictName))
       }
       else if (vehicleType.text?.includes('水运交通')) {
         options.value.fireSite = res.HZ_QHWZ_JTGJ.filter(item => ['船舶'].includes(item.dictName))

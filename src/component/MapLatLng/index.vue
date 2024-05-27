@@ -66,131 +66,131 @@ else if (new Date().getHours() <= 5) {
 }
 else if (new Date().getHours() <= 6) {
   // yzj
-  tiandituToken = 'd927933bc13be8ed3d03e214384b5f6a'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 7 && new Date().getMinutes() <= 20) {
   // yzj
-  tiandituToken = '5b6cabe52fd2cdc45388a68caebdff11'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 7 && new Date().getMinutes() <= 40) {
   //
-  tiandituToken = '4833053a0fa62824e0d45f0603791cbf'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 7 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '6ad5201356c14a08ac439d120432113a'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 8 && new Date().getMinutes() <= 20) {
   // hxf
-  tiandituToken = '145ae0f41051dd019828009201764a8e'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 8 && new Date().getMinutes() <= 40) {
   // czw
-  tiandituToken = 'd98bf73173b93b0e8f9dfbe2fbfd6a9d'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 8 && new Date().getMinutes() <= 60) {
   // czw
-  tiandituToken = '970effc0d0fc9c6684a697a311feb1fe'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 9 && new Date().getMinutes() <= 20) {
   // hxf
-  tiandituToken = '99ed30b3e81f3452e783e74a6f95ba1f'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 9 && new Date().getMinutes() <= 40) {
   // hxf
-  tiandituToken = '133a297557245a2c90dc174db62d715b'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 9 && new Date().getMinutes() <= 60) {
   // czw
-  tiandituToken = '933f5fef657f090ae6d219eddf9726e3'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 10 && new Date().getMinutes() <= 20) {
   // hxf
-  tiandituToken = 'e08fbb267c37554af6d325d0a9591708'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 10 && new Date().getMinutes() <= 40) {
   // hxf
-  tiandituToken = '18522eff16acb285631fa6bad8e386e4'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 10 && new Date().getMinutes() <= 60) {
   // yzq
-  tiandituToken = '20705c5187117906d28da0d093cd1488'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 11 && new Date().getMinutes() <= 20) {
   // hxf
-  tiandituToken = '2bfa1c73bde471cf7e8945b8608a4b94'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 11 && new Date().getMinutes() <= 40) {
   // hxf
-  tiandituToken = 'e1eb1d3c97e317da4627d0f95dc6c73d'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 11 && new Date().getMinutes() <= 60) {
   // hxf
-  tiandituToken = 'b413f808ec9717538011ede0b1116566'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 12 && new Date().getMinutes() <= 30) {
   // pgm
-  tiandituToken = '88e96071463a5bc0c4483c36729f35f5'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 12 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '18f884d0479682d64bca50467ef0ca42'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 13 && new Date().getMinutes() <= 30) {
   // pgm
-  tiandituToken = '7eda0243304f5824ec76ac5fe0376642'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 13 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '50c2888b6a33dabf89ae42a00bb2fb4d'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 14 && new Date().getMinutes() <= 20) {
   // pgm
-  tiandituToken = 'd6557fd49268a1b8d79ca884e1a996dc'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 14 && new Date().getMinutes() <= 40) {
   //
-  tiandituToken = '8a7bbadfbba271e407af5fa9187a50d7'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 14 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = 'e7e3169110980343c3b207dac3aa9c93'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 15 && new Date().getMinutes() <= 20) {
   // pgm
-  tiandituToken = 'd53c97909b4f94deaa2ecc8b1c5ffbd3'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 15 && new Date().getMinutes() <= 40) {
   //
-  tiandituToken = '29d3696e7784be79253d5488e2a944a9'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 15 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '103b5de733bdf94c0c270c5bd8d5e1bc'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 16 && new Date().getMinutes() <= 30) {
   // pgm
-  tiandituToken = '748fa0b36c8f74629658bc3c6d3b68ea'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 16 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '66a6fc693a1dd19ddf4d6eff75d01837'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 17 && new Date().getMinutes() <= 30) {
   // hxr
-  tiandituToken = '34a9fb79e76e934e6b07bc5e8a06e288'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 17 && new Date().getMinutes() <= 60) {
   //
-  tiandituToken = '9b2aa6ea23a4ab371d33c362f80ff718'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 18 && new Date().getMinutes() <= 30) {
   // hxr
-  tiandituToken = 'ec230d443f819e4e9f1dd115c8ac2e9b'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 18 && new Date().getMinutes() <= 60) {
   // hxr
-  tiandituToken = '0da477f81f5d1369b9d7f1dae572fc67'
+  tiandituToken = 'cf7c95cc566c9c6f47d11c8cd67ec73d'
 }
 else if (new Date().getHours() <= 19 && new Date().getMinutes() <= 30) {
   // hxr
