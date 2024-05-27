@@ -160,13 +160,6 @@ defineOptions({
           flex: 1;
           display: flex;
           align-items: center;
-          // flex-shrink: 0;
-          // flex-grow: 0;
-          // text-overflow: ellipsis;
-          // overflow: hidden;
-          // word-break: break-all;
-          // white-space: nowrap;
-          // line-height: 34px;
         }
         .times,.cars{
           width:64px;
@@ -175,12 +168,11 @@ defineOptions({
 
         }
         .deadNum{
-          width:60px;
-          text-align: center;
+          width:50px;
           text-align: right;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-end;
         }
         .people{
           line-height: 34px;
