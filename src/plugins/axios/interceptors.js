@@ -64,16 +64,28 @@ export const responseError = (error) => {
       message: '操作未授权，请重新登录',
     })
     localStorage.clear()
-    setTimeout(() => location.reload(), 500)
+    if (window.ecpot) {
+      window.ecpot.close()
+    } else {
+      setTimeout(() => location.reload(), 500)
+    }
   }
   else if (error.response?.status === 302) {
     localStorage.clear()
-    setTimeout(() => location.reload(), 500)
+    if (window.ecpot) {
+      window.ecpot.close()
+    } else {
+      setTimeout(() => location.reload(), 500)
+    }
   }
   else if (error.response?.status === 404) {
     if (error.response?.data?.path === '/acws/login.jsp') {
       localStorage.clear()
-      setTimeout(() => location.reload(), 500)
+      if (window.ecpot) {
+        window.ecpot.close()
+      } else {
+        setTimeout(() => location.reload(), 500)
+      }
     } else {
       showFailToast({
         message: error.response?.data?.error || '非法请求，请重试！',
