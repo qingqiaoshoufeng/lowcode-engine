@@ -172,6 +172,7 @@ const searchDimension = inject('searchDimension')
         :title="`请选择${fieldObj?.label}`"
         :single="fieldObj.single"
         :select-leaf="fieldObj.selectLeaf"
+        :select-level-equal="fieldObj.selectLevelEqual"
         :headers-disabled="fieldObj.headersDisabled"
         :params="{ ...fieldObj.params, staticFlag: searchDimension }"
       />

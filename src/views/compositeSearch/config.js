@@ -37,6 +37,7 @@ export const useFormConfig = () => {
         labelWidth: `var(--van-field-label-width-104)`,
         single: false,
         selectLeaf: false,
+        selectLevelEqual: true,
         headersDisabled: true,
         params: { permission: true }
       },

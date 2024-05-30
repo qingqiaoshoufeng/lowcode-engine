@@ -2,6 +2,7 @@
 import { onMounted, ref, watch, computed, nextTick, useAttrs } from "vue";
 import { getDispatchGroup } from "@/apis/index.js";
 import { showLoadingToast, closeToast } from "vant";
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps({
   value: {
@@ -24,6 +25,10 @@ const props = defineProps({
   selectLevel: {
     type: Number,
     default: -1,
+  },
+  selectLevelEqual: { // 是否只能选择同级单位
+    type: Boolean,
+    default: false,
   },
   required: {
     type: Boolean,
@@ -205,7 +210,28 @@ const handleCheck = (item) => {
     selectVisible.value = false;
     return
   }
-  if (item.checked) {
+  else if (props.selectLevelEqual && item.checked) {
+    selectItem.value.forEach(temp => {
+      if (temp.orgLevel === item.orgLevel && temp.organizationid !== item.organizationid) {
+        selectItem.value.push(cloneDeep(temp))
+      }
+    });
+    selectItem.value.push(cloneDeep(item));
+    selectValue.value = selectItem.value.map((temp) => item.organizationid);
+    selectText.value = selectItem.value.map((temp) => item.name);
+    treeData.value.forEach(arr => {
+      arr.forEach(i => {
+        if (selectValue.value.indexOf(i.organizationid) < 0 && i.checked) {
+          i.checked = false
+        }
+      })
+    })
+    emit("update:value", selectItem.value);
+    emit("update:text", selectText.value);
+    emit("change", selectValue.value, selectItem.value, selectText.value);
+    return
+  }
+  else if (item.checked) {
     selectValue.value.push(item.organizationid);
     selectText.value.push(item.name);
     selectItem.value.push(item);
