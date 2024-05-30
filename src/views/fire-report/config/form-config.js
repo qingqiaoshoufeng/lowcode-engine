@@ -1062,7 +1062,7 @@ export const useFormConfig = (validateProgress) => {
     form.value.basicInfo.severity.value = fireInfo?.severity
     form.value.basicInfo.noDispatchArea.value = fireInfo?.noDispatchArea?.split(',')
     form.value.basicInfo.noDispatchArea.text = fireInfo?.noDispatchAreaValue?.split('/')
-    form.value.basicInfo.fireDate.value = fireInfo?.fireDate && dayjs(fireInfo?.fireDate)
+    form.value.basicInfo.fireDate.value = fireInfo?.fireDate && dayjs(Number(fireInfo?.fireDate))
     form.value.basicInfo.fireDirection.value = fireInfo?.fireDirection
     form.value.basicInfo.area.value = fireInfo?.area?.split(',')
     form.value.basicInfo.isUrbanVillages.value = fireInfo?.isUrbanVillages
@@ -1250,7 +1250,7 @@ export const useFormConfig = (validateProgress) => {
 
     checkFormField(warningDetail, options)
 
-    callback()
+    callback && callback()
   }
 
   // 当选择草稿时，去掉部分数据校验

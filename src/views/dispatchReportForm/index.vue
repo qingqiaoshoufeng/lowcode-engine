@@ -4,7 +4,7 @@ import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
 import dayjs from 'dayjs'
 import { cloneDeep, forIn } from 'lodash-es'
-import { showToast, showLoadingToast, closeToast } from "vant";
+import { showToast, showLoadingToast, closeToast, showConfirmDialog } from "vant";
 import FireInfo from './components/fireInfo.vue';
 import BattleResult from './components/battleResult.vue';
 import BasicInformation from "./components/basicInformation.vue";
@@ -43,16 +43,14 @@ import {
   saveDispatchReport,
   saveTemporaryDispatchReport,
 } from '@/apis/index.js'
-import { fixCarParams, getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
+import { fixCarParams, getTypeText, scrollFormFailed, interceptUnix, saveReportTemporary, removeReportTemporary, getReportTemporary } from '@/utils/tools.js'
 import { gender } from '@/utils/constants.js';
 import { useFormConfig } from "./formConfig.js";
 import { useModal } from '@/hooks/useModal.js';
 import { useOptions } from '@/hooks/useOptions.js';
-import { useAsyncQueue } from '@vueuse/core';
+import { useAsyncQueue, useNetwork } from '@vueuse/core';
 import { useStore } from "vuex";
 import { useIntersection } from '@/hooks/useIntersection.js';
-
-const hidevalidate = ref(false)
 
 const props = defineProps({
   showDraft: {
@@ -126,21 +124,25 @@ const diyValidateMap = ref({
   defaultKey:[]
 })
 
-
 const isOpen = ref(true)
+
+const hidevalidate = ref(false)
+
 const statusList = ref([])
 
 const triggerMenu = (val)=>{
   isOpen.value = val
 }
 
-provide('diyValidateMap',diyValidateMap)
+provide('diyValidateMap', diyValidateMap)
 
 const emits = defineEmits(['finishCallback'])
 
 const { options } = useOptions();
 
 const { show } = useModal();
+
+const { isOnline } = useNetwork();
 
 const formRef = ref(null);
 
@@ -177,7 +179,6 @@ const validateProgress = async()=>{
     // console.log(statusList,'result');
   }
   // formRef.value.validate()
-
 }
 
 provide('validateProgress',validateProgress)
@@ -595,7 +596,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+          initReportTemporary(res)
         }
       }).finally(() => resolve())
     }
@@ -607,8 +608,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+          initReportTemporary(res)
         }
       }).finally(() => resolve())
     }
@@ -619,8 +619,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+          initReportTemporary(res)
         }
       }).finally(() => resolve())
     }
@@ -631,8 +630,7 @@ const initDetail = () => {
           if (!props.showDraft) {
             importantEdit.value = res.importantInfoRecheck
           }
-
-          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+          initReportTemporary(res)
         }
       }).finally(() => resolve())
     } else {
@@ -644,7 +642,7 @@ const initDetail = () => {
       }
       form.value.draftInfo.partakeType.value = currentRow?.partakeType || currentRow?.dispatchTypeValue
 
-      initWatch()
+      initReportTemporary()
       resolve()
     }
   })
@@ -697,6 +695,33 @@ const initModuleState = () => {
   })
 }
 
+const initReportTemporary = (res) => {
+  const id = props.currentRow?.boFireDispatchId || localFireDispatchId.value
+  const filter = getReportTemporary(id)
+  if (filter?.length > 0 && !props.isDetail) {
+    showConfirmDialog({
+      message: '当前填报已离线缓存在本地，是否回显到页面表单中？',
+    })
+      .then(() => {
+        initFormByDetail(filter[0]?.params, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+        removeReportTemporary(id)
+        showToast('回显成功！')
+      })
+      .catch(() => {
+        if (res) {
+          initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+        } else {
+          initWatch()
+        }
+        removeReportTemporary(id)
+      });
+  } else if (res) {
+    initFormByDetail(res, options.value, initWatch, detail.value, { nationTeamFlag: showNationTeam.value })
+  } else {
+    initWatch()
+  }
+}
+
 provide('refreshProcess', initFireProcess)
 
 const initWatch = () => {
@@ -709,7 +734,7 @@ const initWatch = () => {
       initFormWhenChange()
     }, { deep: true })
     watch(() => form.value.basicInformation.dealSituation.value, () => {
-      initFormWhenChange(false,'0')
+      initFormWhenChange(false, '0')
     }, { deep: true })
     // 只有当填报状态下才自动生成处置过程
     if (props.closeModal && props.isInput) {
@@ -747,7 +772,7 @@ const getPersonNum = () => {
   return 0
 }
 
-const getSubmitParams = () => {
+const getSubmitParams = (temporary) => {
   const {
     draftInfo,
     basicInformation,
@@ -788,7 +813,7 @@ const getSubmitParams = () => {
         dealEndDate: interceptUnix(basicInformation.dealEndDate.value),
         returnLateReason: basicInformation.returnLateReason.value,
         draftName: draftInfo.draftName.value,
-        warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
+        warningType: temporary ? draftInfo.warningType.value?.join(',') : cloneDeep(draftInfo.warningType.value)?.pop(),
         partakeType: draftInfo.partakeType.value,
         temperature: basicInformation.temperature.value,
         weather: basicInformation.weather.value,
@@ -993,7 +1018,7 @@ const getSubmitParams = () => {
         midwayReturnDate: interceptUnix(basicInfoHead.midwayReturnDate.value),
         returnDate: interceptUnix(basicInfoHead.returnDate.value),
         draftName: draftInfo.draftName.value,
-        warningType: cloneDeep(draftInfo.warningType.value)?.pop(),
+        warningType: temporary ? draftInfo.warningType.value?.join(',') : cloneDeep(draftInfo.warningType.value)?.pop(),
         partakeType: draftInfo.partakeType.value,
       },
       fireDispatchHead: {
@@ -1328,7 +1353,20 @@ const handleSubmit = () => {
 }
 
 const handleTemporary = () => {
-  temporarySubmit()
+  if (isOnline.value) {
+    temporarySubmit()
+  } else {
+    showConfirmDialog({
+      message: '当前移动设备连接不到网络，是否把已填写内容离线缓存在本地，当网络恢复时可继续编辑。',
+    })
+      .then(() => {
+        saveReportTemporary({
+          params: getSubmitParams(true),
+          id: props.currentRow?.boFireDispatchId || localFireDispatchId.value
+        })
+        showToast('暂存成功')
+      })
+  }
 }
 
 const onSubmit = async () => {
@@ -1345,8 +1383,14 @@ const onSubmit = async () => {
       showToast('请对异常指标进行批注说明！')
     }
     else {
-      await submit()
-      props.closeModal()
+      if (isOnline.value) {
+        await submit()
+        props.closeModal()
+      } else {
+        showConfirmDialog({
+          message: '当前移动设备连接不到网络，无法提交，可先点击暂定。',
+        })
+      }
     }
   }
 };

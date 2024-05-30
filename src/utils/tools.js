@@ -648,3 +648,43 @@ export const getParams = (url) => {
   }
   return params;
 }
+
+export const saveReportTemporary = (values) => {
+  let temp = localStorage.getItem('reportTemporary')
+  if (temp && temp !== 'null' && temp !== 'undefined') {
+    temp = JSON.parse(temp)
+  } else {
+    temp = []
+  }
+  const filter = temp.filter(item => item.id === values.id)
+  if (!filter || filter.length <= 0) {
+    // 不存在 push
+    temp.push(values)
+  } else {
+    // 存在更新
+    const index = temp.findIndex(item => item.id === values.id)
+    temp[index] = values
+  }
+  localStorage.setItem('reportTemporary', JSON.stringify(temp))
+}
+
+export const removeReportTemporary = (id) => {
+  let temp = localStorage.getItem('reportTemporary')
+  if (temp && temp !== 'null' && temp !== 'undefined') {
+    temp = JSON.parse(temp)
+  } else {
+    temp = []
+  }
+  temp = temp.filter(item => item.id !== id)
+  localStorage.setItem('reportTemporary', JSON.stringify(temp))
+}
+
+export const getReportTemporary = (id) => {
+  let temp = localStorage.getItem('reportTemporary')
+  if (temp && temp !== 'null' && temp !== 'undefined') {
+    temp = JSON.parse(temp)
+  } else {
+    temp = []
+  }
+  return temp.filter(item => item.id === id)
+}

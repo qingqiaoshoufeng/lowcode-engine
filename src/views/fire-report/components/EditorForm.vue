@@ -5,7 +5,7 @@ import ProCard from "@/component/ProCard/index.vue";
 import { cloneDeep } from 'lodash-es'
 import { useDetail, useSubmit } from '@castle/castle-use'
 import { v4 as uuidv4 } from 'uuid'
-import { useAsyncQueue } from '@vueuse/core'
+import { useAsyncQueue, useNetwork } from '@vueuse/core'
 import FireInfo from '@/views/dispatchReportForm/components/fireInfo.vue'
 import BaseInfo from './base-info.vue'
 import CasualtyWar from './casualty-war.vue'
@@ -25,7 +25,7 @@ import { useOptions } from '@/hooks/useOptions.js'
 import { useModal } from '@/hooks/useModal.js'
 import { useSuccess } from '@/hooks/useSuccess.js'
 // import { useRerender } from '@/hooks/useRerender.js'
-import { getTypeText, scrollFormFailed, interceptUnix } from '@/utils/tools.js'
+import { getTypeText, scrollFormFailed, interceptUnix, saveReportTemporary, removeReportTemporary, getReportTemporary } from '@/utils/tools.js'
 import { useIntersection } from '@/hooks/useIntersection.js';
 import {
   effect, exitNonConformance, gender, injuryType, install, isNot, isResearch,
@@ -42,14 +42,12 @@ import {
   saveFireDispatchReport,
   saveTemporaryFireDispatchReport,
 } from '@/apis/index.js'
-import { showToast, showLoadingToast, closeToast } from 'vant';
+import { showToast, showLoadingToast, closeToast, showConfirmDialog } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
 
 const diyValidateMap = ref({
   defaultKey:[]
 })
-
-
 
 provide('diyValidateMap',diyValidateMap)
 
@@ -140,6 +138,8 @@ const getSystemDictSync = store.getters['dict/getSystemDictSync']
 const { options } = useOptions()
 
 const { show } = useModal()
+
+const { isOnline } = useNetwork();
 
 // const { showCurrentDom } = useRerender(props.renderDom)
 
@@ -479,6 +479,33 @@ const initFireSite = () => {
   }
 }
 
+const initReportTemporary = (res) => {
+  const id = props.currentRow?.boFireInfoId || localFireInfoId.value
+  const filter = getReportTemporary(id)
+  if (filter?.length > 0 && !props.isDetail) {
+    showConfirmDialog({
+      message: '当前填报已离线缓存在本地，是否回显到页面表单中？',
+    })
+      .then(() => {
+        initFormByDetail(filter[0]?.params, options.value, initWatch, detail.value)
+        removeReportTemporary(id)
+        showToast('回显成功！')
+      })
+      .catch(() => {
+        if (res) {
+          initFormByDetail(res, options.value, initWatch, detail.value)
+        } else {
+          initWatch()
+        }
+        removeReportTemporary(id)
+      });
+  } else if (res) {
+    initFormByDetail(res, options.value, initWatch, detail.value)
+  } else {
+    initWatch()
+  }
+}
+
 const initWatch = () => {
   closeToast()
   const { fireType, severity } = form.value.basicInfo
@@ -597,16 +624,16 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
-          importantInfoReject.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
         if (res.fireInfo?.isNoDispatchFlag === '1') {
           unDispatch.value = true
         }
         if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
-          importantEdit.value = res.importantInfoReject
-          importantInfoReject.value = res.importantInfoReject
-        }
-        initFormByDetail(res, options.value, initWatch, detail.value)
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
+        initReportTemporary(res)
       }
     })
   }
@@ -617,18 +644,18 @@ const initDetail = () => {
         fireDetail.value = res
         if (!props.showDraft && currentRow?.fireStatusValue === '待更正') {
           importantEdit.value = res.importantInfoRecheck
-          importantInfoReject.value = res.importantInfoRecheck
+          importantInfoReject.value = res.importantInfoRecheck
         }
         if (!props.showDraft && currentRow?.fireStatusValue === '被驳回') {
-          importantEdit.value = res.importantInfoReject
-          importantInfoReject.value = res.importantInfoReject
-        }
-        initFormByDetail(res, options.value, initWatch, detail.value)
+          importantEdit.value = res.importantInfoReject
+          importantInfoReject.value = res.importantInfoReject
+        }
+        initReportTemporary(res)
       }
     })
   }
   else {
-    initWatch()
+    initReportTemporary()
   }
 }
 
@@ -720,7 +747,7 @@ const initDict = () => {
   })
 }
 
-const getSubmitParams = () => {
+const getSubmitParams = (temporary) => {
   const { basicInfo, economicLoss, fireBuilding, fireFacilities, caseHandling, casualtyWar, fireCourse, firePhoto, otherAttach } = form.value
   const params = {
     fireInfo: {
@@ -736,11 +763,11 @@ const getSubmitParams = () => {
       fireOrgname: basicInfo.fireOrgname?.value,
       // fireTel: basicInfo.fireTel?.value,
       socialCreditCode: basicInfo.socialCreditCode?.value,
-      fireType: cloneDeep(basicInfo.fireType?.completeValue)?.pop(),
+      fireType: temporary ? basicInfo.fireType?.completeValue?.join(',') : cloneDeep(basicInfo.fireType?.completeValue)?.pop(),
       fireCause: basicInfo.fireCause?.value?.join(','),
       burnedArea: basicInfo.burnedArea?.value,
       fireLevel: basicInfo.fireLevel?.value,
-      firePlace: cloneDeep(basicInfo.firePlace?.value)?.pop(),
+      firePlace: temporary ? basicInfo.firePlace?.value?.join(',') : cloneDeep(basicInfo.firePlace?.value)?.pop(),
       isLaborIntensive: basicInfo.isLaborIntensive?.value,
       plantRiskClassification: basicInfo.plantRiskClassification?.value,
       otherFirePlace: basicInfo.otherFirePlace?.value,
@@ -1050,8 +1077,21 @@ const approvalCallback = async (form) => {
 
 const setTemporary = async () => {
   formRef.value.validate('basicInfo.fireDate.value').then(async () => {
-    await temporarySubmit()
-    showToast('暂存成功')
+    if (isOnline.value) {
+      await temporarySubmit()
+      showToast('暂存成功')
+    } else {
+      showConfirmDialog({
+        message: '当前移动设备连接不到网络，是否把已填写内容离线缓存在本地，当网络恢复时可继续编辑。',
+      })
+        .then(() => {
+          saveReportTemporary({
+            params: getSubmitParams(true),
+            id: props.currentRow?.boFireInfoId || localFireInfoId.value
+          })
+          showToast('暂存成功')
+        })
+    }
   })
     .catch((error) => {
       showToast('请填写正确起火时间！')
@@ -1072,15 +1112,20 @@ const handleSubmit = () => {
       emits('refreshEdit')
     }
     else {
-    
       if (!props.showDraft && checkFieldWarning(fieldExist.value)
       ) {
         // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
         showToast('请对异常指标进行批注说明！')
       }
       else {
-        await submit()
-        emits('refreshEdit')
+        if (isOnline.value) {
+          await submit()
+          emits('refreshEdit')
+        } else {
+          showConfirmDialog({
+            message: '当前移动设备连接不到网络，无法提交，可先点击暂定。',
+          })
+        }
       }
     }
   })
