@@ -261,7 +261,7 @@ const searchOptions = computed(()=>([
     type: 'select-org',
     placeholder: '请选择所属队伍',
     params: { permission: true },
-    single: false,
+    single: true,
     selectLeaf: false,
     headersDisabled: true,
     value: 'orgId',

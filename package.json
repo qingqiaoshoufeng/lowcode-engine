@@ -10,6 +10,7 @@
     "build:test": "vue-cli-service build --mode test",
     "build:production-h5": "vue-cli-service build --mode production-h5",
     "build:staging-h5": "vue-cli-service build --mode staging-h5",
+    "build:test-h5": "vue-cli-service build --mode test-h5",
     "lint": "eslint --fix --ext .js,.vue src",
     "lint-staged": "npx lint-staged",
     "prepare": "husky install"
