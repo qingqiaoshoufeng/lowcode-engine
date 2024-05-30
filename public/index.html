@@ -44,7 +44,7 @@
           // 初始成功回调
           console.log('onetalk：初始化成功！', window.ecpot)
           if (window.ecpot && location.href.indexOf('a2_ticket') > -1) {
-            window.ecpot.close()
+            window.ecpot.hideTitleBar()
           }
         });
       }
