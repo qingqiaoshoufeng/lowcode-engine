@@ -31,7 +31,7 @@ const toLogin = () => {
 
 // 创建axios实例
 export const request = window.__axios = axios.create({
-  baseURL: ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : '/',
+  baseURL: ['production','test', 'production-h5','staging-h5', 'test-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : '/',
   timeout: 1000 * 12
 })
 // 设置post请求头

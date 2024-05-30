@@ -16,6 +16,8 @@ const routes = [
 
 const getRouterBase = () => {
   switch (process.env.NODE_ENV) {
+    case 'test-h5':
+      return '/fire_alarm_statistics_app_h5_test'
     case 'staging-h5':
       return '/fire_alarm_statistics_app_h5_staging'
     case 'production-h5':

@@ -46,7 +46,7 @@ export function getAllRules() {
 }
 
 export const getVerificationCode = async() => {
-  const imgRes = await fetch(`${ ['production','test', 'production-h5','staging-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
+  const imgRes = await fetch(`${ ['production','test', 'production-h5','staging-h5', 'test-h5'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''}/acws/rest/security/captcha`).then(r => r.blob()).then((blob) => {
     return new Promise((resolve) => { 
       const reader = new FileReader()
       reader.readAsDataURL(blob)

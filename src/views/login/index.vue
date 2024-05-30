@@ -174,7 +174,7 @@ const handleUserLogin = async () => {
 	}
 	else if (res?.token) {
 		localStorage.token = res.token
-		if (['staging-h5', 'production-h5'].indexOf(process.env.NODE_ENV === 'test') > -1) {
+		if (['staging-h5', 'production-h5', 'test-h5'].indexOf(process.env.NODE_ENV === 'test') > -1) {
 			localStorage.platform = "hztj-h5"
 		} else {
 			localStorage.platform = "hztj-app"
