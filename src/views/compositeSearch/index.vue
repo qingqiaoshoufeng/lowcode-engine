@@ -74,10 +74,16 @@ const onSearchCallback = () => {
   queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
   const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
   const keyMap = ['', 'areaGroupStaticFlag', 'dispatchGroupOrgStaticFlag', 'fireHeadStaticFlag']
+  if (queryParams.value.comprehensiveWarningQueryReq?.areaGroup) {
+    queryParams.value.comprehensiveWarningQueryReq.areaGroupStaticFlag = searchDimension.value
+  }
+  if (queryParams.value.comprehensiveDispatchQueryReq?.dispatchGroupOrg) {
+    queryParams.value.comprehensiveDispatchQueryReq.dispatchGroupOrgStaticFlag = searchDimension.value
+  }
+  if (queryParams.value.comprehensiveDispatchHeadQueryReq?.fireHead) {
+    queryParams.value.comprehensiveDispatchHeadQueryReq.fireHeadStaticFlag = searchDimension.value
+  }
   if (searchType.value < 4) {
-    proListRef.value.query.comprehensiveWarningQueryReq.areaGroupStaticFlag = searchDimension.value
-    proListRef.value.query.comprehensiveDispatchQueryReq.dispatchGroupOrgStaticFlag = searchDimension.value
-    proListRef.value.query.comprehensiveDispatchHeadQueryReq.fireHeadStaticFlag = searchDimension.value
     queryParams.value[firstKeyMap[searchType.value]][keyMap[searchType.value]] = searchDimension.value
   }
   // 设置查询的历史数据版本
