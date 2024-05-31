@@ -5,7 +5,7 @@ import { getCookie } from '@/utils/tools.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
-  config.headers.platform = 'App'
+  config.headers.platform = localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
   return config
 }
 

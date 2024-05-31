@@ -75,6 +75,9 @@ const onSearchCallback = () => {
   const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
   const keyMap = ['', 'areaGroupStaticFlag', 'dispatchGroupOrgStaticFlag', 'fireHeadStaticFlag']
   if (searchType.value < 4) {
+    proListRef.value.query.comprehensiveWarningQueryReq.areaGroupStaticFlag = searchDimension.value
+    proListRef.value.query.comprehensiveDispatchQueryReq.dispatchGroupOrgStaticFlag = searchDimension.value
+    proListRef.value.query.comprehensiveDispatchHeadQueryReq.fireHeadStaticFlag = searchDimension.value
     queryParams.value[firstKeyMap[searchType.value]][keyMap[searchType.value]] = searchDimension.value
   }
   // 设置查询的历史数据版本
