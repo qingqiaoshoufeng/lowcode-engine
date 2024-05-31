@@ -1,5 +1,5 @@
 <script setup>
-import { inject, nextTick, onMounted, ref } from "vue";
+import { inject, nextTick, onMounted, ref, onUnmounted } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
@@ -118,6 +118,12 @@ const onClosePreview = () => {
     window.ecpot.hideWatermark();
   }
 }
+
+onUnmounted(() => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+})
 </script>
 
 <template>

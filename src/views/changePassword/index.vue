@@ -6,7 +6,6 @@ import { useRouter } from "vue-router";
 import { updatePwd, getUserDetail } from "@/apis/index.js";
 import { validatePwd } from "@/utils/validate.js";
 import HeaderTitle from "@/component/HeaderTitle/index.vue";
-import { encrypt } from '@/utils/tools.js';
 
 const form = ref({
   userId: "",
@@ -27,8 +26,8 @@ const { loading, submit } = useSubmit(
       const { password, oldPassword } = form.value;
       const params = {
         userId: form.value?.userId,
-        password: encrypt(password),
-        oldPassword: encrypt(oldPassword),
+        password,
+        oldPassword,
       };
       return updatePwd(params);
     },

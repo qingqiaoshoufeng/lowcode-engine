@@ -22,7 +22,11 @@ const currentab = ref(5);
 // 判断是否为接入平台
 const isInsert = ref(localStorage.platform === 'ydyj-app')
 
-const list = ref(entryList)
+const list = ref(entryList.filter(item=>{
+  const flag = (item.label === '修改密码' && isInsert.value)
+  return !flag
+}))
+
 
 const router = useRouter();
 

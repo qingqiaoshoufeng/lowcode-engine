@@ -1,5 +1,5 @@
 <script setup>
-import { inject, nextTick, onMounted, ref } from 'vue'
+import { inject, nextTick, onMounted, ref, onUnmounted } from 'vue'
 import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile,uploadFile  } from '@/apis/index.js'
@@ -146,6 +146,12 @@ const onClosePreview = () => {
     window.ecpot.hideWatermark();
   }
 }
+
+onUnmounted(() => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+})
 </script>
 
 <template>
