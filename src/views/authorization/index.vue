@@ -117,7 +117,7 @@ onMounted(async () => {
   height: 100vh;
   background-color: #fff;
   background: url('~@/assets/images/start@2x.png') no-repeat center center;
-  background-size: 100% 100%;
+  background-size: 100vw 100vh;
   .authorization-account {
     width: 100vw;
     height: 100vh;

@@ -124,6 +124,15 @@ onUnmounted(() => {
     window.ecpot.hideWatermark();
   }
 })
+
+const onClickUpload = () => {
+  if (window.ecpot) {
+    window.ecpot.chooseMedia({
+      take: false,
+      multi: false,
+    });
+  }
+}
 </script>
 
 <template>
@@ -154,18 +163,17 @@ onUnmounted(() => {
                 @close-preview="onClosePreview"
               />
             </template>
-          <template v-slot:title="">
-            <FieldAnnotation
-              label="相关附件上传："
-              remark-field="photos"
-              field-module="scenePhoto"
-              :exist-data="fieldExist?.photos"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
+            <template v-slot:title="">
+              <FieldAnnotation
+                label="相关附件上传："
+                remark-field="photos"
+                field-module="scenePhoto"
+                :exist-data="fieldExist?.photos"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </van-cell>
-
       </div>
     </van-cell-group>
   </ProCard>
