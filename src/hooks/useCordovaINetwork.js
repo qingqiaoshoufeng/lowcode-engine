@@ -8,10 +8,10 @@ export const useCordovaINetwork = (initial) => {
     if (window.cordova) {
       document.addEventListener('online', () => {
         networkState.value = 'online';
-      });
+      }, false);
       document.addEventListener('offline', () => {
         networkState.value = 'offline';
-      });
+      }, false);
     }
   })
 

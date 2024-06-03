@@ -70,6 +70,16 @@ const handleItem = (row) => {
   show.value.lookVisible = true
 };
 
+// 火灾场所格式化
+const renderFirePlace = (record) => {
+  let prefix = ''
+  if (record.fireTypeValue) {
+    const types = record.fireTypeValue?.split('/')
+    prefix = `${types[types.length - 1]}${record.firePlace ? '/' : ''}`
+  }
+  return `${prefix}${record.firePlace}`
+}
+
 const onTimeChange = (value) => {
   showLoadingToast();
   proListRef.value.filter().then((res) => {
@@ -123,12 +133,12 @@ onMounted(() => {
         <div class="pro-list-item" @click="handleItem(record)">
           <div class="item-header">
             <div class="item-title">{{ record.warningName }}</div>
-            <div class="item-state" :class="generateColorByState(record.warningStatusValue)">
-              {{ record.warningStatusValue }}
+            <div class="item-state" :class="generateColorByState('已作废')">
+              已作废
             </div>
           </div>
-          <div class="item-type">
-            <span>{{ record.warningTypeValue }}</span>
+          <div v-if="renderFirePlace(record)" class="item-type">
+            <span>{{ renderFirePlace(record) }}</span>
           </div>
           <div class="item-field">
             <img src="../../assets/images/icon-time@2x.png" alt="" />
