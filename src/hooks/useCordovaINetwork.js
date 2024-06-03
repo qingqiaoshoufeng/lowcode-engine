@@ -18,15 +18,13 @@ export const useCordovaINetwork = () => {
 
   onMounted(() => {
     // 当网络状态发生变化时，更新网络状态
-    if (window.cordova) {
-      document.addEventListener('deviceready', onDeviceReady, false);
-    }
+    document.addEventListener('online', onLine, false);
+    document.addEventListener('offline', onOffline, false);
   })
 
   onUnmounted(() => {
     // 清理事件监听器
     if (window.cordova) {
-      document.removeEventListener('deviceready', onDeviceReady);
       document.removeEventListener('online', onLine);
       document.removeEventListener('offline', onOffline);
     }
