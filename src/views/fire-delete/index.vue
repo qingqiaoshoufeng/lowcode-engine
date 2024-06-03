@@ -31,7 +31,7 @@ const searchOptions = ref([
     title: '行政区域',
     type: 'select-area',
     placeholder: '请选择行政区域',
-    value: 'boAreaId',
+    value: 'warningArea',
   },
   {
     title: '火灾地址',
@@ -56,7 +56,7 @@ const defaultFilterValue = {
   fireCode: '',
   fireDirection: '',
   applyGroup: [],
-  warningTag: [],
+  warningArea: [],
 };
 
 const { show } = useModal();
@@ -142,7 +142,7 @@ onMounted(() => {
               alt=""
             />
             <div class="item-field-label">行政区域：</div>
-            <div>{{ record.warningAreaValue }}</div>
+            <div>{{ record.noDispatchAreaValue }}</div>
           </div>
           <div class="item-field">
             <img
@@ -150,8 +150,8 @@ onMounted(() => {
               style="width: 13px; height: 15px; margin-right: 8px"
               alt=""
             />
-            <div class="item-field-label">警情地址：</div>
-            <div>{{ record.warningAddr }}</div>
+            <div class="item-field-label">火灾地址：</div>
+            <div>{{ record.fireDirection }}</div>
           </div>
           <div class="item-field">
             <img
