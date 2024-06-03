@@ -51,6 +51,7 @@ import { useOptions } from '@/hooks/useOptions.js';
 import { useAsyncQueue, useNetwork } from '@vueuse/core';
 import { useStore } from "vuex";
 import { useIntersection } from '@/hooks/useIntersection.js';
+import { useCordovaINetwork } from '@/hooks/useCordovaINetwork.js'
 
 const props = defineProps({
   showDraft: {
@@ -143,6 +144,8 @@ const { options } = useOptions();
 const { show } = useModal();
 
 const { isOnline } = useNetwork();
+
+const { networkState } = useCordovaINetwork()
 
 const formRef = ref(null);
 
@@ -1353,7 +1356,7 @@ const handleSubmit = () => {
 }
 
 const handleTemporary = () => {
-  if (isOnline.value) {
+  if (isOnline.value || networkState.value === 'online') {
     temporarySubmit()
   } else {
     showConfirmDialog({
@@ -1383,7 +1386,7 @@ const onSubmit = async () => {
       showToast('请对异常指标进行批注说明！')
     }
     else {
-      if (isOnline.value) {
+      if (isOnline.value || networkState.value === 'online') {
         await submit()
         props.closeModal()
       } else {
