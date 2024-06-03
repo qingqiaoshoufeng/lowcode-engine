@@ -18,8 +18,10 @@ export const useCordovaINetwork = () => {
 
   onMounted(() => {
     // 当网络状态发生变化时，更新网络状态
-    document.addEventListener('online', onLine, false);
-    document.addEventListener('offline', onOffline, false);
+    if (window.cordova) {
+      document.addEventListener('online', onLine, false);
+      document.addEventListener('offline', onOffline, false);
+    }
   })
 
   onUnmounted(() => {

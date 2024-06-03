@@ -21,7 +21,6 @@
     "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-inappbrowser": "^6.0.0",
-    "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-splashscreen": "^6.0.2",
     "cordova-plugin-statusbar": "^3.0.0",
     "foolnofool-cordova-plugin-file-transfer": "^2.2.0",
@@ -49,8 +48,7 @@
       "cordova-base64-to-gallery": {},
       "cordova-plugin-android-update": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-network-information": {}
+      "cordova-plugin-inappbrowser": {}
     }
   }
 }
