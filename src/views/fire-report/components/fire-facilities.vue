@@ -1169,7 +1169,7 @@ const onEmergencyExit = () => {
             :options="options.networkAlarm"
             allow-clear
             placeholder="请选择联网报警方式"
-            :field-names="{ value: 'boDictId', label: 'dictName' }"
+            :field-names="{ value: 'value', label: 'label' }"
             title="请选择联网报警方式"
             class="field-not-required"
           >

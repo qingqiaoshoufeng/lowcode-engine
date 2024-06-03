@@ -39,7 +39,8 @@ export const pathMap = {
   "fireAmend":'have-done-info/fireAmend',
   "jingqingqueren": '/policeConfirm',
   "jingqingzhuanpai": '/policeTransfer',
-  "jingqingzuofei":'/police-delete'
+  "jingqingzuofei":'/police-delete',
+  "huozaizuofei":'/fire-delete',
 }
 
 export const permission={
