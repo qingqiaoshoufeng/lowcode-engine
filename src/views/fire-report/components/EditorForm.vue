@@ -44,6 +44,7 @@ import {
 } from '@/apis/index.js'
 import { showToast, showLoadingToast, closeToast, showConfirmDialog } from 'vant';
 // import ProSteps from '@/components/pro-steps/index.vue'
+import { useCordovaINetwork } from '@/hooks/useCordovaINetwork.js'
 
 const diyValidateMap = ref({
   defaultKey:[]
@@ -140,6 +141,8 @@ const { options } = useOptions()
 const { show } = useModal()
 
 const { isOnline } = useNetwork();
+
+const { networkState } = useCordovaINetwork()
 
 // const { showCurrentDom } = useRerender(props.renderDom)
 
@@ -1077,7 +1080,7 @@ const approvalCallback = async (form) => {
 
 const setTemporary = async () => {
   formRef.value.validate('basicInfo.fireDate.value').then(async () => {
-    if (isOnline.value) {
+    if (isOnline.value || networkState.value === 'online') {
       await temporarySubmit()
       showToast('暂存成功')
     } else {
@@ -1118,7 +1121,7 @@ const handleSubmit = () => {
         showToast('请对异常指标进行批注说明！')
       }
       else {
-        if (isOnline.value) {
+        if (isOnline.value || networkState.value === 'online') {
           await submit()
           emits('refreshEdit')
         } else {
