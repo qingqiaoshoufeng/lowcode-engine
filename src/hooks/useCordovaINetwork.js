@@ -1,17 +1,17 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
 export const useCordovaINetwork = () => {
-  const networkState = ref('online')
+  const networkState = ref('online');
 
-  const onLine = () => {
+  function onLine() {
     networkState.value = 'online';
   }
 
-  const onOffline = () => {
+  function onOffline() {
     networkState.value = 'offline';
   }
 
-  const onDeviceReady = () => {
+  function onDeviceReady() {
     document.addEventListener('online', onLine, false);
     document.addEventListener('offline', onOffline, false);
   }
