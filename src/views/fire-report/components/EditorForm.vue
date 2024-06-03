@@ -142,7 +142,7 @@ const { show } = useModal()
 
 const { isOnline } = useNetwork();
 
-const { networkState } = useCordovaINetwork()
+const { checkNetwork } = useCordovaINetwork()
 
 // const { showCurrentDom } = useRerender(props.renderDom)
 
@@ -1080,10 +1080,13 @@ const approvalCallback = async (form) => {
 
 const setTemporary = async () => {
   formRef.value.validate('basicInfo.fireDate.value').then(async () => {
-    if (isOnline.value || networkState.value === 'online') {
+    temporaryLoading.value = true
+    const onLine = await checkNetwork()
+    if (onLine) {
       await temporarySubmit()
       showToast('暂存成功')
     } else {
+      temporaryLoading.value = false
       showConfirmDialog({
         message: '当前移动设备连接不到网络，是否把已填写内容离线缓存在本地，当网络恢复时可继续编辑。',
       })
@@ -1121,10 +1124,13 @@ const handleSubmit = () => {
         showToast('请对异常指标进行批注说明！')
       }
       else {
-        if (isOnline.value || networkState.value === 'online') {
+        loading.value = true
+        const onLine = await checkNetwork()
+        if (onLine) {
           await submit()
           emits('refreshEdit')
         } else {
+          loading.value = false
           showConfirmDialog({
             message: '当前移动设备连接不到网络，无法提交，可先点击暂定。',
           })

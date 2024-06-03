@@ -1,4 +1,5 @@
 import { onMounted, onUnmounted, ref } from 'vue'
+import { getRoleList } from '@/apis/index.js'
 
 export const useCordovaINetwork = () => {
   const networkState = ref('online');
@@ -14,6 +15,15 @@ export const useCordovaINetwork = () => {
   function onDeviceReady() {
     document.addEventListener('online', onLine, false);
     document.addEventListener('offline', onOffline, false);
+  }
+
+  const checkNetwork = async () => {
+    try {
+      const res = await getRoleList()
+      return res && res.data && res.data.code === 200
+    } catch (error) {
+      return false
+    }
   }
 
   onMounted(() => {
@@ -34,5 +44,6 @@ export const useCordovaINetwork = () => {
 
   return {
     networkState,
+    checkNetwork,
   }
 }

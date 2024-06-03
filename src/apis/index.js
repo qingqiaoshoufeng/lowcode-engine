@@ -225,3 +225,16 @@ export function getSourceOption(params) {
 export function getMsgCode(data) {
   return request.post(`/acws/rest/biz/factor/sendloginmsg`, data)
 }
+
+export function getRoleList() {
+  const params = {
+    offset: 1,
+    limit: 10,
+  }
+  return axios.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
+    return {
+      ...res,
+      list: res?.items,
+    }
+  })
+}
