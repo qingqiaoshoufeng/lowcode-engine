@@ -78,7 +78,13 @@ const { onRemove } = useUpload()
 
 const show = ref({})
 
-const showOtherOrgRemark = ref(false)
+const showOtherOrgRemark = computed(() => {
+  const filter = options.value.leadInspectionOrg?.filter(item => item.boDictId === form.value.basicInfo.leadInspectionOrg?.value)
+  if (filter && filter[0]?.dictName.includes('其他')) {
+    return true
+  }
+  return false
+})
 
 const ratingOptions = ref(options.value.fireResistanceRating)
 const diyValidateMap = inject("diyValidateMap");
@@ -421,14 +427,7 @@ const validateFireTel = (value) => {
 }
 
 const onLeadInspectionOrg = () => {
-  const filter = options.value.leadInspectionOrg?.filter(item => item.boDictId === form.value.basicInfo.leadInspectionOrg?.value)
-  if (filter && filter[0]?.dictName.includes('其他')) {
-    showOtherOrgRemark.value = true
-  }
-  else {
-    showOtherOrgRemark.value = false
-    form.value.basicInfo.otherOrgRemark.value = ''
-  }
+  form.value.basicInfo.otherOrgRemark.value = ''
 }
 
 const isShowIndustryAndEconomicType = computed(()=>{

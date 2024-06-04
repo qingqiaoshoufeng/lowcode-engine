@@ -5,6 +5,9 @@
     <van-button v-if="!isInsert" type="primary" plain block style="margin-top: 20px" @click="handleOut">
       退出登录
     </van-button>
+    <van-button v-else type="primary" plain block style="margin-top: 20px" @click="handleBack">
+      退出登录
+    </van-button>
   </div>
   <Tabbar :currentTab="currentab" />
 </template>
@@ -48,6 +51,12 @@ const handleOut = () => {
     });
   });
 };
+
+const handleBack = () => {
+  if (window.ecpot) {
+    window.ecpot.close()
+  }
+}
 
 const getNewNumber = async() => {
   const res = await getRemind()

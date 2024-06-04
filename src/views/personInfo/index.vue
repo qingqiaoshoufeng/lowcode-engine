@@ -114,7 +114,13 @@ onMounted(() => {
     :deep(.van-uploader__preview) {
       margin: 0 0;
     }
+    :deep(.van-uploader__preview-image) {
+      width: unset;
+      height: unset;
+    }
     :deep(.van-image__img) {
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
     }
   }
