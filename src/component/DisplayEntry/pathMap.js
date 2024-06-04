@@ -41,7 +41,6 @@ export const pathMap = {
   "jingqingzhuanpai": '/policeTransfer',
   "jingqingzuofei":'/police-delete',
   "huozaizuofei":'/fire-delete',
-  'huozaizuofeishenpi':'/fire-abolish-approval',
 }
 
 export const permission={

@@ -1459,18 +1459,18 @@ export const useFormConfig = () => {
     }
     form.value.draftInfo.partakeType.value = fireDispatch?.partakeType || fireDispatch?.dispatchTypeValue
     // 简要情况
-    form.value.basicInformation.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
-    form.value.basicInformation.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(fireDispatch?.midwayReturnDate)
-    form.value.basicInformation.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(fireDispatch?.attendanceDate)
-    form.value.basicInformation.carryoutDate.value = fireDispatch?.carryoutDate && dayjs(fireDispatch?.carryoutDate)
-    form.value.basicInformation.waterflowDate.value = fireDispatch?.waterflowDate && dayjs(fireDispatch?.waterflowDate)
-    form.value.basicInformation.controllingDate.value = fireDispatch?.controllingDate && dayjs(fireDispatch?.controllingDate)
-    form.value.basicInformation.washDate.value = fireDispatch?.washDate && dayjs(fireDispatch?.washDate)
-    form.value.basicInformation.extinctDate.value = fireDispatch?.extinctDate && dayjs(fireDispatch?.extinctDate)
-    form.value.basicInformation.endDate.value = fireDispatch?.endDate && dayjs(fireDispatch?.endDate)
-    form.value.basicInformation.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(fireDispatch?.evacuateDate)
-    form.value.basicInformation.returnDate.value = fireDispatch?.returnDate && dayjs(fireDispatch?.returnDate)
-    form.value.basicInformation.dealEndDate.value = fireDispatch?.dealEndDate && dayjs(fireDispatch?.dealEndDate)
+    form.value.basicInformation.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(Number(fireDispatch?.dispatchDate))
+    form.value.basicInformation.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(Number(fireDispatch?.midwayReturnDate))
+    form.value.basicInformation.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(Number(fireDispatch?.attendanceDate))
+    form.value.basicInformation.carryoutDate.value = fireDispatch?.carryoutDate && dayjs(Number(fireDispatch?.carryoutDate))
+    form.value.basicInformation.waterflowDate.value = fireDispatch?.waterflowDate && dayjs(Number(fireDispatch?.waterflowDate))
+    form.value.basicInformation.controllingDate.value = fireDispatch?.controllingDate && dayjs(Number(fireDispatch?.controllingDate))
+    form.value.basicInformation.washDate.value = fireDispatch?.washDate && dayjs(Number(fireDispatch?.washDate))
+    form.value.basicInformation.extinctDate.value = fireDispatch?.extinctDate && dayjs(Number(fireDispatch?.extinctDate))
+    form.value.basicInformation.endDate.value = fireDispatch?.endDate && dayjs(Number(fireDispatch?.endDate))
+    form.value.basicInformation.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(Number(fireDispatch?.evacuateDate))
+    form.value.basicInformation.returnDate.value = fireDispatch?.returnDate && dayjs(Number(fireDispatch?.returnDate))
+    form.value.basicInformation.dealEndDate.value = fireDispatch?.dealEndDate && dayjs(Number(fireDispatch?.dealEndDate))
     form.value.basicInformation.returnLateReason.value = fireDispatch?.returnLateReason
     // 基本信息
     form.value.basicInformation.dealSituation.value = fireDispatch?.dealSituation
@@ -1495,11 +1495,11 @@ export const useFormConfig = () => {
     // form.value.basicInformation.notUseFireHydrantReason.value = fireDispatchItem?.notUseFireHydrantReason
     // 基本信息-全勤指挥部
     // form.value.basicInfoHead.headquarterName.value = fireDispatch?.headquarterName
-    form.value.basicInfoHead.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(fireDispatch?.dispatchDate)
-    form.value.basicInfoHead.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(fireDispatch?.attendanceDate)
-    form.value.basicInfoHead.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(fireDispatch?.evacuateDate)
-    form.value.basicInfoHead.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(fireDispatch?.midwayReturnDate)
-    form.value.basicInfoHead.returnDate.value = fireDispatch?.returnDate && dayjs(fireDispatch?.returnDate)
+    form.value.basicInfoHead.dispatchDate.value = fireDispatch?.dispatchDate && dayjs(Number(fireDispatch?.dispatchDate))
+    form.value.basicInfoHead.attendanceDate.value = fireDispatch?.attendanceDate && dayjs(Number(fireDispatch?.attendanceDate))
+    form.value.basicInfoHead.evacuateDate.value = fireDispatch?.evacuateDate && dayjs(Number(fireDispatch?.evacuateDate))
+    form.value.basicInfoHead.midwayReturnDate.value = fireDispatch?.midwayReturnDate && dayjs(Number(fireDispatch?.midwayReturnDate))
+    form.value.basicInfoHead.returnDate.value = fireDispatch?.returnDate && dayjs(Number(fireDispatch?.returnDate))
     form.value.basicInfoHead.personNum.value = fireDispatchHead?.personNum
     form.value.basicInfoHead.truckNum.value = fireDispatchHead?.truckNum
     form.value.basicInfoHead.commandTime.value = fireDispatchHead?.commandTime
@@ -1639,7 +1639,7 @@ export const useFormConfig = () => {
           ...item,
           nameIds: item.boFireUserId,
           name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
-          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+          teamEntryTime: item.teamEntryTime ? dayjs(Number(item.teamEntryTime)) : undefined,
           rescueRank: item.rescueRank?.split(','),
           duty: item.duty?.split(','),
           nativePlace: item.nativePlace?.split(','),
@@ -1651,11 +1651,11 @@ export const useFormConfig = () => {
           ...item,
           nameIds: item.boFireUserId,
           name: nationTeamFlag ? { value: item.boFireUserId, label: item.name, boFireUserId: item.boFireUserId, userName: item.name } : item.name,
-          teamEntryTime: item.teamEntryTime ? dayjs(item.teamEntryTime) : undefined,
+          teamEntryTime: item.teamEntryTime ? dayjs(Number(item.teamEntryTime)) : undefined,
           rescueRank: item.rescueRank?.split(','),
           duty: item.duty?.split(','),
           nativePlace: item.nativePlace?.split(','),
-          deathDate: item.deathDate ? dayjs(item.deathDate) : undefined,
+          deathDate: item.deathDate ? dayjs(Number(item.deathDate)) : undefined,
         }
       })
     }
@@ -1745,7 +1745,7 @@ export const useFormConfig = () => {
     form.value.proSteps.fireDispatchTransferVOList.value = fireDispatchTransferVOList
     checkFormField(warningDetail, nationTeamFlag)
 
-    callback()
+    callback && callback()
   }
 
   // 校验是否对异常项进行批注

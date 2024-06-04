@@ -191,6 +191,7 @@ watch(() => form.value.casualtyWar.isInjured, () => {
   }
   else if (form.value.casualtyWar.isInjured.value === '2') {
     form.value.casualtyWar.injuredList = []
+    form.value.casualtyWar.injuryNum.value = 0
   }
 }, { deep: true })
 

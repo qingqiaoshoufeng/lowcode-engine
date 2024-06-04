@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <!-- <meta http-equiv="Content-Security-Policy" content="img-src 'self' data: file: http: https:;"> -->
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>全国火灾与警情统计系统</title>
     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
     <script src="./vconsole.min.js"></script>
     <script>
@@ -28,15 +28,6 @@
 
     <!-- 应急部 js sdk -->
     <script src="<%= process.env.VUE_APP_JS_SDK %>"></script>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-
-    <script src="./app-update.js"></script>
 
     <script>
       if ($c && $c.init) {
@@ -44,10 +35,19 @@
           // 初始成功回调
           console.log('onetalk：初始化成功！', window.ecpot)
           if (window.ecpot && location.href.indexOf('a2_ticket') > -1) {
-            window.ecpot.close()
+            window.ecpot.hideTitleBar()
           }
         });
       }
     </script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but 全国火灾与警情统计系统 doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <script src="./app-update.js"></script>
   </body>
 </html>

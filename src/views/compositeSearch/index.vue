@@ -74,6 +74,15 @@ const onSearchCallback = () => {
   queryParams.value.time = policeBase.warningDate.value || fireBase.fireDate.value
   const firstKeyMap = ['', 'comprehensiveWarningQueryReq', 'comprehensiveDispatchQueryReq', 'comprehensiveDispatchHeadQueryReq']
   const keyMap = ['', 'areaGroupStaticFlag', 'dispatchGroupOrgStaticFlag', 'fireHeadStaticFlag']
+  if (queryParams.value.comprehensiveWarningQueryReq?.areaGroup) {
+    queryParams.value.comprehensiveWarningQueryReq.areaGroupStaticFlag = searchDimension.value
+  }
+  if (queryParams.value.comprehensiveDispatchQueryReq?.dispatchGroupOrg) {
+    queryParams.value.comprehensiveDispatchQueryReq.dispatchGroupOrgStaticFlag = searchDimension.value
+  }
+  if (queryParams.value.comprehensiveDispatchHeadQueryReq?.fireHead) {
+    queryParams.value.comprehensiveDispatchHeadQueryReq.fireHeadStaticFlag = searchDimension.value
+  }
   if (searchType.value < 4) {
     queryParams.value[firstKeyMap[searchType.value]][keyMap[searchType.value]] = searchDimension.value
   }

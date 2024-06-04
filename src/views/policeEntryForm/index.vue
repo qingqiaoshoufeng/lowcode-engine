@@ -926,6 +926,16 @@ const validateHeadquarters = (value, rule) => {
 const onWarningOrgname = () => {
   showDialog({ message: `如果该警情无主，请输入“无明确产权”` });
 }
+
+const checkPhone = () => {
+  return showPreview.value && localStorage.platform === 'ydyj-app' && validateTelePhone(form.value.warningTel)
+}
+
+const handleStartPhone = () => {
+  if (window.ecpot) {
+    window.ecpot.callNumber({ number: form.value.warningTel });
+  }
+}
 </script>
 
 <template>
@@ -1323,31 +1333,66 @@ const onWarningOrgname = () => {
           />
         </template>
       </SelectSingle>
-      <van-field
-        v-if="!showSecurityService"
-        v-model="form.warningTel"
-        v-preview-text="showPreview"
-        :readonly="showPreview"
-        name="warningTel"
-        label="联系方式："
-        placeholder="请输入联系方式"
-        maxlength="13"
-        class="field-not-required"
-        :required="false"
-        :disabled="isConfirm"
-        :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
-      >
-        <template v-slot:label="">
-          <FieldAnnotation
-            label="联系方式："
-            :id="currentRow?.boFireWarningId"
-            remark-field="warningTel"
-            field-module="policeWarning"
-            :exist-data="fieldExist?.warningTel"
-            @refresh-callback="refreshField"
-          />
-        </template>
-      </van-field>
+      <template v-if="showPreview">
+        <van-field
+          v-if="!showSecurityService"
+          v-model="form.warningTel"
+          :readonly="showPreview"
+          name="warningTel"
+          label="联系方式："
+          placeholder="请输入联系方式"
+          maxlength="13"
+          class="field-not-required"
+          :required="false"
+          :disabled="isConfirm"
+          :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
+        >
+          <template v-if="checkPhone" #input>
+            <div style="width: 100%;text-align: left;color: blue;" @click="handleStartPhone">
+              {{ form.warningTel }}
+            </div>
+          </template>
+          <template v-else-if="showPreview" #input>
+            <div style="width: 100%;text-align: left;">{{ form.warningTel }}</div>
+          </template>
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="联系方式："
+              :id="currentRow?.boFireWarningId"
+              remark-field="warningTel"
+              field-module="policeWarning"
+              :exist-data="fieldExist?.warningTel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+      </template>
+      <template v-else>
+        <van-field
+          v-if="!showSecurityService"
+          v-model="form.warningTel"
+          :readonly="showPreview"
+          name="warningTel"
+          label="联系方式："
+          placeholder="请输入联系方式"
+          maxlength="13"
+          class="field-not-required"
+          :required="false"
+          :disabled="isConfirm"
+          :rules="[{ validator: validateFireTel, trigger: 'onBlur' }, { required: false, message: '' }]"
+        >
+          <template v-slot:label="">
+            <FieldAnnotation
+              label="联系方式："
+              :id="currentRow?.boFireWarningId"
+              remark-field="warningTel"
+              field-module="policeWarning"
+              :exist-data="fieldExist?.warningTel"
+              @refresh-callback="refreshField"
+            />
+          </template>
+        </van-field>
+      </template>
       <van-field
         v-if="showNaturalDisaster"
         :readonly="showPreview"

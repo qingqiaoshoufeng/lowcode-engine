@@ -77,6 +77,10 @@ watch(() => props.value, (newVal) => {
     currentDate.value = [value.year(), value.month() + 1, value.date()];
     currentTime.value = [value.hour(), value.minute(), value.second()];
     selectText.value = value.format("YYYY-MM-DD HH:mm:ss");
+  } else {
+    currentDate.value = []
+    currentTime.value = []
+    selectText.value = ''
   }
 }, { immediate: true });
 

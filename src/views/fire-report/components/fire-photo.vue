@@ -1,5 +1,5 @@
 <script setup>
-import { inject, nextTick, onMounted, ref } from 'vue'
+import { inject, nextTick, onMounted, ref, onUnmounted } from 'vue'
 import { gutter } from '@/utils/constants.js'
 import { useUpload } from '@/hooks/useUpload.js'
 import { downloadAttachmentFile, getAttachmentFile,uploadFile  } from '@/apis/index.js'
@@ -133,6 +133,25 @@ onMounted(() => {
     })
   }
 })
+
+const onOpenPreview = () => {
+  // 在应急部app内，预览图片时开启水印
+  if (window.ecpot) {
+    window.ecpot.showWatermark();
+  }
+}
+
+const onClosePreview = () => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+}
+
+onUnmounted(() => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+})
 </script>
 
 <template>
@@ -200,6 +219,8 @@ onMounted(() => {
                 :show-upload="form.firePhoto.photos?.value?.length < 9 && !isDetail"
                 :after-read="OnAfterRead"
                 @delete="onDelete"
+                @click-preview="onOpenPreview"
+                @close-preview="onClosePreview"
               />
             </template>
             <template v-slot:label="">

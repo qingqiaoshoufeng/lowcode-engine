@@ -1,5 +1,5 @@
 <script setup>
-import { inject, nextTick, onMounted, ref } from "vue";
+import { inject, nextTick, onMounted, ref, onUnmounted } from "vue";
 import { showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
@@ -105,6 +105,34 @@ const onDelete = (file) => {
     });
   })
 }
+
+const onOpenPreview = () => {
+  // 在应急部app内，预览图片时开启水印
+  if (window.ecpot) {
+    window.ecpot.showWatermark();
+  }
+}
+
+const onClosePreview = () => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+}
+
+onUnmounted(() => {
+  if (window.ecpot) {
+    window.ecpot.hideWatermark();
+  }
+})
+
+const onClickUpload = () => {
+  if (window.ecpot) {
+    window.ecpot.chooseMedia({
+      take: false,
+      multi: false,
+    });
+  }
+}
 </script>
 
 <template>
@@ -131,20 +159,21 @@ const onDelete = (file) => {
                 :show-upload="form.scenePhoto.photos?.value?.length < 9 && !isDetail"
                 :after-read="onAfterRead"
                 :before-delete="onDelete"
+                @click-preview="onOpenPreview"
+                @close-preview="onClosePreview"
               />
             </template>
-          <template v-slot:title="">
-            <FieldAnnotation
-              label="相关附件上传："
-              remark-field="photos"
-              field-module="scenePhoto"
-              :exist-data="fieldExist?.photos"
-              @refresh-callback="refreshField"
-            />
-          </template>
-        </van-field>
+            <template v-slot:title="">
+              <FieldAnnotation
+                label="相关附件上传："
+                remark-field="photos"
+                field-module="scenePhoto"
+                :exist-data="fieldExist?.photos"
+                @refresh-callback="refreshField"
+              />
+            </template>
+          </van-field>
         </van-cell>
-
       </div>
     </van-cell-group>
   </ProCard>

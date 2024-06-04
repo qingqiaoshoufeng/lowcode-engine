@@ -18,6 +18,7 @@ export * from './system/login.js'
 export * from './business/home.js'
 export * from './business/fire-report.js'
 export * from './business/fire-manage.js'
+export * from './business/fire-delete.js'
 export * from './business/fire-review.js'
 export * from './business/data-approval.js'
 export * from './business/statistical-supervision.js'
@@ -223,4 +224,17 @@ export function getSourceOption(params) {
 // 获取验证码
 export function getMsgCode(data) {
   return request.post(`/acws/rest/biz/factor/sendloginmsg`, data)
+}
+
+export function getRoleList() {
+  const params = {
+    offset: 1,
+    limit: 10,
+  }
+  return axios.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
+    return {
+      ...res,
+      list: res?.items,
+    }
+  })
 }
