@@ -71,7 +71,7 @@ export const permission={
   "chudongchaoshitongji":["admin", "dispatch-timeout"],
   "jingqingzuofei":["admin", "police-delete"],
   "weitianbaoduizhantongji":["admin", "station-timeout"],
-  "huozaizuofei":["admin", "station-timeout"],
-  "huozaizuofeishenpi":'/fire-abolish-approval',
+  "huozaizuofei":["admin", "fire-delete"],
+  "huozaizuofeishenpi":["admin", "fire-abolish-approval"],
 }
   
