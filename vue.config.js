@@ -13,7 +13,7 @@ function getPublicPath() {
     default:
       return './'
   }
-}
+} 
 
 module.exports = {
   lintOnSave: false,

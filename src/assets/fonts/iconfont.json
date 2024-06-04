@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "40536968",
+      "name": "huozaizuofei",
+      "font_class": "huozaizuofei",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "40536969",
+      "name": "huozaizuofeishenpi",
+      "font_class": "huozaizuofeishenpi",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
       "icon_id": "35792450",
       "name": "段首缩紧",
       "font_class": "duanshousuojin",
