@@ -1631,15 +1631,15 @@ const onSideBarChange = (e, k) => {
   <div v-if="!showPreview && show.apiLoading" class="dispatch-report-footer">
     <div class="form-footer">
       <template v-if="isApproval && isEdit">
-        <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
+        <van-button block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
           审核
         </van-button>
       </template>
       <template v-else>
-        <van-button round block type="default" size="small" :loading="commonLoading" @click="handleTemporary">
+        <van-button block type="default" size="small" :loading="commonLoading" @click="handleTemporary">
           暂存
         </van-button>
-        <van-button round block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
+        <van-button block type="primary" size="small" :loading="commonLoading" @click="handleSubmit">
           确定
         </van-button>
       </template>

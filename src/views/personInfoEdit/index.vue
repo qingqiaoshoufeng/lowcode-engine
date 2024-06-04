@@ -101,7 +101,7 @@ onMounted(() => {
         />
       </van-cell-group>
       <div style="margin: 16px">
-        <van-button round block :loading="loading" type="primary" native-type="submit">
+        <van-button block :loading="loading" type="primary" native-type="submit">
           保存
         </van-button>
       </div>
