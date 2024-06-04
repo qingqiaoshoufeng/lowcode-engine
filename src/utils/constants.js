@@ -25,6 +25,10 @@ export const MSG_LOCKING_TEXT = '该数据已被锁定，需联系管理员解�
 
 export const MSG_NO_HEAD_REPORT = '暂时无法生成全勤指挥部出动的相关报表！'
 
+export const MSG_IS_CANCEL = '该数据已申请作废，正处于审批中，不允许重复申请！'
+
+export const MSG_IS_EDIT = '该数据已申请更正，正处于审批中，不允许重复申请！'
+
 export const MSG_LOCKING_ADMIN = '包含已被锁定数据，需联系管理员解锁后才可操作！'
 
 export const dispatchInjuryType = [
@@ -302,6 +306,10 @@ export const applyRecordType = [
   {
     value: '4',
     label: '警情作废申请',
+  },
+  {
+    value: '5',
+    label: '火灾作废申请',
   },
 ]
 

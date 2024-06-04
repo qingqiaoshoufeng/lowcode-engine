@@ -63,3 +63,8 @@ export function getFireManageList(data) {
 export function turnFireBack(data) {
   return axios.post('/acws/rest/biz/fireinfo/rejectfire', data)
 }
+
+// 火灾申请作废
+export function abolishFire(params) {
+  return axios.post(`/acws/rest/biz/fireinfocancel/save`, params)
+}

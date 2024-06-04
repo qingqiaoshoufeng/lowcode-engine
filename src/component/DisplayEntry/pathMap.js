@@ -41,6 +41,7 @@ export const pathMap = {
   "jingqingzhuanpai": '/policeTransfer',
   "jingqingzuofei":'/police-delete',
   "huozaizuofei":'/fire-delete',
+  "huozaizuofeishenpi":'/fire-abolish-approval',
 }
 
 export const permission={
@@ -69,6 +70,8 @@ export const permission={
   "huozaichaoshitongji":["admin", "fire-timeout"],
   "chudongchaoshitongji":["admin", "dispatch-timeout"],
   "jingqingzuofei":["admin", "police-delete"],
-  "weitianbaoduizhantongji":["admin", "station-timeout"]
+  "weitianbaoduizhantongji":["admin", "station-timeout"],
+  "huozaizuofei":["admin", "station-timeout"],
+  "huozaizuofeishenpi":'/fire-abolish-approval',
 }
   

@@ -30,6 +30,27 @@ export function getFireWarningEditApproval(data) {
   })
 }
 
+// 未出动作废申请列表
+export function getFireAbolishApproval(data) {
+  return request.get('/acws/rest/biz/fire/cancelreviewlist/query', {
+    params: {
+      offset: (data.page - 1) * data.limit + 1,
+      limit: data.limit,
+      startDate: data.time?.[0] ? dayjs(data.time[0]).format('YYYY-MM-DD HH:mm:ss') : '',
+      endDate: data.time?.[1] ? dayjs(data.time[1]).format('YYYY-MM-DD HH:mm:ss') : '',
+      state: data.state,
+      applyType: data.applyType,
+      applyGroup: data.applyGroup?.length > 0 ? data.applyGroup[0].organizationid : '',
+      fireCode: data.fireCode,
+    },
+  }).then((res) => {
+    return {
+      ...res,
+      list: res.items,
+    }
+  })
+}
+
 // 警情作废申请列表
 export function getFireWarningAbolishApproval(data) {
   return request.get('/acws/rest/biz/warning/cancelreviewlist/query', {

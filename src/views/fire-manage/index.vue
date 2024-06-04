@@ -102,6 +102,17 @@
               >
                更正
               </van-button>
+              <van-button
+                v-p="['admin', 'fire-manage:apply']"
+                type="success"
+                size="mini"
+                color="#1989fa"
+                class="item-btn"
+                @click.stop="handleAbolish(record)"
+                :disabled="!checkAbolishFireState(record.isDispatch, record.fireStatusValue, record.updatePermission)"
+              >
+               作废
+              </van-button>
             </div>
           </div>
         </template>
@@ -145,6 +156,22 @@
         />
       </template>
     </ProModal>
+     <!-- 申请作废 -->
+     <ProModal
+      :showConfirmBack="true"
+      :showHeader="false"
+      title="申请作废" 
+      v-model:visible="show.abolishVisible"
+      width="700px"
+      >
+        <template #default="{ setHandleOk }">
+          <ApplyAbolish
+            :current-row="currentRow"
+            :set-handle-ok="setHandleOk"
+            @finish-callback="refreshCallback"
+          />
+        </template>
+      </ProModal>
   </div>
 </template>
   
@@ -155,14 +182,15 @@ import {
   collectFireWarning,
   getFireManageList } from '@/apis/index.js'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
-import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue";
-import { getLastMonth,checkFireChangeState } from '@/utils/tools.js'
-import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
+import ApplyRecheck from "@/views/policeManageList/apply-recheck.vue"; 
+import { getLastMonth,checkFireChangeState,checkAbolishFireState } from '@/utils/tools.js'
+import { MSG_LOCKING_TEXT, isNot, MSG_IS_EDIT,MSG_IS_CANCEL } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import SelectMore from "@/component/SelectMore/index";
 import { formatYmdHm } from "@/utils/format.js";
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import { showToast, showLoadingToast, closeToast } from 'vant';
+import ApplyAbolish from './apply-abolish.vue'
 import store from '@/store/index.js'
 const getSystemDictSync = store.getters['dict/getSystemDictSync']
 
@@ -416,6 +444,25 @@ const onTabChangeFn = (val,val1)=>{
 const handleItem = (record)=>{
   // selectVisible
 }
+
+// 作废验证
+const handleAbolish = (row) => {
+  if (row.isLock === '1') {
+    showToast(MSG_LOCKING_TEXT)
+    return
+  }
+  if (row.isExistCancel === '1') {
+    showToast(MSG_IS_CANCEL)
+    return
+  }
+  if (row.isExistEdit === '1') {
+    showToast(MSG_IS_EDIT)
+    return
+  }
+  currentRow.value = row
+  show.value.abolishVisible = true
+}
+
 </script>
 
 <style lang="scss" scoped>

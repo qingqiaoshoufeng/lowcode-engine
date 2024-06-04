@@ -11,10 +11,10 @@ import {
 } from "@/utils/tools.js";
 import { applyType } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getFireWarningAbolishApproval } from "@/apis/index.js";
+import { getFireAbolishApproval } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useModal } from '@/hooks/useModal.js'
-
+import EditorForm from '../fire-report/components/EditorForm.vue'
 const searchOptions = ref([
   {
     title: '选择时间',
@@ -104,6 +104,12 @@ const onSearchConfirm = () => {
   });
 }
 
+// 火灾作废申请
+const approvalCallback = () => {
+  show.value.reviewVisible = false
+  proListRef.value.filter()
+}
+
 const finishCallback = () => {
   show.value.reviewVisible = false
   proListRef.value.filter()
@@ -122,7 +128,7 @@ onMounted(() => {
       ref="proListRef"
       title="火灾作废审批"
       :defaultFilterValue="defaultFilterValue"
-      :getListFn="getFireWarningAbolishApproval"
+      :getListFn="getFireAbolishApproval"
       :tabs="tabs"
       rowKey="boFireWarningId"
       :showLoad="false"
@@ -212,13 +218,14 @@ onMounted(() => {
       title="火灾作废审批"
     >
       <template #default="{ setHandleOk }">
-        <PoliceEntryDetail
-          :current-row="currentRow"
-          :is-approval="true"
-          process-key="warningCancel"
-          approval-text="火灾作废审批"
+        <EditorForm
+          :showReviewDialog="showReviewDialog"
           :set-handle-ok="setHandleOk"
-          @finish-callback="finishCallback"
+          :current-row="currentRow" 
+          :is-detail="true"
+          :is-approval="true"
+          process-key="fireCancel"
+          @finish-callback="approvalCallback"
         />
       </template>
     </ProModal>
