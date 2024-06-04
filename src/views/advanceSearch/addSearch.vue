@@ -260,6 +260,7 @@ defineExpose({
             :select-level="form.selectLevel"
             :select-level-non="form.selectLevelNon || -1"
             :select-leaf="form.selectLeaf"
+            :select-level-equal="form.selectLevelEqual"
             :headers-disabled="form.headersDisabled ? false : true"
             :params="{ ...form.params, staticFlag: searchDimension }"
             :rules="[{ validator: validateOrg }]"

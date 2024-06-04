@@ -75,9 +75,9 @@ const renderFirePlace = (record) => {
   let prefix = ''
   if (record.fireTypeValue) {
     const types = record.fireTypeValue?.split('/')
-    prefix = `${types[types.length - 1]}${record.firePlace ? '/' : ''}`
+    prefix = `${types[types.length - 1]}${record.firePlaceValue ? '/' : ''}`
   }
-  return `${prefix}${record.firePlace}`
+  return `${prefix}${record.firePlaceValue}`
 }
 
 const onTimeChange = (value) => {

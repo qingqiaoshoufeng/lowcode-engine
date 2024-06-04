@@ -1,11 +1,12 @@
 <script setup>
-import { ref, onMounted, nextTick, inject, watch, computed } from "vue";
+import { ref, onMounted, provide, nextTick, inject, watch, computed } from "vue";
 import ProList from "@/component/ProList/index";
 import { generateColorByState, checkRejectState } from "@/utils/tools.js";
 import PoliceEntryDetail from '@/views/policeEntryDetail/index.vue';
 import ApplyReject from "@/views/police-supervision/apply-reject.vue";
 import ProModal from "@/component/ProModal/index";
 import SearchInfo from './searchInfo.vue';
+import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import ReportGenerate from "@/views/statistics/components/reportGenerate.vue";
 import { showDialog, showToast, showLoadingToast, closeToast } from "vant"
 import { getSearchResult, getAdvanceSearchResult } from "@/apis/index.js";
@@ -40,6 +41,8 @@ const { show } = useModal();
 const currentRow = ref(null);
 
 const proListRef = ref(null);
+
+provide('show', show)
 
 const rejectType = computed(() => {
   switch (searchType.value) {
@@ -229,8 +232,14 @@ const applyTypeFlag = computed(() => {
     </div>
 
     <!-- 警情详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="警情详情">
-      <PoliceEntryDetail :current-row="currentRow" />
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true"
+      :showHeader="false"
+      :title="currentRow?.boFireWarningId ? '警情详情' : '未出动火灾详情'"
+    >
+      <PoliceEntryDetail v-if="currentRow?.boFireWarningId" :current-row="currentRow" />
+      <EditorForm v-else :current-row="currentRow" :is-detail="true" />
     </ProModal>
     <!-- 发起驳回说明 -->
     <ProModal
