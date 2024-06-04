@@ -14,6 +14,7 @@ export const checkBoxs = [
     label: '警情所属队伍',
     type: '6',
     selectLeaf: false,
+    selectLevelEqual: true,
     params: { permission: true },
     labelWidth: '116px',
   },
@@ -92,6 +93,7 @@ export const checkBoxs = [
     label: '录入单位',
     type: '6',
     selectLeaf: false,
+    selectLevelEqual: true,
     params: { permission: true },
   },
   {
@@ -201,6 +203,7 @@ export const checkBoxs = [
     type: '6',
     single: false,
     selectLeaf: false,
+    selectLevelEqual: true,
     params: { permission: true },
   },
   {
@@ -364,6 +367,7 @@ export const checkBoxs = [
     label: '出动单位',
     type: '6',
     selectLeaf: false,
+    selectLevelEqual: true,
   },
   {
     fieldKeyOne: 'deptNature',
@@ -945,6 +949,7 @@ export const checkBoxs = [
     single: false,
     selectLeaf: false,
     headersDisabled: false,
+    selectLevelEqual: true,
     params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' },
     labelWidth: '104px',
   },

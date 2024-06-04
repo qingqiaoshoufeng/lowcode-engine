@@ -117,6 +117,7 @@ export const useFormConfig = () => {
         single: false,
         selectLeaf: false,
         headersDisabled: true,
+        selectLevelEqual: true,
         params: { permission: true }
       },
       warningStatus: { // 警情状态
@@ -232,6 +233,7 @@ export const useFormConfig = () => {
       //   single: false,
       //   selectLeaf: false,
       //   headersDisabled: true,
+      // selectLevelEqual: true,
       //   params: { permission: true }
       // },
       dutyGroup: { // 责任队站
@@ -405,6 +407,7 @@ export const useFormConfig = () => {
         single: false,
         selectLeaf: false,
         headersDisabled: true,
+        selectLevelEqual: true,
         params: { permission: true }
       },
       // dispatchGroup: { // 出动队伍
@@ -982,6 +985,7 @@ export const useFormConfig = () => {
         single: false,
         selectLeaf: false,
         headersDisabled: false,
+        selectLevelEqual: true,
         params: { deptType: 1, deptLevel: 4, dutyGroupFlag: '1' }
       },
       fireDirection: { // 火灾地址

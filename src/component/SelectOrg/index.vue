@@ -211,14 +211,16 @@ const handleCheck = (item) => {
     return
   }
   else if (props.selectLevelEqual && item.checked) {
-    selectItem.value.forEach(temp => {
+    const origin = cloneDeep(selectItem.value)
+    selectItem.value = []
+    origin.forEach(temp => {
       if (temp.orgLevel === item.orgLevel && temp.organizationid !== item.organizationid) {
         selectItem.value.push(cloneDeep(temp))
       }
     });
     selectItem.value.push(cloneDeep(item));
-    selectValue.value = selectItem.value.map((temp) => item.organizationid);
-    selectText.value = selectItem.value.map((temp) => item.name);
+    selectValue.value = selectItem.value.map((temp) => temp.organizationid);
+    selectText.value = selectItem.value.map((temp) => temp.name);
     treeData.value.forEach(arr => {
       arr.forEach(i => {
         if (selectValue.value.indexOf(i.organizationid) < 0 && i.checked) {
