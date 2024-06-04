@@ -59,15 +59,25 @@ export const responseError = (error) => {
       loginError(text)
     }
   }
-  else if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_REQUEST' || error.message === 'Network Error') {
-    showFailToast({
-      message: '操作未授权，请重新登录',
-    })
+  else if (error.response?.data?.path === '/acws/login.jsp') {
     localStorage.clear()
     if (window.ecpot) {
       window.ecpot.close()
     } else {
       setTimeout(() => location.reload(), 500)
+    }
+  }
+  else if (error.message === 'Network Error' && !error.response && error.isAxiosError) {
+    showFailToast({
+      message: '操作未授权，请重新登录',
+    })
+    if (!error.response && error.isAxiosError) {
+      localStorage.clear()
+      if (window.ecpot) {
+        window.ecpot.close()
+      } else {
+        setTimeout(() => location.reload(), 500)
+      }
     }
   }
   else if (error.response?.status === 302) {
@@ -79,18 +89,9 @@ export const responseError = (error) => {
     }
   }
   else if (error.response?.status === 404) {
-    if (error.response?.data?.path === '/acws/login.jsp') {
-      localStorage.clear()
-      if (window.ecpot) {
-        window.ecpot.close()
-      } else {
-        setTimeout(() => location.reload(), 500)
-      }
-    } else {
-      showFailToast({
-        message: error.response?.data?.error || '非法请求，请重试！',
-      })
-    }
+    showFailToast({
+      message: error.response?.data?.error || '非法请求，请重试！',
+    })
   }
   else if (error.response) {
     const { status, statusText, data } = error.response
