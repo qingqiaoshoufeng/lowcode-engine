@@ -19,6 +19,7 @@ import { entryList } from "./config.js";
 import { showLoadingToast, closeToast } from "vant";
 import { loginOut, getRemind, getNotice } from "@/apis/index.js";
 import { useRouter } from "vue-router";
+import { resetLocalStorage } from '@/utils/tools.js'
 
 const currentab = ref(5);
 
@@ -30,7 +31,6 @@ const list = ref(entryList.filter(item=>{
   return !flag
 }))
 
-
 const router = useRouter();
 
 provide('isInsert',isInsert)
@@ -41,11 +41,7 @@ const handleOut = () => {
   loginOut({}).finally(() => {
     closeToast();
     // 记住密码存在了 localStorage，这里不使用 localStorage.clear()
-    localStorage.token = ""
-    localStorage.platform = ""
-    localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
-    localStorage.SYSTEM_ENV = ""
-    localStorage.SYSTEM_BASE_URL = ""
+    resetLocalStorage(1)
     router.replace({
       path: "/login",
     });

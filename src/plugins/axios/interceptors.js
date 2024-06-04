@@ -2,6 +2,7 @@ import { showFailToast } from 'vant'
 import { getCodeMessages } from '@/utils/http-code-messages.js'
 import { loginError } from '@/apis/index.js'
 import { getCookie } from '@/utils/tools.js'
+import { resetLocalStorage } from '@/utils/tools.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
@@ -63,7 +64,7 @@ export const responseError = (error) => {
     showFailToast({
       message: '操作未授权，请重新登录',
     })
-    localStorage.clear()
+    resetLocalStorage()
     if (window.ecpot) {
       window.ecpot.close()
     } else {
@@ -71,27 +72,21 @@ export const responseError = (error) => {
     }
   }
   else if (error.message === 'Network Error' && !error.response && error.isAxiosError) {
-    // eslint-disable-next-line no-console
-    console.log('error', error)
-    Object.keys(error).forEach((key) => {
-      // eslint-disable-next-line no-console
-      console.log(`${key}: ${error[key]}`)
-    })
     showFailToast({
       message: '操作未授权，请重新登录',
     })
-    // localStorage.clear()
-    // if (window.ecpot) {
-    //   window.ecpot.close()
-    // } else {
-    //   setTimeout(() => location.reload(), 500)
-    // }
+    resetLocalStorage()
+    if (window.ecpot) {
+      window.ecpot.close()
+    } else {
+      setTimeout(() => location.reload(), 500)
+    }
   }
   else if (error.response?.status === 302) {
     showFailToast({
       message: '操作未授权，请重新登录',
     })
-    localStorage.clear()
+    resetLocalStorage()
     if (window.ecpot) {
       window.ecpot.close()
     } else {

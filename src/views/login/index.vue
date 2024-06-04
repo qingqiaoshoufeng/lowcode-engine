@@ -313,7 +313,7 @@ const handleSwitch = () => {
 	.submit {
 		margin-top: 60px;
 		margin-bottom: 20px;
-		background-color: #7485CB !important;
+		background-color: #2c59f2 !important;
 		height: 36px;
 	}
 	.submit-phone {
