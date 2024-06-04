@@ -60,6 +60,9 @@ export const responseError = (error) => {
     }
   }
   else if (error.response?.data?.path === '/acws/login.jsp') {
+    showFailToast({
+      message: '操作未授权，请重新登录',
+    })
     localStorage.clear()
     if (window.ecpot) {
       window.ecpot.close()
@@ -68,19 +71,26 @@ export const responseError = (error) => {
     }
   }
   else if (error.message === 'Network Error' && !error.response && error.isAxiosError) {
+    // eslint-disable-next-line no-console
+    console.log('error', error)
+    Object.keys(error).forEach((key) => {
+      // eslint-disable-next-line no-console
+      console.log(`${key}: ${error[key]}`)
+    })
     showFailToast({
       message: '操作未授权，请重新登录',
     })
-    if (!error.response && error.isAxiosError) {
-      localStorage.clear()
-      if (window.ecpot) {
-        window.ecpot.close()
-      } else {
-        setTimeout(() => location.reload(), 500)
-      }
-    }
+    // localStorage.clear()
+    // if (window.ecpot) {
+    //   window.ecpot.close()
+    // } else {
+    //   setTimeout(() => location.reload(), 500)
+    // }
   }
   else if (error.response?.status === 302) {
+    showFailToast({
+      message: '操作未授权，请重新登录',
+    })
     localStorage.clear()
     if (window.ecpot) {
       window.ecpot.close()

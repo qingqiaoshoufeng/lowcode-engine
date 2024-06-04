@@ -101,23 +101,21 @@ const isShowTitle = computed(()=>{
         justify-content: center;
         align-items: center;
         .label{
-            font-size: 13px;
-            font-family: PingFang-SC-Medium, PingFang-SC;
-            font-weight: 500;
-            color: #0E203C;
+          font-size: 13px;
+          font-family: PingFang-SC-Medium, PingFang-SC;
+          font-weight: 500;
+          color: #0E203C;
         }
-        img{
-            height: 30px;
-            width: 30px;
-            background-color: #fff;
-
+        img {
+          height: 32px;
+          width: 32px;
+          background-color: #fff;
         }
       }
-  
     }
-    .icon{
-      width: 30px;
-      height: 30px;
+    .icon {
+      width: 32px;
+      height: 32px;
     }
   }
   </style>

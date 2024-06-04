@@ -226,7 +226,7 @@ const applyTypeFlag = computed(() => {
     </div>
 
     <div class="result-generate">
-      <van-button type="primary" round block @click="handleGenerate">
+      <van-button type="primary" block @click="handleGenerate">
         生成报表
       </van-button>
     </div>

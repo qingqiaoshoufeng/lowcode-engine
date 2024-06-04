@@ -204,7 +204,6 @@ onMounted(() => {
         <van-button
           type="primary"
           size="small"
-          round
           style="width: 88px"
           @click="handleSearch"
         >

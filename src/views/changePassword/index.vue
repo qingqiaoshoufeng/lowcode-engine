@@ -132,7 +132,6 @@ onMounted(() => {
       </van-cell-group>
       <div style="margin: 16px">
         <van-button
-          round
           block
           :loading="loading"
           type="primary"

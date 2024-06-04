@@ -1306,15 +1306,15 @@ const onSideBarChange = (e, k) => {
   <div v-if="!showPreview && show.apiLoading" class="fire-report-footer">
     <div class="form-footer" v-if="!showPreview">
       <template v-if="isReview">
-        <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
+        <van-button block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
           审核
         </van-button>
       </template>
       <template v-else>
-        <van-button round block type="default" size="small" v-if="isShowTemporary" :loading="commonLoading" @click.stop="setTemporary">
+        <van-button block type="default" size="small" v-if="isShowTemporary" :loading="commonLoading" @click.stop="setTemporary">
           暂存
         </van-button>
-        <van-button round block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
+        <van-button block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
           确定
         </van-button>
       </template>

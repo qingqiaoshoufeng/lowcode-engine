@@ -87,7 +87,6 @@
 				<van-button
 					class="submit"
 					:class="{ 'submit-phone': needSmsCheck }"
-					round
 					block
 					type="primary"
 					native-type="submit"

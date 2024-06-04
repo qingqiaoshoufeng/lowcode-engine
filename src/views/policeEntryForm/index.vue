@@ -2050,12 +2050,12 @@ const handleStartPhone = () => {
     />
 
     <div class="form-footer" v-if="!showPreview && !isConfirm">
-      <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
+      <van-button block type="primary" size="large" :loading="loading" @click="handleSubmit">
         派发
       </van-button>
     </div>
     <div class="form-footer" v-if="!showPreview && isConfirm">
-      <van-button round block type="primary" size="large" :loading="loading" @click="handleSubmit">
+      <van-button block type="primary" size="large" :loading="loading" @click="handleSubmit">
         跨省警情确认
       </van-button>
     </div>
