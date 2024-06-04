@@ -849,7 +849,7 @@ export const useFormConfig = (validateProgress) => {
     const { warningAddr, extinctDate } = detail
     let content = ''
     if (basicInfo.fireType?.text?.includes('交通工具火灾')) {
-      content = '【起火时间年月日时分】，【警情地址】一【起火场所】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
+      content = '【起火时间年月日时分】，【警情地址】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
       content = '【起火时间年月日时分】，【火灾地址】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
@@ -867,8 +867,8 @@ export const useFormConfig = (validateProgress) => {
     if (basicInfo.firePlace.text?.length > 0) {
       content = content.replace('【起火场所】', cloneDeep(basicInfo.firePlace.text)?.pop())
     }
-    if (basicInfo.vehicleType.text?.length > 0) {
-      content = content.replace('【交通工具类型】', cloneDeep(basicInfo.vehicleType.text)?.pop())
+    if (basicInfo.vehicleType.text?.length >= 1) {
+      content = content.replace('【交通工具类型】', cloneDeep(basicInfo.vehicleType.text)?.[1])
     }
     if (basicInfo.initialFuelsType.text?.length > 0) {
       content = content.replace('【起火物】', cloneDeep(basicInfo.initialFuelsType.text)?.pop())
