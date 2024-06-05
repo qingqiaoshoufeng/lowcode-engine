@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { request } from '@/plugins/axios/index.js'
+import { getAttachUrl } from '@/utils/tools.js'
 
 export * from './system/login.js'
 export * from './system/user-manage.js'
@@ -227,6 +228,7 @@ export function getMsgCode(data) {
 }
 
 export function getRoleList() {
-  return fetch(`/acws/rest/biz/role/query?offset=1&limit=10`)
+  const url = ['production', 'test', 'staging'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''
+  return fetch(`${url}/acws/rest/biz/role/query?offset=1&limit=10`)
     .then((res) => res.json())
 }
