@@ -229,6 +229,13 @@ export function getMsgCode(data) {
 
 export function getRoleList() {
   const url = ['production', 'test', 'staging'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''
-  return fetch(`${url}/acws/rest/biz/role/query?offset=1&limit=10`)
+  return fetch(`${url}/acws/rest/biz/role/query?offset=1&limit=10`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'token': localStorage.token,
+      'platform': localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
+    },
+  })
     .then((res) => res.json())
 }
