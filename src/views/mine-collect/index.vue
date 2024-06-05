@@ -156,9 +156,8 @@
             />
             <!-- <van-button
               v-p="['admin', 'fire-report:look']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click.stop="handleLook(record)"
             >

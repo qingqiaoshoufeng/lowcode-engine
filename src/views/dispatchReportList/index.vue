@@ -103,9 +103,8 @@ const refreshCallback = () => {
           <div class="item-operate" @click.stop>
             <van-button
               v-p="['admin', 'dispatch-report:reback']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleReject(record)"
             >
@@ -113,9 +112,8 @@ const refreshCallback = () => {
             </van-button>
             <van-button
               v-p="['admin', 'dispatch-report:input']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleInput(record)"
             >

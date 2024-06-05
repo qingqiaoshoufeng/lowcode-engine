@@ -80,9 +80,8 @@ const finishCallback = () => {
           <div class="item-operate" @click.stop>
             <van-button
               v-p="['admin', 'police-manage:edit']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleEdit(record)"
             >

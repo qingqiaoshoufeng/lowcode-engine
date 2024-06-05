@@ -334,9 +334,8 @@ onMounted(() => {
             />
             <van-button
               v-p="['admin', 'police-manage:abolish']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleAbolish(record)"
               :disabled="!checkAbolishState(record.warningStatusValue, record.updatePermission)"
@@ -345,9 +344,8 @@ onMounted(() => {
             </van-button>
             <van-button
               v-p="['admin', 'police-manage:change']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleChange(record)"
               :disabled="!checkPoliceChangeState(record.warningStatusValue, record.updatePermission)"

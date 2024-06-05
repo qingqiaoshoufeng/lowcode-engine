@@ -82,9 +82,8 @@
               />
               <!-- <van-button
                 v-p="['admin', 'fire-report:look']"
-                type="success"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleLook(record)"
               >
@@ -92,21 +91,18 @@
               </van-button> -->
               <van-button
                 v-p="['admin', 'fire-report:look']"
-                type="success"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleRecheck(record)"
                 :disabled="!checkFireChangeState(record.fireStatusValue, record.updatePermission)"
-
               >
                更正
               </van-button>
               <van-button
                 v-p="['admin', 'fire-manage:apply']"
-                type="success"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleAbolish(record)"
                 :disabled="!checkAbolishFireState(record.isDispatch, record.fireStatusValue, record.updatePermission)"

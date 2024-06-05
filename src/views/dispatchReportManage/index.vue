@@ -324,9 +324,8 @@ onMounted(() => {
             />
             <van-button
               v-p="['admin', 'dispatch-manage:change']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleChange(record)"
               :disabled="!checkDispatchChangeState(record.dispatchStatusValue, record.updatePermission)"

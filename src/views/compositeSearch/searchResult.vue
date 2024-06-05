@@ -209,12 +209,11 @@ const applyTypeFlag = computed(() => {
               <van-button
                 v-p="['admin', 'composite-search:back', 'advance-search:back', 'composite-search:common-back', 'advance-search:common-back']"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 :class="{
                   gay: !record.permission
                 }"
-                type="link"
+                type="primary"
                 @click="handleReject(record)"
               >
                 驳回

@@ -251,9 +251,8 @@ onMounted(() => {
           <div class="item-operate" @click.stop>
             <van-button
               v-p="['admin', 'police-confirm:look']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleItem(record)"
             >
@@ -261,9 +260,8 @@ onMounted(() => {
             </van-button>
             <van-button
               v-p="['admin', 'police-confirm:confirm']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleConfirm(record)"
               v-if="proListRef?.query?.confirmFlag === '1'"
