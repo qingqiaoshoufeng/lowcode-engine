@@ -81,7 +81,7 @@
                 @click="handleCollect(record, true)"
               />
               <!-- <van-button
-                v-p="['admin', 'fire-report:look']"
+                v-p="['admin', 'fire-manage:look']"
                 type="primary"
                 size="mini"
                 class="item-btn"
@@ -90,7 +90,7 @@
                 查看
               </van-button> -->
               <van-button
-                v-p="['admin', 'fire-report:look']"
+                v-p="['admin', 'fire-manage:apply']"
                 type="primary"
                 size="mini"
                 class="item-btn"
@@ -100,7 +100,7 @@
                更正
               </van-button>
               <van-button
-                v-p="['admin', 'fire-manage:abolish']"
+                v-p="['admin', 'fire-manage:apply']"
                 type="primary"
                 size="mini"
                 class="item-btn"
