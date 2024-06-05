@@ -231,7 +231,7 @@ export function getRoleList() {
     offset: 1,
     limit: 10,
   }
-  return axios.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
+  return request.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
     return {
       ...res,
       list: res?.items,
