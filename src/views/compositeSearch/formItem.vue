@@ -229,6 +229,7 @@ const searchDimension = inject('searchDimension')
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
         :selectLeaf="false"
+        :params="{ staticFlag: searchDimension }"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'checkbox'">

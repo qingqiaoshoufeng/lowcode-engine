@@ -100,7 +100,7 @@
                更正
               </van-button>
               <van-button
-                v-p="['admin', 'fire-manage:apply']"
+                v-p="['admin', 'fire-manage:abolish']"
                 type="primary"
                 size="mini"
                 class="item-btn"
