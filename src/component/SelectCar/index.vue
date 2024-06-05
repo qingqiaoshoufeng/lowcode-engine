@@ -264,7 +264,7 @@ defineOptions({
         text-overflow: ellipsis;
       }
       .icon {
-        color: green;
+        color: var(--van-primary-color);
       }
     }
     .car-item::after {

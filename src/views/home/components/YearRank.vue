@@ -125,7 +125,7 @@ defineOptions({
       }
       
       .isActive{
-        color: #1833A9;
+        color: var(--van-primary-color);
         background-color: #FFFFFD ;
       }
     }

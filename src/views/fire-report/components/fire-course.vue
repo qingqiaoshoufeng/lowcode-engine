@@ -67,13 +67,13 @@ const showDraft = inject('showDraft')
   }
   .refresh-btn {
     font-size: 12px;
-    color: #027AFF;
+    color: var(--van-primary-color);
     display: flex;
     align-items: center;
     position: absolute;
     top: -26px;
     left: 88px;
-    border: 1px solid #027AFF;
+    border: 1px solid var(--van-primary-color);
     border-radius: 16px;
     padding: 0px 6px;
   }

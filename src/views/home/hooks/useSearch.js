@@ -224,7 +224,7 @@ export default function useSearch({ dataPickerRef, statisticsInfoRef, YearRankRe
     const r = /[0-9][\.]*/g
     // const r = /[^\d\.]/g
     return val.replace(r, (str) => {
-      return `<span style="color:#2F6BFF">${str}</span>`
+      return `<span style="color:#2c59f2">${str}</span>`
     })
   }
   // 获取形式分析数据

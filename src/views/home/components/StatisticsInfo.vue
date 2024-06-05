@@ -246,7 +246,7 @@ export default {
     }
   }
   .isActive{
-        color: #1833A9 !important;
+        color: var(--van-primary-color) !important;
         background-color: #FFFFFD !important;
       }
 }

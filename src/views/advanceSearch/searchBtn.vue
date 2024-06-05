@@ -219,7 +219,7 @@ onMounted(() => {
         .item-enter {
           font-size: 14px;
           font-weight: 400;
-          color: #027AFF;
+          color: var(--van-primary-color);
           margin-left: auto;
         }
         &::after {
@@ -254,7 +254,7 @@ onMounted(() => {
         position: relative;
         i {
           font-size: 14px;
-          color: #027AFF;
+          color: var(--van-primary-color);
           margin-left: auto;
         }
       }

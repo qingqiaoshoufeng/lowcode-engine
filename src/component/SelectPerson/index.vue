@@ -279,7 +279,7 @@ defineOptions({
         text-overflow: ellipsis;
       }
       .icon {
-        color: green;
+        color: var(--van-primary-color);
       }
     }
     .person-item::after {
