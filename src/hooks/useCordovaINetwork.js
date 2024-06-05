@@ -20,6 +20,8 @@ export const useCordovaINetwork = () => {
   const checkNetwork = async () => {
     try {
       const res = await getRoleList()
+      // eslint-disable-next-line no-console
+      console.log('test network', res, res?.data)
       return res && res.data && res.data.code === 200
     } catch (error) {
       return false
