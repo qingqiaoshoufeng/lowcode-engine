@@ -227,14 +227,6 @@ export function getMsgCode(data) {
 }
 
 export function getRoleList() {
-  const params = {
-    offset: 1,
-    limit: 10,
-  }
-  return request.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
-    return {
-      ...res,
-      list: res?.items,
-    }
-  })
+  return fetch(`/acws/rest/biz/role/query?offset=1&limit=10`)
+    .then((res) => res.json())
 }
