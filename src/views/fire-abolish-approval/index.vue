@@ -36,7 +36,7 @@ const searchOptions = ref([
     single: true,
     selectLeaf: false,
     headersDisabled: true,
-    value: 'orgIds',
+    value: 'applyGroup',
   },
 ])
 
