@@ -53,8 +53,8 @@ onMounted(()=>{
   height: 44px;
   box-sizing: content-box;
   line-height: 44px;
-  border-top: 0px solid #0c207f;
-  background-color: #0c207f;
+  border-top: 0px solid var(--van-header-title-color);
+  background-color: var(--van-header-title-color);
   color: #fff;
   width: 100%;
   text-align: center;

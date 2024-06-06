@@ -220,7 +220,7 @@ defineOptions({
   height: 100vh;
   .back {
     height: 44px;
-    background: #0C207F;
+    background: var(--van-header-title-color);
     display: flex;
     position: relative;
     font-size: 18px;
