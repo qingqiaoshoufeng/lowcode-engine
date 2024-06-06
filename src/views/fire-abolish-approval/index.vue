@@ -81,10 +81,7 @@ const onTabFn = (name, title) => {
 };
 
 const handleApproval = (row) => {
-  currentRow.value =  {
-    ...row,
-    boFireInfoId:boFireInfoId,
-  }
+  currentRow.value = row
   show.value.reviewVisible = true
 };
 
