@@ -78,10 +78,10 @@ install&build-job:
     - cp ../public/version.xml $FIREALARMVERDION
     - wget http://10.13.4.153:9000/foodreserver-apps/mc
     - chmod a+x mc
-    # - ls
-    # - ./mc alias set hxdi-pub http://223.4.79.9:31201/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-    # - ./mc cp $FIREALARMAPK hxdi-pub/foodreserver-apps/$FIREALARMAPKNAME
-    # - ./mc cp $FIREALARMVERDION hxdi-pub/foodreserver-apps/$FIREALARMVERDIONNAME
+    - ls
+    - ./mc alias set hxdi-pub http://223.4.79.9:31201/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc cp $FIREALARMAPK hxdi-pub/foodreserver-apps/$FIREALARMAPKNAME
+    - ./mc cp $FIREALARMVERDION hxdi-pub/foodreserver-apps/$FIREALARMVERDIONNAME
 
   artifacts:
     expire_in: 4 week
