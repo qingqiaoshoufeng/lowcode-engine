@@ -15,7 +15,13 @@
           <!-- <div class="tip_per">
               “-”表示同、环期无数据或者数据为0，无法计算出同环比
             </div> -->
-          <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
+          <!-- <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item" v-html="itm"></div> -->
+          <div v-for="(itm, index) in generalInfo" :key="index" class="generalInfo_item">
+            <div v-if="!itm.includes('\r')" v-html="itm" />
+            <div v-for="(itms, indexs) in splitItem(itm)" v-else :key="indexs">
+              <div v-html="itms" />
+            </div>
+          </div>
         </div>
       </div>
       <div v-else-if="currentTab === 5 && withTab" class="general">
@@ -23,7 +29,12 @@
           <!-- <div class="tip_per">
               “-”表示同、环期无数据或者数据为0，无法计算出同环比
             </div> -->
-          <div v-for="(itm, index) in formInfo" :key="index" class="generalInfo_item" v-html="itm"></div>
+          <div v-for="(itm, index) in formInfo" :key="index" class="generalInfo_item">
+            <div v-if="!itm.includes('\r')" v-html="itm" />
+            <div v-for="(itms, indexs) in splitItem(itm)" v-else :key="indexs">
+              <div v-html="itms" />
+            </div>
+          </div>
         </div>
       </div>
       <div v-else class="card_list">
@@ -107,6 +118,9 @@ const {
   paramsKey:'annual'
 })
 
+const splitItem = (val) => {
+  return val.split('\r')
+}
 // 自动轮播暂时关闭
 // const jumpNext = () => {
 //   setTimeout(() => {
