@@ -89,6 +89,7 @@ onMounted(async () => {
   })
   const params = getParams(location.href)
   if (params?.a2_ticket) {
+    params.a2_ticket = params.a2_ticket.replace('#/authorization', '')
     const res = await startAuthorization({
       ticket: params.a2_ticket,
       ssoTag: 'abcdefg', // 跳过验证码
