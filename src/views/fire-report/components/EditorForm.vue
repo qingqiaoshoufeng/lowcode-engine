@@ -204,6 +204,8 @@ watch(
 provide('isRequired',isRequired)
 const showPreview = ref(null)
 
+const warningName = ref('')
+
 const importantEdit = ref(true) // 重要信息更正
 
 const importantInfoReject = ref(true) // 高级驳回
@@ -512,7 +514,7 @@ const initReportTemporary = (res) => {
 // 如果是详情页切换activeBar并且定位位置
 const activeChangeAndScroll = ()=>{
   if(showPreview.value ){
-    sideBarActive.value = '1'
+    sideBarActive.value = Object.keys(sections.value).findIndex((item )=>item === 'briefSituation') || 0
     nextTick(()=>{
       onSideBarChange(null,'warningTitle-s')
     })
@@ -1198,6 +1200,7 @@ onMounted(() => {
         detail.value.extinctDate = res[2].extinctDate
         initFireDetail.value.dispatchArriveFlag = res[2]?.fireWarning?.dispatchArriveFlag
         initFireDetail.value.dispatchAllBackFlag = res[2]?.dispatchAllBackFlag
+        warningName.value = res[2]?.fireWarning?.warningName || ''
         if (res[2]?.dispatchAllBackFlag) {
           form.value.firePhoto.isAllBack.value = '1'
         }
@@ -1261,8 +1264,8 @@ const onSideBarChange = (e, k) => {
               <van-form ref="formRef" @submit="onSubmit">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
-                <ProCard title="标题" :showOpenClose="false" v-if="showPreview" id="warningTitle-s">
-                  <div class="warningName">{{ currentRow.warningName }}</div>
+                <ProCard v-if="(currentRow.warningName || warningName) && showPreview" title="标题" :showOpenClose="false" id="warningTitle-s">
+                  <div class="warningName">{{ currentRow.warningName || warningName }}</div>
                 </ProCard>
                 <!-- 简要情况 -->
                 <ProCard v-if="!showDraft" title="简要情况" id="briefSituation" :showOpenClose="!showPreview">
