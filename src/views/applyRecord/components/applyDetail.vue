@@ -83,6 +83,7 @@ const getCurrentStatus = (item) => {
         readonly
         :class="generateColorByState(detail?.status)"
       />
+      
       <template v-if="applyType === '1' || applyType === '4'">
         <van-field
           label="关联警情编号："
@@ -105,7 +106,7 @@ const getCurrentStatus = (item) => {
         />
         <van-field label="出动状态：" :model-value="detail?.dispatchStatusValue" readonly />
       </template>
-      <template v-else-if="applyType === '3'">
+      <template v-else-if="['3','5'].includes(applyType)">
         <van-field
           label="关联火灾编号："
           label-width="104px"
@@ -166,7 +167,7 @@ const getCurrentStatus = (item) => {
     <!-- 火灾填报详情 -->
     <ProModal v-model:visible="show.fireVisible" :showBack="true" :showHeader="false" title="火灾填报详情">
       <EditorForm
-        :current-row="{ boFireInfoId: currentRow.recheckAppid, boFireWarningId: currentRow.boFireWarningId }"
+        :current-row="{ boFireInfoId: currentRow.recheckAppid || currentRow.boFireInfoId, boFireWarningId: currentRow.boFireWarningId}"
         :is-detail="true"
       />
     </ProModal>
