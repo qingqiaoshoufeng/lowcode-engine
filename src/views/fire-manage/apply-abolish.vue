@@ -77,7 +77,7 @@ onMounted(() => {
   <div class="apply-abolish">
     <div class="tooltip">
       <img src="@/assets/images/icon_warning.png" alt="">
-      <span style="margin-left: 10px;">火灾作废需支队、总队两级审批，一旦生效纳入统计！</span>
+      <span style="margin-left: 10px;">火灾作废需支队、总队两级审批，一旦生效不纳入统计！</span>
     </div>
     <van-form ref="formRef" @submit="onSubmit">
       <SelectSingle

@@ -509,6 +509,17 @@ const initReportTemporary = (res) => {
   }
 }
 
+// 如果是详情页切换activeBar并且定位位置
+const activeChangeAndScroll = ()=>{
+  if(showPreview.value ){
+    sideBarActive.value = '1'
+    nextTick(()=>{
+      onSideBarChange(null,'warningTitle-s')
+    })
+  }
+}
+
+
 const initWatch = () => {
   closeToast()
   const { fireType, severity } = form.value.basicInfo
@@ -607,6 +618,7 @@ const initWatch = () => {
   setTimeout(() => {
     showPreview.value = Boolean(props.isDetail && (form.value.basicInfo.severity.value || form.value.basicInfo.fireType.value))
     show.value.apiLoading = true
+    activeChangeAndScroll()
   }, 0)
 }
 
@@ -1249,7 +1261,7 @@ const onSideBarChange = (e, k) => {
               <van-form ref="formRef" @submit="onSubmit">
                 <!-- 警情信息 -->
                 <FireInfo v-if="!showDraft && !isPolice && !unDispatch" @update-field="(value) => form.fireInfo.fieldAnnotation = value" />
-                <ProCard title="标题" :showOpenClose="false" v-if="showPreview">
+                <ProCard title="标题" :showOpenClose="false" v-if="showPreview" id="warningTitle-s">
                   <div class="warningName">{{ currentRow.warningName }}</div>
                 </ProCard>
                 <!-- 简要情况 -->
