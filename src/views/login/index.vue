@@ -240,8 +240,8 @@ const handleSwitch = () => {
 	if (process.env.NODE_ENV === 'test') {
 		if (clickNumber.value === 7) {
 			localStorage.SYSTEM_ENV = systemEnv.value = '预发布环境'
-			localStorage.SYSTEM_BASE_URL = 'http://stat.119.gov.cn/staging';
-			window.__axios.defaults.baseURL = 'http://stat.119.gov.cn/staging';
+			localStorage.SYSTEM_BASE_URL = 'https://stat.119.gov.cn/staging';
+			window.__axios.defaults.baseURL = 'https://stat.119.gov.cn/staging';
 			getCode()
 			showToast('已切换为预发布环境')
 			window.checkAppVersion(false)
