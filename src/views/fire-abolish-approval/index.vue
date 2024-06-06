@@ -81,7 +81,10 @@ const onTabFn = (name, title) => {
 };
 
 const handleApproval = (row) => {
-  currentRow.value = row
+  currentRow.value =  {
+    ...row,
+    boFireInfoId:boFireInfoId,
+  }
   show.value.reviewVisible = true
 };
 
@@ -206,8 +209,15 @@ onMounted(() => {
     </ProList>
 
     <!-- 火灾详情 -->
-    <ProModal v-model:visible="show.lookVisible" :showBack="true" :showHeader="false" title="火灾详情">
-      <PoliceEntryDetail :current-row="currentRow" />
+    <ProModal
+      v-model:visible="show.lookVisible"
+      :showBack="true" :showHeader="false" 
+      title="火灾详情"
+      :ok-display="false"
+      :footer="null"
+      pro-card-id="card-wrap"
+    >
+      <EditorForm :current-row="currentRow" :is-detail="true" />
     </ProModal>
     <!-- 火灾作废审批 -->
     <ProModal
