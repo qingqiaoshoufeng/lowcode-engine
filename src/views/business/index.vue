@@ -21,12 +21,12 @@ import store from "@/store/index.js";
 import { onMounted } from "vue";
 import DisplayEntry from '@/component/DisplayEntry/index.vue'
 
-const menuInfoList = store.getters['menuInfo/menuInfoList']
+const menuInfoList = computed(()=>(store.getters['menuInfo/menuInfoList']))
 const currentab = ref(3);
 const titleList = ["", "信息采集", "审核/审批", "统计监督"];
 const menuListMap = computed(() => {
   // const menuList = store.state?.menuInfo.menuInfo?.appMenuList || [];
-  const result = menuInfoList.reduce((current, item, index) => {
+  const result = menuInfoList.value.reduce((current, item, index) => {
     const { menuType } = item;
     const list = current[menuType] || [];
     list.push(item);
@@ -42,7 +42,7 @@ const onRefresh = async() => {
 };
 
 onMounted(()=>{
-  return store.dispatch('menuInfo/init')
+  store.dispatch('menuInfo/init')
 })
 </script>
     
