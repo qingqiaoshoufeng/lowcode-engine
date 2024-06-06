@@ -97,12 +97,12 @@ const {
       value:1,
     },
     {
-      label:'出动',
-      value:2,
-    },
-    {
       label:'火灾',
       value:3,
+    },
+    {
+      label:'出动',
+      value:2,
     },
     {
       label: '形势分析',
@@ -113,7 +113,7 @@ const {
       value: 0,
     },
   ],
-  defaultTab:0,
+  defaultTab:1,
   handleChange:props.handleChange,
   paramsKey:'annual'
 })
