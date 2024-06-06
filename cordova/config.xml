@@ -22,7 +22,7 @@
         <allow-navigation href="*" />
         <allow-intent href="market:*"/>
         <preference name="StatusBarOverlaysWebView" value="false"/>
-        <preference name="StatusBarBackgroundColor" value="#0C207F"/>
+        <preference name="StatusBarBackgroundColor" value="#0075E7"/>
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:requestLegacyExternalStorage="true"/>
             <application android:usesCleartextTraffic="true" />
