@@ -79,7 +79,7 @@ const handleReject = (row) => {
     if (searchType.value === 1) {
       showDialog({ message: `警情状态为已发送，且申请更正/申请作废，才允许驳回！` })
     } else {
-      showDialog({ message: `报告状态为已审核，且没有申请更正，才允许驳回！` })
+      showDialog({ message: `报告状态为已审核，且没有申请更正、申请作废，才允许驳回！！` })
     }
     return
   }

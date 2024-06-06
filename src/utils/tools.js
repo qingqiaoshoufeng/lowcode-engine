@@ -268,7 +268,7 @@ export const checkPoliceChangeState = (status, updatePermission) => {
 }
 
 export const checkAbolishFireState = (isDispatch, status, updatePermission) => {
-  return !(['已作废', '已归档'].includes(status)) && updatePermission && (isDispatch === '否')
+  return (['已审核'].includes(status)) && updatePermission && (isDispatch === '否')
 }
 
 export const checkDispatchChangeState = (status, updatePermission) => {

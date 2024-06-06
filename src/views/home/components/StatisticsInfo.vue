@@ -82,10 +82,6 @@ const {
   tabList,tabChange} = useTab({
   list:[
     {
-      label: '录入情况',
-      value: 0,
-    },
-    {
       label:'警情',
       value:1,
     },
@@ -100,6 +96,10 @@ const {
     {
       label: '形势分析',
       value: 5,
+    },
+    {
+      label: '录入情况',
+      value: 0,
     },
   ],
   defaultTab:0,

@@ -433,6 +433,14 @@ const handleRecheck = (row) => {
     showToast(MSG_LOCKING_TEXT)
     return
   }
+  if (row.isExistCancel === '1') {
+    showToast(MSG_IS_CANCEL)
+    return
+  }
+  if (row.isExistEdit === '1') {
+    showToast(MSG_IS_EDIT)
+    return
+  }
   currentRow.value = row
   show.value.recheckVisible = true
 }

@@ -266,7 +266,7 @@ const handleLook = (row) => {
 
 const handleReject = (row) => {
   if (!row.permission) {
-    showDialog({ message: `报告状态为已审核，且没有申请更正，才允许驳回！` })
+    showDialog({ message: `报告状态为已审核，且没有申请更正、申请作废，才允许驳回！！` })
     return
   }
   if (row.isLock === '1') {

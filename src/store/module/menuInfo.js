@@ -21,6 +21,7 @@ const getters = {
       dispatchEditReportBacklogNum, // 出动更正待审批数量
       fireEditReportBacklogNum, // 火灾更正待审批数量
       warningEditBacklogNum,  // 警情待修改数量
+      fireCancelBacklogNum
     } = state.menuInfo
     const map = {
       'jingqingxiugai':warningEditBacklogNum,
@@ -36,7 +37,8 @@ const getters = {
       "chudonggengzhengshenpi":dispatchEditReportBacklogNum,
       "huozaigengzhengshenpi":fireEditReportBacklogNum,
       "jingqingzuofeishenpi":warningCancelBacklogNum,
-      "jingqingqueren":warningConfirmBacklogNum
+      "jingqingqueren":warningConfirmBacklogNum,
+      "huozaizuofeishenpi":fireCancelBacklogNum,
     }
     
     return state.menuInfo.appMenuList.map((item)=>{
