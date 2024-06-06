@@ -213,7 +213,7 @@ defineOptions({
       color: #969799;
     }
     .confirm {
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
     .modal-title {
       color: #242424;
@@ -242,7 +242,7 @@ defineOptions({
     .selected-icon {
       background-color: white;
       border: white;
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
   }
   :deep(.pro-list-item) {
@@ -264,7 +264,7 @@ defineOptions({
         text-overflow: ellipsis;
       }
       .icon {
-        color: green;
+        color: var(--van-primary-color);
       }
     }
     .car-item::after {

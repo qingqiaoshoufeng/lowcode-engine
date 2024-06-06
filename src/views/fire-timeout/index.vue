@@ -68,19 +68,17 @@
           <div class="item-operate" @click.stop>
             <!-- <van-button
               v-p="['admin', 'fire-timeout:look']"
-              type="link"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleLook(record)"
             >
               查看
             </van-button> -->
             <van-button
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
-              type="link"
               @click="handleRemark(record)"
             >
               备注

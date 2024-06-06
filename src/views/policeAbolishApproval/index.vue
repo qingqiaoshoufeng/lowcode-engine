@@ -184,9 +184,8 @@ onMounted(() => {
             <div class="item-line" />
             <div class="item-operate" @click.stop>
               <van-button
-                type="success"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click="handleApproval(record)"
                 v-if="proListRef?.query?.state === 'running'"

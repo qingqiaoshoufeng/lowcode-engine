@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { request } from '@/plugins/axios/index.js'
+import { getAttachUrl } from '@/utils/tools.js'
 
 export * from './system/login.js'
 export * from './system/user-manage.js'
@@ -227,14 +228,14 @@ export function getMsgCode(data) {
 }
 
 export function getRoleList() {
-  const params = {
-    offset: 1,
-    limit: 10,
-  }
-  return axios.get(`/acws/rest/biz/role/query`, { params, noErrorHandler: true }).then((res) => {
-    return {
-      ...res,
-      list: res?.items,
-    }
+  const url = ['production', 'test', 'staging'].includes(process.env.NODE_ENV) ? getAttachUrl() : ''
+  return fetch(`${url}/acws/rest/biz/role/query?offset=1&limit=10`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'token': localStorage.token,
+      'platform': localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
+    },
   })
+    .then((res) => res.json())
 }

@@ -187,7 +187,7 @@ defineOptions({
       color: #969799;
     }
     .confirm {
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
     .modal-title {
       color: #242424;

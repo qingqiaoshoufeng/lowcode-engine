@@ -312,7 +312,7 @@ onMounted(() => {
             <van-icon
               name="star"
               v-if="record.focusStatus === '1'"
-              style="color: #fed547"
+              style="color: #ffbc15"
               class="item-collect"
               @click="handleCollect(record, false)"
             />
@@ -324,9 +324,8 @@ onMounted(() => {
             />
             <van-button
               v-p="['admin', 'dispatch-manage:change']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleChange(record)"
               :disabled="!checkDispatchChangeState(record.dispatchStatusValue, record.updatePermission)"

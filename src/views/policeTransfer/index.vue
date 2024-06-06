@@ -248,9 +248,8 @@ onMounted(() => {
           <div class="item-operate" @click.stop>
             <van-button
               v-p="['admin', 'police-redeploy:look']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleItem(record)"
             >
@@ -258,9 +257,8 @@ onMounted(() => {
             </van-button>
             <van-button
               v-p="['admin', 'police-redeploy:transform']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleTransfer(record)"
               v-if="proListRef?.query?.onlyMy === '2'"
@@ -269,9 +267,8 @@ onMounted(() => {
             </van-button>
             <van-button
               v-p="['admin', 'police-redeploy:back']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleBack(record)"
               v-if="proListRef?.query?.onlyMy === '2'"

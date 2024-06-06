@@ -246,7 +246,7 @@ onMounted(() => {
           padding: 0 10px;
           &.active {
             color: #fff;
-            background: #2f6bff;
+            background: var(--van-primary-color);
           }
           &:first-child {
             &.active {
@@ -286,7 +286,7 @@ onMounted(() => {
         .item-enter {
           font-size: 14px;
           font-weight: 400;
-          color: #027aff;
+          color: var(--van-primary-color);
           margin-left: auto;
         }
         &::after {
@@ -321,7 +321,7 @@ onMounted(() => {
         position: relative;
         i {
           font-size: 14px;
-          color: #027aff;
+          color: var(--van-primary-color);
           margin-left: auto;
         }
       }

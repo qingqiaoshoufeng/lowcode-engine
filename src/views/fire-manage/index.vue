@@ -70,7 +70,7 @@
               <van-icon
                 name="star"
                 v-if="record.focusStatus === '1'"
-                style="color: #fed547"
+                style="color: #ffbc15"
                 class="item-collect"
                 @click="handleCollect(record, false)"
               />
@@ -81,32 +81,28 @@
                 @click="handleCollect(record, true)"
               />
               <!-- <van-button
-                v-p="['admin', 'fire-report:look']"
-                type="success"
+                v-p="['admin', 'fire-manage:look']"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleLook(record)"
               >
                 查看
               </van-button> -->
               <van-button
-                v-p="['admin', 'fire-report:look']"
-                type="success"
+                v-p="['admin', 'fire-manage:apply']"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleRecheck(record)"
                 :disabled="!checkFireChangeState(record.fireStatusValue, record.updatePermission)"
-
               >
                更正
               </van-button>
               <van-button
-                v-p="['admin', 'fire-manage:apply']"
-                type="success"
+                v-p="['admin', 'fire-manage:abolish']"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleAbolish(record)"
                 :disabled="!checkAbolishFireState(record.isDispatch, record.fireStatusValue, record.updatePermission)"

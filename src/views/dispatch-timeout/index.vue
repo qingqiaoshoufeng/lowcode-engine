@@ -68,9 +68,8 @@
           <div class="item-operate" @click.stop>
             <!-- <van-button
               v-p="['admin', 'dispatch-timeout:look']"
-              type="link"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleLook(record)"
             >
@@ -78,9 +77,8 @@
             </van-button> -->
             <van-button
               size="mini"
-              color="#1989fa"
               class="item-btn"
-              type="link"
+              type="primary"
               @click="handleRemark(record)"
             >
               备注

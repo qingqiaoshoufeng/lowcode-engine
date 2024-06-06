@@ -12,15 +12,10 @@ export const useCordovaINetwork = () => {
     networkState.value = 'offline';
   }
 
-  function onDeviceReady() {
-    document.addEventListener('online', onLine, false);
-    document.addEventListener('offline', onOffline, false);
-  }
-
   const checkNetwork = async () => {
     try {
       const res = await getRoleList()
-      return res && res.data && res.data.code === 200
+      return res && res.data && res.code === 200
     } catch (error) {
       return false
     }

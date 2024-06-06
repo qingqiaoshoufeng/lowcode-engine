@@ -220,7 +220,7 @@ export default {
                   :get-popup-container="triggerNode => triggerNode.ownerDocument.body"
                   @confirm="handleDelete(item)"
                 >
-                  <close-outlined style="color: #2F6BFF;margin: 5px 0 0 auto;" />
+                  <close-outlined style="color: #2c59f2;margin: 5px 0 0 auto;" />
                 </a-popconfirm>
               </template> -->
             </div>

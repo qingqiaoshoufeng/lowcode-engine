@@ -237,7 +237,7 @@ defineOptions({
     font-size: 14px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: bold;
-    color: #2f6bff;
+    color: var(--van-primary-color);
     width: 65px;
     text-align: right;
     &.green {

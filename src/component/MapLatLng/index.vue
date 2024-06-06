@@ -440,7 +440,7 @@ defineOptions({
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #2F6BFF;
+      background-color: var(--van-primary-color);
       border-top-right-radius: 2px;
       border-bottom-right-radius: 2px;
     }

@@ -64,9 +64,8 @@
             <div class="item-operate" @click.stop>
               <!-- <van-button
                 v-p="['admin', 'police-supervision:look']"
-                type="link"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click="handleLook(record)"
               >
@@ -75,12 +74,11 @@
               <van-button
                 v-p="['admin', 'police-supervision:back', 'police-supervision:common-back']"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 :class="{
                   gay: !record.permission
                 }"
-                type="link"
+                type="primary"
                 @click="handleReject(record)"
               >
                 驳回

@@ -959,6 +959,7 @@ const getSubmitParams = (temporary) => {
 
 const { loading, submit } = useSubmit(
   (res) => {
+    localStorage.reportTemporary = ""
     if (!props.isApproval && !props.isAgain && !props.showDraft) {
       // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'fire-manage' })
       showToast('提交送审成功！')
@@ -1118,8 +1119,7 @@ const handleSubmit = () => {
       emits('refreshEdit')
     }
     else {
-      if (!props.showDraft && checkFieldWarning(fieldExist.value)
-      ) {
+      if (!props.showDraft && checkFieldWarning(fieldExist.value)) {
         // notification.open({ message: '填报异常提醒', description: '请对异常指标进行批注说明！', style: { backgroundColor: 'orange' } })
         showToast('请对异常指标进行批注说明！')
       }

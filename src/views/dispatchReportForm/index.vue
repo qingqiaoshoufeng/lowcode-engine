@@ -1207,6 +1207,7 @@ const getSubmitParams = (temporary) => {
 
 const { loading, submit } = useSubmit(
   (res) => {
+    localStorage.reportTemporary = ""
     if (!props.isApproval && !props.isAgain && !props.showDraft) {
       // showSuccessModal({ title: '提交送审成功！', okText: '查看已填列表', pathName: 'dispatch-manage' })
       showToast('提交送审成功！')

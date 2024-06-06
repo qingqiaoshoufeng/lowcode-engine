@@ -199,9 +199,8 @@ onMounted(() => {
           <div class="item-operate" @click.stop>
             <van-button
               v-if="proListRef?.query?.state === 'running' && checkDispatchApproval(record.dispatchStatusValue)"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click="handleReview(record)"
             >

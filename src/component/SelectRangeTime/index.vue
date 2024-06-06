@@ -205,7 +205,7 @@ defineOptions({
       color: #969799;
     }
     .confirm {
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
     .label {
       width: 100%;
@@ -226,9 +226,9 @@ defineOptions({
     display: flex;
     padding: 0 16px;
     .fast-btn-item {
-      color: #1989fa;
+      color: var(--van-primary-color);
       padding: 3px 8px;
-      border: 1px solid #1989fa;
+      border: 1px solid #2c59f2;
       white-space: nowrap;
       margin-right: 10px;
     }
@@ -248,7 +248,7 @@ defineOptions({
     .selected-icon {
       background-color: white;
       border: white;
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
   }
 }

@@ -158,7 +158,7 @@ defineExpose({
       </template>
     </HeaderTitle>
     <div v-if="tabs?.length > 0" class="list-tabs">
-      <van-tabs v-model:active="tabsActive" color="#1833A9" @change="onTabs">
+      <van-tabs v-model:active="tabsActive" color="#2c59f2" @change="onTabs">
         <van-tab
           v-for="item in tabs"
           :key="item.value"

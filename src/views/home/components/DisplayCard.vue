@@ -91,15 +91,15 @@ export default {
   }
 }
 .blue{
-  background: linear-gradient(180deg, #355ECC 0%, #718DF6 100%);
+  background: linear-gradient(180deg, var(--van-primary-color) 0%, #718DF6 100%);
   box-shadow: 0px 2px 6px 0px rgba(138,108,252,0.2);
 }
 .red{
-  background: linear-gradient(180deg, #FF5B3E 0%, #FF846F 100%);
+  background: linear-gradient(180deg, #f3392e 0%, #FF846F 100%);
   box-shadow: 0px 2px 6px 0px rgba(255,84,42,0.2);
 }
 .green{
-  background: linear-gradient(180deg, #38C68C 0%, #66E3C0 100%);
+  background: linear-gradient(180deg, #00b7a4 0%, #66E3C0 100%);
   box-shadow: 0px 2px 6px 0px rgba(73,198,148,0.2);
 }
 </style>

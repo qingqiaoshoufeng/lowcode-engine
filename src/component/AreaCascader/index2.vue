@@ -293,7 +293,7 @@ export default {
         :options="areaOptions"
         :field-names="{ value: 'boAreaId', text: 'areaName' }"
         :placeholder="placeholder"
-        active-color="#1989fa"
+        active-color="#2c59f2"
         @close="selectVisible = false"
         @change="onChange"
         @finish="onFinish"

@@ -52,9 +52,8 @@
             <div class="item-operate">
               <van-button
                 v-p="['admin', 'fire-manage:edit']"
-                type="success"
+                type="primary"
                 size="mini"
-                color="#1989fa"
                 class="item-btn"
                 @click.stop="handleEdit(record)"
               >

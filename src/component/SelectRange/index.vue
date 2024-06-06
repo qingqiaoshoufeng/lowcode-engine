@@ -138,7 +138,7 @@ defineOptions({
     .selected-icon {
       background-color: white;
       border: white;
-      color: #1989fa;
+      color: var(--van-primary-color);
     }
   }
 }

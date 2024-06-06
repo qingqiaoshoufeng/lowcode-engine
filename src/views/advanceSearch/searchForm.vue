@@ -152,8 +152,8 @@ defineExpose({
         padding: 2px 4px;
         margin-right: 4px;
         border-radius: 2px;
-        background-color: #2F6BFF;
-        border: 1px solid #2F6BFF;
+        background-color: var(--van-primary-color);
+        border: 1px solid var(--van-primary-color);
         :deep(.van-radio__label) {
           color: white;
           margin-left: 0px;

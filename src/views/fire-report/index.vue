@@ -57,9 +57,8 @@
           <div class="item-operate">
             <!-- <van-button
               v-p="['admin', 'fire-report:look']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click.stop="handleclick({type:'look' ,record})"
             >
@@ -67,9 +66,8 @@
             </van-button> -->
             <van-button
               v-p="['admin', 'fire-report:input']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click.stop="handleclick({type:'editor' ,record})"
             >
@@ -77,17 +75,16 @@
             </van-button>
             <van-button
               v-p="['admin', 'fire-report:reback']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click.stop="handleclick({type:'return' ,record})"
             >
               退回
             </van-button>
             <van-button
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               v-if="record.isDistribute !== '1'" 
               v-p="['admin', 'fire-report:transfer']" 

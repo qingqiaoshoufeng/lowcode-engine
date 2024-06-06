@@ -7,7 +7,7 @@
         <div class="name">{{info.userName}}</div> 
         <div class="editor" @click.stop="handleEdit" v-if="!isInsert">
           <span>编辑资料</span>
-          <van-icon name="edit" color="#1E86FE" />
+          <van-icon name="edit" color="#2c59f2" />
         </div>
       </div>
       <div class="organization">{{info.orgName}}</div>
@@ -110,7 +110,7 @@ onMounted(() => {
               font-size: 14px;
               font-family: PingFang-SC-Medium, PingFang-SC;
               font-weight: 500;
-              color: #1E86FE;
+              color: #2c59f2;
             
           }
       }

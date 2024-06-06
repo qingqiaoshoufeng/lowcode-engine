@@ -72,7 +72,7 @@ defineOptions({
   }
   .pro-card-close {
     font-size: 14px;
-    color: #1989FA;
+    color: var(--van-primary-color);
     display: flex;
     align-items: center;
     justify-content: center;

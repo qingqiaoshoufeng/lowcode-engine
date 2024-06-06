@@ -87,7 +87,7 @@ defineExpose({
   margin-bottom: 10px;
   font-weight: bold;
   .title-clear {
-    color: #027AFF;
+    color: var(--van-primary-color);
     margin-left: auto;
     i {
       font-size: 14px;

@@ -123,7 +123,7 @@ defineOptions({
         :title="placeholder"
         :options="options"
         :field-names="fieldNames"
-        active-color="#1989fa"
+        active-color="#2c59f2"
         @close="selectVisible = false"
         @finish="onFinish"
       />

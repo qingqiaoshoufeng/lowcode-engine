@@ -64,18 +64,16 @@
           <div class="item-operate" @click.stop>
             <!-- <van-button
               v-p="['admin', 'fire-report:look']"
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               @click.stop="handleLook(record)"
             >
               查看
             </van-button> -->
             <van-button
-              type="success"
+              type="primary"
               size="mini"
-              color="#1989fa"
               class="item-btn"
               :disabled="!(tabType === 'running' && checkFireApproval(record.fireStatusValue))"
               @click="handleReview(record)"

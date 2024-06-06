@@ -563,38 +563,6 @@ export const checkTimeout = (time, threshold = 24) => {
   return false
 }
 
-export const initBackLogin = () => {
-  let timeoutId = setTimeout(() => {
-    Modal.confirm({
-      title: '您已长时间未操作，请重新登录！',
-      icon: createVNode(ExclamationCircleOutlined),
-      cancelButtonProps: {
-        style: { display: 'none' },
-      },
-      onOk: async () => {
-        localStorage.clear()
-        location.reload()
-      },
-    })
-  }, 1800 * 1000)
-  document.getElementById('app').addEventListener('click', () => {
-    clearTimeout(timeoutId)
-    timeoutId = setTimeout(() => {
-      Modal.confirm({
-        title: '您已长时间未操作，请重新登录！',
-        icon: createVNode(ExclamationCircleOutlined),
-        cancelButtonProps: {
-          style: { display: 'none' },
-        },
-        onOk: async () => {
-          localStorage.clear()
-          location.reload()
-        },
-      })
-    }, 1800 * 1000)
-  }, false)
-}
-
 // 将 base64 数据转换为 Blob 对象
 export const dataURItoBlob = (dataURI) => {
   const byteString = atob(dataURI.split(',')[1])
@@ -691,4 +659,15 @@ export const getReportTemporary = (id) => {
     temp = []
   }
   return temp.filter(item => item.id === id)
+}
+
+export const resetLocalStorage = (type) => {
+  localStorage.token = ""
+  localStorage.platform = ""
+  localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
+  localStorage.SYSTEM_ENV = ""
+  localStorage.SYSTEM_BASE_URL = ""
+  if (type === 1) {
+    localStorage.reportTemporary = ""
+  }
 }
