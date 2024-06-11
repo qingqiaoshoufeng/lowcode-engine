@@ -665,11 +665,17 @@ const initReport = () => {
           initDispatchDetail.value.dispatchArriveFlag = res.dispatchArriveFlag
           initDispatchDetail.value.returnWarningFlag = res.returnWarningFlag
           initDispatchDetail.value.isFirst = res.isFirst
+          // 如果是有队伍到场 || 中返警情
           if (res.dispatchArriveFlag === '2' || res.returnWarningFlag === '1') {
             form.value.basicInformation.dealSituation.value = '2023020800262'
             form.value.basicInformation.dealSituation.text = '中途返回'
           }
+          // 如果是首到，禁止选择中返
           if (res.isFirst === '1' && options.value.dealSituation) {
+            options.value.dealSituation[2].disabled = true
+          }
+          // 如果是主战，非中返警情，禁止选择中途返回
+          else if (showMainGroup.value && res.returnWarningFlag !== '1' && options.value.dealSituation) {
             options.value.dealSituation[2].disabled = true
           }
         }
