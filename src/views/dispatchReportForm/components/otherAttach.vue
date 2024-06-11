@@ -1,6 +1,6 @@
 <script setup>
 import { inject, onMounted, ref } from "vue";
-import { showDialog } from 'vant';
+import { showToast, showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import {downLoad} from '@/utils/download.js'
 import ProCard from "@/component/ProCard/index.vue";
@@ -59,6 +59,9 @@ const onAfterRead = (file) => {
       file.file.fileType = res.fileType
       file.file.fullPath = res.fullPath
     }
+  }).catch(error => {
+    showToast('附件上传失败，请重试！')
+    form.value.otherAttach.attach.value = form.value.otherAttach.attach.value?.filter(item => item.file.attachmentId)
   })
 }
 

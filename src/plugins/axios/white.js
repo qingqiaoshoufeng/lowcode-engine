@@ -3,4 +3,5 @@ export const whiteList = [
   '/acws/rest/biz/firetruck/query',
   '/acws/rest/biz/fireuser/query',
   '/acws/rest/attachments',
+  '/acws/rest/biz/common/sysarea/unfold/arealist',
 ]

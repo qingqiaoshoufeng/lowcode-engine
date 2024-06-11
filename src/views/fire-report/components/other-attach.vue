@@ -7,6 +7,7 @@ import ProCard from "@/component/ProCard/index.vue";
 import { downloadAttachmentFile, getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { downLoad } from '@/utils/download.js'
 import { getAttachUrl } from '@/utils/tools.js'
+import { showToast, showDialog } from 'vant';
 
 const form = inject('form')
 
@@ -81,23 +82,31 @@ const OnAfterRead = async(file) => {
   formData.append('attachmentType', 'file')
   formData.append('extend2', '其他附件')
   formData.append('file', file.file)
-  await uploadFile(formData) 
-  getAttachmentFile({
-    businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
-    businessType: 'file',
-  }).then((res) => {
-    form.value.otherAttach.attach.value = res.data.map((item) => {
-      return {
-        isImage: true,
-        deletable:!isDetail,
-        ...item, 
-        uid: item.attachmentId,
-        name: item.attachmentName,
-        status: 'done',
-        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+  return uploadFile(formData)
+    .then(response => {
+      if (response?.attachmentId) {
+        getAttachmentFile({
+          businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
+          businessType: 'file',
+        }).then((res) => {
+          form.value.otherAttach.attach.value = res.data.map((item) => {
+            return {
+              isImage: true,
+              deletable:!isDetail,
+              ...item, 
+              uid: item.attachmentId,
+              name: item.attachmentName,
+              status: 'done',
+              url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+            }
+          }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+        })
       }
-    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
-  })
+    })
+    .catch(error => {
+      showToast('附件上传失败，请重试！')
+      form.value.otherAttach.attach.value = form.value.otherAttach.attach.value?.filter(item => item.file.attachmentId)
+    })
 }
 const downLoadFile = (val)=>{
   if(isDetail){

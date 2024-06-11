@@ -156,23 +156,31 @@ const OnAfterRead = async(file) => {
   formData.append('attachmentType', 'safetyFile')
   formData.append('extend2', '其他附件')
   formData.append('file', file.file)
-  await uploadFile(formData)
-  getAttachmentFile({
-    businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
-    businessType: 'safetyFile',
-  }).then((res) => {
-    form.value.basicInfo.attach.value  = res.data.map((item) => {
-      return {
-        isImage: true,
-        deletable:!isDetail,
-        ...item, 
-        uid: item.attachmentId,
-        name: item.attachmentName,
-        status: 'done',
-        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+  return uploadFile(formData)
+    .then(response => {
+      if (response?.attachmentId) {
+        getAttachmentFile({
+          businessObjId: currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
+          businessType: 'safetyFile',
+        }).then((res) => {
+          form.value.basicInfo.attach.value  = res.data.map((item) => {
+            return {
+              isImage: true,
+              deletable:!isDetail,
+              ...item,
+              uid: item.attachmentId,
+              name: item.attachmentName,
+              status: 'done',
+              url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+            }
+          }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+        })
       }
-    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
-  })
+    })
+    .catch(error => {
+      showToast('附件上传失败，请重试！')
+      form.value.basicInfo.attach.value = form.value.basicInfo.attach.value?.filter(item => item.file.attachmentId)
+    })
 }
 
 const downLoadFile = (val)=>{
@@ -1953,7 +1961,7 @@ const onFireLevel = () => {
             name="basicInfo.attach.value"
             :rules="form.basicInfo.attach.rules"
             id="attach"
-            accept="file"
+            accept="*"
             v-model="form.basicInfo.attach.value"
             :disabled="isDetail"
             :after-read="OnAfterRead"

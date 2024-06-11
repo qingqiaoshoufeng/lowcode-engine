@@ -1,6 +1,6 @@
 <script setup>
 import { inject, nextTick, onMounted, ref, onUnmounted } from "vue";
-import { showDialog } from 'vant';
+import { showToast, showDialog } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
 import ProCard from "@/component/ProCard/index.vue";
 import { getAttachUrl } from '@/utils/tools.js'
@@ -82,6 +82,9 @@ const onAfterRead = (file) => {
       file.file.fullPath = res.fullPath
     }
     initImages()
+  }).catch(error => {
+    showToast('图片上传失败，请重试！')
+    form.value.scenePhoto.photos.value = form.value.scenePhoto.photos.value?.filter(item => item.file.attachmentId)
   })
 }
 
