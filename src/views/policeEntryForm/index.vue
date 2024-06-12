@@ -941,7 +941,7 @@ const handleStartPhone = () => {
 
 <template>
   <div class="police-entry-form" :class="{'detail-form-info':showPreview}">
-    <ProCard v-if="!showSurvey && showPreview" title="简要概况" :showOpenClose="false">
+    <ProCard v-if="!showSurvey && showPreview" title="简要概况" :showOpenClose="false" class="baseInfo-d">
       <div class="warningName">{{ form.warningSurvey }}</div>
     </ProCard>
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
@@ -2108,7 +2108,7 @@ const handleStartPhone = () => {
     padding: 5px 16px;
     font-size: 14px;
     line-height: 1.5em;
-    border-bottom: 10px solid #e9e9e9,
+    border-bottom: 1px solid #f2f3f5,
   }
   .police-entry-title {
     display: flex;
@@ -2160,6 +2160,13 @@ const handleStartPhone = () => {
     .van-field__value::after {
       content: '无';
       color: #323233;
+    }
+  }
+  :deep(.baseInfo-d) {
+    .pro-card-title{
+      img{
+        display: none;
+      }
     }
   }
 }
