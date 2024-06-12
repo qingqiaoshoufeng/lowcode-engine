@@ -174,7 +174,7 @@ const searchDimension = inject('searchDimension')
         :select-leaf="fieldObj.selectLeaf"
         :select-level-equal="fieldObj.selectLevelEqual"
         :headers-disabled="fieldObj.headersDisabled"
-        :params="{ ...fieldObj.params, staticFlag: searchDimension }"
+        :params="{ ...fieldObj.params, staticFlag: 2 }"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'cascader-multiple'">
@@ -229,7 +229,7 @@ const searchDimension = inject('searchDimension')
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
         :selectLeaf="false"
-        :params="{ staticFlag: searchDimension }"
+        :params="{ staticFlag: 2 }"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'checkbox'">
