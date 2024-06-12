@@ -17,6 +17,7 @@ import CascaderSingle from "@/component/CascaderSingle/index";
 import SelectDateTime from "@/component/SelectDateTime/index";
 import ProSteps from "@/component/ProSteps/index.vue";
 import PoliceConfirm from "@/views/policeConfirm/police-confirm.vue";
+import ProCard from "@/component/ProCard/index.vue";
 import { v4 as uuidv4 } from 'uuid'
 import {
   confirmPolice,
@@ -940,6 +941,9 @@ const handleStartPhone = () => {
 
 <template>
   <div class="police-entry-form" :class="{'detail-form-info':showPreview}">
+    <ProCard v-if="!showSurvey && showPreview" title="简要概况" :showOpenClose="false">
+      <div class="warningName">{{ form.warningSurvey }}</div>
+    </ProCard>
     <van-form ref="formRef" @failed="onFailed" @submit="onSubmit">
       <van-field
         v-if="showSurvey"
@@ -2100,6 +2104,12 @@ const handleStartPhone = () => {
   height: 100%;
   overflow-y: auto;
   background-color: white;
+  .warningName{
+    padding: 5px 16px;
+    font-size: 14px;
+    line-height: 1.5em;
+    border-bottom: 10px solid #e9e9e9,
+  }
   .police-entry-title {
     display: flex;
     flex-direction: column;

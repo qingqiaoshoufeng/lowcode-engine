@@ -312,7 +312,20 @@ export const applyRecordType = [
     label: '火灾作废申请',
   },
 ]
-
+export const isRemark = [
+  {
+    label: '全部',
+    value: '0',
+  },
+  {
+    label: '是',
+    value: '1',
+  },
+  {
+    label: '否',
+    value: '2',
+  },
+]
 export const applyStatus = [
   {
     value: '1',

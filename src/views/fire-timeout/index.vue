@@ -140,7 +140,7 @@ import RemarkReason from '@/views/police-timeout/remark-reason.vue';
 import EditorForm from '@/views/fire-report/components/EditorForm.vue'
 import LookReason from '@/views/police-timeout/look-reason.vue';
 import { getLastMonth,checkRejectState } from '@/utils/tools.js'
-import { MSG_LOCKING_TEXT, isNot } from '@/utils/constants.js';
+import { MSG_LOCKING_TEXT, isNot,isRemark } from '@/utils/constants.js';
 import { generateColorByState } from "@/utils/tools.js";
 import RegularLook from '@/views/police-timeout/regular-look.vue';
 import SelectMore from "@/component/SelectMore/index"; 
@@ -156,6 +156,7 @@ const options = {}
 getSystemDictSync(['JQ_TYPE', 'HZ_TIMEOUT_TYPE'], null, (res) => {
   options.timeOutType = res.HZ_TIMEOUT_TYPE
   options.fireType = res?.JQ_TYPE?.filter(item => item.dictName === '火灾扑救') // 火灾类型
+  options.isRemark = isRemark
 }, 3)
 
 const showExplainFn = ()=>{
@@ -224,6 +225,14 @@ const searchOptions = computed(()=>([
     placeholder: '请输入警情地址',
     value: "fireDirection",
   },
+  {
+    title: '是否备注',
+    type: 'select-single',
+    placeholder: '请选择是否备注',
+    fieldNames:{ value: 'value', label: 'label' },
+    options: options.isRemark,
+    value: "isHasRemark",
+  },
 ]))
 const currentRow = ref({})
 const proListRef = ref(null);
@@ -234,6 +243,7 @@ const defaultFilterValue = {
   timeOutHoursEnd: '',
   fireType: undefined,
   timeOutType: undefined,
+  isHasRemark:null
 }
 
 const show = ref({})

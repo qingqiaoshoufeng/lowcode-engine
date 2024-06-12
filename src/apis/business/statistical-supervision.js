@@ -3,6 +3,12 @@ import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import { getTagsKeyValue } from '@/utils/tools.js'
 
+
+const getIsRemark = (val) => {
+  const remarkMap = [null, true, false]
+  return remarkMap[val]
+}
+
 // 警情质量监督列表参数
 export function getFireWarningSupervisionParams(data) {
   const tags = getTagsKeyValue(data.tags)
@@ -113,6 +119,7 @@ export function getPoliceTimeoutParams(data) {
     timeOutType: data.timeOutType,
     warningAddr: data.warningAddr,
     boAreaId: cloneDeep(data.boAreaId)?.pop(),
+    isHasRemark: getIsRemark(data.isHasRemark),
   }
 }
 
@@ -144,6 +151,7 @@ export function getDispatchTimeoutParams(data) {
     dispatchCode: data.dispatchCode,
     warningAddr: data.warningAddr,
     warningArea: cloneDeep(data?.warningArea)?.pop(),
+    isHasRemark: getIsRemark(data.isHasRemark),
   }
 }
 
@@ -175,6 +183,7 @@ export function getFireTimeoutParams(data) {
     fireCode: data.fireCode,
     fireDirection: data.fireDirection,
     warningArea: cloneDeep(data?.warningArea)?.pop(),
+    isHasRemark: getIsRemark(data.isHasRemark),
   }
 }
 
