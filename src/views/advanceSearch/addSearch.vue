@@ -241,7 +241,7 @@ defineExpose({
             :label="`${form.label}：`"
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
-            :params="{ staticFlag: searchDimension }"
+            :params="{ staticFlag: 2 }"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
             :selectLeaf="false"
             @change="onAreaChange"
@@ -262,7 +262,7 @@ defineExpose({
             :select-leaf="form.selectLeaf"
             :select-level-equal="form.selectLevelEqual"
             :headers-disabled="form.headersDisabled ? false : true"
-            :params="{ ...form.params, staticFlag: searchDimension }"
+            :params="{ ...form.params, staticFlag: 2 }"
             :rules="[{ validator: validateOrg }]"
             @change="onOrgChange"
           />

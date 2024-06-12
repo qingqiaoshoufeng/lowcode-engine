@@ -3,13 +3,13 @@ import { getCodeMessages } from '@/utils/http-code-messages.js'
 import { loginError } from '@/apis/index.js'
 import { getCookie } from '@/utils/tools.js'
 import { resetLocalStorage } from '@/utils/tools.js'
+import { whiteList } from './white.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
   config.headers.platform = localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
   return config
 }
-
 
 export const responseInterceptors = (response) => {
   const { data, config } = response
@@ -50,6 +50,12 @@ export const responseInterceptors = (response) => {
 }
 
 export const responseError = (error) => {
+  if (whiteList.includes(error?.config?.url)) {
+    return Promise.reject(error)
+  }
+  else if (whiteList.includes(error?.response?.config?.url)) {
+    return Promise.reject(error)
+  }
   if (error.response?.status === 401) {
     const text = error.response?.data?.msg || '用户信息输入有误，请重新输入！'
     showFailToast({

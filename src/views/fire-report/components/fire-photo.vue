@@ -6,6 +6,7 @@ import { downloadAttachmentFile, getAttachmentFile,uploadFile  } from '@/apis/in
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 import { getAttachUrl } from '@/utils/tools.js'
 import { formatYmdHm } from "@/utils/format.js";
+import { showToast, showDialog } from 'vant';
 
 const form = inject('form')
 
@@ -55,23 +56,31 @@ const OnAfterRead = async(file) => {
   formData.append('extend2', '照片')
   formData.append('extend3', formatYmdHm(form.value.basicInfo.fireDate.value, 'YYYY年MM月DD日'))
   formData.append('file', file.file)
-  await uploadFile(formData)
-  getAttachmentFile({
-    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
-    businessType: 'image',
-  }).then((res) => {
-    form.value.firePhoto.photos.value = res.data.map((item) => {
-      return {
-        isImage: true,
-        deletable:!isDetail,
-        ...item, 
-        uid: item.attachmentId,
-        name: item.attachmentName,
-        status: 'done',
-        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+  return uploadFile(formData)
+    .then(response => {
+      if (response?.attachmentId) {
+        getAttachmentFile({
+          businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId,
+          businessType: 'image',
+        }).then((res) => {
+          form.value.firePhoto.photos.value = res.data.map((item) => {
+            return {
+              isImage: true,
+              deletable:!isDetail,
+              ...item, 
+              uid: item.attachmentId,
+              name: item.attachmentName,
+              status: 'done',
+              url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+            }
+          }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+        })
       }
-    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
-  })
+    })
+    .catch(error => {
+      showToast('图片上传失败，请重试！')
+      form.value.firePhoto.photos.value = form.value.firePhoto.photos.value?.filter(item => item.file.attachmentId)
+    })
 }
 
 const onDelete = async(val,val1)=>{
