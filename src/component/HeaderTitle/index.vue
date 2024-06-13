@@ -58,7 +58,6 @@ export default {
   .explain{
     position: absolute;
     right: 16px;
-    bottom: 9px;
   }
 }
 </style>

@@ -926,7 +926,7 @@ const getSubmitParams = (temporary) => {
   if (casualtyWar.isInjured.value === '1') {
     if (casualtyWar.injuryNum.value > 0) {
       params.fireInfoInjuryList.push({
-        injuryType: 1,
+        injuryType: '1',
         injuryNum: casualtyWar.injuryNum.value,
       })
     }
