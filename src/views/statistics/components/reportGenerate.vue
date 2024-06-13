@@ -677,7 +677,7 @@ onMounted(() => {
         placeholder="请选择查询类型"
         :rules="[{ required: true, message: '请选择查询类型' }]"
       />
-      <van-field label="">
+      <van-field v-if="false" label="">
         <template #input>
           <van-checkbox v-model="form.deactivateFlag">不查停用单位和地区</van-checkbox>
         </template>
