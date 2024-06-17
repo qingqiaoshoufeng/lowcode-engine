@@ -968,7 +968,6 @@ const getSubmitParams = (temporary) => {
     })
     params.fireInfoPersonList.push(...list)
   }
-  console.log('.....', params)
   return params
 }
 
