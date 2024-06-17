@@ -830,7 +830,7 @@ const getSubmitParams = (temporary) => {
       fireInjuryCost: economicLoss.fireInjuryCost?.value,
       costSource: economicLoss.costSource?.value,
       affectedHouse: economicLoss.affectedHouse?.value,
-      isInjury: (casualtyWar.isInjury?.value === '1' || casualtyWar.isDead.value === '1') ? '1' : '2',
+      isInjury: (casualtyWar.isInjured?.value === '1' || casualtyWar.isDead.value === '1') ? '1' : '2',
       // 案件办理
       handleTwoCase: caseHandling.handleTwoCase?.value,
       penaltyNum: caseHandling.penaltyNum?.value,
@@ -968,6 +968,7 @@ const getSubmitParams = (temporary) => {
     })
     params.fireInfoPersonList.push(...list)
   }
+  console.log('.....', params)
   return params
 }
 
@@ -988,7 +989,7 @@ const { loading, submit } = useSubmit(
   {
     submitFn: () => {
       const params = getSubmitParams()
-      return saveFireDispatchReport(params)
+      // return saveFireDispatchReport(params)
     },
   },
 )
@@ -1001,7 +1002,7 @@ const { loading: temporaryLoading, submit: temporarySubmit } = useSubmit(
   {
     submitFn: () => {
       const params = getSubmitParams()
-      return saveTemporaryFireDispatchReport(params)
+      // return saveTemporaryFireDispatchReport(params)
     },
   },
 )
@@ -1016,18 +1017,18 @@ const { loading: approvalLoading, submit: approvalSubmit } = useSubmit(
   {
     submitFn: () => {
       const params = getSubmitParams()
-      return approveFireActions({
-        ...params,
-        taskReq: {
-          businessData: {},
-          approveType: approvalForm.value.approveType,
-          taskData: {
-            suggest: approvalForm.value.suggest,
-            variables: {},
-          },
-          remark: approvalForm.value.remark,
-        }
-      })
+      // return approveFireActions({
+      //   ...params,
+      //   taskReq: {
+      //     businessData: {},
+      //     approveType: approvalForm.value.approveType,
+      //     taskData: {
+      //       suggest: approvalForm.value.suggest,
+      //       variables: {},
+      //     },
+      //     remark: approvalForm.value.remark,
+      //   }
+      // })
     },
   },
 )
@@ -1041,18 +1042,18 @@ const { loading: againLoading, submit: againSubmit } = useSubmit(
   {
     submitFn: () => {
       const params = getSubmitParams()
-      return approveFireActions({
-        ...params,
-        taskReq: {
-          businessData: {},
-          approveType: 1,
-          taskData: {
-            suggest: '',
-            variables: {},
-          },
-          remark: '',
-        }
-      })
+      // return approveFireActions({
+      //   ...params,
+      //   taskReq: {
+      //     businessData: {},
+      //     approveType: 1,
+      //     taskData: {
+      //       suggest: '',
+      //       variables: {},
+      //     },
+      //     remark: '',
+      //   }
+      // })
     },
   },
 )
