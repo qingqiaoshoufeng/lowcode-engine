@@ -254,6 +254,18 @@ const showBuildingFire = computed(() => {
   return basicInfo.fireType?.text?.includes('建构筑物火灾')
 })
 
+// 交通工具-建构筑物
+const showVehicleBuilding = computed(() => {
+  const { basicInfo } = form.value
+  let result = false
+  options.value.firePlace?.forEach((item) => {
+    if (basicInfo.firePlace?.text?.includes(item.dictName) && item.dictType === 'HZ_QHCS_JGZW') {
+      result = true
+    }
+  })
+  return result
+})
+
 // 交通工具火灾
 const showVehicleFire = computed(() => {
   const { basicInfo } = form.value
@@ -365,7 +377,7 @@ const sections = computed(() => {
     result.casualtyWar = casualtyWar
   }
   result.economicLoss = economicLoss
-  if (showBuildingFire.value) { // 建构筑物火灾
+  if (showBuildingFire.value || (showVehicleFire.value && showVehicleBuilding.value)) { // 建构筑物火灾
     result.fireBuilding = fireBuilding
   }
   if (showBuildingFire.value && showSevereFire.value) { // 建构筑物火灾 && 严重火灾
@@ -1284,7 +1296,7 @@ const onSideBarChange = (e, k) => {
                   <EconomicLoss />
                 </ProCard>
                 <!-- 起火建筑 -->
-                <ProCard title="起火建筑" v-if="showBuildingFire" id="fireBuilding" :showOpenClose="!showPreview">
+                <ProCard title="起火建筑" v-if="showBuildingFire || (showVehicleFire && showVehicleBuilding)" id="fireBuilding" :showOpenClose="!showPreview">
                   <FireBuilding  />
                 </ProCard>
                 <!-- 消防设施 -->

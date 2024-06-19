@@ -1021,11 +1021,6 @@ export const useFormConfig = (validateProgress) => {
         fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
         fieldWarning: form.value.casualtyWar.fieldWarning,
       }
-      form.value.fireBuilding = {
-        ...cloneDeep(formOrigin.fireBuilding),
-        fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
-        fieldWarning: form.value.fireBuilding.fieldWarning,
-      }
       form.value.fireFacilities = {
         ...cloneDeep(formOrigin.fireFacilities),
         fieldAnnotation: form.value.fireFacilities.fieldAnnotation,
@@ -1036,6 +1031,11 @@ export const useFormConfig = (validateProgress) => {
         fieldAnnotation: form.value.caseHandling.fieldAnnotation,
         fieldWarning: form.value.caseHandling.fieldWarning,
       }
+    }
+    form.value.fireBuilding = {
+      ...cloneDeep(formOrigin.fireBuilding),
+      fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
+      fieldWarning: form.value.fireBuilding.fieldWarning,
     }
   }
 
@@ -1161,7 +1161,9 @@ export const useFormConfig = (validateProgress) => {
     form.value.economicLoss.costSource.value = fireInfo?.costSource
     form.value.economicLoss.affectedHouse.value = fireInfo?.affectedHouse
     // 起火建筑
-    form.value.fireBuilding.buildTag.value = fireInfoBuild?.buildTag?.split(',')
+    if (fireInfoBuild?.buildTag) {
+      form.value.fireBuilding.buildTag.value = fireInfoBuild?.buildTag?.split(',')
+    }
     form.value.fireBuilding.buildType.value = fireInfoBuild?.buildType
     form.value.fireBuilding.fireResistanceRating.value = fireInfoBuild?.fireResistanceRating
     form.value.fireBuilding.buildStructure.value = fireInfoBuild?.buildStructure
