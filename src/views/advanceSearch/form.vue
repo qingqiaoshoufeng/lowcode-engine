@@ -3,7 +3,7 @@ import { computed, inject, watch, nextTick, onBeforeMount, onMounted, provide, r
 import SearchForm from './searchForm.vue'
 import AddSearch from './addSearch.vue'
 import {
-  dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus,
+  dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus, haveNull
 } from './constants.js'
 import {
   getFireWarningTag,
@@ -58,6 +58,7 @@ onMounted(async () => {
   options.value.fireHeadLevel = fireHeadLevel
   options.value.dispatchFireHeadLvl = fireHeadLevel
   options.value.warningDealStatus = warningDealStatus
+  options.value.haveNull = haveNull
   options.value.monthRange = [...Array(11)].map((i, index) => ({ dictName: index + 1, boDictId: `${index + 1}` }))
   options.value.dayRange = [...Array(30)].map((i, index) => ({ dictName: index + 1, boDictId: `${index + 1}` }))
   const res = store.getters?.["dict/filterDicts"](['JQ_TYPE', 'HZ_INFO_QY', 'HZ_QHCS', 'HZ_QHYY', 'HZ_INFO_HZDJ', 'HZ_QHWZ_CS', 'HZ_QHXT_SGXT', 'HZ_INFO_BGSY',

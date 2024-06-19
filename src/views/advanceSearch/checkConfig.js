@@ -319,19 +319,19 @@ export const checkBoxs = [
     fieldKeyOne: 'isZf',
     label: '政府指挥',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
   },
   {
     fieldKeyOne: 'isLinkDepartment',
     label: '联动力量',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
   },
   {
     fieldKeyOne: 'isOtherDepartment',
     label: '其他救援力量',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
     labelWidth: '116px',
   },
   {
@@ -581,14 +581,14 @@ export const checkBoxs = [
     fieldKeyOne: 'isDispatchTruck',
     label: '有无车辆出动',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
     labelWidth: '116px',
   },
   {
     fieldKeyOne: 'isReturnTruck',
     label: '有无车辆中返',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
     labelWidth: '116px',
   },
   // 出动车辆信息
@@ -857,7 +857,7 @@ export const checkBoxs = [
     fieldKeyOne: 'isWastageTruck',
     label: '有无车辆损耗',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
     labelWidth: '116px',
   },
   {
@@ -1227,7 +1227,7 @@ export const checkBoxs = [
     fieldKeyOne: 'isInjury',
     label: '人员伤亡',
     type: '9',
-    dict: 'isNot',
+    dict: 'haveNull',
     labelWidth: '124px',
   },
   {
@@ -1526,7 +1526,7 @@ export const checkBoxs = [
     fieldKeyOne: 'isFirefightFacility',
     label: '消防设施设备',
     type: '9',
-    dict: 'isNot',
+    dict: 'install',
     labelWidth: '132px',
   },
   {

@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import dayjs from 'dayjs'
 import { generateByKeyValue, generateByCascader } from '@/utils/tools.js'
-import { install, isCase, isNot } from '@/utils/constants.js'
+import { install, isCase, isNot, haveNull } from '@/utils/constants.js'
 
 export const useFormConfig = () => {
   const formOrigin = {
@@ -269,20 +269,20 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '政府指挥',
-        options: isNot
+        options: haveNull
       },
       isLinkDepartment: { // 联动力量
         value: '',
         type: 'radio-is',
         label: '联动力量',
-        options: isNot
+        options: haveNull
       },
       isOtherDepartment: { // 其他救援力量
         value: '',
         type: 'radio-is',
         label: '其他救援力量',
         labelWidth: '142px',
-        options: isNot
+        options: haveNull
       },
     },
     policeOther: {
@@ -607,14 +607,14 @@ export const useFormConfig = () => {
         type: 'radio-is',
         label: '有无车辆出动',
         labelWidth: `var(--van-field-label-width-112)`,
-        options: isNot
+        options: haveNull
       },
       isReturnTruck: { // 有无车辆中返
         value: '',
         type: 'radio-is',
         label: '有无车辆中返',
         labelWidth: `var(--van-field-label-width-112)`,
-        options: isNot
+        options: haveNull
       },
       dispatchTruckInfo: { // 消防车辆信息
         value: undefined,
@@ -878,7 +878,7 @@ export const useFormConfig = () => {
         type: 'radio-is',
         label: '有无车辆损耗',
         labelWidth: `var(--van-field-label-width-112)`,
-        options: isNot
+        options: haveNull
       },
       fireProcess: { // 处置经过
         value: '',
@@ -1285,7 +1285,7 @@ export const useFormConfig = () => {
         type: 'radio-is',
         label: '人员伤亡',
         labelWidth: `var(--van-field-label-width-112)`,
-        options: isNot
+        options: haveNull
       },
       injuryType: { // 伤亡情况
         value: undefined,
@@ -1652,7 +1652,7 @@ export const useFormConfig = () => {
         type: 'radio-is',
         label: '消防设施设备',
         labelWidth: `var(--van-field-label-width-130)`,
-        options: isNot
+        options: install
       },
       autoAlarm: { // 自动报警系统
         value: undefined,

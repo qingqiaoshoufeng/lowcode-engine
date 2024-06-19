@@ -68,6 +68,17 @@ export const isNot = [
   },
 ]
 
+export const haveNull = [
+  {
+    label: '有',
+    value: '1',
+  },
+  {
+    label: '无',
+    value: '2',
+  },
+]
+
 export const isCase = [
   {
     label: '已立案',
