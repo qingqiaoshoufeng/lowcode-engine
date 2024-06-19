@@ -522,6 +522,6 @@ export const warningDealStatus = [{
   boDictId: '2',
 },
 {
-  dictName: '中途返回',
+  dictName: '全部中返',
   boDictId: '3',
 }]
