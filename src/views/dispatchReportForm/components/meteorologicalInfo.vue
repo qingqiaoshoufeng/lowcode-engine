@@ -40,7 +40,6 @@ const options = inject("options");
   </SelectSingle>
   <van-field
     v-model="form.basicInformation.temperature.value"
-    v-preview-text="showPreview"
     :readonly="showPreview"
     type="number"
     maxlength="5"

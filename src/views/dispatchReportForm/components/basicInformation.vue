@@ -92,7 +92,6 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="showNotDealReason"
       v-model="form.basicInformation.notDealReason.value"
-      v-preview-text="showPreview"
       :readonly="showPreview"
       maxlength="100"
       required
@@ -115,7 +114,6 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="!showMidwayReturn"
       v-model="form.basicInformation.fireDistance.value"
-      v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
       maxlength="10"
@@ -167,7 +165,6 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="showMainGroup && !showFalsePolice && !showMidwayReturn && !showNotDealReason"
       v-model="form.basicInformation.trappedPerson.value"
-      v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
       maxlength="10"
