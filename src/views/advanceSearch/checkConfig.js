@@ -546,7 +546,7 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'firemenNumMin',
     fieldKeyTwo: 'firemenNumMax',
-    label: '消防员人数',
+    label: '战斗员人数',
     type: '2',
     numType: 'digit',
   },
@@ -594,7 +594,7 @@ export const checkBoxs = [
   // 出动车辆信息
   {
     fieldKeyOne: 'dispatchTruckInfo',
-    label: '消防车辆信息',
+    label: '消防车',
     type: '11',
     dict: 'dispatchTruckInfo',
     field: { value: 'boFireTruckId', label: 'truckNumber' },
@@ -618,14 +618,14 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'fireBoatNumMin',
     fieldKeyTwo: 'fireBoatNumMax',
-    label: '艇数',
+    label: '消防艇数',
     type: '2',
     numType: 'digit',
   },
   {
     fieldKeyOne: 'fireAirplaneNumMin',
     fieldKeyTwo: 'fireAirplaneNumMax',
-    label: '消防直升机数',
+    label: '直升机数',
     type: '2',
     numType: 'digit',
     labelWidth: '104px',
@@ -647,7 +647,7 @@ export const checkBoxs = [
   {
     fieldKeyOne: 'robotNumMin',
     fieldKeyTwo: 'robotNumMax',
-    label: '灭火机器人（个）',
+    label: '机器人（个）',
     labelWidth: '132px',
     type: '2',
     numType: 'digit',
