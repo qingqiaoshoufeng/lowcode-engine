@@ -596,10 +596,10 @@ export const useFormConfig = () => {
         label: '指战员姓名',
         labelWidth: '100px',
       },
-      firemenNumMin: { // 消防员人数
+      firemenNumMin: { // 战斗员人数
         value: ['', ''],
         type: 'input-range',
-        label: '消防员人数',
+        label: '战斗员人数',
         numType: 'digit',
       },
       isDispatchTruck: { // 有无车辆出动
@@ -616,11 +616,11 @@ export const useFormConfig = () => {
         labelWidth: `var(--van-field-label-width-112)`,
         options: haveNull
       },
-      dispatchTruckInfo: { // 消防车辆信息
+      dispatchTruckInfo: { // 消防车
         value: undefined,
         back: false,
         type: 'select-car',
-        label: '消防车辆信息',
+        label: '消防车',
         labelWidth: `var(--van-field-label-width-104)`,
       },
       truckType: { // 车辆类型
@@ -637,16 +637,16 @@ export const useFormConfig = () => {
         label: '车辆数',
         numType: 'digit',
       },
-      fireBoatNumMin: { // 艇数
+      fireBoatNumMin: { // 消防艇数
         value: ['', ''],
         type: 'input-range',
-        label: '艇数',
+        label: '消防艇数',
         numType: 'digit',
       },
-      fireAirplaneNumMin: { // 消防直升机数
+      fireAirplaneNumMin: { // 直升机数
         value: ['', ''],
         type: 'input-range',
-        label: '消防直升机数',
+        label: '直升机数',
         labelWidth: `var(--van-field-label-width-104)`,
         numType: 'digit',
       },
@@ -662,10 +662,10 @@ export const useFormConfig = () => {
         label: '无人机数',
         numType: 'digit',
       },
-      robotNumMin: { // 灭火机器人（个）
+      robotNumMin: { // 机器人（个）
         value: ['', ''],
         type: 'input-range',
-        label: '灭火机器人（个）',
+        label: '机器人（个）',
         labelWidth: `var(--van-field-label-width-132)`,
         numType: 'digit',
       },

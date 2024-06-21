@@ -476,11 +476,11 @@ export const useFormConfig = () => {
           { pattern: positiveIntegerReg, message: '请输入正确指挥员人数' },
         ],
       },
-      firemenNum: { // 消防员（人）
+      firemenNum: { // 战斗员（人）
         value: '',
         rules: [
-          { required: true, message: '请输入消防员人数' },
-          { pattern: positiveIntegerReg, message: '请输入正确消防员人数' },
+          { required: true, message: '请输入战斗员人数' },
+          { pattern: positiveIntegerReg, message: '请输入正确战斗员人数' },
         ],
       },
       commander: { // 指挥员人数（人）
@@ -489,19 +489,19 @@ export const useFormConfig = () => {
           { required: true, message: '请选择指挥员' },
         ],
       },
-      firemen: { // 消防员（人）
+      firemen: { // 战斗员（人）
         value: undefined,
         rules: [
-          { required: true, message: '请选择消防员' },
+          { required: true, message: '请选择战斗员' },
         ],
       },
       isResponseTruck: { // 是否有车辆出动
         value: '1',
         rules: [{ required: true, message: '请选择是否有车辆出动' }],
       },
-      dispatchTruckList: { // 消防车辆信息（船舶)
+      dispatchTruckList: { // 消防车
         value: undefined,
-        rules: [{ required: true, message: '请选择消防车辆信息（船舶)' }],
+        rules: [{ required: true, message: '请选择消防车' }],
       },
       isReturnTruck: { // 是否有车辆中途返回
         value: '2',
@@ -513,18 +513,18 @@ export const useFormConfig = () => {
         disabled: false,
         rules: [{ required: true, message: '请选择中途返回车辆信息' }],
       },
-      fireBoatNum: { // 艇（艘）
+      fireBoatNum: { // 消防艇（艘）
         value: '',
         rules: [
-          // { required: true, message: '请输入艇数' },
-          // { pattern: positiveIntegerReg, message: '请输入正确艇数' },
+          // { required: true, message: '请输入消防艇数' },
+          // { pattern: positiveIntegerReg, message: '请输入正确消防艇数' },
         ],
       },
-      fireAirplaneNum: { // 消防直升机（架）
+      fireAirplaneNum: { // 直升机（架）
         value: '',
         rules: [
-          // { required: true, message: '请输入消防直升机数量' },
-          // { pattern: positiveIntegerReg, message: '请输入正确消防直升机数量' },
+          // { required: true, message: '请输入直升机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确直升机数量' },
         ],
       },
       rescueDogNum: { // 搜救犬（只）
@@ -541,11 +541,11 @@ export const useFormConfig = () => {
           // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
         ],
       },
-      robotNum: { // 灭火机器人（个）
+      robotNum: { // 机器人（个）
         value: '',
         rules: [
-          // { required: true, message: '请输入灭火机器人数量' },
-          // { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
+          // { required: true, message: '请输入机器人数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确机器人数量' },
         ],
       },
       // governmentCommand: { // 政府指挥
@@ -811,11 +811,11 @@ export const useFormConfig = () => {
           // { pattern: positiveIntegerReg, message: '请输入正确损耗舟艇数量' },
         ],
       },
-      airplane: { // 损耗消防直升机（架）
+      airplane: { // 损耗直升机（架）
         value: '',
         rules: [
-          // { required: true, message: '请输入损耗消防直升机数量' },
-          // { pattern: positiveIntegerReg, message: '请输入正确损耗消防直升机数量' },
+          // { required: true, message: '请输入损耗直升机数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确损耗直升机数量' },
         ],
       },
       rescueDog: { // 损耗搜救犬（只）
@@ -832,11 +832,11 @@ export const useFormConfig = () => {
           // { pattern: positiveIntegerReg, message: '请输入正确无人机数量' },
         ],
       },
-      robot: { // 损耗灭火机器人（个）
+      robot: { // 损耗机器人（个）
         value: '',
         rules: [
-          // { required: true, message: '请输入灭火机器人数量' },
-          // { pattern: positiveIntegerReg, message: '请输入正确灭火机器人数量' },
+          // { required: true, message: '请输入机器人数量' },
+          // { pattern: positiveIntegerReg, message: '请输入正确机器人数量' },
         ],
       },
       waterPump: { // 机动消防泵（含浮艇泵）（台）

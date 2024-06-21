@@ -149,14 +149,14 @@ const onCommander = () => {
         name="investForce.dispatchTruckList.value" 
         :rules="form.investForce.dispatchTruckList.rules"
         :readonly="true"
-        label="消防车辆信息（船舶)："
+        label="消防车："
         label-width="118px"
-        placeholder="请选择消防车辆信息（船舶)"
+        placeholder="请选择消防车"
         @change="onDispatchTruck"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="消防车辆信息（船舶)："
+            label="消防车："
             remark-field="dispatchTruckList"
             field-module="investForce"
             :exist-data="fieldExist?.dispatchTruckList"
@@ -261,15 +261,15 @@ const onCommander = () => {
       type="digit"
       maxlength="5"
       name="investForce.firemenNum.value"
-      label="消防员（人）："
+      label="战斗员（人）："
       label-width="120px"
-      placeholder="请输入消防员人数"
+      placeholder="请输入战斗员人数"
       :rules="form.investForce.firemenNum.rules"
       @blur="OnCarNum"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="消防员（人）："
+          label="战斗员（人）："
           remark-field="firemenNum"
           field-module="investForce"
           :exist-data="fieldExist?.firemenNum"
@@ -339,14 +339,14 @@ const onCommander = () => {
       name="investForce.firemen.value"
       :rules="form.investForce.firemen.rules"
       :disabled="form.investForce.firemen.disabled"
-      label="消防员："
-      placeholder="请选择消防员"
-      title="请选择消防员"
+      label="战斗员："
+      placeholder="请选择战斗员"
+      title="请选择战斗员"
       @change="OnCarNum"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="消防员："
+          label="战斗员："
           :isWarning="form.investForce.firemen.warning"
           remark-field="firemen"
           field-module="investForce"
@@ -364,14 +364,14 @@ const onCommander = () => {
       type="digit"
       maxlength="20"
       name="investForce.fireBoatNum.value"
-      label="艇(艘)："
-      placeholder="请输入艇数量"
+      label="消防艇(艘)："
+      placeholder="请输入消防艇数量"
       class="field-not-required"
       :rules="form.investForce.fireBoatNum.rules"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="艇(艘)："
+          label="消防艇(艘)："
           remark-field="fireBoatNum"
           field-module="investForce"
           :exist-data="fieldExist?.fireBoatNum"
@@ -387,15 +387,15 @@ const onCommander = () => {
       type="digit"
       maxlength="20"
       name="investForce.fireAirplaneNum.value"
-      label="消防直升机(架)："
+      label="直升机(架)："
       label-width="128px"
-      placeholder="请输入消防直升机数量"
+      placeholder="请输入直升机数量"
       class="field-not-required"
       :rules="form.investForce.fireAirplaneNum.rules"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="消防直升机(架)："
+          label="直升机(架)："
           remark-field="fireAirplaneNum"
           field-module="investForce"
           :exist-data="fieldExist?.fireAirplaneNum"
@@ -459,15 +459,15 @@ const onCommander = () => {
       type="digit"
       maxlength="20"
       name="investForce.robotNum.value"
-      label="灭火机器人(个)："
+      label="机器人(个)："
       label-width="132px"
-      placeholder="请输入灭火机器人数量"
+      placeholder="请输入机器人数量"
       class="field-not-required"
       :rules="form.investForce.robotNum.rules"
     >
       <template v-slot:label="">
         <FieldAnnotation
-          label="灭火机器人(个)："
+          label="机器人(个)："
           remark-field="robotNum"
           field-module="investForce"
           :exist-data="fieldExist?.robotNum"
