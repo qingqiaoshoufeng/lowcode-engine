@@ -50,11 +50,11 @@ const onHaveVolunteer = (e) => {
 </script>
 
 <template>
-  <SplitLines title="其他消防救援力量" />
+  <SplitLines title="其他救援力量" />
   <van-cell-group>
     <van-field 
       name="investForce.haveVolunteer.value" 
-      label="是否有志愿队力量："
+      label="是否有志愿队力量出动："
       label-width="144px"
       :rules="form.investForce.haveVolunteer.rules"
       required

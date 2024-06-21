@@ -52,7 +52,7 @@ const onHaveLinkageUnit = (e) => {
   <van-cell-group>
     <van-field 
       name="investForce.haveLinkageUnit.value" 
-      label="是否有联动单位："
+      label="是否有联动单位出动："
       label-width="136px"
       :rules="form.investForce.haveLinkageUnit.rules"
       required
