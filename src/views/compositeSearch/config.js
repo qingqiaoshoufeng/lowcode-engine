@@ -34,7 +34,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '所属队伍',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         single: false,
         selectLeaf: false,
         selectLevelEqual: true,
@@ -82,13 +82,13 @@ export const useFormConfig = () => {
         value: '',
         type: 'input',
         label: '119编号',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
       },
       warningOrgname: { // 单位/户主名称
         value: '',
         type: 'input',
         label: '单位/户主名称',
-        labelWidth: '152px',
+        labelWidth: '108px',
       },
       warningTel: { // 报警人联系方式
         value: '',
@@ -208,7 +208,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-nodes',
         label: '指挥部名称',
-        labelWidth: `var(--van-field-label-width-112)`,
+        // labelWidth: `var(--van-field-label-width-112)`,
         options: 'headquarters',
         fieldNames: { value: 'organizationid', label: 'name' },
       },
@@ -269,19 +269,21 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '政府领导到场',
+        labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
       isLinkDepartment: { // 联动单位出动
         value: '',
         type: 'radio-is',
         label: '联动单位出动',
+        labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
       isOtherDepartment: { // 其他救援力量出动
         value: '',
         type: 'radio-is',
         label: '其他救援力量出动',
-        labelWidth: '142px',
+        labelWidth: '136px',
         options: haveNull
       },
     },
@@ -513,7 +515,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'select-range',
         label: '中返时间',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
       },
       attendanceDate: { // 到场时间
         value: undefined,
@@ -594,7 +596,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-person',
         label: '指战员姓名',
-        labelWidth: '100px',
+        // labelWidth: '100px',
       },
       firemenNumMin: { // 战斗员人数
         value: ['', ''],
@@ -621,7 +623,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-car',
         label: '消防车',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
       },
       truckType: { // 车辆类型
         value: undefined,
@@ -647,7 +649,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '直升机数',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         numType: 'digit',
       },
       rescueDogNumMin: { // 搜救犬数
@@ -666,7 +668,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '机器人（个）',
-        labelWidth: `var(--van-field-label-width-132)`,
+        labelWidth: `var(--van-field-label-width-116)`,
         numType: 'digit',
       },
     },
@@ -792,7 +794,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '受伤部位',
-        labelWidth: `var(--van-field-label-width-112)`,
+        // labelWidth: `var(--van-field-label-width-112)`,
         options: 'injuryPart',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -801,7 +803,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '致命部位',
-        labelWidth: `var(--van-field-label-width-112)`,
+        // labelWidth: `var(--van-field-label-width-112)`,
         options: 'deathPart',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -809,7 +811,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '当场死亡',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         options: isNot
       },
     },
@@ -877,7 +879,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '有无车辆损耗',
-        labelWidth: `var(--van-field-label-width-112)`,
+        labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
       fireProcess: { // 处置经过
@@ -981,7 +983,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-org',
         label: '责任区大队',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         single: false,
         selectLeaf: false,
         headersDisabled: false,
@@ -1104,14 +1106,14 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '扶贫安置房',
-        labelWidth: '142px',
+        // labelWidth: '142px',
         options: isNot
       },
       isChangeUseType: { // 变更使用性质
         value: undefined,
         type: 'radio-is',
         label: '变更使用性质',
-        labelWidth: '136px',
+        labelWidth: '104px',
         options: isNot
       },
       useType: { // 变更后使用性质
@@ -1181,7 +1183,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '调查部门',
-        labelWidth: `var(--van-field-label-width-130)`,
+        // labelWidth: `var(--van-field-label-width-130)`,
         options: 'leadInspectionOrg',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1203,7 +1205,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '单方面火灾',
-        labelWidth: `var(--van-field-label-width-112)`,
+        // labelWidth: `var(--van-field-label-width-112)`,
         options: isNot
       },
       fireInspection: { // 监督检查情况
@@ -1264,7 +1266,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '生产经营',
-        labelWidth: `var(--van-field-label-width-132)`,
+        // labelWidth: `var(--van-field-label-width-132)`,
         options: isNot
       },
       plantRiskClassification: { // 火灾危险性分类
@@ -1284,7 +1286,7 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '人员伤亡',
-        labelWidth: `var(--van-field-label-width-112)`,
+        // labelWidth: `var(--van-field-label-width-112)`,
         options: haveNull
       },
       injuryType: { // 伤亡情况
@@ -1427,7 +1429,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '主要症状',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         options: 'mainSymptoms',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1436,7 +1438,7 @@ export const useFormConfig = () => {
         back: false,
         type: 'select-multiple',
         label: '尸体位置',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         options: 'bodyLocation',
         fieldNames: { value: 'boDictId', label: 'dictName' },
       },
@@ -1719,7 +1721,7 @@ export const useFormConfig = () => {
         value: ['', ''],
         type: 'input-range',
         label: '间距（米）',
-        labelWidth: '140px',
+        // labelWidth: '140px',
       },
       escapeRoute: { // 疏散通道
         value: undefined,
