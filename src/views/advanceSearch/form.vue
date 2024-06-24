@@ -3,7 +3,7 @@ import { computed, inject, watch, nextTick, onBeforeMount, onMounted, provide, r
 import SearchForm from './searchForm.vue'
 import AddSearch from './addSearch.vue'
 import {
-  dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus,
+  dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus, haveNull
 } from './constants.js'
 import {
   getFireWarningTag,
@@ -58,6 +58,7 @@ onMounted(async () => {
   options.value.fireHeadLevel = fireHeadLevel
   options.value.dispatchFireHeadLvl = fireHeadLevel
   options.value.warningDealStatus = warningDealStatus
+  options.value.haveNull = haveNull
   options.value.monthRange = [...Array(11)].map((i, index) => ({ dictName: index + 1, boDictId: `${index + 1}` }))
   options.value.dayRange = [...Array(30)].map((i, index) => ({ dictName: index + 1, boDictId: `${index + 1}` }))
   const res = store.getters?.["dict/filterDicts"](['JQ_TYPE', 'HZ_INFO_QY', 'HZ_QHCS', 'HZ_QHYY', 'HZ_INFO_HZDJ', 'HZ_QHWZ_CS', 'HZ_QHXT_SGXT', 'HZ_INFO_BGSY',
@@ -90,8 +91,8 @@ onMounted(async () => {
   options.value.driveState = res.HZ_INFO_XSZT // 行驶状态
   options.value.inspectMethod = res.HZ_INFO_DCFS // 调查方式
   options.value.costSource = res.HZ_INFO_SSLY // 损失来源
-  options.value.bodyLocation = res.HZ_SW_STWZ// 发现尸体位置
-  options.value.mainSymptoms = res.HZ_INFO_STZY // 身体主要症状
+  options.value.bodyLocation = res.HZ_SW_STWZ// 尸体位置
+  options.value.mainSymptoms = res.HZ_INFO_STZY // 主要症状
   options.value.injuryPart = res.CD_CZRY_SSBW // 受伤部位
   options.value.deathPart = res.CD_CZRY_ZMBW // 致命部位
   options.value.injuryPartFire = res.HZ_INFO_SSBW // 受伤部位
@@ -100,7 +101,7 @@ onMounted(async () => {
   options.value.injuryCauseFire = res.HZ_INFO_YY // 受伤/致伤原因
   options.value.injuryReason = res.CD_CZRY_SSYY
   options.value.deathReason = res.CD_CZRY_SWYY // 死亡原因
-  options.value.schooling = res.HZ_INFO_SJY // 受教育程度
+  options.value.schooling = res.HZ_INFO_SJY // 教育程度
   options.value.health = res.HZ_INFO_JKZK // 健康状况
   options.value.job = res.HZ_INFO_ZY // 职业
   options.value.injurySource = res.HZ_INFO_LY // 人员来源
@@ -115,7 +116,7 @@ onMounted(async () => {
   options.value.warningLevel = res.JQ_LEVEL // 警情等级
   options.value.dealSituation = res.CD_JYQK_CZ // 处置情况
   options.value.fireSituation = res.CD_DC_HZQK
-  options.value.returnLateReason = res.CD_BACK // 平均时速异常原因
+  options.value.returnLateReason = res.CD_BACK // 时速异常原因
   options.value.industryDepartment = res.CD_HYZG // 行业主管部门
   options.value.wind = res.TQ_TYPE_FL
   options.value.windDirection = res.TQ_TYPE_FX

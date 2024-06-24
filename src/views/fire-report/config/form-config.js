@@ -849,7 +849,7 @@ export const useFormConfig = (validateProgress) => {
     const { warningAddr, extinctDate } = detail
     let content = ''
     if (basicInfo.fireType?.text?.includes('交通工具火灾')) {
-      content = '【起火时间年月日时分】，【警情地址】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
+      content = '【起火时间年月日时分】，【火灾地址】【交通工具类型】着火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
     }
     else {
       content = '【起火时间年月日时分】，【火灾地址】一【起火场所】【起火物】起火，【扑灭时间】扑灭。起火原因系【起火原因】（安全生产事故），过火面积【过火面积】平方米，造成【亡人数】死【伤人数】伤，直接经济损失【直接经济损失】元。'
@@ -1021,11 +1021,6 @@ export const useFormConfig = (validateProgress) => {
         fieldAnnotation: form.value.casualtyWar.fieldAnnotation,
         fieldWarning: form.value.casualtyWar.fieldWarning,
       }
-      form.value.fireBuilding = {
-        ...cloneDeep(formOrigin.fireBuilding),
-        fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
-        fieldWarning: form.value.fireBuilding.fieldWarning,
-      }
       form.value.fireFacilities = {
         ...cloneDeep(formOrigin.fireFacilities),
         fieldAnnotation: form.value.fireFacilities.fieldAnnotation,
@@ -1036,6 +1031,11 @@ export const useFormConfig = (validateProgress) => {
         fieldAnnotation: form.value.caseHandling.fieldAnnotation,
         fieldWarning: form.value.caseHandling.fieldWarning,
       }
+    }
+    form.value.fireBuilding = {
+      ...cloneDeep(formOrigin.fireBuilding),
+      fieldAnnotation: form.value.fireBuilding.fieldAnnotation,
+      fieldWarning: form.value.fireBuilding.fieldWarning,
     }
   }
 
@@ -1161,7 +1161,9 @@ export const useFormConfig = (validateProgress) => {
     form.value.economicLoss.costSource.value = fireInfo?.costSource
     form.value.economicLoss.affectedHouse.value = fireInfo?.affectedHouse
     // 起火建筑
-    form.value.fireBuilding.buildTag.value = fireInfoBuild?.buildTag?.split(',')
+    if (fireInfoBuild?.buildTag) {
+      form.value.fireBuilding.buildTag.value = fireInfoBuild?.buildTag?.split(',')
+    }
     form.value.fireBuilding.buildType.value = fireInfoBuild?.buildType
     form.value.fireBuilding.fireResistanceRating.value = fireInfoBuild?.fireResistanceRating
     form.value.fireBuilding.buildStructure.value = fireInfoBuild?.buildStructure

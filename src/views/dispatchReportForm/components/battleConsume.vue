@@ -257,13 +257,13 @@ onMounted(() => {
         type="number"
         maxlength="10"
         name="battleConsume.airplane.value"
-        label="损耗消防直升机(架)："
-        placeholder="请输入损耗消防直升机数量"
+        label="损耗直升机(架)："
+        placeholder="请输入损耗直升机数量"
         :rules="form.battleConsume.airplane.rules"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="损耗消防直升机(架)："
+            label="损耗直升机(架)："
             remark-field="airplane"
             field-module="battleConsume"
             :exist-data="fieldExist?.airplane"
@@ -321,13 +321,13 @@ onMounted(() => {
         type="number"
         maxlength="10"
         name="battleConsume.robot.value"
-        label="损耗灭火机器人(个)："
-        placeholder="请输入损耗灭火机器人数量"
+        label="损耗机器人(个)："
+        placeholder="请输入损耗机器人数量"
         :rules="form.battleConsume.robot.rules"
       >
         <template v-slot:label="">
           <FieldAnnotation
-            label="损耗灭火机器人(个)："
+            label="损耗机器人(个)："
             remark-field="robot"
             field-module="battleConsume"
             :exist-data="fieldExist?.robot"
