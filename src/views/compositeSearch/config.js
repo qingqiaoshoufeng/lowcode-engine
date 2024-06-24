@@ -269,21 +269,21 @@ export const useFormConfig = () => {
         value: '',
         type: 'radio-is',
         label: '政府指挥',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
       isLinkDepartment: { // 联动力量
         value: '',
         type: 'radio-is',
         label: '联动力量',
-        labelWidth: `var(--van-field-label-width-104)`,
+        // labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
       isOtherDepartment: { // 其他救援力量
         value: '',
         type: 'radio-is',
         label: '其他救援力量',
-        labelWidth: '136px',
+        labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
     },
