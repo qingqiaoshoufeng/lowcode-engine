@@ -317,19 +317,19 @@ export const checkBoxs = [
   },
   {
     fieldKeyOne: 'isZf',
-    label: '政府领导到场',
+    label: '政府指挥',
     type: '9',
     dict: 'haveNull',
   },
   {
     fieldKeyOne: 'isLinkDepartment',
-    label: '联动单位出动',
+    label: '联动力量',
     type: '9',
     dict: 'haveNull',
   },
   {
     fieldKeyOne: 'isOtherDepartment',
-    label: '其他救援力量出动',
+    label: '其他救援力量',
     type: '9',
     dict: 'haveNull',
     labelWidth: '116px',

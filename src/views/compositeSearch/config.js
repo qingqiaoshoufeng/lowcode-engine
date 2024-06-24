@@ -265,24 +265,24 @@ export const useFormConfig = () => {
         labelWidth: `var(--van-field-label-width-104)`,
         options: isNot
       },
-      isZf: { // 政府领导到场
+      isZf: { // 政府指挥
         value: '',
         type: 'radio-is',
-        label: '政府领导到场',
+        label: '政府指挥',
         labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
-      isLinkDepartment: { // 联动单位出动
+      isLinkDepartment: { // 联动力量
         value: '',
         type: 'radio-is',
-        label: '联动单位出动',
+        label: '联动力量',
         labelWidth: `var(--van-field-label-width-104)`,
         options: haveNull
       },
-      isOtherDepartment: { // 其他救援力量出动
+      isOtherDepartment: { // 其他救援力量
         value: '',
         type: 'radio-is',
-        label: '其他救援力量出动',
+        label: '其他救援力量',
         labelWidth: '136px',
         options: haveNull
       },
