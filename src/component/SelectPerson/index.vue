@@ -31,6 +31,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  extraParams: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 const emit = defineEmits(["update:value", "change"]);
@@ -49,6 +53,7 @@ const defaultFilterValue = {
   overQueryFlag: '1',
   status: '1',
   isSelfOrg: ['1'],
+  ...props.extraParams,
 };
 
 watch(() => props.value, (val) => {

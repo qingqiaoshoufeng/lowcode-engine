@@ -40,7 +40,7 @@ const props = defineProps({
       出动车辆<span>{{ searchInfo.dispatchTruckCounts }}</span>辆，
       出动警力<span>{{ searchInfo.dispatchPersonCounts }}</span>人，
       抢救被困人员<span>{{ searchInfo.rescueCount }}</span>人，
-      疏散被困人员<span>{{ searchInfo.evacuateNumSum }}</span>人，
+      疏散、转移被困人员<span>{{ searchInfo.evacuateNumSum + searchInfo.transferNumSum }}</span>人，
       抢救财产价值<span>{{ searchInfo.emergencyNumSum }}</span>元，
       保护财产价值<span>{{ searchInfo.protectNumSum }}</span>元，
       参战人员死亡<span>{{ searchInfo.firedeathNumSum || searchInfo.fireDeathNumSum }}</span>人，

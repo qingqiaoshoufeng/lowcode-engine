@@ -208,6 +208,7 @@ const searchDimension = inject('searchDimension')
         :label="`${fieldObj.label}：`"
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
+        :extra-params="{ status: null }"
       />
     </template>
     <template v-else-if="fieldObj?.type === 'select-person'">
@@ -217,6 +218,9 @@ const searchDimension = inject('searchDimension')
         :label="`${fieldObj.label}：`"
         :label-width="`${fieldObj?.labelWidth}`"
         :placeholder="`请选择${fieldObj.label}`"
+        :extra-params="{
+          status: null,
+        }"
       />
     </template>
     <template v-if="fieldObj?.type === 'area-cascader'">

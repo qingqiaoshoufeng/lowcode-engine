@@ -324,6 +324,9 @@ defineExpose({
             :placeholder="`请选择${form.label}`"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
             @change="onPersonChange"
+            :extra-params="{
+              status: null,
+            }"
           />
         </template>
         <template v-if="form.type === '11'">
@@ -334,6 +337,7 @@ defineExpose({
             :label-width="`${form?.labelWidth}`"
             :placeholder="`请选择${form.label}`"
             :rules="[{ required: true, message: `请输入${form.label}` }]"
+            :extra-params="{ status: null }"
             @change="onCarChange"
           />
         </template>
