@@ -1,30 +1,21 @@
 <template>
-   <div class="list-wrapper">
-      <Vue3SeamlessScroll :list="list" hover wheel step="0.5">
-          <div class="marquee-box">
-            <van-cell v-for="item in list" :key="item.noticeTitle" title="单元格">
-                <template #title>
-                    <div class="title">
-                        <div class="label">{{ item.noticeTitle }}</div>
-                    </div>
-                </template> 
-            </van-cell>
-          </div>
-        </Vue3SeamlessScroll>
-        <img class="arrow" src="@/assets/images/arrow.png" alt="">
+  <div class="list-wrapper">
+    <Vue3SeamlessScroll :list="list" hover wheel step="0.5">
+      <div class="marquee-box">
+        <van-cell v-for="item in list" :key="item.noticeTitle" title="单元格">
+            <template #title>
+                <div class="title">
+                    <div class="label">{{ item.noticeTitle }}</div>
+                </div>
+            </template> 
+        </van-cell>
       </div>
- <!-- <div class="marquee-container">
-    <div class="img">
-      <div class="dot"></div>
-      <img src="@/assets/images/home-notice.png" alt="">
-    </div>
-    
-   
-</div> -->
+    </Vue3SeamlessScroll>
+    <img class="arrow" src="@/assets/images/arrow.png" alt="">
+  </div>
 </template>
   
 <script setup>
-import {cardList} from '../config.js'
 import { Vue3SeamlessScroll } from 'vue3-seamless-scroll'
 const props = defineProps({
   list:{

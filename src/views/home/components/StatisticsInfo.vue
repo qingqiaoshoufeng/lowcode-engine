@@ -247,7 +247,6 @@ export default {
       border-radius: 8px;
       border: 1px solid #E6E9EF;
     }
-
     .red.card_item{
       background: #EEF8F8;
       border-radius: 8px;
@@ -258,13 +257,44 @@ export default {
       border-radius: 8px;
       border: 1px solid #F9D8B0;
     }
+    .one.card_item{
+      background: #F7FAFF;
+      border: 1px solid #E6E9EF;
+    }
+    .two.card_item{
+      background: #F5F6F7;
+      border: 1px solid #EAEAEA;
+    }
+    .three.card_item{
+      background: #EFF9FF;
+      border: 1px solid #D7EAFA;
+    }
+    .four.card_item{
+      background: #EEF8F8;
+      border: 1px solid #B2E7D7;
+    }
+    .five.card_item{
+      background: #FAF6FF;
+      border: 1px solid #E9DEFC;
+    }
+    .six.card_item{
+      background: #F2F3FD;
+      border: 1px solid #D1D4ED;
+    }
+    .seven.card_item{
+      background: #FEFBF7;
+      border: 1px solid #F8EAD9;
+    }
+    .eight.card_item{
+      background: #FFF4F4;
+      border: 1px solid #FFD6D4;
+    }
   }
   .isActive{
-        color: var(--van-primary-color) !important;
-        background-color: #FFFFFD !important;
-      }
+    color: var(--van-primary-color) !important;
+    background-color: #FFFFFD !important;
+  }
 }
-
 .tip_per{
     margin-top: 10px;
     color:red;

@@ -2,7 +2,6 @@ import { reactive, toRefs, watch } from 'vue'
 import { showLoadingToast, closeToast } from 'vant';
 import router from '@/router/index.js'
 import Time from '@/utils/time.js'
-import { cardList } from '../config.js'
 import { gethomePageInfo, getFireNotice } from '@/apis/index.js'
 import store from '@/store'
 import { size } from 'lodash-es';
@@ -15,7 +14,6 @@ export default function useSearch({ dataPickerRef, statisticsInfoRef, YearRankRe
       time: false
     },
     isStanding: ORGLEVEL === 5,
-    cardList,
     FireInfoList: '', // 百万人口火灾
     DispatchInfoList: '', // 出动平均时长列表
     InitialFuelsList: [],// 高频起火场所
@@ -422,14 +420,14 @@ const firelistMap = [
     label: '火灾总数',
     numberKey: 'fireCount',
     YOYkey: 'fireCountYOY',
-    color: 'blue',
+    color: 'one',
     unit: '起',
   },
   {
     label: '非轻微火灾',
     numberKey: 'nonMinorFireCount',
     YOYkey: 'nonMinorFireCountYOY',
-    color: 'red',
+    color: 'one',
     unit: '起',
   },
   // {
@@ -443,14 +441,14 @@ const firelistMap = [
     label: '死亡人数',
     numberKey: 'deCount',
     YOYkey: 'deCountYOY',
-    color: 'green',
+    color: 'three',
     unit: '人',
   },
   {
     label: '死亡人数（较大火灾）',
     numberKey: 'largerFireDeathCount',
     YOYkey: 'largerFireDeathCountYOY',
-    color: 'green',
+    color: 'three',
     unit: '人',
     labelStyle:{
       'font-size':'12px',
@@ -462,28 +460,28 @@ const firelistMap = [
     label: '受伤人数',
     numberKey: 'ssCount',
     YOYkey: 'ssCountYOY',
-    color: 'green',
+    color: 'five',
     unit: '人',
   },
   {
     label: '重伤人数',
     numberKey: 'zsCount',
     YOYkey: 'zsCountYOY',
-    color: 'green',
+    color: 'five',
     unit: '人',
   },
   {
     label: '直接经济损失',
     numberKey: 'disCount',
     YOYkey: 'disCountYOY',
-    color: 'green',
+    color: 'seven',
     unit: '万元',
   },
   {
     label: '直接财产损失',
     numberKey: 'disProCount',
     YOYkey: 'disProCountYOY',
-    color: 'green',
+    color: 'seven',
     unit: '万元',
   },
 ]
@@ -493,69 +491,69 @@ const dispatchListMap = [
     label: '队站出动队次',
     numberKey: 'totalDispatch',
     YOYkey: 'totalDispatchPro',
-    color: 'blue',
+    color: 'one',
     unit: '队次',
   },
   {
     label: '队站出动人次',
     numberKey: 'person',
     YOYkey: 'personPro',
-    color: 'blue',
+    color: 'one',
     unit: '人次',
   },
   {
     label: '火灾扑救',
     numberKey: 'hzpj',
     YOYkey: 'hzpjPro',
-    color: 'red',
+    color: 'two',
     unit: '队次',
   },
   {
     label: '抢险救援',
     numberKey: 'qxjy',
     YOYkey: 'qxjyPro',
-    color: 'red',
+    color: 'two',
     unit: '队次',
   },
   {
     label: '国家队出动',
     numberKey: 'national',
     YOYkey: 'nationalPro',
-    color: 'red',
+    color: 'three',
     unit: '队次',
   },
   {
     label: '专职队出动',
     numberKey: 'dedicated',
     YOYkey: 'dedicatedPro',
-    color: 'red',
+    color: 'three',
     unit: '队次',
   },
   {
     label: '全勤指挥部出动',
     numberKey: 'headquarters',
     YOYkey: 'headquartersPro',
-    color: 'red',
+    color: 'four',
     unit: '队次',
   },
   {
     label: '抢救被困',
     numberKey: 'rescueNum',
     YOYkey: 'rescueNumPro',
-    color: 'green',
+    color: 'four',
     unit: '人',
   }, {
     label: '抢救财产价值',
     numberKey: 'emergencyNum',
     YOYkey: 'emergencyNumPro',
-    color: 'green',
+    color: 'five',
     unit: '万元',
   },
   {
     label: '保护财产价值',
     numberKey: 'protectNum',
     YOYkey: 'protectNumPro',
-    color: 'green',
+    color: 'five',
     unit: '万元',
   },
 ]
