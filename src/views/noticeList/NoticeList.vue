@@ -44,9 +44,7 @@ const getNotice = async(params= {})=>{
 
 const list = ref([])
 
-const {
-  currentTab,
-  tabList,tabChange} = useTab({
+const { currentTab, tabList, tabChange } = useTab({
   list:[
     {
       label:'全部',
@@ -61,11 +59,11 @@ const {
       value:'2',
     },
   ],
-  defaultTab:'1',
+  defaultTab:'0',
   paramsKey:'annual'
 })
 
-watch(()=>tabRef.value.active,(val)=>{
+watch(()=> tabRef.value.active ,(val)=>{
   let paramsMap = [
     { 
     },
@@ -79,7 +77,7 @@ watch(()=>tabRef.value.active,(val)=>{
   getNotice(paramsMap[val])
 })
 
-getNotice({ status: 1 })
+getNotice({ })
 
 const goDetail = (item)=>{
   router.push({

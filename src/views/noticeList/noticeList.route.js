@@ -5,6 +5,6 @@ export default [{
     index: 2,
     keepAlive: true,
   },
-  component: () => import('@/views/noticeList/index.vue')
+  component: () => import('@/views/noticeList/NoticeList.vue')
 }]
     
