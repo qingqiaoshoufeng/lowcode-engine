@@ -28,19 +28,6 @@ const handlePreview = (el, binding, vnode) => {
     }).join()
     el.innerText = context
   }
-  // if(el.className.includes('cascader-single')){
-  //   // const context = el.querySelector('input').value
-  //   const icon = el.querySelector('i')
-  //   console.log('icon',icon);
-  //   if(icon){
-  //     debugger
-  //     el.removeChild(icon)
-     
-  //     console.log('icon',icon);
-  //   }
-  //   el.classList.add('p_e_n')
-  //   // right.innerText = context
-  // }
 
   if (textValue && wrapper) {
     // 多次渲染要先移除

@@ -92,12 +92,13 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="showNotDealReason"
       v-model="form.basicInformation.notDealReason.value"
+      v-preview-text="showPreview"
       :readonly="showPreview"
       maxlength="100"
       required
       name="basicInformation.notDealReason.value"
       label="未处置原因："
-      label-width="132px"
+      label-width="104px"
       placeholder="请输入未处置原因"
       :rules="form.basicInformation.notDealReason.rules"
     >
