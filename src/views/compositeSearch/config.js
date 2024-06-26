@@ -1653,7 +1653,7 @@ export const useFormConfig = () => {
         value: undefined,
         type: 'radio-is',
         label: '消防设施设备',
-        labelWidth: `var(--van-field-label-width-130)`,
+        // labelWidth: `var(--van-field-label-width-130)`,
         options: install
       },
       autoAlarm: { // 自动报警系统

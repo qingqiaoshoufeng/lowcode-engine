@@ -18,7 +18,7 @@
               </div>
               <div class="bottom">
                 <div class="organization">{{ item.publishOrganization }}</div>
-                <div class="organization">{{ dayjs(item.createDate).format('YYYY-MM-DD') }}</div>
+                <div class="organization">{{ formatYmdHm(item.publishTime, 'YYYY-MM-DD') }}</div>
               </div>
             </div>
           </div>
@@ -29,17 +29,21 @@
 </template>
 
 <script setup>
-import { getFireNotice} from '@/apis/index.js'
+import { getFireNotice } from '@/apis/index.js'
 import router from '@/router/index.js'
-import dayjs from 'dayjs';
-import {ref} from 'vue'
+import { ref, onMounted } from 'vue'
 import useTab from './hooks/useTab.js'
 import { watch } from 'vue';
+import { formatYmdHm } from "@/utils/format.js";
+
 const tabRef = ref(0)
+
 const getNotice = async(params= {})=>{
   list.value = await getFireNotice(params)
 }
+
 const list = ref([])
+
 const {
   currentTab,
   tabList,tabChange} = useTab({
@@ -58,9 +62,9 @@ const {
     },
   ],
   defaultTab:'1',
-  // handleChange:getNotice,
   paramsKey:'annual'
 })
+
 watch(()=>tabRef.value.active,(val)=>{
   let paramsMap = [
     { 
@@ -74,17 +78,25 @@ watch(()=>tabRef.value.active,(val)=>{
   ]
   getNotice(paramsMap[val])
 })
-getNotice( {status: 1})
+
+getNotice({ status: 1 })
+
 const goDetail = (item)=>{
   router.push({
     path:'/noticeDetail',
     query:{
-      id:item.boUserNoticeId
+      id: item.boUserNoticeId,
+      publishTime: item.publishTime,
     }
   })
 }
 </script>
 
+<script>
+export default {
+  name: 'NoticeList'
+}
+</script>
 
 <style scoped lang="scss">
 .van-tabs{

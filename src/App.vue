@@ -7,17 +7,29 @@
  * @LastEditTime: 2021-01-02 14:32:14
  * @FilePath: /refactor-with-vue3/src/App.vue
  -->
- <template>
-  <keep-alive>
-    <router-view />
-  </keep-alive>
+<template>
+  <router-view v-slot="{ Component, route }">
+    <transition>
+      <keep-alive v-if="route.meta.keepAlive" :include="cachedComponents">
+        <component :is="Component" />
+      </keep-alive>
+      <component v-else :is="Component" />
+    </transition>
+  </router-view>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const cachedComponents = ref(['NoticeList'])
+</script>
 
 <script>
 export default {
   name: "App"
 };
 </script>
+
 <style lang="scss">
 @import "./styles/base.scss";
 

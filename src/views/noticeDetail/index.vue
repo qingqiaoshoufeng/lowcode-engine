@@ -2,23 +2,19 @@
   <div class="notice_detail">
     <HeaderTitle title="通知公告"/>
     <div class="info">
-      <div class="title">{{
-        form.noticeTitle
-         }}</div>
+      <div class="title">{{ form.noticeTitle }}</div>
       <div class="header">
         <div class="org">{{ form.publishOrganization }}</div>
-        <div class="time">{{ dayjs(form.createDate).format('YYYY-MM-DD')}}</div>
+        <div class="time">{{ formatYmdHm(form.publishTime, 'YYYY-MM-DD') }}</div>
       </div>
       <div v-html="form.noticeBody"></div>
       <div class="bottom" >
         <div v-for="item in form?.attach || []" :key="item.url">
-          <!-- <a :href="item.url" :download="item.name"> -->
-            <div class="left">
-              <img src="~@/assets/images/filetip.png" alt="">
-              <span>{{ item.name }}</span>
-            </div>
-            <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
-          <!-- </a> -->
+          <div class="left">
+            <img src="~@/assets/images/filetip.png" alt="">
+            <span>{{ item.name }}</span>
+          </div>
+          <img src="~@/assets/images/down-loading.png" alt="" @click="downLoad(item)">
         </div>
       </div>
     </div>
@@ -28,18 +24,17 @@
 <script setup>
 import { getNoticeDetail, updateNotice, getAttachmentFile } from '@/apis/index.js'
 import { downLoad } from '@/utils/download.js'
-import { ref } from 'vue'
-import dayjs from 'dayjs';
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { Item } from '@castle/ant-design-vue/lib/menu';
 import { getAttachUrl } from '@/utils/tools.js'
+import { formatYmdHm } from "@/utils/format.js";
 
 const form = ref({})
 
 const route = useRoute()
 
 defineProps()
-
 
 const getFIleList = (res)=>{
   if (res.boUserNoticeId) {
@@ -59,8 +54,9 @@ const getFIleList = (res)=>{
     })
   }
 }
+
 const getDetail = ()=>{
-  getNoticeDetail({id:route.query.id}).then((res) => {
+  getNoticeDetail({ id: route.query.id }).then((res) => {
     if (res) {
       form.value.noticeTitle = res.noticeTitle
       form.value.noticeType = res.noticeType
@@ -74,19 +70,19 @@ const getDetail = ()=>{
     return res
   })
 }
-getDetail()
 
+onMounted(() => {
+  form.value.publishTime = Number(route.query.publishTime)
+  getDetail()
+})
 </script>
-
 
 <style scoped lang="scss">
 .notice_detail{
   background-color: #fff;
-
  .info{
   padding: 16px;
   .title{
-    width: 121px;
     height: 22px;
     font-size: 16px;
     font-family: PingFangSC-Regular, PingFang SC;
@@ -109,7 +105,6 @@ getDetail()
  .bottom{
   position: absolute;
   bottom: 49px;
-  // display: flex;
   justify-content: flex-end;
   >div{
     display: flex;
@@ -133,7 +128,6 @@ getDetail()
       height: 14px;
     }
   }
-  // margin-top:
   .van-button{
     width: 92px;
     height: 28px;
@@ -141,7 +135,6 @@ getDetail()
     border-radius: 2px;
     border: 1px solid #0095FF;
   }
-
  }
 }
 </style>
