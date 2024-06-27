@@ -752,9 +752,9 @@ const initWatch = () => {
       }, { deep: true })
     }
     initModuleState()
+    show.value.apiLoading = true
     nextTick(() => {
       showPreview.value = Boolean(props.isDetail && (form.value.basicInformation.dealSituation.value || form.value.draftInfo.warningType.value))
-      show.value.apiLoading = true
     })
     resolve()
   })

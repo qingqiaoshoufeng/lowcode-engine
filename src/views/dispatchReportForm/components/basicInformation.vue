@@ -98,7 +98,7 @@ const onDealSituation = (value, option) => {
       required
       name="basicInformation.notDealReason.value"
       label="未处置原因："
-      label-width="104px"
+      label-width="102px"
       placeholder="请输入未处置原因"
       :rules="form.basicInformation.notDealReason.rules"
     >
@@ -115,6 +115,7 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="!showMidwayReturn"
       v-model="form.basicInformation.fireDistance.value"
+      v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
       maxlength="10"
@@ -166,6 +167,7 @@ const onDealSituation = (value, option) => {
     <van-field
       v-if="showMainGroup && !showFalsePolice && !showMidwayReturn && !showNotDealReason"
       v-model="form.basicInformation.trappedPerson.value"
+      v-preview-text="showPreview"
       :readonly="showPreview"
       type="number"
       maxlength="10"
