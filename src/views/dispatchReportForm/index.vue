@@ -1383,7 +1383,11 @@ const handleTemporary = async () => {
 }
 
 const onSubmit = async () => {
-  if (props.isApproval) {
+  // 只有审核校验批注，审批不再校验批注
+  if ((props.labelText === '审核' && props.isApproval) && checkFieldWarning(fieldExist.value)) {
+    showToast('请对异常指标进行批注说明！')
+  }
+  else if (props.isApproval) {
     show.value.approvalVisible = true
   }
   else if (props.isAgain) {
