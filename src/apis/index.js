@@ -234,7 +234,7 @@ export function getRoleList() {
     headers: {
       'Content-Type': 'application/json',
       'token': localStorage.token,
-      'platform': localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
+      'platform': localStorage.platform || 'App'
     },
   })
     .then((res) => res.json())
