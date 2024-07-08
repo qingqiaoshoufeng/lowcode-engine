@@ -1,5 +1,5 @@
 <script setup>
-import { ref, inject } from "vue";
+import { ref, inject, computed } from "vue";
 import SelectSingle from "@/component/SelectSingle/index";
 import { checkAttendanceDate, checkFireDistance, checkReturnSpeed, checkTrappedPerson } from '../tool.js'
 import { useStore } from "vuex";
@@ -29,9 +29,17 @@ const detail = inject('detail')
 
 const initDispatchDetail = inject('initDispatchDetail')
 
+const isInput = inject('isInput')
+
 const store = useStore()
 
 const trappedConfig = store.state.rules.ruleConfig.trappedConfig
+
+const dealSituationDisabled = computed(() => {
+  return isInput
+    ? initDispatchDetail?.value?.dispatchArriveFlag === '2' || initDispatchDetail?.value?.returnWarningFlag === '1'
+    : false
+})
 
 const onIsBlocking = (value) => {
   if (value === '2') {
@@ -61,6 +69,26 @@ const onDealSituation = (value, option) => {
     showToast('首到队伍不能选择中途返回')
   }
 }
+
+const validateDealSituation = (value, rule) => {
+  if (!isInput) {
+    if ((initDispatchDetail?.value?.dispatchArriveFlag === '2' || initDispatchDetail?.value?.returnWarningFlag === '1')
+      && form.value.basicInformation.dealSituation.value !== '2023020800262') {
+      return "该警情为中返警情，处置情况请选择“中途返回”"
+    }
+    else if (!(initDispatchDetail?.value?.dispatchArriveFlag === '2' || initDispatchDetail?.value?.returnWarningFlag === '1')
+      && (initDispatchDetail?.value?.isFirst === '1' || currentRow?.dispatchTypeValue === '主战')
+      && form.value.basicInformation.dealSituation.value === '2023020800262') {
+      return "该警情非中返警情，主战、首到队伍的处置情况请选择“到场实施处置”或“到场未实施处置"
+    }
+    else {
+      return ""
+    }
+  }
+  else {
+    return ""
+  }
+}
 </script>
 
 <template>
@@ -75,8 +103,8 @@ const onDealSituation = (value, option) => {
       title="请选择处置情况"
       label="处置情况："
       placeholder="请选择处置情况"
-      :disabled="initDispatchDetail?.dispatchArriveFlag === '2' || initDispatchDetail?.returnWarningFlag === '1'"
-      :rules="form.basicInformation.dealSituation.rules"
+      :disabled="dealSituationDisabled"
+      :rules="[{ validator: validateDealSituation, trigger: 'onBlur' }, ...form.basicInformation.dealSituation.rules]"
       @change="onDealSituation"
     >
       <template v-slot:label="">

@@ -439,6 +439,8 @@ provide('detail', detail)
 
 provide('importantEdit', importantEdit)
 
+provide('isInput', props.isInput)
+
 provide('showDraft', props.showDraft)
 
 provide('isEdit', props.isEdit)
