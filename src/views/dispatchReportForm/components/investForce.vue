@@ -315,6 +315,7 @@ const onCommander = () => {
       :field-names="{ value: 'boFireUserId', label: 'userName' }"
       :rules="form.investForce.groupLeader.rules"
       :disabled="form.investForce.groupLeader.disabled"
+      :select-one="true"
       label="带队指挥人员："
       label-width="120px"
       placeholder="请选择带队指挥人员"

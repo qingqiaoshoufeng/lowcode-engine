@@ -42,6 +42,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  selectOne: {
+    type: Boolean,
+    default: false,
+  },
   options: {
     type: Array,
     default: () => [],
@@ -62,6 +66,8 @@ const selectText = ref("");
 
 const checkboxRefs = ref([]);
 
+const checkboxGroupRef = ref(null);
+
 watch(() => [props.value, props.nodes], (val) => {
   if (props.value?.length > 0) {
     selectItem.value = props.options?.filter((item) => props.value.includes(item[props.fieldNames.value]));
@@ -76,10 +82,24 @@ watch(() => [props.value, props.nodes], (val) => {
     selectValue.value = []
     selectText.value = ''
   }
-}, { immediate: true })
+}, { immediate: true, deep: true })
 
 const toggle = (index) => {
-  checkboxRefs.value[index].toggle();
+  if (props.selectOne) {
+    props.options.forEach((item, i) => {
+      if (i !== index) {
+        checkboxRefs.value[i].toggle(false);
+      }
+    })
+    checkboxRefs.value[index].toggle();
+    if (!checkboxRefs.value[index]?.checked?.value) {
+      selectValue.value = [selectValue.value[selectValue.value.length - 1]]
+    } else {
+      selectValue.value = []
+    }
+  } else {
+    checkboxRefs.value[index].toggle();
+  }
 };
 
 const handleOk = () => {
@@ -139,7 +159,7 @@ defineOptions({
         <div class="confirm" @click="handleOk">确定</div>
       </div>
       <div class="multiple-wrapper">
-        <van-checkbox-group v-model="selectValue">
+        <van-checkbox-group ref="checkboxGroupRef" v-model="selectValue">
           <van-cell
             v-for="(item, index) in options"
             :title="item[fieldNames.label]"

@@ -7,7 +7,8 @@ import { whiteList } from './white.js'
 
 export const requestInterceptors = (config) => {
   config.headers.token = localStorage.token
-  config.headers.platform = localStorage.platform === 'ydyj-app' ? 'ydyj-app' : 'App'
+  config.headers.platform = localStorage.platform || 'App'
+  config.headers['client-version'] = '1.3.7-1-20240711'
   return config
 }
 

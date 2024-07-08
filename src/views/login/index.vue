@@ -173,10 +173,10 @@ const handleUserLogin = async () => {
 	}
 	else if (res?.token) {
 		localStorage.token = res.token
-		if (['staging-h5', 'production-h5', 'test-h5'].indexOf(process.env.NODE_ENV === 'test') > -1) {
+		if (['staging-h5', 'production-h5', 'test-h5'].indexOf(process.env.NODE_ENV) > -1) {
 			localStorage.platform = "hztj-h5"
 		} else {
-			localStorage.platform = "hztj-app"
+			localStorage.platform = "App"
 		}
 		const { jcaptchaCode, password, ...rest } = loginForm.value
 		isRemember.value && localStorage.setItem('loginForm', JSON.stringify(rest))
