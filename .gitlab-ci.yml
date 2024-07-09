@@ -79,7 +79,8 @@ install&build-job:
     - wget http://10.13.4.153:9000/foodreserver-apps/mc
     - chmod a+x mc
     - ls
-    - ./mc alias set apk https://stat.119.gov.cn/minio/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc alias set apk https://stat.119.gov.cn/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    - ./mc mb apk/minio
     - ./mc cp $FIREALARMAPK apk/foodreserver-apps/$FIREALARMAPKNAME
     - ./mc cp $FIREALARMVERDION apk/foodreserver-apps/$FIREALARMVERDIONNAME
 
