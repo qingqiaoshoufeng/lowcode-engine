@@ -60,9 +60,9 @@ swagger 地址：http://10.13.4.128:1086/acws/rest/swagger-ui.html
 
 ## 环境信息
 
-测试版：http://223.4.79.9:31201/foodreserver-apps/dev-fire-alarm.apk
+测试版：https://stat.119.gov.cn/minio/foodreserver-apps/dev-fire-alarm.apk
 
-正式版：http://223.4.79.9:31201/foodreserver-apps/fire-alarm.apk
+正式版：https://stat.119.gov.cn/minio/foodreserver-apps/fire-alarm.apk
 
 admin@ln 辽宁省消防救援总队
 

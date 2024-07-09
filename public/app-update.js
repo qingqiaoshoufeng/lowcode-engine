@@ -4,7 +4,7 @@ function checkAppVersion(isProd = true) {
   if (window._SYSTEM_CURRENT_ENV === 'test') {
     isProd = false
   }
-  const updateUrl = `http://223.4.79.9:31201/foodreserver-apps/${isProd ? "" : "dev-"}fire-alarm-version.xml?t=${new Date().getTime()}`;
+  const updateUrl = `https://stat.119.gov.cn/minio/foodreserver-apps/${isProd ? "" : "dev-"}fire-alarm-version.xml?t=${new Date().getTime()}`;
   console.log("updateUrl: ", updateUrl);
   fetch(updateUrl)
     .then((res) => res.text())
