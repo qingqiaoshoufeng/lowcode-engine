@@ -6,7 +6,7 @@ import { downloadAttachmentFile, getAttachmentFile,uploadFile  } from '@/apis/in
 // import FieldAnnotation from '@/components/field-annotation/index.vue'
 import { getAttachUrl } from '@/utils/tools.js'
 import { formatYmdHm } from "@/utils/format.js";
-import { showToast, showDialog } from 'vant';
+import { showToast, showDialog, showLoadingToast, closeToast } from 'vant';
 
 const form = inject('form')
 
@@ -50,6 +50,7 @@ const onPreview = (file) => {
 }
 
 const OnAfterRead = async(file) => {
+  showLoadingToast({ message: '上传中...' });
   const formData = new FormData()
   formData.append('businessId', relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'image')
@@ -76,8 +77,10 @@ const OnAfterRead = async(file) => {
           }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
         })
       }
+      closeToast()
     })
     .catch(error => {
+      closeToast()
       showToast('图片上传失败，请重试！')
       form.value.firePhoto.photos.value = form.value.firePhoto.photos.value?.filter(item => item.file.attachmentId)
     })

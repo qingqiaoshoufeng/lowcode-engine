@@ -7,7 +7,7 @@ import ProCard from "@/component/ProCard/index.vue";
 import { downloadAttachmentFile, getAttachmentFile,uploadFile } from '@/apis/index.js'
 import { downLoad } from '@/utils/download.js'
 import { getAttachUrl } from '@/utils/tools.js'
-import { showToast, showDialog } from 'vant';
+import { showToast, showDialog, showLoadingToast, closeToast } from 'vant';
 
 const form = inject('form')
 
@@ -47,7 +47,6 @@ const onDelete = async(val,val1)=>{
   }).then((res) => {
     form.value.otherAttach.attach.value = res.data.map((item) => {
       return {
-        isImage: true,
         deletable:isEdit || isShowTemporary.value,
         ...item,
         uid: item.attachmentId,
@@ -64,7 +63,6 @@ const onDelete = async(val,val1)=>{
   }).then((res) => {
     form.value.otherAttach.attach.value = res.data.map((item) => {
       return {
-        isImage: true,
         deletable:isEdit || isShowTemporary.value,
         ...item,
         uid: item.attachmentId,
@@ -77,6 +75,7 @@ const onDelete = async(val,val1)=>{
 }
 
 const OnAfterRead = async(file) => {
+  showLoadingToast({ message: '上传中...' });
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId.value || localFireInfoId)
   formData.append('attachmentType', 'file')
@@ -91,7 +90,6 @@ const OnAfterRead = async(file) => {
         }).then((res) => {
           form.value.otherAttach.attach.value = res.data.map((item) => {
             return {
-              isImage: true,
               deletable:!isDetail,
               ...item, 
               uid: item.attachmentId,
@@ -102,8 +100,10 @@ const OnAfterRead = async(file) => {
           }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
         })
       }
+      closeToast()
     })
     .catch(error => {
+      closeToast()
       showToast('附件上传失败，请重试！')
       form.value.otherAttach.attach.value = form.value.otherAttach.attach.value?.filter(item => item.file.attachmentId)
     })
@@ -142,23 +142,25 @@ onMounted(() => {
         <div :span="24">
           <van-cell title="相关附件上传" class="item-cell" style="margin-left: 10px;">
             <van-uploader
+              v-model="form.otherAttach.attach.value"
+              accept="*"
+              preview-full-image
+              name="basicInfo.attach.value"
+              :max-count="9"
+              :max-size="10 * 1000 * 1000000"
               :readonly="isDetail"
               :deletable="!isDetail"
               :show-upload="form.otherAttach.attach?.value?.length < 9 && !isDetail"
+              :after-read="OnAfterRead"
               :before-delete="onDelete"
               @click-preview="downLoadFile"
-              name="basicInfo.attach.value"
               :rules="form.otherAttach.attach.rules"
               :disabled="isDetail"
-              preview-full-image
-              :max-count="9"
-              accept="*"
-              :max-size="10 * 1000 * 1000000"
-              id="attach"
-              v-model="form.otherAttach.attach.value" 
-              :after-read="OnAfterRead"
-              @delete="onDelete"
-            />
+            >
+              <van-button v-if="form.otherAttach.attach?.value?.length < 9 && !isDetail" icon="plus" size="small" type="primary">
+                上传文件
+              </van-button>
+            </van-uploader>
           </van-cell>
         </div>
       </div>

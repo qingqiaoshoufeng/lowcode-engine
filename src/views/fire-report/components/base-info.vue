@@ -4,7 +4,7 @@ import AreaCascader from '@/component/AreaCascader/index.vue'
 import SelectDateTime from "@/component/SelectDateTime/index";
 import SelectMultiple from "@/component/SelectMultiple/index";
 import CascaderSingle from "@/component/CascaderSingle/index";
-import { showDialog, showToast } from 'vant';
+import { showDialog, showToast, showLoadingToast, closeToast } from 'vant';
 import store from '@/store/index.js'
 import dayjs from 'dayjs'
 // import { message, notification } from '@castle/ant-design-vue'
@@ -106,39 +106,34 @@ const fireTypeDisabled = computed(() => {
   }
   return value
 })
-const onDelete = async(val,val1)=>{
 
-try {
-  const res = await onRemove(val)
-} catch (error) {
+const onDelete = async (val,val1) => {
+  try {
+    const res = await onRemove(val)
+  } catch (error) {
+    getAttachmentFile({
+      businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId,
+      businessType: 'safetyFile',
+    }).then((res) => {
+      form.value.basicInfo.attach.value  = res.data.map((item) => {
+        return {
+          isImage: true,
+          deletable:!isDetail,
+          ...item,
+          uid: item.attachmentId,
+          name: item.attachmentName,
+          status: 'done',
+          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+        }
+      }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
+    })
+  }
   getAttachmentFile({
     businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId,
     businessType: 'safetyFile',
   }).then((res) => {
     form.value.basicInfo.attach.value  = res.data.map((item) => {
       return {
-        isImage: true,
-        deletable:!isDetail,
-        ...item,
-        uid: item.attachmentId,
-        name: item.attachmentName,
-        status: 'done',
-        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
-      }
-    }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
-  })
-}
-
-  // if(res === true){
-    
-  // }
-  getAttachmentFile({
-    businessObjId: relevanceDraft?.boFireInfoId || currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId,
-    businessType: 'safetyFile',
-  }).then((res) => {
-    form.value.basicInfo.attach.value  = res.data.map((item) => {
-      return {
-        isImage: true,
         deletable:!isDetail,
         ...item,
         uid: item.attachmentId,
@@ -151,6 +146,7 @@ try {
 }
 
 const OnAfterRead = async(file) => {
+  showLoadingToast({ message: '上传中...' });
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireInfoId || localFireInfoId?.value || localFireInfoId)
   formData.append('attachmentType', 'safetyFile')
@@ -165,7 +161,6 @@ const OnAfterRead = async(file) => {
         }).then((res) => {
           form.value.basicInfo.attach.value  = res.data.map((item) => {
             return {
-              isImage: true,
               deletable:!isDetail,
               ...item,
               uid: item.attachmentId,
@@ -176,8 +171,10 @@ const OnAfterRead = async(file) => {
           }).sort((a,b)=> (new Date(a.createDate)-(new Date(b.createDate))))
         })
       }
+      closeToast()
     })
     .catch(error => {
+      closeToast()
       showToast('附件上传失败，请重试！')
       form.value.basicInfo.attach.value = form.value.basicInfo.attach.value?.filter(item => item.file.attachmentId)
     })

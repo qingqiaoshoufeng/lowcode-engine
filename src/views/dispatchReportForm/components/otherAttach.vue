@@ -1,8 +1,8 @@
 <script setup>
 import { inject, onMounted, ref } from "vue";
-import { showToast, showDialog } from 'vant';
+import { showToast, showDialog, showLoadingToast, closeToast } from 'vant';
 import { deleteAttachmentFile, getAttachmentFile, uploadFile } from "@/apis/index.js";
-import {downLoad} from '@/utils/download.js'
+import { downLoad } from '@/utils/download.js'
 import ProCard from "@/component/ProCard/index.vue";
 import { getAttachUrl } from '@/utils/tools.js'
 
@@ -26,26 +26,31 @@ const isOpen = ref((form.value.otherAttach.attach.value?.length > 0 || !isDetail
 
 const haveData = ref((form.value.otherAttach.attach.value?.length > 0 || !isDetail))
 
+const initImages = () => {
+  getAttachmentFile({
+    businessObjId: currentRow?.boFireDispatchId,
+    businessType: "file",
+  }).then((res) => {
+    form.value.otherAttach.attach.value = res.data.map((item) => {
+      return {
+        ...item,
+        uid: item.attachmentId,
+        name: item.attachmentName,
+        status: "done",
+        url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
+      };
+    });
+  });
+}
+
 onMounted(() => {
   if (isDetail || isEdit || currentRow?.boFireDispatchId) {
-    getAttachmentFile({
-      businessObjId: currentRow?.boFireDispatchId,
-      businessType: "file",
-    }).then((res) => {
-      form.value.otherAttach.attach.value = res.data.map((item) => {
-        return {
-          ...item,
-          uid: item.attachmentId,
-          name: item.attachmentName,
-          status: "done",
-          url: `${getAttachUrl()}/acws/rest/app/attachments/${item.attachmentId}`,
-        };
-      });
-    });
+    initImages()
   }
 });
 
 const onAfterRead = (file) => {
+  showLoadingToast({ message: '上传中...' });
   const formData = new FormData()
   formData.append('businessId', currentRow?.boFireDispatchId || localFireDispatchId)
   formData.append('attachmentType', 'file')
@@ -59,7 +64,10 @@ const onAfterRead = (file) => {
       file.file.fileType = res.fileType
       file.file.fullPath = res.fullPath
     }
+    initImages()
+    closeToast()
   }).catch(error => {
+    closeToast()
     showToast('附件上传失败，请重试！')
     form.value.otherAttach.attach.value = form.value.otherAttach.attach.value?.filter(item => item.file.attachmentId)
   })
@@ -96,7 +104,7 @@ const downLoadFile = (val)=>{
 <template>
   <ProCard :title="haveData ? '其他附件' : '其他附件（无数据）'" id="otherAttach" :state="isOpen">
     <van-cell-group>
-      <div class="scene-photo">
+      <div class="other-attach">
         <van-cell title="相关附件上传：" name="otherAttach.attach.value" class="item-cell">
           <van-uploader
             v-model="form.otherAttach.attach.value"
@@ -132,7 +140,7 @@ const downLoadFile = (val)=>{
 </template>
 
 <style lang="scss" scoped>
-.scene-photo {
+.other-attach {
   padding: 10px 0 0 10px;
   .item-cell {
     flex-direction: column;
