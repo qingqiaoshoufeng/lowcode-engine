@@ -55,7 +55,7 @@ install&build-job:
     - sed -i 's|<version>1</version>|<version>'$TIMESTAMP'</version>|g' ./public/version.xml
     - sed -i 's|<name>1.0.0</name>|<name>'$DATE'-'$TIMESTAMP'</name>|g' ./public/version.xml
     - sed -i 's|<remark>remark</remark>|<remark>'$ENVTEXT'-#'$CI_PIPELINE_ID'</remark>|g' ./public/version.xml
-    - sed -i 's|<url>url</url>|<url>https://stat.119.gov.cn/minio/foodreserver-apps/'$FIREALARMAPKNAME'</url>|g' ./public/version.xml
+    - sed -i 's|<url>url</url>|<url>https://stat.119.gov.cn/foodreserver-apps/'$FIREALARMAPKNAME'</url>|g' ./public/version.xml
     - cd cordova
     # - sed -i 's|<name>浙江储备</name>|<name>浙江储备</name>|g' config.xml
     # - sed -i 's|<icon src="res/zhejiang.png"/>|<icon src="res/zhejiang.png"/>|g' config.xml
@@ -76,12 +76,12 @@ install&build-job:
     - cordova build
     - cp platforms/android/app/build/outputs/apk/debug/app-debug.apk $FIREALARMAPK
     - cp ../public/version.xml $FIREALARMVERDION
-    - wget http://10.13.4.153:9000/foodreserver-apps/mc
-    - chmod a+x mc
-    - ls
-    - ./mc alias set apk https://stat.119.gov.cn/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
-    - ./mc cp $FIREALARMAPK apk/foodreserver-apps/$FIREALARMAPKNAME
-    - ./mc cp $FIREALARMVERDION apk/foodreserver-apps/$FIREALARMVERDIONNAME
+    # - wget http://10.13.4.153:9000/foodreserver-apps/mc
+    # - chmod a+x mc
+    # - ls
+    # - ./mc alias set apk https://stat.119.gov.cn/ $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
+    # - ./mc cp $FIREALARMAPK apk/foodreserver-apps/$FIREALARMAPKNAME
+    # - ./mc cp $FIREALARMVERDION apk/foodreserver-apps/$FIREALARMVERDIONNAME
 
   artifacts:
     expire_in: 4 week
