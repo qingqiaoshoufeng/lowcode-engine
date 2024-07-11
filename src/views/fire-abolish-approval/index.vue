@@ -225,7 +225,6 @@ onMounted(() => {
     >
       <template #default="{ setHandleOk }">
         <EditorForm
-          :showReviewDialog="showReviewDialog"
           :set-handle-ok="setHandleOk"
           :current-row="currentRow" 
           :is-detail="true"

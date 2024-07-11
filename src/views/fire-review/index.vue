@@ -95,7 +95,6 @@
     >
       <template #default="{ setHandleOk }">
         <EditorForm
-          :showReviewDialog="showReviewDialog"
           :set-handle-ok="setHandleOk"
           :current-row="currentRow"
           :is-edit="true"

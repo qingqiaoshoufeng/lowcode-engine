@@ -405,11 +405,6 @@ const container = () => {
   return document.querySelector('.tab-pane-content') || document.querySelector('#record-wrap') || document.querySelector('.ant-modal-body')
 }
 
-// 打开审核弹窗
-const showReviewDialog = () => {
-  show.value.approvalVisible = true
-}
-
 const refreshField = () => {
   if (localFireInfoId.value) {
     getFieldAnnotationDetail({
@@ -1340,7 +1335,7 @@ const onSideBarChange = (e, k) => {
   <div v-if="!showPreview && show.apiLoading" class="fire-report-footer">
     <div class="form-footer" v-if="!showPreview">
       <template v-if="isReview">
-        <van-button block type="primary" size="small" :loading="commonLoading" @click.stop="showReviewDialog">
+        <van-button block type="primary" size="small" :loading="commonLoading" @click.stop="handleSubmit">
           审核
         </van-button>
       </template>
