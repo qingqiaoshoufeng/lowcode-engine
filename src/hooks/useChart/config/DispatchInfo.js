@@ -54,11 +54,19 @@ const options = {
   ],
   series: [
     {
-      name: '火灾起数',
+      name: '到场时长(分钟)',
       type: 'bar',
       data: [5, 20, 36, 10, 10, 20],
       barWidth:10,
       color:'#5CC97C',
+      markLine: {
+        data: [
+          {
+            type: 'average',
+            name: '平均值',
+          },
+        ],
+      },
     },
   ]
 }
