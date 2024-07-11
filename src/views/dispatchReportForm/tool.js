@@ -79,19 +79,21 @@ export const checkFireDistance = (form, prompt = true) => {
   form.basicInformation.fireDistance.warningText = ''
   form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:true;', 'fireDistance:false;')
   const { fireDistance } = form.basicInformation
-  if (Number(fireDistance.value) < distanceConfig?.[0]?.value && form.investForce.dispatchTruckList?.value?.length > 0) {
-    form.basicInformation.fireDistance.warning = true
-    form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
-    form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
-    // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
-  }
-  if (Number(fireDistance.value) > distanceConfig?.[1]?.value) {
-    form.basicInformation.fireDistance.warning = true
-    form.basicInformation.fireDistance.warningText = `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`
-    form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
-    // prompt && notification.open({ message: '填报异常提醒', description: `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
-    prompt && showToast(`行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`)
+  if (form.basicInformation.dealSituation?.text !== '中途返回') {
+    if (Number(fireDistance.value) <= distanceConfig?.[0]?.value && form.investForce.dispatchTruckList?.value?.length > 0) {
+      form.basicInformation.fireDistance.warning = true
+      form.basicInformation.fireDistance.warningText = `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`
+      form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
+      // prompt && notification.open({ message: '填报异常提醒', description: `有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
+      prompt && showToast(`有车辆出动，行驶距离小于${distanceConfig?.[0]?.value}不合理，请修改或备注！`)
+    }
+    if (Number(fireDistance.value) > distanceConfig?.[1]?.value) {
+      form.basicInformation.fireDistance.warning = true
+      form.basicInformation.fireDistance.warningText = `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`
+      form.basicInformation.fieldWarning = form.basicInformation.fieldWarning.replace('fireDistance:false;', 'fireDistance:true;')
+      // prompt && notification.open({ message: '填报异常提醒', description: `行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`, style: { backgroundColor: 'orange' } })
+      prompt && showToast(`行驶距离超过${distanceConfig?.[1]?.value}公里不合理，请修改或备注！`)
+    }
   }
 }
 
