@@ -56,6 +56,8 @@ import YearRank from './components/YearRank.vue'
 import Chart from './components/Chart.vue'
 import {ref} from 'vue'
 import { useStore } from "vuex";
+import { showConfirmDialog } from "vant";
+import { downLoad } from '@/utils/download.js'
 
 const store = useStore()
 
@@ -105,6 +107,20 @@ const initStore = async () => {
 
 if (!store.getters?.["menuInfo/getMenuInfo"]) {
   initStore()
+}
+
+if (!localStorage.downloadYDYJ) {
+  localStorage.downloadYDYJ = '1'
+  showConfirmDialog({
+    // title: '标题',
+    message: `本应用已整合到'移动应急'APP，是否安装'移动应急'app替换原应用`,
+  })
+    .then(() => {
+      downLoad({
+        url: 'https://yjapp.yjglcloud.mem.gov.cn/cdn/ydyjapps/app/ydyj-re.html',
+        name: 'ydyj.apk',
+      })
+    })
 }
 </script>
   

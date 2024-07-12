@@ -4,7 +4,7 @@ export const downLoad = ({ url, name }) => {
   } else {
     if (window.cordova) {
       cordova.InAppBrowser.open(encodeURI(url), "_system");
-      return 
+      return
     }
     const link = document.createElement('a')
     link.style.display = 'none'

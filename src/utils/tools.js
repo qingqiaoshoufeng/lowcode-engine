@@ -665,6 +665,7 @@ export const resetLocalStorage = (type) => {
   localStorage.token = ""
   localStorage.platform = ""
   localStorage.saveInfo = "" // vuex-persistedstate 缓存内容清除
+  localStorage.downloadYDYJ = ''
   localStorage.SYSTEM_ENV = ""
   localStorage.SYSTEM_BASE_URL = ""
   if (type === 1) {
