@@ -1,10 +1,5 @@
 import {isType} from '@/utils/types.js'
 
-const mockData = [
-  [],
-]
-
-
 const options = {
   tooltip: {},
   grid:{
@@ -60,15 +55,14 @@ const options = {
       barWidth:10,
       color:'#5CC97C',
       markLine: {
-        data: [
-          {
-            type: 'average',
-            name: '平均值',
-          },
-        ],
-      },
+        data: [{
+          yAxis: 0,
+          symbol: 'none',
+          name: '平均值',
+        }]
+      }
     },
-  ]
+  ],
 }
 
 export default {
@@ -88,6 +82,17 @@ export default {
       options.series[index].data = data[index]
     })
     options.xAxis.data = data[1]
+    let average = 0;
+    if (data[0]) {
+      average = data[0].reduce((a, b) => a + b, 0) / data[0].length
+    }
+    options.series[0].markLine = {
+      data: [{
+        yAxis: average,
+        symbol: 'none',
+        name: '平均值',
+      }]
+    }
     options.dataZoom.end = Math.floor(100*(8/data[1].length))
     return options
   }
