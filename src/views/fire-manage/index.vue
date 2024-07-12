@@ -174,7 +174,7 @@
 <script setup>
 import {  
   // deleteFireReportDraft, 
-  getFireWarningTag,
+  getTagList,
   collectFireWarning,
   getFireManageList } from '@/apis/index.js'
 import { computed, createVNode, onMounted, ref ,reactive,toRaw} from 'vue'
@@ -216,7 +216,7 @@ getSystemDictSync(['HZ_STATUS', 'HZ_INFO_HZDJ', 'HZ_QHYY', 'HZ_INFO_QY', 'HZ_INF
 
 onMounted(() => {
   // 获取火灾标签
-  getFireWarningTag({ tagType: 3 }).then((res) => {
+  getTagList({ tagType: 3, page: 1, limit: 10000 }).then((res) => {
     options.value.fireTags = res.data || []
     show.value.moreFilter = true
   })

@@ -16,7 +16,7 @@ import {
 import router from "@/router/index.js";
 import { MSG_LOCKING_TEXT, isDispatch, isNot } from '@/utils/constants.js';
 import { showToast, showLoadingToast, closeToast } from "vant";
-import { getFireWarningManage, collectFireWarning, getFireWarningTag } from "@/apis/index.js";
+import { getFireWarningManage, collectFireWarning, getTagList } from "@/apis/index.js";
 import { formatYmdHm } from "@/utils/format.js";
 import { useStore } from "vuex";
 import { useModal } from '@/hooks/useModal.js'
@@ -257,7 +257,7 @@ onMounted(() => {
   searchOptions.value[4].options = res.JQ_LEVEL
   searchOptions.value[10].options = res.NATURAL_DISASTER_TYPE
   // 获取警情标签
-  getFireWarningTag({ tagType: 1 }).then((res) => {
+  getTagList({ tagType: 1, page: 1, limit: 10000 }).then((res) => {
     searchOptions.value[7].options = res.data;
   });
   nextTick(() => {

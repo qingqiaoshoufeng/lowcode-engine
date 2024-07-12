@@ -6,7 +6,7 @@ import {
   dispatchType, fieldType, fireHeadLevel, gender, injuryType, install, isCase, isConnect, isNot, isResearch, minorInjury, networking, regulation, searchParams, seasonRange, statisticRange, warningDealStatus, haveNull
 } from './constants.js'
 import {
-  getFireWarningTag,
+  getTagList,
   getInputPerson,
   getHeaderOrg,
 } from '@/apis/index.js'
@@ -184,7 +184,7 @@ onMounted(async () => {
     }
   })
   // 获取警情标签
-  getFireWarningTag({ tagType: 1 }).then((res) => {
+  getTagList({ tagType: 1, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.warningTag = res.data.map((val) => {
         return {
@@ -196,7 +196,7 @@ onMounted(async () => {
     }
   })
   // 获取出动标签
-  getFireWarningTag({ tagType: 2 }).then((res) => {
+  getTagList({ tagType: 2, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.dispatchTag = options.value.dispatchHeadTag = res.data.map((val) => {
         return {
@@ -208,7 +208,7 @@ onMounted(async () => {
     }
   })
   // 获取火灾标签
-  getFireWarningTag({ tagType: 3 }).then((res) => {
+  getTagList({ tagType: 3, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.fireInfoTag = res.data.map((val) => {
         return {

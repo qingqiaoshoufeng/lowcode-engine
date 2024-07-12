@@ -1,6 +1,6 @@
 <script setup>
 import { computed, inject, nextTick, onBeforeMount, onMounted, provide, ref } from 'vue';
-import { getFireWarningTag, getHeaderOrg } from '@/apis/index.js';
+import { getTagList, getHeaderOrg } from '@/apis/index.js';
 import FormItem from './formItem.vue'
 import {
   dispatchInjuryType,
@@ -159,7 +159,7 @@ onMounted(() => {
     })
   }
   // 获取警情标签
-  getFireWarningTag({ tagType: 1 }).then((res) => {
+  getTagList({ tagType: 1, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.warningTag = res.data?.map(item => {
         return { ...item, label: item.tagName, value: item.boFireTagId }
@@ -167,7 +167,7 @@ onMounted(() => {
     }
   })
   // 出动标签
-  getFireWarningTag({ tagType: 2 }).then((res) => {
+  getTagList({ tagType: 2, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.dispatchTag = res.data.map(item => {
         return { ...item, label: item.tagName, value: item.boFireTagId }
@@ -178,7 +178,7 @@ onMounted(() => {
     }
   })
   // 火灾标签
-  getFireWarningTag({ tagType: 3 }).then((res) => {
+  getTagList({ tagType: 3, page: 1, limit: 10000 }).then((res) => {
     if (res?.data) {
       options.value.fireInfoTag = res.data.map(item => {
         return { ...item, label: item.tagName, value: item.boFireTagId }
