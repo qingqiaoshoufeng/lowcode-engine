@@ -109,7 +109,7 @@ if (!store.getters?.["menuInfo/getMenuInfo"]) {
   initStore()
 }
 
-if (!localStorage.downloadYDYJ) {
+if (!localStorage.downloadYDYJ && localStorage.platform === 'App') {
   localStorage.downloadYDYJ = '1'
   showConfirmDialog({
     // title: '标题',
