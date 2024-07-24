@@ -9,12 +9,6 @@
         {{ record.fireStatusValue }}
       </div>
     </div>
-    <div class="item-type" v-if="['fireFilled','fireReject'].includes(type)">
-      <span>{{ record.firePlaceValue }}</span>
-    </div>
-    <div class="item-type" v-else>
-      <span>{{ record.fireTypeValue }}</span>
-    </div>
     <div class="item-field" v-if="['fireFilled','fireReviewed','fireReject'].includes(type)">
       <img 
         style="width: 13px; height: 15px; margin-right: 8px" 

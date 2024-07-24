@@ -42,7 +42,7 @@
         alt=""
       />
       <div class="item-field-label">申请时间：</div>
-      <div>{{ record.createDate }}</div>
+      <div>{{ formatYmdHm(record.createDate) }}</div>
     </div>
     <div class="item-field" v-if="['policeAmend'].includes(type)">
       <img 
