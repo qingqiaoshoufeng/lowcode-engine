@@ -228,7 +228,7 @@ const handleItem = (row) => {
 
 const handleReject = (row) => {
   if (!row.permission) {
-    showDialog({ message: `警情状态为已发送，且申请更正/申请作废，才允许驳回！` })
+    showDialog({ message: `警情状态为已发送，且没有申请更正/申请作废，才允许驳回！` })
     return
   }
   if (row.isLock === '1') {
