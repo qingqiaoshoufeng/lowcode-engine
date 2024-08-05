@@ -184,9 +184,7 @@ form.value.warningName = computed(() => {
     return detail.value?.warningName;
   }
   const { warningDate, warningOrgname, warningAreaText, warningTypeText, naturalDisasterTypeText } = form.value;
-  let result = warningDate
-    ? `“${dayjs(warningDate).format("M")}· ${dayjs(warningDate).format("D")}”`
-    : "";
+  let result = warningDate ? `“${dayjs(warningDate).format("M")}· ${dayjs(warningDate).format("D")}”` : "";
   if (warningTypeText?.[0] === "虚假警") {
     if (warningTypeText?.[1] === "虚警（误报）") {
       result += `${userMessage.value?.USERMESSAGE?.orgName}接报一起虚警`;
@@ -204,47 +202,21 @@ form.value.warningName = computed(() => {
   }
   if (warningTypeText?.[0] === "火灾扑救") {
     result += warningTypeText?.[1] === "室外设备设施火灾" ? "一" : "";
-    result += warningTypeText
-      ? `${textFilter(warningTypeText, 1).replace("火灾", "")}火灾`
-      : "";
+    result += warningTypeText ? `${textFilter(warningTypeText, 1).replace("火灾", "")}火灾` : "";
   }
   if (warningTypeText?.[0] === "抢险救援") {
-    result += warningTypeText
-      ? `${textFilter(warningTypeText, warningTypeText.length - 1).replace(
-        "抢险救援",
-        ""
-      )}抢险救援`
-      : "";
-    result += naturalDisasterTypeText
-      ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
-      : "";
+    result += warningTypeText ? `${textFilter(warningTypeText, warningTypeText.length - 1).replace("抢险救援", "")}抢险救援` : "";
+    result += naturalDisasterTypeText?.length > 0 ? `（${textFilter(naturalDisasterTypeText, naturalDisasterTypeText.length - 1)}）` : "";
   }
   if (warningTypeText?.[0] === "社会救助") {
-    result += warningAreaText?.length > 0 ? `${`${warningAreaText?.[3]}`}` : "";
-    result += warningTypeText
-      ? `${textFilter(warningTypeText, warningTypeText.length - 1)}`
-      : "";
-    result += naturalDisasterTypeText
-      ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
-      : "";
+    result += warningAreaText?.[3] ? `${`${warningAreaText?.[3]}`}` : "";
+    result += warningTypeText ? `${textFilter(warningTypeText, warningTypeText.length - 1)}` : "";
+    result += naturalDisasterTypeText?.length > 0 ? `（${textFilter(naturalDisasterTypeText, naturalDisasterTypeText.length - 1)}）` : "";
   }
   if (warningTypeText?.[0] === "安保勤务") {
     result += warningOrgname ? `${warningOrgname}` : "";
-    result += warningTypeText
-      ? `${textFilter(warningTypeText, 2) || textFilter(warningTypeText, 1)}`
-      : "";
-    result += naturalDisasterTypeText
-      ? `（${textFilter(
-        naturalDisasterTypeText,
-        naturalDisasterTypeText.length - 1
-      )}）`
-      : "";
+    result += warningTypeText ? `${textFilter(warningTypeText, 2) || textFilter(warningTypeText, 1)}` : "";
+    result += naturalDisasterTypeText?.length > 0 ? `（${textFilter(naturalDisasterTypeText, naturalDisasterTypeText.length - 1)}）` : "";
   }
   return result;
 });
